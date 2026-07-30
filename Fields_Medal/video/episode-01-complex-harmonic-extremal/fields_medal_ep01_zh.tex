@@ -1,0 +1,432 @@
+% Fields Medal Winners - Episode 1 Chinese beamer deck
+% Source:
+%   Fields_Medal/fields_medal_episode_classification.md
+%   Fields_Medal/pages/<year>/<winner>/index.html
+\documentclass[aspectratio=169,14pt]{beamer}
+
+% ---- Theme ----
+\usetheme{default}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{
+  \hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}
+}
+
+% ---- Fonts ----
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+
+% ---- Packages ----
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+% ---- Colors ----
+\definecolor{bgmain}{RGB}{238,243,252}
+\definecolor{panel}{RGB}{238,244,255}
+\definecolor{factbg}{RGB}{246,242,235}
+\definecolor{coverprimary}{HTML}{2563EB}
+\definecolor{coveraccent}{HTML}{00A884}
+\definecolor{coverwarning}{HTML}{F59E0B}
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{30,30,30}
+\definecolor{muteddark}{RGB}{72,86,115}
+\definecolor{bluepanel}{RGB}{226,237,255}
+\definecolor{greenpanel}{RGB}{225,246,237}
+\definecolor{amberpanel}{RGB}{255,244,222}
+\definecolor{purplepanel}{RGB}{239,231,255}
+\definecolor{redpanel}{RGB}{255,235,235}
+
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% ---- Helpers ----
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.07] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.45, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!8] (current page.north west) rectangle (current page.south east);
+  \fill[coverprimary!14] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[coveraccent!12] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coverwarning!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.045, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \draw[coveraccent, opacity=0.38, line width=1.1pt] ([xshift=0.35cm,yshift=7.72cm]current page.south west) -- ++(3.25,0) -- ++(0.45,-0.45) -- ++(2.0,0);
+  \draw[coverprimary, opacity=0.24, line width=1.0pt] ([xshift=9.35cm,yshift=8.25cm]current page.south west) -- ++(2.3,0) -- ++(0.55,-0.55) -- ++(3.2,0);
+  \fill[coverdark, opacity=0.07] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{9}{11}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.12cm}
+}
+
+\newcommand{\chip}[3]{%
+  \node[rounded corners=5pt, fill=#1, inner xsep=7pt, inner ysep=4pt, font=\fontsize{7.6}{9}\selectfont\bfseries, text=#2] at #3;
+}
+
+\newcommand{\portrait}[2]{%
+  \begin{tikzpicture}
+    \node[draw=coverprimary!32, line width=0.8pt, fill=white, rounded corners=4pt, inner sep=3pt] {
+      \includegraphics[width=2.65cm,height=3.05cm,keepaspectratio]{#1}
+    };
+    \node[anchor=north, text=covermuted, font=\fontsize{5.4}{6.3}\selectfont] at (0,-1.80) {#2};
+  \end{tikzpicture}
+}
+
+\newcommand{\factrow}[2]{%
+  {\fontsize{6.8}{8.1}\selectfont\bfseries\color{coverprimary!78!black} #1}\hspace{0.35em}%
+  {\fontsize{6.8}{8.1}\selectfont\color{coverdark!82} #2}\par\vspace{2pt}
+}
+
+\newcommand{\personslide}[9]{%
+\begin{frame}
+\plainbar
+% ---- Title area ----
+\vspace{-0.45cm}
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{coverdark} #1}\\[2pt]
+  {\fontsize{9.5}{11.5}\selectfont\color{muteddark} #2}
+\end{center}
+\vspace{0.15cm}
+% ---- Middle: photo + info card side by side ----
+\begin{columns}[c]
+\begin{column}{0.22\textwidth}
+  \centering
+  \begin{tikzpicture}
+    \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=3pt, inner sep=2.5pt, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.12}] {
+      \includegraphics[width=2.4cm,height=2.9cm,keepaspectratio]{#3}
+    };
+  \end{tikzpicture}
+  {\par\vspace{1pt}\fontsize{6.5}{7.5}\selectfont\color{covermuted} #4\par}
+\end{column}
+\begin{column}{0.28\textwidth}
+  \begin{tikzpicture}
+    \node[fill=greenpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=3.8cm, align=left] {
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 身份}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 机构}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #8}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.6cm, anchor=north west] at (0,0) {
+      {\fontsize{8.6}{10.2}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\\[3pt]
+      {\fontsize{7.4}{9.2}\selectfont\color{coverdark!84} #9}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+% ---- Slides ----
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{28}{34}\selectfont\bfseries, text=coverdark]
+    at ([yshift=2.05cm]current page.center) {菲尔兹奖人物谱系};
+  \node[anchor=center, font=\fontsize{15}{19}\selectfont, text=coverprimary!82!black]
+    at ([yshift=0.86cm]current page.center) {第1集 \enspace·\enspace 复分析、调和分析与极值问题};
+  \node[anchor=center, font=\fontsize{12.5}{16}\selectfont\bfseries, text=coveraccent!76!black]
+    at ([yshift=0.10cm]current page.center) {Riemann Surfaces · Distributions · Harmonic Analysis · Sphere Packing};
+  \draw[coveraccent, line width=1.4pt] ([yshift=-1.02cm, xshift=-4.55cm]current page.center)
+    -- ([yshift=-1.02cm, xshift=4.55cm]current page.center);
+  \node[anchor=center] at ([yshift=-1.90cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=coverprimary!10, inner sep=5pt, minimum height=1.2em, font=\footnotesize\bfseries, text=coverprimary!85!black] at (-4.05,0) {Ahlfors};
+      \node[rounded corners=8pt, fill=coveraccent!11, inner sep=5pt, minimum height=1.2em, font=\footnotesize\bfseries, text=coveraccent!70!black] at (-2.35,0) {Schwartz};
+      \node[rounded corners=8pt, fill=coverwarning!14, inner sep=5pt, minimum height=1.2em, font=\footnotesize\bfseries, text=coverwarning!65!black] at (-0.45,0) {Hörmander};
+      \node[rounded corners=8pt, fill=purplepanel, inner sep=5pt, minimum height=1.2em, font=\footnotesize\bfseries, text=coverprimary!75!black] at (1.55,0) {Fefferman};
+      \node[rounded corners=8pt, fill=greenpanel, inner sep=5pt, minimum height=1.2em, font=\footnotesize\bfseries, text=coveraccent!70!black] at (3.35,0) {Bourgain};
+      \node[rounded corners=8pt, fill=amberpanel, inner sep=5pt, minimum height=1.2em, font=\footnotesize\bfseries, text=coverwarning!60!black] at (5.15,0) {Viazovska};
+    \end{tikzpicture}
+  };
+  \node[anchor=south, font=\scriptsize, text=coverdark!45]
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace Fields Medal \enspace|\enspace Episode 01 \enspace|\enspace 1936--2022};
+\end{tikzpicture}
+\end{frame}
+}
+
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{一个函数可以有多“怪”？}{第一集的入口：从复变函数到广义函数，再到 Fourier 分析的极值问题}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={draw=coverprimary!45, fill=panel, rounded corners=5pt, inner xsep=10pt, inner ysep=7pt, text=coverdark, font=\fontsize{8.4}{10}\selectfont\bfseries, align=center},
+  edge/.style={-{Stealth}, draw=coveraccent, line width=0.95pt}
+]
+  \node[nodebox, fill=bluepanel] (a) at (-5.2,1.25) {复分析\\几何化函数};
+  \node[nodebox, fill=greenpanel] (b) at (-2.55,1.25) {分布理论\\允许奇异对象};
+  \node[nodebox, fill=amberpanel] (c) at (0.15,1.25) {微局部分析\\看见奇异性方向};
+  \node[nodebox, fill=purplepanel] (d) at (2.9,1.25) {调和分析\\分解振动};
+  \node[nodebox, fill=factbg] (e) at (5.35,1.25) {极值问题\\最优结构};
+  \foreach \x/\y in {a/b,b/c,c/d,d/e} {
+    \draw[edge] (\x) -- (\y);
+  }
+  \node[draw=coverwarning!60, fill=coverwarning!12, rounded corners=5pt, inner sep=7pt, text width=11.4cm, align=center] at (0,-0.92) {
+    {\fontsize{8.0}{9.6}\selectfont\bfseries\color{coverwarning!65!black} 本集的问题}\\[-1pt]
+    {\fontsize{7.2}{8.8}\selectfont\color{coverdark!80} 数学家如何把“函数”“曲面”“奇异性”“波动”和“最优堆积”放进同一套分析语言里？}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\roadmapslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{六位得主，一条分析主线}{不是简单按年份罗列，而是看分析工具如何不断升级}
+\begin{center}
+\begin{tikzpicture}[
+  milestone/.style={draw=coverprimary!45, fill=panel, rounded corners=4pt, inner xsep=7pt, inner ysep=5pt, align=center, font=\fontsize{7.2}{8.6}\selectfont\bfseries},
+  arrow/.style={-{Stealth}, draw=coveraccent, line width=0.9pt}
+]
+  \node[milestone, fill=bluepanel] (a) at (-5.45,1.0) {1936\\Ahlfors\\黎曼曲面};
+  \node[milestone, fill=greenpanel] (b) at (-3.25,1.0) {1950\\Schwartz\\分布};
+  \node[milestone, fill=amberpanel] (c) at (-1.05,1.0) {1962\\Hörmander\\线性 PDE};
+  \node[milestone, fill=purplepanel] (d) at (1.25,1.0) {1978\\Fefferman\\多复变};
+  \node[milestone, fill=greenpanel] (e) at (3.45,1.0) {1994\\Bourgain\\调和分析};
+  \node[milestone, fill=factbg] (f) at (5.65,1.0) {2022\\Viazovska\\球堆积};
+  \foreach \x/\y in {a/b,b/c,c/d,d/e,e/f} {
+    \draw[arrow] (\x) -- (\y);
+  }
+  \node[draw=coverprimary!38, fill=white, rounded corners=5pt, inner sep=7pt, text width=11.2cm, align=left] at (0,-1.15) {
+    {\fontsize{8.0}{9.8}\selectfont\bfseries\color{coverprimary!80!black} 叙事线}\\[-1pt]
+    {\fontsize{7.2}{8.8}\selectfont\color{coverdark!82} 从 19 世纪复分析的几何直觉出发，经由广义函数和微局部分析，进入现代调和分析。最后，Fourier 分析不仅解释振动，还能证明高维空间中最优的球堆积结构。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\conceptslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{本集的四个关键词}{观众需要记住的不是公式，而是分析学的工作方式}
+\begin{columns}[T]
+\begin{column}{0.49\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!45, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.0cm, anchor=north west] at (0,0) {
+      {\fontsize{8.5}{10}\selectfont\bfseries\color{coverprimary!80!black} 1. 几何化}\\[2pt]
+      {\fontsize{7.3}{8.8}\selectfont\color{coverdark!82} 复函数不只是代数表达式，也可以看成曲面、覆盖和映射。Ahlfors 把复分析推向几何化。}
+    };
+    \node[draw=coveraccent!45, fill=greenpanel, rounded corners=5pt, inner sep=7pt, text width=6.0cm, anchor=north west] at (0,-2.25) {
+      {\fontsize{8.5}{10}\selectfont\bfseries\color{coveraccent!70!black} 2. 广义化}\\[2pt]
+      {\fontsize{7.3}{8.8}\selectfont\color{coverdark!82} 函数可以变成"分布"，微分方程可以容纳冲击、点源和奇异对象。Schwartz 改写了分析语言。}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.49\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverwarning!55, fill=amberpanel, rounded corners=5pt, inner sep=7pt, text width=6.0cm, anchor=north west] at (0,0) {
+      {\fontsize{8.5}{10}\selectfont\bfseries\color{coverwarning!62!black} 3. 局部化}\\[2pt]
+      {\fontsize{7.3}{8.8}\selectfont\color{coverdark!82} Hörmander 与 Fefferman 让数学家能够追踪奇异性和边界行为，理解高维复分析和 PDE。}
+    };
+    \node[draw=coverprimary!35, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=6.0cm, anchor=north west] at (0,-2.25) {
+      {\fontsize{8.5}{10}\selectfont\bfseries\color{coverprimary!74!black} 4. 极值化}\\[2pt]
+      {\fontsize{7.3}{8.8}\selectfont\color{coverdark!82} Bourgain 和 Viazovska 展示了调和分析的现代力量：控制振动、随机性、几何和最优结构。}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+\newcommand{\ahlforsslide}{%
+\personslide
+  {Lars Ahlfors}
+  {拉尔斯·阿尔福斯：首届菲尔兹奖得主之一}
+{images/Lars_Ahlfors_-_MFO.jpg}
+  {Photo: Wikipedia}
+  {1936（首届，29岁）}
+  {1907--1996}
+  {芬兰}
+  {U of Helsinki → Harvard}
+  {Ahlfors 的核心贡献在黎曼曲面、覆盖曲面、整函数与亚纯函数的反函数理论。他代表了菲尔兹奖最早期的分析传统：从复函数出发，用几何方式理解函数、映射和曲面的结构。\\[3pt]
+  \textbf{一句话：} 复分析不是“会算积分”的技巧，而是一种描述空间结构的语言。}
+}
+
+\newcommand{\schwartzslide}{%
+\personslide
+  {Laurent Schwartz}
+  {洛朗·施瓦茨：让“广义函数”成为数学语言}
+{images/LaurentSchwartz.jpg}
+  {Photo: Wikipedia}
+  {1950（35岁）}
+  {1915--2002}
+  {法国}
+  {U of Nancy → École Polytechnique}
+  {Schwartz 建立分布理论，把 Dirac delta 这类“不是普通函数”的对象纳入严格数学体系。偏微分方程、量子场论、信号处理都因此获得统一语言。\\[3pt]
+  \textbf{一句话：} 分析学开始接受奇异性；数学家不再逃避尖峰、冲击和点源，而是给它们建立精确语法。}
+}
+
+\newcommand{\hormanderslide}{%
+\personslide
+  {Lars Hörmander}
+  {拉尔斯·赫尔曼德尔：线性偏微分算子的总设计师}
+{images/Lars_Hörmander.jpg}
+  {Photo: Wikipedia}
+  {1962（31岁）}
+  {1931--2012}
+  {瑞典}
+  {Stockholm U → IAS → Lund U}
+  {Hörmander 建立线性偏微分算子的一般理论，深刻推进微局部分析。他的工作让数学家能够判断方程什么时候有解、解有多光滑、奇异性如何传播。\\[3pt]
+  \textbf{一句话：} 如果 Schwartz 给了奇异对象名字，Hörmander 则解释这些奇异性怎样在方程里运动。}
+}
+
+\newcommand{\feffermanslide}{%
+\personslide
+  {Charles Fefferman}
+  {查尔斯·费弗曼：多复变与调和分析的早熟天才}
+{images/330px-Charles_Fefferman.jpg}
+  {Photo: Wikipedia}
+  {1978（29岁）}
+  {1949--}
+  {美国}
+  {U of Chicago → Princeton}
+  {Fefferman 在多复变、调和分析和偏微分方程中有基础性贡献，特别是把一维复分析中的直觉推广到高维复杂边界。\\[3pt]
+  \textbf{一句话：} 高维复分析远比一维复杂，边界几何、核函数和调和分析在这里汇合。}
+}
+
+\newcommand{\bourgainslide}{%
+\personslide
+  {Jean Bourgain}
+  {让·布尔甘：现代分析的全能发动机}
+{images/500px-Jean_Bourgain_vertical_crop_.jpg}
+  {Photo: Wikipedia}
+  {1994（40岁）}
+  {1954--2018}
+  {比利时}
+  {IHÉS → IAS}
+  {Bourgain 横跨 Banach 空间、凸几何、调和分析、遍历理论和非线性 PDE。他的特点不是解决一个孤立问题，而是不断把分析工具带到新的领域。\\[3pt]
+  \textbf{一句话：} 1990 年代以后，分析学成为跨学科工具箱，能够同时进入数论、动力系统、PDE 和组合结构。}
+}
+
+\newcommand{\viazovskaslide}{%
+\personslide
+  {Maryna Viazovska}
+  {玛丽娜·维亚佐夫斯卡：Fourier 分析解决高维球堆积}
+{images/Maryna_Vazovska_MFO_2013_crop.jpg}
+  {Photo: Wikipedia}
+  {2022（37岁）}
+  {1984--}
+  {乌克兰}
+  {Humboldt U → EPFL}
+  {Viazovska 证明 E8 晶格给出 8 维最密球堆积，并推进相关极值问题。她的证明把 Fourier 分析、模形式和几何优化结合起来。\\[3pt]
+  \textbf{一句话：} 本集以她收束：分析学不仅研究函数，也能回答“高维空间中如何最紧密地摆放球”这样的几何极值问题。}
+}
+
+\newcommand{\synthesisslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{第一集的主线}{从复分析到高维极值问题，分析学一直在扩张自己的边界}
+\begin{center}
+\begin{tikzpicture}[>=Stealth,
+  block/.style={draw=coverprimary!42, fill=white, rounded corners=5pt, inner sep=6pt, text width=3.05cm, align=center, font=\fontsize{7.2}{8.7}\selectfont},
+  arrow/.style={->, draw=coveraccent, line width=0.9pt}
+]
+  \node[block, fill=bluepanel] (a) at (-4.95,1.25) {\textbf{Ahlfors}\\函数的几何};
+  \node[block, fill=greenpanel] (b) at (-1.65,1.25) {\textbf{Schwartz}\\奇异对象合法化};
+  \node[block, fill=amberpanel] (c) at (1.65,1.25) {\textbf{Hörmander / Fefferman}\\奇异性与边界};
+  \node[block, fill=purplepanel] (d) at (4.95,1.25) {\textbf{Bourgain / Viazovska}\\调和分析的扩张};
+  \foreach \x/\y in {a/b,b/c,c/d} {
+    \draw[arrow] (\x) -- (\y);
+  }
+  \node[draw=coverwarning!65, fill=factbg, rounded corners=5pt, inner sep=7pt, text width=11.1cm, align=left] at (0,-1.35) {
+    {\fontsize{8.0}{9.8}\selectfont\bfseries\color{coverwarning!62!black} 一句话总结}\\[-1pt]
+    {\fontsize{7.4}{9}\selectfont\color{coverdark!84} 分析学的发展，不是把函数越算越复杂，而是不断扩大“什么可以被分析”的范围：曲面、奇异性、边界、随机性、振动，甚至高维空间里的最优排列。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\nextslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{下一集}{偏微分方程与应用分析}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverwarning!60, fill=coverwarning!12, rounded corners=5pt, inner sep=7pt, text width=10.5cm, align=center] (hook) at (0,2.0) {
+    {\fontsize{8.4}{10}\selectfont\bfseries\color{coverwarning!65!black} 开场问题}\\[-1pt]
+    {\fontsize{7.4}{9}\selectfont\color{coverdark!80} 肥皂泡为什么是球形？宇宙中的气体如何趋向平衡？数学家怎样用方程描述自然界的形状和运动？}
+  };
+  \node[draw=coverprimary!45, fill=bluepanel, rounded corners=5pt, inner sep=8pt, text width=10.5cm, align=center] at (0,-1.2) {
+    {\fontsize{11}{13.2}\selectfont\bfseries\color{coverprimary!82!black} 第2集：从肥皂泡到 Boltzmann 方程}\\[5pt]
+    {\fontsize{8.0}{9.8}\selectfont\color{coverdark!84} Jesse Douglas、Pierre-Louis Lions、Terence Tao、Cédric Villani、Alessio Figalli、Yu Deng}\\[5pt]
+    {\fontsize{7.4}{9}\selectfont\color{coverdark!70} 主题：变分法、极小曲面、非线性 PDE、最优传输、动理学方程。}
+  };
+  \node[anchor=south, font=\scriptsize, text=coverdark!45] at (0,-3.2) {\faIcon{arrow-right}\enspace 从"函数的语言"进入"自然界的方程"};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+\newcommand{\medalslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{菲尔兹奖}{Fields Medal — 数学界的最高荣誉之一}
+\begin{center}
+\begin{tikzpicture}
+  % Front medal
+  \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=4pt, inner sep=3pt, drop shadow={shadow xshift=0.6pt, shadow yshift=-0.6pt, opacity=0.15}] (front) at (-3.2,0.6) {
+    \includegraphics[height=4.2cm,keepaspectratio]{images/FieldsMedalFront_1080px.jpg}
+  };
+  \node[anchor=north, font=\fontsize{7.5}{9}\selectfont\bfseries, text=coverprimary!80!black] at (-3.2,-1.7) {正面：阿基米德像};
+  \node[anchor=north, font=\fontsize{6.5}{8}\selectfont, text=covermuted] at (-3.2,-2.2) {TRANSIRE SUUM PECTUS};
+  \node[anchor=north, font=\fontsize{6.0}{7.2}\selectfont\itshape, text=coverdark!65] at (-3.2,-2.6) {（超越人类精神的极限）};
+  % Back medal
+  \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=4pt, inner sep=3pt, drop shadow={shadow xshift=0.6pt, shadow yshift=-0.6pt, opacity=0.15}] (back) at (3.2,0.6) {
+    \includegraphics[height=4.2cm,keepaspectratio]{images/FieldsMedalBack_1080px.jpg}
+  };
+  \node[anchor=north, font=\fontsize{7.5}{9}\selectfont\bfseries, text=coverprimary!80!black] at (3.2,-1.7) {背面：月桂枝与题词};
+  \node[anchor=north, font=\fontsize{6.5}{8}\selectfont, text=covermuted] at (3.2,-2.2) {CONGREGATI EX TOTO ORBE};
+  \node[anchor=north, font=\fontsize{6.0}{7.2}\selectfont\itshape, text=coverdark!65] at (3.2,-2.6) {（全世界数学家汇聚一堂）};
+  % Bottom info
+  \node[draw=coveraccent!40, fill=greenpanel, rounded corners=5pt, inner sep=6pt, text width=10.8cm, align=center] at (0,-3.5) {
+    {\fontsize{7.4}{9}\selectfont\color{coverdark!82} 每四年颁发一次 \enspace·\enspace 授予 40 岁以下数学家 \enspace·\enspace 1936 年首次颁奖 \enspace·\enspace 至今共 64 位获奖者}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\begin{document}
+\titleslide
+\medalslide
+\hookslide
+\roadmapslide
+\conceptslide
+\ahlforsslide
+\schwartzslide
+\hormanderslide
+\feffermanslide
+\bourgainslide
+\viazovskaslide
+\synthesisslide
+\nextslide
+\end{document}

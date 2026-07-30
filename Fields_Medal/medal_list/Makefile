@@ -1,0 +1,96 @@
+# Makefile for Fields Medal Laureates list document.
+#
+# Usage:
+#   make            build both PDFs
+#   make pdf        build article-style PDF
+#   make beamer     build beamer presentation PDF
+#   make images     generate slide images from beamer PDF
+#   make video      synthesize video from slide images with BGM
+#   make clean      remove intermediate files
+#   make distclean  remove generated PDF/images/video
+
+MAIN        = fields_medal_laureates
+BEAMER      = fields_medal_laureates_beamer
+VIDEO_NAME  = fields_medal_laureates
+OUTPUT_DIR  = output
+IMAGES_DIR  = $(OUTPUT_DIR)/images
+SLIDES_TXT  = $(OUTPUT_DIR)/slides.txt
+
+DURATION    = 7
+BGM         = timeless.wav
+
+LATEXMK     = latexmk
+PDFTOPPM    = pdftoppm
+FFMPEG      = ffmpeg
+PYTHON      = python3
+
+.PHONY: all pdf beamer images video clean distclean
+
+all: pdf beamer
+
+pdf: $(MAIN).pdf
+
+$(MAIN).pdf: $(MAIN).tex
+	$(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode $(MAIN).tex || \
+	  (rm -f $(MAIN).fdb_latexmk && $(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode -f $(MAIN).tex)
+	$(LATEXMK) -c $(MAIN).tex
+
+beamer: $(BEAMER).pdf
+
+$(BEAMER).pdf: $(BEAMER).tex
+	$(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode $(BEAMER).tex || \
+	  (rm -f $(BEAMER).fdb_latexmk && $(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode -f $(BEAMER).tex)
+	$(LATEXMK) -c $(BEAMER).tex
+
+images: $(IMAGES_DIR)/.done
+
+$(IMAGES_DIR)/.done: $(BEAMER).pdf
+	@mkdir -p $(IMAGES_DIR)
+	$(PDFTOPPM) -png -r 600 $(BEAMER).pdf $(IMAGES_DIR)/slide
+	@cd $(IMAGES_DIR) && for f in slide-*.png; do \
+	  mv "$$f" "$$(echo $$f | sed 's/-/_/')"; \
+	done 2>/dev/null || true
+	@touch $@
+
+clean:
+	$(LATEXMK) -c $(MAIN).tex 2>/dev/null || true
+	$(LATEXMK) -c $(BEAMER).tex 2>/dev/null || true
+	rm -f $(MAIN).{aux,log,toc,out,nav,snm,fls,fdb_latexmk,xdv}
+	rm -f $(BEAMER).{aux,log,toc,out,nav,snm,fls,fdb_latexmk,xdv}
+	rm -f $(SLIDES_TXT)
+	rm -f $(IMAGES_DIR)/.done
+
+distclean: clean
+	rm -f $(MAIN).pdf
+	rm -f $(BEAMER).pdf
+	rm -rf $(IMAGES_DIR)
+	rm -f $(OUTPUT_DIR)/$(VIDEO_NAME).mp4
+	rm -f $(VIDEO_NAME).mp4
+
+$(SLIDES_TXT): $(IMAGES_DIR)/.done
+	@$(PYTHON) -c "\
+	import os; \
+	imgs = sorted([f for f in os.listdir('$(IMAGES_DIR)') if f.endswith('.png')]); \
+	lines = []; \
+	[lines.extend([\"file 'images/\" + f + \"'\", 'duration $(DURATION)']) for f in imgs]; \
+	lines.append(\"file 'images/\" + imgs[-1] + \"'\"); \
+	open('$(SLIDES_TXT)', 'w').write('\\n'.join(lines) + '\\n'); \
+	print(f'  slides.txt: {len(imgs)} slides x $(DURATION)s = {len(imgs)*$(DURATION)}s')"
+
+video: $(OUTPUT_DIR)/$(VIDEO_NAME).mp4
+
+$(OUTPUT_DIR)/$(VIDEO_NAME).mp4: $(SLIDES_TXT) $(BGM)
+	@mkdir -p $(OUTPUT_DIR)
+	@rm -f $(OUTPUT_DIR)/$(VIDEO_NAME).tmp.mp4 $(OUTPUT_DIR)/$(VIDEO_NAME).mp4
+	$(FFMPEG) -y \
+	  -f concat -safe 0 -i $(SLIDES_TXT) \
+	  -stream_loop -1 -i $(BGM) \
+	  -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" \
+	  -c:v libx264 -profile:v high -pix_fmt yuv420p \
+	  -crf 15 -preset medium -r 24 \
+	  -c:a aac -b:a 192k \
+	  -shortest \
+	  $(OUTPUT_DIR)/$(VIDEO_NAME).tmp.mp4
+	@mv $(OUTPUT_DIR)/$(VIDEO_NAME).tmp.mp4 $(OUTPUT_DIR)/$(VIDEO_NAME).mp4
+	@cp $(OUTPUT_DIR)/$(VIDEO_NAME).mp4 $(VIDEO_NAME).mp4
+	@echo "==== Done: $(VIDEO_NAME).mp4 ===="

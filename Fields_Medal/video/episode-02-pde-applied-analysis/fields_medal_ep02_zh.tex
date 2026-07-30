@@ -1,0 +1,452 @@
+% Fields Medal Winners - Episode 2 Chinese beamer deck
+% Source:
+%   Fields_Medal/fields_medal_episode_classification.md
+%   Fields_Medal/pages/<year>/<winner>/index.html
+\documentclass[aspectratio=169,14pt]{beamer}
+
+\usetheme{default}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{}
+
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+\definecolor{bgmain}{RGB}{238,243,252}
+\definecolor{panel}{RGB}{238,244,255}
+\definecolor{factbg}{RGB}{246,242,235}
+\definecolor{coverprimary}{HTML}{2563EB}
+\definecolor{coveraccent}{HTML}{00A884}
+\definecolor{coverwarning}{HTML}{F59E0B}
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{bluepanel}{RGB}{226,237,255}
+\definecolor{greenpanel}{RGB}{225,246,237}
+\definecolor{amberpanel}{RGB}{255,244,222}
+\definecolor{purplepanel}{RGB}{239,231,255}
+\definecolor{redpanel}{RGB}{255,235,235}
+\definecolor{cyanpanel}{RGB}{225,247,252}
+\definecolor{titlecolor}{RGB}{30,30,30}
+\definecolor{muteddark}{RGB}{72,86,115}
+
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.07] (current page.south west) rectangle ([yshift=0.18cm]current page.south east);
+  \draw[coveraccent, opacity=0.45, line width=0.8pt] ([yshift=0.18cm]current page.south west) -- ([yshift=0.18cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!8] (current page.north west) rectangle (current page.south east);
+  \fill[coverprimary!14] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[coveraccent!12] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coverwarning!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.045, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \draw[coveraccent, opacity=0.38, line width=1.1pt] ([xshift=0.35cm,yshift=7.72cm]current page.south west) -- ++(3.25,0) -- ++(0.45,-0.45) -- ++(2.0,0);
+  \draw[coverprimary, opacity=0.24, line width=1.0pt] ([xshift=9.35cm,yshift=8.25cm]current page.south west) -- ++(2.3,0) -- ++(0.55,-0.55) -- ++(3.2,0);
+  \fill[coverdark, opacity=0.07] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{9}{11}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.12cm}
+}
+
+\newcommand{\portrait}[2]{%
+  \begin{tikzpicture}
+    \node[draw=coverprimary!32, line width=0.8pt, fill=white, rounded corners=4pt, inner sep=3pt] {
+      \includegraphics[width=2.52cm,height=2.82cm,keepaspectratio]{#1}
+    };
+    \node[anchor=north, text=covermuted, font=\fontsize{5.2}{6.1}\selectfont] at (0,-1.68) {#2};
+  \end{tikzpicture}
+}
+
+\newcommand{\placeholderportrait}[1]{%
+  \begin{tikzpicture}
+    \node[draw=coverprimary!32, line width=0.8pt, fill=white, rounded corners=4pt, inner sep=3pt, minimum width=2.52cm, minimum height=2.82cm, align=center] {
+      {\fontsize{21}{24}\selectfont\bfseries\color{coverprimary!78!black} #1}\\[3pt]
+      {\fontsize{6.2}{7.3}\selectfont\color{covermuted} 本地无头像}
+    };
+    \node[anchor=north, text=covermuted, font=\fontsize{5.2}{6.1}\selectfont] at (0,-1.68) {Wikipedia 页面未下载到图片};
+  \end{tikzpicture}
+}
+
+\newcommand{\factrow}[2]{%
+  {\fontsize{6.3}{7.4}\selectfont\bfseries\color{coverprimary!78!black} #1}\hspace{0.35em}%
+  {\fontsize{6.3}{7.4}\selectfont\color{coverdark!82} #2}\par\vspace{1pt}
+}
+
+\newcommand{\factblock}[4]{%
+  {\fontsize{6.3}{7.2}\selectfont
+  \renewcommand{\arraystretch}{1.02}
+  \begin{tabular}{@{}p{0.62cm}@{\hspace{0.18cm}}p{2.72cm}@{}}
+    {\bfseries\color{coverprimary!78!black}获奖} & {\color{coverdark!82}#1}\\[1pt]
+    {\bfseries\color{coverprimary!78!black}生卒} & {\color{coverdark!82}#2}\\[1pt]
+    {\bfseries\color{coverprimary!78!black}身份} & {\color{coverdark!82}#3}\\[1pt]
+    {\bfseries\color{coverprimary!78!black}机构} & {\color{coverdark!82}#4}
+  \end{tabular}}
+}
+
+\newcommand{\personslide}[9]{%
+\begin{frame}
+\plainbar
+% ---- Title area ----
+\vspace{-0.45cm}
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{coverdark} #1}\\[2pt]
+  {\fontsize{9.5}{11.5}\selectfont\color{muteddark} #2}
+\end{center}
+\vspace{0.15cm}
+% ---- Middle: photo + info card + contribution card ----
+\begin{columns}[c]
+\begin{column}{0.22\textwidth}
+  \centering
+  \begin{tikzpicture}
+    \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=3pt, inner sep=2.5pt, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.12}] {
+      \includegraphics[width=2.4cm,height=2.9cm,keepaspectratio]{#3}
+    };
+  \end{tikzpicture}
+  {\par\vspace{1pt}\fontsize{6.5}{7.5}\selectfont\color{covermuted} #4\par}
+\end{column}
+\begin{column}{0.28\textwidth}
+  \begin{tikzpicture}
+    \node[fill=greenpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=3.8cm, align=left] {
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 身份}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 机构}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #8}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.6cm, anchor=north west] at (0,0) {
+      {\fontsize{8.4}{10}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\\[2pt]
+      {\fontsize{7.6}{9.3}\selectfont\color{coverdark!84} #9}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+\newcommand{\personslideplaceholder}[8]{%
+\begin{frame}
+\plainbar
+% ---- Title area ----
+\vspace{-0.45cm}
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{coverdark} #1}\\[2pt]
+  {\fontsize{9.5}{11.5}\selectfont\color{muteddark} #2}
+\end{center}
+\vspace{0.15cm}
+% ---- Middle: photo + info card + contribution card ----
+\begin{columns}[c]
+\begin{column}{0.22\textwidth}
+  \centering
+  \begin{tikzpicture}
+    \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=3pt, inner sep=2.5pt, minimum width=2.4cm, minimum height=2.9cm, align=center, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.12}] {
+      {\fontsize{21}{24}\selectfont\bfseries\color{coverprimary!78!black} #3}\\[3pt]
+      {\fontsize{6.2}{7.3}\selectfont\color{covermuted} 本地无头像}
+    };
+  \end{tikzpicture}
+  {\par\vspace{1pt}\fontsize{6.5}{7.5}\selectfont\color{covermuted} Wikipedia 页面未下载到图片\par}
+\end{column}
+\begin{column}{0.28\textwidth}
+  \begin{tikzpicture}
+    \node[fill=greenpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=3.8cm, align=left] {
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #4}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 身份}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 机构}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.6cm, anchor=north west] at (0,0) {
+      {\fontsize{8.4}{10}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\\[2pt]
+      {\fontsize{7.6}{9.3}\selectfont\color{coverdark!84} #8}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{28}{34}\selectfont\bfseries, text=coverdark]
+    at ([yshift=2.05cm]current page.center) {菲尔兹奖人物谱系};
+  \node[anchor=center, font=\fontsize{15}{19}\selectfont, text=coverprimary!82!black]
+    at ([yshift=0.86cm]current page.center) {第2集 \enspace·\enspace 偏微分方程与应用分析};
+  \node[anchor=center, font=\fontsize{12.5}{16}\selectfont\bfseries, text=coveraccent!76!black]
+    at ([yshift=0.10cm]current page.center) {Minimal Surfaces · Nonlinear PDE · Optimal Transport · Kinetic Theory};
+  \draw[coveraccent, line width=1.4pt] ([yshift=-1.02cm, xshift=-4.55cm]current page.center)
+    -- ([yshift=-1.02cm, xshift=4.55cm]current page.center);
+  \node[anchor=center] at ([yshift=-1.90cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=coverprimary!10, inner sep=5pt, font=\footnotesize\bfseries, text=coverprimary!85!black] at (-4.35,0) {Douglas};
+      \node[rounded corners=8pt, fill=coveraccent!11, inner sep=5pt, font=\footnotesize\bfseries, text=coveraccent!70!black] at (-2.55,0) {Lions};
+      \node[rounded corners=8pt, fill=coverwarning!14, inner sep=5pt, font=\footnotesize\bfseries, text=coverwarning!65!black] at (-0.95,0) {Tao};
+      \node[rounded corners=8pt, fill=purplepanel, inner sep=5pt, font=\footnotesize\bfseries, text=coverprimary!75!black] at (0.75,0) {Villani};
+      \node[rounded corners=8pt, fill=greenpanel, inner sep=5pt, font=\footnotesize\bfseries, text=coveraccent!70!black] at (2.55,0) {Figalli};
+      \node[rounded corners=8pt, fill=amberpanel, inner sep=5pt, font=\footnotesize\bfseries, text=coverwarning!60!black] at (4.15,0) {Yu Deng};
+    \end{tikzpicture}
+  };
+  \node[anchor=south, font=\scriptsize, text=coverdark!45]
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace Fields Medal \enspace|\enspace Episode 02 \enspace|\enspace 1936--2026};
+\end{tikzpicture}
+\end{frame}
+}
+
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{肥皂泡为什么总是“最省”？}{第二集的入口：从变分问题走向描述自然界的方程}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={draw=coverprimary!45, fill=panel, rounded corners=5pt, inner xsep=9pt, inner ysep=7pt, text=coverdark, font=\fontsize{8.2}{9.8}\selectfont\bfseries, align=center},
+  edge/.style={-{Stealth}, draw=coveraccent, line width=0.95pt}
+]
+  \node[nodebox, fill=bluepanel] (a) at (-5.2,1.25) {变分法\\寻找最优形状};
+  \node[nodebox, fill=greenpanel] (b) at (-2.65,1.25) {PDE\\描述变化规律};
+  \node[nodebox, fill=amberpanel] (c) at (-0.05,1.25) {非线性\\反馈与耦合};
+  \node[nodebox, fill=purplepanel] (d) at (2.65,1.25) {最优传输\\移动质量的成本};
+  \node[nodebox, fill=factbg] (e) at (5.25,1.25) {动理学\\从粒子到方程};
+  \foreach \x/\y in {a/b,b/c,c/d,d/e} {
+    \draw[edge] (\x) -- (\y);
+  }
+  \node[draw=coverwarning!60, fill=coverwarning!12, rounded corners=5pt, inner sep=7pt, text width=11.4cm, align=center] at (0,-0.92) {
+    {\fontsize{8.0}{9.6}\selectfont\bfseries\color{coverwarning!65!black} 本集的问题}\\[-1pt]
+    {\fontsize{7.2}{8.8}\selectfont\color{coverdark!80} 数学家如何从一个最小曲面问题出发，建立描述流体、气体、概率、几何和运输的方程语言？}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\roadmapslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{六位得主，一条 PDE 主线}{从极小曲面到 Boltzmann 方程，PDE 把纯数学和物理世界连在一起}
+\begin{center}
+\begin{tikzpicture}[
+  milestone/.style={draw=coverprimary!45, fill=panel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, align=center, font=\fontsize{7.0}{8.4}\selectfont\bfseries},
+  arrow/.style={-{Stealth}, draw=coveraccent, line width=0.9pt}
+]
+  \node[milestone, fill=bluepanel] (a) at (-5.50,1.0) {1936\\Douglas\\极小曲面};
+  \node[milestone, fill=greenpanel] (b) at (-3.25,1.0) {1994\\Lions\\非线性 PDE};
+  \node[milestone, fill=amberpanel] (c) at (-1.05,1.0) {2006\\Tao\\综合分析};
+  \node[milestone, fill=purplepanel] (d) at (1.25,1.0) {2010\\Villani\\动理学};
+  \node[milestone, fill=cyanpanel] (e) at (3.45,1.0) {2018\\Figalli\\最优传输};
+  \node[milestone, fill=factbg] (f) at (5.65,1.0) {2026\\Yu Deng\\Boltzmann};
+  \foreach \x/\y in {a/b,b/c,c/d,d/e,e/f} {
+    \draw[arrow] (\x) -- (\y);
+  }
+  \node[draw=coverprimary!38, fill=white, rounded corners=5pt, inner sep=7pt, text width=11.2cm, align=left] at (0,-1.15) {
+    {\fontsize{8.0}{9.8}\selectfont\bfseries\color{coverprimary!80!black} 叙事线}\\[-1pt]
+    {\fontsize{7.2}{8.8}\selectfont\color{coverdark!82} Douglas 解决 Plateau 问题，PDE 进入几何；Lions 和 Tao 展示非线性分析的广度；Villani 与 Figalli 把最优传输推向核心；Yu Deng 则回到气体分子，严格推出宏观动理学方程。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\conceptslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{本集的四个关键词}{PDE 的核心不是“求解公式”，而是理解结构、极限和稳定性}
+\begin{columns}[T]
+\begin{column}{0.49\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!45, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.0cm, anchor=north west] at (0,0) {
+      {\fontsize{8.5}{10}\selectfont\bfseries\color{coverprimary!80!black} 1. 极值}\\[2pt]
+      {\fontsize{7.3}{8.8}\selectfont\color{coverdark!82} 极小曲面、最短路径和最小能量问题，把几何直觉转化成方程。Douglas 是这个入口。}
+    };
+    \node[draw=coveraccent!45, fill=greenpanel, rounded corners=5pt, inner sep=7pt, text width=6.0cm, anchor=north west] at (0,-2.25) {
+      {\fontsize{8.5}{10}\selectfont\bfseries\color{coveraccent!70!black} 2. 非线性}\\[2pt]
+      {\fontsize{7.3}{8.8}\selectfont\color{coverdark!82} 自然界的方程很少是线性的。Lions、Tao、Villani 都在处理反馈、耦合和长期行为。}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.49\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverwarning!55, fill=amberpanel, rounded corners=5pt, inner sep=7pt, text width=6.0cm, anchor=north west] at (0,0) {
+      {\fontsize{8.5}{10}\selectfont\bfseries\color{coverwarning!62!black} 3. 传输}\\[2pt]
+      {\fontsize{7.3}{8.8}\selectfont\color{coverdark!82} 最优传输研究“怎样以最小代价移动质量”，连接几何、概率、经济学和 PDE。}
+    };
+    \node[draw=coverprimary!35, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=6.0cm, anchor=north west] at (0,-2.25) {
+      {\fontsize{8.5}{10}\selectfont\bfseries\color{coverprimary!74!black} 4. 极限}\\[2pt]
+      {\fontsize{7.3}{8.8}\selectfont\color{coverdark!82} 动理学的难点是从大量粒子出发，严格推出宏观方程。Yu Deng 的工作正属于这个前沿。}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+\newcommand{\douglasslide}{%
+\personslide
+  {Jesse Douglas}
+  {杰西·道格拉斯：用变分法解决 Plateau 问题}
+  {images/jesse_douglas.jpg}
+  {Photo: Wikipedia}
+  {1936（首届，39岁）}
+  {1897--1965}
+  {美国}
+  {City College of NY}
+  {Douglas 因 1930 年解决 Plateau 问题而获首届菲尔兹奖：给定一条边界，是否存在面积最小的曲面？这个从 Lagrange 1760 年提出以来悬而未决的“肥皂膜问题”，把变分法、微分几何和 PDE 连在一起。\\[3pt]
+  \textbf{一句话：} 第二集从这里开始，因为 PDE 与变分法最自然的问题就是“什么形状最省”。}
+}
+
+\newcommand{\lionsslide}{%
+\personslide
+  {Pierre-Louis Lions}
+  {皮埃尔-路易·利翁：非线性 PDE 的系统化力量}
+  {images/pierre_louis_lions.jpg}
+  {Photo: Wikipedia}
+  {1994（38岁）}
+  {1956--}
+  {法国}
+  {Collège de France}
+  {Lions 因粘性解、Boltzmann 方程和变分法中的贡献获 1994 年菲尔兹奖。他提出浓缩紧性原理，处理非线性 PDE 中“质量逃逸”和缺紧性问题；又与 DiPerna 建立 Boltzmann 方程的全局存在性理论。\\[3pt]
+  \textbf{一句话：} 非线性 PDE 的难点不是“解出来”，而是建立存在性、紧性、稳定性和近似方法。}
+}
+
+\newcommand{\taoslide}{%
+\personslide
+  {Terence Tao}
+  {陶哲轩：横跨 PDE、调和分析与加性数论}
+  {images/terence_tao.jpg}
+  {Photo: Wikipedia}
+  {2006（31岁）}
+  {1975--}
+  {澳大利亚 / 美国}
+  {UCLA}
+  {Tao 因在偏微分方程、组合、调和分析和加性数论中的贡献获 2006 年菲尔兹奖。他在非线性 PDE 和调和分析中建立关键工具，同时以 Green--Tao 定理展示分析方法进入素数结构研究的力量。\\[3pt]
+  \textbf{一句话：} Tao 的位置是桥梁：他把第一集的调和分析工具带入第二集的 PDE 世界。}
+}
+
+\newcommand{\villanislide}{%
+\personslide
+  {Cédric Villani}
+  {塞德里克·维拉尼：从 Boltzmann 方程到最优传输}
+  {images/cedric_villani.jpg}
+  {Photo: Wikipedia}
+  {2010（37岁）}
+  {1973--}
+  {法国}
+  {ENS Lyon / IHP}
+  {Villani 因 Landau 阻尼和 Boltzmann 方程方面的工作获 2010 年菲尔兹奖。他证明非线性体系可在很长时间内保持预期的阻尼行为，并研究 Boltzmann 方程趋于平衡的速度；同时推动最优传输进入几何和概率。\\[3pt]
+  \textbf{一句话：} Boltzmann 方程问的是：大量粒子碰撞之后，系统如何走向平衡？}
+}
+
+\newcommand{\figallislide}{%
+\personslide
+  {Alessio Figalli}
+  {阿莱西奥·菲加利：最优传输走向几何与自由边界}
+  {images/alessio_figalli.jpg}
+  {Photo: Wikipedia}
+  {2018（34岁）}
+  {1984--}
+  {意大利}
+  {ETH Zurich}
+  {Figalli 因最优传输理论及其在 PDE、度量几何和概率中的应用获 2018 年菲尔兹奖。他发展 Monge--Ampère 方程和最优传输映射的正则性理论，并把这些工具用于自由边界、障碍问题和几何不等式稳定性。\\[3pt]
+  \textbf{一句话：} 最优传输不是运输问题的技巧，而是一种重新组织几何和分析的语言。}
+}
+
+\newcommand{\yudengslide}{%
+\personslide
+  {Yu Deng}
+  {邓煜：从粒子系统严格推出 Boltzmann 方程}
+  {images/Y._Deng.png}
+  {Photo: Wikipedia}
+  {2026（37岁）}
+  {1989--}
+  {中国}
+  {University of Chicago}
+  {Yu Deng 与合作者从服从牛顿定律的硬球粒子系统出发，在长时间尺度上严格推导出 Boltzmann 方程，被视为希尔伯特第六问题（用数学公理化物理学）的重大进展。他还推导波动动理方程并发展非线性 Schrödinger 动力学的概率方法。\\[3pt]
+  \textbf{一句话：} 从牛顿粒子到 Boltzmann 方程——一百多年前希尔伯特提出的第六问题，终于在 PDE 的语言中迈出决定性一步。}
+}
+
+\newcommand{\synthesisslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{第二集的主线}{PDE 是连接几何、物理和概率的共同语言}
+\begin{center}
+\begin{tikzpicture}[
+  block/.style={draw=coverprimary!42, fill=white, rounded corners=5pt, inner sep=6pt, text width=3.05cm, align=center, font=\fontsize{7.2}{8.7}\selectfont},
+  arrow/.style={-{Stealth}, draw=coveraccent, line width=0.9pt}
+]
+  \node[block, fill=bluepanel] (a) at (-4.95,1.25) {\textbf{Douglas}\\最小面积};
+  \node[block, fill=greenpanel] (b) at (-1.65,1.25) {\textbf{Lions / Tao}\\非线性分析};
+  \node[block, fill=amberpanel] (c) at (1.65,1.25) {\textbf{Villani / Figalli}\\最优传输};
+  \node[block, fill=purplepanel] (d) at (4.95,1.25) {\textbf{Yu Deng}\\动理学极限};
+  \foreach \x/\y in {a/b,b/c,c/d} {
+    \draw[arrow] (\x) -- (\y);
+  }
+  \node[draw=coverwarning!65, fill=factbg, rounded corners=5pt, inner sep=7pt, text width=11.1cm, align=left] at (0,-1.35) {
+    {\fontsize{8.0}{9.8}\selectfont\bfseries\color{coverwarning!62!black} 一句话总结}\\[-1pt]
+    {\fontsize{7.4}{9}\selectfont\color{coverdark!84} PDE 的力量不在于把所有方程写成公式答案，而在于理解结构：极小、平衡、稳定、传输和极限。它让数学家能从肥皂膜讲到气体分子，从几何讲到物理。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\nextslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{下一集}{微分几何与几何分析}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverprimary!45, fill=bluepanel, rounded corners=5pt, inner sep=8pt, text width=10.5cm, align=center] {
+    {\fontsize{11}{13.2}\selectfont\bfseries\color{coverprimary!82!black} 第3集：用方程理解弯曲空间}\\[5pt]
+    {\fontsize{8.0}{9.8}\selectfont\color{coverdark!84} Kunihiko Kodaira、Shing-Tung Yau、Grigori Perelman、Maryam Mirzakhani、Hong Wang}\\[5pt]
+    {\fontsize{7.4}{9}\selectfont\color{coverdark!70} 主题：Kähler 几何、Calabi 猜想、Ricci 流、模空间几何、几何测度论。}
+  };
+  \node[anchor=south, font=\scriptsize, text=coverdark!45] at (0,-2.85) {\faIcon{arrow-right}\enspace 从“方程解释自然”进入“方程解释空间”};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\begin{document}
+\titleslide
+\hookslide
+\roadmapslide
+\conceptslide
+\douglasslide
+\lionsslide
+\taoslide
+\villanislide
+\figallislide
+\yudengslide
+\synthesisslide
+\nextslide
+\end{document}

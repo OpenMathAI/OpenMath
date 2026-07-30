@@ -1,0 +1,348 @@
+% Wolf Prize in Mathematics - Episode 1 Chinese beamer deck
+% Source:
+%   Wolf_Prize/wolf_prize_episode_classification.md
+%   Wolf_Prize/wolf_prize_winners.md
+%   Wolf_Prize/pages/<year>/<winner>/index.html
+\documentclass[aspectratio=169,14pt]{beamer}
+
+% ---- Theme ----
+\usetheme{default}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{
+  \hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}
+}
+
+% ---- Fonts ----
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+
+% ---- Packages ----
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+% ---- Colors ----
+\definecolor{bgmain}{RGB}{238,243,252}
+\definecolor{panel}{RGB}{238,244,255}
+\definecolor{factbg}{RGB}{246,242,235}
+\definecolor{coverprimary}{HTML}{2563EB}
+\definecolor{coveraccent}{HTML}{00A884}
+\definecolor{coverwarning}{HTML}{F59E0B}
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{30,30,30}
+\definecolor{muteddark}{RGB}{72,86,115}
+\definecolor{bluepanel}{RGB}{226,237,255}
+\definecolor{greenpanel}{RGB}{225,246,237}
+\definecolor{amberpanel}{RGB}{255,244,222}
+\definecolor{purplepanel}{RGB}{239,231,255}
+\definecolor{redpanel}{RGB}{255,235,235}
+
+\setbeamercolor{background canvas}{bg=bgmain}
+% ---- Helpers ----
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.07] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.45, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!8] (current page.north west) rectangle (current page.south east);
+  \fill[coverprimary!14] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[coveraccent!12] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coverwarning!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.045, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \draw[coveraccent, opacity=0.38, line width=1.1pt] ([xshift=0.35cm,yshift=7.72cm]current page.south west) -- ++(3.25,0) -- ++(0.45,-0.45) -- ++(2.0,0);
+  \draw[coverprimary, opacity=0.24, line width=1.0pt] ([xshift=9.35cm,yshift=8.25cm]current page.south west) -- ++(2.3,0) -- ++(0.55,-0.55) -- ++(3.2,0);
+  \fill[coverdark, opacity=0.07] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{9}{11}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.12cm}
+}
+\newcommand{\personslide}[9]{%
+\begin{frame}
+\plainbar
+\vspace{-0.45cm}
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{coverdark} #1}\\[2pt]
+  {\fontsize{9.5}{11.5}\selectfont\color{muteddark} #2}
+\end{center}
+\vspace{0.15cm}
+\begin{columns}[c]
+\begin{column}{0.22\textwidth}
+  \centering
+  \begin{tikzpicture}
+    \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=3pt, inner sep=2.5pt, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.12}] {
+      \includegraphics[width=2.4cm,height=2.9cm,keepaspectratio]{#3}
+    };
+  \end{tikzpicture}
+  {\par\vspace{1pt}\fontsize{6.5}{7.5}\selectfont\color{covermuted} #4\par}
+\end{column}
+\begin{column}{0.28\textwidth}
+  \begin{tikzpicture}
+    \node[fill=greenpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=3.8cm, align=left] {
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 身份}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coveraccent!70!black} 机构}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #8}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.6cm, anchor=north west] at (0,0) {
+      {\fontsize{8.6}{10.2}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\\[3pt]
+      {\fontsize{7.4}{9.2}\selectfont\color{coverdark!84} #9}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+% ---- Slides ----
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{28}{34}\selectfont\bfseries, text=coverdark]
+    at ([yshift=2.05cm]current page.center) {沃尔夫数学奖人物谱系};
+  \node[anchor=center, font=\fontsize{15}{19}\selectfont, text=coverprimary!82!black]
+    at ([yshift=0.86cm]current page.center) {第1集（导论）\enspace·\enspace 沃尔夫数学奖的定位与百年数学地图};
+  \node[anchor=center, font=\fontsize{12.5}{16}\selectfont\bfseries, text=coveraccent!76!black]
+    at ([yshift=0.10cm]current page.center) {What the Wolf Prize Is · A Map of 20th-Century Mathematics};
+  \draw[coveraccent, line width=1.4pt] ([yshift=-1.02cm, xshift=-4.55cm]current page.center)
+    -- ([yshift=-1.02cm, xshift=4.55cm]current page.center);
+  \node[anchor=center] at ([yshift=-1.90cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=coverprimary!10, inner sep=5pt, minimum height=1.2em, font=\footnotesize\bfseries, text=coverprimary!85!black] at (-3.7,0) {终身成就};
+      \node[rounded corners=8pt, fill=coveraccent!11, inner sep=5pt, minimum height=1.2em, font=\footnotesize\bfseries, text=coveraccent!70!black] at (-0.9,0) {无年龄限制};
+      \node[rounded corners=8pt, fill=coverwarning!14, inner sep=5pt, minimum height=1.2em, font=\footnotesize\bfseries, text=coverwarning!65!black] at (2.35,0) {三大数学荣誉之一};
+    \end{tikzpicture}
+  };
+\end{tikzpicture}
+\end{frame}
+}
+
+\newcommand{\awardslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{沃尔夫数学奖}{Wolf Prize in Mathematics — 数学界的"终身成就奖"}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverprimary!45, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=5.4cm, align=left, anchor=north west] (a) at (-5.7,1.65) {
+    {\fontsize{8.5}{10}\selectfont\bfseries\color{coverprimary!80!black} 设立与颁发}\\[2pt]
+    {\fontsize{7.3}{9}\selectfont\color{coverdark!84} 1976 年 Ricardo Wolf 创立，Wolf Foundation（以色列）管理，1978 年首次颁发，通常每年一次。}
+  };
+  \node[draw=coveraccent!45, fill=greenpanel, rounded corners=5pt, inner sep=7pt, text width=5.4cm, align=left, anchor=north west] (b) at (0.3,1.65) {
+    {\fontsize{8.5}{10}\selectfont\bfseries\color{coveraccent!70!black} 没有年龄限制}\\[2pt]
+    {\fontsize{7.3}{9}\selectfont\color{coverdark!84} 与菲尔兹奖不同，沃尔夫奖侧重终身贡献，得主年龄通常较大，被视为对资深数学家的最高认可之一。}
+  };
+  \node[draw=coverwarning!60, fill=amberpanel, rounded corners=5pt, inner sep=7pt, text width=11.4cm, align=center, anchor=north] at (0,-1.35) {
+    {\fontsize{8.0}{9.8}\selectfont\bfseries\color{coverwarning!62!black} 三大数学荣誉}\\[-1pt]
+    {\fontsize{7.4}{9}\selectfont\color{coverdark!82} 常与菲尔兹奖、阿贝尔奖并列，被认为是国际数学界最重要的三项荣誉。菲尔兹奖看"40 岁前的突破"，沃尔夫奖看"一生的分量"。}
+  };
+  \node[anchor=north, font=\scriptsize, text=coverdark!45] at (0,-3.15) {\faIcon{medal}\enspace Wolf Prize \enspace|\enspace Episode 01 \enspace|\enspace 1978 起};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{如何看这套系列？}{导论集的入口：用一座奖，串起 20 世纪数学的主要领域}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={draw=coverprimary!45, fill=panel, rounded corners=5pt, inner xsep=10pt, inner ysep=7pt, text=coverdark, font=\fontsize{8.4}{10}\selectfont\bfseries, align=center},
+  edge/.style={-{Stealth}, draw=coveraccent, line width=0.95pt}
+]
+  \node[nodebox, fill=bluepanel] (a) at (-5.0,1.25) {一座奖\\沃尔夫数学奖};
+  \node[nodebox, fill=greenpanel] (b) at (-1.7,1.25) {68 位得主\\终身成就};
+  \node[nodebox, fill=amberpanel] (c) at (1.7,1.25) {11 个主题\\一条数学地图};
+  \node[nodebox, fill=purplepanel] (d) at (5.0,1.25) {每集一主题\\一页一人};
+  \foreach \x/\y in {a/b,b/c,c/d} {
+    \draw[edge] (\x) -- (\y);
+  }
+  \node[draw=coverwarning!60, fill=coverwarning!12, rounded corners=5pt, inner sep=7pt, text width=11.4cm, align=center] at (0,-0.92) {
+    {\fontsize{8.0}{9.6}\selectfont\bfseries\color{coverwarning!65!black} 本集的定位}\\[-1pt]
+    {\fontsize{7.2}{8.8}\selectfont\color{coverdark!80} 第 1 集是导论：先讲清楚沃尔夫奖是什么、为什么重要，再用它作为线索，勾勒后面 11 集覆盖的数学版图。人物的深入讲解，从第 2 集开始按主题展开。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+\newcommand{\roadmapslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{分集地图（上）}{第 1--6 集：从数学语言的重建，到分析、应用、概率与拓扑}
+\begin{center}
+\begin{tikzpicture}[
+  ep/.style={draw=coverprimary!40, rounded corners=4pt, inner xsep=7pt, inner ysep=6pt, text width=10.6cm, align=left, font=\fontsize{7.6}{9.4}\selectfont}
+]
+  \node[ep, fill=bluepanel] (a) at (0,2.55) {\textbf{\color{coverprimary!85!black}第1集 · 导论}\enspace 沃尔夫数学奖的定位与百年数学地图};
+  \node[ep, fill=greenpanel] (b) at (0,1.45) {\textbf{\color{coveraccent!70!black}第2集}\enspace Bourbaki、同调与代数几何基础 \;·\; Leray、Weil、Cartan、Serre…};
+  \node[ep, fill=amberpanel] (c) at (0,0.35) {\textbf{\color{coverwarning!62!black}第3集}\enspace 复分析、调和分析与 PDE \;·\; Ahlfors、Hörmander、Stein…};
+  \node[ep, fill=purplepanel] (d) at (0,-0.75) {\textbf{\color{coverprimary!74!black}第4集}\enspace 应用数学、自由边界与小波 \;·\; Lax、Caffarelli、Daubechies…};
+  \node[ep, fill=bluepanel] (e) at (0,-1.85) {\textbf{\color{coverprimary!85!black}第5集}\enspace 概率、随机过程与随机几何 \;·\; Kolmogorov、Itō、Le Gall…};
+  \node[ep, fill=greenpanel] (f) at (0,-2.95) {\textbf{\color{coveraccent!70!black}第6集}\enspace 拓扑革命 \;·\; Milnor、Bott、Smale、Donaldson…};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\roadmaptwoslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{分集地图（下）}{第 7--12 集：从几何、数论、代数几何，到群论、动力系统与逻辑}
+\begin{center}
+\begin{tikzpicture}[
+  ep/.style={draw=coverprimary!40, rounded corners=4pt, inner xsep=7pt, inner ysep=6pt, text width=10.6cm, align=left, font=\fontsize{7.6}{9.4}\selectfont}
+]
+  \node[ep, fill=amberpanel] (a) at (0,2.55) {\textbf{\color{coverwarning!62!black}第7集}\enspace 微分几何、几何分析与辛几何 \;·\; Chern、Gromov、Yau…};
+  \node[ep, fill=purplepanel] (b) at (0,1.45) {\textbf{\color{coverprimary!74!black}第8集}\enspace 数论、自守形式与 Langlands \;·\; Siegel、Langlands、Wiles…};
+  \node[ep, fill=bluepanel] (c) at (0,0.35) {\textbf{\color{coverprimary!85!black}第9集}\enspace 代数几何、Hodge 理论与表示论 \;·\; Kodaira、Deligne、Drinfeld…};
+  \node[ep, fill=greenpanel] (d) at (0,-0.75) {\textbf{\color{coveraccent!70!black}第10集}\enspace 群论、组合数学与计算 \;·\; Erdős、Thompson、Lovász…};
+  \node[ep, fill=amberpanel] (e) at (0,-1.85) {\textbf{\color{coverwarning!62!black}第11集}\enspace 动力系统与遍历理论 \;·\; Moser、Arnold、Sinai、Margulis…};
+  \node[ep, fill=purplepanel] (f) at (0,-2.95) {\textbf{\color{coverprimary!74!black}第12集}\enspace 泛函分析、算子理论与数理逻辑 \;·\; Gelfand、Krein、Shelah};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\conceptslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{本集的四个关键词}{观众需要记住的不是定理，而是沃尔夫奖看重的品质}
+\begin{columns}[T]
+\begin{column}{0.49\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!45, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.0cm, anchor=north west] at (0,0) {
+      {\fontsize{8.5}{10}\selectfont\bfseries\color{coverprimary!80!black} 1. 奠基}\\[2pt]
+      {\fontsize{7.3}{8.8}\selectfont\color{coverdark!82} 四人都不是解决一道题，而是搭起后人使用的框架：泛函分析、数论、层论、代数几何。}
+    };
+    \node[draw=coveraccent!45, fill=greenpanel, rounded corners=5pt, inner sep=7pt, text width=6.0cm, anchor=north west] at (0,-2.25) {
+      {\fontsize{8.5}{10}\selectfont\bfseries\color{coveraccent!70!black} 2. 广度}\\[2pt]
+      {\fontsize{7.3}{8.8}\selectfont\color{coverdark!82} Gelfand 的影响横跨分析、几何、生物；Weil 连接数论与几何。沃尔夫奖偏爱这种跨领域的分量。}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.49\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverwarning!55, fill=amberpanel, rounded corners=5pt, inner sep=7pt, text width=6.0cm, anchor=north west] at (0,0) {
+      {\fontsize{8.5}{10}\selectfont\bfseries\color{coverwarning!62!black} 3. 长度}\\[2pt]
+      {\fontsize{7.3}{8.8}\selectfont\color{coverdark!82} 无年龄限制意味着评价的是数十年积累。许多得主获奖时已年长，成就早已沉淀为标准工具。}
+    };
+    \node[draw=coverprimary!35, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=6.0cm, anchor=north west] at (0,-2.25) {
+      {\fontsize{8.5}{10}\selectfont\bfseries\color{coverprimary!74!black} 4. 传统}\\[2pt]
+      {\fontsize{7.3}{8.8}\selectfont\color{coverdark!82} 首届的选择本身就是宣言：沃尔夫奖表彰塑造 20 世纪数学主干的人，而非一时的明星。}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+\newcommand{\foundersslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{首届传统：1978--1979}{奖项如何用最初两届，定义"表彰哪种数学家"}
+\begin{center}
+\begin{tikzpicture}[
+  card/.style={rounded corners=5pt, inner xsep=7pt, inner ysep=6pt, text width=5.35cm, align=left, font=\fontsize{7.4}{9.2}\selectfont}
+]
+  \node[card, draw=coverprimary!45, fill=bluepanel] (a) at (-3.0,2.05) {\textbf{\color{coverprimary!85!black}Israel Gelfand}\;{\fontsize{6.4}{7.6}\selectfont\color{covermuted}1978}\\[2pt]泛函分析、表示论、积分几何的全景式人物。\;{\fontsize{6.6}{8}\selectfont\itshape\color{coverdark!60}（人物页见第 12 集）}};
+  \node[card, draw=coveraccent!45, fill=greenpanel] (b) at (3.0,2.05) {\textbf{\color{coveraccent!70!black}Carl L. Siegel}\;{\fontsize{6.4}{7.6}\selectfont\color{covermuted}1978}\\[2pt]古典数论、多复变与天体力学的巅峰。\;{\fontsize{6.6}{8}\selectfont\itshape\color{coverdark!60}（人物页见第 8 集）}};
+  \node[card, draw=coverwarning!55, fill=amberpanel] (c) at (-3.0,-0.15) {\textbf{\color{coverwarning!62!black}Jean Leray}\;{\fontsize{6.4}{7.6}\selectfont\color{covermuted}1979}\\[2pt]层、谱序列与拓扑度理论的发明者。\;{\fontsize{6.6}{8}\selectfont\itshape\color{coverdark!60}（人物页见第 2 集）}};
+  \node[card, draw=coverprimary!35, fill=purplepanel] (d) at (3.0,-0.15) {\textbf{\color{coverprimary!74!black}André Weil}\;{\fontsize{6.4}{7.6}\selectfont\color{covermuted}1979}\\[2pt]代数几何基础、Weil 猜想、Bourbaki 核心。\;{\fontsize{6.6}{8}\selectfont\itshape\color{coverdark!60}（人物页见第 2 集）}};
+  \node[draw=coverwarning!60, fill=coverwarning!12, rounded corners=5pt, inner sep=7pt, text width=11.4cm, align=center] at (0,-2.35) {
+    {\fontsize{8.0}{9.6}\selectfont\bfseries\color{coverwarning!65!black} 首届的宣言}\\[-1pt]
+    {\fontsize{7.2}{8.8}\selectfont\color{coverdark!80} 沃尔夫奖从第一天起就不追逐"最年轻的突破"，而是表彰用一生重塑整个领域的奠基者。他们各自的深入讲解，会在对应的主题集里展开。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\synthesisslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{导论的主线}{一座奖，一条贯穿 20 世纪数学的主干}
+\begin{center}
+\begin{tikzpicture}[>=Stealth,
+  block/.style={draw=coverprimary!42, fill=white, rounded corners=5pt, inner sep=6pt, text width=3.05cm, align=center, font=\fontsize{7.2}{8.7}\selectfont},
+  arrow/.style={->, draw=coveraccent, line width=0.9pt}
+]
+  \node[block, fill=bluepanel] (a) at (-4.95,1.25) {\textbf{语言}\\代数几何/分析};
+  \node[block, fill=greenpanel] (b) at (-1.65,1.25) {\textbf{结构}\\几何/拓扑/数论};
+  \node[block, fill=amberpanel] (c) at (1.65,1.25) {\textbf{随机与应用}\\概率/PDE/小波};
+  \node[block, fill=purplepanel] (d) at (4.95,1.25) {\textbf{群与逻辑}\\组合/动力/逻辑};
+  \foreach \x/\y in {a/b,b/c,c/d} {
+    \draw[arrow] (\x) -- (\y);
+  }
+  \node[draw=coverwarning!65, fill=factbg, rounded corners=5pt, inner sep=7pt, text width=11.1cm, align=left] at (0,-1.35) {
+    {\fontsize{8.0}{9.8}\selectfont\bfseries\color{coverwarning!62!black} 一句话总结}\\[-1pt]
+    {\fontsize{7.4}{9}\selectfont\color{coverdark!84} 沃尔夫奖表彰用一生重塑领域的数学家。把 68 位得主按主题排开，就得到一张 20 世纪数学的地图——这正是本系列后面 11 集要逐一走过的路线。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\nextslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{下一集}{Bourbaki、同调与代数几何基础}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverwarning!60, fill=coverwarning!12, rounded corners=5pt, inner sep=7pt, text width=10.5cm, align=center] (hook) at (0,2.0) {
+    {\fontsize{8.4}{10}\selectfont\bfseries\color{coverwarning!65!black} 开场问题}\\[-1pt]
+    {\fontsize{7.4}{9}\selectfont\color{coverdark!80} 一群化名 Bourbaki 的数学家，为什么要把整个数学从头重写一遍？范畴、同调、层，这些抽象语言从何而来？}
+  };
+  \node[draw=coverprimary!45, fill=bluepanel, rounded corners=5pt, inner sep=8pt, text width=10.5cm, align=center] at (0,-1.2) {
+    {\fontsize{11}{13.2}\selectfont\bfseries\color{coverprimary!82!black} 第2集：Bourbaki、同调与代数几何基础}\\[5pt]
+    {\fontsize{8.0}{9.8}\selectfont\color{coverdark!84} Jean Leray、André Weil、Henri Cartan、Oscar Zariski、Samuel Eilenberg、Jean-Pierre Serre、Michael Artin}\\[5pt]
+    {\fontsize{7.4}{9}\selectfont\color{coverdark!70} 主题：层与谱序列、同调代数、范畴论、交换代数、代数几何基础与现代数学语言的重建。}
+  };
+  \node[anchor=south, font=\scriptsize, text=coverdark!45] at (0,-3.2) {\faIcon{arrow-right}\enspace 从"奠基者的一生"进入"数学语言的重写"};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\begin{document}
+\titleslide
+\awardslide
+\hookslide
+\conceptslide
+\roadmapslide
+\roadmaptwoslide
+\foundersslide
+\synthesisslide
+\nextslide
+\end{document}
+
+
+
+
+
+
