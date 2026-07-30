@@ -1,11 +1,10 @@
-# OpenMathAI
+# OpenMath
 
 > 🏆 Open-source LaTeX Beamer slides & video materials for the world's most prestigious mathematics and computer science awards — and the laureates behind them.
 
 ## 项目简介
 
-**OpenMathAI** 是一个开源项目，致力于用精美的 LaTeX Beamer 幻灯片系统性地介绍世界顶级数学与计算机科学大奖及其得主。
-
+**OpenMath** 是一个开源项目，致力于用精美的 LaTeX Beamer 幻灯片系统性地介绍世界顶级数学与计算机科学大奖及其得主。
 我们的目标是：
 - 📖 为每一位获奖数学家制作详尽的 Beamer 演示文档
 - 🎬 生成可直接用于视频制作的 PDF 幻灯片
@@ -24,7 +23,7 @@
 ## 项目结构
 
 ```
-OpenMathAI/
+OpenMath/
 ├── Abel_Prize/              # 阿贝尔奖：得主资料、视频系列 Beamer
 ├── Fields_Medal/            # 菲尔兹奖：得主资料、视频系列 Beamer
 ├── Wolf_Prize/              # 沃尔夫奖：得主资料、视频系列 Beamer
@@ -64,8 +63,8 @@ brew install pandoc
 
 ```bash
 # 克隆仓库
-git clone https://github.com/OpenMathAI/OpenMathAI.git
-cd OpenMathAI
+git clone https://github.com/OpenMathAI/OpenMath.git
+cd OpenMath
 
 # 编译某个 Beamer 幻灯片（以阿贝尔奖序章为例）
 cd Abel_Prize/video/episode-00-what-is-abel-prize
