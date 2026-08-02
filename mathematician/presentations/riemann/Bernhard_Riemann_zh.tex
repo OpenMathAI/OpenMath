@@ -1,0 +1,630 @@
+% =============================================================
+%  黎曼：猜想永恒 (Bernhard Riemann)
+%  Beamer 演示 —— 参照 Grothendieck 版式
+%  资料来源：mathematician/pages/Bernhard_Riemann + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：黎曼 —— 墨绿主色 + 银灰 + 深藏青（数论）=====
+\definecolor{bgmain}{RGB}{244,246,244}
+\definecolor{coverprimary}{HTML}{1B4332}   % 墨绿 — 主色
+\definecolor{coveraccent}{HTML}{8B9DAF}    % 银灰 — 强调
+\definecolor{coveramber}{HTML}{C47E3A}     % 暖铜
+\definecolor{coverpurple}{HTML}{5A3E85}    % 紫罗兰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{26,52,42}
+\definecolor{muteddark}{RGB}{80,92,80}
+\definecolor{bluepanel}{RGB}{226,234,240}    % 浅灰蓝面板
+\definecolor{greenpanel}{RGB}{220,238,225}   % 浅绿面板
+\definecolor{amberpanel}{RGB}{255,244,228}   % 浅琥珀面板
+\definecolor{purplepanel}{RGB}{238,230,252}  % 浅紫面板
+\definecolor{goldpanel}{RGB}{248,245,240}    % 暖金面板
+\definecolor{graypanel}{RGB}{242,244,248}
+% 主题四色
+\definecolor{badgenumber}{HTML}{1A3A5C}   % 数论 → 深藏青
+\definecolor{badgegeo}{HTML}{1B4332}      % 几何 → 墨绿
+\definecolor{badgeanaly}{HTML}{C47E3A}    % 分析 → 暖铜
+\definecolor{badgecomplex}{HTML}{5A3E85}  % 复分析 → 紫罗兰
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgecomplex!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgegeo!10] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coveraccent!16] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgenumber!8] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\newcommand{\openmathslide}{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.30, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+  \node[anchor=center, font=\fontsize{24}{30}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=3.9cm]current page.center) {OpenMath已开放源码};
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont, text=coverprimary!60!black]
+    at ([yshift=3.05cm]current page.center) {为 10,000+ 位数学家立传};
+  \draw[coveraccent!45, line width=1.0pt] ([yshift=2.45cm, xshift=-5.0cm]current page.center)
+    -- ([yshift=2.45cm, xshift=5.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{8.2}{11.5}\selectfont, text=coverdark!72, align=center, text width=13cm]
+    at ([yshift=1.55cm]current page.center)
+    {从欧拉、黎曼、希尔伯特，到格罗滕迪克、陶哲轩，\\[2pt]
+     OpenMath 正在为 10,000+ 位数学家建立开放、持续演进的数学人物档案。};
+  \node[anchor=center, font=\fontsize{8}{11}\selectfont\bfseries, text=coverprimary!82!black, align=center]
+    at ([yshift=0.45cm]current page.center)
+    {这不只是人物名单，而是一部由社区共同构建的现代数学人物史：};
+  \node[anchor=north west, font=\fontsize{7}{9.2}\selectfont, text=coverdark!78, align=left]
+    at ([xshift=-6.3cm, yshift=-0.05cm]current page.center)
+    {📚 \textbf{10,000+ 数学家} —— 持续收录、整理与补充\\[4pt]
+     🧭 \textbf{人物生平} —— 教育经历、学术生涯、重要节点\\[4pt]
+     🧮 \textbf{数学贡献} —— 定理、理论、方法与历史影响};
+  \node[anchor=north west, font=\fontsize{7}{9.2}\selectfont, text=coverdark!78, align=left]
+    at ([xshift=0.3cm, yshift=-0.05cm]current page.center)
+    {🏆 \textbf{荣誉与传承} —— Fields Medal、Abel Prize、Wolf Prize 等\\[4pt]
+     🌍 \textbf{数学谱系} —— 学派、师承、合作与思想传承\\[4pt]
+     🔬 \textbf{开放共建} —— 欢迎任何人补充、纠错、完善};
+  \node[draw=coveraccent!50, fill=goldpanel, rounded corners=5pt, inner sep=9pt, text width=12.0cm, align=center]
+    at ([yshift=-2.35cm]current page.center)
+    {{\fontsize{8.6}{11}\selectfont\bfseries\color{coverdark!88} 数学史，不应该只存在于少数人的书架上。}\\[2pt]
+     {\fontsize{7.5}{9.5}\selectfont\color{covermuted} 让每一位数学家的故事都可以被发现、被理解、被连接。}};
+  \node[anchor=south, font=\fontsize{7.8}{9.8}\selectfont\bfseries, text=coveraccent!80!black]
+    at ([yshift=0.64cm]current page.south) {\faIcon{star}\enspace Star OpenMath · 加入共建\enspace|\enspace https://github.com/OpenMathAI/OpenMath};
+  \node[anchor=south, font=\fontsize{6.2}{7.8}\selectfont, text=covermuted]
+    at ([yshift=0.38cm]current page.south) {欢迎 Star、Issue、PR，共同建设一部开放的数学人物史。};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{24}{30}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=3.2cm]current page.center) {黎曼：猜想永恒};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.9cm]current page.center) {Bernhard Riemann\enspace·\enspace 1826 — 1866};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=1.3cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=1.3cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.35cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgenumber, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {ζ 函数\\数论};
+      \node[rounded corners=8pt, fill=badgegeo, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {黎曼几何\\微分几何};
+      \node[rounded corners=8pt, fill=badgeanaly, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {黎曼积分\\实分析};
+      \node[rounded corners=8pt, fill=badgecomplex, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {黎曼面\\复分析};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{12}\selectfont, text=coverdark!75]
+    at ([yshift=-2.1cm]current page.center)
+    {"他改变了我们对空间和数的理解。"};
+  \node[anchor=south, font=\fontsize{6.8}{8.4}\selectfont, text=covermuted]
+    at ([yshift=0.25cm]current page.south) {\faIcon{infinity}\enspace OpenMathAI\enspace|\enspace 数学家人物志};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 为什么黎曼如此重要 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{仅 39 岁的传奇}{一生只有 10 篇论文，却开创了现代数学的四个主流方向}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=13pt, inner ysep=9pt, font=\fontsize{8.5}{10.4}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=badgenumber, text=white, text width=3.2cm] (a) at (-5.4,1.2) {数论\\[2pt]ζ 函数\\黎曼猜想};
+  \node[nodebox, fill=badgegeo, text=white, text width=3.2cm] (b) at (-1.8,1.2) {微分几何\\[2pt]黎曼度量\\弯曲空间};
+  \node[nodebox, fill=badgeanaly, text=white, text width=3.2cm] (c) at (1.8,1.2) {实分析\\[2pt]黎曼积分\\可积性理论};
+  \node[nodebox, fill=badgecomplex, text=white, text width=3.2cm] (d) at (5.4,1.2) {复分析\\[2pt]黎曼面\\映射定理};
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=13.5cm, align=center] at (0,-1.1) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 10 篇论文，4 个领域，每一篇都改变了数学。}\\[2pt]
+    {\fontsize{7.5}{9.5}\selectfont\color{covermuted} 高斯出席了他的就职演讲；爱因斯坦把广义相对论建立在黎曼几何之上；160 年后，黎曼猜想仍是数学之巅。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 童年与求学 ---
+\newcommand{\childhoodslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{童年与求学 (1826–1846)}{从 Breselenz 到 Göttingen —— 一个牧师的儿子，在孤独中走向数学}
+\vspace{-0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, text width=13.0cm, font=\fontsize{7.4}{9.4}\selectfont, align=left}
+]
+  \node[item, fill=purplepanel, draw=badgecomplex!30] (a) at (0,3.6)
+    {\textbf{1826 · Breselenz 出生。}父亲是路德宗牧师，家境清贫；母亲早逝后由父亲独自抚养六个孩子。黎曼自幼羞涩、内向，但在数学上展现出惊人的直觉。};
+  \node[item, fill=greenpanel, draw=badgegeo!30] (b) at (0,1.95)
+    {\textbf{1840–1846 · 吕讷堡 (Lüneburg) 中学。}校长 Schmalfuss 发现了他的才能，借给他 Legendre 的《数论》—— 这部 859 页的专著，黎曼六天读完并完全掌握。};
+  \node[item, fill=amberpanel, draw=badgeanaly!30] (c) at (0,0.55)
+    {\textbf{1846 · 入读 Göttingen 大学。}初修神学，但很快转入数学与物理；旁听 Gauss 的课程，同时师从 Moritz Stern — Göttingen 第一位犹太裔正教授。};
+  \node[draw=coveraccent!60, fill=goldpanel, rounded corners=5pt, inner sep=6pt, text width=13.0cm, align=center] at (0,-1.2) {
+    {\fontsize{7.8}{10}\selectfont\itshape\color{coverdark!85} "他以令人难以置信的速度吸收了最困难的数学思想 —— 仿佛这些东西本就属于他。" —— 中学校长 Schmalfuss}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. Göttingen → 柏林 → 博士 ---
+\newcommand{\risingslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Göttingen → 柏林 → 博士 (1847–1851)}{从 Gauss 到 Dirichlet —— 站在巨人的肩膀上}
+\begin{center}
+\begin{tikzpicture}[
+  yr/.style={circle, fill=coveraccent, text=white, font=\fontsize{7}{8}\selectfont\bfseries, inner sep=2.4pt},
+  box/.style={rounded corners=4pt, inner xsep=7pt, inner ysep=6pt, text width=3.1cm, font=\fontsize{7.2}{9}\selectfont, align=left}
+]
+  \draw[coverprimary!30, line width=1.3pt] (-6.6,2.6) -- (6.6,2.6);
+  \foreach \x in {-5.4,-1.8,1.8,5.4} { \node[yr] at (\x,2.6) {}; }
+  \node[yr] at (-5.4,2.6) {47}; \node[yr] at (-1.8,2.6) {49};
+  \node[yr] at (1.8,2.6) {50}; \node[yr] at (5.4,2.6) {51};
+
+  \node[box, fill=purplepanel, draw=badgecomplex!30] at (-5.4,0.85)
+    {\textbf{柏林大学}\\转学至柏林，师从 Dirichlet、Jacobi、Steiner、Eisenstein —— 当时欧洲最强的数学家群体。};
+  \node[box, fill=greenpanel, draw=badgegeo!30] at (-1.8,0.85)
+    {\textbf{1849 · 返回 Göttingen}\\回归 Göttingen，在 Wilhelm Weber 的物理实验室工作，接受 Gauss 的指导。};
+  \node[box, fill=bluepanel, draw=badgenumber!30] at (1.8,0.85)
+    {\textbf{复变函数论}\\复分析方向的酝酿：为后来的黎曼面与映射定理奠定基础。};
+  \node[box, fill=amberpanel, draw=badgeanaly!30] at (5.4,0.85)
+    {\textbf{1851 · 博士论文}\\《单复变函数一般理论基础》— Gauss 给出罕见的极高评价："这是一项真正具有原创性的工作。"};
+
+  \node[draw=coveraccent!60, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=13.0cm, align=center] at (0,-1.15) {
+    {\fontsize{8}{10}\selectfont\itshape\color{coverdark!85} "他的博士论文远远超出了一篇普通论文的水准 —— 它建立了一个全新的领域。"}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 黎曼积分 ---
+\newcommand{\integralslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{黎曼积分 (1854)}{重新定义"面积"的含义 —— 从直观到严格}
+\begin{center}
+\begin{tikzpicture}[
+  obj/.style={rounded corners=5pt, inner sep=9pt, text width=5.0cm, font=\fontsize{8}{10}\selectfont, align=center}
+]
+  \node[obj, fill=graypanel, draw=covermuted!45] (left) at (-3.8,1.4)
+    {\textbf{柯西之前}\\"曲线下方的面积"\\直觉定义，缺乏\\一致的严格性。};
+  \node[obj, fill=amberpanel, draw=badgeanaly!45] (right) at (3.8,1.4)
+    {\textbf{黎曼积分}\\对区间作划分 (partition)，\\取上和与下和求极限；\\$\int_a^b f(x)\,dx$};
+  \draw[-{Stealth[length=3mm]}, badgeanaly, line width=1.5pt] (left) -- (right);
+  \node[text width=13.0cm, align=center, font=\fontsize{7.6}{9.4}\selectfont] at (0,-0.7) {
+    \textbf{黎曼和 (Riemann sum)}\quad ·\quad \textbf{可积性条件}\quad ·\quad \textbf{达布上下和}\\[1pt]
+    黎曼为"可积性"提供了第一个精确的数学定义：函数 $f$ 可积当且仅当\\[1pt]
+    $\displaystyle \lim_{\|P\|\to 0} \sum_{i=1}^n f(t_i)(x_i - x_{i-1})$ 存在且与划分和取样无关。
+  };
+  \node[draw=badgeanaly!55, fill=amberpanel, rounded corners=5pt, inner sep=6pt, text width=13.0cm, align=center] at (0,-2.25) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 黎曼积分不是"又多了一种积分"，而是第一次给出了积分的严格定义。}\\[1pt]
+    {\fontsize{7.2}{9}\selectfont\color{covermuted} 后来的勒贝格积分、Stieltjes 积分，都从此出发。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 黎曼面 ---
+\newcommand{\surfaceslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{黎曼面 (Riemann Surface)}{多值函数的几何化 —— 用拓扑眼光看复分析}
+\begin{center}
+\begin{tikzpicture}[
+  obj/.style={rounded corners=5pt, inner sep=9pt, text width=5.0cm, font=\fontsize{8}{10}\selectfont, align=center}
+]
+  \node[obj, fill=graypanel, draw=covermuted!45] (left) at (-3.8,1.4)
+    {\textbf{经典复分析}\\$\sqrt{z}$ 或 $\log z$\\在复平面上是"多值"的；\\分支切割 (branch cut)\\是一种 ad-hoc 修补。};
+  \node[obj, fill=purplepanel, draw=badgecomplex!45] (right) at (3.8,1.4)
+    {\textbf{黎曼面}\\将多值函数的各个\\"分支"粘贴成一张\\多层曲面 ——\\一个自然的几何对象。};
+  \draw[-{Stealth[length=3mm]}, badgecomplex, line width=1.5pt] (left) -- (right);
+  \node[text width=13.0cm, align=center, font=\fontsize{7.8}{9.8}\selectfont] at (0,-0.9) {
+    \textbf{一个统一的概念：} 黎曼面是 1 维复流形。
+    它不仅解决了多值性问题，更开启了\\[1pt]
+    代数曲线理论的新篇章 —— $\mathbb{C}$ 上的代数曲线 = 紧黎曼面。
+  };
+  \node[draw=badgecomplex!55, fill=purplepanel, rounded corners=5pt, inner sep=6pt, text width=13.0cm, align=center] at (0,-2.3) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 黎曼面是"拓扑学进入函数论"的第一个入口。}\\[1pt]
+    {\fontsize{7.2}{9}\selectfont\color{covermuted} 今天，黎曼面是复几何、弦论、动力系统的通用语言。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 黎曼映射定理 ---
+\newcommand{\maptheoremslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{黎曼映射定理 (1851)}{任意单连通区域都共形等价于单位圆盘}
+\begin{center}
+\begin{tikzpicture}[
+  obj/.style={rounded corners=5pt, inner sep=9pt, text width=4.5cm, font=\fontsize{7.8}{10}\selectfont, align=center}
+]
+  \node[obj, fill=graypanel, draw=covermuted!45] (left) at (-4.2,1.1)
+    {\textbf{任意单连通区域 $\Omega$}\\[1pt]任意的边界、任意的形状\\只需不是整个复平面};
+  \node[obj, fill=purplepanel, draw=badgecomplex!45] (right) at (4.2,1.1)
+    {\textbf{存在共形映射 $f$}\\[1pt]$\displaystyle f: \Omega \to \mathbb{D}$\\保角、保定向、一一对应};
+  \draw[-{Stealth[length=3mm]}, badgecomplex, line width=1.5pt] (left) -- (right);
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=13.0cm, align=center] at (0,-1.3) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 看似完全不同的区域，其实都是同一个东西的变形。}\\[2pt]
+    {\fontsize{7.5}{9.5}\selectfont\color{covermuted} 这一定理深刻地揭示了复平面的"刚性"与"柔性"的统一。\\[1pt]
+    黎曼用 Dirichlet 原理给出的证明虽不完全严格（后由 Hilbert 修正），\\但定理本身正确且影响深远。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 就职演讲 ---
+\newcommand{\habilitationslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{就职演讲 (1854)}{"Über die Hypothesen, welche der Geometrie zu Grunde liegen"}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=9pt, inner ysep=4pt, text width=13.0cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgegeo!35] (a) at (0,3.1)
+    {\textbf{1854 年 6 月 10 日，Göttingen。}黎曼向哲学系提交了三道就职演讲题目。Gauss 打破惯例，选择了第三道 —— "Über die Hypothesen, welche der Geometrie zu Grunde liegen"（论作为几何基础的假设）。};
+  \node[item, fill=amberpanel, draw=badgeanaly!35] (b) at (0,1.25)
+    {\textbf{核心思想。}空间不必是平坦的。可以在任意维度的流形上，通过一个"度量"(metric) 来定义距离、角度、曲率 —— 这是第一次有人系统地提出 n 维弯曲空间的理论。};
+  \node[item, fill=purplepanel, draw=badgecomplex!30] (c) at (0,-0.25)
+    {\textbf{Gauss 的反应。}年迈的高斯罕见地激动不已。据目击者记载，他离开讲座时"以从未有过的热情盛赞黎曼思想的深度"。};
+  \node[draw=coveraccent!60, fill=goldpanel, rounded corners=5pt, inner sep=6pt, text width=13.0cm, align=center] at (0,-1.65) {
+    {\fontsize{7.8}{9.8}\selectfont\bfseries\color{coverdark!88} 这篇演讲直到 1868 年才正式发表 —— 但 60 年后，爱因斯坦正是在这个框架上建立了广义相对论。}\\[2pt]
+    {\fontsize{7.2}{8.8}\selectfont\color{covermuted} 弯曲时空 = 引力。这不是诗，这是黎曼几何。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 黎曼几何 ---
+\newcommand{\geoslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{黎曼几何}{从平坦空间到任意弯曲的宇宙 —— 广义相对论的数学摇篮}
+\begin{center}
+\begin{tikzpicture}[
+  obj/.style={rounded corners=5pt, inner sep=9pt, text width=4.8cm, font=\fontsize{7.8}{10}\selectfont, align=center}
+]
+  \node[obj, fill=graypanel, draw=covermuted!45] (left) at (-3.8,1.8)
+    {\textbf{欧氏几何}\\平直空间，平行公设，\\$\sum$ 三角形内角和 = $\pi$。};
+  \node[obj, fill=greenpanel, draw=badgegeo!45] (mid) at (3.8,1.8)
+    {\textbf{黎曼几何}\\任意弯曲的流形 $M$，\\由黎曼度量 $g_{ij}$ 定义；\\曲率局部可变，平行线可相交。};
+  \draw[-{Stealth[length=3mm]}, badgegeo, line width=1.5pt] (left) -- (mid);
+  \node[obj, fill=bluepanel, draw=badgenumber!35, text width=12.0cm] at (0,-0.36) {
+    {\fontsize{7.6}{9.4}\selectfont\bfseries\color{coverdark!88} 黎曼度量 $\displaystyle ds^2 = \sum_{i,j=1}^{n} g_{ij}(x)\,dx^i dx^j$}\\[2pt]
+    {\fontsize{7.2}{9}\selectfont\color{covermuted} 度量张量 $g_{ij}$ 定义了流形上的长度、角度、曲率。\\不依赖外围空间的嵌入 —— 这是"内蕴几何"的革命性飞跃。}
+  };
+  \node[draw=badgegeo!60, fill=greenpanel, rounded corners=5pt, inner sep=6pt, text width=12.0cm, align=center] at (0,-2.25) {
+    {\fontsize{8}{10}\selectfont\bfseries\color{coverdark!88} 1915 年，爱因斯坦将引力解释为时空的弯曲 —— 用的正是黎曼几何。}\\[1pt]
+    {\fontsize{7.2}{9}\selectfont\color{covermuted} 今天，黎曼几何是微分几何、微分拓扑、几何分析的标准语言。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 黎曼 ζ 函数 ---
+\newcommand{\zetaslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{黎曼 $\zeta$ 函数 (1859)}{"Über die Anzahl der Primzahlen unter einer gegebenen Grösse"}
+\begin{center}
+\begin{tikzpicture}[
+  obj/.style={rounded corners=5pt, inner sep=9pt, text width=6.2cm, font=\fontsize{7.6}{9.6}\selectfont, align=left}
+]
+  \node[obj, fill=bluepanel, draw=badgenumber!40] (left) at (-3.4,1.6)
+    {\textbf{$\zeta$ 函数定义}\\[2pt]
+     $\displaystyle \zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}$\quad (Re$(s) > 1$)\\[4pt]
+     \textbf{解析延拓}到整个复平面\\（除 $s = 1$ 处的简单极点）\\[2pt]
+     \textbf{函数方程：}
+     $\zeta(s) = 2^s \pi^{s-1} \sin\left(\frac{\pi s}{2}\right) \Gamma(1-s)\,\zeta(1-s)$};
+  \node[obj, fill=amberpanel, draw=badgeanaly!40] (right) at (3.67,1.6)
+    {\textbf{欧拉乘积公式}\\[2pt]
+     $\displaystyle \zeta(s) = \prod_{p\ \text{prime}} \frac{1}{1 - p^{-s}}$\\[4pt]
+     这个公式将复分析（$\zeta$ 函数）\\与数论（素数）联结在一起。\\[2pt]
+     素数分布 = $\zeta(s)$ 的零点分布！};
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=13.0cm, align=center] at (0,-1.4) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 这是仅有 9 页的论文 —— 但每一页都改变了数论。}\\[2pt]
+    {\fontsize{7.5}{9.5}\selectfont\color{covermuted} 黎曼把素数分布问题转化为复分析问题。这是 19 世纪数学最伟大的洞察之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 黎曼猜想 ---
+\newcommand{\hypothesisslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{黎曼猜想 (Riemann Hypothesis)}{数学史上最著名的问题 —— 悬而未决 160+ 年}
+\begin{center}
+\begin{tikzpicture}[
+  obj/.style={rounded corners=5pt, inner sep=5pt, text width=13.0cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[obj, fill=bluepanel] (a) at (0,2.55) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{badgenumber!85!black} $\zeta(s)$ 的所有非平凡零点的实部都等于 $\displaystyle \frac{1}{2}$。}\\[2pt]
+    {\fontsize{6.5}{8.2}\selectfont\color{coverdark!80} 即：若 $\zeta(\rho) = 0$ 且 $0 \leq \operatorname{Re}(\rho) \leq 1$（非平凡零点），则 $\operatorname{Re}(\rho) = \frac{1}{2}$.}
+  };
+  \node[obj, fill=amberpanel] (b) at (0,1.25)
+    {\textbf{如果黎曼猜想为真}，素数分布的误差项将得到最优的估计。\\[1pt]
+     这意味着我们对素数 —— 数学中最基本对象的分布 —— 将达到最深刻的理解。};
+  \node[obj, fill=purplepanel] (c) at (0,-0.05) {
+    {\textbf{当前状态：}已通过计算机验证前 $10^{13}$ 个零点全部满足猜想。\\[1pt]
+     \textbf{悬赏：}Clay 数学研究所七大千禧年问题之一，奖金 $1,000,000$ 美元。\\[1pt]
+     \textbf{意义：}超越数论 —— Hilbert--Pólya 猜想将它与随机矩阵理论、量子混沌联系起来。}
+  };
+  \node[fill=bluepanel, rounded corners=5pt, inner sep=5pt, text width=13.0cm, align=center] at (0,-1.75) {
+    {\fontsize{7.2}{9.2}\selectfont\bfseries\color{coverdark!88} 黎曼本人在论文中写道："当然，我希望给出严格的证明，\\但在几次徒劳的尝试后，我暂时搁置了这一目标……"}\\[2pt]
+    {\fontsize{6.5}{8.0}\selectfont\color{covermuted} 这句轻描淡写的旁注，成为数学史上最著名的悬念。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 黎曼-罗赫定理 ---
+\newcommand{\rochslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{黎曼-罗赫定理 (1857/1865)}{代数曲线理论的第一基石}
+\begin{center}
+\begin{tikzpicture}[
+  obj/.style={rounded corners=5pt, inner sep=9pt, text width=12.0cm, font=\fontsize{7.6}{9.6}\selectfont, align=center}
+]
+  \node[obj, fill=greenpanel, draw=badgegeo!40] (a) at (0,2.3) {
+    {\fontsize{9}{11}\selectfont\bfseries\color{coverdark!88} $\displaystyle \ell(D) - \ell(K-D) = \deg(D) + 1 - g$}\\[4pt]
+    $D$：除子 (divisor)\quad $K$：典范除子 (canonical divisor)\quad $g$：曲线的亏格 (genus)\\[2pt]
+    黎曼证明了不等式 $\ell(D) \geq \deg(D) + 1 - g$；\\
+    他的学生 Gustav Roch 在 1865 年补全了等式。
+  };
+  \node[obj, fill=amberpanel, draw=badgeanaly!35] (b) at (0,0.2) {
+    {\textbf{为什么它如此重要？}}\\[2pt]
+    它把三条线索编织在一起：几何（曲线上的点）→ 分析（亚纯函数的存在性）→ 拓扑（亏格 $g$）。\\[2pt]
+    这是第一个将拓扑不变量（亏格）与分析结论（函数空间的维数）联系起来的定理。
+  };
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=12.0cm, align=center] at (0,-1.85) {
+    {\fontsize{8.2}{10.2}\selectfont\itshape\color{coverdark!85} Grothendieck 在 1957 年将黎曼-罗赫定理推广到任意维 —— 这就是 GRR 定理。}\\[1pt]
+    {\fontsize{7.5}{9.5}\selectfont\color{covermuted} 从黎曼 (1857) 到 Grothendieck (1957)，整整 100 年的发展。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 阿贝尔函数理论 ---
+\newcommand{\abelianslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{阿贝尔函数理论}{复数域上的周期函数统一 —— 黎曼的"高等复分析"}
+\begin{center}
+\begin{tikzpicture}[
+  obj/.style={rounded corners=5pt, inner sep=7pt, text width=12.0cm, font=\fontsize{7.2}{9.2}\selectfont, align=left}
+]
+  \node[obj, fill=purplepanel, draw=badgecomplex!40] (a) at (0,2.3) {
+    {\textbf{背景。}19 世纪中叶，椭圆函数、超椭圆函数、Theta 函数等各自独立发展。\\黎曼的目标：用黎曼面与代数曲线的语言，给出一个统一的阿贝尔函数理论。}\\[2pt]
+    \textbf{核心贡献：}
+    \begin{itemize}
+      \item 在紧黎曼面上定义了阿贝尔积分 (Abelian integrals) 与阿贝尔函数
+      \item 通过周期矩阵 (period matrix) 描述函数的结构
+      \item 提出 Riemann theta function $\displaystyle \theta(z, \Omega) = \sum_{n \in \mathbb{Z}^g} e^{\pi i n^T \Omega n + 2\pi i n^T z}$
+    \end{itemize}
+  };
+  \node[obj, fill=amberpanel, draw=badgeanaly!35] (b) at (0,0.04) {
+    {\textbf{影响。}这不仅是复分析的重大进展，更是黎曼面理论的巅峰应用。\\[1pt]
+     后来的 Jacobi 簇 (Jacobian variety)、Abel 簇 (Abelian variety) 理论\\直接起源于黎曼的这一工作。代数几何中的 Torelli 定理也与此脉相承。}
+  };
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=5pt, text width=12.0cm, align=center] at (0,-1.36) {
+    {\fontsize{7.6}{9.6}\selectfont\bfseries\color{coverdark!88} 黎曼的新方法本质上就是今天的"复几何 + 代数几何"的早期雏形。}\\[1pt]
+    {\fontsize{6.8}{8.4}\selectfont\color{covermuted} 他的工具后来被 Abel、Jacobi、Frobenius、Weil 等人发展为庞大的数学分支。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. Göttingen 教授 ---
+\newcommand{\professorslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Göttingen 教授 (1857–1866)}{继承 Dirichlet 的教席 —— 不到十年，改变世界}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=9pt, inner ysep=4pt, text width=13.0cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgegeo!35] (a) at (0,3.20)
+    {\textbf{1857 · 副教授。}黎曼被任命为 Göttingen 大学 außerordentlicher Professor（副教授），薪水微薄，但终于获得了稳定的学术位置。};
+  \node[item, fill=bluepanel, draw=badgenumber!35] (b) at (0,1.69)
+    {\textbf{1859 · 接替 Dirichlet。}Dirichlet 去世后，黎曼继任正教授。同年发表了他唯一的一篇数论论文 —— 《论小于给定值的素数个数》—— 提出了黎曼猜想。};
+  \node[item, fill=amberpanel, draw=badgeanaly!35] (c) at (0,0.18)
+    {\textbf{1862 · 婚姻与疾病。}与 Elise Koch 结婚；同年患上肺结核 —— 这在 19 世纪几乎是不治之症。};
+  \node[item, fill=purplepanel, draw=badgecomplex!30] (d) at (0,-0.67)
+    {\textbf{1866 · 皇家学会外籍会员。}在生命的最后一年，被选为英国皇家学会外籍会员 —— 这是他生前获得的最高荣誉。};
+  \node[draw=coveraccent!60, fill=goldpanel, rounded corners=5pt, inner sep=5pt, text width=13cm, align=center] at (0,-1.70) {
+    {\fontsize{7.4}{9.4}\selectfont\itshape\color{coverdark!85} "如果黎曼活得更久，19 世纪末的数学将会完全不同。" —— 这是数学史家的普遍看法。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 病痛与早逝 ---
+\newcommand{\deathslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{病痛与早逝 (1862–1866)}{三次赴意大利疗养，40 岁 —— 昙花一现的天才}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=13.0cm, font=\fontsize{7.4}{9.4}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgeanaly!35] (a) at (0,3.5)
+    {\textbf{1862 年秋天。}黎曼染上胸膜炎，随后确诊为肺结核。那个年代，医生唯一的处方是：去温暖的地方。他开始了旷日持久的意大利疗养之旅。};
+  \node[item, fill=purplepanel, draw=badgecomplex!30] (b) at (0,2.0)
+    {\textbf{1862–1865 · 三赴意大利。}先后到访西西里、比萨、热那亚等地。在病床上他仍在思考和写作，但健康状况持续恶化。1865 年返回 Göttingen，仍未康复。};
+  \node[item, fill=greenpanel, draw=badgegeo!35] (c) at (0,0.65)
+    {\textbf{1866 · Selasca。}6 月再次前往意大利，抵达马焦雷湖畔的小镇 Selasca。7 月 20 日，黎曼在此去世，年仅 39 岁。埋葬于 Biganzolo 的教堂墓地。};
+  \node[draw=coveraccent!60, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=13.0cm, align=center] at (0,-1.03) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 39 岁。10 篇论文。改变了数学的四个方向。}\\[2pt]
+    {\fontsize{7.5}{9.5}\selectfont\color{covermuted} 数学史上有许多天才，但像黎曼这样短暂一生的丰碑，绝无仅有。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 16. 永恒的猜想 ---
+\newcommand{\hiddenslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{永恒的猜想}{160 年后 —— 黎曼猜想依然等待证明}
+\begin{center}
+\begin{tikzpicture}[
+  obj/.style={rounded corners=5pt, inner sep=9pt, text width=6.0cm, font=\fontsize{7.6}{9.6}\selectfont, align=left}
+]
+  \node[obj, fill=bluepanel, draw=badgenumber!45] (left) at (-3.2,1.3) {
+    {\textbf{已取得的进展}}\\[2pt]
+    $\bullet$ Hardy (1914): 临界线上有无穷多零点\\[2pt]
+    $\bullet$ Selberg (1942): 至少 1\% 的零点在临界线上\\[2pt]
+    $\bullet$ Conrey (1989): 至少 40\% 的零点在临界线上\\[2pt]
+    $\bullet$ 计算机验证: 前 $10^{13}$ 个零点全部满足猜想\\[2pt]
+    $\bullet$ Weil 猜想 (Grothendieck/Deligne):\\函数域上的 RH 已证明 (1974)
+  };
+  \node[obj, fill=amberpanel, draw=badgeanaly!45] (right) at (3.47,1.3) {
+    {\textbf{悬而未决的核心}}\\[2pt]
+    $\bullet$ 目前没有任何人能证明\\所有非平凡零点的实部都等于 1/2\\[2pt]
+    $\bullet$ 与随机矩阵理论、量子混沌、\\Hilbert--Pólya 猜想的联系日益深化\\[2pt]
+    $\bullet$ Atiyah (2018) 声称的证明\\未被数学界广泛接受
+  };
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=13.0cm, align=center] at (0,-1.45) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 黎曼的 9 页论文，变成了人类智力最宏大的探险之一。}\\[2pt]
+    {\fontsize{7.5}{9.5}\selectfont\color{covermuted} 谁能最终证明黎曼猜想？这或许是 21 世纪留给数学的最大谜题。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 17. 升起海水 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{升起海水，让坚果自己裂开}{黎曼的工作如何改变了人类对空间和数的理解}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=8pt, text width=3.55cm, font=\fontsize{7.6}{9.6}\selectfont, align=center}
+]
+  \node[leg, fill=bluepanel, draw=badgenumber!40] (a) at (-4.5,1.5)
+    {{\fontsize{8.8}{11}\selectfont\bfseries\color{badgenumber} 数论}\\[2pt]黎曼猜想驱动了整个解析数论的发展。};
+  \node[leg, fill=greenpanel, draw=badgegeo!45] (b) at (0,1.5)
+    {{\fontsize{8.8}{11}\selectfont\bfseries\color{badgegeo} 几何}\\[2pt]黎曼几何是广义相对论、微分几何和几何分析的基础。};
+  \node[leg, fill=amberpanel, draw=badgeanaly!45] (c) at (4.5,1.5)
+    {{\fontsize{8.8}{11}\selectfont\bfseries\color{badgeanaly} 分析}\\[2pt]黎曼积分与黎曼面重塑了实分析和复分析的框架。};
+  \node[draw=coveraccent!60, fill=goldpanel, rounded corners=5pt, inner sep=9pt, text width=12.0cm, align=center] at (0,-1.65) {
+    {\fontsize{8.6}{10.8}\selectfont\bfseries\color{coverdark!88} 39 年生命，10 篇论文，翻开 4 个数学世界的大门。}\\[3pt]
+    {\fontsize{7.5}{9.5}\selectfont\color{covermuted} 他不仅给出了新的定理，更教会我们如何提出新的问题。\\黎曼猜想仍在等待它的征服者 —— 你，会是那个人吗？}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 18. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{20}{26}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.9cm]current page.center) {猜想永恒};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=1.3cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=1.3cm, xshift=4.9cm]current page.center);
+  % 黎曼肖像（右上）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.8cm,height=3.2cm,keepaspectratio]{Georg_Friedrich_Bernhard_Riemann.jpeg}};
+  \node[anchor=south, font=\fontsize{9.5}{12}\selectfont, text=coverdark!75]    at ([yshift=0.2cm]current page.center)
+    {"黎曼把数学的边界推到了人类想象力从未触及的地方。"};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.7cm]current page.center)
+    {伯恩哈德·黎曼\quad Bernhard Riemann\quad 1826 — 1866};
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\faIcon{infinity}\enspace 他从地基开始重写了人类对空间的理解\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+% SLIDES_HERE
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\childhoodslide
+\risingslide
+\integralslide
+\surfaceslide
+\maptheoremslide
+\habilitationslide
+\geoslide
+\zetaslide
+\hypothesisslide
+\rochslide
+\abelianslide
+\professorslide
+\deathslide
+\hiddenslide
+\legacyslide
+\closingslide
+\end{document}
