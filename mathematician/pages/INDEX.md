@@ -1,6 +1,6 @@
 # 数学家完整页面索引
 
-> 生成时间：2026-08-03 14:15:36
+> 生成时间：2026-08-03 14:33:20
 > 共 **1** 人
 
-- [Hermann Weyl](Hermann_Weyl/page.md) （1885–1955） — German mathematician (1885–1955)
+- [André Weil](André_Weil/page.md) （1906–1998） — French mathematician (1906-1998)

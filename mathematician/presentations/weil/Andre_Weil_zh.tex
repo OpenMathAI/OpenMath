@@ -1,0 +1,622 @@
+% =============================================================
+%  数论与代数几何的建筑师：安德烈·韦伊 (André Weil)
+%  Beamer 演示 —— 参照 Weyl / Noether / Neumann / Kolmogorov 版式
+%  资料来源：mathematician/pages/André_Weil + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：韦伊 —— 勃艮第深红 + 石板暖灰 + 象牙金 + 赤陶暖（法国优雅 + 布尔巴基严谨 + 印度智慧）=====
+\definecolor{bgmain}{RGB}{245,242,240}
+\definecolor{coverprimary}{HTML}{4A1525}   % 勃艮第深红 — 法国数学世家
+\definecolor{coveraccent}{HTML}{C9AF7B}    % 象牙金 — 布尔巴基的建筑之光
+\definecolor{coveramber}{HTML}{A06030}     % 赤陶暖 — 印度智慧
+\definecolor{coverpurple}{HTML}{5C3D6B}    % 法式紫 — 点缀
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{55,15,25}
+\definecolor{muteddark}{RGB}{90,70,65}
+\definecolor{bluepanel}{RGB}{225,230,236}
+\definecolor{greenpanel}{RGB}{224,241,234}
+\definecolor{amberpanel}{RGB}{252,240,225}   % 赤陶暖面板
+\definecolor{purplepanel}{RGB}{238,230,248}
+\definecolor{goldpanel}{RGB}{252,248,232}
+\definecolor{graypanel}{RGB}{242,244,248}
+\definecolor{redpanel}{RGB}{250,235,238}     % 浅勃艮第面板
+\definecolor{stonepanel}{RGB}{235,232,228}   % 石板暖灰面板
+% 韦伊四大支柱
+\definecolor{badgenumber}{HTML}{6B1D2F}      % 数论/类域论 — 勃艮第深红
+\definecolor{badgegeometry}{HTML}{5C5C4F}    % 代数几何/Weil猜想 — 石板暖灰
+\definecolor{badgebourbaki}{HTML}{C9AF7B}    % 布尔巴基/公理化 — 象牙金
+\definecolor{badgewisdom}{HTML}{A06030}      % 印度智慧/哲学/自传 — 赤陶暖
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgenumber!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgegeometry!10] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coveraccent!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgewisdom!8] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\newcommand{\openmathslide}{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.30, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+  \node[anchor=center, font=\fontsize{24}{30}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=3.9cm]current page.center) {OpenMath已开放源码};
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont, text=coverprimary!60!black]
+    at ([yshift=3.05cm]current page.center) {为 10,000+ 位数学家立传};
+  \draw[coveraccent!45, line width=1.0pt] ([yshift=2.45cm, xshift=-5.0cm]current page.center)
+    -- ([yshift=2.45cm, xshift=5.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{8.2}{11.5}\selectfont, text=coverdark!72, align=center, text width=13cm]
+    at ([yshift=1.55cm]current page.center)
+    {从欧拉、黎曼、希尔伯特，到格罗滕迪克、陶哲轩，\\[2pt]
+     OpenMath 正在为 10,000+ 位数学家建立开放、持续演进的数学人物档案。};
+  \node[anchor=center, font=\fontsize{8}{11}\selectfont\bfseries, text=coverprimary!82!black, align=center]
+    at ([yshift=0.45cm]current page.center)
+    {这不只是人物名单，而是一部由社区共同构建的现代数学人物史：};
+  \node[anchor=north west, font=\fontsize{7}{9.2}\selectfont, text=coverdark!78, align=left]
+    at ([xshift=-6.3cm, yshift=-0.05cm]current page.center)
+    {\faBook\enspace\textbf{10,000+ 数学家} —— 持续收录、整理与补充\\[4pt]
+     \faMap\enspace\textbf{人物生平} —— 教育经历、学术生涯、重要节点\\[4pt]
+     \faTh\enspace\textbf{数学贡献} —— 定理、理论、方法与历史影响};
+  \node[anchor=north west, font=\fontsize{7}{9.2}\selectfont, text=coverdark!78, align=left]
+    at ([xshift=0.3cm, yshift=-0.05cm]current page.center)
+    {\faTrophy\enspace\textbf{荣誉与传承} —— Fields Medal、Abel Prize、Wolf Prize 等\\[4pt]
+     \faGlobe\enspace\textbf{数学谱系} —— 学派、师承、合作与思想传承\\[4pt]
+     \faFlask\enspace\textbf{开放共建} —— 欢迎任何人补充、纠错、完善};
+  \node[draw=coveraccent!50, fill=goldpanel, rounded corners=5pt, inner sep=9pt, text width=12.0cm, align=center]
+    at ([yshift=-2.35cm]current page.center)
+    {{\fontsize{8.6}{11}\selectfont\bfseries\color{coverdark!88} 数学史，不应该只存在于少数人的书架上。}\\[2pt]
+     {\fontsize{7.5}{9.5}\selectfont\color{covermuted} 让每一位数学家的故事都可以被发现、被理解、被连接。}};
+  \node[anchor=south, font=\fontsize{7.8}{9.8}\selectfont\bfseries, text=coveraccent!80!black]
+    at ([yshift=0.64cm]current page.south) {\faIcon{star}\enspace Star OpenMath · 加入共建\enspace|\enspace https://github.com/OpenMathAI/OpenMath};
+  \node[anchor=south, font=\fontsize{6.2}{7.8}\selectfont, text=covermuted]
+    at ([yshift=0.38cm]current page.south) {欢迎 Star、Issue、PR，共同建设一部开放的数学人物史。};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{university}\enspace 数论与代数几何的建筑师};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {安德烈·韦伊};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {André Weil\enspace·\enspace 1906 — 1998};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {布尔巴基的灵魂 · Weil 猜想的预言者 · 在牢房里做数学的人};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgenumber, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {数论 Number};
+      \node[rounded corners=8pt, fill=badgegeometry, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {代数几何 Geom.};
+      \node[rounded corners=8pt, fill=badgebourbaki, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {布尔巴基 Bourbaki};
+      \node[rounded corners=8pt, fill=badgewisdom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {哲学 Wisdom};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"数学不只是一个工具，它是一种文明。" —— André Weil};
+  % 韦伊肖像（右上）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.5cm,height=3.2cm,keepaspectratio]{portrait.jpg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.2cm]current page.center)
+    {André Weil, 1906–1998};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{medal}\enspace Wolf 数学奖 1979 · 京都奖 1980\enspace|\enspace 巴黎 · 芝加哥 · IAS};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么 Weil 是"建筑师"}{布尔巴基 + Weil 猜想 + 代数几何基础 —— 三角架构}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=goldpanel, draw=badgebourbaki!50, text=coverprimary!85!black]
+    (a) at (-5.7,1.05) {布尔巴基\\φ, ⊗, N/Z/Q/R/C};
+  \node[nodebox, fill=stonepanel, draw=badgegeometry!50, text=badgegeometry!85!black]
+    (b) at (-1.9,1.05) {Weil 猜想\\有限域 · zeta函数 · Deligne};
+  \node[nodebox, fill=redpanel, draw=badgenumber!50, text=badgenumber!85!black]
+    (c) at (1.9,1.05) {代数几何基础\\交截理论 · 特征 p};
+  \node[nodebox, fill=amberpanel, draw=badgewisdom!50, text=badgewisdom!85!black]
+    (d) at (5.7,1.05) {数论\\adele/idele · 类域论};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他建立了现代代数几何的基础，预言了跨越数论、拓扑、代数的猜想，\\并领导一群法国年轻人重写了全部数学。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 他不是独自建造一座孤塔，而是设计了一座城市的蓝图——后人用了半个世纪才将它建成。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 巴黎神童 ---
+\newcommand{\prodigyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{巴黎的神童 (1906–1928)}{16 岁考入高师 · 22 岁博士 · 自学梵文}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgenumber!35] at (0,2.55)
+    {\textbf{1906 · 生于巴黎。}犹太知识分子家庭，父亲是医生。从小展现超常的数学天赋——与妹妹 Simone Weil（未来的哲学家）一起成长，两人构成了 20 世纪法国思想史上最独特的兄妹关系。};
+  \node[item, fill=goldpanel, draw=badgebourbaki!30] at (0,1.05)
+    {\textbf{1922 · 16 岁考入高师。}巴黎高等师范学院（ÉNS）是法国数学家的摇篮。Weil 在这里遇到了未来的布尔巴基伙伴们：Henri Cartan、Jean Delsarte。};
+  \node[item, fill=amberpanel, draw=badgewisdom!35] at (0,-0.25)
+    {\textbf{1928 · 22 岁博士。}导师是法国分析大师 Jacques Hadamard（素数定理证明者）。博士论文：《代数曲线上的算术》—— 题目已经预示了一生的方向。此外，他自学梵文阅读印度数学原著。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{7.8}{9.8}\selectfont\bfseries\color{coverdark!88} 22 岁的 Weil 已经具备了三个特质：数学天才、语言天赋、对东方智慧的天然亲近。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 印度岁月 ---
+\newcommand{\indiaslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{印度岁月 (1930–1932)}{东方智慧如何塑造一位西方数学家}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgewisdom!50] at (0,2.35)
+    {\textbf{1930–1932 · 阿里格尔穆斯林大学。}24 岁的 Weil 远赴印度任教两年。这段时间他自学梵文，可以直接阅读印度数学经典原文。这在整个 20 世纪数学界绝无仅有。};
+  \node[item, fill=goldpanel, draw=badgebourbaki!30] at (0,0.85)
+    {\textbf{数学与哲学的双重收获。}在印度，Weil 不仅继续他的数论研究，还深入接触了印度哲学。他晚年展现出的"东方智者"气质——京都奖演讲中的从容与深邃——直接源于这段经历。};
+  \node[item, fill=redpanel, draw=badgenumber!25] at (0,-0.45)
+    {\textbf{一位"带东方色彩的法国数学家"。}与同时代的 Cartan、Serre、Grothendieck 相比，Weil 身上有一种独特的"跨文化"气质。他的自传中花了大量篇幅回忆印度。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他是 20 世纪唯一能阅读梵文数学原著的顶级数学家。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 布尔巴基的诞生 ---
+\newcommand{\bourbakislide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{布尔巴基的诞生 (1934–1935)}{一群法国年轻人决定重写全部数学}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgebourbaki!50] at (0,2.35)
+    {\textbf{1934–1935 · 秘密会议。}在斯特拉斯堡的一个咖啡馆里，Weil 和 Henri Cartan、Chevalley、Delsarte、Dieudonné 等人决定：用纯粹的公理化方法，以"集合论"为唯一基础，重写全部数学。他们虚构了一个"作者"—— Nicolas Bourbaki。};
+  \node[item, fill=redpanel, draw=badgenumber!35] at (0,0.85)
+    {\textbf{雄心壮志。}"所有定理都可以从最少的公理出发逻辑推导。"这个理念今天看来有些极端，但在 1930 年代，它是一场数学革命。Weil 是这场运动的灵魂人物和精神领袖。};
+  \node[item, fill=stonepanel, draw=badgegeometry!30] at (0,-0.45)
+    {\textbf{影响至今。}布尔巴基的《数学原理》改变了全世界的数学语言：∅（空集）、⊗（张量积）、N/Z/Q/R/C（数集符号）——这些都是布尔巴基的遗产。Weil 对此功不可没。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个虚构的人名，改变了一个真实的学科。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 布尔巴基的遗产 ---
+\newcommand{\bourbakilegacy}{%
+\begin{frame}
+\plainbar
+\sectiontitle{布尔巴基的遗产}{∅, ⊗, N/Z/Q/R/C —— 你每天都在用他们的发明}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgebourbaki!50] at (0,2.55)
+    {\textbf{符号革命。}今天每一个数学家都在使用的符号——∅（空集）、⊗（张量积）、⇒、⇔、∈、N、Z、Q、R、C —— 都是布尔巴基引入或推广的。Weil 和他的朋友们为全世界的数学制定了一种"通用语言"。};
+  \node[item, fill=redpanel, draw=badgenumber!35] at (0,1.05)
+    {\textbf{结构主义。}布尔巴基的核心思想是：数学不是"若干学科的集合"，而是"若干结构的集合"——代数结构、序结构、拓扑结构。这一观点深刻影响了 20 世纪的数学教育。};
+  \node[item, fill=amberpanel, draw=badgewisdom!35] at (0,-0.25)
+    {\textbf{从激进到反思。}晚年 Weil 承认"我们走得太远了"。公理化不是数学的全部。但这种自我批判的诚实，反而让布尔巴基的故事更加动人。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{7.8}{9.8}\selectfont\bfseries\color{coverdark!88} 「我们布尔巴基一代人走得太远了。」—— André Weil, 晚年反思}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 芬兰生死劫 ---
+\newcommand{\finlandslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{芬兰生死劫 (1939)}{被捕 · 险些被枪决 · Nevanlinna 的营救}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgenumber!50] at (0,2.35)
+    {\textbf{1939 · 二战爆发。}Weil 当时在芬兰。苏联入侵芬兰，芬兰当局对所有外国人高度警惕。他因持有法国护照被怀疑是苏联间谍，遭到逮捕。};
+  \node[item, fill=goldpanel, draw=badgebourbaki!35] at (0,0.85)
+    {\textbf{生死一线。}Weil 面临被当作间谍处决的危险。芬兰数学家 Rolf Nevanlinna（Nevanlinna 理论的创始人）出面干预。他对芬兰当局说："如果你们枪毙他，数学界会记住这件事。"};
+  \node[item, fill=amberpanel, draw=badgewisdom!30] at (0,-0.45)
+    {\textbf{传奇营救。}Nevanlinna 的声望和斡旋最终救了 Weil 的命。Weil 被驱逐出境而非处决。这是 20 世纪数学史上最惊心动魄的营救故事之一。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 如果 Nevanlinna 没有出手 —— 我们可能永远失去了 Weil 猜想。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 监狱里的数学 ---
+\newcommand{\prisonslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{监狱里的数学 (1940)}{在鲁昂监狱中完成 Weil 猜想的核心工作}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=stonepanel, draw=badgegeometry!50] at (0,2.35)
+    {\textbf{1940 · 鲁昂军事监狱。}回到法国后，Weil 因"逃避兵役"被判 5 年监禁。在狱中的几个月里（1940年2月–5月），他完成了数学史上最不寻常的工作之一：有限域上曲线的 Riemann 猜想的证明。};
+  \node[item, fill=goldpanel, draw=badgebourbaki!35] at (0,0.85)
+    {\textbf{"我的数学工作从来没有这么顺畅过。"}他在狱中给妹妹 Simone 写信说。在囚室中，没有任何干扰——没有教学、没有会议、没有行政事务——只有纯粹的数学思考。};
+  \node[item, fill=amberpanel, draw=badgewisdom!35] at (0,-0.45)
+    {\textbf{给妹妹的信。}Weil 写下了著名的"狱中书信"——阐述数学与神秘主义的联系。这封信后来成为理解他内心世界的钥匙。数学和宗教体验在 Weyl 看来并不遥远。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 数学史上没有第二个人在监狱里完成了里程碑级的工作。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. Weil 猜想 ---
+\newcommand{\conjectureslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Weil 猜想 (1949)}{连接代数几何、数论与拓扑的罗塞塔石碑}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=stonepanel, draw=badgegeometry!55] at (0,2.35)
+    {\textbf{1949 · 四个猜想。}Weil 提出了有限域上代数簇的 ζ 函数的四个猜想。这些猜想惊人地连接了三个看似无关的数学世界：拓扑学（Betti 数）、代数几何（特征 p 的簇）、解析数论（Riemann zeta 函数类比）。};
+  \node[item, fill=goldpanel, draw=badgebourbaki!35] at (0,0.85)
+    {\textbf{罗塞塔石碑。}Weil 猜想之所以重要，不是因为猜想本身，而是因为它揭示了一种深层的"数学语言翻译规则"——在完全不同的数学领域之间，存在着隐藏的同构。};
+  \node[item, fill=redpanel, draw=badgenumber!35] at (0,-0.45)
+    {\textbf{推动了一个世纪。}为了证明 Weil 猜想，Grothendieck 发明了 étale 上同调——整整一个数学大厦。1974 年，Deligne 完成了最后一个猜想的证明。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 一个好的猜想比一个好的定理更有价值 —— 它为数学指定了方向。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 代数几何基础 ---
+\newcommand{\foundationslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{代数几何的基础}{特征 p 上的代数几何 · 交截理论的严格化}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=stonepanel, draw=badgegeometry!50] at (0,2.35)
+    {\textbf{1946 · 《代数几何基础》。}Weil 的这本著作将代数几何建立在严格的代数基础上。他处理了特征 p（有限域）上的几何——这一领域在意大利古典几何学家手中充满了直觉但缺少严谨。};
+  \node[item, fill=goldpanel, draw=badgebourbaki!35] at (0,0.85)
+    {\textbf{交截理论的严格化。}Weil 用代数方法重新定义了曲线的交截数——这是代数几何最核心的概念之一。他的工作为 Grothendieck 后来的 scheme 理论铺平了道路。};
+  \node[item, fill=amberpanel, draw=badgewisdom!30] at (0,-0.45)
+    {\textbf{从古典到现代的桥梁。}Weil 不是代数几何的"革命者"（那是 Grothendieck 的角色），而是"奠基者"——他把一个直觉性的学科变成了严格的科学。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 没有 Weil 的基础工作，就没有 Grothendieck 的 scheme 革命。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 类域论 ---
+\newcommand{\classfieldslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{类域论与 adele/idele}{现代数论语言的创造者}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgenumber!50] at (0,2.35)
+    {\textbf{adele/idele 语言。}Weil 将 adele（阿代尔）和 idele（伊代尔）系统引入数论——这是一种将局部信息"粘合"成全局信息的技术。今天，没有 adele 语言，类域论的现代表述是无法想象的。};
+  \node[item, fill=goldpanel, draw=badgebourbaki!35] at (0,0.85)
+    {\textbf{类域论的现代化。}类域论是数论的最高成就之一——它描述了代数数域的 Abel 扩张。Weil 用 adele 语言重新表述了整个理论，使其变得清晰、统一、可推广。};
+  \node[item, fill=stonepanel, draw=badgegeometry!30] at (0,-0.45)
+    {\textbf{《基础数论》(1973)。}Weil 的晚期著作，是他数论思想的集大成。这本书深刻影响了 Langlands 纲领——现代数论最宏大的统一计划。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Langlands 纲领的精神先驱 —— Weil 的数论思想仍在指引现代数学的前沿。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. Weil 配对 ---
+\newcommand{\pairingslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Weil 配对}{从椭圆曲线到现代密码学的数学基石}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgenumber!50] at (0,2.35)
+    {\textbf{Weil 配对。}Weil 发现了椭圆曲线上挠点之间的一种双线性配对。这个纯粹的数学构造，后来成为一系列现代密码学方案的理论基础。};
+  \node[item, fill=goldpanel, draw=badgebourbaki!35] at (0,0.85)
+    {\textbf{密码学革命。}基于 Weil 配对的密码学（identity-based encryption, BLS 签名）彻底改变了密码学的格局。Weil 本人从未想到他的纯数学工作会进入密码学。};
+  \node[item, fill=stonepanel, draw=badgegeometry!30] at (0,-0.45)
+    {\textbf{从理论到实践的跨越。}Weil 配对 → Tate 配对 → Ate 配对 → 配对密码学。这是一个"纯数学最终找到了实用"的经典案例——就像 Weyl 的规范理论在物理中的重生。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 你的银行卡加密、区块链签名 —— 底层都有 Weil 的影子。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. IAS 岁月 ---
+\newcommand{\iasslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{IAS 岁月 (1958–1976)}{普林斯顿的智者}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgebourbaki!40] at (0,2.35)
+    {\textbf{1958 · 加入 IAS。}Weil 加入普林斯顿高等研究院，直到 1976 年退休。与 Einstein、Gödel、von Neumann 等同事共处——这是 20 世纪智力史上最璀璨的群体。};
+  \node[item, fill=amberpanel, draw=badgewisdom!45] at (0,0.85)
+    {\textbf{晚年智慧。}退休后，Weil 继续数学研究和写作。1991 年出版自传《一个数学家的学徒生涯》——数学史上最诚实的自传之一，毫不掩饰对同行的批评和对自我的审视。};
+  \node[item, fill=stonepanel, draw=badgegeometry!30] at (0,-0.45)
+    {\textbf{1994 · 京都奖 25 周年。}在庆典演讲中，Weil 展现出令人惊叹的东方智者气质——这与他早年在印度的经历一脉相承。他说："数学不只是一个工具，它是一种文明。"};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从巴黎到阿里格尔、从鲁昂监狱到普林斯顿 IAS —— 92 年的人生是一部史诗。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 与妹妹 Simone ---
+\newcommand{\simoneslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{与妹妹 Simone}{一个数学家与一个神秘主义者的精神对话}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgewisdom!55] at (0,2.35)
+    {\textbf{两兄妹。}André Weil 和妹妹 Simone Weil 是 20 世纪法国知识分子史上最奇特的一对。André 在纯数学中寻找终极秩序，Simone 在基督教神秘主义和终极苦难中寻找真理。};
+  \node[item, fill=redpanel, draw=badgenumber!35] at (0,0.85)
+    {\textbf{互相不理解却互相尊重。}Simone 认为 André 陷入了"抽象的偶像崇拜"。André 晚年却说："她是我见过的最聪明的人。"——这是两种截然不同的智力路径的对话。};
+  \node[item, fill=goldpanel, draw=badgebourbaki!30] at (0,-0.45)
+    {\textbf{狱中信。}1940 年在鲁昂监狱中，Weil 给 Simone 写了一封长信，阐述数学与神秘主义体验的相似性。这封信——"我最好的读者是 Simone"——至今令人动容。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 理性与神秘 —— 两兄妹分别抵达了人类精神的最深处。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 晚年反思 ---
+\newcommand{\reflectionslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{「我们走得太远了」}{晚年对布尔巴基运动的反思}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgebourbaki!50] at (0,2.35)
+    {\textbf{自我批判。}晚年 Weil 承认，布尔巴基的运动有其极限。「我们布尔巴基一代人走得太远了。」他说，「公理化的方法不是数学的全部。」};
+  \node[item, fill=amberpanel, draw=badgewisdom!45] at (0,0.85)
+    {\textbf{直觉的回归。}Weil 晚年越来越强调直觉和具体例子在数学中的重要性——这与年轻时狂热的公理化信仰形成了鲜明对比。这是一种罕见的智识成熟。};
+  \node[item, fill=redpanel, draw=badgenumber!30] at (0,-0.45)
+    {\textbf{诚实的价值。}在数学史上，能公开承认自己「走过头了」的领袖级人物极少。Weil 的自我批判让他的遗产更加可信——他是一个真正的思想者，不是一个教条主义者。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 真正的智慧不是坚持己见，而是有勇气审视自己的局限。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 16. Deligne 的证明 ---
+\newcommand{\deligneslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Deligne 的证明 (1974)}{Weil 猜想的最后一个堡垒被攻克}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=stonepanel, draw=badgegeometry!55] at (0,2.35)
+    {\textbf{1974 · "Riemann 类比"。}Weil 猜想的最后一个（也是最难的）部分——有限域上代数簇的 Riemann 猜想类比——被 Pierre Deligne 完全证明。Weil 当时 68 岁，亲眼看到了自己 25 年前的预言成真。};
+  \node[item, fill=goldpanel, draw=badgebourbaki!35] at (0,0.85)
+    {\textbf{一代人的接力。}Weil 提出问题（1949）→ Grothendieck 建造工具（étale 上同调，1960s）→ Deligne 完成证明（1974）。这是一个"大师提出框架、一代人共同完成"的经典案例。};
+  \node[item, fill=redpanel, draw=badgenumber!30] at (0,-0.45)
+    {\textbf{Fields Medal。}Deligne 凭此获得 1978 年 Fields 奖。在某种意义上，这也是属于 Weil 的奖——他是那个画出地图的人。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个好的问题，胜过一打好的答案。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 17. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{韦伊的遗产}{从你的银行卡加密到费马大定理证明}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=stonepanel, draw=badgegeometry!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgegeometry} Weil 猜想}\\[3pt]代数几何\\数论\\拓扑的桥梁};
+  \node[leg, fill=goldpanel, draw=badgebourbaki!50, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{coverprimary!85!black} 布尔巴基}\\[3pt]数学语言\\公理化\\符号体系};
+  \node[leg, fill=redpanel, draw=badgenumber!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgenumber} 数论}\\[3pt]adele/idele\\类域论\\Weil配对};
+  \node[leg, fill=amberpanel, draw=badgewisdom!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgewisdom} 智慧}\\[3pt]自传\\反思\\东方哲学};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他不是某一个定理的发现者 ——\\他是现代数论与代数几何的蓝图设计师。}\\[4pt]
+    {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      从 Weil 猜想到密码学，从布尔巴基到 Langlands 纲领，\\
+      从鲁昂监狱到普林斯顿 IAS —— \\
+      Weil 用一生证明了：数学不只是一个工具，它是一种文明。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 18. 墓碑 ---
+\newcommand{\epitaphslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center] at ([yshift=2.2cm]current page.center) {
+    \begin{tikzpicture}
+      \node[draw=coverprimary!20, line width=0.8pt, fill=white, rounded corners=4pt, inner sep=2pt]
+        {\includegraphics[width=5.5cm,keepaspectratio]{portrait.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{15}{22}\selectfont\bfseries, text=coverprimary!90!black,
+        align=center, text width=13cm]
+    at ([yshift=-0.9cm]current page.center) {他在监狱里为数学画下了};
+  \node[anchor=center, font=\fontsize{15}{22}\selectfont\bfseries, text=coverprimary!90!black,
+        align=center, text width=13cm]
+    at ([yshift=-1.9cm]current page.center) {通向未来的地图。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-2.7cm, xshift=-2.5cm]current page.center)
+    -- ([yshift=-2.7cm, xshift=2.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-3.6cm]current page.center)
+    {安德烈·韦伊\quad André Weil\quad 1906 — 1998};
+  \node[anchor=south, font=\fontsize{6.5}{8}\selectfont, text=coverdark!45]
+    at ([yshift=0.35cm]current page.south) {Princeton · 普林斯顿};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 19. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.9cm]current page.center) {数学不只是一个工具，};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.0cm]current page.center) {它是一种文明。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=0.15cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=0.15cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-0.9cm]current page.center)
+    {—— André Weil, 京都奖演讲, 1994};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-2.4cm]current page.center)
+    {安德烈·韦伊\quad André Weil\quad 1906 — 1998};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{university}\enspace 数论与代数几何的建筑师\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\prodigyslide
+\indiaslide
+\bourbakislide
+\bourbakilegacy
+\finlandslide
+\prisonslide
+\conjectureslide
+\foundationslide
+\classfieldslide
+\pairingslide
+\iasslide
+\simoneslide
+\reflectionslide
+\deligneslide
+\legacyslide
+\epitaphslide
+\closingslide
+\end{document}
