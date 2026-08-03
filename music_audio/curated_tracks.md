@@ -25,14 +25,7 @@
 | 12 | With Me | 52k views | 高受众 / 温和 / 稳定 | 人物介绍、过渡段、非高潮页 | `music_audio/alex-productions/83-DXAblXgCK-k-With-Me.wav` |
 | 13 | Eternals | 49k views | 较高受众 / 宏大 / 深远 | Langlands、基础理论、长期影响 | `music_audio/alex-productions/76-V5T_kW2PH_s-Eternals.wav` |
 | 14 | Cinematic Experience | 47k views | 较高受众 / 电影感 / 高张力 | 大定理、章节高潮、片头片尾 | `music_audio/alex-productions/48-QL3O8MUFAm4-Cinematic-Experience.wav` |
-
-### 🚫 黑名单
-
-以下曲目不再使用：
-
-| 曲目 | 原因 |
-|---|---|
-| Silence | 不合场景氛围 |
+| 15 | Beethoven 5 Symphony | — | 古典 / 激昂 / 标志性 | 高潮、历史性时刻、宏大叙事 | `music_audio/beethoven5_symphony.wav` |
 
 ---
 
