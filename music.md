@@ -21,16 +21,15 @@
 | 3 | PAST | 86k views | 高受众 / 历史感 / 深沉 | 人物回顾、冷战时期、数学传统 | `music_audio/89-geyy8_WXDK0-PAST.wav` |
 | 4 | Nostalgia | 80k views | 高受众 / 怀旧 / 温和 | 传记段落、学派传承 | `music_audio/86-5ETNuoDcBg4-Nostalgia.wav` |
 | 5 | Awaken | 79k views | 高受众 / 鼓舞 / 明亮 | 开场、突破性证明、年轻数学家 | `music_audio/36-aqLUvpAdLNQ-Awaken.wav` |
-| 6 | Silence | 76k views | 高受众 / 安静 / 克制 | 概念解释、严肃证明、低情绪密度段落 | `music_audio/91-3oUukPtFxIY-Silence.wav` |
-| 7 | SEA | 75k views | 高受众 / 流动 / 平稳 | 概率、动力系统、连续叙事 | `music_audio/92-WEqfdRXU3IU-SEA.wav` |
-| 8 | Expedition | 66k views | 高受众 / 探索 / 史诗 | 几何、拓扑、远征式叙事 | `music_audio/33--_CEmB_dHpA-Expedition.wav` |
-| 9 | The Flow of Time | 56k views | 高受众 / 时间感 / 纪录片 | 数学史时间线、经典数论 | `music_audio/35-jqIDnltiDRI-The-Flow-of-Time.wav` |
-| 10 | Daylight | 53k views | 高受众 / 明亮 / 轻快 | 组合数学、现代成果、结尾轻收 | `music_audio/44-JoyIRE5k2Yo-Daylight.wav` |
-| 11 | Savage | 52k views | 高受众 / 强推进 / 紧张 | 竞争、难题攻克、革命性转折 | `music_audio/34-pILVwyuW3jw-Savage.wav` |
-| 12 | Tragedy | 52k views | 高受众 / 深色 / 戏剧性 | 悲剧人物、争议、失败与突破 | `music_audio/80-K5f65-22sY4-Tragedy.wav` |
-| 13 | With Me | 52k views | 高受众 / 温和 / 稳定 | 人物介绍、过渡段、非高潮页 | `music_audio/83-DXAblXgCK-k-With-Me.wav` |
-| 14 | Eternals | 49k views | 较高受众 / 宏大 / 深远 | Langlands、基础理论、长期影响 | `music_audio/76-V5T_kW2PH_s-Eternals.wav` |
-| 15 | Cinematic Experience | 47k views | 较高受众 / 电影感 / 高张力 | 大定理、章节高潮、片头片尾 | `music_audio/48-QL3O8MUFAm4-Cinematic-Experience.wav` |
+| 6 | SEA | 75k views | 高受众 / 流动 / 平稳 | 概率、动力系统、连续叙事 | `music_audio/92-WEqfdRXU3IU-SEA.wav` |
+| 7 | Expedition | 66k views | 高受众 / 探索 / 史诗 | 几何、拓扑、远征式叙事 | `music_audio/33--_CEmB_dHpA-Expedition.wav` |
+| 8 | The Flow of Time | 56k views | 高受众 / 时间感 / 纪录片 | 数学史时间线、经典数论 | `music_audio/35-jqIDnltiDRI-The-Flow-of-Time.wav` |
+| 9 | Daylight | 53k views | 高受众 / 明亮 / 轻快 | 组合数学、现代成果、结尾轻收 | `music_audio/44-JoyIRE5k2Yo-Daylight.wav` |
+| 10 | Savage | 52k views | 高受众 / 强推进 / 紧张 | 竞争、难题攻克、革命性转折 | `music_audio/34-pILVwyuW3jw-Savage.wav` |
+| 11 | Tragedy | 52k views | 高受众 / 深色 / 戏剧性 | 悲剧人物、争议、失败与突破 | `music_audio/80-K5f65-22sY4-Tragedy.wav` |
+| 12 | With Me | 52k views | 高受众 / 温和 / 稳定 | 人物介绍、过渡段、非高潮页 | `music_audio/83-DXAblXgCK-k-With-Me.wav` |
+| 13 | Eternals | 49k views | 较高受众 / 宏大 / 深远 | Langlands、基础理论、长期影响 | `music_audio/76-V5T_kW2PH_s-Eternals.wav` |
+| 14 | Cinematic Experience | 47k views | 较高受众 / 电影感 / 高张力 | 大定理、章节高潮、片头片尾 | `music_audio/48-QL3O8MUFAm4-Cinematic-Experience.wav` |
 
 ## 曲目清单
 
@@ -126,7 +125,7 @@
 | 88 | Rebel<br><sub>Rebel – Alex-Productions (No Copyright Music)</sub> | 3:39 | [video](https://www.youtube.com/watch?v=nDpz9TrPKSo) | `music_audio/88-nDpz9TrPKSo-Rebel.wav` |
 | 89 | PAST<br><sub>PAST – Alex-Productions (No Copyright Music)</sub> | 3:00 | [video](https://www.youtube.com/watch?v=geyy8_WXDK0) | `music_audio/89-geyy8_WXDK0-PAST.wav` |
 | 90 | Lights<br><sub>Lights – Alex-Productions (No Copyright Music)</sub> | 2:43 | [video](https://www.youtube.com/watch?v=d7QaCsulPqo) | `music_audio/90-d7QaCsulPqo-Lights.wav` |
-| 91 | Silence<br><sub>Silence – Alex-Productions (No Copyright Music)</sub> | 3:24 | [video](https://www.youtube.com/watch?v=3oUukPtFxIY) | `music_audio/91-3oUukPtFxIY-Silence.wav` |
+| 91 | Silence<br><sub>Silence – Alex-Productions (No Copyright Music)</sub> | 3:24 | [video](https://www.youtube.com/watch?v=3oUukPtFxIY) | `music_audio/91-3oUukPtFxIY-Silence.wav`<br>不再使用：过于安静克制，不适合数学人物传记 |
 | 92 | SEA<br><sub>SEA – Alex-Productions (No Copyright Music)</sub> | 2:58 | [video](https://www.youtube.com/watch?v=WEqfdRXU3IU) | `music_audio/92-WEqfdRXU3IU-SEA.wav` |
 
 ## 下载记录
