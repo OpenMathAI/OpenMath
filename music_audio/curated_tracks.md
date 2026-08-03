@@ -25,7 +25,21 @@
 | 12 | With Me | 52k views | 高受众 / 温和 / 稳定 | 人物介绍、过渡段、非高潮页 | `music_audio/alex-productions/83-DXAblXgCK-k-With-Me.wav` |
 | 13 | Eternals | 49k views | 较高受众 / 宏大 / 深远 | Langlands、基础理论、长期影响 | `music_audio/alex-productions/76-V5T_kW2PH_s-Eternals.wav` |
 | 14 | Cinematic Experience | 47k views | 较高受众 / 电影感 / 高张力 | 大定理、章节高潮、片头片尾 | `music_audio/alex-productions/48-QL3O8MUFAm4-Cinematic-Experience.wav` |
-| 15 | Beethoven 5 Symphony | — | 古典 / 激昂 / 标志性 | 高潮、历史性时刻、宏大叙事 | `music_audio/beethoven5_symphony.wav` |
+
+---
+
+## 👤 Beethoven · Karajan（VerachtetmirdieMeisternicht 频道）
+
+> 指挥：Herbert von Karajan / Berliner Philharmoniker
+> 完整清单：[beethoven-karajan/music.md](beethoven-karajan/music.md)
+
+| 优先级 | 曲目 | 时长 | 标签 | 适合场景 | 本地文件 |
+|---:|---|---|---|---|---|
+| 1 | Symphony No. 5 | 30:59 | 古典 / 激昂 / 标志性 | 高潮、历史性时刻、宏大叙事 | `music_audio/beethoven-karajan/05-OV6Lp7cnX7s-Beethoven "Symphony No 5" Karajan.wav` |
+| 2 | Symphony No. 3 "Eroica" | 48:52 | 古典 / 英雄 / 壮丽 | 伟大成就、里程碑、片尾升华 | `music_audio/beethoven-karajan/03-BgIjGSPmk7I-Beethoven "Symphony No 3" Karajan.wav` |
+| 3 | Symphony No. 7 | 37:40 | 古典 / 律动 / 庄严 | 数学之舞、节奏与结构 | `music_audio/beethoven-karajan/07-W5NsPOgyALI-Beethoven "Symphony No 7" Karajan.wav` |
+| 4 | Symphony No. 9 "Choral" | 1:05:35 | 古典 / 终极 / 欢乐颂 | 终章、人类精神、最伟大的致敬 | `music_audio/beethoven-karajan/09-fRZaX6-dsn8-Beethoven "Symphony No 9" Karajan (Stereo).wav` |
+| 5 | Symphony No. 6 "Pastoral" | 37:37 | 古典 / 宁静 / 田园 | 传记中的平静段落、自然隐喻 | `music_audio/beethoven-karajan/06-fNXCZXrlX7I-Beethoven "Symphony No 6" Karajan.wav` |
 
 ---
 
