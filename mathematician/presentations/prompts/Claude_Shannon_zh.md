@@ -78,7 +78,7 @@
 09  玩杂耍的天才 — Theseus 老鼠·下棋机·火焰小号
 10  贝尔实验室的黄金时代
 11  信息时代的前奏 — Shannon 之后的世界
-12  升起海水 — 他发明了"信息"这个词的数学含义
+12  思想回响 — 他发明了"信息"这个词的数学含义
 13  结束页 — 主题句：The fundamental problem of communication is that of reproducing at one point a message selected at another point
 ```
 

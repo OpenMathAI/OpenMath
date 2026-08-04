@@ -39,7 +39,7 @@
 03  Jordan 曲线定理 — "显然"背后的深渊
 04  群论的系统化 — Traité des substitutions (1870)
 05  Jordan–Hölder 定理
-06  升起海水 + 结束页
+06  思想回响 + 结束页
 ```
 
 > **开始执行。**

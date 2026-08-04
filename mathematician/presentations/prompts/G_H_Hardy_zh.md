@@ -89,7 +89,7 @@
 09  《一个数学家的辩白》(1940) — "数学是年轻人的游戏"
 10  板球与数学 — Hardy 的另一个热情
 11  "无用的数学" — 讽刺的遗产：数论成了密码学
-12  升起海水 — 他是纯粹数学精神的化身
+12  思想回响 — 他是纯粹数学精神的化身
 13  结束页 — 主题句：Beautiful mathematics should be justified by its beauty alone
 ```
 

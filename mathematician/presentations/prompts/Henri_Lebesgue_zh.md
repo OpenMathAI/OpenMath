@@ -73,7 +73,7 @@
 07  从 Fourier 到泛函分析 — Lebesgue 积分的多米诺
 08  Borel → Lebesgue → Kolmogorov — 三代人的数学基础
 09  安静的教书匠 — 不张扬的数学革命
-10  升起海水 + 结束页
+10  思想回响 + 结束页
 ```
 
 ---

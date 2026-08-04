@@ -78,7 +78,7 @@
 07  三个天才学生 — Hironaka, Mumford, Artin
 08  Grothendieck 的前奏 — 从Zariski到Scheme
 09  Wolf 奖 1981
-10  升起海水 + 结束页
+10  思想回响 + 结束页
 ```
 
 ---

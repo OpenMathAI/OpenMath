@@ -254,7 +254,7 @@
 15  Turing 的遗产 — 从你的手机到 ChatGPT，他的思想无处不在
 
 === 结尾 ===
-16  升起海水 — Turing 证明了：思想永远不属于任何国家机器
+16  思想回响 — Turing 证明了：思想永远不属于任何国家机器
 17  结束页 — "He gave us the mathematical definition of 'computable', and the world has never been the same."
 ```
 

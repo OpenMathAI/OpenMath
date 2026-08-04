@@ -85,7 +85,7 @@
 08  Deligne–Lusztig — 有限群的表示
 09  IAS 的宁静 — Grothendieck 之后
 10  Fields + Wolf + Abel — 大满贯
-11  升起海水 + 结束页
+11  思想回响 + 结束页
 ```
 
 ---

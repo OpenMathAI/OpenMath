@@ -70,7 +70,7 @@
 05  《Categories for the Working Mathematician》(1971)
 06  芝加哥学派的缔造者
 07  活到 95 — 从 Weyl 到量子计算
-08  升起海水 + 结束页
+08  思想回响 + 结束页
 ```
 
 ---

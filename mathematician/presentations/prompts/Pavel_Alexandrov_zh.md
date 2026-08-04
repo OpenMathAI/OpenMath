@@ -44,7 +44,7 @@
 05  同调论的发展 — Alexandroff–Čech 上同调
 06  与 Noether 的哥廷根对话
 07  苏联拓扑学派 — Pontryagin, Tikhonov 等
-08  升起海水 + 结束页
+08  思想回响 + 结束页
 ```
 
 ### 史实陷阱：
