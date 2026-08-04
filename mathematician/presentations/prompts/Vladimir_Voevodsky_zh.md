@@ -1,88 +1,85 @@
 # 沃埃沃茨基 (Vladimir Voevodsky) 立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-> 直接复制本文件内容到新对话中使用。
+> 严格遵循 [Mathematician_Biography_Guide.md]。参考: cartan, weyl。
 
 ---
 
-## 背景信息
+## 背景
 
-- **目标数学家**: Vladimir Voevodsky (1966–2017)
-- **气质关键词**: **同伦型论的发明者、代数几何与逻辑的融合者、Fields 奖的早逝天才**
-- **Wikipedia 页面**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Vladimir_Voevodsky/`
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+- **目标**: Vladimir Voevodsky (1966–2017)
+- **气质**: **代数几何中的同伦论革命者、2002 年 Fields 奖得主、∞-范畴与同伦类型论的开拓者**
+- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Vladimir_Voevodsky/`
 
----
+## 第 0 步：校验
 
-## 第 0 步：下载 Wikipedia 页面并校验
-
-- **生卒日期**：1966-06-04 ~ 2017-09-30，享年 51 岁
-- **国籍**：苏联 → 美国
+- **生卒**：1966-06-04 ~ 2017-09-30，享年 51 岁（英年早逝）
+- **国籍**：俄罗斯→美国
+- **出生地**：Moscow, USSR
 - **博士导师**：David Kazhdan（哈佛大学）
 - **博士论文**：1992
-- **主要任职**：普林斯顿高等研究院 (IAS)
-- **荣誉**：Fields Medal 2002
+- **任职**：普林斯顿 IAS (1998–2017，终身教授)
+- **荣誉**：Fields 奖 (2002)
 
----
+### 时间线
+- 1966: 生于莫斯科
+- 1989: 莫斯科国立大学毕业
+- 1990: 到哈佛读研
+- 1992: 博士（导师 Kazhdan）
+- 1996: 引入 A¹-同伦论——代数几何的"同伦革命"
+- 2000: 引入 Voevodsky motives（导出范畴版本）
+- 2002: Fields 奖（因 motivic 上同调和 Bloch–Kato 猜想）
+- 2006: 转向同伦类型论 (HoTT)
+- 2017: 在普林斯顿家中去世（主动脉瘤）
 
-## 核心数学贡献
-
+### 核心
 | 领域 | 贡献 | 年代 |
 |------|------|:--:|
-| 代数几何 | A¹ 同伦论（motivic homotopy theory）—— 代数簇上的同伦论 | 1990s |
-| 代数 K 理论 | Milnor 猜想和 Bloch–Kato 猜想的证明 | 1990s–2000s |
-| 逻辑 | 同伦型论 (Homotopy Type Theory, HoTT) —— 数学基础的新方案 | 2010s |
-| 证明助手 | Coq 证明助手 + UniMath 库的开发 | 2010s |
+| 代数几何 | A¹-同伦论 | 1996 |
+| 动机理论 | Voevodsky motives 的三角范畴 | 2000 |
+| K-理论 | Bloch–Kato 猜想的证明 | 1990s–2000s |
+| 逻辑 | 同伦类型论 (HoTT) 的推动 | 2006–2017 |
+| 计算机 | UniMath —— 基于同伦类型论的证明助手 | 2010s |
 
-### ★ 叙事线索
+### ★ 叙事
+1. **代数几何的同伦论革命** — Voevodsky 将拓扑中的同伦论完整地移植到代数几何中。这是 Grothendieck 动机理论的梦想实现
+2. **Bloch–Kato 猜想** — Milnor K-理论中的猜想。Voevodsky 用 motivic 上同调证明了它
+3. **Fields 奖 (2002)** — 在 2010 年 ICM 颁发（原定 2002 北京 ICM 因 SARS 推迟）
+4. **从代数几何到逻辑** — 2006 年后，他彻底转向同伦类型论 (HoTT)——一种基于同伦论的数学新基础
+5. **51 岁的早逝** — 2017 年因主动脉瘤突然去世。留下 Univalent Foundations 的未完成革命
 
-1. **莫斯科的叛逆少年** — 父亲是化学教授，母亲会 7 种语言。他高中退学，自学数学。被莫斯科大学录取后又退学
-2. **A¹ 同伦论** — 将代数簇视为"空间"，用同伦论的语言研究数论问题。这个想法革新了代数几何和 K 理论
-3. **Milnor 猜想 + Bloch–Kato 猜想** — 两个搁置几十年的猜想，他用 motivic 上同调一举证明。Fields Medal 2002
-4. **数学基础的新篇章** — 30 多岁获得 Fields 奖后，他没有继续深耕代数几何，而是转向了数学基础和计算机验证。他说："我发现了我早期证明中的一个错误，然后意识到人脑是不可靠的。我决定用计算机来检查数学证明。"
-5. **51 岁的早逝** — 2017 年因主动脉瘤在家中去世。他留下了 HoTT 这个未竟的事业
+## ⚠️ 史实陷阱
+- **博士导师** — Kazhdan（哈佛），不是 Gelfand 也不是 Manin
+- **Fields 奖** — 2002，但在 2010 ICM 颁发（因 SARS 推迟）
+- **死因** — 主动脉瘤 (aortic aneurysm)，不是癌症
+- **Bloch–Kato 猜想** — 不是全部由 Voevodsky 证明。Merkurjev–Suslin 证明了低次部分
+- **HoTT** — Voevodsky 是推动者之一，不是"创始人"（Martin-Löf 类型论在先）
 
-### 人物关系：
-- **Grothendieck** — motivic 理论的灵感来源
-- **Milnor** — 他证明的猜想以 Milnor 命名
-- **Suslin** — A¹ 同伦论的早期合作者
+## ⚠️ 终审
+| 点 | 检查 |
+|----|------|
+| 出生 | Moscow 1966 |
+| 博士 | Kazhdan 1992 |
+| A¹-同伦 | 1996 |
+| Fields | 2002 |
+| 死因 | 主动脉瘤 2017.09.30 |
+| HoTT | 2006 后转向 |
 
----
+## 配色：同伦紫 + IAS 灰 + 动机金
+## 幻灯片（14 页）
+01 封面 — 《沃埃沃茨基：代数几何的同伦革命者》
+02 莫斯科→哈佛 (1966–1992)
+03 A¹-同伦论 (1996)
+04 Voevodsky motives
+05 Bloch–Kato 猜想的证明
+06 Fields 奖 (2002)
+07 同伦类型论 (HoTT) 的转向
+08 Univalent Foundations
+09 UniMath —— 计算机证明的未来
+10 IAS 二十年
+11 51 岁的早逝 (2017)
+12 遗产
+13 结束页 — 他在代数几何和逻辑之间建立了一座同伦论的桥梁
 
-## 配色方案
+## 音乐: Timeless + Tragedy
 
-- **主色**：深靛 + 逻辑银 —— Grothendieck 的传承 + 计算机验证的冰冷精确
-- 四个分类色：
-  - **badgeag** (代数几何) — 深靛 `#1B1B6B`
-  - **badgeHoTT** (同伦型论) — 逻辑银 `#C0C0C0`
-  - **badgeK** (K理论) — 暖金 `#B8860B`
-  - **badgeproof** (证明助手) — 电路绿 `#00FF41`
-
----
-
-## 幻灯片序列（11 页）
-
-```
-01  封面 — 《沃埃沃茨基：重新发明数学基础的人》 / Vladimir Voevodsky 1966–2017
-02  莫斯科的叛逆 — 退学两次的自学天才
-03  A¹ 同伦论 — 代数簇上的拓扑
-04  Milnor 猜想 + Bloch–Kato 猜想 — 一举双杀
-05  Fields Medal 2002
-06  从 Fields 到计算机 — 惊人的转向
-07  同伦型论 (HoTT) — 数学基础的新篇章
-08  "人脑是不可靠的" — 他为什么转向计算机
-09  51 岁的戛然而止 (2017)
-10  思想回响 — 他留下的 HoTT 仍在生长
-11  结束页
-```
-
----
-
-## 音乐选择
-
-| 优先级 | 曲目 | 来源 | 理由 |
-|:--:|------|------|------|
-| ★★★ | Mirage | inspiring-electronic | 梦幻，代数几何与逻辑的融合 |
-| ★★★ | Falling Apart | inspiring-electronic | 渐进，从 Fields 到 HoTT 的转向 |
-
-> **开始执行。**
+> **开始执行。** 特别提醒: 死因是主动脉瘤，不是癌症。Fields 2002 颁发推迟到 2010。
