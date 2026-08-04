@@ -1,83 +1,67 @@
 # 内万林纳 (Rolf Nevanlinna) 立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-> 直接复制本文件内容到新对话中使用。
+> 严格遵循 [Mathematician_Biography_Guide.md]。参考: cartan, weyl。
 
 ---
 
-## 背景信息
+## 背景
 
-- **目标数学家**: Rolf Nevanlinna (1895–1980)
-- **气质关键词**: **值分布理论之父、芬兰数学的缔造者、复杂的战时选择**
-- **Wikipedia 页面**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Rolf_Nevanlinna/`
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+- **目标**: Rolf Nevanlinna (1895–1980)
+- **气质**: **值分布理论的创立者、芬兰数学的国家象征、Nevanlinna 理论的命名者**
+- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Rolf_Nevanlinna/`
 
----
+## 第 0 步：校验
 
-## 第 0 步：下载 Wikipedia 页面并校验
-
-- **生卒日期**：1895-10-22 ~ 1980-05-28，享年 84 岁
+- **生卒**：1895-10-22 ~ 1980-05-28，享年 84 岁
 - **国籍**：芬兰
+- **出生地**：Joensuu, Finland
 - **博士导师**：Ernst Lindelöf（赫尔辛基大学）
 - **博士论文**：1919
-- **主要任职**：赫尔辛基大学、ETH Zürich
-- **荣誉**：芬兰科学院院士、芬兰数学界的民族英雄
-- **争议**：二战期间曾与纳粹德国合作（以芬兰军方身份），战后被要求退出某些职位
+- **任职**：赫尔辛基大学、ETH Zürich、芬兰学术院
+- **荣誉**：Fields 奖委员会成员（未获奖，但有以他命名的 Nevanlinna 奖——理论计算机科学）
+- **政治争议**：二战期间亲纳粹立场（芬兰与德国同盟对抗苏联）
 
----
-
-## 核心数学贡献
-
+### 核心
 | 领域 | 贡献 | 年代 |
 |------|------|:--:|
-| 复分析 | Nevanlinna 理论（值分布理论） | 1925 |
-| 复分析 | Nevanlinna 第一和第二基本定理 | 1920s |
-| 复分析 | 亚纯函数的缺陷关系 | 1930s |
+| 复分析 | Nevanlinna 理论——亚纯函数的值分布 | 1925 |
+| 复分析 | Nevanlinna 特征函数 T(r,f) | 1925 |
+| 复分析 | 第一、第二基本定理 | 1925 |
+| 计算机科学 | Nevanlinna 奖（以他命名） | 1981设立 |
 
-### ★ 叙事线索
+### ★ 叙事
+1. **值分布理论** — 亚纯函数取每个值的频率（Picard 定理的量化版）
+2. **两个基本定理** — 第一定理是 Poisson–Jensen 的推广，第二定理是真正的突破
+3. **与 Ahlfors 的关系** — 两人都是 Lindelöf 的学生，但 Ahlfors 在几何方向推广了 Nevanlinna 理论
+4. **政治阴影** — 二战期间芬兰与纳粹德国同盟，Nevanlinna 担任了亲德职务
 
-1. **值分布理论** — 一个亚纯函数取每个值的次数几乎相等。Nevanlinna 将这个直觉变成了严格的数学理论，被 Weyl 称为"20 世纪分析学最伟大的成就之一"
-2. **Nevanlinna Prize** — 1983 年 ICM 设立 Nevanlinna 奖（信息科学数学），2019 年更名为 IMU Abacus Medal
-3. **芬兰的民族英雄** — 在芬兰独立后的文化建国中，Nevanlinna 是芬兰科学力量的象征
-4. **战时的政治选择** — 1940 年代与德国的复杂关系在战后受到审视。这是需要被记录但不应过度审判的灰色地带
+## ⚠️ 史实陷阱
+- **Nevanlinna 奖** — 以他命名，但他本人未获奖。不要写成"他是 Nevanlinna 奖得主"
+- **政治争议** — 客观叙述，不美化和不丑化
+- **博士导师** — Lindelöf（与 Ahlfors 同门）
 
-### 人物关系：
-- **Ahlfors** — 学生（首届 Fields 奖得主）
-- **Weil** — Nevanlinna 曾试图在战时帮助 Weil（芬兰事件，Weil 自传中有夸大之处）
-- **Lindelöf** — 导师
+## ⚠️ 终审
+| 点 | 检查 |
+|----|------|
+| 博士 | Lindelöf 1919 |
+| 理论 | 1925 |
+| 政治 | 二战亲德 |
+| 奖 | 以他命名，非他所得 |
 
----
+## 配色：芬兰白 + 复分析蓝 + 北欧灰
+## 幻灯片（12 页）
+01 封面
+02 值分布理论
+03 第一、第二基本定理
+04 Nevanlinna 特征函数
+05 Lindelöf 的两个学生
+06 与 Ahlfors 的对话
+07 芬兰数学的象征
+08 二战的政治阴影
+09 Nevanlinna 奖
+10 遗产
+11 结束页
 
-## 配色方案
-
-- **主色**：北欧蓝 + 森林绿 —— 芬兰的自然与学术
-- 四个分类色：
-  - **badgedist** (值分布) — 北欧蓝 `#003580`
-  - **badgemero** (亚纯函数) — 森林绿 `#2E5A3E`
-  - **badgewar** (战时) — 灰 `#6B6B6B`
-
----
-
-## 幻灯片序列（9 页）
-
-```
-01  封面 — 《内万林纳：值分布理论的创立者》 / Rolf Nevanlinna 1895–1980
-02  芬兰复分析学派的诞生 — Lindelöf 的弟子
-03  Nevanlinna 理论 — 亚纯函数取值的秘密
-04  第一和第二基本定理 — 分析的精确之美
-05  芬兰的民族英雄 — 科学建国
-06  Ahlfors — 第一届 Fields 奖首名学生
-07  战时的灰色地带
-08  思想回响 + 结束页
-```
-
----
-
-## 音乐选择
-
-| 优先级 | 曲目 | 来源 | 理由 |
-|:--:|------|------|------|
-| ★★★ | PAST | alex-productions | 历史感，芬兰建国与战时选择 |
-| ★★★ | Timeless | alex-productions | 沉稳，值分布理论的永恒 |
+## 音乐: Timeless
 
 > **开始执行。**
