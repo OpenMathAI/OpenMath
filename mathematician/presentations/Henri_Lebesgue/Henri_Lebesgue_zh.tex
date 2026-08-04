@@ -1,0 +1,540 @@
+% =============================================================
+%  积分的革命者：亨利·勒贝格 (Henri Lebesgue)
+%  Beamer 演示 —— 参照 Banach / Artin / Weil 版式
+%  资料来源：mathematician/pages/Henri_Lebesgue + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：勒贝格 —— 巴黎灰 + 赤陶红（安静巨人的革命）=====
+\definecolor{bgmain}{RGB}{245,243,241}
+\definecolor{coverprimary}{HTML}{3D3D3D}   % 巴黎灰 — 安静、知性
+\definecolor{coveraccent}{HTML}{BB4444}    % 赤陶红 — 积分的生命线
+\definecolor{coveramber}{HTML}{C2733A}     % 暖铜对比
+\definecolor{coverpurple}{HTML}{5A3E85}    % 紫罗兰点缀
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{45,45,45}
+\definecolor{muteddark}{RGB}{95,85,75}
+\definecolor{redpanel}{RGB}{252,240,240}     % 浅赤陶面板
+\definecolor{greenpanel}{RGB}{224,244,235}   % 浅绿面板
+\definecolor{amberpanel}{RGB}{255,242,228}   % 暖铜面板
+\definecolor{purplepanel}{RGB}{238,230,252}  % 浅紫面板
+\definecolor{goldpanel}{RGB}{252,246,230}    % 暖金面板
+\definecolor{graypanel}{RGB}{242,244,248}
+\definecolor{bluepanel}{RGB}{228,234,248}
+% 勒贝格四大支柱
+\definecolor{badgeinteg}{HTML}{BB4444}       % Lebesgue 积分 — 赤陶红
+\definecolor{badgemeasure}{HTML}{5A5A5A}     % 测度论 — 巴黎灰
+\definecolor{badgefourier}{HTML}{1B4D6B}     % Fourier 分析 — 深蓝
+\definecolor{badgetopos}{HTML}{8B6914}       % 拓扑/覆盖 — 暖金棕
+\definecolor{coverteal}{HTML}{009688}       % 青绿 — 来自 openmath_page
+\definecolor{coverwarm}{HTML}{FFB300}        % 暖金 — 来自 openmath_page
+\definecolor{badgecomputation}{HTML}{00BFA5} % 来自 openmath_page
+\definecolor{badgeAI}{HTML}{5C6BC0}          % 来自 openmath_page
+\definecolor{badgebio}{HTML}{FFA000}         % 来自 openmath_page
+\definecolor{badgephilosophy}{HTML}{8D6E63} % 来自 openmath_page
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeinteg!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgemeasure!10] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coveraccent!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgefourier!8] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{divide}\enspace 积分的革命者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {亨利·勒贝格};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Henri Lebesgue\enspace·\enspace 1875 — 1941};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {Lebesgue 积分 · 测度论 · 现代实分析的奠基人};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeinteg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {Lebesgue 积分};
+      \node[rounded corners=8pt, fill=badgemeasure, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {测度论};
+      \node[rounded corners=8pt, fill=badgefourier, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {Fourier 分析};
+      \node[rounded corners=8pt, fill=badgetopos, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {L$^p$ 空间};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"约化为一般理论，数学将是没有内容的漂亮形式。" —— 勒贝格};
+  % Lebesgue 肖像（右上）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.2cm,height=3.0cm,keepaspectratio]{Lebesgue_2.jpeg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.3cm]current page.center)
+    {Henri Lebesgue};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{medal}\enspace Poncelet 奖 1914 · 皇家学会外籍院士 · 法国科学院院士\enspace|\enspace Paris · Collège de France};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么勒贝格改变了分析的面貌}{Lebesgue 积分 · 测度论 · 现代实分析的基础设施}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=redpanel, draw=badgeinteg!50, text=coverprimary!85!black]
+    (a) at (-5.7,1.05) {积分的革命\\按 y 轴切分\\而非 x 轴};
+  \node[nodebox, fill=graypanel, draw=badgemeasure!50, text=badgemeasure!85!black]
+    (b) at (-1.9,1.05) {测度论\\长度/面积\\严格推广};
+  \node[nodebox, fill=bluepanel, draw=badgefourier!50, text=badgefourier!85!black]
+    (c) at (1.9,1.05) {Fourier 分析\\Riemann-Lebesgue 引理\\$L^p$ 空间};
+  \node[nodebox, fill=goldpanel, draw=badgetopos!50, text=badgetopos!85!black]
+    (d) at (5.7,1.05) {现代分析的基石\\泛函分析 → 概率论\\量子力学};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 在他之前，很多函数"不可积"。在他之后，不可积的函数成了特例。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 他的博士论文被认为是数学史上最杰出的论文之一。而他只是一个安静的法兰西教师。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年与求学 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{早年与求学 (1875–1897)}{博韦的排字工之子 · 社区资助 · 巴黎高等师范学校}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgeinteg!40] at (0,2.55)
+    {\textbf{1875 · 生于博韦 (Beauvais)。}父亲是排字工人，母亲是小学教师。家中藏书丰富——幼年的勒贝格得以在家中的图书馆自由阅读。父亲在他幼年时因肺结核去世，母亲独自抚养他长大。};
+  \node[item, fill=redpanel, draw=badgeinteg!30] at (0,1.05)
+    {\textbf{天赋初显。}小学阶段的勒贝格展现出卓越的数学才能。一位教师为他争取了社区资助，使他得以先进入博韦学院，继而进入巴黎的圣路易中学和路易大帝中学继续深造。};
+  \node[item, fill=graypanel, draw=badgemeasure!25] at (0,-0.25)
+    {\textbf{1894 · 巴黎高等师范学校 (ENS)。}以优异成绩考入法国最精英的学术机构。1897 年毕业后留校在图书馆工作两年，在此期间接触了 Baire 关于不连续函数的最新研究——这为他日后积分理论的革命埋下了种子。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个排字工人的儿子，靠着社区资助和天赋，走进了法国的数学最高殿堂。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 博士论文 1902 ---
+\newcommand{\thesisslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{博士论文 (1902)}{Intégrale, longueur, aire —— 130 页改变数学史}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeinteg!55] at (0,2.35)
+    {\textbf{1899–1902 · 南锡的中学教师。}在 Lycée Central de Nancy 教书的同时，利用业余时间撰写博士论文。他吸收了 Borel 的测度论思想、Jordan 的 Jordan 测度理论，试图为积分学建立全新的基础。};
+  \node[item, fill=graypanel, draw=badgemeasure!40] at (0,0.85)
+    {\textbf{论文结构。}第一章：测度理论（Borel 测度）；第二章：积分——几何与解析两种定义；第三章：长度、面积与可应用曲面；第四章：Plateau 问题。这篇论文被认为是用数学语言表达清晰性的典范。};
+  \node[item, fill=amberpanel, draw=badgetopos!30] at (0,-0.45)
+    {\textbf{数学史上最杰出的博士论文之一。}这篇论文不仅定义了勒贝格积分和勒贝格测度，它开创了现代测度论和实分析的整个领域。博士导师是比他年长四岁的 Borel——尽管日后两人在谁的积分"更一般"的问题上产生了分歧。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一篇 130 页的博士论文，开启了现代分析的新纪元。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Riemann 积分的局限 ---
+\newcommand{\riemannlimitslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Riemann 积分的局限}{按 x 轴切分的世界 —— 为什么需要一场革命}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgeinteg!40] at (0,2.55)
+    {\textbf{Riemann 积分 (1854)。}Riemann 对积分的形式化定义——将定义域（x 轴）分割成小区间，用矩形面积逼近函数下方的面积——是 19 世纪分析的标志性成就。但对于很多"行为不好"的函数，这些矩形面积的总和不趋近任何数——它们没有 Riemann 积分。};
+  \node[item, fill=redpanel, draw=badgeinteg!50] at (0,1.05)
+    {\textbf{不可积函数太多了。}Dirichlet 函数（有理数上为 1、无理数上为 0）在 Riemann 意义下不可积。这意味着——人们无法对最简单的"可以想象的"不连续函数进行积分。这是一个深刻的问题。};
+  \node[item, fill=graypanel, draw=badgemeasure!30] at (0,-0.25)
+    {\textbf{Fourier 级数的呼唤。}在 Fourier 分析中，极限与积分的交换是核心操作。但 Riemann 积分对此要求过于苛刻——逐点收敛不足以保证积分号的交换。数学家需要一种更"宽容"的积分理论。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Riemann 分蛋糕的方法太粗糙了。勒贝格决定换一种切法。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. Lebesgue 积分的洞见 ---
+\newcommand{\insightslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Lebesgue 积分的洞见}{先横后竖 —— 一道简单的视角转换，改变了整个现代分析}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeinteg!55] at (0,2.35)
+    {\textbf{视角转换。}Riemann 积分按定义域（x 轴）切分——先竖后横。Lebesgue 积分按值域（y 轴）切分——先横后竖。在 y 轴上取水平切片，测量函数取值落在每个小区间内的 x 集合的"测度"，然后求和。};
+  \node[item, fill=graypanel, draw=badgemeasure!40] at (0,0.85)
+    {\textbf{简单函数 → 可测函数 → 一般函数。}Lebesgue 先为简单函数（只取有限多个值的可测函数）定义积分，再用上确界逼近为任意可测函数定义积分。这个"从简单到复杂"的构造方式成为现代分析的标准模板。};
+  \node[item, fill=bluepanel, draw=badgefourier!35] at (0,-0.45)
+    {\textbf{更强的收敛定理。}Lebesgue 积分的核心优势：控制收敛定理（Dominated Convergence Theorem）。在非常宽松的条件下即可交换极限和积分——这是 Riemann 积分永远做不到的。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Riemann 用竖线切蛋糕。Lebesgue 说：用横线切。就这么简单。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Lebesgue 测度 ---
+\newcommand{\measureslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Lebesgue 测度}{什么是长度？—— 从一个简单问题到现代测度论}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=graypanel, draw=badgemeasure!55] at (0,2.35)
+    {\textbf{"长度"的严格化。}区间 [0,1] 的长度是 1——这没有问题。但 Cantor 三分集（每步挖去中间三分之一）的长度是多少？答案：0。但 Cantor 集与 [0,1] 有相同的基数——都是不可数集。这意味着"大小"的概念比"元素个数"更复杂。};
+  \node[item, fill=redpanel, draw=badgeinteg!35] at (0,0.85)
+    {\textbf{可测集。}Lebesgue 定义了"可测集"这一概念——一个集合是可测的，如果它的"长度"（测度）可以被唯一定义。可测集类非常庞大：它包含所有开集、闭集、可数个可测集的并集和交集。};
+  \node[item, fill=amberpanel, draw=badgetopos!30] at (0,-0.45)
+    {\textbf{不可测集。}选择公理 (AC) 的存在意味着存在不可测集。Lebesgue 对此完全清楚。他的测度论精确地画出了"可测量的"和"不可测量的"之间的界线——这是现代分析基础的核心。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "长度"看似简单。给它一个数学定义，用了数学史上最深刻的洞察。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 六个理想条件 ---
+\newcommand{\sixconditionsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{积分应该满足的六个条件}{从公理化视角看积分 —— 比 Hilbert 的几何公理更早的"公理化精神"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeinteg!50] at (0,2.35)
+    {\textbf{1904 《积分教程》。}在著名的"Borel 文集"中，Lebesgue 提出了积分应该满足的六个理想条件。这不是具体的计算规则，而是一种公理化思考——积分是什么？一个好的积分理论需要具备哪些性质？};
+  \node[item, fill=graypanel, draw=badgemeasure!35] at (0,0.85)
+    {\textbf{关键条件六。}"如果函数序列 $f_n(x)$ 递增地趋向极限 $f(x)$，则 $f_n$ 的积分趋向 $f$ 的积分。"这是 Lebesgue 积分比 Riemann 积分更强大的核心原因：单调收敛定理。};
+  \node[item, fill=amberpanel, draw=badgetopos!25] at (0,-0.45)
+    {\textbf{公理化思维的先驱。}Lebesgue 展示了一个重要思想：满足这六个条件的积分理论必然导致测度论和可测函数的概念。他从"想要的"出发推导出"必须的"——现代数学的公理化方法在分析中的早期典范。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他不是在问"怎么算"？他在问——"积分应该是什么"？}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. Fourier 分析与 Riemann-Lebesgue ---
+\newcommand{\fourierslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Fourier 分析与 Riemann–Lebesgue 引理 (1903)}{从三角函数到现代调和分析的路标}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgefourier!55] at (0,2.35)
+    {\textbf{1903 · "Sur les séries trigonométriques"。}Lebesgue 发表了关于三角级数的重要论文，其中包含三个核心定理：(1) 表示有界函数的三角级数是 Fourier 级数；(2) Riemann–Lebesgue 引理——Fourier 系数趋于零；(3) Fourier 级数可以逐项积分。};
+  \node[item, fill=redpanel, draw=badgeinteg!35] at (0,0.85)
+    {\textbf{Riemann–Lebesgue 引理。}任何一个 $L^1$ 函数的 Fourier 系数必定趋于零。这是调和分析的基本定理之一——连接了 Lebesgue 积分的抽象理论与 Fourier 级数的具体计算。};
+  \node[item, fill=graypanel, draw=badgemeasure!25] at (0,-0.45)
+    {\textbf{1904–1905 · Collège de France 讲座。}Lebesgue 在法兰西公学院讲授三角级数，后结集出版为 Borel 文集的第二卷。他再次以历史视角呈现——从 Fourier 到 Cantor-Riemann 理论再到 Poisson 积分。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Lebesgue 积分不是目的——Fourier 分析才是。积分只是让 Fourier 分析变得更强大的工具。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 职业生涯 ---
+\newcommand{\careerslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{从雷恩到法兰西公学院 (1902–1941)}{一个安静的法兰西教授的上升轨迹}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeinteg!45] at (0,2.55)
+    {\textbf{1902–1906 · 雷恩大学。}获得博士学位后，Lebesgue 的第一个教职在布列塔尼的雷恩大学。这是法国学术体系的起点——年轻的博士在地方大学开始教学和研究生涯。};
+  \node[item, fill=amberpanel, draw=badgetopos!35] at (0,1.05)
+    {\textbf{1906–1910 · 普瓦捷大学 → 1910–1921 · 索邦。}逐步向巴黎靠近。1910 年成为索邦大学的 maître de conférences（讲师），1919 年升任教授。在索邦的十一年是他学术产出最丰富的时期之一。};
+  \node[item, fill=graypanel, draw=badgemeasure!35] at (0,-0.25)
+    {\textbf{1921–1941 · 法兰西公学院。}1921 年离开索邦，成为法兰西公学院（Collège de France）的数学教授——法国学术体系的最高荣誉之一。1922 年当选法国科学院院士。他在公学院坚守到生命最后一年，在纳粹占领的巴黎去世。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从布列塔尼的海边到巴黎的左岸，一个安静的人走完了法国学术体系的全部阶梯。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 与 Borel 的争论 ---
+\newcommand{\boreldisputeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{与 Borel 的争论}{谁的积分更一般？—— 师生之间的一场君子之争}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgetopos!50] at (0,2.35)
+    {\textbf{Émile Borel (1871–1956)。}Borel 是 Lebesgue 的博士导师，比 Lebesgue 年长四岁。Borel 首创了现代测度论的基本概念（Borel 集、Borel 测度），但他在 1910 年代发展了自己的积分理论——与 Lebesgue 的思路不同。};
+  \node[item, fill=redpanel, draw=badgeinteg!40] at (0,0.85)
+    {\textbf{1918–1920 · Annales de l'École Supérieure。}两位大师在《高等师范学校年鉴》上展开了三回合的学术辩论。Borel 声称他的积分比 Lebesgue 的"更一般"。Lebesgue 礼貌但坚定地反驳——这场争论在 Annals 上留下了三篇经典论文。};
+  \node[item, fill=graypanel, draw=badgemeasure!25] at (0,-0.45)
+    {\textbf{君子之争。}尽管存在分歧，这场争论始终保持着学术尊严。Lebesgue 对 Borel 始终怀着尊重——他在多年后讲课时仍称 Borel 为"开创整个领域的先驱"。两位数学家的名字并肩出现在测度论的基础中。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 老师与学生争论谁的积分更一般——这是数学史上最优雅的"代际对话"之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 多米诺效应 ---
+\newcommand{\dominoslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{多米诺效应}{从 Lebesgue 积分到现代泛函分析 —— 一环扣一环的革命}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeinteg!55] at (0,2.55)
+    {\textbf{Lebesgue 积分 → $L^p$ 空间。}有了 Lebesgue 积分，数学家可以定义 $L^p$ 空间：$p$ 次方可积函数的空间。$L^2$ 成为 Hilbert 空间的第一个（也是最重要的）具体实例。没有 Lebesgue 积分，就没有 $L^2$ 的完备性。};
+  \node[item, fill=bluepanel, draw=badgefourier!40] at (0,1.05)
+    {\textbf{$L^2$ 空间 → 量子力学。}John von Neumann 在 1930 年代用 Hilbert 空间的语言严格表述了量子力学。而 Hilbert 空间的完备性依赖于 Lebesgue 积分。换句话说——量子力学的数学基础建立在一个法国教师的博士论文之上。};
+  \node[item, fill=graypanel, draw=badgemeasure!30] at (0,-0.25)
+    {\textbf{Banach 空间 → PDE → 概率论。}Lebesgue 积分为泛函分析提供了操作空间。Banach 空间的大量实例就是 $L^p$ 空间。Kolmogorov 的概率论公理化也依赖于测度论。从 PDE 到金融数学，Lebesgue 的足迹无处不在。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一篇博士论文 → 测度论 → Hilbert 空间 → 量子力学。这就是数学的多米诺。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 统计学与遍历论 ---
+\newcommand{\statmechslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{意想不到的来世}{统计力学与遍历论 —— Lebesgue 积分走出纯数学}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgetopos!50] at (0,2.35)
+    {\textbf{1947 · Norbert Wiener 的发现。}Wiener 在《控制论》中指出：Lebesgue 积分为 Gibbs 统计力学的基础——遍历假说——提供了严格的数学证明。测度论中的"平均"和"测度"概念恰好是遍历论所需要的语言。};
+  \node[item, fill=redpanel, draw=badgeinteg!35] at (0,0.85)
+    {\textbf{Lebesgue 本人完全不知道。}Lebesgue 于 1941 年去世。他终其一生不知道自己的积分理论在统计物理中发挥着如此关键的作用。这是基础数学贡献的经典模式——在奠基者去世后才展现出其全部力量。};
+  \node[item, fill=bluepanel, draw=badgefourier!25] at (0,-0.45)
+    {\textbf{Lebesgue 积分 → Wiener 积分 → 随机分析。}Wiener 自己发展出了 Wiener 测度（布朗运动的数学描述），其基础仍然是 Lebesgue 型的测度论构造。Kolmogorov 的概率公理化、Itô 的随机积分——都生长在 Lebesgue 埋下的土壤中。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他种了一棵树——Wiener、Kolmogorov、Itô 后来都在那棵树下乘凉。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 博士学生 ---
+\newcommand{\studentsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{导师与学生}{三位改变 20 世纪数学的学生}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeinteg!45] at (0,2.35)
+    {\textbf{Paul Montel (1876–1975)。}法国分析学家，以 Montel 正规族定理闻名——复分析中关于全纯函数族的紧性准则。他成为索邦的教授，培育了整整一代法国数学家。};
+  \node[item, fill=bluepanel, draw=badgefourier!30] at (0,1.05)
+    {\textbf{Zygmunt Janiszewski (1888–1920)。}波兰拓扑学家，以 Janiszewski 定理闻名。他倡导波兰数学集中于集合论、拓扑和泛函分析——这一战略规划催生了后来的 Lwów 学派和华沙学派。36 岁早逝于流感。};
+  \node[item, fill=amberpanel, draw=badgetopos!30] at (0,-0.05)
+    {\textbf{Georges de Rham (1903–1990)。}瑞士数学家，以 de Rham 上同调闻名——微分拓扑和代数拓扑的基石。De Rham 定理证明了微分形式的上同调与奇异上同调同构，连接了分析与拓扑。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.55) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个安静的法国分析学家，教出了波兰拓扑学派的战略家、瑞士几何的大师。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 安静的教书匠 ---
+\newcommand{\personslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{安静的教书匠 (1875–1941)}{巴黎左岸的一位谦逊巨匠}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgetopos!40] at (0,2.35)
+    {\textbf{个人生活。}Lebesgue 娶了同学之妹，育有一子一女（Suzanne 和 Jacques）。他不是一个锋芒毕露的数学家——他的工作方式是在法兰西公学院的讲台上安静地教书、写作，将深奥的数学转化为清晰的语言。};
+  \node[item, fill=redpanel, draw=badgeinteg!30] at (0,0.85)
+    {\textbf{荣誉。}Poncelet 奖 (1914)、法国科学院院士 (1922)、英国皇家学会外籍院士 (1934)、法国荣誉军团勋章。他得到了法国学术体系能给予的全部荣誉——但他从不追求这些。};
+  \node[item, fill=graypanel, draw=badgemeasure!25] at (0,-0.45)
+    {\textbf{1941 · 纳粹占领下的巴黎。}Lebesgue 生命的最后一年正值纳粹占领。他在德国占领区的巴黎坚持教学和研究，于 1941 年 7 月 26 日去世，享年 66 岁。他活着看到了自己积分的理论成为现代分析的通用语言。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "约化为一般理论，数学将是没有内容的漂亮形式。" —— 一个只关心"内容"的人。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 16. 勒贝格的遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{勒贝格的遗产}{他的名字写在现代分析教科书的每一页上}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=redpanel, draw=badgeinteg!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeinteg} Lebesgue 积分}\\[3pt]控制收敛定理\\$L^p$ 空间\\Radon–Nikodym};
+  \node[leg, fill=graypanel, draw=badgemeasure!50, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgemeasure} Lebesgue 测度}\\[3pt]可测集\\Borel $\sigma$ 代数\\不可测集};
+  \node[leg, fill=bluepanel, draw=badgefourier!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgefourier} 调和分析}\\[3pt]Riemann–Lebesgue 引理\\Lebesgue 常数\\Fourier 级数};
+  \node[leg, fill=amberpanel, draw=badgetopos!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgetopos} 拓扑学}\\[3pt]覆盖维数\\Lebesgue 数引理\\通用覆盖问题};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他发明的不是某一个定理 ——\\他改变了对"积分"这个基础概念的思考方式。}\\[4pt]
+{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      20 多个以 Lebesgue 命名的定理、引理和概念。\\
+      Lebesgue 积分 → 测度论 → $L^p$ 空间 → 泛函分析 → 概率论 → 量子力学。\\
+      他的名字不是装饰 —— 他是现代分析基础设施的建造者。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 17. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {他说：约化为一般理论，数学};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {将是没有内容的漂亮形式。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.5cm]current page.center)
+    {亨利·勒贝格\quad Henri Lebesgue\quad 1875 — 1941};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{divide}\enspace 积分的革命者 · 现代实分析的奠基人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\thesisslide
+\riemannlimitslide
+\insightslide
+\measureslide
+\sixconditionsslide
+\fourierslide
+\careerslide
+\boreldisputeslide
+\dominoslide
+\statmechslide
+\studentsslide
+\personslide
+\legacyslide
+\closingslide
+\end{document}
