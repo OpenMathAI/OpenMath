@@ -1,60 +1,87 @@
 # 嘉当 (Élie Cartan) 立传提示词
 
-> 严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
+> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
+> 直接复制本文件内容到新对话中使用。
 
 ---
 
 ## 背景信息
 
 - **目标数学家**: Élie Cartan (1869–1951)
-- **关键词**: **大器晚成的微分几何巨匠、李群与李代数的几何化、活动标架法**
-- **Wikipedia**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Elie_Cartan/`
-- 注意区分：Élie Cartan（父亲，微分几何）≠ Henri Cartan（儿子，代数拓扑，Serre的导师）
+- **气质关键词**: **李群理论的巨人、微分几何的孤独建筑师、Hermann Weyl 的对话者**
+- **Wikipedia 页面**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Elie_Cartan/`
+- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
 
 ---
 
-## 第 0 步：下载并校验
+## 第 0 步：下载 Wikipedia 页面并校验
 
 - **生卒日期**：1869-04-09 ~ 1951-05-06，享年 82 岁
 - **国籍**：法国
-- **博士导师**：Gaston Darboux 和 Sophus Lie
+- **博士导师**：Gaston Darboux、Sophus Lie（间接影响）
 - **博士论文**：1894，《论有限连续变换群的结构》
-- **主要任职**：巴黎大学（索邦）
+- **主要任职**：巴黎大学（终身）
+- **关键荣誉**：法国科学院院士、英国皇家学会外籍院士
+- **重要合作者/学生**：Henri Cartan（儿子，Bourbaki）、Weil、陈省身
 
-### 核心贡献：
-- **活动标架法 (Méthode du repère mobile)** — Cartan 的独门利器，用微分形式重新表述微分几何。晚年后被发展成 Cartan 连络 (Cartan connection) 理论
-- **李群与李代数的分类** — 完成了复单李代数的分类（与 Killing 独立工作，但更完整）
-- **对称空间** — Cartan 对 Riemann 对称空间的分类
-- **微分形式与外微分** — 发展了现代微分几何的语言
-- **旋量 (Spinor)** — 在物理学界广为人知的旋量概念，最初由 Cartan 在 1913 年引入
-- **Pfaff 系统** — PDE 的几何化处理
+---
 
-### ★ 叙事亮点：
-1. **大器晚成** — Cartan 的贡献在生前没有被充分认可，他的活动标架法在当时被视为"太难了"。直到 1950s 以后，他的思想才被充分理解和发扬光大
-2. **一个数学王朝** — 儿子 Henri Cartan 是代数拓扑大师（Serre 的导师）、Bourbaki 创始人之一。数学史上最成功的父子之一
-3. **微分形式的先知** — 他用微分形式做微分几何，比同行领先了 30 年
-4. **旋量的发现者** — 物理学家每天都在用的旋量，是 Cartan 在 1913 年发现的
+## 核心数学贡献
 
-### 人物关系：
-- **Henri Cartan** (儿子) — 代数拓扑大师
-- **Darboux** — 博士导师
-- **Sophus Lie** — 博士联合导师，李群的思想源头
-- **Hermann Weyl** — 后继者，发展了 Cartan 的李群表示论
-- **陈省身** — 活动标架法在整体微分几何中的伟大应用（Chern 类！）
+| 领域 | 贡献 | 年代 |
+|------|------|:--:|
+| 李群 | Cartan 子代数 —— 半单李代数的核心结构 | 1913 |
+| 李群 | Cartan 分类 —— 所有复半单李代数的完整分类 | 1894–1914 |
+| 微分几何 | Cartan 联络（仿射联络）—— 广义相对论的数学语言 | 1920s |
+| 外微分 | 外微分形式与 Cartan 结构方程 | 1899–1904 |
+| 对称空间 | Cartan 对称空间的分类 | 1926–1935 |
+| 李群 | Cartan–Killing 形式 | 1894 |
+| 微分几何 | 活动标架法 (méthode du repère mobile) | 1930s |
 
-### 配色：法兰西几何紫 + 象牙
+### ★ 叙事线索
 
-### 幻灯片（13 页）：
+1. **"孤独的巨人"** — 他的工作在 20 世纪前 30 年几乎不被理解。Weyl 说："读 Cartan 的论文像是在丛林中跋涉。" 但后来发现他一个人开辟了半个微分几何
+2. **李群的分类** — Killing 开创了李代数分类，Cartan 完成了它（纠正了 Killing 的错误）。1894 年的博士论文和 1913 年的补充，奠定了 20 世纪李理论的基础
+3. **Cartan 联络** — 今天广义相对论使用的数学语言（纤维丛上的联络），Cartan 在 1920 年代就已发明
+4. **陈省身的老师** — 陈省身在巴黎师从 Cartan。陈说："Cartan 的工作在活着的时候没人真正读懂，但他去世后每个人都在用他的语言。"
+5. **父与子** — Élie Cartan（几何）与 Henri Cartan（代数/层论）是数学史最伟大的父子档
+
+---
+
+## 配色方案
+
+- **主色**：法兰西深蓝 + 几何金 —— 巴黎学派的优雅
+- 四个分类色：
+  - **badgeLie** (李群) — 法兰西深蓝 `#002147`
+  - **badgeconn** (Cartan联络) — 几何金 `#B8860B`
+  - **badgesym** (对称空间) — 古铜 `#8B6914`
+  - **badgeext** (外微分) — 银灰 `#A0A0A0`
+
+---
+
+## 幻灯片序列（12 页）
+
 ```
-01  封面 — 《嘉当：微分几何的先知》
-02  大器晚成的天才
-03  活动标架法 — 领先30年的微分形式语言
-04  李群的几何化
-05  对称空间
-06  旋量 (1913) — 物理学每天都在用的概念
-07  Cartan 数学王朝 — 儿子 Henri Cartan
-08  陈省身的继承 — 从活动标架到 Chern 类
-09  升起海水 + 结束页
+01  封面 — 《嘉当：孤独的微分几何巨人》 / Élie Cartan 1869–1951
+02  李群分类 — 博士论文 (1894) 纠正了 Killing
+03  Cartan 子代数 — 半单李代数的核心
+04  Cartan–Killing 形式 — 李代数的"内积"
+05  活动标架法 — 微分几何的通用工具
+06  Cartan 联络 — 广义相对论的语言 (1920s)
+07  对称空间 — 六年的系统分类
+08  陈省身的老师 — 孤独巨人的传承
+09  父与子 — Élie Cartan → Henri Cartan
+10  Weyl 的敬意 — "没有人比他更深地改变了微分几何"
+11  升起海水 + 结束页
 ```
 
-> **开始执行。**
+---
+
+## 音乐选择
+
+| 优先级 | 曲目 | 来源 | 理由 |
+|:--:|------|------|------|
+| ★★★ | Timeless | alex-productions | 沉稳，被忽视 30 年后被重新发现 |
+| ★★★ | Expedition | alex-productions | 探索，一个人开辟半个微分几何 |
+
+> **开始执行。每完成一步向我汇报。**

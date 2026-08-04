@@ -1,68 +1,90 @@
 # 阿诺德 (Vladimir Arnold) 立传提示词
 
-> 严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
+> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
+> 直接复制本文件内容到新对话中使用。
 
 ---
 
 ## 背景信息
 
 - **目标数学家**: Vladimir Arnold (1937–2010)
-- **气质关键词**: **Kolmogorov 的传人、动力系统的革命者、古典力学的几何化大师**
-- **Wikipedia 页面**: ⚠️ **尚未下载。**
-  - 页面路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Vladimir_Arnold/`
+- **气质关键词**: **Kolmogorov 的传人、KAM 定理的 A、动力系统与辛拓扑的大师**
+- **Wikipedia 页面**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Vladimir_Arnold/`
+- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
 
 ---
 
-## 第 0 步：下载并校验
+## 第 0 步：下载 Wikipedia 页面并校验
 
 - **生卒日期**：1937-06-12 ~ 2010-06-03，享年 72 岁
 - **国籍**：苏联 → 俄罗斯
-- **博士导师**：Andrey Kolmogorov — **最得意的门徒**
-- **博士论文**：1961（年仅 24 岁）
-- **主要任职**：莫斯科大学、Steklov 数学研究所、巴黎大学
-- **关键荣誉**：Wolf 奖 (2001)、Crafoord 奖 (1982)、Shaw 奖 (2008)
+- **博士导师**：Andrey Kolmogorov（莫斯科大学）
+- **博士论文**：1961
+- **主要任职**：莫斯科大学、斯捷克洛夫数学研究所、巴黎第九大学
+- **荣誉**：Lenin 奖 1965、Crafoord 奖 1982、Wolf 奖 2001、Shaw 奖 2008
+- **重要合作者/学生**：Kolmogorov, Sinai
 
-### 核心贡献：
+---
 
-| 领域 | 贡献 |
-|------|------|
-| 动力系统 | KAM 理论中的 "A"（Kolmogorov–Arnold–Moser）|
-| 古典力学 | 《古典力学的数学方法》— 领域圣经 |
-| 奇点理论 | Arnold 分类（ADE 分类） |
-| 拓扑学 | Arnold 猜想（辛拓扑） |
-| 数学物理 | 完全可积系统、Poisson 几何 |
+## 核心数学贡献
 
-### ★ 叙事亮点：
+| 领域 | 贡献 | 年代 |
+|------|------|:--:|
+| 经典力学 | KAM 定理（Arnold 部分 — 扩散） | 1960s |
+| Hilbert 问题 | Hilbert 第十三问题的解决（与 Kolmogorov） | 1957 |
+| 奇点理论 | ADE 分类（与数学物理的联系） | 1970s |
+| 辛拓扑 | Arnold 猜想（辛不动点猜想） | 1960s |
+| 流体力学 | Arnold 对 Euler 方程的几何描述 | 1966 |
 
-1. **KAM 理论** — Kolmogorov–Arnold–Moser：解决了"小扰动不会摧毁所有不变环面"的问题，这是天体力学中庞加莱未完成的工作的继续。Arnold 是 "A"
-2. **Arnold 猜想** — 辛几何中的核心猜想，关于 Hamilton 微分同胚的不动点。由 Floer 等人部分证明，推动了 Floer 同调的发展
-3. **教学与写作** — Arnold 以充满激情和幽默的教学风格著称。他极度鄙视 Bourbaki 式的形式主义，说数学是"物理的一部分"
-4. **反对 Bourbaki** — 他是 Bourbaki 形式主义最激烈的批评者之一，主张数学应该从物理直觉出发
-5. **19 岁解决 Hilbert 第十三问题的部分情形** — 这是 Arnold 成名的起点（和他的导师 Kolmogorov 合作）
+### ★ 叙事线索
+
+1. **Kolmogorov 最杰出的学生** — Kolmogorov 说 Arnold 是他见过的最聪明的学生。19 岁就参与解决了 Hilbert 第十三问题
+2. **KAM 定理的 "A"** — Kolmogorov 提出框架，Arnold 给出第一个严格证明，Moser 推广到光滑情形。三人共享命名
+3. **Arnold 猜想** — 断言：紧辛流形上的 Hamilton 微分同胚的不动点数 ≥ Morse 函数临界点的最小数。1980s–1990s 由 Floer, Fukaya, Ono 等人证实。催生了 Floer 同调
+4. **"数学是物理的一部分"** — Arnold 强烈反对 Bourbaki 的形式主义。他认为数学的灵感来自物理世界。他的教材充满直观的几何图示
+5. **Arnold 的猫** — Arnold 猫映射是混沌理论的标志性例子。一只猫的照片被映射拉伸再压缩，生动展示遍历性
 
 ### 人物关系：
-- **Kolmogorov** — 导师，KAM 的 K 和 A
-- **Moser** — KAM 的 M
-- **Gelfand** — 苏联数学的另一位巨人，两人风格互补
-- **Serre** — 互相尊重但数学风格截然不同 (Arnold: 几何直觉 vs Serre: 代数简洁)
+- **Kolmogorov** — 博士导师
+- **Moser** — KAM 的合作者
+- **Sinai** — 动力系统的同事
+- **Smale** — 动力系统的同辈巨人
 
-### 配色建议：俄罗斯红 + 星空深蓝（动力系统的动态 + 古典力学的宏大）
+---
 
-### 幻灯片建议（14 页）：
+## 配色方案
+
+- **主色**：莫斯科金穹 + 动力红
+- 四个分类色：
+  - **badgeKAM** (KAM 定理) — 金穹 `#C9A227`
+  - **badgesymp** (辛拓扑) — 深红 `#8B0000`
+  - **badgechaos** (混沌/猫映射) — 暖橙 `#D2691E`
+  - **badgeHilbert** (Hilbert 13) — 象牙白 `#F5F0E8`
+
+---
+
+## 幻灯片序列（11 页）
+
 ```
-01  封面 — 《阿诺德：动力系统之王》
-02  Kolmogorov 最得意的门徒 — 19岁开始闪耀
-03  KAM 理论 (A) — 拯救了不变环面
-04  古典力学的数学圣经 — 几何化的力学
-05  Arnold 猜想 — 辛拓扑的圣杯
-06  ADE 分类 — 奇点理论的优美
-07  反 Bourbaki 的斗士 — 数学是物理的一部分
-08  教学大师 — 激情与幽默
-09  升起海水 + 结束页
+01  封面 — 《阿诺德：Kolmogorov 的传人》 / Vladimir Arnold 1937–2010
+02  少年天才 — 19 岁解决 Hilbert 第十三问题
+03  KAM 定理 — 太阳系的稳定性
+04  Arnold 扩散 — 动力系统最深刻的谜题
+05  Arnold 猜想 — 催生了 Floer 同调
+06  Arnold 的猫 — 混沌的萌宠
+07  "数学是物理的一部分" — 反 Bourbaki
+08  流体力学中的几何 — Euler 方程的新视角
+09  Kolmogorov 的传承
+10  升起海水 + 结束页
 ```
 
-### 史实陷阱：
-- **KAM** — K 是 Kolmogorov (1954)，A 是 Arnold (1963)，M 是 Moser (1962)。三人的贡献几乎同时且相互独立。不要写"Arnold 创立了 KAM 理论"
-- **Hilbert 第十三问题** — Arnold 19 岁参与解决的是部分情形。完全解决是一个渐进过程
+---
+
+## 音乐选择
+
+| 优先级 | 曲目 | 来源 | 理由 |
+|:--:|------|------|------|
+| ★★★ | Savage | alex-productions | 强推进，动力与混沌 |
+| ★★★ | Awaken | alex-productions | 明亮，Kolmogorov 的传人 |
 
 > **开始执行。**
