@@ -1,0 +1,485 @@
+% =============================================================
+%  孤独的微分几何巨人：埃利·嘉当 (Élie Cartan)
+%  Beamer 演示 —— 参照 Lebesgue / Artin / Weyl 版式
+%  资料来源：mathematician/pages/Elie_Cartan + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：嘉当 —— 法兰西深蓝 + 几何金 + 象牙白（孤独建筑师 + 巴黎学派的优雅）=====
+\definecolor{bgmain}{RGB}{245,243,240}
+\definecolor{coverprimary}{HTML}{002147}     % 法兰西深蓝 — 李群理论的庄严
+\definecolor{coveraccent}{HTML}{DAA520}      % 几何金 — Cartan 联络的光芒
+\definecolor{coveramber}{HTML}{B8860B}       % 古铜金对比
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{0,28,55}
+\definecolor{muteddark}{RGB}{80,85,75}
+\definecolor{bluepanel}{RGB}{220,230,242}     % 浅法兰西蓝面板
+\definecolor{goldpanel}{RGB}{252,246,225}     % 暖金面板
+\definecolor{amberpanel}{RGB}{255,242,220}    % 古铜面板
+\definecolor{greenpanel}{RGB}{224,244,235}    % 浅绿面板
+\definecolor{graypanel}{RGB}{242,244,248}
+\definecolor{purplepanel}{RGB}{238,232,248}   % 浅紫面板
+\definecolor{silverpanel}{RGB}{235,238,240}   % 银灰面板
+% 嘉当四大支柱
+\definecolor{badgeLie}{HTML}{002147}          % 李群/李代数 — 法兰西深蓝
+\definecolor{badgeConn}{HTML}{DAA520}         % Cartan 联络 — 几何金
+\definecolor{badgeSym}{HTML}{8B6914}          % 对称空间 — 古铜
+\definecolor{badgeExt}{HTML}{708090}          % 外微分 — 银灰
+\definecolor{coverteal}{HTML}{009688}         % 青绿 — 来自 openmath_page
+\definecolor{coverwarm}{HTML}{FFB300}         % 暖金 — 来自 openmath_page
+\definecolor{badgecomputation}{HTML}{00BFA5}  % 来自 openmath_page
+\definecolor{badgeAI}{HTML}{5C6BC0}           % 来自 openmath_page
+\definecolor{badgebio}{HTML}{FFA000}          % 来自 openmath_page
+\definecolor{badgephilosophy}{HTML}{8D6E63}   % 来自 openmath_page
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeLie!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeSym!10] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coveraccent!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeConn!8] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{cogs}\enspace 孤独的微分几何巨人};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {埃利·嘉当};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.65cm]current page.center) {Élie Cartan\enspace·\enspace 1869 — 1951};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.15cm]current page.center) {李群分类 · Cartan 联络 · 对称空间 · 外微分形式};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.70cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.70cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeLie, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.2,0) {李群\\Lie Groups};
+      \node[rounded corners=8pt, fill=badgeConn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.73,0) {Cartan 联络\\Connections};
+      \node[rounded corners=8pt, fill=badgeSym, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.73,0) {对称空间\\Sym. Spaces};
+      \node[rounded corners=8pt, fill=badgeExt, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.2,0) {外微分\\Ext. Calculus};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.2cm]current page.center)
+    {"读 Cartan 的论文，像是在丛林中跋涉。" —— Hermann Weyl};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{medal}\enspace 法国科学院院士 1931 · 英国皇家学会外籍院士 1937\enspace|\enspace Paris · Sorbonne};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么嘉当是"孤独的巨人"}{李群 · 联络 · 对称空间 · 外微分 —— 一个人开辟了半个微分几何}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=bluepanel, draw=badgeLie!50, text=coverprimary!85!black]
+    (a) at (-5.7,1.05) {李群分类\\纠正 Killing\\奠定整个领域};
+  \node[nodebox, fill=goldpanel, draw=badgeConn!50, text=badgeConn!85!black]
+    (b) at (-1.9,1.05) {Cartan 联络\\广义相对论的\\数学语言};
+  \node[nodebox, fill=amberpanel, draw=badgeSym!50, text=badgeSym!85!black]
+    (c) at (1.9,1.05) {对称空间\\六年孤独分类\\后来的核心工具};
+  \node[nodebox, fill=silverpanel, draw=badgeExt!50, text=badgeExt!85!black]
+    (d) at (5.7,1.05) {外微分形式\\现代微分几何\\的基本语法};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他的论文以"不可读"著称 —— 不是因为写得差，而是因为他在所有人理解之前，创造了新的数学语言。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 陈省身说："Cartan 的工作在活着的时候没人真正读懂，但每个人都在用他的语言。"}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年与求学 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{铁匠之子到巴黎高师 (1869–1894)}{Dolomieu 村 → 巴黎高等师范学校 · 一个安静的天才的成长}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgeSym!40] at (0,2.55)
+    {\textbf{1869 · 生于 Dolomieu。}法国东南部 Isère 省的一个小村庄。父亲 Antoine Cartan 是村里的铁匠。家庭虽然不富裕，但支持小 Élie 的教育——他的哥哥后来也成为了一名教师。};
+  \node[item, fill=bluepanel, draw=badgeLie!35] at (0,1.05)
+    {\textbf{天赋初显。}在维也纳 (Vienne) 的中学，年轻的 Cartan 展现出卓越的数学才能。一位国家巡视员发现了他，帮助他获得了奖学金，使他得以进入巴黎的 Janson de Sailly 中学预备班。};
+  \node[item, fill=graypanel, draw=badgeExt!25] at (0,-0.25)
+    {\textbf{1888 · 巴黎高等师范学校 (ENS)。}以入学考试第一名的成绩进入法国最精英的学术机构。在 ENS 期间，他受到 Darboux、Picard 和 Tannery 的深刻影响——Darboux 后来成为他的博士导师。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个铁匠的儿子，从阿尔卑斯山脚下的小村庄，走进了法国数学的最高殿堂。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 博士论文 ---
+\newcommand{\thesisslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{博士论文 (1894)}{纠正 Killing —— 完成复半单李代数的完整分类}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeLie!55] at (0,2.35)
+    {\textbf{Killing 的先驱工作。}Wilhelm Killing (1888–1890) 首先开始分类李代数，但他的工作充满了技术性错误——许多定理的陈述不完整，甚至有些分类结果是错误的。Cartan 继承了 Killing 的思路，但以精确代替了猜测。};
+  \node[item, fill=goldpanel, draw=badgeConn!35] at (0,0.85)
+    {\textbf{1894 · "Sur la structure des groupes de transformations finis et continus"。}Cartan 在 Darboux 指导下完成博士论文。他以"极优" (très honorable) 成绩通过答辩。这篇论文给出了复半单李代数的第一个完整、无误的分类——四种经典系列加五个例外代数 ($G_2, F_4, E_6, E_7, E_8$)。};
+  \node[item, fill=graypanel, draw=badgeExt!30] at (0,-0.45)
+    {\textbf{Cartan–Killing 形式。}在论文中，Cartan 引入了后来被称为 Killing 形式的双线性型——实际上是他独立定义的。有趣的是，他谦虚地称之为 "Killing 形式"，而非自己的名字。这种谦逊贯穿了他整个学术生涯。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 年仅 25 岁，用一篇博士论文奠定了 20 世纪李理论的基础。不炫耀，只是安静地纠正。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Cartan 子代数 ---
+\newcommand{\subalgebraslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Cartan 子代数与分类体系 (1894–1914)}{二十年磨一剑 —— 从博士论文到李群理论的完整大厦}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeLie!55] at (0,2.35)
+    {\textbf{Cartan 子代数 (1913)。}在博士论文之后近二十年，Cartan 发表了关于半单李代数结构的核心论文。他定义了 Cartan 子代数——李代数中最大的交换子代数，其所有元素在半单表示下可同时对角化。这是整个表示论的基础概念。};
+  \node[item, fill=goldpanel, draw=badgeConn!35] at (0,0.85)
+    {\textbf{根系统与 Weyl 群。}Cartan 发现了根系统——李代数的 Cartan 子代数上的线性函数集合，编码了整个李代数的结构。Weyl 群（根系统的对称群）后来以 Weyl 命名，但其核心结构是 Cartan 发现的。};
+  \node[item, fill=amberpanel, draw=badgeSym!30] at (0,-0.45)
+    {\textbf{Cartan 矩阵与 Dynkin 图。}Cartan 将根系统的信息编码为一个整数矩阵——Cartan 矩阵。Dynkin 后来将 Cartan 矩阵可视化为 Dynkin 图。今天物理学家用的 $A_n, B_n, C_n, D_n, E_6, E_7, E_8, F_4, G_2$ 分类体系直接源于 Cartan。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} String Theory 的 gauge group $E_8 \times E_8$？ M-theory 的 $E_{11}$？\\都追溯到 Cartan 1894 年的博士论文。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 外微分 ---
+\newcommand{\exteriorcalc}{%
+\begin{frame}
+\plainbar
+\sectiontitle{外微分与 Cartan 结构方程 (1899–1904)}{不是发现定理，而是发明语法 —— 现代微分几何的语言基础}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=silverpanel, draw=badgeExt!55] at (0,2.35)
+    {\textbf{外微分形式。}在 Grassmann 的外代数基础上，Cartan 建立了一套完整的外微分运算体系：$d$ (外微分)、$\wedge$ (楔积)、$d^2=0$。这不是发现了一个定理，而是发明了一套语法——让微分几何从"公式的堆积"变成了"结构的运算"。};
+  \node[item, fill=bluepanel, draw=badgeLie!35] at (0,0.85)
+    {\textbf{Cartan 结构方程。}对于曲面和流形上的活动标架，Cartan 写下了两个简洁的结构方程：$d\omega^i = -\omega^i_j \wedge \omega^j$ 和 $d\omega^i_j = -\omega^i_k \wedge \omega^k_j + \Omega^i_j$。曲率形式 $\Omega^i_j$ 自然地从外微分运算中出现——不需要坐标！};
+  \node[item, fill=goldpanel, draw=badgeConn!30] at (0,-0.45)
+    {\textbf{Pfaff 系统的理论。}Cartan 将偏微分方程组的研究转化为外微分形式系统的研究——Pfaff 系统。他的方法可以统一处理 Frobenius 可积性定理、Monge–Ampère 方程、以及各种几何问题。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 今天每一个学习微分几何的学生，第一件事就是学 $d$ 和 $\wedge$。这是 Cartan 创造的语言。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Cartan 联络 ---
+\newcommand{\connslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Cartan 联络 (1920s)}{广义相对论的数学语言 —— 比物理学早了十年}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgeConn!55] at (0,2.35)
+    {\textbf{什么是联络。}在光滑流形上做"平行移动"时，需要一个规则告诉我们在不同点之间如何"比较"向量。这个规则就是联络。Riemann 曲率、测地线、协变导数——所有这些概念都依赖联络的定义。};
+  \node[item, fill=bluepanel, draw=badgeLie!35] at (0,0.85)
+    {\textbf{Cartan 的推广。}Riemann 的原始理论只处理了切丛上的 Levi-Civita 联络。Cartan 将联络的概念推广到任意的纤维丛上——包括标架丛、旋量丛，以及更一般的齐性空间。这为后来 Ehresmann 的纤维丛理论铺平了道路。};
+  \node[item, fill=amberpanel, draw=badgeSym!25] at (0,-0.45)
+    {\textbf{Cartan 与 Einstein。}1929–1932 年间，Cartan 与 Einstein 通信讨论统一场论。Einstein 试图统一引力和电磁学，而 Cartan 已经发展出了包含挠率 (torsion) 的联络理论——Einstein–Cartan 理论至今仍是引力理论的活跃研究方向。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Cartan 告诉 Einstein："你的引力方程使用的数学框架，我 10 年前已经建好了。"}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 活动标架法 ---
+\newcommand{\movframe}{%
+\begin{frame}
+\plainbar
+\sectiontitle{活动标架法 (1930s)}{méthode du repère mobile —— 微分几何的通用计算引擎}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=silverpanel, draw=badgeExt!55] at (0,2.25)
+    {\textbf{一个强大的计算工具。}活动标架法 (repère mobile) 是 Cartan 将外微分形式与微分几何深度结合后发展出的系统方法。其核心思想：在研究流形的几何性质时，不是固定一个坐标系，而是让标架在流形上自由移动，通过标架的运动方程来提取几何信息。};
+  \node[item, fill=goldpanel, draw=badgeConn!35] at (0,0.8)
+    {\textbf{不需要坐标。}活动标架法的最大优势是：它完全不依赖特定的坐标选择。Cartan 的结构方程用外微分形式表达了曲率、挠率等几何量——在任何坐标系下都成立。这是一种"内在几何" (intrinsic geometry) 的极致表达。};
+  \node[item, fill=bluepanel, draw=badgeLie!25] at (0,-0.45)
+    {\textbf{影响力。}活动标架法成为 20 世纪微分几何的标准工具。陈省身的 Chern 类、Chern–Simons 理论的证明都使用了活动标架法。Élie Cartan 的儿子 Henri Cartan 后来评价："活动标架法是我父亲最持久的遗产之一。"};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从一个简单的想法——"让标架动起来"——Cartan 创造了一套通用计算引擎。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 对称空间 ---
+\newcommand{\symspaceslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{对称空间的分类 (1926–1935)}{六年孤独劳作 —— 从无人问津到核心工具}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgeSym!55] at (0,2.35)
+    {\textbf{什么是对称空间。}一个 Riemann 流形是"对称的"，如果每一点都存在一个等距反射（geodesic symmetry），使得在该点附近流形关于此点对称。球面、双曲空间、和 Grassmann 流形都是典型的例子。};
+  \node[item, fill=bluepanel, draw=badgeLie!35] at (0,0.85)
+    {\textbf{完整的分类。}Cartan 花了六年时间 (1926–1935) 完成所有对称空间的分类。他将对称空间与半单李群联系起来：每个对称空间都可以写成 $G/K$ 的形式，其中 $G$ 是半单李群，$K$ 是 $G$ 的一个特殊子群。这建立了对称空间与李理论的深刻联系。};
+  \node[item, fill=goldpanel, draw=badgeConn!30] at (0,-0.45)
+    {\textbf{后来的爆发。}分类完成后很长一段时间，对称空间被认为是"Cartan 的私人花园"——美丽但无用的数学奇观。但 1950s 后，对称空间在表示论、调和分析、数论、以及 Langlands 纲领中成为核心舞台。Cartan 的"无用"工作变成了精金。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "孤独的巨人"最深刻的一面：六年的劳动，几十年后才被理解为无价的宝藏。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 陈省身的老师 ---
+\newcommand{\chernslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{陈省身的老师}{数学史上最成功的师徒传承之一}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeLie!45] at (0,2.35)
+    {\textbf{1936 · 巴黎。}陈省身从汉堡大学获得博士学位后，来到巴黎跟随 Cartan 做博士后研究。他在汉堡时已经读过 Cartan 的著作，但"实在读不懂"。在巴黎，他获得了直接向 Cartan 学习的机会。};
+  \node[item, fill=goldpanel, draw=badgeConn!40] at (0,0.85)
+    {\textbf{独特的教学方法。}Cartan 的教学方式独一无二：每两周一次，陈省身来到 Cartan 的家中，两人面对面讨论数学。Cartan 不讲课——他提问、引导、让陈省身自己走通思路。这不是教学，是"数学思维的传功"。};
+  \node[item, fill=silverpanel, draw=badgeExt!30] at (0,-0.45)
+    {\textbf{Chern 类的诞生。}陈省身将 Cartan 的外微分和活动标架法应用于复流形上的示性类，创造了 Chern 类——整体微分几何的基石。Chern 后来回忆说："我的一切都来自于 Cartan 的数学思想，我只是把它们带到了更远的地方。"};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "他的工作活着的时候没有人真正读懂，但他去世后，每个人都在用他的语言。" —— 陈省身}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 父与子 ---
+\newcommand{\fatherson}{%
+\begin{frame}
+\plainbar
+\sectiontitle{父与子}{Élie Cartan → Henri Cartan —— 数学史上最伟大的父子档之一}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeLie!45] at (0,2.25)
+    {\textbf{Henri Cartan (1904–2008)。}Élie 的长子。与父亲深沉、孤独的风格截然不同，Henri 是一位系统建造者。他是 Nicolas Bourbaki（法国数学集体）的创始成员之一，活了 104 岁，几乎比父亲多活了一个甲子。};
+  \node[item, fill=goldpanel, draw=badgeConn!35] at (0,0.8)
+    {\textbf{Henri 的贡献。}层论 (sheaf theory)、同调代数 (homological algebra)、Steenrod 代数上的 Cartan 公式——这些都是现代代数拓扑和代数几何的基础。他教出了 Serre、Grothendieck 等一代数学大师。};
+  \node[item, fill=amberpanel, draw=badgeSym!25] at (0,-0.45)
+    {\textbf{两种风格的对比。}Élie：深度探索者，一个人在丛林中开路；Henri：系统建筑师，组织一群数学家集体建造。但他们共享同一种品质：对数学结构的深刻直觉。这是一种卓越的数学基因在两代人之间的传承。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 父亲一个人开辟了微分几何的丛林，儿子组织了一群人建造了代数几何的大厦。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 职业生涯 ---
+\newcommand{\careerslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{从蒙彼利埃到索邦 (1894–1940)}{安静的法兰西教授的上升轨迹}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeLie!45] at (0,2.65)
+    {\textbf{1894–1903 · 蒙彼利埃大学。}博士毕业后，Cartan 的第一个职位在法国南部的蒙彼利埃。当时 25 岁的他本可以留在巴黎，但法国学术体系要求年轻博士先在地方大学服务。九年间，他安静地教课、做研究，完成了外微分形式理论的重要工作。};
+  \node[item, fill=amberpanel, draw=badgeSym!35] at (0,1.1)
+    {\textbf{1903–1912 · 里昂大学 → 南锡大学。}逐步向北靠近巴黎。在里昂的六年（1903–1909）和南锡的三年（1909–1912），Cartan 继续深入李群理论和微分方程组研究，积累了大量的数学成果。};
+  \node[item, fill=goldpanel, draw=badgeConn!30] at (0,-0.25)
+    {\textbf{1912–1940 · 巴黎大学（索邦）。}43 岁终于回到巴黎。此后的 28 年，他在索邦培养了一代法国几何学家。1931 年当选科学院院士，1937 年成为英国皇家学会外籍院士。1940 年退休，时年 71 岁。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从蒙彼利埃的 25 岁博士到索邦的终身教授 —— 一条安静而坚定的学术之路。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. Weyl 的敬意 ---
+\newcommand{\weylslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Weyl 的敬意}{"没有人比他更深地改变了微分几何"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgeConn!50] at (0,2.35)
+    {\textbf{Hermann Weyl (1885–1955)。}Weyl 是 Cartan 最重要的对话者之一。两人在 1920s–1930s 通过论文和通信相互照亮——Weyl 是最早认识到 Cartan 工作深度的数学家之一。Weyl 的《经典群》大量使用了 Cartan 的李理论工具。};
+  \node[item, fill=bluepanel, draw=badgeLie!40] at (0,0.85)
+    {\textbf{丛林跋涉。}1949 年，Weyl 在 Cartan 的讣告中写下了那段著名的话："读 Cartan 的论文，像是在丛林中跋涉——繁茂、复杂、充满未被命名的宝藏。他在数学森林中开辟了前人从未涉足的小径，而当后来的旅行者沿着这些小径前行时，他们发现了一个全新的世界。"};
+  \node[item, fill=amberpanel, draw=badgeSym!30] at (0,-0.45)
+    {\textbf{"最伟大的几何学家之一"。}Weyl 将 Cartan 与 Riemann、Klein、Lie 并列。在 Weyl 眼中，Cartan 不是 Riemann 或 Klein 的追随者——他是与他们比肩的开创者。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "一个全新的世界。" —— 这是 Weyl 对 Cartan 一生工作的最终评价。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{嘉当的遗产}{李群 · 联络 · 对称空间 · 外微分 —— 他的名字写在现代几何的每一页上}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=bluepanel, draw=badgeLie!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLie} 李群理论}\\[3pt]Cartan 子代数\\Cartan 矩阵\\$E_6, E_7, E_8$};
+  \node[leg, fill=goldpanel, draw=badgeConn!50, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeConn} Cartan 联络}\\[3pt]纤维丛联络\\Einstein–Cartan\\标架丛};
+  \node[leg, fill=amberpanel, draw=badgeSym!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSym} 对称空间}\\[3pt]完整分类\\$G/K$ 结构\\调和分析};
+  \node[leg, fill=silverpanel, draw=badgeExt!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeExt} 外微分形式}\\[3pt]结构方程\\活动标架法\\Pfaff 系统};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他不是发明了某一个定理 —— 他发明了现代微分几何的语言本身。}\\[4pt]
+{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      30+ 个以 Cartan 命名的概念和定理。\\
+      Cartan 子代数 → 李群分类 → 对称空间 → 表示论 → 弦论。\\
+      从博士论文到活动标架法，他一个人开辟了半个微分几何。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.9cm]current page.center) {他一个人，在丛林中开辟了};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=1.0cm]current page.center) {半个微分几何。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=0.15cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=0.15cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-0.9cm]current page.center)
+    {"读 Cartan 的论文，像是在丛林中跋涉 —— 繁茂、复杂、充满未被命名的宝藏。"\\—— Hermann Weyl, 1949};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-2.4cm]current page.center)
+    {埃利·嘉当\quad Élie Cartan\quad 1869 — 1951};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{cogs}\enspace 孤独的微分几何巨人 · 现代微分几何语言的发明者\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\thesisslide
+\subalgebraslide
+\exteriorcalc
+\connslide
+\movframe
+\symspaceslide
+\chernslide
+\fatherson
+\careerslide
+\weylslide
+\legacyslide
+\closingslide
+\end{document}
