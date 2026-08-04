@@ -121,7 +121,7 @@
 希尔伯特内容极丰富，建议 20 页（比黎曼多 2 页，因为他有 23 问题、Hilbert 纲领、纳粹三条独特叙事线）：
 
 ```
-00  OpenMath 项目首页（从 grothendieck 的 tex 中直接复用 \openmathslide 命令）
+00  OpenMath 项目首页（从 cover 模板 \input，见 §3.4）
 
 === 人物篇 ===
 01  封面 — 《希尔伯特：数学之王》 / David Hilbert 1862–1943 + 四色badge
@@ -276,7 +276,7 @@ pdftoppm -png -r 300 -f N -l N output/David_Hilbert_zh.pdf output/check
 
 ## 第 11 步：插入 OpenMath 项目首页
 
-- 从 `grothendieck/Alexander_Grothendieck_zh.tex` 中复制 `\openmathslide` 命令定义
+- ★ **使用统一 cover 模板**：从 `../cover/OpenMath_Cover.tex` 复制 `\openmathslide` 命令定义（或直接 `\input`）
 - 在 `\begin{document}` 后调用 `\openmathslide`，然后调用希尔伯特的封面 `\titleslide`
 
 ---

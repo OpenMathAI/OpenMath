@@ -194,7 +194,7 @@
 庞加莱内容密度极高，且有很多独有叙事线（相对论、混沌、科学哲学、早逝悲剧），建议 20 页：
 
 ```
-00  OpenMath 项目首页（从已有 tex 中直接复用 \openmathslide 命令）
+00  OpenMath 项目首页（从 cover 模板 \input，见 §3.4）
 
 === 人物篇 ===
 01  封面 — 《庞加莱：直觉之王》 / Henri Poincaré 1854–1912 + 四色badge
@@ -343,7 +343,7 @@
 
 ## 第 11 步：插入 OpenMath 项目首页
 
-- 从任一已有 tex 中复制 `\openmathslide` 命令定义
+- ★ **使用统一 cover 模板**：从 `../cover/OpenMath_Cover.tex` 复制 `\openmathslide` 命令定义（或直接 `\input`）
 - 在 `\begin{document}` 后调用 `\openmathslide`，然后调用庞加莱的封面 `\titleslide`
 
 ---

@@ -198,7 +198,7 @@ Kolmogorov 的一生是一个"全才叙事"——他不是某一个领域的专�
 Kolmogorov 的内容广度极大，建议约 19 页：
 
 ```
-00  OpenMath 项目首页（复用）
+00  OpenMath 项目首页（从 cover 模板 \input，见 §3.4）
 
 === 人物篇 ===
 01  封面 — 《柯尔莫哥洛夫：概率之王》 / Andrey Kolmogorov 1903–1987 + 四色badge

@@ -129,7 +129,7 @@
 塞尔内容极其丰富，但考虑到他**仍在世**，叙事需要与已故数学家不同——结尾不是"遗产"，而是"仍在书写的传奇"。建议 20 页：
 
 ```
-00  OpenMath 项目首页（从 grothendieck 的 tex 中直接复用 \openmathslide 命令）
+00  OpenMath 项目首页（从 cover 模板 \input，见 §3.4）
 
 === 人物篇 ===
 01  封面 — 《塞尔：风格即数学》 / Jean-Pierre Serre 1926– + 四色badge
@@ -279,7 +279,7 @@
 
 ## 第 11 步：插入 OpenMath 项目首页
 
-- 从 `grothendieck/Alexander_Grothendieck_zh.tex` 中复制 `\openmathslide` 命令定义
+- ★ **使用统一 cover 模板**：从 `../cover/OpenMath_Cover.tex` 复制 `\openmathslide` 命令定义（或直接 `\input`）
 - 在 `\begin{document}` 后调用 `\openmathslide`，然后调用塞尔的封面 `\titleslide`
 
 ---
