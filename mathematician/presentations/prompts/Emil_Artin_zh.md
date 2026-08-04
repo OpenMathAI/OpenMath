@@ -25,9 +25,9 @@
 - **生卒日期**：1898-03-03 ~ 1962-12-20，享年 64 岁
 - **国籍**：奥地利 → 美国（1937 年纳粹时期移居）→ 1958 年返回德国
 - **出生地**：维也纳（Vienna），奥匈帝国
-- **家庭背景**：父亲是亚美尼亚裔艺术品经销商，母亲是歌剧演员。父亲在他出生前已去世，母亲改嫁后他随继父姓 Artin
+- **家庭背景**：父亲 Emil Hadochadus Maria Artin 是亚美尼亚裔奥地利人（原姓 Artinian，后缩写为 Artin），母亲 Emma 是轻歌剧演员。父亲 1906 年因梅毒并发症去世，Artin 时年 8 岁。1907 年母亲改嫁制造商 Rudolf Hübner
 - **成长地**：赖兴贝格（Reichenberg，今捷克 Liberec）
-- **博士导师**：Gustav Herglotz（莱比锡大学）
+- **博士导师**：Gustav Herglotz（莱比锡大学）；Otto Hölder 亦列为共同导师
 - **博士论文**：1921，《Quadratische Körper im Gebiete der höheren Kongruenzen》（高阶同余域中的二次域）
 - **任教资格论文**：1923，汉堡大学 —— 引入了 Artin L-函数
 - **主要任职机构**：
@@ -37,9 +37,9 @@
   - 1946–1958: 普林斯顿大学
   - 1958–1962: 返回汉堡大学 —— 归乡
 - **关键荣誉**：
-  - 1955: 美国国家科学院院士
-  - 1957: 美国数学会 Cole 奖（数论）
-  - 多个荣誉博士学位
+  - 1932: **Ackermann–Teubner 纪念奖**（与 Emmy Noether 共享）
+  - 1957: 美国艺术与科学院院士
+  - 克莱蒙费朗大学荣誉博士
 - **重要合作者/同事/学生**：
   - 同事与知识盟友: Emmy Noether（终生挚友）、Helmut Hasse、Richard Brauer
   - 学生: **John Tate**（类域论合作者，Artin–Tate 讲义）、**Serge Lang**、**Hans Zassenhaus**、**Max Zorn**（Zorn 引理命名者）、**Bernard Dwork**（p-adic 分析的先驱）
