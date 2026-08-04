@@ -264,7 +264,7 @@
 
 ## 第 7 步：编写 Beamer 源码
 
-- 文件名：`/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/turing/Alan_Turing_zh.tex`
+- 文件名：`/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Alan_Turing/Alan_Turing_zh.tex`
 - 完全参照已有模板的代码结构
 - 每页用 `\newcommand{\xxxslide}{% ... }` 定义
 
@@ -377,8 +377,22 @@
 
 ## 音乐选择
 
-- 图灵的气质：**冷峻、理性、暗色中的光芒、悲剧英雄的沉重**
-- **推荐：暗色调的电子乐或沉稳的钢琴独奏** — 不应过于昂扬（那不属于 Turing），应带有理性和孤独感
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+
+图灵的气质：**冷峻、理性、暗色中的光芒、悲剧英雄的沉重** — 不应过于昂扬，应带有理性和孤独感。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Lonesome | inspiring-electronic | `music_audio/inspiring-electronic/16-xBLYHNv7C4Q-Lonesome.wav` | 悲伤电影感，悲剧英雄的孤独 |
+| ★★★ | Through the Darkness | inspiring-electronic | `music_audio/inspiring-electronic/14-Trn1cSsY2t8-Audiomachine - Through the Darkness.wav` | 史诗黑暗，破解 Enigma 的紧张推进 |
+| ★★ | Falling Apart | inspiring-electronic | `music_audio/inspiring-electronic/03-qtNSLNUd1VE-Michael FK & Andy Leech - Falling Apart.wav` | 电子渐进，化学阉割与 Turing 图案 |
+| ★ | Nostalgy | inspiring-electronic | `music_audio/inspiring-electronic/17-_DA0mdtL-jI-Nostalgy.wav` | 怀旧深沉，Bl
+
+etchley Park 的战后回顾 |
+
+**操作**：复制选定的 `.wav` 到 `Alan_Turing/` 目录，`make video` 自动混入。
 
 ---
 

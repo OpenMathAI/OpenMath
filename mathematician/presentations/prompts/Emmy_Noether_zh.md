@@ -227,7 +227,7 @@
 
 ## 第 7 步：编写 Beamer 源码
 
-- 文件名：`/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/noether/Emmy_Noether_zh.tex`
+- 文件名：`/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Emmy_Noether/Emmy_Noether_zh.tex`
 - 完全参照已有模板的代码结构
 - 每页用 `\newcommand{\xxxslide}{% ... }` 定义
 
@@ -293,8 +293,20 @@
 
 ### 音乐选择
 
-- 诺特的气质：**坚韧、温暖、开创性、代数的纯粹之美**
-- **推荐：温暖而坚定的室内乐** — 弦乐四重奏或钢琴独奏，抒情但不感伤，有力但不张扬
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+
+诺特的气质：**坚韧、温暖、开创性、代数的纯粹之美** — 温暖而坚定的室内乐，抒情但不感伤，有力但不张扬。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Awaken | alex-productions | `music_audio/alex-productions/36-aqLUvpAdLNQ-Awaken.wav` | 鼓舞明亮，开创者的光芒 |
+| ★★★ | With Me | alex-productions | `music_audio/alex-productions/83-DXAblXgCK-k-With-Me.wav` | 温和稳定，代数的纯粹之美 |
+| ★★ | Daylight | alex-productions | `music_audio/alex-productions/44-JoyIRE5k2Yo-Daylight.wav` | 明亮轻快，Noether 的乐观与坚韧 |
+| ★ | Nostalgia | alex-productions | `music_audio/alex-productions/86-5ETNuoDcBg4-Nostalgia.wav` | 怀旧温和，哥廷根学派的传承 |
+
+**操作**：复制选定的 `.wav` 到 `Emmy_Noether/` 目录，`make video` 自动混入。
 
 ---
 

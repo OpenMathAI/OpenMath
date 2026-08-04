@@ -265,7 +265,7 @@ Banach 的故事有三条主线：泛函分析的创立 + Lwów 学派的传奇 
 
 ## 第 7 步：编写 Beamer 源码
 
-- 文件名：`/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/banach/Stefan_Banach_zh.tex`
+- 文件名：`/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Stefan_Banach/Stefan_Banach_zh.tex`
 - 完全参照已有模板的代码结构
 - 每页用 `\newcommand{\xxxslide}{% ... }` 定义
 
@@ -369,8 +369,20 @@ Banach 的故事有三条主线：泛函分析的创立 + Lwów 学派的传奇 
 
 ## 音乐选择
 
-- 巴拿赫的气质：**温暖、醇厚、波兰土地的朴实、咖啡馆的亲密感、战争的伤痕**
-- **推荐：温暖而略带忧伤的音乐** — 波兰民间音乐改编的室内乐、Chopin 夜曲式的钢琴独奏、或略带烟熏感的手风琴音乐。避免过于宏大的交响乐——苏格兰咖啡馆不适合管弦乐队的尺度
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+
+巴拿赫的气质：**温暖、醇厚、波兰土地的朴实、咖啡馆的亲密感、战争的伤痕** — 避免过于宏大的交响乐，苏格兰咖啡馆不适合管弦乐队尺度。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Nostalgia | alex-productions | `music_audio/alex-productions/86-5ETNuoDcBg4-Nostalgia.wav` | 怀旧温和，Lwów 咖啡馆的黄金时代 |
+| ★★★ | With Me | alex-productions | `music_audio/alex-productions/83-DXAblXgCK-k-With-Me.wav` | 温和稳定，人物传记段落 |
+| ★★ | Tragedy | alex-productions | `music_audio/alex-productions/80-K5f65-22sY4-Tragedy.wav` | 深色戏剧性，战争伤痕与 Schauder 之死 |
+| ★ | SEA | alex-productions | `music_audio/alex-productions/92-WEqfdRXU3IU-SEA.wav` | 流动平稳，泛函分析的连续叙事 |
+
+**操作**：复制选定的 `.wav` 到 `Stefan_Banach/` 目录，`make video` 自动混入。
 
 ---
 

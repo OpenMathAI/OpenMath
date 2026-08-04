@@ -261,7 +261,7 @@
 
 ## 第 7 步：编写 Beamer 源码
 
-- 文件名：`/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/godel/Kurt_Godel_zh.tex`
+- 文件名：`/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Kurt_Godel/Kurt_Godel_zh.tex`
 - 完全参照已有模板的代码结构
 - 每页用 `\newcommand{\xxxslide}{% ... }` 定义
 
@@ -364,8 +364,20 @@
 
 ## 音乐选择
 
-- 哥德尔的气质：**深邃、理性、孤独、维也纳知识分子的庄重**
-- **推荐：深沉而克制的音乐** — 不应该是史诗或英雄风格。室内乐或慢板交响乐的二乐章、Bach 赋格等理性而沉思的音乐最为合适
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+
+哥德尔的气质：**深邃、理性、孤独、维也纳知识分子的庄重** — 不应该是史诗或英雄风格，而是深沉克制的音乐。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | PAST | alex-productions | `music_audio/alex-productions/89-geyy8_WXDK0-PAST.wav` | 历史感、深沉，匹配 Gödel 的孤独沉思 |
+| ★★★ | Timeless | alex-productions | `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` | 内敛的深度，猜想与永恒 |
+| ★★ | The Flow of Time | alex-productions | `music_audio/alex-productions/35-jqIDnltiDRI-The-Flow-of-Time.wav` | 时间感，匹配不完备性定理的永恒性 |
+| ★ | Nostalgia | alex-productions | `music_audio/alex-productions/86-5ETNuoDcBg4-Nostalgia.wav` | 维也纳的怀旧，Einstein 友谊的情感锚 |
+
+**操作**：复制选定的 `.wav` 到 `Kurt_Godel/` 目录，`make video` 自动混入。
 
 ---
 

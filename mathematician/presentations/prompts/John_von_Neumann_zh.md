@@ -263,6 +263,25 @@
 
 ---
 
+## 第 14 步：音乐选择
+
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+
+冯·诺依曼的气质：**超高速思维、跨领域全才、暗色中的火花、计算机时代降临** — 不应是传统古典的庄严，应是紧张推进的电子质感。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Savage | alex-productions | `music_audio/alex-productions/34-pILVwyuW3jw-Savage.wav` | 强推进紧张，von Neumann 的超高速思维 |
+| ★★★ | Through the Darkness | inspiring-electronic | `music_audio/inspiring-electronic/14-Trn1cSsY2t8-Audiomachine - Through the Darkness.wav` | 史诗黑暗，曼哈顿计划与博弈论的并行 |
+| ★★ | Falling Apart | inspiring-electronic | `music_audio/inspiring-electronic/03-qtNSLNUd1VE-Michael FK & Andy Leech - Falling Apart.wav` | 电子渐进，自复制自动机早于 DNA |
+| ★ | Last Hope | inspiring-electronic | `music_audio/inspiring-electronic/24-ie5iLcdKiqk-Victor Cooper - Last Hope.wav` | 戏剧性力量，存储程序架构的革命性突破 |
+
+**操作**：复制选定的 `.wav` 到 `John_von_Neumann/` 目录，`make video` 自动混入。
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 >
 > **特别提醒：**

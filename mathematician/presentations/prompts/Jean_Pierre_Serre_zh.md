@@ -295,11 +295,20 @@
 
 ## 第 13 步：音乐选择
 
-参照指南 §15.7：
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
 
-- 塞尔的气质：**非科室内乐**。实际成片选择 **Monumental**（#40, 2:49, 史诗纪念碑式，雄壮慷慨），匹配他跨五领域的丰碑级成就。
-- **黑名单**：Silence（#91）已禁用——过于安静克制，不适合数学人物传记。
-- 从 `/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/curated_tracks.md` 中查询具体曲目。
+塞尔的气质：**优雅、深度、跨五领域的丰碑、非科室内乐** — 雄壮慷慨但保持品味。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Timeless | alex-productions | `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` | 沉稳纪录片风，Serre 的优雅风格 |
+| ★★★ | Expedition | alex-productions | `music_audio/alex-productions/33--_CEmB_dHpA-Expedition.wav` | 探索史诗，跨五领域的远征 |
+| ★★ | Eternals | alex-productions | `music_audio/alex-productions/76-V5T_kW2PH_s-Eternals.wav` | 宏大深远，仍在书写的传奇 |
+| ★ | Nostalgia | alex-productions | `music_audio/alex-productions/86-5ETNuoDcBg4-Nostalgia.wav` | 怀旧温和，巴黎学派的传承 |
+
+**操作**：复制选定的 `.wav` 到 `Jean_Pierre_Serre/` 目录，`make video` 自动混入。
 
 ---
 

@@ -305,3 +305,22 @@
 > 4. 与 Noether 的关系 —— 在纳粹时代保护同事、为死者亲致悼词 —— 是展现人格温暖的关键节点
 > 5. 他是少数能与 Einstein 在物理上平等对话、同时与 Hilbert 在数学上平等对话的人
 > 6. 结尾主题句："他从来不只是数学家或物理学家，他总是两者兼备。"（Einstein 原话）
+
+---
+
+## 第 14 步：音乐选择
+
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+
+外尔的气质：**超级连接者、几何-物理双栖、Hilbert 的传人、哲人数学家** — 庄严深沉，对称与秩序的美感。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Timeless | alex-productions | `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` | 沉稳纪录片风，Weyl 在数学与物理之间的永恒连接 |
+| ★★★ | Symphony No. 7 | beethoven-karajan | `music_audio/beethoven-karajan/07-W5NsPOgyALI-Beethoven "Symphony No 7" Karajan.wav` | 律动庄严，对称之美 |
+| ★★ | Eternals | alex-productions | `music_audio/alex-productions/76-V5T_kW2PH_s-Eternals.wav` | 宏大深远，规范理论50年的回响 |
+| ★ | Expedition | alex-productions | `music_audio/alex-productions/33--_CEmB_dHpA-Expedition.wav` | 探索史诗，从黎曼面到规范场的跨越 |
+
+**操作**：复制选定的 `.wav` 到 `Hermann_Weyl/` 目录，`make video` 自动混入。

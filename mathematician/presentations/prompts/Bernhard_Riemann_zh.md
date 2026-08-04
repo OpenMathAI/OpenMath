@@ -203,10 +203,20 @@
 
 ### 音乐选择
 
-参照指南 §15.7，根据数学家气质选择 BGM：
-- 革命者/教皇气质 → Heroic/宏大
-- **克制天才/悲剧早逝/猜想悬而未决 → Timeless/沉稳纪录片风**
-- 判断标准：不是所有人都需要 epic 风格
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+
+黎曼的气质：**克制天才、内敛深度、猜想悬而未决、39岁静默离世** — 不是所有人都需要 epic 风格。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Timeless | alex-productions | `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` | 沉稳纪录片风，猜想永恒 ↔ 39岁离世 |
+| ★★★ | PAST | alex-productions | `music_audio/alex-productions/89-geyy8_WXDK0-PAST.wav` | 历史感深沉，黎曼几何为百年后的 GR 奠基 |
+| ★★ | Symphony No. 7 | beethoven-karajan | `music_audio/beethoven-karajan/07-W5NsPOgyALI-Beethoven "Symphony No 7" Karajan.wav` | 律动庄严，数学之舞 |
+| ★ | The Flow of Time | alex-productions | `music_audio/alex-productions/35-jqIDnltiDRI-The-Flow-of-Time.wav` | 时间感，黎曼 ζ 与素数穿越 165 年 |
+
+**操作**：复制选定的 `.wav` 到 `Bernhard_Riemann/` 目录，`make video` 自动混入。
 ---
 
 ## 第 10 步：布局微调

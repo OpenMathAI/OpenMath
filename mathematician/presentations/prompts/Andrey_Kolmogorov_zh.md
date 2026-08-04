@@ -242,7 +242,7 @@ Kolmogorov 的内容广度极大，建议约 19 页：
 
 ## 第 7 步：编写 Beamer 源码
 
-- 文件名：`/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/kolmogorov/Andrey_Kolmogorov_zh.tex`
+- 文件名：`/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Andrey_Kolmogorov/Andrey_Kolmogorov_zh.tex`
 - 完全参照已有模板的代码结构
 - 每页用 `\newcommand{\xxxslide}{% ... }` 定义
 
@@ -311,11 +311,20 @@ Kolmogorov 的内容广度极大，建议约 19 页：
 
 ### 音乐选择
 
-- Kolmogorov 的气质：**深邃、理性、广度、力量与秩序**
-- **推荐：宏大而理性的交响乐** — 俄罗斯浪漫主义晚期或苏联时期作品，有力但不张扬，理性中蕴含深度
-  - 备选：拉赫玛尼诺夫第二钢琴协奏曲（深沉→磅礴）
-  - 备选：肖斯塔科维奇第五交响曲（压抑中的力量）
-  - 备选：普罗科菲耶夫《罗密欧与朱丽叶》组曲
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+
+Kolmogorov 的气质：**深邃、理性、广度、力量与秩序** — 宏大而理性的交响乐，有力但不张扬。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Symphony No. 5 | beethoven-karajan | `music_audio/beethoven-karajan/05-OV6Lp7cnX7s-Beethoven "Symphony No 5" Karajan.wav` | 力量与秩序的厚重，苏联学术的庄严 |
+| ★★★ | New Lands | alex-productions | `music_audio/alex-productions/74-oK8HN0FsZmc-New-Lands.wav` | 史诗开阔，百科全书式数学家 |
+| ★★ | Eternals | alex-productions | `music_audio/alex-productions/76-V5T_kW2PH_s-Eternals.wav` | 宏大深远，概率论公理化的永恒影响 |
+| ★ | Timeless | alex-productions | `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` | 纪录片风，匹配理性与深度 |
+
+**操作**：复制选定的 `.wav` 到 `Andrey_Kolmogorov/` 目录，`make video` 自动混入。
 
 ---
 

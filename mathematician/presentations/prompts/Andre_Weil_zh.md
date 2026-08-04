@@ -284,3 +284,22 @@
 > 2. **不要从"布尔巴基传说"中借料** —— 咖啡馆故事、Nevanlinna传闻、各种引语都可能不在 page.md 中
 > 3. **芬兰事件的核心是"夸大"** —— page.md 用词是 "exaggerated"，不是 heroic rescue
 > 4. **Deligne 年份是 1973** —— 不是 1974，不是 1978（Fields奖年份）
+
+---
+
+## 第 14 步：音乐选择
+
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+
+韦伊的气质：**深邃、预言者、布尔巴基的灵魂、狱中数学的传奇、梵文与对称的东方智慧** — 深沉史诗感，带有探索者的远征气质。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Expedition | alex-productions | `music_audio/alex-productions/33--_CEmB_dHpA-Expedition.wav` | 探索史诗，Weil 猜想的跨世纪远征 |
+| ★★★ | Eternals | alex-productions | `music_audio/alex-productions/76-V5T_kW2PH_s-Eternals.wav` | 宏大深远，算术几何的罗塞塔石碑 |
+| ★★ | Tragedy | alex-productions | `music_audio/alex-productions/80-K5f65-22sY4-Tragedy.wav` | 深色戏剧性，芬兰监狱的传奇 |
+| ★ | Timeless | alex-productions | `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` | 沉稳纪录片风，布尔巴基的永恒遗产 |
+
+**操作**：复制选定的 `.wav` 到 `Andre_Weil/` 目录，`make video` 自动混入。

@@ -168,9 +168,20 @@
 
 ### 音乐选择
 
-- 陈省身的气质：**宏阔、优雅、中国根基 + 世界格局、宗师风范**
-- **推荐：中西融合的管弦乐** — 可以是带有中国元素的现代古典乐，或类似 Tan Dun 风格的配乐
-- 从 `/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/curated_tracks.md` 中查询
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+
+陈省身的气质：**宏阔、优雅、中国根基 + 世界格局、宗师风范** — 可以带有中国元素的现代古典乐。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Awaken | alex-productions | `music_audio/alex-productions/36-aqLUvpAdLNQ-Awaken.wav` | 鼓舞明亮，微分几何的开创者 |
+| ★★★ | Timeless | alex-productions | `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` | 沉稳纪录片，Chern 类的永恒影响 |
+| ★★ | Nostalgia | alex-productions | `music_audio/alex-productions/86-5ETNuoDcBg4-Nostalgia.wav` | 怀旧温和，叶落归根南开研究所 |
+| ★ | Expedition | alex-productions | `music_audio/alex-productions/33--_CEmB_dHpA-Expedition.wav` | 探索史诗，从嘉兴到伯克利到南开 |
+
+**操作**：复制选定的 `.wav` 到 `Shiing_Shen_Chern/` 目录，`make video` 自动混入。
 
 ---
 

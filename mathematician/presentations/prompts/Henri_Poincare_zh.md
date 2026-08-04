@@ -359,11 +359,20 @@
 
 ## 第 13 步：音乐选择
 
-参照指南 §15.7：
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
 
-- 庞加莱的气质：**直觉、深远、法兰西的知性、星空的浩瀚、早逝的悲剧感**
-- **推荐：深沉、优雅、略带忧郁的法式配乐**（类似 Debussy 或 Ravel 的管弦乐风格，或现代配乐中带有沉思气质的曲目）
-- 从 `/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/curated_tracks.md` 中查询具体曲目
+庞加莱的气质：**直觉、深远、法兰西的知性、星空的浩瀚、早逝的悲剧感** — 深沉优雅略带忧郁。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Timeless | alex-productions | `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` | 沉稳纪录片风，58岁戛然而止的永恒 |
+| ★★★ | Eternals | alex-productions | `music_audio/alex-productions/76-V5T_kW2PH_s-Eternals.wav` | 宏大深远，Poincaré 猜想的百年等待 |
+| ★★ | Tragedy | alex-productions | `music_audio/alex-productions/80-K5f65-22sY4-Tragedy.wav` | 深色戏剧性，早逝的悲剧感 |
+| ★ | Cinematic Experience | alex-productions | `music_audio/alex-productions/48-QL3O8MUFAm4-Cinematic-Experience.wav` | 电影感高张力，百科全书式全才 |
+
+**操作**：复制选定的 `.wav` 到 `Henri_Poincare/` 目录，`make video` 自动混入。
 
 ---
 

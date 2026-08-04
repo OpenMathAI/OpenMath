@@ -292,11 +292,20 @@ pdftoppm -png -r 300 -f N -l N output/David_Hilbert_zh.pdf output/check
 
 ## 第 13 步：音乐选择
 
-参照指南 §15.7：
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
 
-- 希尔伯特的气质：**王者、权威、德国学术传统的巅峰、20 世纪的领航人**
-- **推荐：Heroic / 史诗风格**（类似 Grothendieck，但更注重"庄严"而非"革命"）
-- 从 `/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/curated_tracks.md` 中查询具体曲目
+希尔伯特的气质：**王者、权威、德国学术传统的巅峰、20 世纪的领航人** — 史诗庄严，注重"王者"而非"革命"。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Symphony No. 3 "Eroica" | beethoven-karajan | `music_audio/beethoven-karajan/03-BgIjGSPmk7I-Beethoven "Symphony No 3" Karajan.wav` | 英雄壮丽，Hilbert 的数学帝国 |
+| ★★★ | New Lands | alex-productions | `music_audio/alex-productions/74-oK8HN0FsZmc-New-Lands.wav` | 史诗开阔，23 个问题引领 20 世纪 |
+| ★★ | Cinematic Experience | alex-productions | `music_audio/alex-productions/48-QL3O8MUFAm4-Cinematic-Experience.wav` | 电影感高张力，1900 年巴黎 ICM 演讲 |
+| ★ | Eternals | alex-productions | `music_audio/alex-productions/76-V5T_kW2PH_s-Eternals.wav` | 宏大深远，哥廷根的永恒遗产 |
+
+**操作**：复制选定的 `.wav` 到 `David_Hilbert/` 目录，`make video` 自动混入。
 
 ---
 
