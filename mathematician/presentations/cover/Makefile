@@ -6,7 +6,7 @@
 #   make clean      remove intermediate files
 #   make distclean  remove generated PDF
 
-MAIN        = OpenMath_Cover
+MAIN        = openmath_page_standalone
 LATEXMK     = latexmk
 
 .PHONY: all pdf clean distclean
@@ -15,7 +15,7 @@ all: pdf
 
 pdf: $(MAIN).pdf
 
-$(MAIN).pdf: $(MAIN).tex
+$(MAIN).pdf: $(MAIN).tex openmath_page.tex
 	$(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode $(MAIN).tex || \
 	  (rm -f $(MAIN).fdb_latexmk && $(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode -f $(MAIN).tex)
 	$(LATEXMK) -c $(MAIN).tex
@@ -23,7 +23,7 @@ $(MAIN).pdf: $(MAIN).tex
 
 clean:
 	$(LATEXMK) -c $(MAIN).tex 2>/dev/null || true
-	rm -f $(MAIN).{aux,log,toc,out,nav,snm,fls,fdb_latexmk,xdv} c.log
+	rm -f $(MAIN).{aux,log,toc,out,nav,snm,fls,fdb_latexmk,xdv} openmath_page.{aux,log} c.log
 
 distclean: clean
 	rm -f $(MAIN).pdf
