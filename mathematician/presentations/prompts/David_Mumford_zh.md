@@ -1,81 +1,74 @@
 # 芒福德 (David Mumford) 立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-> 直接复制本文件内容到新对话中使用。
+> 严格遵循 [Mathematician_Biography_Guide.md]。参考: cartan, weyl。
 
 ---
 
-## 背景信息
+## 背景
 
-- **目标数学家**: David Mumford (1937–)
-- **气质关键词**: **代数几何与计算机视觉的跨越者、模式理论的先驱**
-- **Wikipedia 页面**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/David_Mumford/`
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+- **目标**: David Mumford (1937– )
+- **气质**: **代数几何→计算机视觉的转型大师、Fields 奖得主、模式理论的先驱**
+- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/David_Mumford/`
 
----
+## 第 0 步：校验
 
-## 第 0 步：下载 Wikipedia 页面并校验
-
-- **出生日期**：1937-06-11（仍在世）
+- **生卒**：1937-06-11 ~ (在世，89 岁)
 - **国籍**：美国
+- **出生地**：Worth, West Sussex, England（生于英国，幼年移居美国）
 - **博士导师**：Oscar Zariski（哈佛大学）
-- **博士论文**：1961，代数几何
-- **主要任职**：哈佛大学、布朗大学
-- **荣誉**：Fields Medal 1974、Wolf Prize 2008、美国国家科学勋章 2010
+- **博士论文**：1961，《Existence of the Moduli Scheme for Curves of Any Genus》
+- **任职**：哈佛大学 (1961–1996)、布朗大学 (1996–至今)
+- **荣誉**：Fields 奖 (1974)、Wolf 奖 (2008)、Shaw 奖 (2006)、美国国家科学奖章 (2009)
 
----
-
-## 核心数学贡献
-
+### 核心
 | 领域 | 贡献 | 年代 |
 |------|------|:--:|
+| 代数几何 | 曲线模空间的构造 | 1961–1965 |
 | 代数几何 | 几何不变量理论 (GIT) | 1965 |
-| 代数曲线 | Mumford 紧化 —— 曲线模空间的紧化 | 1960s |
-| \(\theta\) 函数 | 《\(\theta\) 函数讲义》三卷 —— 经典 | 1980s |
-| 计算机视觉 | 模式理论 (Pattern Theory) | 1990s |
-| 数学生物学 | 视觉皮层模型 | 2000s |
+| 代数几何 | 阿贝尔簇理论 | 1970s |
+| 模式理论 | 计算机视觉与模式识别的数学基础 | 1980s+ |
+| AI | 变分方法在图像处理中的应用 | 1990s |
 
-### ★ 叙事线索
+### ★ 叙事
+1. **Fields → AI** — 可能是唯一从纯代数几何转向计算机视觉的 Fields 奖得主
+2. **GIT** — 几何不变量理论——解决商空间存在性的核心框架
+3. **Zariski 的学生** — 继承了几何严格化的传统
+4. **50 岁的重生** — 中年后彻底改变研究方向
+5. **仍在世** — 在布朗大学继续应用数学
 
-1. **从 Zariski 到 Fields** — Zariski 的学生，在代数几何的黄金年代成长为一代大师
-2. **40 岁之后的转向** — 大多数数学家一生深耕一个领域。Mumford 在 40 岁后转向计算机视觉和模式理论
-3. **GIT** — 几何不变量理论是现代代数几何的核心工具。Mumford 1974 年的 Fields 奖主要表彰这一工作
-4. **模式理论** — 他从音乐、绘画、文本中寻找数学结构。这是一个数学家对"理解"本身的理解
-5. **学术家族的代际传承** — Zariski → Mumford → 新一代。他是代数几何黄金时代的连接人
+## ⚠️ 史实陷阱
+- **出生地** — 英国（虽然国籍是美国）
+- **GIT 与 Grothendieck** — GIT 是 Grothendieck 框架之外的独立贡献
+- **博士导师** — Zariski, 1961
 
----
+## ⚠️ 终审
+| 点 | 检查 |
+|----|------|
+| 出生 | Worth, England |
+| 博士 | Zariski, 1961 |
+| Fields | 1974 |
+| GIT | 1965 |
 
-## 配色方案
+## 配色：哈佛深红 + 模式紫 + AI蓝
+- **badgemoduli** — `#A51C30`
+- **badgeGIT** — `#5B3256`
+- **badgeAI** (模式理论) — `#003366`
+- **badgelegacy** — 银灰
 
-- **主色**：深松绿 + 视觉金 —— 代数几何的深度 + 计算机视觉的亮度
-- 四个分类色：
-  - **badgeag** (代数几何) — 深松绿 `#2E5A3E`
-  - **badgeGIT** (不变量理论) — 暖金 `#B8860B`
-  - **badgepattern** (模式理论) — 视觉黄 `#FFD700`
-  - **badgecurve** (代数曲线) — 深蓝 `#1B4D6B`
+## 幻灯片（13 页）
+01 封面
+02 曲线模空间
+03 GIT 几何不变量理论
+04 Zariski 的传人
+05 阿贝尔簇
+06 Fields 奖 (1974)
+07 中年转型——从代数到 AI
+08 模式理论的数学基础
+09 变分图像处理
+10 Wolf + Shaw
+11 仍在探索
+12 结束页 — 他先定义了"模空间"，然后去教计算机如何"看"
 
----
-
-## 幻灯片序列（10 页）
-
-```
-01  封面 — 《芒福德：从代数几何到计算机视觉》 / David Mumford (1937–)
-02  Zariski 的传人 — 代数几何的黄金一代
-03  几何不变量理论 (GIT) — Fields Medal 1974
-04  Mumford 紧化 — 曲线模空间的边界
-05  \(\theta\) 函数 — 三卷经典的诞生
-06  40 岁的转向 — 从代数几何到计算机视觉
-07  模式理论 — 用数学理解音乐、绘画、文本
-08  思想回响 + 结束页
-```
-
----
-
-## 音乐选择
-
-| 优先级 | 曲目 | 来源 | 理由 |
-|:--:|------|------|------|
-| ★★★ | Awaken | alex-productions | 明亮，40 岁后的新方向 |
-| ★★★ | Timeless | alex-productions | 纪录片风，代数几何的传承 |
+## 音乐: Expedition + Timeless
 
 > **开始执行。**

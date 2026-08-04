@@ -1,84 +1,79 @@
 # 勒雷 (Jean Leray) 立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-> 直接复制本文件内容到新对话中使用。
+> 严格遵循 [Mathematician_Biography_Guide.md]。参考: cartan, weyl。
 
 ---
 
-## 背景信息
+## 背景
 
-- **目标数学家**: Jean Leray (1906–1998)
-- **气质关键词**: **谱序列与层论的发明者、战俘营中的数学家**
-- **Wikipedia 页面**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Jean_Leray/`
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+- **目标**: Jean Leray (1906–1998)
+- **气质**: **谱序列的发明者、层论的共同发现者、纳粹战俘营中的数学创造者**
+- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Jean_Leray/`
 
----
+## 第 0 步：校验
 
-## 第 0 步：下载 Wikipedia 页面并校验
-
-- **生卒日期**：1906-11-07 ~ 1998-11-10，享年 92 岁
+- **生卒**：1906-11-07 ~ 1998-11-10，享年 92 岁
 - **国籍**：法国
-- **博士导师**：Henri Villat
-- **博士论文**：1933，流体力学
-- **主要任职**：巴黎大学、法兰西公学院 (Collège de France)
-- **荣誉**：Wolf Prize 1979、法国科学院院士
+- **博士导师**：Henri Villat（巴黎大学）
+- **博士论文**：1933，流体力学（Navier–Stokes方程）
+- **任职**：巴黎大学 (1945–1947)、Collège de France (1947–1978)
+- **荣誉**：Wolf 奖 (1979)、法国科学院院士
 
----
+### 关键
+- 1940–1945: 二战期间在奥地利战俘营 Oflag XVII-A
+- 在战俘营中创造了谱序列和层论的核心思想——为避免被征用做德国的军事研究，他假装自己在做"拓扑学"（当时被认为对战争无用）
+- 1945: 战后发表谱序列理论（Comptes Rendus）
+- 1946: 层论 (sheaf theory) 和 Leray 谱序列
+- 1950: 《双曲型偏微分方程》
 
-## 核心数学贡献
+### 核心贡献
+| 领域 | 贡献 |
+|------|------|
+| 代数拓扑 | 谱序列 |
+| 层论 | 层 (faisceau) 与 Leray 谱序列 |
+| PDE | Navier–Stokes 方程的弱解 (1934) |
+| 复分析 | 残数理论 |
 
-| 领域 | 贡献 | 年代 |
-|------|------|:--:|
-| 代数拓扑 | 谱序列 —— 代数拓扑的基本计算工具 | 1940s |
-| 代数拓扑 | 层论 (Sheaf Theory) 的发明 | 1945 |
-| PDE | Leray–Schauder 不动点定理 | 1934 |
-| 流体力学 | Navier–Stokes 方程 | 1930s |
+### ★ 叙事
+1. **战俘营中的创造** — 五年监禁，创造了现代代数拓扑最强大的计算工具
+2. **谱序列** — 一种通过逐页逼近来计算代数不变量的方法
+3. **"伪装"为拓扑学家** — 他隐藏自己的流体力学专长，以避免被德军征用
+4. **层论的共同发现者** — 虽然 Henri Cartan 和 Serre 后来将层论发展为更系统化的工具
+5. **从流体到拓扑再回到分析** — 他的一生跨越了应用数学和纯数学
 
-### ★ 叙事线索
+## ⚠️ 史实陷阱
+- **层论"发明者"** — Leray 的"层"与后来 Grothendieck/Cartan 的"层"有区别。Leray 的版本局限于连续映射
+- **谱序列** — 1946 年发表，不是 1942（虽然他在战俘营中构思）
+- **战俘营编号** — Oflag XVII-A (Edelbach, Austria)
+- **博士方向** — 流体力学（不是拓扑！）
 
-1. **战俘营中的数学** — 1940 年被俘，关押在奥地利战俘营 (Oflag XVII-A) 5 年。在那里他发明了谱序列和层论。为了避免被德军征用做工程，他故意只做"纯数学"。他在战俘营当了数学教授
-2. **伪装成纯数学家的应用数学家** — 他本来是流体力学专家。在战俘营为了不被强迫为德军工作，故意伪装只做抽象的拓扑学。结果这个伪装成了他最大的贡献
-3. **谱序列** — 现代代数拓扑最核心的计算工具。Grothendieck、Serre 都依赖它。发明于纳粹战俘营
-4. **层论** — Cartan 和 Serre 后来发展了层论，但原始的"faisceau"概念是 Leray 在 1945 年战俘营笔记中定义的
+## ⚠️ 终审
+| 点 | 检查 |
+|----|------|
+| 博士 | 流体力学 1933 |
+| 战俘营 | 1940–1945, Oflag XVII-A |
+| 谱序列 | 1946 |
+| 层论 | 1946 |
 
-### 人物关系：
-- **Cartan** — 发展了 Leray 的层论
-- **Serre** — 使用谱序列证明了球面同伦群的有限性
-- **Grothendieck** — 在 SGA 中系统使用了 Leray 谱序列
+## 配色：战俘营灰 + 法国蓝 + 拓扑金
+- **badgeSS** (谱序列) — `#1B4D6B`
+- **badgeSheaf** (层论) — `#DAA520`
+- **badgePDE** (PDE) — `#2E5A40`
+- **badgelegacy** (遗产) — 灰
 
----
+## 幻灯片（13 页）
+01 封面 — 《勒雷：战俘营中的拓扑革命》
+02 流体力学博士
+03 战俘营 Oflag XVII-A ——"伪装"为拓扑学家
+04 谱序列的诞生
+05 层论 (Faisceaux)
+06 Leray 谱序列
+07 战后回归——从战俘营到 Collège de France
+08 Navier–Stokes 弱解
+09 Wolf 奖 (1979)
+10 遗产：工具比定理更持久
+11 结束页 — 他在铁丝网后面发明了代数拓扑最强大的工具
 
-## 配色方案
-
-- **主色**：战俘灰 + 法兰西蓝 —— 战俘营的铁丝网 + 法国数学的荣耀
-- 四个分类色：
-  - **badgespec** (谱序列) — 战俘灰 `#6B6B6B`
-  - **badgesheaf** (层论) — 法兰西蓝 `#002395`
-  - **badgepde** (PDE/不动点) — 深绿 `#2E4A2E`
-  - **badgefluid** (流体力学) — 海蓝 `#1B6B8B`
-
----
-
-## 幻灯片序列（10 页）
-
-```
-01  封面 — 《勒雷：战俘营中的拓扑革命》 / Jean Leray 1906–1998
-02  流体力学 — 战前的 Leray
-03  Oflag XVII-A — 奥地利战俘营中的数学
-04  谱序列 — 现代拓扑的计算引擎
-05  层论 (1945) — 战俘营笔记中的概念
-06  战后的荣耀 — Cartan·Serre·Grothendieck 的传承
-07  Wolf Prize 1979
-08  思想回响 + 结束页
-```
-
----
-
-## 音乐选择
-
-| 优先级 | 曲目 | 来源 | 理由 |
-|:--:|------|------|------|
-| ★★★ | Through the Darkness | inspiring-electronic | 黑暗中的突破，战俘营的创造 |
-| ★★★ | PAST | alex-productions | 历史感，战争年代的数学 |
+## 音乐: Tragedy + Expedition
 
 > **开始执行。**
