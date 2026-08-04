@@ -1,85 +1,91 @@
 # 沙法列维奇 (Igor Shafarevich) 立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-> 直接复制本文件内容到新对话中使用。
+> 严格遵循 [Mathematician_Biography_Guide.md]。参考: cartan, weyl。
 
 ---
 
-## 背景信息
+## 背景
 
-- **目标数学家**: Igor Shafarevich (1923–2017)
-- **气质关键词**: **苏联代数几何的支柱、代数数论与代数几何的架桥者**
-- **Wikipedia 页面**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Igor_Shafarevich/`
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+- **目标**: Igor Shafarevich (1923–2017)
+- **气质**: **苏联代数几何的支柱、数论与反交换代数的开拓者、Gelfand 学派的传人、Solzhenitsyn 的挚友与争议人物**
+- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Igor_Shafarevich/`
 
----
+## 第 0 步：校验
 
-## 第 0 步：下载 Wikipedia 页面并校验
-
-- **生卒日期**：1923-06-03 ~ 2017-02-19，享年 93 岁
-- **国籍**：苏联 → 俄罗斯
-- **博士导师**：Boris Delaunay（斯捷克洛夫数学研究所）
+- **生卒**：1923-06-03 ~ 2017-02-19，享年 93 岁
+- **国籍**：苏联→俄罗斯
+- **出生地**：Zhytomyr, Ukrainian SSR (now Ukraine)
+- **博士导师**：Boris Delaunay（莫斯科国立大学）
 - **博士论文**：1946
-- **主要任职**：斯捷克洛夫数学研究所、莫斯科大学
-- **荣誉**：苏联科学院院士、列宁奖 1962、俄罗斯科学院院士
+- **任职**：斯捷克洛夫数学研究所 (Steklov Institute, 1943–1975)、莫斯科国立大学
+- **荣誉**：苏联科学院院士 (1991)（但 1974 年因持不同政见被拒绝）、Lenin 奖
+- **学生**：Yuri Manin, Andrey Todorov, Alexey Parshin
 
----
+### 时间线
+- 1923: 生于日托米尔
+- 1946: 博士
+- 1950s–1960s: 代数数论、反交换代数、代数几何的苏联学派核心
+- 1960s: Shafarevich 群 (椭圆曲线的 Selmer 群推广)
+- 1970s: Shafarevich 定理——代数数域的 Galois 群理论
+- 1974: 因持不同政见（支持 Solzhenitsyn）被苏联科学院拒绝
+- 1977: 出版反共著作——与 Solzhenitsyn 一起被视为持不同政见者
+- 1991: 苏联解体后，最终成为科学院院士
+- 2017: 去世
 
-## 核心数学贡献
+### 人格：苏联数学界的"内部分裂者"——同时是顶尖的代数学家和政治上的争议持不同政见者。他的反共立场与俄罗斯民族主义交织。
 
+## 核心贡献
 | 领域 | 贡献 | 年代 |
 |------|------|:--:|
-| 代数数论 | Shafarevich–Tate 群（Ш 群） | 1950s |
-| 代数几何 | Shafarevich 猜想 （Faltings 1983 证明） | 1962 |
-| 类域论 | Shafarevich 对显式类域论的贡献 | 1950s |
-| Galois 理论 | Shafarevich 定理（可解 Galois 群的逆问题） | 1950s |
-| 教科书 | 《基础代数几何》两卷 — 俄国学派的经典 | 1970s |
+| 数论 | Shafarevich 群 (Ш) —— BSD 猜想核心 | 1960s |
+| 代数几何 | 代数曲面分类 | 1960s |
+| Galois 理论 | Shafarevich 定理 | 1970s |
+| 代数 | 反交换代数 (超代数) 的早期系统研究 | 1960s |
+| 教科书 | 《代数几何基础》——苏联学生经典 | 1970s |
 
-### ★ 叙事线索
+### ★ 叙事
+1. **Shafarevich 群** — 椭圆曲线的"障碍群"。BSD 猜想的核心对象。Shafarevich 发现了它，但 50 年后人们仍在研究它
+2. **苏联数学的支柱** — 与 Gelfand、Manin 等人共同构建了苏联代数几何学派
+3. **政治与数学的冲突** — 1974 年被拒之院士门外，因为他的政治立场
+4. **Solzhenitsyn 的挚友** — 诺贝尔文学奖得主、《古拉格群岛》作者的亲密朋友
+5. **《代数几何基础》** — 影响了三代数学家的教科书
 
-1. **Ш (Sha)** — Shafarevich–Tate 群用西里尔字母 Ш 表示。这是 Birch–Swinnerton-Dyer 猜想的核心对象。Ш 群的有限性是千禧年七大难题之一
-2. **Shafarevich 猜想** — 1962 年提出：给定一个数域上的 Abel 簇的集合，在固定的分歧集之外只有有限多个。Faltings 1983 年证明，因此获 Fields Medal
-3. **苏联数学的支柱** — 与 Manin, Arnold, Gelfand 同为莫斯科学派的代表
-4. **《基础代数几何》** — 苏联学生的标准教材，影响了俄罗斯代数几何学派的成长
-5. **政治争议** — Shafarevich 晚年发表了有争议的民族主义和政治观点，这在西方数学界引起过讨论
+## ⚠️ 史实陷阱
+- **Shafarevich 群** — 以 Ш 表示（俄文字母 Sha）
+- **政治争议** — 他的民族主义立场与美国主流观点有冲突。客观描述，不美化不丑化
+- **与 Gelfand 的关系** — 不是 Gelfand 的学生，是同事和在 Steklov 的同代人
+- **博士导师** — Boris Delaunay（几何学家）
 
-### 人物关系：
-- **Tate** — Ш 群的共同命名人
-- **Faltings** — Shafarevich 猜想的证明者
-- **Manin** — 莫斯科大学同事
-- **Kolmogorov** — 苏联科学院同事
+## ⚠️ 终审
+| 点 | 检查 |
+|----|------|
+| 出生地 | Zhytomyr, Ukraine |
+| 博士导师 | Delaunay |
+| Shafarevich 群 | 1960s |
+| 政治问题 | 1974拒绝→1991最终当选 |
 
----
+## 配色：苏联深红 + 数论金 + 代数黑
+- **badgenum** (数论) — `#8B0000`
+- **badgealgebra** (代数几何) — 金 `#D4A017`
+- **badgepolit** (政治) — `#1F2937`
+- **badgelegacy** (遗产) — 银灰
 
-## 配色方案
+## 幻灯片（13 页）
+01 封面
+02 Shafarevich 群 —— BSD 的核心
+03 苏联代数几何的崛起
+04 反交换代数
+05 《代数几何基础》
+06 Galois 理论
+07 Solzhenitsyn 的挚友
+08 1974：被拒绝的院士
+09 Steklov 研究所
+10 1991：最终承认
+11 遗产
+12 结束页
 
-- **主色**：苏联红 + 代数灰 —— 苏联学术传统 + 代数几何的抽象
-- 四个分类色：
-  - **badgeSha** (Ш 群) — 苏联红 `#CC0000`
-  - **badgeag** (代数几何) — 代数灰 `#5A5A5A`
-  - **badgeclass** (类域论) — 暖金 `#B8860B`
+## 音乐: PAST + Timeless
 
----
-
-## 幻灯片序列（10 页）
-
-```
-01  封面 — 《沙法列维奇：Ш 群的命名者》 / Igor Shafarevich 1923–2017
-02  苏联代数几何的支柱
-03  Ш (Sha) 群 — BSD 猜想的核心
-04  Shafarevich 猜想 (1962) — Faltings 的 Fields 之路
-05  可解 Galois 群的逆问题
-06  《基础代数几何》 — 苏联学派的经典
-07  莫斯科学派的巨人 — Shafarevich·Manin·Arnold
-08  思想回响 + 结束页
-```
-
----
-
-## 音乐选择
-
-| 优先级 | 曲目 | 来源 | 理由 |
-|:--:|------|------|------|
-| ★★★ | PAST | alex-productions | 历史感，苏联学术的时代回响 |
+## Round 2: Shafarevich 群定义、政治争议平衡、Delaunay 导师。
 
 > **开始执行。**

@@ -1,90 +1,98 @@
 # 阿诺德 (Vladimir Arnold) 立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-> 直接复制本文件内容到新对话中使用。
+> 严格遵循 [Mathematician_Biography_Guide.md]。参考: cartan, weyl。
 
 ---
 
-## 背景信息
+## 背景
 
-- **目标数学家**: Vladimir Arnold (1937–2010)
-- **气质关键词**: **Kolmogorov 的传人、KAM 定理的 A、动力系统与辛拓扑的大师**
-- **Wikipedia 页面**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Vladimir_Arnold/`
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+- **目标**: Vladimir Arnold (1937–2010)
+- **气质**: **KAM 理论的共同创立者、辛拓扑之父、Kolmogorov 的天才学生、经典力学的现代拯救者**
+- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Vladimir_Arnold/`
 
----
+## 第 0 步：校验
 
-## 第 0 步：下载 Wikipedia 页面并校验
+- **生卒**：1937-06-12 ~ 2010-06-03，享年 72 岁
+- **国籍**：苏联→俄罗斯
+- **出生地**：Odessa, Ukrainian SSR (now Ukraine)
+- **博士导师**：Andrey Kolmogorov（莫斯科国立大学）
+- **博士论文**：1961，《On the Representation of Continuous Functions of Three Variables》
+- **任职**：莫斯科国立大学 (1961–1986)、Steklov 研究所、巴黎第九大学 (Université Paris-Dauphine, 1993–2010)
+- **荣誉**：Lenin 奖 (1965)、Crafoord 奖 (1982)、Wolf 奖 (2001)、Shaw 奖 (2008)
+- **学生**：Alexander Givental, Askold Khovanskii, Victor Vassiliev
 
-- **生卒日期**：1937-06-12 ~ 2010-06-03，享年 72 岁
-- **国籍**：苏联 → 俄罗斯
-- **博士导师**：Andrey Kolmogorov（莫斯科大学）
-- **博士论文**：1961
-- **主要任职**：莫斯科大学、斯捷克洛夫数学研究所、巴黎第九大学
-- **荣誉**：Lenin 奖 1965、Crafoord 奖 1982、Wolf 奖 2001、Shaw 奖 2008
-- **重要合作者/学生**：Kolmogorov, Sinai
+### 时间线
+- 1937: 生于敖德萨
+- 1954: 入莫斯科国立大学
+- 1957: 19 岁解决 Hilbert 第十三问题（Kolmogorov 指导下）
+- 1961: 博士
+- 1963: KAM 理论（Kolmogorov–Arnold–Moser）——Hamilton 系统的稳定性
+- 1965: Lenin 奖
+- 1966: Arnold 扩散的发现
+- 1970s: 辛拓扑与接触拓扑的创立
+- 1974: Arnold 猜想的提出
+- 1980s: 奇点理论与突变论的深入研究
+- 1990s: 转向数学物理与流体力学
+- 2010: 在巴黎去世
 
----
+### 人格：Kolmogorov 最著名的学生。以"攻击性"与幽默并存。他享受证明法国数学家"在俄罗斯早已知道"的事情。
 
-## 核心数学贡献
+## 核心贡献
 
 | 领域 | 贡献 | 年代 |
 |------|------|:--:|
-| 经典力学 | KAM 定理（Arnold 部分 — 扩散） | 1960s |
-| Hilbert 问题 | Hilbert 第十三问题的解决（与 Kolmogorov） | 1957 |
-| 奇点理论 | ADE 分类（与数学物理的联系） | 1970s |
-| 辛拓扑 | Arnold 猜想（辛不动点猜想） | 1960s |
-| 流体力学 | Arnold 对 Euler 方程的几何描述 | 1966 |
+| 动力系统 | KAM 理论 | 1963 |
+| 辛拓扑 | Arnold 猜想 | 1974 |
+| 奇点理论 | ADE 分类（与 Thom 等人并行） | 1970s |
+| Hilbert 问题 | 第 13 问题的 19 岁解决 | 1957 |
+| 流体力学 | Arnold–Beltrami 流 | 1960s |
+| 经典力学 | 《经典力学的数学方法》——经典教材 | 1974 |
 
-### ★ 叙事线索
+### ★ 叙事
+1. **19 岁的天才** — 解决 Hilbert 第 13 问题时 Kolmogorov 说："他已经不需要我了"
+2. **KAM 理论** — 为什么太阳系是稳定的？KAM 证明大多数轨道是拟周期的——混沌被"困在"KAM 环面之间
+3. **辛拓扑之父** — 他创立了一个全新的数学分支，推广了 Poincaré 的几何定理
+4. **苏联数学的明星** — Kolmogorov 的学生、莫斯科数学学派的代表
+5. **Arnold 猜想** — 辛流形上的 Hamilton 系统必有无穷多周期轨道。此猜想驱动了 Flöer 同调的发展
 
-1. **Kolmogorov 最杰出的学生** — Kolmogorov 说 Arnold 是他见过的最聪明的学生。19 岁就参与解决了 Hilbert 第十三问题
-2. **KAM 定理的 "A"** — Kolmogorov 提出框架，Arnold 给出第一个严格证明，Moser 推广到光滑情形。三人共享命名
-3. **Arnold 猜想** — 断言：紧辛流形上的 Hamilton 微分同胚的不动点数 ≥ Morse 函数临界点的最小数。1980s–1990s 由 Floer, Fukaya, Ono 等人证实。催生了 Floer 同调
-4. **"数学是物理的一部分"** — Arnold 强烈反对 Bourbaki 的形式主义。他认为数学的灵感来自物理世界。他的教材充满直观的几何图示
-5. **Arnold 的猫** — Arnold 猫映射是混沌理论的标志性例子。一只猫的照片被映射拉伸再压缩，生动展示遍历性
+## ⚠️ 史实陷阱
+- **KAM** — Arnold 完成了最难的部分（1963）。Kolmogorov 提出了框架（1954），Moser 独立完成了另一部分（1962）
+- **Hilbert 第 13 问题** — 19 岁完成，由 Kolmogorov 指导
+- **Arnold 猜想** — 1974 提出。Symplectic fixed point theorem
+- **ADE 分类** — 不应只归功于 Arnold。Thom 等人独立发现
 
-### 人物关系：
-- **Kolmogorov** — 博士导师
-- **Moser** — KAM 的合作者
-- **Sinai** — 动力系统的同事
-- **Smale** — 动力系统的同辈巨人
+## ⚠️ 终审
+| 点 | 检查 |
+|----|------|
+| Hilbert 13 | 1957, 19 岁 |
+| KAM | Kolmogorov 1954 + Arnold 1963 + Moser 1962 |
+| 辛拓扑 | 1970s 开创 |
+| Wolf 奖 | 2001 |
+| Crafoord | 1982（因没有合适的 Nobel 方向） |
 
----
+## 配色：莫斯科红 + 辛拓扑金 + KAM 蓝
+- **badgeKAM** (动力系统) — KAM 蓝 `#1B4D6B`
+- **badgesymp** (辛拓扑) — 辛几何金 `#DAA520`
+- **badgeclass** (经典力学) — 莫斯科红 `#CC0000`
+- **badgelegacy** (遗产) — 银灰
 
-## 配色方案
+## 幻灯片（14 页）
+01 封面 — 《阿诺德：动力系统与辛拓扑的巨人》
+02 19 岁解决 Hilbert 第 13 问题
+03 Kolmogorov 的天才学生
+04 KAM 理论 — 太阳系为什么稳定
+05 Arnold 扩散
+06 辛拓扑的创立
+07 Arnold 猜想
+08 奇点理论
+09 经典力学的数学方法
+10 从莫斯科到巴黎
+11 Wolf + Crafoord + Shaw
+12 遗产
+13 结束页 — 他证明了太阳系大多是稳定的
 
-- **主色**：莫斯科金穹 + 动力红
-- 四个分类色：
-  - **badgeKAM** (KAM 定理) — 金穹 `#C9A227`
-  - **badgesymp** (辛拓扑) — 深红 `#8B0000`
-  - **badgechaos** (混沌/猫映射) — 暖橙 `#D2691E`
-  - **badgeHilbert** (Hilbert 13) — 象牙白 `#F5F0E8`
+## 音乐: Symphony No. 7 + Expedition
 
----
-
-## 幻灯片序列（11 页）
-
-```
-01  封面 — 《阿诺德：Kolmogorov 的传人》 / Vladimir Arnold 1937–2010
-02  少年天才 — 19 岁解决 Hilbert 第十三问题
-03  KAM 定理 — 太阳系的稳定性
-04  Arnold 扩散 — 动力系统最深刻的谜题
-05  Arnold 猜想 — 催生了 Floer 同调
-06  Arnold 的猫 — 混沌的萌宠
-07  "数学是物理的一部分" — 反 Bourbaki
-08  流体力学中的几何 — Euler 方程的新视角
-09  Kolmogorov 的传承
-10  思想回响 + 结束页
-```
-
----
-
-## 音乐选择
-
-| 优先级 | 曲目 | 来源 | 理由 |
-|:--:|------|------|------|
-| ★★★ | Savage | alex-productions | 强推进，动力与混沌 |
-| ★★★ | Awaken | alex-productions | 明亮，Kolmogorov 的传人 |
+## Round 2: KAM 三人、Hilbert 13 年龄、辛拓扑开创时间。
 
 > **开始执行。**
