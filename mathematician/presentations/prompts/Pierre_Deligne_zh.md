@@ -1,100 +1,96 @@
 # 德利涅 (Pierre Deligne) 立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-> 直接复制本文件内容到新对话中使用。
+> 严格遵循 [Mathematician_Biography_Guide.md]。参考: cartan, weyl, lebesgue。
 
 ---
 
-## 背景信息
+## 背景
 
-- **目标数学家**: Pierre Deligne (1944–)
-- **气质关键词**: **Weil 猜想的终结者、Grothendieck 的王储、代数几何与数论的融合者**
-- **Wikipedia 页面**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Pierre_Deligne/`
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+- **目标**: Pierre Deligne (1944– )
+- **气质**: **证明 Weil 猜想的天才、Grothendieck 的继承者、1978 年 Fields 奖得主、代数几何与数论融合的大师**
+- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Pierre_Deligne/`
 
----
+## 第 0 步：校验
 
-## 第 0 步：下载 Wikipedia 页面并校验
-
-下载到 `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Pierre_Deligne/`
-
-- **出生日期**：1944-10-03（仍在世）
+- **生卒**：1944-10-03 ~ (在世，2026 年 81 岁)
 - **国籍**：比利时
-- **博士导师**：Alexander Grothendieck
-- **博士论文**：1968
-- **主要任职**：IHÉS → 普林斯顿高等研究院（IAS）
-- **关键荣誉**：Fields Medal 1978、Crafoord Prize 1988、Abel Prize 2013、Wolf Prize 2008
-- **重要合作者**：Grothendieck, Serre, Mumford
+- **出生地**：Etterbeek, Brussels, Belgium
+- **博士导师**：Alexandre Grothendieck（巴黎大学，1968 年）—— 实际导师：René Thom（正式导师）
+- **博士论文**：1968，《Théorème de Lefschetz et critères de dégénérescence de suites spectrales》
+- **任职**：IHÉS (1968–1984)、普林斯顿高等研究院 (1984–至今)
+- **荣誉**：Fields 奖 (1978)、Wolf 奖 (2008)、Abel 奖 (2013)、Crafoord 奖 (1988)
+- **合作者**：Grothendieck（思想和导师）、Serre, Mumford, Lusztig
 
-### 关键时间线：
-- 1944: 生于比利时布鲁塞尔
-- 1968: Grothendieck 指导下完成博士论文
-- 1973: 证明 Weil 猜想（最后一个也是最重要的 —— Riemann 猜想类比）
-- 1978: Fields Medal
+### 时间线
+- 1944: 生于布鲁塞尔
+- 1966: 布鲁塞尔自由大学毕业
+- 1968: 在 Grothendieck 指导下获博士（正式导师 René Thom）
+- 1973: 证明 Weil 猜想（Riemann 假设在有限域上的类比）
+- 1974: 发表 Weil I —— 证明的一部分
+- 1978: Fields 奖（33 岁）
+- 1980: 发表 Weil II —— 更完整的框架
 - 1984: 加入 IAS
-- 2013: Abel Prize
+- 2008: Wolf 奖
+- 2013: Abel 奖
 
----
-
-## 核心数学贡献
+## 核心贡献
 
 | 领域 | 贡献 | 年代 |
 |------|------|:--:|
-| 代数几何 | Weil 猜想的完全证明 —— 有限域上代数簇的 zeta 函数猜想 | 1973 |
-| 霍奇理论 | 混合霍奇结构 | 1970s |
-| 数论 | 模形式与 Galois 表示（与 Serre 合作） | 1970s |
+| 代数几何 | 证明 Weil 猜想 | 1973–1980 |
+| 代数几何 | 混合 Hodge 结构 | 1970s |
+| 数论 | ℓ-adic 上同调与权 (poids) 理论 | 1970s–1980s |
 | 表示论 | Deligne–Lusztig 理论 | 1976 |
+| 数学物理 | Deligne–Mumford 叠 (stacks) | 1969 |
 
-### ★ 叙事线索
+### ★ 叙事
+1. **Weil 猜想** — 1949 年 Weil 提出了有限域上代数簇的四个猜想。Deligne 在 1973 年证明了最难的一个：Riemann 假设的类比。这是 20 世纪数学的最高成就之一
+2. **Grothendieck 的继承人** — Grothendieck 建立了 étale 上同调的宏伟框架，但自己无法证明 Riemann 猜想的类比。Deligne 接过了火炬
+3. **比利时小镇的天才** — 布鲁塞尔的一个普通家庭出身。不是巴黎高师，不是 Princeton——他是比利时人
+4. **沉默的合作者** — Deligne 以极简风格著称。他的论文短而深，不浪费一个词
+5. **拒绝 Grothendieck 的信** — 当 Grothendieck 号召数学家抵制科学界时，Deligne 是少数公开拒绝的老师的学生之一
 
-1. **Weil 猜想的终结者** — Weil 1949 年提出三个猜想。Deligne 1973 年证明了最后一个（也是最难的：Riemann 猜想的类比）。这用了 24 年
-2. **Grothendieck 的王储** — Grothendieck 为他建造了整个代数几何的机器（Étale 上同调），Deligne 用这台机器完成了他设想的证明
-3. **超越 Grothendieck** — Grothendieck 的系统缺少最后一环；Deligne 发明了"权"的概念来填补它
-4. **比利时 → Bures → Princeton** — 从欧洲小国到 IHÉS 的丛林，再到 IAS 的宁静
-5. **Fields + Abel + Wolf** — 大满贯级荣誉，与 Serre 并列
+## ⚠️ 史实陷阱
+- **博士导师** — 正式导师是 René Thom，但实际在 Grothendieck 的 IHÉS 团队中学习和工作
+- **Weil 猜想** — 四个猜想中的三个由 Grothendieck 等人证明。Deligne 证明了最难的一个（Riemann 假设类比）
+- **"Weil I" 与 "Weil II"** — 1974 与 1980。第一篇证明猜想，第二篇建立更一般的"权"理论
+- **与 Grothendieck 的决裂** — 不是个人关系恶化，而是因为 Grothendieck 反对整个学术体制
+- **仍在世** — 不要用过去时
 
-### 人物关系：
-- **Grothendieck** — 导师
-- **Serre** — 合作者（模形式与 Galois 表示）
-- **Weil** — 猜想的提出者
-- **Lusztig** — Deligne–Lusztig 理论的合作者
+## ⚠️ 终审高危
+| 点 | 检查 |
+|----|------|
+| 出生地 | Etterbeek, Brussels, 比利时 |
+| 博士导师 | 正式 Thom，实际 Grothendieck |
+| Weil 猜想证明 | 1973/1974 |
+| Fields 奖 | 1978 |
+| Abel 奖 | 2013 |
+| 与 Grothendieck | 确认决裂原因 |
 
----
+## 配色：比利时黑金红 + 代数靛
+- **badgeWeil** (Weil 猜想) — 比利时黑 `#000000`
+- **badgeHodge** (Hodge 结构) — 比利时金 `#FDDA24`
+- **badgeDeligne** (表示论) — 比利时红 `#EF3340`
+- **badgeIAS** (IAS) — 代数靛 `#1A1150`
 
-## 配色方案
+## 幻灯片（14 页）
+01 封面 — 《德利涅：Weil 猜想的征服者》
+02 Weil 猜想 — 1949 的挑战
+03 布鲁塞尔的天才少年
+04 Grothendieck 的火炬手
+05 Weil I (1974) — 证明的完成
+06 Weil II (1980) — 权理论的诞生
+07 ℓ-adic 上同调
+08 Deligne–Lusztig 理论 (1976)
+09 Fields 奖 (1978)
+10 从 IHÉS 到 IAS
+11 混合 Hodge 结构
+12 Wolf + Abel — 三冠加冕
+13 遗产
+14 结束页 — 他接过了 Grothendieck 的火炬，点亮了有限域上的 Riemann 假设
 
-- **主色**：深靛 + 金 —— Grothendieck 的传承 + Fields 的荣耀
-- 四个分类色：
-  - **badgeweil** (Weil猜想) — 深靛 `#1B1B6B`
-  - **badgehodge** (霍奇理论) — 暖金 `#B8860B`
-  - **badgegalois** (Galois表示) — 比利时蓝 `#2B3B6B`
-  - **badgerep** (表示论) — 银灰 `#A0A0A0`
+## 音乐: Timeless + Eternals
 
----
+## Round 2: Weil 猜想的四个部分归属、导师关系、与 Grothendieck 决裂。
 
-## 幻灯片序列（12 页）
-
-```
-01  封面 — 《德利涅：Weil 猜想的终结者》 / Pierre Deligne (1944–)
-02  Weil 的三个猜想 (1949) — 数论几何的圣杯
-03  Grothendieck 的机器 — étale 上同调与 SGA
-04  最后一环 — "权"的概念 (1973)
-05  Weil 猜想的完全证明 — 24 年的等待
-06  Fields Medal 1978
-07  混合霍奇结构 — 代数几何的新语言
-08  Deligne–Lusztig — 有限群的表示
-09  IAS 的宁静 — Grothendieck 之后
-10  Fields + Wolf + Abel — 大满贯
-11  思想回响 + 结束页
-```
-
----
-
-## 音乐选择
-
-| 优先级 | 曲目 | 来源 | 理由 |
-|:--:|------|------|------|
-| ★★★ | Eternals | alex-productions | 宏大深远，Weil 猜想的百年等待 |
-| ★★★ | Timeless | alex-productions | 沉稳，Grothendieck 的传承 |
-
-> **开始执行。每完成一步向我汇报。**
+> **开始执行。** 特别提醒: Weil 猜想 ≠ "Deligne 一个人证明了全部四个"。

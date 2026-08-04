@@ -1,80 +1,89 @@
 # 惠特尼 (Hassler Whitney) 立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-> 直接复制本文件内容到新对话中使用。
+> 严格遵循 [Mathematician_Biography_Guide.md]。参考: cartan, weyl, lebesgue。
 
 ---
 
-## 背景信息
+## 背景
 
-- **目标数学家**: Hassler Whitney (1907–1989)
-- **气质关键词**: **微分拓扑的开山鼻祖、Whitney 嵌入定理的命名者、奇点理论的先驱**
-- **Wikipedia 页面**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Hassler_Whitney/`
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+- **目标**: Hassler Whitney (1907–1989)
+- **气质**: **微分拓扑的开山鼻祖、Whitney 嵌入定理之父、Stiefel–Whitney 类、从音乐到数学的转型者**
+- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Hassler_Whitney/`
 
----
+## 第 0 步：Wikipedia 校验
 
-## 第 0 步：下载 Wikipedia 页面并校验
-
-- **生卒日期**：1907-03-23 ~ 1989-05-10，享年 82 岁
+- **生卒**：1907-03-23 ~ 1989-05-10，享年 82 岁
 - **国籍**：美国
-- **博士导师**：G.D. Birkhoff（哈佛大学）
-- **博士论文**：1932，图论
-- **主要任职**：哈佛大学、普林斯顿高等研究院
-- **荣誉**：美国国家科学勋章 1976、Wolf Prize 1982、Steele Prize 1985
+- **出生地**：New York City, USA
+- **博士导师**：George David Birkhoff（哈佛大学）
+- **博士论文**：1932，《The Coloring of Graphs》（图论）
+- **任职**：哈佛大学 (1930s–1952)、普林斯顿高等研究院 (1952–1977)
+- **荣誉**：Wolf 奖 (1982)、美国国家科学奖章 (1976)、Steele 奖 (1985)
+- **学生**：John Nash（在普林斯顿时期指导过 Nash）
 
----
+### 关键事实
+- 本科在耶鲁学音乐和物理（小提琴家！）
+- 1930 年代从图论转向微分拓扑
+- 1935 年引入 Stiefel–Whitney 特征类
+- 1936 年证明 Whitney 嵌入定理：任何光滑 n 维流形可嵌入 R²ⁿ
+- 1940s: 引入 Whitney 挠积 (cup product) 和上同调理论
+- 1950s: 几何积分理论的先驱
+- 晚年研究教育理论
 
-## 核心数学贡献
+## 核心贡献
 
 | 领域 | 贡献 | 年代 |
 |------|------|:--:|
-| 微分拓扑 | Whitney 嵌入定理 — 任何 n 维流形可嵌入 R²ⁿ | 1936 |
-| 奇点理论 | Whitney 奇点 — 折叠和尖点（fold & cusp） | 1950s |
-| 上同调 | Whitney 积 (cup product) | 1930s |
-| 图论 | 图论基础 — 四色问题的早期工作 | 1930s |
-| 几何测度论 | Whitney 扩张定理 | 1930s |
+| 微分拓扑 | Whitney 嵌入定理 | 1936 |
+| 拓扑学 | Stiefel–Whitney 特征类 | 1935 |
+| 代数拓扑 | Whitney 挠积 (cup product) | 1940s |
+| 奇点理论 | Whitney 折叠与尖点 (fold/cusp) | 1955 |
+| 几何积分 | Whitney 几何积分理论 | 1950s |
+| 图论 | 图着色理论（早期） | 1930s |
 
-### ★ 叙事线索
+### ★ 叙事
+1. **"我们生活在 Rⁿ 中"** — 嵌入定理说：任何流形都可以放在某个欧氏空间中。这是微分拓扑最根本的定理
+2. **小提琴手转行数学家** — 本科在耶鲁主修音乐和物理
+3. **特征类** — Stiefel–Whitney 类是最基本的特征类（模 2 系数）
+4. **Whitney 折叠与尖点** — 奇点分类的基石——任何光滑映射的奇点都可化简为 fold 和 cusp
+5. **从哈佛到 IAS** — 美国拓扑学的黄金一代
 
-1. **Whitney 嵌入定理** — 任何 n 维光滑流形都可以嵌入 R²ⁿ（后来改进为 R²ⁿ⁻¹）。这是微分拓扑的第一块基石。在你画不出高维流形之前，Whitney 告诉你：它们都住在平凡的欧氏空间里
-2. **从音乐到图论到拓扑** — 他原本学音乐和小提琴，后来转向物理，最终落在数学。他的图论工作来自四色问题
-3. **奇点理论** — 1955 年发表《从欧氏空间到平面的映射的奇点》。他发现了只有两种稳定的奇点：折叠和尖点。这是 René Thom 突变理论的前奏
-4. **Birkhoff 的学生** — 哈佛动力系统学派的传承人
-5. **安静的开创者** — 与 Milnor, Smale 不同，Whitney 的名气较小。但他是微分拓扑这个学科的"命名者"——他定义了什么是微分流形，什么是嵌入，什么是奇点
+## ⚠️ 史实陷阱
+- **嵌入定理的维数** — R²ⁿ（不是 Rⁿ⁺¹）
+- **Stiefel–Whitney** — Stiefel 独立发现了同样的类（在瑞士）。Whitney 给出了模 2 版本
+- **博士论文** — 图论（不是拓扑！）
 
----
+## ⚠️ 终审高危
+| 点 | 检查 |
+|----|------|
+| 博士论文 | 图着色 (1932) |
+| 嵌入定理 | 1936, R²ⁿ |
+| Stiefel–Whitney | 1935, 与 Stiefel 独立 |
+| Wolf 奖 | 1982 |
+| 学生 John Nash | 确认 |
 
-## 配色方案
+## 配色：耶鲁蓝 + 白银 + 墨黑
+- **badgeembed** (嵌入) — `#00356B`
+- **badgeclass** (特征类) — 白银 `#C0C0C0`
+- **badgesing** (奇点) — 墨黑 `#1F2937`
+- **badgemusic** (音乐) — 暖铜 `#B87333`
 
-- **主色**：拓扑深蓝 + 白 —— 嵌入定理的纯洁性
-- 四个分类色：
-  - **badgeembed** (嵌入定理) — 深蓝 `#1B3A5C`
-  - **badgesing** (奇点理论) — 暖金 `#B8860B`
-  - **badgecoho** (上同调) — 银灰 `#A0A0A0`
+## 幻灯片（14 页）
+01 封面 — 《惠特尼：微分拓扑的开山鼻祖》
+02 小提琴手变拓扑学家
+03 嵌入定理 (1936)
+04 Stiefel–Whitney 类 (1935)
+05 Cup Product 与上同调
+06 折叠与尖点 (1955)
+07 几何积分理论
+08 从哈佛到 IAS
+09 图论的开端
+10 Wolf 奖 (1982)
+11 遗产
+12 结束页 — 他证明了：我们永远可以把弯曲的世界放入平坦的空间
 
----
+## 音乐: Expedition + Timeless
 
-## 幻灯片序列（10 页）
-
-```
-01  封面 — 《惠特尼：微分拓扑的命名者》 / Hassler Whitney 1907–1989
-02  音乐→物理→数学 — 三次转向的天才
-03  图论 (1932) — 从四色问题开始
-04  Whitney 嵌入定理 (1936) — 所有流形活在欧氏空间里
-05  Whitney 积 — 上同调的乘法
-06  奇点理论 — 折叠和尖点 (1955)
-07  Wolf Prize 1982
-08  思想回响 — 他定义了"嵌入"的含义
-09  结束页
-```
-
----
-
-## 音乐选择
-
-| 优先级 | 曲目 | 来源 | 理由 |
-|:--:|------|------|------|
-| ★★★ | Timeless | alex-productions | 沉稳，嵌入定理的永恒 |
+## Round 2: 嵌入定理维数、Stiefel 独立发现、博士方向。
 
 > **开始执行。**

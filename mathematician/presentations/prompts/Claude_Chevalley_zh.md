@@ -1,99 +1,85 @@
 # 谢瓦莱 (Claude Chevalley) 立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-> 直接复制本文件内容到新对话中使用。
+> 严格遵循 [Mathematician_Biography_Guide.md]。参考: cartan, weyl, lebesgue。
 
 ---
 
-## 背景信息
+## 背景
 
-- **目标数学家**: Claude Chevalley (1909–1984)
-- **气质关键词**: **代数群之父、有限单群分类的先行者、Bourbaki 的创始核心**
-- **Wikipedia 页面**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Claude_Chevalley/`
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+- **目标**: Claude Chevalley (1909–1984)
+- **气质**: **Bourbaki 创始成员、李型有限单群的构造者、代数群理论的先驱**
+- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Claude_Chevalley/`
 
----
+## 第 0 步：校验
 
-## 第 0 步：下载 Wikipedia 页面并校验
-
-下载到 `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Claude_Chevalley/`
-
-- **生卒日期**：1909-02-11 ~ 1984-06-28，享年 75 岁
+- **生卒**：1909-02-11 ~ 1984-06-28，享年 75 岁
 - **国籍**：法国
-- **博士导师**：Émile Picard（巴黎大学）
+- **出生地**：Johannesburg, South Africa（父亲是法国外交官）
+- **博士导师**：Émile Picard（巴黎大学，1933）
 - **博士论文**：1933，类域论
-- **主要任职**：普林斯顿大学、哥伦比亚大学、巴黎第七大学
-- **关键荣誉**：Bourbaki 创始成员、Cole 奖 1941
+- **任职**：普林斯顿大学 (1939–1947)、哥伦比亚大学 (1947–1955)、巴黎大学 (1955–1978)
+- **荣誉**：Bourbaki 创始成员、Cole 奖 (1941)
+- **合作者**：André Weil（Bourbaki 同事）、Armand Borel（代数群）
 
-### 关键时间线：
-- 1909: 生于南非约翰内斯堡（法国外交官家庭）
-- 1933: 巴黎大学博士，导师 Picard
-- 1934: 与 Weil, Cartan 等人创立 Bourbaki
-- 1940s: 二战期间在普林斯顿
-- 1955: 发表 Chevalley 群 —— 有限单群分类的关键步骤
-- 1956–1958: 三卷《李群理论》—— 经典教材
-- 1970s: 巴黎七大退休
+### 关键
+- Bourbaki 的共同创始人（1935）
+- 1940s: 发现代数群与李群之间的深刻联系
+- 1955: 构造了 Chevalley 群——李型有限单群
+- 1950s–1960s: 代数群理论的系统化（与 Borel 合作）
 
----
-
-## 核心数学贡献
+## 核心贡献
 
 | 领域 | 贡献 | 年代 |
 |------|------|:--:|
-| 代数群 | Chevalley 群 —— 李型有限单群的统一构造 | 1955 |
-| 类域论 | Chevalley 的 idèle（伊代尔）方法 —— 类域论的现代化 | 1930s |
-| 代数几何 | Chevalley 定理 —— 代数群的几何结构 | 1950s |
-| 李群 | Chevalley–Eilenberg 上同调 | 1948 |
-| 教科书 | 《李群理论》三卷 —— 标准教材 | 1950s |
+| 群论 | Chevalley 群——李型有限单群的构造 | 1955 |
+| 代数群 | 代数群的系统理论 | 1950s–1960s |
+| 类域论 | 博士论文——类域论的算术化 | 1933 |
+| Bourbaki | 创始成员 | 1935 |
+| 逻辑 | Chevalley–Tarski 定理 | 1950s |
 
-### ★ 叙事线索
+### ★ 叙事
+1. **Bourbaki 的创始成员** — 与 Weil, Cartan, Dieudonné 等人创建了 20 世纪最著名的数学集体
+2. **李型有限单群** — Chevalley 群：一个统一的构造方法产生了几乎所有有限单群的新族
+3. **南非出生的法国人** — 父亲是外交官，生于约翰内斯堡
+4. **二战美国流亡** — 1939–1947 在普林斯顿，带来了 Bourbaki 的风格影响美国数学
+5. **代数群的先驱** — 在 Grothendieck 之前，Chevalley 开创了代数群的系统研究
 
-1. **Chevalley 群** — 用代数方法构造了几乎所有有限单群的一个无限族。这是有限单群分类工程的基石
-2. **Bourbaki 的创始灵魂** — 不是最出名的，但是最稳定的。当 Weil 和 Cartan 离开时，Chevalley 持续写了 20 年
-3. **idèle 的简化** — 类域论在 1930 年代还是一团乱麻。Chevalley 用 idèle 概念把它变得优雅
-4. **南非出生的法国数学家** — 父亲是法国驻南非外交官。他一生在两个大陆之间穿梭
-5. **被低估的大师** — 他的名字不如 Weil 或 Serre 响亮，但有限单群分类、类域论、代数群三个领域都有他的奠基性工作
+## ⚠️ 史实陷阱
+- **有限单群分类** — Chevalley 群是有限单群分类的基石，但最终分类由数十位数学家完成
+- **Bourbaki 角色** — 创始成员，但不如 Weil 和 Dieudonné 那样是"leader"
+- **代数群** — Chevalley 的代数群理论是线性的，不是一般代数群
 
-### 人物关系：
-- **Weil** — Bourbaki 同僚
-- **Cartan** — Bourbaki 同僚（Élie Cartan 的儿子 Henri）
-- **Eilenberg** — 上同调的合作者
-- **Grothendieck** — Bourbaki 后继者
+## ⚠️ 终审高危
+| 点 | 检查 |
+|----|------|
+| 出生地 | Johannesburg, South Africa |
+| 博士导师 | Picard（不是 Weil） |
+| Chevalley 群 | 1955 |
+| Bourbaki | 1935 创始，非 leader |
+| Cole 奖 | 1941 |
 
----
+## 配色：Bourbaki 深灰 + 南非暖金 + 代数蓝
+- **badgegroups** (Chevalley 群) — 代数蓝 `#002147`
+- **badgeBourbaki** (Bourbaki) — 深灰 `#2F3542`
+- **badgealgebra** (代数群) — 南非金 `#D4A017`
+- **badgelegacy** (遗产) — 银灰 `#A8A8A8`
 
-## 配色方案
+## 幻灯片（13 页）
+01 封面 — 《谢瓦莱：Bourbaki 的群论之手》
+02 Bourbaki 的创始故事
+03 南非→巴黎→普林斯顿
+04 类域论的开端 (1933)
+05 代数群的理论
+06 Chevalley 群 (1955)
+07 有限单群分类的基石
+08 二战的美国流亡
+09 回到巴黎
+10 Cole 奖与荣誉
+11 遗产
+12 结束页 — 他构建了李群的算术版本，开启了有限单群的世界
 
-- **主色**：法兰西蓝 + 南非金 —— 双重大陆的跨越
-- 四个分类色：
-  - **badgegroup** (代数群) — 金赭 `#B8860B`
-  - **badgeclass** (类域论) — 法兰西蓝 `#002395`
-  - **badgecoho** (上同调) — 深绿 `#2E4A2E`
-  - **badgebour** (Bourbaki) — 象牙白 `#F5F0E8`
+## 音乐: Timeless + Expedition
 
----
+## Round 2: Chevalley 群与有限单群分类的关系、Bourbaki 角色。
 
-## 幻灯片序列（11 页）
-
-```
-01  封面 — 《谢瓦莱：代数群的建筑师》 / Claude Chevalley 1909–1984
-02  南非到巴黎 — 外交官之子的数学之路
-03  Bourbaki 的创始灵魂 — 20 年的同行者
-04  Chevalley 群 (1955) — 有限单群的统一构造
-05  idèle — 类域论的优雅化
-06  Chevalley–Eilenberg 上同调 — 代数与拓扑的握手
-07  《李群理论》三卷 — 标准教材
-08  被低估的大师 — 三个领域的奠基
-09  思想回响 + 结束页
-```
-
----
-
-## 音乐选择
-
-| 优先级 | 曲目 | 来源 | 理由 |
-|:--:|------|------|------|
-| ★★★ | Timeless | alex-productions | 纪录片风，Bourbaki 的法式优雅 |
-| ★★★ | Nostalgia | alex-productions | 怀旧，南非与巴黎的双重乡愁 |
-
-> **开始执行。每完成一步向我汇报。**
+> **开始执行。**
