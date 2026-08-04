@@ -1,6 +1,6 @@
 # 柯尔莫哥洛夫 (Andrey Kolmogorov) 立传提示词
 
-> 本提示词严格遵循 [数学家立传工作指南.md](./数学家立传工作指南.md)，以 Grothendieck、Riemann、Hilbert、Serre、Noether 成品为参考模板，为柯尔莫哥洛夫制作 Beamer 演示文稿。
+> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)，以 Grothendieck、Riemann、Hilbert、Serre、Noether 成品为参考模板，为柯尔莫哥洛夫制作 Beamer 演示文稿。
 > 直接复制本文件内容到新对话中使用。
 
 ---
@@ -20,13 +20,13 @@
   - `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/serre/Jean_Pierre_Serre_zh.tex` — Serre 完整源码（优雅气质）
   - `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/noether/Emmy_Noether_zh.tex` — Noether 完整源码（开创者气质）
   - `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/grothendieck/Makefile` — 构建脚本（直接复制）
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/数学家立传工作指南.md`
+- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
 
 ---
 
 ## 你的任务
 
-按照 [数学家立传工作指南.md](./数学家立传工作指南.md) 第十一节「推荐制作流程」的步骤，依次完成。**每完成一步向我汇报进度**，遇到歧义时先征求我的意见再继续。
+按照 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md) 第十一节「推荐制作流程」的步骤，依次完成。**每完成一步向我汇报进度**，遇到歧义时先征求我的意见再继续。
 
 ---
 
@@ -332,7 +332,7 @@ Kolmogorov 的气质：**深邃、理性、广度、力量与秩序** — 宏大
 
 | 文件 | 用途 |
 |------|------|
-| `mathematician/presentations/数学家立传工作指南.md` | 完整操作手册 |
+| `mathematician/presentations/Mathematician_Biography_Guide.md` | 完整操作手册 |
 | `mathematician/pages/Andrey_Kolmogorov/page.md` | Kolmogorov Wikipedia 正文 |
 | `mathematician/pages/Andrey_Kolmogorov/metadata.json` | Kolmogorov Wikidata 元数据 |
 | `mathematician/pages/Andrey_Kolmogorov/images.txt` | 图片 URL 清单 |

@@ -1,6 +1,6 @@
 # 陈省身 (Shiing-Shen Chern) 立传提示词
 
-> 严格遵循 [数学家立传工作指南.md](./数学家立传工作指南.md)。
+> 严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
 
 ---
 
@@ -189,7 +189,7 @@
 
 | 文件 | 用途 |
 |------|------|
-| `mathematician/presentations/数学家立传工作指南.md` | 完整操作手册 |
+| `mathematician/presentations/Mathematician_Biography_Guide.md` | 完整操作手册 |
 | `mathematician/pages/Shiing-Shen_Chern/page.md` | Chern Wikipedia 正文（需下载） |
 | `mathematician/pages/Shiing-Shen_Chern/metadata.json` | Chern Wikidata 元数据（需下载） |
 | `mathematician/pages/Shiing-Shen_Chern/images.txt` | 图片 URL 清单（需下载） |

@@ -1,6 +1,6 @@
 # 约翰·冯·诺依曼 (John von Neumann) 立传提示词
 
-> 本提示词严格遵循 [数学家立传工作指南.md](./数学家立传工作指南.md)，以 Weyl、Weil 等成品为参考模板。
+> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)，以 Weyl、Weil 等成品为参考模板。
 > 直接复制本文件内容到新对话中使用。
 
 ---
@@ -12,7 +12,7 @@
 - **Wikipedia 页面**: ⚠️ **尚未下载。** 第一步需要运行下载脚本：
   - 页面路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/John_von_Neumann/`
 - **参考模板**: `weyl/`, `weil/`, `grothendieck/`, `kolmogorov/` 等完整源码
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/数学家立传工作指南.md`
+- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
 
 ---
 

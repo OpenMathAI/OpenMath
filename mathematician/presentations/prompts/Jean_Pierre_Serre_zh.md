@@ -1,6 +1,6 @@
 # 塞尔 (Jean-Pierre Serre) 立传提示词
 
-> 本提示词严格遵循 [数学家立传工作指南.md](./数学家立传工作指南.md)，以 Grothendieck、Riemann 和 Hilbert 成品为参考模板，为塞尔制作 Beamer 演示文稿。
+> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)，以 Grothendieck、Riemann 和 Hilbert 成品为参考模板，为塞尔制作 Beamer 演示文稿。
 > 直接复制本文件内容到新对话中使用。
 
 ---
@@ -18,13 +18,13 @@
   - `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/riemann/Bernhard_Riemann_zh.tex` — Riemann 完整源码（克制天才气质）
   - `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/hilbert/David_Hilbert_zh.tex` — Hilbert 完整源码（王者气质）
   - `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/grothendieck/Makefile` — 构建脚本（直接复制）
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/数学家立传工作指南.md`
+- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
 
 ---
 
 ## 你的任务
 
-按照 [数学家立传工作指南.md](./数学家立传工作指南.md) 第十一节「推荐制作流程」的步骤，依次完成。**每完成一步向我汇报进度**，遇到歧义时先征求我的意见再继续。
+按照 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md) 第十一节「推荐制作流程」的步骤，依次完成。**每完成一步向我汇报进度**，遇到歧义时先征求我的意见再继续。
 
 ---
 
@@ -316,7 +316,7 @@
 
 | 文件 | 用途 |
 |------|------|
-| `mathematician/presentations/数学家立传工作指南.md` | 完整操作手册 (§16 快速启动清单) |
+| `mathematician/presentations/Mathematician_Biography_Guide.md` | 完整操作手册 (§16 快速启动清单) |
 | `mathematician/pages/Jean-Pierre_Serre/page.md` | Serre Wikipedia 正文 |
 | `mathematician/pages/Jean-Pierre_Serre/metadata.json` | Serre Wikidata 元数据 |
 | `mathematician/pages/Jean-Pierre_Serre/images.txt` | 图片 URL 清单 |

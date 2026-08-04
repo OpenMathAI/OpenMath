@@ -1,6 +1,6 @@
 # 若尔当 (Camille Jordan) 立传提示词
 
-> 严格遵循 [数学家立传工作指南.md](./数学家立传工作指南.md)。
+> 严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
 
 ---
 

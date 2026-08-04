@@ -1,6 +1,6 @@
 # 图灵 (Alan Turing) 立传提示词
 
-> 本提示词严格遵循 [数学家立传工作指南.md](../数学家立传工作指南.md)，以 von Neumann、Hilbert 等成品为参考模板，为图灵制作 Beamer 演示文稿。
+> 本提示词严格遵循 [Mathematician_Biography_Guide.md](../Mathematician_Biography_Guide.md)，以 von Neumann、Hilbert 等成品为参考模板，为图灵制作 Beamer 演示文稿。
 > 直接复制本文件内容到新对话中使用。
 
 ---
@@ -12,13 +12,13 @@
 - **Wikipedia 页面**: ⚠️ **尚未下载。** 第一步需要运行下载脚本：
   - 页面路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Alan_Turing/`
 - **参考模板**: `von_neumann/`, `hilbert/`, `grothendieck/`, `riemann/` 等完整源码
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/数学家立传工作指南.md`
+- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
 
 ---
 
 ## 你的任务
 
-按照 [数学家立传工作指南.md](../数学家立传工作指南.md) 第十一节「推荐制作流程」的步骤，依次完成。**每完成一步向我汇报进度**，遇到歧义时先征求我的意见再继续。
+按照 [Mathematician_Biography_Guide.md](../Mathematician_Biography_Guide.md) 第十一节「推荐制作流程」的步骤，依次完成。**每完成一步向我汇报进度**，遇到歧义时先征求我的意见再继续。
 
 ---
 
@@ -217,7 +217,7 @@
 ## 第 6 步：规划幻灯片序列
 
 > ★ **第 0 页（OpenMath 首页）必须使用统一模板 `../cover/OpenMath_Cover.tex`**，禁止自行编写。
-> 详见 [数学家立传工作指南 §3.4](../../数学家立传工作指南.md#34-openmath-项目首页-统一使用-cover-模板)。
+> 详见 [数学家立传工作指南 §3.4](../../Mathematician_Biography_Guide.md#34-openmath-项目首页-统一使用-cover-模板)。
 
 图灵的故事有四条线索 —— 计算、密码、AI、悲剧 —— 建议 18 页：
 
@@ -400,7 +400,7 @@ etchley Park 的战后回顾 |
 
 | 文件 | 用途 |
 |------|------|
-| `mathematician/presentations/数学家立传工作指南.md` | 完整操作手册 |
+| `mathematician/presentations/Mathematician_Biography_Guide.md` | 完整操作手册 |
 | `mathematician/pages/Alan_Turing/page.md` | Turing Wikipedia 正文 |
 | `mathematician/pages/Alan_Turing/metadata.json` | Turing Wikidata 元数据 |
 | `mathematician/pages/Alan_Turing/images.txt` | 图片 URL 清单 |

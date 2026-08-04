@@ -1,6 +1,6 @@
 # 赫尔曼·外尔 (Hermann Weyl) 立传提示词
 
-> 本提示词严格遵循 [数学家立传工作指南.md](./数学家立传工作指南.md)，以 Kolmogorov、冯·诺依曼、Noether 等成品为参考模板。
+> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)，以 Kolmogorov、冯·诺依曼、Noether 等成品为参考模板。
 > 直接复制本文件内容到新对话中使用。
 
 ---
@@ -12,7 +12,7 @@
 - **Wikipedia 页面**: ⚠️ **尚未下载。** 第一步需要运行下载脚本：
   - 页面路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Hermann_Weyl/`
 - **参考模板**: `grothendieck/`, `riemann/`, `hilbert/`, `serre/`, `noether/`, `neumann/`, `kolmogorov/` 七个完整源码
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/数学家立传工作指南.md`
+- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
 
 ---
 
