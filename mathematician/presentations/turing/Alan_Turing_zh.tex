@@ -45,6 +45,70 @@
 \end{tikzpicture}%
 }
 
+% ===== 多变边框栏：不同领域不同配色 =====
+% 可计算性 — 暗青绿侧边竖条
+\newcommand{\cyanbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[badgecomputation, opacity=0.12] (current page.south west) rectangle ([yshift=0.45cm]current page.south east);
+  \draw[badgecomputation, opacity=0.55, line width=1.2pt] ([yshift=0.45cm]current page.south west) -- ([yshift=0.45cm]current page.south east);
+  \fill[badgecomputation, opacity=0.22] (current page.north west) rectangle ([xshift=0.25cm]current page.south west);
+\end{tikzpicture}%
+}
+
+% 密码学 — 深灰蓝底部双线 + 右侧暗角
+\newcommand{\darkbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[badgecrypto, opacity=0.10] (current page.south west) rectangle ([yshift=0.45cm]current page.south east);
+  \draw[badgecrypto, opacity=0.60, line width=0.8pt] ([yshift=0.45cm]current page.south west) -- ([yshift=0.45cm]current page.south east);
+  \draw[badgecrypto, opacity=0.35, line width=0.4pt] ([yshift=0.52cm]current page.south west) -- ([yshift=0.52cm]current page.south east);
+  \fill[badgecrypto, opacity=0.18] (current page.north east) rectangle ([xshift=-0.22cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% AI — 冷银左上角标 + 底部虚线
+\newcommand{\silverbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \draw[badgeAI, opacity=0.55, line width=1.0pt, dash pattern=on 2pt off 2pt] ([yshift=0.42cm]current page.south west) -- ([yshift=0.42cm]current page.south east);
+  \fill[badgeAI, opacity=0.14] (current page.north west) ++(0,-0.18) rectangle ++(0.22,-1.6);
+  \node[anchor=north west, font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=badgeAI!65!black, rotate=90]
+    at ([xshift=0.08cm, yshift=-0.6cm]current page.north west) {A R T I F I C I A L\ \  I N T E L L I G E N C E};
+\end{tikzpicture}%
+}
+
+% 生物数学 — 暖金波浪底部
+\newcommand{\goldbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[badgebio, opacity=0.10] (current page.south west) rectangle ([yshift=0.45cm]current page.south east);
+  \draw[badgebio, opacity=0.55, line width=1.2pt] ([yshift=0.45cm]current page.south west) -- ([yshift=0.45cm]current page.south east);
+  \draw[badgebio, opacity=0.25, line width=0.8pt] ([yshift=0.65cm]current page.south west) -- ([yshift=0.36cm, xshift=2.0cm]current page.south west)
+    -- ([yshift=0.65cm, xshift=4.0cm]current page.south west) -- ([yshift=0.36cm, xshift=6.0cm]current page.south west)
+    -- ([yshift=0.65cm, xshift=8.0cm]current page.south west) -- ([yshift=0.36cm, xshift=10.0cm]current page.south west)
+    -- ([yshift=0.65cm, xshift=12.0cm]current page.south west) -- ([yshift=0.36cm, xshift=14.0cm]current page.south west)
+    -- ([yshift=0.65cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 悲剧/暗面 — 暗红渐变底部 + 左右双角落印记
+\newcommand{\redbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \shade[bottom color=coverprimary!25, top color=coverprimary!0] (current page.south west) rectangle ([yshift=0.65cm]current page.south east);
+  \draw[coverprimary, opacity=0.55, line width=1.0pt] ([yshift=0.42cm]current page.south west) -- ([yshift=0.42cm]current page.south east);
+  \fill[coverwarm, opacity=0.16] (current page.south west) ++(0,0.1) rectangle ++(0.18,0.45);
+  \fill[coverwarm, opacity=0.16] (current page.south east) ++(-0.18,0.1) rectangle ++(0.18,0.45);
+\end{tikzpicture}%
+}
+
+% 遗产/总结 — 四种颜色拼接底部条
+\newcommand{\gradientbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[badgecomputation, opacity=0.14] (current page.south west) rectangle ([xshift=4.0cm, yshift=0.45cm]current page.south west);
+  \fill[badgecrypto, opacity=0.14] ([xshift=4.0cm]current page.south west) rectangle ([xshift=8.0cm, yshift=0.45cm]current page.south west);
+  \fill[badgeAI, opacity=0.14] ([xshift=8.0cm]current page.south west) rectangle ([xshift=12.0cm, yshift=0.45cm]current page.south west);
+  \fill[badgebio, opacity=0.14] ([xshift=12.0cm]current page.south west) rectangle ([yshift=0.45cm]current page.south east);
+  \draw[coverprimary, opacity=0.35, line width=0.9pt] ([yshift=0.45cm]current page.south west) -- ([yshift=0.45cm]current page.south east);
+\end{tikzpicture}%
+}
+
 \newcommand{\deckbackground}{%
 \begin{tikzpicture}[remember picture, overlay]
   \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
@@ -189,7 +253,7 @@
 % --- 3. Turing 机的诞生 ---
 \newcommand{\machineslide}{%
 \begin{frame}
-\plainbar
+\cyanbar
 \sectiontitle{Turing 机的诞生 (1936)}{一篇论文 —— 《论可计算数》—— 定义了"计算"本身}
 \vspace{-0.4cm}
 \begin{center}
@@ -213,7 +277,7 @@
 % --- 4. 停机问题 ---
 \newcommand{\haltingslide}{%
 \begin{frame}
-\plainbar
+\cyanbar
 \sectiontitle{停机问题}{一劳永逸地回答 Hilbert 的 Entscheidungsproblem}
 \begin{center}
 \begin{tikzpicture}[
@@ -236,7 +300,7 @@
 % --- 5. Bletchley Park ---
 \newcommand{\bletchleyslide}{%
 \begin{frame}
-\plainbar
+\darkbar
 \sectiontitle{Bletchley Park (1939–1945)}{秘密战争中的数学家：密码破译改变了二战的进程}
 \vspace{-0.4cm}
 \begin{center}
@@ -260,7 +324,7 @@
 % --- 6. Bombe 与 Enigma ---
 \newcommand{\bombeslide}{%
 \begin{frame}
-\plainbar
+\darkbar
 \sectiontitle{Bombe 与 Enigma 的破解}{数学如何击败纳粹密码机}
 \begin{center}
 \begin{tikzpicture}[
@@ -283,7 +347,7 @@
 % --- 7. ACE 与存储程序架构 ---
 \newcommand{\aceslide}{%
 \begin{frame}
-\plainbar
+\cyanbar
 \sectiontitle{ACE 与存储程序架构 (1945–1947)}{从数学机器到电子计算机的独立设计}
 \vspace{-0.4cm}
 \begin{center}
@@ -307,7 +371,7 @@
 % --- 8. 曼彻斯特岁月 ---
 \newcommand{\manchesterslide}{%
 \begin{frame}
-\plainbar
+\cyanbar
 \sectiontitle{曼彻斯特岁月 (1948–1954)}{Ferranti Mark I · 计算机实验室 · 计算的黎明}
 \begin{center}
 \begin{tikzpicture}[
@@ -330,7 +394,7 @@
 % --- 9. Turing 测试 ---
 \newcommand{\testslide}{%
 \begin{frame}
-\plainbar
+\silverbar
 \sectiontitle{Turing 测试 (1950)}{"机器能思考吗？" —— 一个哲学问题的工程转化}
 \vspace{-0.4cm}
 \begin{center}
@@ -354,7 +418,7 @@
 % --- 10. AI 的哲学深度 ---
 \newcommand{\aiphilosophyslide}{%
 \begin{frame}
-\plainbar
+\silverbar
 \sectiontitle{人工智能的哲学深度}{从国际象棋到学习机器 —— Turing 为 AI 铺设了蓝图}
 \vspace{-0.4cm}
 \begin{center}
@@ -378,7 +442,7 @@
 % --- 11. Turing 图案 ---
 \newcommand{\patternsslide}{%
 \begin{frame}
-\plainbar
+\goldbar
 \sectiontitle{Turing 图案 (1952)}{反应扩散方程 —— 斑马条纹、豹子斑点的数学}
 \vspace{-0.4cm}
 \begin{center}
@@ -402,7 +466,7 @@
 % --- 12. 在黑暗中创造光明 ---
 \newcommand{\darklightsslide}{%
 \begin{frame}
-\plainbar
+\redbar
 \sectiontitle{在黑暗中创造光明}{化学阉割与生物数学 —— 两条平行线的惊人交汇}
 \begin{center}
 \begin{tikzpicture}[
@@ -425,7 +489,7 @@
 % --- 13. 国家的恶 ---
 \newcommand{\stateslide}{%
 \begin{frame}
-\plainbar
+\redbar
 \sectiontitle{国家的恶 (1952–1954)}{当国家机器摧毁了它最伟大的英雄}
 \vspace{-0.4cm}
 \begin{center}
@@ -449,7 +513,7 @@
 % --- 14. 最后的苹果 ---
 \newcommand{\appleslide}{%
 \begin{frame}
-\plainbar
+\redbar
 \sectiontitle{最后的苹果 (1954)}{41 岁的终点 —— 咬了一口的氰化物苹果}
 \vspace{-0.4cm}
 \begin{center}
@@ -470,10 +534,34 @@
 \end{frame}
 }
 
-% --- 15. Turing 的遗产 ---
+% --- 15. 图灵奖 —— 计算机界的诺贝尔 ---
+\newcommand{\turingawardslide}{%
+\begin{frame}
+\gradientbar
+\sectiontitle{图灵奖 —— 计算机界的诺贝尔}{ACM 以他的名字命名了计算机科学的最高荣誉}
+\vspace{-0.6cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=cyanpanel, draw=badgecomputation!55] at (0,2.55)
+    {\textbf{1966 · ACM 设立图灵奖。}Turing 去世 12 年后，美国计算机学会 (ACM) 设立了以他命名的最高奖项 —— A.M.\ Turing Award。每年颁发一次，奖励"对计算机领域产生持久重大技术贡献"的个人。};
+  \node[item, fill=goldpanel, draw=badgebio!45] at (0,1.05)
+    {\textbf{首届获奖者：Alan Perlis (1966)。}Perlis 是早期编程语言的先驱（ALGOL 58/60），获奖理由："在高级编程语言和编译器构造领域的奠基性贡献。"这是对"让计算机编程成为科学"的表彰。};
+  \node[item, fill=darkpanel, draw=badgecrypto!35] at (0,-0.25)
+    {\textbf{100 万美元奖金 + 青铜奖杯。}自 2014 年起，Google 赞助将图灵奖奖金提升至 100 万美元，与诺贝尔奖奖金水平看齐。奖杯设计为刻有 Turing 肖像的青铜碗 —— "计算机界的诺贝尔奖"实至名归。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 图灵奖不仅是荣誉 —— 它是计算机科学从"辅助工具"成为独立学科的里程碑。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 16. Turing 的遗产 ---
 \newcommand{\legacyslide}{%
 \begin{frame}
-\plainbar
+\gradientbar
 \sectiontitle{图灵的遗产}{从 £50 钞票到 Turing 奖 —— 他的思想无处不在}
 \vspace{-0.4cm}
 \begin{center}
@@ -501,7 +589,7 @@
 \end{frame}
 }
 
-% --- 16. 升起海水 ---
+% --- 17. 升起海水 ---
 \newcommand{\epitaphslide}{%
 \begin{frame}[plain]
 \deckbackground
@@ -529,7 +617,7 @@
 \end{frame}
 }
 
-% --- 17. 结束页 ---
+% --- 18. 结束页 ---
 \newcommand{\closingslide}{%
 \begin{frame}[plain]
 \deckbackground
@@ -566,6 +654,7 @@
 \darklightsslide
 \stateslide
 \appleslide
+\turingawardslide
 \legacyslide
 \epitaphslide
 \closingslide
