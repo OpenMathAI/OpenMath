@@ -1,94 +1,98 @@
 # 扎里斯基 (Oscar Zariski) 立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-> 直接复制本文件内容到新对话中使用。
+> 严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。参考: cartan, weyl, lebesgue。
 
 ---
 
 ## 背景信息
 
-- **目标数学家**: Oscar Zariski (1899–1986)
-- **气质关键词**: **代数几何的代数化先驱、意大利学派的终结者、Weil → Grothendieck 的桥梁**
-- **Wikipedia 页面**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Oscar_Zariski/`
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+- **目标**: Oscar Zariski (1899–1986)，原名 Ascher Zaritsky
+- **气质关键词**: **代数几何的代数化先驱、意大利学派的终结者、Zariski 拓扑的创立者**
+- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Oscar_Zariski/`
 
----
+## 第 0 步：Wikipedia 校验
 
-## 第 0 步：下载 Wikipedia 页面并校验
+- **生卒**：1899-04-24 ~ 1986-07-04，享年 87 岁
+- **国籍**：美国（生于俄罗斯帝国，今白俄罗斯）
+- **出生地**：Kobryn, Russian Empire (now Belarus)
+- **博士导师**：Guido Castelnuovo（罗马大学）
+- **博士论文**：1925，意大利代数几何学派
+- **任职**：约翰·霍普金斯大学 (1927–1945)、哈佛大学 (1947–1969)
+- **荣誉**：Wolf 奖 (1981)、Steele 奖 (1981)、美国国家科学奖章 (1965)
+- **学生**：Heisuke Hironaka（奇点解消）、David Mumford、Michael Artin、Steven Kleiman
 
-下载到 `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Oscar_Zariski/`
+### 时间线
+- 1899: 生于白俄罗斯 Kobryn（当时俄罗斯帝国）
+- 1918: 因俄国革命，流亡到基辅→意大利
+- 1921: 入读罗马大学，师从 Castelnuovo——意大利代数几何学派
+- 1925: 博士。但很快发现意大利学派的"直觉"方法不够严格
+- 1927: 移民美国，加入约翰·霍普金斯大学
+- 1930s: 开始用代数和拓扑方法改造代数几何
+- 1940: 引入 Zariski 拓扑——代数簇上的新拓扑
+- 1944–1946: 在巴西与 André Weil 交流（Weil 正在写《代数几何基础》）
+- 1947: 转任哈佛大学
+- 1950s: 在奇点理论和局部环理论中取得突破
+- 1964: 学生 Hironaka 证明奇点解消定理（Fields 奖）
+- 1981: Wolf 奖
+- 1986: 去世
 
-- **生卒日期**：1899-04-24 ~ 1986-07-04，享年 87 岁
-- **国籍**：俄罗斯帝国 → 意大利 → 美国
-- **博士导师**：Guido Castelnuovo（罗马大学，意大利代数几何学派）
-- **博士论文**：1924
-- **主要任职**：约翰·霍普金斯大学、哈佛大学（长期）
-- **关键荣誉**：美国国家科学院院士、Wolf 奖 1981、Steele 奖 1981
-- **重要学生**：Heisuke Hironaka（奇点消解，Fields 奖）、David Mumford、Michael Artin
+### 人格：安静、系统性、不满足于意大利学派的"直觉"——他用代数严格性重建了整个领域。
 
----
-
-## 核心数学贡献
+## 核心贡献
 
 | 领域 | 贡献 | 年代 |
 |------|------|:--:|
-| 代数几何 | Zariski 拓扑 —— 代数簇上的代数拓扑 | 1940s |
-| 交换代数 | 《交换代数》（与 Samuel 合著）—— 经典教材 | 1958 |
-| 奇点理论 | Zariski 消解 —— 用代数工具解决几何问题 | 1930s–1940s |
-| 代数曲面 | Zariski 对代数曲面的分类 | 1930s |
-| 代数几何 | 代数化的纲领 —— 将意大利学派直觉转变为严格代数 | 1930s–1950s |
+| 代数几何 | Zariski 拓扑 | 1940 |
+| 代数几何 | 双有理变换的代数化 | 1930s–1940s |
+| 奇点理论 | 奇点解消的猜想与局部理论 | 1950s |
+| 交换代数 | Zariski–Nagata 纯性定理 | 1950s |
+| 教科书 | 《交换代数》(与 Samuel 合著) —— 经典 | 1958 |
 
-### ★ 叙事线索
+### ★ 叙事
+1. **意大利学派的终结者** — Zariski 本人是意大利学派的产物，但他用代数严格性"杀死了"自己的老师那一派
+2. **Zariski 拓扑** — 代数簇上最自然的拓扑——闭集是代数子簇
+3. **俄国→意大利→美国的移民** — 三个大陆、三种文化
+4. **Hironaka 的导师** — 他提出了奇点解消猜想，由学生完成证明
+5. **代数的力量** — 他证明了：代数比几何直觉更可靠
 
-1. **意大利学派的终结者** — 20 世纪初的代数几何由意大利学派（Castelnuovo, Enriques, Severi）主导，以几何直觉为基础。Zariski 用严格的代数工具替代了直觉推理
-2. **Zariski 拓扑** — 代数簇上定义的最自然的拓扑。闭集不是点集的闭包，而是多项式零点的集合。这是现代代数几何的基本语言
-3. **三个天才学生** — Hironaka（奇点消解的 Fields 奖）、Mumford（代数几何的 Fields 奖）、Michael Artin。Zariski 的教学遗产延续了三代人
-4. **从俄国到意大利到美国** — 三次文化的跨越。出生于白俄罗斯，在意大利求学，在美国建立学派
-5. **Grothendieck 的前奏** — Zariski 的代数化纲领，为 Grothendieck 的方案理论扫清了语言障碍
+## ⚠️ 史实陷阱
+- **不是 Grothendieck** — Zariski 的代数化 ≠ Grothendieck 的概形论。Zariski 在 Grothendieck 之前
+- **Zariski 拓扑** — 1940 年引入。不是所有闭集都是"曲线"—— 闭集=代数子簇
+- **意大利学派的"错误"** — 不是他们错了，而是他们的方法不严格。Zariski 是尊重而非"推翻"
+- **出生地** — 白俄罗斯（当时俄罗斯帝国）
 
-### 人物关系：
-- **Castelnuovo** — 博士导师，意大利学派最后的大师
-- **Grothendieck** — 后继者，用方案理论完成了代数几何的革命
-- **Weil** — 同时代人，同样在代数几何领域奠基
-- **Hironaka** — 学生，证明了任意特征的奇点消解（Fields 奖 1970）
-- **Mumford** — 学生，代数几何的 Fields 奖得主
+## ⚠️ 终审高危
+| 高危点 | 检查 |
+|---------|------|
+| 出生地与原名 | Ascher Zaritsky, Kobryn (Belarus) |
+| 博士导师 | Castelnuovo, 罗马 |
+| Zariski 拓扑 | 1940 |
+| 学生 Hironaka | 1964 奇点解消 |
+| Wolf 奖 | 1981 |
 
----
+## 配色：白俄罗斯暖金 + 哈佛深红 + 象牙白
+- **badgeZtop** (Zariski 拓扑) — 深红 `#A51C30`
+- **badgebirat** (双有理) — 暖金 `#D4A017`
+- **badgecomm** (交换代数) — 石板灰 `#4A4A4A`
+- **badgelegacy** (传承) — 象牙白 `#F5F0E5`
 
-## 配色方案
+## 幻灯片（14 页）
+01 封面 — 《扎里斯基：代数几何的严格化者》
+02 从意大利到代数——一个方法的革命
+03 俄国→意大利→美国
+04 Zariski 拓扑 (1940)
+05 双有理变换的代数化
+06 奇点理论
+07 Hironaka 与奇点解消 (1964)
+08 《交换代数》(1958)
+09 哈佛岁月
+10 意大利学派的终结
+11 Wolf 奖 (1981)
+12 遗产
+13 结束页 — 他用代数给了几何一个不可动摇的基础
 
-- **主色**：赤陶红 + 象牙白 —— 意大利学派的温暖 + 代数几何的抽象
-- 四个分类色：
-  - **badgeag** (代数几何) — 赤陶红 `#BB4444`
-  - **badgecommalg** (交换代数) — 深灰 `#4A4A4A`
-  - **badgesing** (奇点理论) — 暗紫 `#4B0082`
-  - **badgezar** (Zariski拓扑) — 象牙白 `#F5F0E8`
+## 音乐: Timeless + Expedition
 
----
+## Round 2 高危: Zariski vs Grothendieck 时序、意大利学派的"缺陷"准确描述、出生地确认。
 
-## 幻灯片序列（12 页）
-
-```
-01  封面 — 《扎里斯基：代数几何的代数化者》 / Oscar Zariski 1899–1986
-02  三度迁徙 — 白俄罗斯→意大利→美国
-03  意大利学派的终结 — 用代数替代直觉
-04  Zariski 拓扑 — 代数簇上最自然的拓扑
-05  奇点消解 — 代数工具解决几何难题
-06  《交换代数》(1958) — 经典教材的诞生
-07  三个天才学生 — Hironaka, Mumford, Artin
-08  Grothendieck 的前奏 — 从Zariski到Scheme
-09  Wolf 奖 1981
-10  思想回响 + 结束页
-```
-
----
-
-## 音乐选择
-
-| 优先级 | 曲目 | 来源 | 理由 |
-|:--:|------|------|------|
-| ★★★ | Nostalgia | alex-productions | 怀旧，意大利学派的传承 |
-| ★★★ | Timeless | alex-productions | 纪录片风，代数几何的奠基 |
-| ★★ | Expedition | alex-productions | 探索，从Zariski到Grothendieck |
-
-> **开始执行。每完成一步向我汇报。**
+> **开始执行。**
