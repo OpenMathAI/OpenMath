@@ -1,6 +1,6 @@
 # 数学家完整页面索引
 
-> 生成时间：2026-08-05 13:05:26
+> 生成时间：2026-08-05 14:15:16
 > 共 **1** 人
 
-- [Laurent Schwartz](Laurent_Schwartz/page.md) （1915–2002） — French mathematician (1915-2002)
+- [John Milnor](John_Milnor/page.md) （1931–） — American mathematician
