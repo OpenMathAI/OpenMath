@@ -287,6 +287,38 @@
 
 ---
 
+## 第 18 步：Makefile
+
+> **模板来源**：直接复制 `Henri_Lebesgue/Makefile` 或 `Elie_Cartan/Makefile`，只需修改 `MAIN` 变量。
+
+### 创建步骤
+
+1. 在 Beamer 目录下创建 `Makefile`（参照 `Henri_Lebesgue/Makefile` 逐字复制）
+2. 修改第 1 行：`MAIN = Felix_Hausdorff_zh`
+3. 修改第 2 行：`VIDEO_NAME = Felix_Hausdorff_zh`
+4. 其余不变
+
+### 目标说明
+
+| 目标 | 命令 | 效果 |
+|:--|------|------|
+| `make` / `make pdf` | `latexmk -xelatex` | 编译 PDF，自动处理交叉引用 |
+| `make images` | `pdftoppm -png -r 600` | 将 PDF 每页转为 600dpi PNG |
+| `make video` | `ffmpeg` concat PNG + BGM | 合成幻灯片视频（如目录下有 .wav 则自动混音） |
+| `make clean` | 删除 aux/log/out/xdv | 清理中间文件 |
+| `make distclean` | clean + 删除 PDF/PNG/MP4 | 完全清理 |
+
+### 验证
+
+```bash
+# 在 Beamer 目录下运行
+cd mathematician/presentations/Felix_Hausdorff
+make clean && make
+# 应输出：Successfully generated Felix_Hausdorff_zh.pdf
+```
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 >
 > **特别提醒：**
