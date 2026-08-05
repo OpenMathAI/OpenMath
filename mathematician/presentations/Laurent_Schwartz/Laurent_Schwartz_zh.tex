@@ -1,0 +1,513 @@
+% =============================================================
+%  赋予 ∞ 以意义的人：洛朗·施瓦兹 (Laurent Schwartz)
+%  Beamer 演示 —— 参照 Cartan / Hausdorff / Lebesgue 版式
+%  资料来源：mathematician/pages/Laurent_Schwartz + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：施瓦兹 —— 分析紫罗兰 + 巴黎蓝 + 激进橙 + 蝴蝶绿 =====
+\definecolor{bgmain}{RGB}{246,244,252}
+\definecolor{coverprimary}{HTML}{2C0E3F}      % 深紫 — 分布的优雅
+\definecolor{coveraccent}{HTML}{5B2C6F}        % 分析紫罗兰 — 数学的生命线
+\definecolor{coveramber}{HTML}{1B4F72}         % 巴黎蓝
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{35,15,50}
+\definecolor{muteddark}{RGB}{90,75,100}
+\definecolor{distpanel}{RGB}{245,235,250}      % 浅紫面板
+\definecolor{spacepanel}{RGB}{232,240,250}     % 浅蓝面板
+\definecolor{actpanel}{RGB}{255,242,232}       % 激进橙面板
+\definecolor{entopanel}{RGB}{232,248,238}      % 蝴蝶绿面板
+\definecolor{graypanel}{RGB}{242,244,248}
+\definecolor{amberpanel}{RGB}{255,242,228}
+\definecolor{ivorypanel}{RGB}{248,245,235}
+% Schwartz 四大面向
+\definecolor{badgedist}{HTML}{5B2C6F}          % 分布理论 — 分析紫罗兰
+\definecolor{badgeSpace}{HTML}{1B4F72}          % Schwartz 空间 — 巴黎蓝
+\definecolor{badgeActivism}{HTML}{D35400}        % 政治活动 — 激进橙
+\definecolor{badgeEnto}{HTML}{27AE60}            % 蝴蝶收藏 — 蝴蝶绿
+\definecolor{coverteal}{HTML}{009688}
+\definecolor{coverwarm}{HTML}{FFB300}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgedist!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeSpace!10] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeActivism!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeEnto!8] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{infinity}\enspace 赋予 $\infty$ 以意义的人};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {洛朗·施瓦兹};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Laurent Schwartz\enspace·\enspace 1915 — 2002};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {分布理论 · 第一位法国 Fields 奖 · Bourbaki 的分析学支柱};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgedist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {分布理论\\Distributions};
+      \node[rounded corners=8pt, fill=badgeSpace, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {泛函分析\\Funct.\ Analysis};
+      \node[rounded corners=8pt, fill=badgeActivism, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {政治活动\\Activism};
+      \node[rounded corners=8pt, fill=badgeEnto, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {蝴蝶收藏\\Entomology};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"数学、政治和蝴蝶。" —— 他的三大热爱 (Angelo Guerraggio)};
+  % 肖像（右上）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.2cm,height=3.0cm,keepaspectratio]{Laurent_Schwartz.jpg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.3cm]current page.center)
+    {Laurent Schwartz};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{university}\enspace ENS · Nancy · Sorbonne · Polytechnique\enspace|\enspace 第一位法国 Fields 奖得主 · 托洛茨基主义活动家};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么施瓦兹改变了分析}{分布理论 · Fields 奖 · Bourbaki · 政治 · 蝴蝶}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=distpanel, draw=badgedist!50, text=coverprimary!85!black]
+    (a) at (-5.7,1.05) {分布理论\\合法化 Dirac $\delta$\\改变 PDE 的面貌};
+  \node[nodebox, fill=spacepanel, draw=badgeSpace!50, text=badgeSpace!85!black]
+    (b) at (-1.9,1.05) {泛函分析\\Schwartz 空间 $\mathcal{S}$\\核定理 (1950s)};
+  \node[nodebox, fill=actpanel, draw=badgeActivism!50, text=badgeActivism!85!black]
+    (c) at (1.9,1.05) {政治活动\\《121 人宣言》\\被 Polytechnique 停职};
+  \node[nodebox, fill=entopanel, draw=badgeEnto!50, text=badgeEnto!85!black]
+    (d) at (5.7,1.05) {蝴蝶收藏\\两万只鳞翅目\\若干物种以他命名};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 在他之前，Dirac $\delta$ 在数学家眼中是一个"不存在的函数"。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 在他之后，它成为了泛函分析中最基本的对象之一。Grothendieck 是他的学生。两万只蝴蝶是他的收藏。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{巴黎之子 (1915–1939)}{从 ENS 到 agrégation，Hadamard 和 Lévy 的数学家族}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=spacepanel, draw=badgeSpace!40] at (0,2.55)
+    {\textbf{1915 · 生于巴黎科学世家。}阿尔萨斯裔犹太家族——父亲是著名外科医生，舅公 (great-uncle-in-law) 是传奇数学家 Jacques Hadamard（素数定理、泛函分析先驱）。一种数学基因在家族的不同分支中流淌。};
+  \node[item, fill=distpanel, draw=badgedist!30] at (0,1.05)
+    {\textbf{1934 · 考入 ENS。}在 Lycée Louis-le-Grand 准备入学考试时，他爱上了 Marie-Hélène Lévy——概率论先驱 Paul Lévy 的女儿。两人 1938 年结婚。Marie-Hélène 本人也是数学家（复解析几何）。};
+  \node[item, fill=graypanel, draw=badgeEnto!20] at (0,-0.25)
+    {\textbf{1937 · agrégation 第二名。}他的老师曾对父母说："注意，有人会说您的儿子有语言天赋，但他只对语言的科学和数学方面感兴趣：他应该成为数学家。"拉丁语、希腊语、数学全优——但数学才是他的命运。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他的数学家族：Hadamard（舅公）、Paul Lévy（岳父）、Marie-Hélène Lévy（妻子）——三个方向的分析。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. WWII ---
+\newcommand{\wwiislide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{二战下的双重身份 (1939–1944)}{化名躲藏，真名发表论文}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=actpanel, draw=badgeActivism!55] at (0,2.35)
+    {\textbf{犹太人 + 托洛茨基主义者 = 双倍危险。}纳粹占领法国后，Schwartz 必须躲藏。他使用化名 Laurent-Marie Sélimartin，在 Clermont-Ferrand（斯特拉斯堡大学战时迁至此处）工作。妻子 Marie-Hélène 化名 Lengé。};
+  \node[item, fill=distpanel, draw=badgedist!35] at (0,0.85)
+    {\textbf{危险的诚实。}1943 年，他的博士论文《Étude des sommes d'exponentielles réelles》以真实姓名 Laurent Schwartz 发表在 Clermont-Ferrand。在化名躲藏的同时，用真名发表数学——一种安静的、数学式的勇敢。};
+  \node[item, fill=spacepanel, draw=badgeSpace!20] at (0,-0.45)
+    {\textbf{与 Feldbau 的不同命运。}在 Clermont-Ferrand 的数学家中，Jacques Feldbau（拓扑学家）没能逃脱纳粹——被捕并死于集中营。Schwartz 夫妇幸存了下来。这段经历塑造了他战后对不公正的敏感。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他化名为 Laurent-Marie Sélimartin。但他的论文署名 Laurent Schwartz。一种数学式的诚实。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 分布理论 ---
+\newcommand{\distslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{分布理论的诞生 (1945–1950)}{Dirac $\delta$ 不再是"不存在的函数"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=distpanel, draw=badgedist!55] at (0,2.35)
+    {\textbf{物理学家早就用了——数学家不承认。}Dirac 在 1927 年引入 $\delta$ 函数：在 $0$ 处无穷大，其他地方为零，积分为 1。物理学家用它来计算，数学家说"这不是函数"。Schwartz 的回答：你说得对，它不是函数——它是一个分布（线性泛函）。};
+  \node[item, fill=spacepanel, draw=badgeSpace!40] at (0,0.85)
+    {\textbf{分布 = 测试函数的连续线性泛函。}核心思想极其简洁：不再直接"定义" $\delta$ 在每一点的值，而是通过它如何作用在光滑测试函数上来刻画它。$\langle \delta, \varphi \rangle = \varphi(0)$——这就是 $\delta$ 的全部。};
+  \node[item, fill=graypanel, draw=badgeEnto!20] at (0,-0.45)
+    {\textbf{合法化的力量。}分布理论不仅让 $\delta$ 函数合法——它让 Fourier 变换可以在远比经典分析更广的函数类上操作。PDE、调和分析、量子场论——分布理论是所有这些领域的共同语言。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 这不是"否定"物理学家的直觉，而是"正式承认"它。分布理论是对物理直觉的数学史诗。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. Schwartz 空间 ---
+\newcommand{\spaceslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Schwartz 空间 \(\mathcal{S}\) 与核定理}{速降函数、Fourier 变换的自然家园}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=spacepanel, draw=badgeSpace!55] at (0,2.35)
+    {\textbf{Schwartz 空间 \(\mathcal{S}\)。}速降函数空间——所有导数都比任何多项式的倒数衰减得更快的光滑函数。这是 Fourier 变换最自然的"家"：\(\mathcal{F}: \mathcal{S} \to \mathcal{S}\) 是一个同构。};
+  \node[item, fill=distpanel, draw=badgedist!35] at (0,0.85)
+    {\textbf{缓增分布 \(\mathcal{S}'\)。}\(\mathcal{S}\) 的对偶空间——比普通的分布更大，比任意线性泛函更有用。这是调和分析和 PDE 的标准工作环境。$\delta$ 函数自然地属于 \(\mathcal{S}'\)。};
+  \node[item, fill=graypanel, draw=badgeActivism!20] at (0,-0.45)
+    {\textbf{Schwartz 核定理。}每个从 \(\mathcal{S}\) 到 \(\mathcal{S}'\) 的连续线性算子都有一个积分核——一个广义函数 $K(x,y)$。"每个算子都是核"——这个看似简单的断言统一了 PDE 理论的核心计算框架。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} \(\mathcal{S} \xrightarrow{\mathcal{F}} \mathcal{S}\) —— Fourier 变换最美的家园。核定理 —— "每个算子都有核"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 菲尔兹奖 ---
+\newcommand{\fieldsmedalslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{菲尔兹奖 (1950)}{第一位法国获奖者，政治背景下的美国之行}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=distpanel, draw=badgedist!55] at (0,2.35)
+    {\textbf{1950 · 剑桥 ICM。}Fields 奖当时只颁发了两届（1936, 1950）。Schwartz 因分布理论获奖——他是第一位获此殊荣的法国数学家。当年同时获奖的还有 Atle Selberg（数论）。};
+  \node[item, fill=actpanel, draw=badgeActivism!50] at (0,0.85)
+    {\textbf{政治障碍。}因为他的托洛茨基主义背景，Schwartz 进入美国遇到了严重困难。美国的麦卡锡时代对左翼知识分子充满猜疑。一场数学荣誉之旅变成了政治考验——但他最终成功入境。};
+  \node[item, fill=spacepanel, draw=badgeSpace!20] at (0,-0.45)
+    {\textbf{分布理论的胜利。}在 ICM 的大会报告中，Schwartz 介绍了他的核定理和分布理论。从这一刻起，分布理论成为 20 世纪分析学的标准语言。一个法国人在美国土地上为法国数学赢得了最高荣誉。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 第一位法国 Fields 奖得主。他为分布理论获奖——为物理直觉的正名而获奖。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 南锡 ---
+\newcommand{\nancyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{南锡的黄金时代 (1945–1952)}{Bourbaki 的分析学支柱，Delsarte-Dieudonné 的邀请}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=spacepanel, draw=badgeSpace!50] at (0,2.35)
+    {\textbf{1945 · 为什么是南锡？}Jean Delsarte 和 Jean Dieudonné 力劝 Schwartz 加入南锡大学。此时的南锡是 Bourbaki 活动的中心——一群法国年轻数学家正在用结构主义的方法重写整个数学。};
+  \node[item, fill=distpanel, draw=badgedist!40] at (0,0.85)
+    {\textbf{分析的革命。}Schwartz 在南锡的七年 (1945–1952) 是他最多产的时期。分布理论的核心框架在此完成。《Théorie des distributions》的初版在此孕育。南锡也因此成为 20 世纪泛函分析和 PDE 的世界中心。};
+  \node[item, fill=graypanel, draw=badgeEnto!25] at (0,-0.25)
+    {\textbf{南锡学派的诞生。}Schwartz 在南锡培养了一批杰出的博士生：Jacques-Louis Lions（后来成为法国应用数学的领袖）、Bernard Malgrange、Alexander Grothendieck。南锡学派的形成是战后法国数学复兴的关键事件。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 南锡七年。分布理论在此完成。Bourbaki 的分析学支柱在此建立。法国分析学派的黄金时代在此开始。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. Grothendieck ---
+\newcommand{\grothendieckslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Grothendieck 的导师}{数学史上最伟大的师生关系之一}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=distpanel, draw=badgedist!55] at (0,2.35)
+    {\textbf{1950 · 一个不同寻常的博士生。}Grothendieck 来到南锡时已是自学成才的分析奇才。Schwartz 为他指定了论文方向：泛函分析中的核空间和张量积。Grothendieck 完成了这篇论文——然后超越了整个框架。};
+  \node[item, fill=spacepanel, draw=badgeSpace!40] at (0,0.85)
+    {\textbf{导师与天才。}Schwartz 是 Fields 奖得主，是分布理论的创造者。他的学生 Grothendieck 后来获得了 Fields 奖（1966），并彻底重塑了代数几何。两人的数学风格截然不同：Schwartz 分析具体、Grothendieck 抽象极致。};
+  \node[item, fill=graypanel, draw=badgeActivism!20] at (0,-0.45)
+    {\textbf{殊途。}Schwartz 留在分析学、PDE、概率论——传统数学的核心领域。Grothendieck 走向了范畴论、概形、étale 上同调——为数学建立全新的基础。两人的政治立场也分道扬镳：Schwartz 继续公共参与，Grothendieck 逐渐退出社会。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 老师是 Fields 奖得主。学生是 20 世纪最伟大的数学家。一段独一无二的师生关系。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 巴黎 ---
+\newcommand{\parisslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{从索邦到 Polytechnique (1952–1965)}{改革法国的数学教育}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=spacepanel, draw=badgeSpace!50] at (0,2.35)
+    {\textbf{1952 · 转入巴黎大学理学院。}离开南锡后，Schwartz 在索邦继续教学和研究。巴黎大学理学院是法国数学的最高殿堂。1958 年，他加入 Polytechnique（虽然最初拒绝了这个职位）。};
+  \node[item, fill=distpanel, draw=badgedist!35] at (0,0.85)
+    {\textbf{在 Polytechnique 的改革。}Schwartz 彻底重组了 Polytechnique 的数学教学和研究——将 Bourbaki 的结构主义方法引入这所法国最精英的工程师学校。他编制的《Cours d'analyse》成为几代法国学生的标准教材。};
+  \node[item, fill=graypanel, draw=badgeEnto!20] at (0,-0.25)
+    {\textbf{1965 · Laurent-Schwartz 数学中心。}他创立并领导了 CMLS。这个中心成为法国泛函分析和 PDE 研究的重要基地，延续了南锡学派的传统——分析学的严谨与物理直觉的融合。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从南锡到索邦到 Polytechnique —— 他在三个地方塑造了法国分析学的面貌。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 121 宣言 ---
+\newcommand{\manifestoslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《121 人宣言》与停职 (1960–1963)}{为了良知付出代价}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=actpanel, draw=badgeActivism!55] at (0,2.35)
+    {\textbf{1960 · 阿尔及利亚战争。}法国对阿尔及利亚的殖民战争（1954–1962）引发法国社会激烈争论。Schwartz 签署了《121 人宣言》——呼吁法国士兵不服从命令，支持阿尔及利亚民族自决。};
+  \node[item, fill=spacepanel, draw=badgeSpace!35] at (0,0.85)
+    {\textbf{1961–1963 · 被 Polytechnique 停职。}Polytechnique 是军校，其军方领导层无法容忍一位教授公开鼓励士兵不服从。Schwartz 被停职两年。这不是第一次——他在战时因为犹太身份被迫躲藏，现在因为良知被自己的国家驱逐出讲台。};
+  \node[item, fill=distpanel, draw=badgedist!20] at (0,-0.45)
+    {\textbf{数学与良知。}Schwartz 后来说，作为数学家，他相信严谨和真理。政治上的"严谨"意味着不能对不公正保持沉默。他的停职是短暂的，但这段经历让他更加坚定了对政治承诺的信念。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他化名为 Sélimartin 躲过纳粹。他因为反对殖民战争被自己的军校停职。良知从沉默到发声。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 蝴蝶 ---
+\newcommand{\butterflyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数学、政治与蝴蝶}{"他的三大热爱"：分布、托洛茨基、两万只鳞翅目标本}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=entopanel, draw=badgeEnto!55] at (0,2.55)
+    {\textbf{两万只蝴蝶。}母亲对自然科学的热情传给了儿子。Schwartz 在世界各地的旅行中收集了超过两万只鳞翅目标本。这些标本现藏于巴黎自然历史博物馆、里昂汇流博物馆、图卢兹博物馆以及玻利维亚的自然史博物馆。};
+  \node[item, fill=distpanel, draw=badgedist!35] at (0,1.05)
+    {\textbf{分类学与分布理论。}在 Schwartz 的世界观中，科学好奇心是一体的。他研究分布理论的严谨性，与他在全球收集蝴蝶标本的热情，是同一种智力品质的不同表现。分布是"广义函数"的分类学。};
+  \node[item, fill=graypanel, draw=badgeActivism!20] at (0,-0.25)
+    {\textbf{若干物种以他命名。}Schwartz 的蝴蝶收藏具有重要的科学价值——几种新的鳞翅目物种以他的名字命名。一个 Fields 奖得主，同时是一个被昆虫学家尊重的业余博物学家。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Angelo Guerraggio 的概括："数学、政治和蝴蝶"——他的三大热爱。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. Maurice Audin ---
+\newcommand{\audinslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Maurice Audin}{学生之死与政治觉醒}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=actpanel, draw=badgeActivism!55] at (0,2.35)
+    {\textbf{Maurice Audin (1932–1957)。}阿尔及利亚裔法国数学家，Schwartz 的博士生，研究泛函分析和分布理论。1957 年阿尔及利亚战争期间，Audin 被法国军队逮捕并杀害。他的尸体从未被找到。};
+  \node[item, fill=spacepanel, draw=badgeSpace!35] at (0,0.85)
+    {\textbf{导师的愤怒与悲伤。}Audin 之死深刻改变了 Schwartz。一个博士生——一个年轻的数学家——被自己的国家杀害。这使 Schwartz 从一般性的左翼同情转向了积极的政治行动。《121 人宣言》的签署与此事直接相关。};
+  \node[item, fill=distpanel, draw=badgedist!20] at (0,-0.45)
+    {\textbf{记忆的延续。}Schwartz 从未让 Audin 被遗忘。他在自传中详细记录了这段往事。2001 年，法国政府最终承认了法国军队在 Audin 之死中的责任。Schwartz 于次年（2002 年）去世——他见证了正义的迟到到来。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个博士生的死，改变了导师的人生轨迹。Audin 的故事是法国殖民史最黑暗的篇章之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{施瓦兹的遗产}{分布 · 核定理 · \(\mathcal{S}\) 空间 · Bourbaki 分析}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=distpanel, draw=badgedist!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgedist} 分布理论}\\[3pt]Dirac $\delta$ 合法化\\广义函数的对偶框架\\物理直觉的数学化};
+  \node[leg, fill=spacepanel, draw=badgeSpace!50, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSpace} 泛函分析}\\[3pt]Schwartz 空间 $\mathcal{S}$\\核定理\\缓增分布 $\mathcal{S}'$};
+  \node[leg, fill=actpanel, draw=badgeActivism!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeActivism} 政治遗产}\\[3pt]《121 人宣言》\\Maurice Audin\\自传《与世纪搏斗》};
+  \node[leg, fill=entopanel, draw=badgeEnto!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeEnto} 人文遗产}\\[3pt]CMLS 数学中心\\两万只蝴蝶\\Bourbaki 分析};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他让物理学家可以合法使用 Dirac $\delta$ 函数。}\\[4pt]
+{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      分布理论 (1945–1950) → 现代 PDE → 调和分析 → 概率论。\\
+      Schwartz 空间 $\mathcal{S}$ → Fourier 变换的自然家园。\\
+      南锡学派 → Grothendieck, Lions, Malgrange → 法国数学的黄金时代。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 思想回响 ---
+\newcommand{\echoslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{思想回响}{他让物理学家可以合法使用 $\delta$ 函数}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=distpanel, draw=badgedist!50] at (0,2.55)
+    {\textbf{分布理论无处不在。}从 Schrödinger 方程的弱解到 Feynman 路径积分的形式化，分布理论是 20 世纪分析学和数学物理的通用语言。今天任何学习 PDE 的学生——在接触 Sobolev 空间之前——都是在分布的框架中思考。};
+  \node[item, fill=spacepanel, draw=badgeSpace!35] at (0,1.05)
+    {\textbf{Bourbaki 的分析遗产。}Schwartz 是 Bourbaki "结构主义" 方法在分析学中的实践者。他的《Cours d'analyse》和《Théorie des distributions》体现了 Bourbaki 的理想：从最一般的公理出发，向下覆盖所有特例。};
+  \node[item, fill=entopanel, draw=badgeEnto!20] at (0,-0.25)
+    {\textbf{自传中的数学与人生。}1997 年出版的《Un mathématicien aux prises avec le siècle》—— 一位与世纪搏斗的数学家——是 20 世纪法国知识分子史的重要文献。数学、政治、战争、殖民主义——他的一生就是 20 世纪的缩影。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他用分布理论回答了"什么是函数"。他用一生回答了"什么是知识分子的责任"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 16. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {他赋予了 Dirac 的 $\delta$ 函数};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {以数学意义上的存在。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.5cm]current page.center)
+    {然后，他为良知付出了被驱逐的代价。};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!60!black]
+    at ([yshift=-2.4cm]current page.center)
+    {洛朗·施瓦兹\quad Laurent Schwartz\quad 1915 — 2002};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{infinity}\enspace 分布理论之父 · 第一位法国 Fields 奖得主 · 托洛茨基主义活动家\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\wwiislide
+\distslide
+\spaceslide
+\fieldsmedalslide
+\nancyslide
+\grothendieckslide
+\parisslide
+\manifestoslide
+\butterflyslide
+\audinslide
+\legacyslide
+\echoslide
+\closingslide
+\end{document}

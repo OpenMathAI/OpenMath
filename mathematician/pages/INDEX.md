@@ -1,6 +1,6 @@
 # 数学家完整页面索引
 
-> 生成时间：2026-08-05 11:33:57
+> 生成时间：2026-08-05 13:05:26
 > 共 **1** 人
 
-- [Felix Hausdorff](Felix_Hausdorff/page.md) （1868–1942） — German mathematician (*1868 – †1942)
+- [Laurent Schwartz](Laurent_Schwartz/page.md) （1915–2002） — French mathematician (1915-2002)
