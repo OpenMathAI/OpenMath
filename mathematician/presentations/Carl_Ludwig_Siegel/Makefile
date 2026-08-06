@@ -1,4 +1,4 @@
-# Makefile for Jean Leray beamer deck.
+# Makefile for Carl Ludwig Siegel beamer deck.
 #
 # Usage:
 #   make            build the PDF
@@ -8,8 +8,8 @@
 #   make clean      remove intermediate files
 #   make distclean  remove generated PDF/images/video
 
-MAIN        = Jean_Leray_zh
-VIDEO_NAME  = Jean_Leray_zh
+MAIN        = Carl_Ludwig_Siegel_zh
+VIDEO_NAME  = Carl_Ludwig_Siegel_zh
 OUTPUT_DIR  = output
 IMAGES_DIR  = $(OUTPUT_DIR)/images
 SLIDES_TXT  = $(OUTPUT_DIR)/slides.txt
@@ -30,8 +30,7 @@ all: pdf
 pdf: $(MAIN).pdf
 
 $(MAIN).pdf: $(MAIN).tex
-	$(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode $(MAIN).tex || \
-	  (rm -f $(MAIN).fdb_latexmk && $(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode -f $(MAIN).tex)
+	$(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode -f $(MAIN).tex || true
 	$(LATEXMK) -c $(MAIN).tex
 	rm -f $(MAIN).{nav,snm,xdv}
 
