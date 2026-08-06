@@ -228,7 +228,89 @@ Johann II's youngest son, grandson of Johann Bernoulli. He studied geometry unde
 
 ---
 
-## IX. Biography Production Status
+## IX. 🇫🇷 The Bernoulli–Curie Bloodline: Two Greatest Scientific Dynasties, One Family
+
+> *Discovered by tracing the genealogical records (2025)*
+
+The **Curie family** holds the record for the most Nobel Prizes won by a single family — six person-instances across two generations:
+
+| Recipient | Nobel Prize | Year |
+|-----------|:----------:|:----:|
+| Pierre Curie & Marie Curie | Physics | 1903 |
+| Marie Curie | Chemistry | 1911 |
+| Irène Joliot-Curie & Frédéric Joliot-Curie | Chemistry | 1935 |
+| Henry Richardson Labouisse Jr. (husband of Ève Curie) | Peace | 1965 |
+
+If the Nobel Prize is set aside, the only family in scientific history that rivals — or arguably surpasses — the Curies is the **Bernoulli family**, whose three generations produced eight outstanding mathematicians and scientists.
+
+### The hidden connection
+
+What few people know is that these two legendary families are **connected by blood**. Through the female line of Johann Bernoulli, a genealogical chain leads directly to Pierre Curie:
+
+```
+Johann Bernoulli (1667–1748)
+  │
+  ├── Nicolaus II (1695–1726)
+  ├── Daniel Bernoulli (1700–1782)
+  ├── Johann II Bernoulli (1710–1790)
+  │     │
+  │     ├── Johann III Bernoulli (1744–1807)
+  │     └── Jacob II Bernoulli (1759–1789)
+  │           │
+  │           └── married Euler's granddaughter  ← another link!
+  │
+  └── Anne Catherine Bernoulli (daughter)
+        │
+        └── married Jean Dollfus
+              │
+              └── ... (2 generations) ...
+                    │
+                    └── Julie Dollfus
+                          │
+                          └── married Jean Hofer
+                                │
+                                └── Augustine Hofer
+                                      │
+                                      └── married Paul Curie
+                                            │
+                                            └── Pierre Curie (1859–1906)
+                                                  │
+                                                  └── married Marie Skłodowska-Curie
+```
+
+### The full chain
+
+1. **Johann Bernoulli** (1667–1748) — the mathematical genius, Euler's teacher
+2. His daughter **Anne Catherine Bernoulli** married **Jean Dollfus**
+3. Their great-granddaughter **Julie Dollfus** married **Jean Hofer**
+4. Their daughter **Augustine Hofer** married **Paul Curie**
+5. Their grandson: **Pierre Curie** — Nobel laureate in Physics (1903)
+
+> **Pierre Curie is a direct descendant of Johann Bernoulli.**
+
+### By marriage, Euler enters too
+
+The connections run even deeper: **Jacob II Bernoulli** (1759–1789), Johann's grandson, married **Euler's granddaughter** — uniting two of the greatest names in mathematical history not just through academic lineage but through family.
+
+### The two dynasties compared
+
+| | Bernoulli Family | Curie Family |
+|---|:---:|:---:|
+| **Era** | 17th–18th century | 19th–20th century |
+| **Notable members** | 8 mathematicians | 5 Nobel laureates (6 person-instances) |
+| **Key fields** | Probability, calculus, fluid mechanics, ODEs | Radioactivity, nuclear physics, chemistry |
+| **Nobel Prizes** | — (Nobel Prize established 1901) | 5 (Physics ×1, Chemistry ×2, Peace ×1) |
+| **Intergenerational span** | ~130 years (Jacob → Jacob II) | ~60 years (Pierre & Marie → Irène & Ève) |
+
+### A question for the ages
+
+> Does a specific genetic inheritance flow across these two centuries, linking the eight Bernoulli mathematicians to the five Curie Nobel laureates?
+
+The overlap of two such extraordinary families — one dominating mathematics in the 17th–18th centuries, the other dominating physics and chemistry in the 19th–20th centuries — sharing a single bloodline, is one of the most remarkable facts in the history of science.
+
+---
+
+## X. Biography Production Status
 
 | Mathematician | Status | Notes |
 |--------------|:------:|-------|
