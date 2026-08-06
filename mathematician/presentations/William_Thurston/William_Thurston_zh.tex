@@ -1,0 +1,526 @@
+% =============================================================
+%  低维拓扑的革命者：威廉·瑟斯顿 (William Thurston)
+%  Beamer 演示 —— 参照 Milnor / Atiyah 版式
+%  资料来源：mathematician/pages/William_Thurston + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：樱花粉 + 双曲夜空蓝 + 普林斯顿赭石橙 + 秋日金 =====
+\definecolor{bgmain}{RGB}{248,246,244}
+\definecolor{coverprimary}{HTML}{1A1628}
+\definecolor{coveraccent}{HTML}{162447}        % 双曲夜空蓝 (Hyperbolic Blue)
+\definecolor{badgeFoliations}{HTML}{C75B7A}     % 樱花粉 (叶状结构 — 青年天才)
+\definecolor{badgeHyperbolic}{HTML}{162447}      % 双曲夜空蓝 (双曲几何)
+\definecolor{badgeGeometrization}{HTML}{D4782F}  % 普林斯顿赭石橙 (几何化猜想)
+\definecolor{badgeLegacy}{HTML}{B8860B}           % 秋日金 (传承与哲学)
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{20,18,40}
+\definecolor{muteddark}{RGB}{90,80,90}
+\definecolor{foliationspanel}{RGB}{252,238,242}
+\definecolor{hyperbolicpanel}{RGB}{232,236,246}
+\definecolor{geometrizationpanel}{RGB}{254,244,232}
+\definecolor{legacypanel}{RGB}{252,248,238}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeFoliations!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHyperbolic!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeGeometrization!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{cube}\enspace 低维拓扑的革命者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {威廉·瑟斯顿};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {William Thurston\enspace·\enspace 1946 — 2012};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {几何化猜想 · 叶状结构 · 八种几何 · 3 维流形};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeFoliations, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {叶状结构\\Foliations};
+      \node[rounded corners=8pt, fill=badgeHyperbolic, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {双曲几何\\Hyperbolic};
+      \node[rounded corners=8pt, fill=badgeGeometrization, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {几何化\\Geometrization};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {八种几何\\8 Geometries};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"数学不是关于形式证明——数学是关于看见空间。" —— William Thurston};
+  % 肖像（右上）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.0cm,height=2.7cm,keepaspectratio]{William_Thurston.jpg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.4cm]current page.center)
+    {William Thurston, 1991};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{university}\enspace Princeton · Berkeley · MSRI · Cornell\enspace|\enspace Fields + Veblen + Steele};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么瑟斯顿改变了我们"看见"空间的方式}{叶状结构 · 几何化 · 八种几何 · 数学哲学}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=11pt,inner ysep=9pt,font=\fontsize{8}{10}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=foliationspanel,draw=badgeFoliations!50,text=badgeFoliations!85!black]
+    (a) at (-5.7,1.05) {叶状结构 (1972)\\[2pt]两年内"清洗"\\整个领域};
+  \node[nodebox,fill=hyperbolicpanel,draw=badgeHyperbolic!50,text=badgeHyperbolic!85!black]
+    (b) at (-1.9,1.05) {双曲 3 维流形\\[2pt]双曲几何无处不在\\怪兽定理};
+  \node[nodebox,fill=geometrizationpanel,draw=badgeGeometrization!50,text=badgeGeometrization!85!black]
+    (c) at (1.9,1.05) {几何化猜想 (1980)\\[2pt]八种模型几何\\Perelman 证明};
+  \node[nodebox,fill=legacypanel,draw=badgeLegacy!50,text=badgeLegacy!85!black]
+    (d) at (5.7,1.05) {数学哲学\\[2pt] "On Proof and Progress"\\35 位博士生};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=12pt,text width=13.4cm,align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他没有"写出"完美证明——他"看见"了整个图景。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 从叶状结构的暴风到几何化猜想的星空。他让拓扑学家学会了用几何的方式思考。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{一个"斜视"孩子的空间直觉 (1946–1967)}{华盛顿 · 帐篷 · New College · UC Berkeley}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=foliationspanel,draw=badgeFoliations!50] at (0,2.55)
+    {\textbf{1946 · 生于华盛顿特区。}父亲 Paul Thurston 是航空工程师，母亲 Margaret 是裁缝。William 患有先天性斜视 (strabismus)，深度感知障碍。他的母亲在他幼年时帮助他从二维图像重建三维结构。这件事可能塑造了他超凡的空间直觉。};
+  \node[item,fill=hyperbolicpanel,draw=badgeHyperbolic!35] at (0,1.05)
+    {\textbf{1967 · New College of Florida 创校首届毕业。}本科论文：拓扑的直觉主义基础。他在新学院期间有时住在树林里的帐篷中，有时睡在教学楼里。自由而反常规的天性。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.25)
+    {\textbf{1972 · UC Berkeley 博士。}导师 Morris Hirsch。论文《Foliations of Three-Manifolds which are Circle Bundles》。从这一刻起，3 维世界在等他。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 先天性斜视没有摧毁他的空间感——反而让他学会了"重新构建"三维世界。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 清洗叶状结构 ---
+\newcommand{\foliationsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{清洗叶状结构理论 (1972–1974)}{博士毕业两年——做完整个领域}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=foliationspanel,draw=badgeFoliations!55] at (0,2.55)
+    {\textbf{什么是叶状结构？}想象一本书：每一页是一个二维曲面，整本书堆叠成一个三维空间。叶状结构就是将高维流形分解为低维"叶片"的方法。1970 年代初，这是拓扑学最活跃的前沿方向之一。};
+  \node[item,fill=hyperbolicpanel,draw=badgeHyperbolic!35] at (0,0.85)
+    {\textbf{Haefliger 结构可积性。}Thurston 证明每个 Haefliger 结构都可以被积分为一个叶状结构。推论：每个欧拉示性数为零的流形都容许余维一叶状结构。他构造了 S³ 上的叶状结构连续族——Godbillon–Vey 不变量取遍所有实数值。};
+  \node[item,fill=graypanel,draw=badgeGeometrization!20] at (0,-0.45)
+    {\textbf{"清洗干净了"。}Thurston 后来在自己的文章中回忆道：导师们劝学生不要进入叶状结构理论——"Thurston is cleaning out the subject."两年之内，一个领域被一个人做完了。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 这不是暴力——这是才华的密度。一个人，两年，一个领域。然后他转向了双曲几何。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Nielsen–Thurston ---
+\newcommand{\nielsenthurstonslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{曲面映射的 Nielsen–Thurston 分类 (1976)}{周期 · 可约 · pseudo-Anosov —— 曲面的三种运动}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=geometrizationpanel,draw=badgeGeometrization!55] at (0,2.35)
+    {\textbf{曲面如何运动？}想象一个甜甜圈表面——如果你把它拉伸、扭曲、然后"放回原位"，它的点去了哪里？数学上：曲面的自同胚 (homeomorphism) 有多少种本质上不同的类型？Thurston 给出了完整答案：三种。};
+  \node[item,fill=foliationspanel,draw=badgeFoliations!35] at (0,0.85)
+    {\textbf{三种命运。}周期型 (periodic)：重复若干次后回到原点。可约型 (reducible)：存在不变曲线族。pseudo-Anosov 型：沿一个方向拉伸、沿另一个方向收缩——像一个双曲矩阵在曲面上留下了看不见的网格。这是最常见、最深刻的类型。};
+  \node[item,fill=hyperbolicpanel,draw=badgeHyperbolic!20] at (0,-0.45)
+    {\textbf{映射类群的几何。}这个分类给出了曲面映射类群 (mapping class group) 的代数和几何描述。它是 Teichmüller 理论、低维拓扑、动力系统的桥梁。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} pseudo-Anosov：看不见的扩张和收缩——就像双曲几何在曲面上的影子。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 8字形结 ---
+\newcommand{\figureeightSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{8 字形结：双曲几何的突破口}{第一个双曲结——从此双曲 3 维流形无处不在}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=hyperbolicpanel,draw=badgeHyperbolic!55] at (0,2.55)
+    {\textbf{在 Thurston 之前。}已知的双曲 3 维流形只有寥寥数个——如 Seifert–Weber 空间。数学家普遍认为双曲结构在 3 维流形中极为罕见。Riley 和 Jørgensen 在 1970s 中期的工作开始挑战这一观点。};
+  \node[item,fill=geometrizationpanel,draw=badgeGeometrization!35] at (0,1.05)
+    {\textbf{8 字形结的启示。}Thurston 用一种极其直观的方法：将 8 字形结的补集分解为两个规则理想双曲正四面体。它们的双曲结构精确匹配——给出了整个补集的双曲结构。};
+  \node[item,fill=foliationspanel,draw=badgeFoliations!20] at (0,-0.25)
+    {\textbf{连锁发现。}利用 Haken 的正规曲面技术，Thurston 发现除了 10 种 Dehn 手术外，所有 8 字形结手术结果都是不可约、非 Haken、非 Seifert 纤维的 3 维流形——此前数学家认为除了 Seifert 纤维外，不可约 3 维流形都是 Haken 的。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 两个四面体 = 一个双曲 3 维流形。空间可以是弯曲的——而且无处不在。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Monster Theorem ---
+\newcommand{\monsterSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{"怪兽定理"——Haken 流形双曲化 (1981)}{3 维拓扑最深奥的证明——完整书面证明近 20 年后才出现}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=hyperbolicpanel,draw=badgeHyperbolic!55] at (0,2.55)
+    {\textbf{Thurston 的"怪兽定理" (Monster Theorem)。}这个非正式名称来自它的证明之深远和困难。Thurston 证明了：每个 Haken 3 维流形（包含不可压缩曲面的紧致、不可约 3 维流形）都容许一个双曲结构。};
+  \node[item,fill=geometrizationpanel,draw=badgeGeometrization!35] at (0,0.85)
+    {\textbf{极其丰富的推论。}由此得出：绝大多数纽结和链环是双曲的（hyperbolic knots and links）。闭双曲 3 维流形大量存在。双曲几何不再是罕见现象——它是 3 维流形的默认几何。};
+  \node[item,fill=foliationspanel,draw=badgeFoliations!20] at (0,-0.45)
+    {\textbf{证明的命运。}Thurston 给出了证明思路，但完整的书面证明直到将近 20 年后才由多个团队合力完成。他自己没有把所有细节写出来——他更关心"看见"全景。这是他数学风格的本质。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他留下了地图。后人铺设了道路。证明可以等待——洞见不能。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 双曲Dehn手术 ---
+\newcommand{\dehnsurgerySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{双曲 Dehn 手术——3 维流形的"工厂"}{从一个流形生成无穷多个双曲流形}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=hyperbolicpanel,draw=badgeHyperbolic!55] at (0,2.55)
+    {\textbf{Dehn 手术：修补贴片。}在一个 3 维流形中，沿一个纽结挖出管状邻域，再以不同的方式"粘回去"。这就是 Dehn 手术——3 维拓扑中的基本构造。Thurston 的问：双曲 Dehn 手术能产生什么？};
+  \node[item,fill=geometrizationpanel,draw=badgeGeometrization!35] at (0,0.85)
+    {\textbf{双曲 Dehn 手术定理。}对于有尖点的双曲 3 维流形，"绝大多数" Dehn 填塞产生新的双曲 3 维流形。只有有限多种填塞会破坏双曲结构。这意味着：从一个流形出发，可以生成无穷多个双曲流形。};
+  \node[item,fill=graypanel,draw=badgeFoliations!20] at (0,-0.45)
+    {\textbf{orbifold 的发现。}在证明过程中，Thurston 意识到 orbifold 结构自然出现——局部像欧氏空间模有限群作用的空间。由此他提出了 orbifold 定理 (1981)，是几何化猜想在 orbifold 上的推广。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个洞 + 补丁 = 一个工厂。Dehn 手术是 3 维拓扑的"增殖机器"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 几何化猜想 ---
+\newcommand{\geometrizationSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{几何化猜想：八种几何 (1980)}{S³ · E³ · H³ · S²×R · H²×R · $\widetilde{\text{SL}(2,\mathbb{R})}$ · Nil · Sol}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  geo/.style={rounded corners=4pt, inner xsep=5pt, inner ysep=4pt, font=\fontsize{5.2}{6.5}\selectfont\bfseries, align=center, text width=2.7cm}
+]
+  \node[geo, fill=foliationspanel, draw=badgeFoliations!55, text=badgeFoliations!85!black] (g1) at (-5.8,1.65)
+    {\faGlobeAmericas\\[2pt]S³ · 球面几何\\正曲率};
+  \node[geo, fill=hyperbolicpanel, draw=badgeHyperbolic!55, text=badgeHyperbolic!85!black] (g2) at (-1.93,1.65)
+    {\faVectorSquare\\[2pt]E³ · 欧氏几何\\零曲率};
+  \node[geo, fill=hyperbolicpanel, draw=badgeHyperbolic!65, text=badgeHyperbolic!85!black] (g3) at (1.93,1.65)
+    {\faExpand\\[2pt]H³ · 双曲几何\\负曲率 · 最普遍};
+  \node[geo, fill=geometrizationpanel, draw=badgeGeometrization!55, text=badgeGeometrization!85!black] (g4) at (5.8,1.65)
+    {\faDotCircle\\[2pt]S²×R\\曲面×线};
+  \node[geo, fill=graypanel, draw=badgeHyperbolic!45, text=badgeHyperbolic!85!black] (g5) at (-5.8,0.15)
+    {\faExpand\\[2pt]H²×R\\双曲曲面×线};
+  \node[geo, fill=foliationspanel, draw=badgeFoliations!45, text=badgeFoliations!85!black] (g6) at (-1.93,0.15)
+    {\faInfinity\\[2pt]$\widetilde{\text{SL}(2,\mathbb{R})}$\\万有覆盖};
+  \node[geo, fill=geometrizationpanel, draw=badgeGeometrization!45, text=badgeGeometrization!85!black] (g7) at (1.93,0.15)
+    {\faCubes\\[2pt]Nil\\幂零几何};
+  \node[geo, fill=legacypanel, draw=badgeLegacy!55, text=badgeLegacy!85!black] (g8) at (5.8,0.15)
+    {\faChartLine\\[2pt]Sol\\可解几何};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=8pt, text width=13.4cm, align=center] at (0,-1.55) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 每个 3 维流形可以唯一分解——每一片恰好承载八种模型几何之一。}\\[2pt]
+    {\fontsize{7.2}{9.0}\selectfont\color{covermuted} 1980 年提出。2002–2003 年 Perelman 用 Ricci 流证明了整个猜想（包括 Poincaré 猜想）。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. Perelman ---
+\newcommand{\perelmanSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Perelman 完成了什么}{Ricci 流 · Poincaré 猜想 · 瑟斯顿的框架有了证明}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=geometrizationpanel,draw=badgeGeometrization!55] at (0,2.45)
+    {\textbf{Ricci 流——空间的"热扩散"。}Richard Hamilton 提出 Ricci 流 (1982)：让流形的曲率像热量一样随时间扩散和均匀化。Thurston 很早就意识到 Ricci 流可能是证明几何化猜想的关键工具。};
+  \node[item,fill=hyperbolicpanel,draw=badgeHyperbolic!35] at (0,0.95)
+    {\textbf{2002–2003 · Perelman 的三篇论文。}Grigori Perelman 用 Ricci 流 + 手术技巧（处理奇点）完整证明了 Thurston 的几何化猜想。Poincaré 猜想作为特例（椭圆化猜想）被一并解决。Thurston 活着看到了这个证明。};
+  \node[item,fill=foliationspanel,draw=badgeFoliations!20] at (0,-0.35)
+    {\textbf{框架的胜利。}Thurston 没有亲自完成几何化猜想——但他提供了整个方案：八种模型几何、分解方法、双曲化定理的基石。Perelman 的 Ricci 流手术是最后一把钥匙。Thurston 是"提出问题的人"。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.9) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他不需要亲手关门——他已经指出了门在哪里。Perelman 推开了它。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. Proof and Progress ---
+\newcommand{\proofprogressSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{"On Proof and Progress in Mathematics" (1994)}{数学思维的本质——挑战形式证明的中心地位}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,2.55)
+    {\textbf{17 页的革命。}这篇 1994 年发表在 Bulletin of the AMS 的论文是 20 世纪最重要的数学哲学文献之一。Thurston 挑战了一个根深蒂固的观念：数学的核心是形式证明。};
+  \node[item,fill=hyperbolicpanel,draw=badgeHyperbolic!35] at (0,1.05)
+    {\textbf{"证明是数学思维的副产品，而不是目的。"}Thurston 认为人类大脑通过类比、图像、示例和直觉来理解数学。形式证明只是沟通这些理解的工具——不是理解本身。这解释了他为什么留下"不完整"的证明。};
+  \node[item,fill=foliationspanel,draw=badgeFoliations!20] at (0,-0.25)
+    {\textbf{叶状结构的教训。}他在文中反思了为什么自己"清洗"一个领域后反而导致了该领域的衰退——因为人们把他建立起来的图景当成了"终点的墙"而不是"起点的大门"。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "数学不是关于符号和形式规则的——数学是关于意义的。"}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. SnapPea ---
+\newcommand{\snappeaSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{SnapPea 与计算拓扑}{计算机"看见" 3 维流形——Thurston 的技术远见}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=hyperbolicpanel,draw=badgeHyperbolic!55] at (0,2.55)
+    {\textbf{纯数学的计算先驱。}在 1980 年代，几乎没有纯数学家认为计算机与数学研究有关。Thurston 是例外。他鼓励学生 Jeffrey Weeks 开发 SnapPea——用于研究和可视化双曲 3 维流形的程序。};
+  \node[item,fill=geometrizationpanel,draw=badgeGeometrization!35] at (0,1.05)
+    {\textbf{SnapPea 能做什么？}计算双曲体积、寻找对称性、生成三角剖分、确定同痕类型。至今仍是全球拓扑学家的标准工具。它把 Thurston 的"看见空间"变成了任何人的可能。};
+  \node[item,fill=foliationspanel,draw=badgeFoliations!20] at (0,-0.25)
+    {\textbf{MSRI 的教育创新。}1992–1997 担任 MSRI 所长期间，Thurston 引入了多项创新教育项目，这些项目后来成为数学研究所的标准模式。他不仅关心研究——也关心如何教下一代会"看见"。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 对于 Thurston，计算机不是"计算器"——它是"看见"空间的新方式。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 荣誉 ---
+\newcommand{\awardsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Veblen · Fields · Steele}{低维拓扑的加冕礼}
+\vspace{-0.3cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[rounded corners=5pt,fill=foliationspanel,draw=badgeFoliations!50,line width=0.6pt,
+        inner sep=6pt,text width=3.0cm,font=\fontsize{4.8}{6}\selectfont,align=center]
+    at (-5.7,1.05) {\small\faIcon{trophy}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeFoliations}Veblen 几何奖 (1976, 29岁)}\\[2pt]与 James Simons 共享\\叶状结构与拓扑};
+  \node[rounded corners=5pt,fill=hyperbolicpanel,draw=badgeHyperbolic!50,line width=0.6pt,
+        inner sep=6pt,text width=3.0cm,font=\fontsize{4.8}{6}\selectfont,align=center]
+    at (-1.9,1.05) {\small\faIcon{medal}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeHyperbolic}Fields 奖 (1982, 35岁)}\\[2pt]"革命性地改变了\\2 维和 3 维拓扑"};
+  \node[rounded corners=5pt,fill=geometrizationpanel,draw=badgeGeometrization!50,line width=0.6pt,
+        inner sep=6pt,text width=3.0cm,font=\fontsize{4.8}{6}\selectfont,align=center]
+    at (1.9,1.05) {\small\faIcon{book}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeGeometrization}Doob 图书奖 (2005)}\\[2pt]《3 维几何与拓扑》\\数学图书最高荣誉};
+  \node[rounded corners=5pt,fill=legacypanel,draw=badgeLegacy!50,line width=0.6pt,
+        inner sep=6pt,text width=3.0cm,font=\fontsize{4.8}{6}\selectfont,align=center]
+    at (5.7,1.05) {\small\faIcon{award}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeLegacy}Steele 奖 (2012)}\\[2pt]开创性研究贡献\\终身成就};
+  \node[rounded corners=6pt,fill=graypanel,draw=coveraccent!55,line width=0.8pt,
+        inner sep=9pt,text width=13cm,font=\fontsize{7}{9}\selectfont,align=center]
+    at (0,-1.35) {
+    {\fontsize{8}{10.5}\selectfont\bfseries\color{coverprimary!90!black} 更多荣誉}\\[2pt]
+    {\color{coverdark!80} {\fontsize{6.5}{8.5}\selectfont Waterman 奖 (1979) · 美国国家科学院院士 (1983)}\\[2pt]
+    {\fontsize{6.5}{8.5}\selectfont 巴黎第十一大学荣誉博士}}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 35博士生 ---
+\newcommand{\studentsSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{35 位博士生——数学的森林}{Oded Schramm · David Gabai · Benson Farb · Danny Calegari · Jeffrey Weeks}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,2.55)
+    {\textbf{35 位博士生、12 位知名合作者。}Thurston 的学生几乎遍布当代低维拓扑、几何群论、Teichmüller 理论的每一个重要方向。他们包括：Oded Schramm (Schramm–Loewner 演化, 2008 年登山逝世)、David Gabai (Freedman 奖)、Benson Farb (几何群论领袖)、Danny Calegari (动力系统与群论)、Jeffrey Weeks (SnapPea 作者)。};
+  \node[item,fill=hyperbolicpanel,draw=badgeHyperbolic!35] at (0,0.85)
+    {\textbf{地下经典。}1978–1981 普林斯顿讲义《The Geometry and Topology of Three-Manifolds》以影印本流传十余年。1997 年正式出版第一卷，2002 年发布完整电子版。这是 3 维拓扑的"圣经"，影响了整整两代人。};
+  \node[item,fill=graypanel,draw=badgeGeometrization!20] at (0,-0.45)
+    {\textbf{Thurston 的 24 个问题。}1982 年在 Smith 会议上，Thurston 列出了 24 个关于 3 维流形的开放问题。这些问题指导了此后数十年的研究方向——许多直到今天仍在被攻克。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Thurston 留下的不是一棵树——是一片森林。每一个学生都是这片森林中的一棵。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 遗产 ---
+\newcommand{\legacySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{瑟斯顿遗产}{几何化猜想 · 3 维流形讲义 · Thurston 前缀}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt,inner xsep=7pt,inner ysep=9pt,text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont,align=center}
+]
+  \node[leg,fill=foliationspanel,draw=badgeFoliations!50,line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeFoliations}叶状结构}\\[3pt]Haefliger 可积性\\Godbillon–Vey\\Confoliations};
+  \node[leg,fill=hyperbolicpanel,draw=badgeHyperbolic!50,line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeHyperbolic}双曲 3 维流形}\\[3pt]Monster Theorem\\Dehn Surgery\\Orbifold};
+  \node[leg,fill=geometrizationpanel,draw=badgeGeometrization!50,line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeGeometrization}几何化}\\[3pt]八种几何\\Perelman 证明\\Ricci 流};
+  \node[leg,fill=legacypanel,draw=badgeLegacy!50,line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy}工具与哲学}\\[3pt]SnapPea\\Thurston 24 题\\Proof \& Progress};
+  \node[draw=coveraccent!65,fill=graypanel,rounded corners=6pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他教会了我们：看见空间——而不是证明定理。}\\[4pt]
+    {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      Nielsen–Thurston · Milnor–Thurston · Cannon–Thurston · Misiurewicz–Thurston\\
+      他的名字成为了"拓扑洞察力"的同义词。他的猜想成为了整个世纪的航标。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 16. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {他教会了我们：};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {数学不是关于形式证明——};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!70!black]
+    at ([yshift=-0.5cm]current page.center) {数学是关于"看见"空间。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-1.2cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-1.2cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-2.1cm]current page.center)
+    {然后用语言——或八种几何——告诉别人你看见了什么。};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!60!black]
+    at ([yshift=-2.9cm]current page.center)
+    {威廉·瑟斯顿\quad William Thurston\quad 1946 — 2012};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{cubes}\enspace 几何化·叶状结构·低维拓扑的革命者\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\foliationsslide
+\nielsenthurstonslide
+\figureeightSlide
+\monsterSlide
+\dehnsurgerySlide
+\geometrizationSlide
+\perelmanSlide
+\proofprogressSlide
+\snappeaSlide
+\awardsslide
+\studentsSlide
+\legacySlide
+\closingslide
+\end{document}
