@@ -20,58 +20,58 @@
 
 ## 二、Top 50 正式排名
 
-| # | 数学家 | 核心标签 |
-|:--:|------|------|
-| 1 | **David Hilbert** | 20世纪数学的总架构师 |
-| 2 | **Henri Poincaré** | 现代数学最后一位真正的全领域巨匠 |
-| 3 | **John von Neumann** | 数学 × 物理 × 计算机之间的超级枢纽 |
-| 4 | **Emmy Noether** | 现代抽象代数与数学物理的核心奠基者 |
-| 5 | **Andrey Kolmogorov** | 概率论公理化、动力系统、信息论等多个领域的奠基者 |
-| 6 | **Hermann Weyl** | 几何、分析、群论、物理的超级连接者 |
-| 7 | **Alexander Grothendieck** | 重新定义代数几何语言的数学家 |
-| 8 | **André Weil** | 现代数论与代数几何的核心建筑师 |
-| 9 | **Alan Turing** | 可计算性与计算理论革命的奠基者 |
-| 10 | **Kurt Gödel** | 改变数学基础与逻辑边界的人 |
-| 11 | **Stefan Banach** | 现代泛函分析的奠基者之一 |
-| 12 | **J.-P. Serre** | 连接代数、拓扑、几何、数论的桥梁 |
-| 13 | **Emil Artin** | 现代代数与数论的核心人物 |
-| 14 | **Henri Lebesgue** | 现代实分析的基础设施建设者 |
-| 15 | **Élie Cartan** | 现代微分几何与李群理论的奠基者 |
-| 16 | **Felix Hausdorff** | 拓扑、集合论与现代分析基础的重要架构师 |
-| 17 | **Laurent Schwartz** | 分布理论改变现代 PDE 和分析 |
-| 18 | **John Milnor** | 现代拓扑与微分拓扑的革命者 |
-| 19 | **Michael Atiyah** | 指标定理、K-理论，几何与分析的深度统一 |
-| 20 | **William Thurston** | 低维拓扑革命、几何化猜想 |
-| 21 | **G.H. Hardy** | 解析数论与分析的英国学派灵魂 |
-| 22 | **J.E. Littlewood** | 与 Hardy 并称的分析与数论大师 |
-| 23 | **L.E.J. Brouwer** | 拓扑学（不动点定理）与直觉主义 |
-| 24 | **Oscar Zariski** | 代数几何的代数化先驱 |
-| 25 | **Marston Morse** | Morse 理论，微分拓扑的基本工具 |
-| 26 | **Hassler Whitney** | 微分拓扑的开山鼻祖、Whitney 嵌入定理 |
-| 27 | **Claude Chevalley** | 代数群、李型有限单群的构造 |
-| 28 | **Heinz Hopf** | 代数拓扑（Hopf 不变量、Hopf 纤维化） |
-| 29 | **陈省身** | 整体微分几何之父、Chern 类、Chern–Simons 理论 |
-| 30 | **Pierre Deligne** | 证明 Weil 猜想，代数几何与数论的融合 |
-| 31 | **Ernst Witt** | 二次型、Witt 环、代数与数论 |
-| 32 | **R.A. Fisher** | 现代统计学的数学基础 |
-| 33 | **Claude Shannon** | 信息论之父，改变人类通信与计算的数学思想 |
-| 34 | **Igor Shafarevich** | 代数数论与代数几何的苏联支柱 |
-| 35 | **Vladimir Arnold** | 动力系统、KAM 理论、辛拓扑 |
-| 36 | **David Mumford** | 代数几何、模式理论 |
-| 37 | **Jean Leray** | 谱序列、层论的发现者 |
-| 38 | **Samuel Eilenberg** | 范畴论与代数拓扑的共同创始人 |
-| 39 | **Saunders Mac Lane** | 范畴论的共同创始人、同调代数的系统化 |
-| 40 | **Atle Selberg** | 解析数论、Selberg 迹公式 |
-| 41 | **Carl Ludwig Siegel** | 数论、模形式、天体力学 |
-| 42 | **Lars Ahlfors** | 复分析，首届 Fields 奖得主 |
-| 43 | **Rolf Nevanlinna** | 值分布理论（Nevanlinna 理论） |
-| 44 | **Sergei Sobolev** | Sobolev 空间，现代 PDE 的语法创造者 |
-| 45 | **Lars Hörmander** | 线性 PDE、微分算子理论 |
-| 46 | **Stephen Smale** | 拓扑（Poincaré 猜想高维情形）、动力系统 |
-| 47 | **Mikhail Gromov** | 几何群论、辛拓扑、度量几何的革命者 |
-| 48 | **Harish-Chandra** | 半单李群的表示论 |
-| 49 | **Jacques-Louis Lions** | PDE、变分法、控制理论 |
-| 50 | **Vladimir Voevodsky** | 代数几何中的同伦论方法、Fields 奖 |
+| # | 原榜 | 数学家 | 核心标签 |
+|:--:|:--:|------|------|
+| 1 | 3 | **David Hilbert** | 20世纪数学的总架构师 |
+| 2 | 2 | **Henri Poincaré** | 现代数学最后一位真正的全领域巨匠 |
+| 3 | 5 | **John von Neumann** | 数学 × 物理 × 计算机之间的超级枢纽 |
+| 4 | 4 | **Emmy Noether** | 现代抽象代数与数学物理的核心奠基者 |
+| 5 | 1 | **Andrey Kolmogorov** | 概率论公理化、动力系统、信息论等多个领域的奠基者 |
+| 6 | 6 | **Hermann Weyl** | 几何、分析、群论、物理的超级连接者 |
+| 7 | 22 | **Alexander Grothendieck** | 重新定义代数几何语言的数学家 |
+| 8 | 7 | **André Weil** | 现代数论与代数几何的核心建筑师 |
+| 9 | 68 | **Alan Turing** | 可计算性与计算理论革命的奠基者 |
+| 10 | 28 | **Kurt Gödel** | 改变数学基础与逻辑边界的人 |
+| 11 | 48 | **Stefan Banach** | 现代泛函分析的奠基者之一 |
+| 12 | 21 | **J.-P. Serre** | 连接代数、拓扑、几何、数论的桥梁 |
+| 13 | 17 | **Emil Artin** | 现代代数与数论的核心人物 |
+| 14 | 11 | **Henri Lebesgue** | 现代实分析的基础设施建设者 |
+| 15 | 24 | **Élie Cartan** | 现代微分几何与李群理论的奠基者 |
+| 16 | 无 | **Felix Hausdorff** | 拓扑、集合论与现代分析基础的重要架构师 |
+| 17 | 84 | **Laurent Schwartz** | 分布理论改变现代 PDE 和分析 |
+| 18 | 26 | **John Milnor** | 现代拓扑与微分拓扑的革命者 |
+| 19 | 50 | **Michael Atiyah** | 指标定理、K-理论，几何与分析的深度统一 |
+| 20 | 无 | **William Thurston** | 低维拓扑革命、几何化猜想 |
+| 21 | 42 | **G.H. Hardy** | 解析数论与分析的英国学派灵魂 |
+| 22 | 56 | **J.E. Littlewood** | 与 Hardy 并称的分析与数论大师 |
+| 23 | 74 | **L.E.J. Brouwer** | 拓扑学（不动点定理）与直觉主义 |
+| 24 | 55 | **Oscar Zariski** | 代数几何的代数化先驱 |
+| 25 | 无 | **Marston Morse** | Morse 理论，微分拓扑的基本工具 |
+| 26 | 23 | **Hassler Whitney** | 微分拓扑的开山鼻祖、Whitney 嵌入定理 |
+| 27 | 38 | **Claude Chevalley** | 代数群、李型有限单群的构造 |
+| 28 | 35 | **Heinz Hopf** | 代数拓扑（Hopf 不变量、Hopf 纤维化） |
+| 29 | 31 | **陈省身** | 整体微分几何之父、Chern 类、Chern–Simons 理论 |
+| 30 | 86 | **Pierre Deligne** | 证明 Weil 猜想，代数几何与数论的融合 |
+| 31 | 100 | **Ernst Witt** | 二次型、Witt 环、代数与数论 |
+| 32 | 82 | **R.A. Fisher** | 现代统计学的数学基础 |
+| 33 | 85 | **Claude Shannon** | 信息论之父，改变人类通信与计算的数学思想 |
+| 34 | 12 | **Igor Shafarevich** | 代数数论与代数几何的苏联支柱 |
+| 35 | 13 | **Vladimir Arnold** | 动力系统、KAM 理论、辛拓扑 |
+| 36 | 80 | **David Mumford** | 代数几何、模式理论 |
+| 37 | 78 | **Jean Leray** | 谱序列、层论的发现者 |
+| 38 | 49 | **Samuel Eilenberg** | 范畴论与代数拓扑的共同创始人 |
+| 39 | 无 | **Saunders Mac Lane** | 范畴论的共同创始人、同调代数的系统化 |
+| 40 | 44 | **Atle Selberg** | 解析数论、Selberg 迹公式 |
+| 41 | 19 | **Carl Ludwig Siegel** | 数论、模形式、天体力学 |
+| 42 | 43 | **Lars Ahlfors** | 复分析，首届 Fields 奖得主 |
+| 43 | 57 | **Rolf Nevanlinna** | 值分布理论（Nevanlinna 理论） |
+| 44 | 20 | **Sergei Sobolev** | Sobolev 空间，现代 PDE 的语法创造者 |
+| 45 | 67 | **Lars Hörmander** | 线性 PDE、微分算子理论 |
+| 46 | 52 | **Stephen Smale** | 拓扑（Poincaré 猜想高维情形）、动力系统 |
+| 47 | 92 | **Mikhail Gromov** | 几何群论、辛拓扑、度量几何的革命者 |
+| 48 | 76 | **Harish-Chandra** | 半单李群的表示论 |
+| 49 | 无 | **Jacques-Louis Lions** | PDE、变分法、控制理论 |
+| 50 | 无 | **Vladimir Voevodsky** | 代数几何中的同伦论方法、Fields 奖 |
 
 ---
 
