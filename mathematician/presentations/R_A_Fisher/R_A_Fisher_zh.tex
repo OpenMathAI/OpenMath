@@ -1,0 +1,478 @@
+% =============================================================
+%  统计学的数学奠基人：罗纳德·费舍尔 (R.A. Fisher)
+%  Beamer 演示 —— 参照 Kolmogorov / Shannon / Deligne 版式
+%  资料来源: mathematician/pages/Ronald_Fisher + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：费舍尔 — 统计蓝 + 烟斗褐 + 遗传绿 + 象牙白 =====
+\definecolor{bgmain}{RGB}{248,246,243}
+\definecolor{coverprimary}{HTML}{111827}
+\definecolor{coveraccent}{HTML}{003366}          % 统计蓝 — 最大似然的深邃
+\definecolor{coveramber}{HTML}{8B5A2B}            % 烟斗褐 — Fisher 的经典形象
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{18,20,30}
+\definecolor{muteddark}{RGB}{75,70,60}
+\definecolor{bluepanel}{RGB}{215,228,242}         % 统计蓝面板
+\definecolor{brownpanel}{RGB}{248,240,230}         % 烟斗褐面板
+\definecolor{greenpanel}{RGB}{220,240,228}         % 遗传绿面板
+\definecolor{ivorypanel}{RGB}{248,242,235}         % 象牙白面板
+\definecolor{graypanel}{RGB}{242,244,248}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{redpanel}{RGB}{255,235,238}
+\definecolor{silverpanel}{RGB}{240,240,242}
+% Fisher 四大支柱
+\definecolor{badgeStat}{HTML}{003366}              % 统计学 — 统计蓝
+\definecolor{badgeGenet}{HTML}{8B5A2B}             % 遗传学 — 烟斗褐
+\definecolor{badgeDesign}{HTML}{2E5A40}             % 实验设计 — 遗传绿
+\definecolor{badgeLegacy}{HTML}{B8A890}             % 遗产 — 象牙灰
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeStat!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeGenet!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeDesign!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!8] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{chart-bar}\enspace 现代统计学的数学奠基人};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {罗纳德·费舍尔};
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.8cm, yshift=-0.8cm]current page.north east) {
+    \includegraphics[width=2.6cm, keepaspectratio]{R_A_Fisher.jpg}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Sir Ronald Fisher\enspace·\enspace 1890 — 1962};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {最大似然 · ANOVA · 实验设计 · 群体遗传学};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeStat, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {统计学};
+      \node[rounded corners=8pt, fill=badgeGenet, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {遗传学};
+      \node[rounded corners=8pt, fill=badgeDesign, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {实验设计};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=coverdark] at (5.4,0) {传承};
+    \end{tikzpicture}
+  };
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{medal}\enspace FRS 1929 · Copley 1955 · Knight 1952\enspace|\enspace 英国\enspace|\enspace Rothamsted · UCL · Cambridge};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么 Fisher 改变了统计学？}{最大似然 · ANOVA · Mendel-Darwin 统一 · 实验设计}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=bluepanel, draw=badgeStat!50, text=badgeStat!85!black]
+    (a) at (-5.7,1.05) {最大似然\\参数估计的\\黄金标准, 1921-25};
+  \node[nodebox, fill=brownpanel, draw=badgeGenet!50, text=badgeGenet!85!black]
+    (b) at (-1.9,1.05) {ANOVA + 方差\\1918 年一篇论文\\同时创造两样};
+  \node[nodebox, fill=greenpanel, draw=badgeDesign!50, text=badgeDesign!85!black]
+    (c) at (1.9,1.05) {Mendel $\times$ Darwin\\离散基因 $\to$ 连续变异\\群体遗传学诞生};
+  \node[nodebox, fill=ivorypanel, draw=badgeLegacy!60, text=badgeLegacy!85!black]
+    (d) at (5.7,1.05) {实验设计\\随机化·区组·拉丁方\\"女士品茶"};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他把统计学从直觉变成了数学——一个人几乎单枪匹马创建了现代统计科学的基础。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} Richard Dawkins: "达尔文之后最伟大的进化生物学家。"统计学界: "20世纪统计学最重要的人物。"}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{早年：伦敦天才少年 (1890–1912)}{极度近视 —— 不能参军，却练就了不依赖纸笔的几何直觉}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgeGenet!40] at (0,2.55)
+    {\textbf{1890 · 生于伦敦 East Finchley 中产阶级家庭。}父亲 George 是拍卖行合伙人。一对双胞胎中的幸存者——另一个胎死腹中。七个孩子中最小的一个。};
+  \node[item, fill=bluepanel, draw=badgeStat!40] at (0,1.05)
+    {\textbf{1904 · 母去世 (14岁)。}母亲死于急性腹膜炎。18 个月后父亲失去生意。少年的 Fisher 在家庭变故中成长——数学成为他的避难所。};
+  \node[item, fill=brownpanel, draw=badgeGenet!25] at (0,-0.25)
+    {\textbf{1909–1912 · 剑桥 Caius 学院。}Harrow 公学获数学奖章。剑桥奖学金入学。1912 年数学一等荣誉毕业。终身严重近视——因此被拒入伍——但也因此发展了独特的几何直觉：不需要纸和笔，在脑中可视化数学。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 近视让他不能参军——却让他用眼睛之外的"眼睛"看数学。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 1918 ---
+\newcommand{\paperslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{1918: 一篇论文改变一切}{Mendel $\times$ Darwin · 方差 · ANOVA —— 三重革命同时诞生}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeStat!60] at (0,2.35)
+    {\textbf{《基于孟德尔遗传的亲属间相关性》(1918)。}这篇论文被比作"达尔文的《物种起源》之于进化生物学、高斯之于数论、亚当·斯密之于经济学"。一篇论文开创了三个领域。};
+  \node[item, fill=greenpanel, draw=badgeDesign!40] at (0,0.85)
+    {\textbf{Mendel $\times$ Darwin。}证明了离散的孟德尔遗传可以产生连续的达尔文变异——离散基因的加性效应。这是现代进化生物学的数学起源。};
+  \node[item, fill=brownpanel, draw=badgeGenet!25] at (0,-0.45)
+    {\textbf{创造"方差"一词 + 发明 ANOVA。}Fisher 在这篇论文中创造了 "variance" 这个词。同时构造了方差分析 (ANOVA) 的雏形。从基因效应分解总方差——这是数量遗传学的诞生。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一篇论文——同时统一了 Mendel 和 Darwin，创造了"方差"这个词，发明了 ANOVA。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Rothamsted ---
+\newcommand{\rothamstedslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Rothamsted 14 年 (1919–1933)}{从农田数据中提炼统计学 —— 萝卜和小麦教会了他实验设计}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgeDesign!55] at (0,2.35)
+    {\textbf{1919 · 拒绝 Karl Pearson。}Pearson 邀请他到 UCL Galton 实验室。Fisher 选择了 Rothamsted——一个农业实验站。他需要分析 1840s 以来积累的数百万条作物数据。这是统计学的金矿。};
+  \node[item, fill=bluepanel, draw=badgeStat!40] at (0,0.85)
+    {\textbf{1921 · ANOVA 首次应用。}《作物变异研究 I》——方差分析首次应用于真实数据。助手 Winifred Mackenzie 协助分析——《作物变异研究 II》成为后来所有 ANOVA 的模板。};
+  \node[item, fill=brownpanel, draw=badgeGenet!25] at (0,-0.45)
+    {\textbf{从农田到实验室。}随机化、区组设计、拉丁方、因子设计——所有这些实验设计原则，都来自对小麦、土豆和萝卜的实验。Fisher 证明了统计学必须从数据中生长出来——不只从公式中推演。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 14 年，数百万条数据——萝卜和小麦教会了他实验设计的全部原则。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 最大似然 ---
+\newcommand{\mlslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{最大似然与 Fisher 信息 (1921–1925)}{统计学的方法论革命 —— "似然"概念改变了一切}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeStat!60] at (0,2.35)
+    {\textbf{1921 · 引入"似然"(likelihood)。}发表的论文被评价为"20 世纪数理统计最具影响力的文章"。区分了概率和似然——概率是参数已知时的数据分布，似然是数据已知时参数的函数。};
+  \node[item, fill=brownpanel, draw=badgeGenet!40] at (0,0.85)
+    {\textbf{1922 · 充分统计量。}如果一个统计量"包含样本中关于参数的全部信息"，它就是充分的。Fisher 发明的充分统计量概念是整个统计推断的基石——它告诉你在数据中找什么。};
+  \node[item, fill=greenpanel, draw=badgeDesign!25] at (0,-0.45)
+    {\textbf{1925 · Fisher 信息量。}$\mathcal{I}(\theta) = \mathbb{E}[(\frac{\partial}{\partial\theta}\log f(X;\theta))^2]$。衡量数据中关于未知参数的信息量。Cramér–Rao 下界——最大似然估计的渐近最优性。这比 Shannon 的信息论早了 20 年。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 似然、充分统计量、信息量——他用三个概念定义了"从数据中学习"的数学基础。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 女士品茶 ---
+\newcommand{\teaslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{女士品茶与实验设计 (1935)}{随机化 · 区组 · 拉丁方 —— 统计学最美的起源故事}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgeDesign!55] at (0,2.55)
+    {\textbf{女士品茶。}Rothamsted 的下午茶。一位女士声称她能分辨茶是先加牛奶还是先加茶。Fisher 说：那我们做个实验。他随机排列 8 杯茶——4 杯先加奶、4 杯先加茶——让她辨别。这是随机化实验设计的经典范例。};
+  \node[item, fill=bluepanel, draw=badgeStat!40] at (0,1.05)
+    {\textbf{Fisher 精确检验。}如果随机猜测，她全部答对的概率是 $1/\binom{8}{4} = 1/70 \approx 0.014$。这就是 Fisher 精确检验——小样本下不需要近似的假设检验方法。};
+  \node[item, fill=brownpanel, draw=badgeGenet!25] at (0,-0.25)
+    {\textbf{《实验设计》(1935)。}原则：(1) 随机化——消除系统偏差 (2) 区组设计——控制已知变异源 (3) 拉丁方——两个方向同时控制 (4) 因子设计——多因素同时研究。这些原则定义了现代科学的实验标准。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从一杯下午茶开始，Fisher 建立了现代科学实验的数学标准。这是统计学最美的起源故事。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 遗传理论 ---
+\newcommand{\geneticslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《自然选择的遗传理论》(1930)}{群体遗传学的圣经 —— Darwin 和 Mendel 的数学综合}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=brownpanel, draw=badgeGenet!60] at (0,2.35)
+    {\textbf{1930 · 群体遗传学三巨头。}Fisher, J.B.S. Haldane, Sewall Wright——三人独立建立了群体遗传学的数学基础。Fisher 的贡献是最全面的：他用统计学将 Mendel 和 Darwin 融合为一门精确科学。};
+  \node[item, fill=bluepanel, draw=badgeStat!40] at (0,0.85)
+    {\textbf{自然选择基本定理。}"任何时刻适应度的增长率等于该时刻适应度的遗传方差。"这是进化生物学中与热力学第二定律齐名的最重要定理之一。Fisher 将自然选择量化为一个数学方程。};
+  \node[item, fill=greenpanel, draw=badgeDesign!25] at (0,-0.45)
+    {\textbf{现代综合的基石。}Fisher 的《自然选择的遗传理论》与 Dobzhansky 的《遗传学与物种起源》(1937)、Mayr 的《分类学与物种起源》(1942)、Simpson 的《进化的节奏与模式》(1944) 共同构成了进化论的"现代综合"。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他把自然选择变成了一个方程式。这是 Darwin 在坟墓里最想看到的东西。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. Fisherian Runaway ---
+\newcommand{\runawayslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Fisherian Runaway — 为什么孔雀有那么长的尾巴？}{性选择的失控模型 —— 从数学到动物行为的桥梁}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=brownpanel, draw=badgeGenet!55] at (0,2.35)
+    {\textbf{1915 · 第一篇论文就是性选择。}《性偏好的进化》——25 岁的 Fisher 的第一篇科学论文，就是关于为什么雌性会选择有华丽外表的雄性。这是行为生态学的数学起源。};
+  \node[item, fill=greenpanel, draw=badgeDesign!40] at (0,0.85)
+    {\textbf{Fisherian runaway (1930)。}假设雌孔雀偏好长尾巴的雄性。长尾巴雄性的儿子也倾向于有长尾巴（遗传），女儿也倾向于偏好长尾巴（遗传）。正反馈循环——每一代尾巴越来越长——直到自然选择的代价（被吃掉）追上性选择的收益。};
+  \node[item, fill=bluepanel, draw=badgeStat!25] at (0,-0.45)
+    {\textbf{数学之美。}Fisher 用了一个简单的差分方程解释了孔雀尾巴的进化。没有复杂的统计，没有大量的数据——纯粹的逻辑推理 + 数学建模。这才是 Fisher 最天才的地方。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他用一个差分方程解释了为什么孔雀有那么长的尾巴——这是数学优雅的最高境界。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 与 Pearson 的战争 ---
+\newcommand{\pearsonslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{与 Pearson 的 20 年战争 (1917–1936)}{统计学的霸主争夺战 —— Fisher 几乎在所有论战中获胜}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeStat!55] at (0,2.55)
+    {\textbf{Karl Pearson (1857–1936)。}20 世纪初英国统计学的绝对霸主。$\chi^2$ 检验的发明者、Biometrika 期刊的创始人、Galton 实验室主任。Fisher 挑战他时，Pearson 是英国科学界的巨人。};
+  \node[item, fill=redpanel, draw=badgeGenet!40] at (0,1.05)
+    {\textbf{论战之一：$\chi^2$ 的自由度。}Pearson 认为 $\chi^2$ 的自由度 = 类别数。Fisher 指出自由度 = 类别数 - 估计参数数。Fisher 是对的。Pearson 在 Biometrika 拒绝了 Fisher 的论文——Fisher 从此再也不向 Biometrika 投稿。};
+  \node[item, fill=brownpanel, draw=badgeGenet!25] at (0,-0.25)
+    {\textbf{论战之二：最大似然 vs 矩估计。}Pearson 偏好矩估计。Fisher 证明了最大似然估计的渐近最优性——充分性、一致性、有效性。Fisher 再次获胜。1936 年 Pearson 去世——战争结束，Fisher 接替了他的 Galton 教授席位。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 20 年战争——关于 $\chi^2$、最大似然、充分统计量。Fisher 几乎在所有论战中获胜。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 优生学 ---
+\newcommand{\eugenicsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Galton 优生学教授 (1933–1943)}{优生学的争议 —— 伟大的科学成就与不可否认的黑暗面}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeGenet!55] at (0,2.55)
+    {\textbf{Fisher 与优生学。}终身的优生学倡导者。1933 年接替 Pearson 任 UCL Galton 优生学教授。1934–1950 年间担任 *Annals of Eugenics* 主编。他相信"人类品种的改良"是科学的社会责任。};
+  \node[item, fill=brownpanel, draw=badgeGenet!40] at (0,1.05)
+    {\textbf{历史的审判。}2020s 以来，多所机构移除了 Fisher 的纪念——包括 Caius 学院的彩窗和 UCL 的冠名建筑。他的统计学是永恒的，但他的优生学信念是无法否认的。};
+  \node[item, fill=silverpanel, draw=badgeLegacy!25] at (0,-0.25)
+    {\textbf{如何看待？}Fisher 的案例提出了一个深刻的问题：我们可以欣赏一个人的科学成就而不认可他的全部信念吗？这个幻灯片不提供答案——只呈现事实。科学与科学家的道德可以分离吗？};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他的统计学是永恒的。他的优生学信念是不可否认的。两者都摆在历史的桌面上。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 吸烟争议 ---
+\newcommand{\smokeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{吸烟争议 (1957) — 方法论者为何犯错？}{"相关不等于因果" —— 这一次，他捍卫的标准错了}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeGenet!55] at (0,2.35)
+    {\textbf{1957 · BBC 广播 "The Cancer Controversy"。}Richard Doll 和 Austin Bradford Hill 的流行病学研究显示了吸烟与肺癌的强关联。Fisher 接受 BBC 采访，用他一生捍卫的方法论原则——"相关不等于因果"——来质疑这个结论。};
+  \node[item, fill=bluepanel, draw=badgeStat!40] at (0,0.85)
+    {\textbf{Fisher 的论点。}(1) 相关不等于因果 (2) 可能有混杂因子——比如携带某种基因的人既更容易吸烟又更容易患肺癌 (3) 他自己抽烟斗，终身未戒烟。};
+  \node[item, fill=silverpanel, draw=badgeLegacy!25] at (0,-0.45)
+    {\textbf{历史的结论。}Fisher 的方法论是正确的——确实不能仅从相关推断因果。但后来的证据（随机对照试验、机制研究、剂量反应关系）确立了两者之间的因果关系。Fisher 在方法论上没有错——但在事实上错了。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 即使是最伟大的方法论者，也可能被自己的偏见所蒙蔽。Fisher 的吸烟争议是这个真理的经典例证。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 荣誉 ---
+\newcommand{\honorsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Knight Bachelor \& 大满贯荣誉}{FRS · Copley · Darwin · Guy 金质奖章 —— 英国科学界的顶级荣誉}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeStat!55] at (0,2.9)
+    {\textbf{皇家学会院士 FRS (1929)。}40 岁之前即入选。英国科学家的最高荣誉。Guy 金质奖章 (1946)——皇家统计学会最高奖项。};
+  \node[item, fill=greenpanel, draw=badgeDesign!45] at (0,1.55)
+    {\textbf{Royal Medal (1938) · Darwin Medal (1948) · Darwin–Wallace Medal (1958)。}皇家学会颁发的最高奖章。Darwin 奖章——进化生物学最高荣誉。Darwin–Wallace 奖章——进化论百周年纪念。};
+  \node[item, fill=brownpanel, draw=badgeGenet!35] at (0,0.35)
+    {\textbf{Copley Medal (1955)。}皇家学会最高荣誉——比 Nobel 奖更古老（1731 年设立）。Fisher 与 Darwin, Einstein, Pasteur 同列获奖者。};
+  \node[item, fill=goldpanel, draw=badgeLegacy!25] at (0,-0.85)
+    {\textbf{Knight Bachelor (1952)。}封爵——Sir Ronald Fisher。Weldon 纪念奖 (1930)。Calcutta 大学荣誉博士。剑桥大学 Arthur Balfour 遗传学讲席教授 (1943–1957)。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.35) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} FRS · Copley · Darwin · Royal · Guy 金质奖章 · Knight Bachelor —— 英国科学界能给予的荣誉，Fisher 几乎全部获得了。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{那些以 Fisher 命名的概念}{从 F-分布到 Fisher 信息 —— 统计学的每一个角落都有他的名字}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=bluepanel, draw=badgeStat!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeStat} 统计学}\\[3pt]Fisher 信息量\\F-分布 · F-检验\\Fisher 精确检验};
+  \node[leg, fill=brownpanel, draw=badgeGenet!50, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeGenet} 遗传与进化}\\[3pt]Fisher 基本定理\\Fisherian runaway\\Wright–Fisher 模型};
+  \node[leg, fill=greenpanel, draw=badgeDesign!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDesign} 实验与方法}\\[3pt]随机化实验设计\\Fisher 线性判别\\Fisher–Yates 洗牌};
+  \node[leg, fill=ivorypanel, draw=badgeLegacy!60, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy} 传承}\\[3pt]充分统计量 · p 值\\C.R. Rao · 女士品茶\\Knight Bachelor};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} "In statistics, call in the statistician before the experiment, not after."}\\[4pt]
+    {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      Fisher 信息 $\to$ F-分布 $\to$ Fisher 精确检验 $\to$ Fisher 基本定理 $\to$ Fisherian runaway\\
+      $\to$ Fisher 线性判别 $\to$ Fisher–Yates 洗牌 $\to$ Wright–Fisher 模型 $\to$ 女士品茶\\
+      以他命名的概念超过二十个——统计学、遗传学、实验设计的每一本教科书中都有他的名字。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {To call in the statistician after the experiment is done};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {is no more than asking him to perform a post-mortem.};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.2cm]current page.center)
+    {— Sir Ronald Fisher, 1938};
+  \node[anchor=center, font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black]
+    at ([yshift=-2.0cm]current page.center)
+    {罗纳德·费舍尔爵士\quad Sir Ronald Fisher\quad 1890 — 1962};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{chart-bar}\enspace 现代统计学奠基人 · FRS 1929 · Copley 1955 · Knight 1952\enspace|\enspace 英国 · OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\paperslide
+\rothamstedslide
+\mlslide
+\teaslide
+\geneticslide
+\runawayslide
+\pearsonslide
+\eugenicsslide
+\smokeslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}
