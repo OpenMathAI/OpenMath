@@ -260,3 +260,84 @@ Scheme → Sheaf → Topos → Étale cohomology → Grothendieck duality → �
 > **Grothendieck 不是一个数学家，他是一整个新数学世界的建筑师。**
 >
 > **Turing 不是一个计算科学家，他是第一个理解"计算"本身可以是一门科学的数学家。**
+
+---
+
+## 十四、Top 100 中未进入本榜前 50 的数学家 — 补充名录
+
+> 以下 56 位数学家来自《20世纪数学家排名》前 100 名，因以下原因未进入本榜前 50：
+> - 部分为 19 世纪主要活跃的奠基者（如 Cantor、Dedekind、Klein、Minkowski、Darboux、Jordan）
+> - 部分贡献虽重要但偏窄或领域相对独立（如 Markov、Hecke、Pontryagin、Fredholm）
+> - 部分属于同一学派但代表性略弱（如 H. Cartan、Luzin、Tikhonov）
+> - 部分在特定国家/地区有极高声望，但全球纯数学史影响力相对有限
+>
+> 这些数学家的贡献同样值得记录和研究，是 OpenMath 后续扩展的重要候补名单。
+
+| # (原榜) | 数学家 | 简介 |
+|:---:|------|------|
+| 8 | **I.M. Gelfand** (盖尔范德) | 首届 Wolf 奖得主，泛函分析大师。解决了 Hilbert 关于超越数的问题。 |
+| 9 | **Norbert Wiener** (维纳) | 神童，控制论的创立人。 |
+| 10 | **Pavel Alexandroff** (亚历山德罗夫) | 点集拓扑中的 Alexandroff 紧化。 |
+| 14 | **Richard Dedekind** (戴德金) | 戴德金分割、Dedekind 环。主要学术生涯属于 19 世纪，但对 20 世纪代数数论影响深远。 |
+| 15 | **Andrey Markov** (马尔可夫) | 马尔可夫过程。证明了维数 ≥ 4 的拓扑流形的同胚分类是算法不可解的。 |
+| 16 | **Felix Klein** (克莱因) | 爱尔兰根纲领。主要活跃于 19 世纪末。 |
+| 18 | **Camille Jordan** (若尔当) | Jordan 闭曲线定理。19 世纪数学家。 |
+| 25 | **René Thom** (托姆) | 突变论创立者，Thom 配边理论（Fields 奖）。 |
+| 27 | **Jacques Hadamard** (阿达玛) | 法国数学家，证明了素数定理。 |
+| 29 | **Edmund Landau** (兰道) | 用一种更简单的分析方法证明了素数定理，并应用于代数数域上的素理想分布。 |
+| 30 | **Erich Hecke** (赫克) | 赫克代数、Hecke 算子。模形式理论的奠基人之一。 |
+| 32 | **Ernst Zermelo** (策梅罗) | ZFC 公理系统的参与建立者，现代数学大厦的地基。 |
+| 33 | **Lev Pontryagin** (庞特里亚金) | Pontryagin 示性类，最早的示性类。 |
+| 34 | **Henri Cartan** (小嘉当) | Élie Cartan 之子。法国布尔巴基学派核心成员，同调代数与层论的早期推动者。 |
+| 36 | **小平邦彦** (Kodaira) | 日本 Fields 奖得主，代数几何学家。消灭定理（Kodaira vanishing）影响深远。 |
+| 37 | **Georg Cantor** (康托尔) | 集合论创始人。19 世纪数学家，但思想深度穿越时代。 |
+| 39 | **Émile Picard** (皮卡) | 常微分方程存在与唯一性定理、复分析中的 Picard 定理。值分布理论开创者。 |
+| 40 | **Alfred North Whitehead** (怀特海) | 来自剑桥的数学哲学家。与 Russell 合著《数学原理》。 |
+| 41 | **Constantin Carathéodory** (卡拉泰奥多里) | 提出 Carathéodory 条件，给出不用外测度建立 Lebesgue 实分析基础的方案。 |
+| 45 | **Albert W. Tucker** (塔克) | 纳什在普林斯顿的老师，经济学中 Tucker 均衡的创立者。博弈论的重要推动者。 |
+| 46 | **高木贞治** (Takagi) | 日本最早具有国际声誉的数学家。类域论的创立者之一（Takagi 存在定理）。 |
+| 47 | **Solomon Lefschetz** (莱夫谢茨) | 普林斯顿王朝的缔造者。Lefschetz 超平面定理、拓扑学方法引入代数几何。 |
+| 51 | **Yakov Sinai** (西奈) | 动力系统、统计力学数学基础。对混沌理论和遍历论的贡献卓越。 |
+| 53 | **志村五郎** (Shimura) | 志村簇、志村–Taniyama 猜想——攻克费马大定理的关键。 |
+| 54 | **Ivan Vinogradov** (维诺格拉多夫) | 证明了哥德巴赫猜想的特殊情形（三素数定理）。解析数论。 |
+| 58 | **Yuri Linnik** (林尼克) | 苏联解析数论学家。 |
+| 59 | **Issai Schur** (舒尔) | 有限群与表示论中多次出现的名字。Schur 引理、Schur 补。 |
+| 60 | **Nikolai Luzin** (鲁津) | Kolmogorov 的博士生导师。莫斯科数学学派的奠基者。描述集合论开创人。 |
+| 61 | **Erik Ivar Fredholm** (弗雷德霍姆) | Fredholm 算子、Fredholm 积分方程理论——泛函分析的先驱。 |
+| 62 | **Bartel van der Waerden** (范德瓦尔登) | 《代数学》（Moderne Algebra）作者，定义了 20 世纪的代数教科书。 |
+| 63 | **Andrey Tikhonov** (吉洪诺夫) | Tikhonov 正则化方法（反问题理论的核心工具）。 |
+| 64 | **Felix Bernstein** (伯恩斯坦) | Bernstein 定理：若存在 A → B 和 B → A 的单射，则存在双射。 |
+| 65 | **Vladimir Rokhlin** (罗赫林) | 苏联拓扑学家与动力系统学家。 |
+| 66 | **福原满洲雄** (Fukuhara) | 日本数学家 (1905–2007)。 |
+| 69 | **Hermann Minkowski** (闵可夫斯基) | 数的几何（Geometry of Numbers）、Minkowski 时空。天才早逝。 |
+| 70 | **Oskar Perron** (佩龙) | Perron–Frobenius 定理。正矩阵与非负矩阵理论。 |
+| 71 | **Jean Gaston Darboux** (达布) | Darboux 导数、Darboux 定理。19 世纪数学分析大家。 |
+| 72 | **Paul Lévy** (列维) | 概率论与实分析。Lévy 过程、Lévy 稳定分布。 |
+| 73 | **Srinivasa Ramanujan** (拉马努金) | 印度超天才数学家。模形式、theta 函数、partition 函数的惊人发现。 |
+| 75 | **Émile Borel** (博雷尔) | Borel 测度、Borel 集。测度论与概率论先驱。 |
+| 77 | **Thoralf Skolem** (斯科伦) | Skolem 标准型、Löwenheim–Skolem 定理。数理逻辑奠基人之一。 |
+| 79 | **Torsten Carleman** (卡尔曼) | Carleman 不等式、Carleman 线性化。瑞典分析学家。 |
+| 81 | **Wolfgang Krull** (克鲁尔) | Krull 维数、Krull 拓扑。交换代数的核心概念。 |
+| 83 | **Mikhail Suslin** (苏斯林) | Suslin 线、Suslin 问题。描述集合论。 |
+| 87 | **Salomon Bochner** (博赫纳) | Bochner 技巧（微分几何中的关键方法）、Bochner 积分。 |
+| 88 | **中山正** (Nakayama) | 日本代数学家。中山引理（Nakayama's Lemma）——交换代数与表示论的基本工具。 |
+| 89 | **Erik Christopher Zeeman** (齐曼) | 英国拓扑学家。突变论的重要推广者。 |
+| 90 | **华罗庚** (Hua Loo-Keng) | 解析数论、多复变、矩阵几何。中国现代数学的旗帜性人物。 |
+| 91 | **Ivan Petrovsky** (彼得罗夫斯基) | 偏微分方程理论的重要贡献者。 |
+| 93 | **佐藤幹夫** (Sato Mikio) | 日本数学家。代数分析（D-模理论）、Sato 超函数。 |
+| 94 | **Bertrand Russell** (罗素) | 数理逻辑。《数学原理》——20 世纪数学基础工程的里程碑。 |
+| 95 | **George David Birkhoff** (伯克霍夫) | 美国第一位真正有国际声誉的数学家。动力系统。 |
+| 96 | **Ernst Lindelöf** (林德洛夫) | Lindelöf 空间、Lindelöf 原理。芬兰拓扑学家。 |
+| 97 | **Oswald Teichmüller** (泰希缪勒) | Teichmüller 空间、单值化定理。代数几何与复分析中不可或缺的概念。 |
+| 98 | **Richard Brauer** (布饶尔) | 有限群表示论大师。Brauer 群——代数数论与环论的基本工具。 |
+| 99 | **Lars Gårding** (戈丁) | 瑞典数学家。Gårding 不等式（PDE 理论的基础工具）。 |
+
+### 说明
+
+1. **Dedekind, Klein, Cantor, Jordan, Darboux, Minkowski** 等 6 人的主要学术生涯属于 19 世纪，已在本文 §十一 中讨论过。此处列出是为了完整展示原榜全貌。
+2. 上述 56 位数学家的简介来自《20 世纪数学家排名》原始榜单。
+3. 这 56 位 + Top 50 正好覆盖原榜前 100 名（注：原榜中的 Hausdorff、Thurston、Morse、Mac Lane、Lions、Voevodsky 未在原始 Top 100 中出现，属于本榜独立增补）。
+
+---
+
+> **这份补充名录不是"二等榜单"，而是告诉我们：数学史的丰度远超任何一张榜单的边界。**
