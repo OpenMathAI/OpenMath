@@ -1,69 +1,42 @@
-# 艾伦伯格 (Samuel Eilenberg) 立传提示词
+# 艾伦伯格 (Samuel Eilenberg) 立传提示词 — 优化版
 
-> 严格遵循 [Mathematician_Biography_Guide.md]。参考: cartan, weyl。
+> 严格遵循 [Mathematician_Biography_Guide.md](../Mathematician_Biography_Guide.md)。模板版本: v2.0。
 
 ---
 
-## 背景
+## 一、结构化元数据
 
-- **目标**: Samuel Eilenberg (1913–1998)
-- **气质**: **范畴论的共同创始人、同调代数的建筑师、Mac Lane 的 50 年合作者、波兰犹太移民**
-- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Samuel_Eilenberg/`
+| 字段 | 值 | 来源 |
+|------|-----|------|
+| 全名 | Samuel Eilenberg | Wikidata Q535833 |
+| 生卒 | 1913-09-30 ~ 1998-01-30 (84岁) | Wikidata |
+| 国籍 | 波兰 → 美国 | Wikidata |
+| 出生地 | 华沙, 波兰 | Wikidata |
+| 博士导师 | Kazimierz Kuratowski, Karol Borsuk | Wikidata |
+| 教育 | 华沙大学 | Wikidata |
+| 任职 | Michigan, Indiana, Columbia, Princeton | Wikidata |
+| 荣誉 | Wolf Prize (1986), Steele Prize (1987) | Wikidata |
+| 知名工作 | Eilenberg–MacLane space, Eilenberg–Steenrod axioms, Chevalley–Eilenberg algebra, Cartan–Eilenberg resolution | Wikidata |
 
-## 第 0 步：校验
+---
 
-- **生卒**：1913-09-30 ~ 1998-01-30，享年 84 岁
-- **国籍**：波兰→美国
-- **出生地**：Warsaw, Poland（俄属波兰）
-- **博士导师**：Karol Borsuk（华沙大学）
-- **博士论文**：1936
-- **任职**：哥伦比亚大学 (1947–1982)
-- **荣誉**：Wolf 奖 (1986)、Steele 奖 (1987)
-- **合作者**：Saunders Mac Lane（范畴论+同调代数）、Norman Steenrod（公理化同调）
+## 二、核心叙事
 
-### 时间线
-- 1913: 生于华沙
-- 1936: 华沙大学博士
-- 1939: 逃离纳粹——来到美国（正是战争爆发前）
-- 1940: 加入密歇根大学
-- 1944: Eilenberg–Mac Lane 空间的首次定义
-- 1945: 与 Mac Lane 发表范畴论的第一篇论文
-- 1947: 哥伦比亚大学
-- 1956: 与 Cartan 合著《同调代数》——经典文本
-- 1986: Wolf 奖
+Eilenberg 是 20 世纪代数拓扑和同调代数的核心建筑师：
+1. **Eilenberg–Steenrod 公理 (1945)** — 同调论的统一公理化
+2. **范畴论 (1942–1945)** — 与 Saunders Mac Lane 共同创立
+3. **Eilenberg–MacLane 空间** — 代数拓扑的基本构造
+4. **Cartan–Eilenberg (1956)** — 同调代数的圣经
+5. **艺术收藏家** — 南亚和东南亚艺术的重要收藏家
 
-## 核心贡献
-| 领域 | 贡献 | 年代 |
-|------|------|:--:|
-| 范畴论 | 范畴、函子、自然变换——数学语言的革命 | 1945 |
-| 同调代数 | Eilenberg–Cartan《同调代数》 | 1956 |
-| 拓扑学 | Eilenberg–Mac Lane 空间 K(G,n) | 1944 |
-| 公理化 | Eilenberg–Steenrod 同调公理 | 1945 |
-| 自动化 | 理论计算机科学（自动机理论） | 1970s |
+## 三、配色
 
-### ★ 叙事
-1. **范畴论的诞生** — 1945 年，Eilenberg 和 Mac Lane 意识到他们需要一个"关于数学的语言"——范畴论由此诞生
-2. **逃亡的犹太数学家** — 1939 年逃离波兰，在华沙被轰炸之前
-3. **K(G,n) 空间** — 同伦论最核心的构造。数学家"唯一关心的空间"
-4. **数学的"架构师"** — 他不创造具体的定理，而是建造让其他人可以工作的框架
+- primary: `#2C3E6B` (波兰蓝)
+- accent: `#C41E3A` (波兰红)
+- badges: topology/cohomology/category/legacy
 
-## ⚠️ 史实陷阱
-- **范畴论起源** — 1945 年 "General Theory of Natural Equivalences"
-- **Eilenberg–Mac Lane 合作** — 几乎 50 年，100+ 篇论文
-- **与 Borsuk** — 导师是 Borsuk(华沙拓扑学派)
-- **逃亡** — 1939 年就在战争爆发前
+## 四、幻灯片 (12页)
 
-## ⚠️ 终审
-| 点 | 检查 |
-|----|------|
-| 博士 | 1936, Warsaw, Borsuk |
-| 范畴论 | 1945 |
-| Eilenberg–Mac Lane | 1944 K(G,n); 1945 范畴 |
-| Wolf | 1986 |
-
-## 配色：范畴蓝 + 华沙灰 + 同调金
-- 幻灯片（12 页）: 范畴论诞生、逃亡、K(G,n)、同调代数...
-
-## 音乐: Timeless
+00 OpenMath · 01 封面 · 02 总览 · 03 波兰学派 · 04 Eilenberg–Steenrod 公理 · 05 范畴论诞生 · 06 Eilenberg–MacLane 空间 · 07 Cartan–Eilenberg · 08 奇异同调 · 09 学生与传承 · 10 Wolf奖 · 11 遗产 · 12 结束页
 
 > **开始执行。**
