@@ -1,6 +1,6 @@
 # 数学家完整页面索引
 
-> 生成时间：2026-08-06 16:34:14
+> 生成时间：2026-08-06 17:10:43
 > 共 **1** 人
 
-- [Claude Shannon](Claude_Shannon/page.md) （1916–2001） — American mathematician and information theorist (1916–2001)
+- [Igor Shafarevich](Igor_Shafarevich/page.md) （1923–2017） — Soviet and Russian mathematician (1923-2017)
