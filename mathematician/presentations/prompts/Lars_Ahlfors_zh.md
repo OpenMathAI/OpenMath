@@ -1,68 +1,40 @@
-# 阿尔福斯 (Lars Ahlfors) 立传提示词
+# 阿尔福斯 (Lars Ahlfors) 立传提示词 — 优化版
 
-> 严格遵循 [Mathematician_Biography_Guide.md]。参考: cartan, weyl。
+> 严格遵循 [Mathematician_Biography_Guide.md](../Mathematician_Biography_Guide.md)。模板版本: v2.0 (2026-08-06)。
 
 ---
 
-## 背景
+## 一、结构化元数据
 
-- **目标**: Lars Ahlfors (1907–1996)
-- **气质**: **首届 Fields 奖得主之一、复分析的芬兰巨人、Riemann 面的现代传人**
-- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Lars_Ahlfors/`
+| 字段 | 值 | 来源 |
+|------|-----|------|
+| 全名 | Lars Valerian Ahlfors | Wikidata Q211642 |
+| 生卒 | 1907-04-18 ~ 1996-10-11 (89岁) | Wikidata |
+| 国籍 | 芬兰大公国(俄罗斯帝国) → 芬兰 → 美国 | Wikidata |
+| 出生地 | 赫尔辛基, 芬兰 | Wikidata |
+| 逝世地 | Pittsfield, MA, 美国 (肺炎) | Wikipedia |
+| 博士导师 | Ernst Lindelöf, Rolf Nevanlinna | Wikidata |
+| 博士 | 1930, 赫尔辛基大学 | Wikipedia |
+| 任职 | Åbo Akademi, 赫尔辛基大学, 苏黎世联邦理工学院, 哈佛大学 (1946–1977) | Wikipedia |
+| 荣誉 | 首届 Fields 奖 (1936), Wolf 奖 (1981), Steele 奖 (1982), Wihuri 奖 (1968) | Wikidata |
+| 知名工作 | 拟共形映射, Teichmüller 空间, Ahlfors 有限性定理, Denjoy–Carleman–Ahlfors 定理, Schwarz–Ahlfors–Pick 定理 | Wikidata + Wikipedia |
 
-## 第 0 步：校验
+---
 
-- **生卒**：1907-04-18 ~ 1996-10-11，享年 89 岁
-- **国籍**：芬兰
-- **出生地**：Helsinki, Finland（时为俄罗斯帝国内的芬兰大公国）
-- **博士导师**：Ernst Lindelöf（赫尔辛基大学）
-- **博士论文**：1930
-- **任职**：赫尔辛基大学 (1933–1935)、哈佛大学 (1935–1977)
-- **荣誉**：Fields 奖 (1936，首届，与 Jesse Douglas 共享)、Wolf 奖 (1981)
+## 二、核心叙事
 
-### 核心
-| 领域 | 贡献 |
-|------|------|
-| 复分析 | Ahlfors–Schwarz 引理 / Ahlfors 超双曲度量 |
-| Riemann 面 | Denjoy 猜想的否定（Ahlfors 反例） |
-| 拟共形映射 | 拟共形映射理论的创立（与 Teichmüller 并行） |
-| 值分布 | Ahlfors 值分布理论——Nevanlinna 理论的几何推广 |
-| 极限集 | Ahlfors 有限性定理 (Kleinian 群) |
+Ahlfors 是 20 世纪复分析的最高权威：
 
-### ★ 叙事
-1. **首届 Fields 奖** — 1936 年，29 岁。与 Jesse Douglas 共享（后者解决 Plateau 问题）
-2. **Lindelöf 的学生** — 芬兰复分析学派的传承
-3. **芬兰→哈佛** — 从赫尔辛基到剑桥，建立美国复分析研究
-4. **拟共形映射** — 将 Beltrami 方程发展成为现代分析的工具
+1. **首届 Fields 奖得主 (1936)** — 与 Jesse Douglas 共享，年仅 29 岁
+2. **拟共形映射之父** — 将 Teichmüller 理论严格化，定义了 Teichmüller 空间
+3. **《Complex Analysis》(1953)** — 复分析的标准教科书，"每一位活跃的函数论学者都是 Ahlfors 的学生"
+4. **战争逃亡者** — 芬兰 → 瑞典 → 苏黎世 → 哈佛
+5. **芬兰学派**的集大成者——Lindelöf → Nevanlinna → Ahlfors 三代传承
 
-## ⚠️ 史实陷阱
-- **Fields 奖** — 首届 1936，共享。不是"唯一得主"
-- **拟共形映射** — Teichmüller 独立发展（德国）。二人路径不同
-- **博士导师** — Lindelöf（不是 Nevanlinna！）
+## 三、配色: 芬兰蓝 + 复分析金
 
-## ⚠️ 终审
-| 点 | 检查 |
-|----|------|
-| Fields | 1936, 首届 |
-| 博士 | Lindelöf 1930 |
-| 拟共形 | 1930s–1950s |
-| Wolf | 1981 |
+## 四、幻灯片 (11页)
 
-## 配色：芬兰蓝 + 复分析白 + 拟共形绿
-## 幻灯片（12 页）
-01 封面 — 《阿尔福斯：复分析的芬兰巨人》
-02 首届 Fields 奖 (1936)
-03 Lindelöf 的弟子
-04 Riemann 面的几何
-05 拟共形映射的创立
-06 Ahlfors 超双曲度量
-07 值分布理论
-08 芬兰→哈佛
-09 Kleinian 群与有限性定理
-10 Wolf 奖 (1981)
-11 遗产
-12 结束页
-
-## 音乐: Timeless + Expedition
+00 OpenMath · 01 封面 (首届 Fields 奖, 29岁) · 02 总览 · 03 早年与芬兰学派 · 04 Denjoy 猜想证明 (1929, 仅22岁!) · 05 首届 Fields 奖 (1936) · 06 拟共形映射与 Teichmüller 空间 · 07 《Complex Analysis》· 08 战争与逃亡 · 09 荣誉 (Wolf+Steele) · 10 遗产 · 11 结束页
 
 > **开始执行。**
