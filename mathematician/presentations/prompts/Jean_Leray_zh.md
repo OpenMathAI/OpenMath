@@ -17,7 +17,7 @@
 | 博士导师 | Henri Villat | Wikidata |
 | 博士论文 | 1933, 流体力学 (Navier-Stokes方程) | MacTutor |
 | 教育 | École Normale Supérieure | Wikidata |
-| 主要任职 | Université de Nancy (1936-1939), 巴黎大学 (1945-1947), Collège de France (1947-1978) | Wikidata |
+| 主要任职 | Université de Nancy (1938-1939), 巴黎大学 (1945-1947), Collège de France (1947-1978) | Wikidata |
 | 荣誉 | Wolf Prize (1979), Lomonosov Gold Medal (1988), Feltrinelli Prize (1971), Foreign Member of the Royal Society (1983) | Wikidata |
 | 主要学生 | Armand Borel, István Fáry, René Deheuvels | Wikidata |
 | 知名工作 | Leray spectral sequence, Leray cover, Leray's theorem, Leray-Hirsch theorem, Leray projection | Wikidata |
@@ -31,8 +31,8 @@
 | 1906 | 11月7日生于 Chantenay-sur-Loire |
 | 1926-1929 | École Normale Supérieure |
 | 1933 | 博士论文: 流体力学 (Navier-Stokes 弱解) |
-| 1934 | 发表 Navier-Stokes 方程弱解的存在性 |
-| 1936 | 任 Université de Nancy 教授 |
+| 1934 | 发表 Navier-Stokes 方程弱解的存在性；与 Schauder 发现 Leray–Schauder 度 |
+| 1938 | 任 Université de Nancy 教授 |
 | 1939 | 二战爆发，参军任炮兵军官 |
 | 1940.6 | 被俘，关入奥地利 Oflag XVII-A 战俘营 |
 | 1940-1945 | **在战俘营中创造谱序列和层论** |
@@ -40,7 +40,6 @@
 | 1946 | 发表谱序列理论 (Comptes Rendus); 发表层论 |
 | 1947 | 任 Collège de France 教授 (至1978) |
 | 1950 | 发表双曲型 PDE 理论 |
-| 1959 | Leray-Schauder 度理论 |
 | 1966 | 当选法国科学院院士 |
 | 1979 | Wolf 奖 |
 | 1988 | Lomonosov 金质奖章 |
@@ -57,7 +56,7 @@
 | 拓扑 | Leray-Hirsch 定理; Leray 度理论 | 1946-1959 |
 | PDE | Navier-Stokes 弱解存在性 | 1934 |
 | 复分析 | 剩余流 (residue currents) | 1950s |
-| 不动点 | Leray-Schauder 度 | 1959 |
+| 不动点 | Leray-Schauder 度 | 1934 |
 
 ---
 
@@ -94,25 +93,24 @@
 | 战俘营具体位置 | ✅ Oflag XVII-A (Edelbach, 奥地利) |
 | 博士年份 | ✅ 1933 (非1934) |
 | Navier-Stokes 弱解 | ✅ 1934 年 (博士论文后一年) |
+| Leray–Schauder 度年份 | ✅ 1934 年，与 Navier–Stokes 弱解同年！非 1959 |
+| Nancy 大学任职 | ✅ 1938–1939 (非1936) |
 
 ---
 
 ## 六、配色方案
 
-**气质**: 战俘营灰 + 法国蓝 + 拓扑金
+**气质**: 法国深蓝 + 拓扑金 + 暖象牙白底
 
 | 变量 | 色值 | 用途 |
 |------|------|------|
-| `coverprimary` | `#1B3A5C` | 法国深蓝 — 封面主色 |
-| `coveraccent` | `#C8A951` | 拓扑金 — 强调/分隔线 |
-| `coverdark` | `#1A1A2E` | 深灰蓝 — 正文文本 |
-| `covermuted` | `#6B7B8D` | 雾灰 — 辅助文本 |
-| `bgmain` | `#0D1B2A` | 战俘营灰蓝 — 背景 |
+| `coverprimary` | `#111827` | 墨色 — 封面主色 |
+| `coveraccent` | `#1B3A5C` | 法国深蓝 — 强调/分隔线 |
+| `bgmain` | `RGB{248,246,243}` | 暖象牙白 — 背景 |
 | `badgeSS` | `#1B4D6B` | 谱序列蓝 |
 | `badgeSheaf` | `#DAA520` | 层论金 |
 | `badgePDE` | `#2E5A40` | PDE 绿 |
 | `badgeLegacy` | `#5A5A6E` | 遗产灰 |
-| `purplepanel` / `amberpanel` / `greenpanel` / `bluepanel` / `goldpanel` / `graypanel` | 按 guide 标准 |
 
 ---
 
