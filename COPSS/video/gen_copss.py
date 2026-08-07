@@ -157,7 +157,7 @@ PEOPLE = {
         ("Lester Mackey", "莱斯特·麦基 \\enspace·\\enspace 首位工业界得主", 2025, "1983–", "美国", "Microsoft Research",
          "大规模机器学习", "大规模核方法、随机特征、概率推理与优化。他连接统计计算与大规模机器学习。",
          "none", "L.M."),
-        ("Weijie Su", "苏炜杰 \\enspace·\\enspace 第九位华人得主", 2026, "—", "美国（生于中国）", "University of Pennsylvania",
+        ("Weijie Su", "苏炜杰 \\enspace·\\enspace 第九位华人得主", 2026, "1988–", "美国（生于中国）", "University of Pennsylvania",
          "深度学习理论", "深度学习理论、差分隐私、强化学习数学基础。他以数学工具严格化 AI 前沿。",
          "none", "W.S."),
     ],
@@ -383,6 +383,22 @@ def esc(s):
     return str(s).replace("&", "\\&")
 
 
+def compute_age(year, life):
+    """Award age = award year - birth year (e.g. '1940–' -> 41 for 1981).
+    Returns '37/38岁' for ambiguous '1982/1983–', None if no birth year."""
+    import re as _re
+    m = _re.search(r'(19|20)\d{2}(?:/(19|20)\d{2})?', life.replace("–", "-"))
+    if not m:
+        return None
+    part = m.group(0)
+    if "/" in part:
+        y1, y2 = part.split("/")
+        a1, a2 = year - int(y1), year - int(y2)
+        lo, hi = min(a1, a2), max(a1, a2)
+        return "%d/%d岁" % (lo, hi) if lo != hi else "%d岁" % lo
+    return "%d岁" % (year - int(part))
+
+
 def resolve_img(p, ep_dir):
     """If a laureate has no photo ('none') but a non-empty images/<name>.<ext>
     file exists in the episode dir, use it automatically."""
@@ -401,13 +417,15 @@ def person_slide(p, prefix="", ep_dir=None):
     img = resolve_img(p, ep_dir)
     body = "研究方向：%s。%s" % (tag, contrib)
     cname = prefix + cmd_name(name)
+    age = compute_age(year, life)
+    year_str = "%d（%s）" % (year, age) if age else str(year)
     return ("\\newcommand{\\%sslide}{\\personslide\n"
             "  {%s}{%s}\n"
             "  {%s}{%s}\n"
-            "  {%d}{%s}{%s}{%s}\n"
+            "  {%s}{%s}{%s}{%s}\n"
             "  {%s}}\n" % (
                 cname,
-                esc(name), esc(subtitle), img, credit, year, esc(life),
+                esc(name), esc(subtitle), img, credit, year_str, esc(life),
                 esc(country), esc(inst), esc(body)))
 
 
