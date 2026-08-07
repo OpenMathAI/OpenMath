@@ -633,7 +633,7 @@ def make_cover_slide(people, ep_dir, title, sub, note, badge,
     # Layout: small sets (≤10) place note+badge BELOW grid; large set (46) keeps them around grid
     if len(people) <= 10:
         center_y = -0.30
-        note_y = center_y - TOTAL_H / 2 - 0.85   # note line below grid (+40px shift)
+        note_y = center_y - TOTAL_H / 2 - 1.15   # note line below grid (+40px +30px shift)
         badge_y = note_y - 0.55                 # badge line below note
     else:
         center_y = -1.50
@@ -666,7 +666,7 @@ def make_cover_slide(people, ep_dir, title, sub, note, badge,
   \\node[anchor=center, font=\\fontsize{20}{25}\\selectfont\\bfseries, text=coverdark]
     at ([yshift=2.60cm]current page.center) {%s};
   \\node[anchor=center, font=\\fontsize{12}{15}\\selectfont, text=coverprimary!85!black]
-    at ([yshift=1.55cm]current page.center) {%s};
+    at ([yshift=1.70cm]current page.center) {%s};
   \\draw[coverprimary, line width=1.4pt] ([yshift=0.75cm, xshift=-5.2cm]current page.center)
     -- ([yshift=0.75cm, xshift=5.2cm]current page.center);
   \\node[anchor=center, font=\\fontsize{9.5}{12.5}\\selectfont\\bfseries, text=coveramber!58!black]
