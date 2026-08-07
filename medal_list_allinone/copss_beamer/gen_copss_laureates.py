@@ -57,7 +57,6 @@ HEADER = r"""% COPSS Presidents' Award — Laureates (1981–2026)
   \vspace{8pt}%
   \centering
   {\large\bfseries\color{copssclr}COPSS 会长奖 · \insertframetitle}\\[3pt]
-  \ifx\framesubject\@empty\else{\footnotesize\color{mutedgray}\framesubject}\\[4pt]\fi
   \textcolor{copssbg}{\rule{0.95\textwidth}{0.6pt}}%
   \vspace{-6pt}%
 }
@@ -165,13 +164,13 @@ def make_table_frame(ep_key, rng, subject):
 \vspace{-2pt}
 \centering
 \scriptsize
-\begin{tabular}{@{}
-  >{\raggedright}m{3.6cm}
-  >{\centering}m{1.05cm}
-  >{\centering}m{1.05cm}
-  >{\raggedright}m{1.5cm}
-  >{\raggedright}m{2.3cm}
-  >{\raggedright\arraybackslash}m{2.9cm}
+\resizebox{\textwidth}{!}{\begin{tabular}{@{}
+  >{\raggedright}m{2.55cm}
+  >{\centering}m{2.45cm}
+  >{\centering}m{2.10cm}
+  >{\raggedright}m{1.60cm}
+  >{\raggedright}m{2.00cm}
+  >{\raggedright\arraybackslash}m{2.40cm}
 @{}}
 \toprule
 \rowcolor{copssbg}
@@ -179,7 +178,7 @@ def make_table_frame(ep_key, rng, subject):
 \midrule
 %s
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \vspace{4pt}
 \end{frame}
 """ % (rng, "\n".join(rows))
@@ -220,27 +219,25 @@ def main():
     for ep_key, rng, subject in EP_RANGES:
         out.append("\\def\\framesubject{%s}\n" % subject)
         out.append(make_table_frame(ep_key, rng, subject))
-    # cross-award summary frame
-    out.append(r"""\begin{frame}{交叉获奖}
-\vspace{2pt}
-\centering
-\scriptsize
-\begin{minipage}{0.92\textwidth}
-\textbf{\color{copssclr}COPSS 得主与四大数学奖交叉情况}
-\begin{itemize}
-  \item \textbf{菲尔兹奖 / 沃尔夫奖 / 阿贝尔奖 / 陈省身奖章}：46 位 COPSS 得主中 \textbf{无人} 同时获得（统计学与纯数学领域不同，2026 年为止）。
-  \item \textbf{David L. Donoho（1994）}：另获 \textbf{IMU 高斯奖 2018}（应用数学最高荣誉）与 \textbf{邵逸夫奖 2013}——COPSS 得主中与数学界奖项交叉最显著者。
-  \item \textbf{统计领域荣誉交叉}：R.A. Fisher Lectureship（Bickel·Fienberg·Berger·Prentice·Wu·Carroll·Wong·Roeder 等）；Guy Medal（Hall·McCullagh·Silverman·Johnstone·Fan）；MacArthur 天才奖（Bickel 1984·Barber 2024）。
+    # cross-award summary frame: no subject, large text, compact layout
+    out.append("\\def\\framesubject{}\n")
+    out.append(r"""\begin{frame}{交叉获奖与荣誉}
+\vspace{0.20cm}
+\begin{center}
+{\Large\bfseries\color{copssclr} COPSS 得主与四大数学奖交叉情况}
+\end{center}
+\vspace{0.25cm}
+{\large
+\begin{itemize}\setlength\itemsep{14pt}\setlength\leftmargin{0.6cm}
+  \item[\textcolor{fieldsclr}{$\blacklozenge$}] \textbf{菲尔兹 / 沃尔夫 / 阿贝尔 / 陈省身奖章}：46 位 COPSS 得主中 \textbf{无人} 同时获得（统计学与纯数学领域不同，2026 年为止）。
+  \item[\textcolor{wolfclr}{$\bigstar$}] \textbf{David L. Donoho（1994）}：另获 \textbf{IMU 高斯奖 2018}（应用数学最高荣誉）与 \textbf{邵逸夫奖 2013}——COPSS 得主中与数学界奖项交叉最显著者。
+  \item[\textcolor{copssclr}{$\blacklozenge$}] \textbf{统计领域荣誉交叉}：R.A. Fisher Lectureship（9 人）；Guy 奖章（6 人）；MacArthur 天才奖（Bickel 1984·Barber 2024）。
 \end{itemize}
-\vspace{6pt}
-\rule{\textwidth}{0.5pt}
-\vspace{4pt}
-\textbf{\color{copssclr}备注}
-\begin{itemize}
-  \item Meinshausen（2016）、Su（2026）英文 Wikipedia 尚无独立条目；年龄按获奖年−出生年估算。
-  \item 年龄注记如「1981（41岁）」= 获奖年 − 出生年（惯例口径）。
-\end{itemize}
-\end{minipage}
+}
+\vspace{0.20cm}
+\begin{center}
+{\small\color{mutedgray}详细交叉名录见 \texttt{cross\_ref/math\_awards\_allinone.pdf}}
+\end{center}
 \end{frame}
 """)
     out.append(r"\end{document}" + "\n")
