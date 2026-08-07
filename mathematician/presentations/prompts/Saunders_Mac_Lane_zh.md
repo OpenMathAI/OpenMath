@@ -14,8 +14,8 @@
 
 - **生卒**：1909-08-04 ~ 2005-04-14，享年 95 岁
 - **国籍**：美国
-- **出生地**：Taftville, Connecticut, USA
-- **博士导师**：Hermann Weyl（哥廷根大学）→ Paul Bernays（接替，因 Weyl 离开）
+- **出生地**：Norwich, Connecticut, USA（家庭住在附近 Taftville）
+- **博士导师**：Hermann Weyl（哥廷根大学）和 Paul Bernays（Bernays 因犹太身份被迫离开，Weyl 接替为主考官）
 - **博士论文**：1934，数理逻辑
 - **任职**：芝加哥大学 (1947–1982)
 - **荣誉**：美国国家科学奖章 (1989)、Steele 奖 (1986)
@@ -29,10 +29,11 @@
 - 1941: 与 Birkhoff 合著《现代代数》(A Survey of Modern Algebra)
 - 1945: 与 Eilenberg 共同发表范畴论第一篇论文
 - 1947: 芝加哥大学教授
+- 1952–1958: Chicago 数学系主任
 - 1960s: 将芝加哥建设为美国代数拓扑和范畴论的中心
-- 1971: 《同调代数学》(Homology)——经典教材
-- 1986: 出版《数学：形式与功能》
-- 1998: 《给工作数学家的范畴论》第一版
+- 1963: 《Homology》——同调代数经典教材
+- 1971: 《Categories for the Working Mathematician》第一版
+- 1986: 出版《Mathematics, Form and Function》
 - 2005: 去世，95 岁
 
 ## 核心贡献
@@ -52,9 +53,11 @@
 5. **95 年的长寿** — 几乎见证了整个 20 世纪数学的发展
 
 ## ⚠️ 史实陷阱
-- **博士导师** — 正式 Weyl，实际 Bernays 指导
+- **博士导师** — 实际主要跟 Bernays 学习，但 Bernays 因犹太身份被纳粹驱逐，Weyl 接替为主考官
+- **Homology 出版年份** — 1963（非 1971）
+- **CWWM 首版年份** — 1971（非 1998，1998 是第二版）
 - **范畴论的主角** — 与 Eilenberg 平等，不要写成"Eilenberg 主导"
-- **哥廷根经验** — 1933-1934 是纳粹上台时期
+- **哥廷根经验** — 1933-1934 是纳粹上台时期，Mac Lane 还师从 Emmy Noether
 
 ## ⚠️ 终审
 | 点 | 检查 |
