@@ -7,7 +7,7 @@
 ## 背景信息
 
 - **目标数学家**: Godfrey Harold Hardy (1877–1947)
-- **气质关键词**: **纯数学的守护者、拉马努金的伯乐、解析数论的英国学派灵魂、板球鉴赏家、《一个数学家的辩白》**
+- **气质关键词**: **纯数学的守护者、英国数学的改革者、拉马努金的伯乐、解析数论的英国学派灵魂、板球鉴赏家、《一个数学家的辩白》**
 - **Wikipedia 页面**: ✅ 已下载
   - 页面路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/G._H._Hardy/`
 - **参考模板**: `milnor/`, `atiyah/`, `thurston/`
@@ -43,7 +43,7 @@
 - **重要学生**: Mary Cartwright, E. C. Titchmarsh, Donald C. Spencer, Harry Pitt, Richard Rado, Robert Rankin
 
 ### 关键时间线:
-- 1877: 2月7日生于萨里郡 Cranleigh 教师家庭
+- 1877: 2月7日生于英国萨里郡 Cranleigh 教师家庭
 - 2岁: 写数字到百万位，在教堂因式分解赞美诗编号
 - 1896: 入读剑桥三一学院
 - 1900: 当选 Trinity Prize Fellowship
