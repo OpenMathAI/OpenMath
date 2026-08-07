@@ -56,7 +56,7 @@ PEOPLE = {
          "MCMC 与贝叶斯计算", "MCMC 方法、吉布斯抽样理论、计算生物学。他为贝叶斯计算的实用化作出开创性贡献。",
          "none", "W.H.W."),
         ("David L. Donoho", "戴维·多诺霍", 1994, "1957–", "美国", "Stanford University",
-         "小波与压缩感知", "小波分析、压缩感知、高维统计推断。他是压缩感知的奠基人之一，2018 年获香农奖。",
+         "小波与压缩感知", "小波分析、压缩感知、高维统计推断。他是压缩感知的奠基人之一。",
          "images/donoho.jpg", "Wikipedia"),
         ("Iain M. Johnstone", "伊恩·约翰斯通", 1995, "1956–", "美国（生于加拿大）", "Stanford University",
          "随机矩阵与高维统计", "随机矩阵理论、小波阈值去噪、稀疏主成分。他在高维统计的理论化上影响深远。",
@@ -175,6 +175,33 @@ EPISODES = [
     ("ep05", "episode-05-data-science-ai-2021-2026", "copss_ep05_zh",
      "数据科学、AI 与贝叶斯革新", "2021–2026 · 统计学站上 AI 前沿", "2021 – 2026", "从 Leek 到 Su"),
 ]
+
+# 主要荣誉（COPSS 之外的重要奖项，来源：Wikipedia Awards + copss_winners.md，2026-08-07 核实）
+HONORS = {
+    "Peter J. Bickel":       "MacArthur 天才奖 1984；R.A. Fisher Lectureship",
+    "Stephen Fienberg":      "R.A. Fisher Lectureship",
+    "James O. Berger":       "美国科学院院士 2003；Guggenheim 学者；R.A. Fisher Lectureship",
+    "Ross L. Prentice":      "R.A. Fisher Lectureship 2008",
+    "C. F. Jeff Wu":         "Shewhart 奖章；R.A. Fisher Lectureship",
+    "Raymond J. Carroll":    "R.A. Fisher Lectureship 2002",
+    "Peter Hall":            "Guy 奖章 2011；澳大利亚桂冠学者 2011",
+    "Peter McCullagh":       "Guy 奖章（金质 2026）；英国皇家学会会士 1994",
+    "Bernard Silverman":     "IMO 金牌；Guy 奖章；英国皇家学会会士",
+    "Nancy Reid":            "R.A. Fisher Lectureship",
+    "Wing Hung Wong":        "R.A. Fisher Lectureship",
+    "David L. Donoho":       "高斯奖 2018（IMU）；邵逸夫奖 2013",
+    "Iain M. Johnstone":     "Guy 奖章（银质 2010）",
+    "Kathryn Roeder":        "R.A. Fisher Lectureship",
+    "Jianqing Fan":          "Guy 奖章（银质 2014）；Guggenheim 学者 2009",
+    "Jun Liu":               "晨兴数学金奖 2010；Mitchell 奖 2000",
+    "Nilanjan Chatterjee":   "Spiegelman 奖 2010；Snedecor 奖 2011",
+    "Martin J. Wainwright":  "Sloan 学者 2005；Guggenheim 学者 2024",
+    "John D. Storey":        "Spiegelman 奖 2015",
+    "Tyler J. VanderWeele":  "Spiegelman 奖 2014",
+    "Rina Foygel Barber":    "MacArthur 天才奖 2024",
+    "Daniela Witten":        "Spiegelman 奖 2019",
+    "Ryan Tibshirani":       "Spiegelman 奖 2022",
+}
 
 NAMES_BAR = {
     "ep01": "Bickel · Fienberg · Lai · Hinkley · Berger · Prentice · Wu · Carroll · Hall · McCullagh",
@@ -416,6 +443,8 @@ def person_slide(p, prefix="", ep_dir=None):
     name, subtitle, year, life, country, inst, tag, contrib, img, credit = p
     img = resolve_img(p, ep_dir)
     body = "研究方向：%s。%s" % (tag, contrib)
+    if name in HONORS:
+        body += "\\\\\\textbf{主要荣誉}：%s" % HONORS[name]
     cname = prefix + cmd_name(name)
     age = compute_age(year, life)
     year_str = "%d（%s）" % (year, age) if age else str(year)
