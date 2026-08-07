@@ -1,6 +1,6 @@
 % =============================================================
 %  铁丝网后的拓扑革命：让·勒雷 (Jean Leray)
-%  Beamer 演示 —— 参照 Chevalley / Hopf 版式
+%  Beamer 演示 —— 参照 Chevalley / Zariski 版式
 %  资料来源：mathematician/pages/Jean_Leray + Wikipedia
 % =============================================================
 \documentclass[aspectratio=169,14pt]{beamer}
@@ -15,34 +15,36 @@
 \usetikzlibrary{positioning,calc,arrows.meta,shadows}
 \graphicspath{{images/}}
 
-% ===== 配色：勒雷 — 战俘营灰蓝 + 法国蓝 + 拓扑金 =====
-\definecolor{bgmain}{RGB}{13,27,42}
-\definecolor{coverprimary}{HTML}{1B3A5C}
-\definecolor{coveraccent}{HTML}{C8A951}
-\definecolor{coverdark}{HTML}{D0D5DB}
-\definecolor{covermuted}{HTML}{6B7B8D}
-\definecolor{coverlight}{HTML}{E8ECF0}
-\definecolor{titlecolor}{RGB}{220,228,240}
-\definecolor{muteddark}{RGB}{140,155,170}
-% 面板色（深色主题适配）
-\definecolor{bluepanel}{RGB}{25,60,85}
-\definecolor{graypanel}{RGB}{30,40,55}
-\definecolor{goldpanel}{RGB}{50,45,30}
-\definecolor{greenpanel}{RGB}{25,50,40}
-\definecolor{amberpanel}{RGB}{50,40,25}
-\definecolor{redpanel}{RGB}{50,25,25}
-\definecolor{silverpanel}{RGB}{35,38,45}
+% ===== 配色：勒雷 — 法国深蓝 + 拓扑金 + 谱序列蓝 + 层论琥珀 =====
+\definecolor{bgmain}{RGB}{248,246,243}
+\definecolor{coverprimary}{HTML}{111827}        % 墨色
+\definecolor{coveraccent}{HTML}{1B3A5C}          % 法国深蓝 — Leray 的法兰西根源
+\definecolor{coveramber}{HTML}{C8A951}           % 拓扑金 — 谱序列与层的荣光
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{18,20,30}
+\definecolor{muteddark}{RGB}{75,70,60}
+% 面板色（浅色主题）
+\definecolor{bluepanel}{RGB}{218,230,245}        % 谱序列蓝面板
+\definecolor{graypanel}{RGB}{242,244,248}
+\definecolor{goldpanel}{RGB}{255,245,225}        % 层论金面板
+\definecolor{silverpanel}{RGB}{240,240,242}
+\definecolor{greenpanel}{RGB}{225,240,230}       % PDE 绿面板
+\definecolor{amberpanel}{RGB}{255,244,225}
+\definecolor{redpanel}{RGB}{252,236,236}
+\definecolor{powpanel}{RGB}{232,230,240}          % 战俘营灰紫面板
 % 勒雷四大支柱
-\definecolor{badgeSS}{HTML}{1B4D6B}
-\definecolor{badgeSheaf}{HTML}{DAA520}
-\definecolor{badgePDE}{HTML}{2E5A40}
-\definecolor{badgeLegacy}{HTML}{5A5A6E}
+\definecolor{badgeSS}{HTML}{1B4D6B}              % 谱序列 — 深海蓝
+\definecolor{badgeSheaf}{HTML}{DAA520}            % 层论 — 金色
+\definecolor{badgePDE}{HTML}{2E5A40}             % PDE — 松绿
+\definecolor{badgeLegacy}{HTML}{5A5A6E}           % 遗产 — 石板灰
 \setbeamercolor{background canvas}{bg=bgmain}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]
-  \fill[coverdark, opacity=0.08] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
-  \draw[coveraccent, opacity=0.50, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
 \end{tikzpicture}%
 }
 
@@ -90,7 +92,7 @@
   \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
     at ([yshift=1.55cm]current page.center) {Jean Leray\enspace·\enspace 1906 — 1998};
   \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
-    at ([yshift=1.1cm]current page.center) {谱序列 · 层论 · Navier–Stokes 弱解 · 战俘营中的数学创造};
+    at ([yshift=1.1cm]current page.center) {谱序列 · 层论 (Faisceaux) · Navier–Stokes 弱解 · 战俘营中的数学创造};
   \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
     -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
   \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
@@ -100,7 +102,7 @@
       \node[rounded corners=8pt, fill=badgeSheaf, inner xsep=8pt, inner ysep=5pt,
             text width=2.5cm, align=center, font=\small\bfseries, text=coverdark] at (-1.8,0) {层论};
       \node[rounded corners=8pt, fill=badgePDE, inner xsep=8pt, inner ysep=5pt,
-            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {PDE};
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {Navier–Stokes};
       \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
             text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {传承};
     \end{tikzpicture}
@@ -110,12 +112,12 @@
     {"在铁丝网后面，我发现了代数拓扑中最强大的计算工具。"};
   \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
     at ([yshift=0.38cm]current page.south)
-    {\faIcon{globe}\enspace 法国\enspace|\enspace\faIcon{medal}\enspace Wolf 奖 1979 · Lomonosov 金质奖章 1988\enspace|\enspace Collège de France 1947–1978};
+    {\faIcon{medal}\enspace Wolf 奖 1979 · Lomonosov 金质奖章 1988\enspace|\enspace {\faIcon{globe}\enspace 法国}\enspace|\enspace Collège de France 1947–1978};
 \end{tikzpicture}
 \end{frame}
 }
 
-% --- 2. 总览 ---
+% --- 2. Hook ---
 \newcommand{\hookslide}{%
 \begin{frame}
 \plainbar
@@ -124,13 +126,13 @@
 \begin{tikzpicture}[
   nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
 ]
-  \node[nodebox, fill=greenpanel, draw=badgePDE!50, text=white!90]
-    (a) at (-5.7,1.05) {流体力学博士\\1933 · Navier–Stokes\\弱解存在性};
-  \node[nodebox, fill=graypanel, draw=badgeLegacy!50, text=white!90]
+  \node[nodebox, fill=greenpanel, draw=badgePDE!50, text=badgePDE!85!black]
+    (a) at (-5.7,1.05) {流体力学博士\\1933 · Villat 指导\\Navier–Stokes 弱解};
+  \node[nodebox, fill=powpanel, draw=badgeLegacy!50, text=badgeLegacy!85!black]
     (b) at (-1.9,1.05) {战俘营 Oflag XVII-A\\1940–1945 · 伪装策略\\"只做无用的拓扑学"};
-  \node[nodebox, fill=bluepanel, draw=badgeSS!50, text=white!90]
+  \node[nodebox, fill=bluepanel, draw=badgeSS!50, text=badgeSS!85!black]
     (c) at (1.9,1.05) {谱序列\\1946 · 逐页逼近\\代数拓扑最强工具};
-  \node[nodebox, fill=goldpanel, draw=badgeSheaf!50, text=white!90]
+  \node[nodebox, fill=goldpanel, draw=badgeSheaf!50, text=badgeSheaf!85!black]
     (d) at (5.7,1.05) {层论 (Faisceaux)\\1946 · 层的原始概念\\现代几何的基础语言};
   \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {
     {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他不是拓扑学家——直到战争把他关进战俘营。}\\[1pt]
@@ -141,7 +143,7 @@
 \end{frame}
 }
 
-% --- 3. 早年：流体力学博士 ---
+% --- 3. 早年与流体力学博士 ---
 \newcommand{\earlyslide}{%
 \begin{frame}
 \plainbar
@@ -156,7 +158,7 @@
   \node[item, fill=bluepanel, draw=badgeSS!40] at (0,1.05)
     {\textbf{1926–1929 · École Normale Supérieure。}入读法国最精英的学府——巴黎高师。师从 Henri Villat——法国流体力学学派的领袖。Villat 引导他进入 Navier–Stokes 方程的研究。};
   \node[item, fill=greenpanel, draw=badgePDE!30] at (0,-0.25)
-    {\textbf{1933 · 博士论文：流体力学。}巴黎大学博士。论文题目：Navier–Stokes 方程的弱解。**1934 年发表——证明了三维 Navier–Stokes 方程弱解的存在性。**这是 PDE 理论的一个里程碑。};
+    {\textbf{1933 · 博士论文：流体力学。}巴黎大学博士。论文研究 Navier–Stokes 方程的弱解。**1934 年发表——证明了三维 Navier–Stokes 方程弱解的存在性。**这是 PDE 理论的一个里程碑。};
   \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
     {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他是一名流体力学专家——拓扑学只是他的业余爱好。直到战争改变了一切。}
   };
@@ -165,18 +167,18 @@
 \end{frame}
 }
 
-% --- 4. 战俘营 ---
-\newcommand{\powSlide}{%
+% --- 4. 战俘营 Oflag XVII-A ---
+\newcommand{\powslide}{%
 \begin{frame}
 \plainbar
-\sectiontitle{战俘营 Oflag XVII-A：铁丝网后的数学 (1940–1945)}{"伪装"为拓扑学家，为避免被德军征用做军事研究}
+\sectiontitle{战俘营 Oflag XVII-A：铁丝网后的数学 (1940–1945)}{"伪装"为拓扑学家——为避免被德军征用做军事研究}
 \vspace{-0.4cm}
 \begin{center}
 \begin{tikzpicture}[
   item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
 ]
-  \node[item, fill=graypanel, draw=badgeLegacy!60] at (0,2.55)
-    {\textbf{1939–1940 · 参军与被俘。}二战爆发，Leray 以炮兵军官身份入伍。1940年6月，法国陷落，他被俘。关入奥地利 Oflag XVII-A 战俘营——一个距离数学世界千里之外的铁丝网围城。};
+  \node[item, fill=powpanel, draw=badgeLegacy!60] at (0,2.55)
+    {\textbf{1939–1940 · 参军与被俘。}二战爆发，Leray 以炮兵军官身份入伍。1940 年 6 月，法国陷落，他被俘。关入奥地利 Oflag XVII-A 战俘营——一个距离数学世界千里之外的铁丝网围城。};
   \node[item, fill=bluepanel, draw=badgeSS!40] at (0,1.05)
     {\textbf{伪装策略。}Leray 藏起他的流体力学专长——担心德军发现他是流体力学专家后会强迫他为德国做军事研究（航空、弹道）。**他宣称自己只做"无用的拓扑学"。**这个谎言改变了一切。};
   \node[item, fill=goldpanel, draw=badgeSheaf!25] at (0,-0.25)
@@ -190,7 +192,7 @@
 }
 
 % --- 5. 谱序列 ---
-\newcommand{\spectralSeqSlide}{%
+\newcommand{\spectralslide}{%
 \begin{frame}
 \plainbar
 \sectiontitle{谱序列的诞生 (1946)}{逐页逼近——代数拓扑中最强大的计算工具}
@@ -214,10 +216,10 @@
 }
 
 % --- 6. 层论 ---
-\newcommand{\sheafSlide}{%
+\newcommand{\sheafslide}{%
 \begin{frame}
 \plainbar
-\sectiontitle{层论 (Faisceaux) 1946}{层的原始概念——现代几何的基本语言}
+\sectiontitle{层论 (Faisceaux) — 1946}{层的原始概念——现代几何的基本语言}
 \vspace{-0.4cm}
 \begin{center}
 \begin{tikzpicture}[
@@ -228,7 +230,7 @@
   \node[item, fill=bluepanel, draw=badgeSS!40] at (0,1.05)
     {\textbf{Leray 覆盖。}Leray 的原始层概念与连续映射 $f: X \to Y$ 相关——层是映射的局部截面的层 (faisceau de coupes locales)。Leray 用层来陈述他的谱序列定理。};
   \node[item, fill=graypanel, draw=badgeLegacy!25] at (0,-0.25)
-    {\textbf{后继发展。}Henri Cartan 和 Jean-Pierre Serre 在 1950 年代将 Leray 的层概念系统化并扩展到代数几何。Grothendieck 用层 (及拓扑斯) 作为代数几何的基本语言——这一切的起点都在 Leray 的铁丝网内。};
+    {\textbf{后继发展。}Henri Cartan 和 Jean-Pierre Serre 在 1950 年代将 Leray 的层概念系统化并扩展到代数几何。Grothendieck 用层（及拓扑斯）作为代数几何的基本语言——这一切的起点都在 Leray 的铁丝网内。};
   \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
     {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Leray 的层是种子——Cartan, Serre, Grothendieck 让这颗种子长成了现代几何的森林。}
   };
@@ -238,7 +240,7 @@
 }
 
 % --- 7. Leray 谱序列的应用 ---
-\newcommand{\applicationsSlide}{%
+\newcommand{\applicationsslide}{%
 \begin{frame}
 \plainbar
 \sectiontitle{Leray 谱序列的应用}{从代数拓扑到代数几何——一个无处不在的计算工具}
@@ -250,22 +252,22 @@
   \node[item, fill=bluepanel, draw=badgeSS!55] at (0,2.55)
     {\textbf{代数拓扑。}计算球面的同伦群——Serre 用 Leray 谱序列计算了球面的稳定同伦群，这是 Serre 获得 Fields 奖 (1954) 的关键工作。Leray–Hirsch 定理给出球面丛的上同调。};
   \node[item, fill=goldpanel, draw=badgeSheaf!40] at (0,1.05)
-    {\textbf{代数几何。}Grothendieck 的代数 de Rham 上同调、étale 上同调、(平展上同调的) Leray 谱序列。Weil 猜想的证明 (Deligne, 1974) 大量使用了 Leray 谱序列。};
+    {\textbf{代数几何。}Grothendieck 的代数 de Rham 上同调、étale 上同调。Weil 猜想的证明 (Deligne, 1974) 大量使用了 Leray 谱序列。Grothendieck 的六大运算之一 $Rf_*$ 的核心工具。};
   \node[item, fill=greenpanel, draw=badgePDE!25] at (0,-0.25)
     {\textbf{数学物理。}量子场论中的 BRST 上同调、几何量子化——所有使用谱序列的物理理论都在 Leray 的遗产上建造。弦理论中的镜对称也使用了谱序列方法。};
   \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
-    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 谱序列是每一位代数拓扑/代数几何研究生必须掌握的工具——它诞生于一座奥地利战俘营。}
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 谱序列是每位代数拓扑/代数几何研究生必须掌握的工具——它诞生于一座奥地利战俘营。}
   };
 \end{tikzpicture}
 \end{center}
 \end{frame}
 }
 
-% --- 8. 战后回归 ---
-\newcommand{\postwarSlide}{%
+% --- 8. 战后回归：法兰西公学院 ---
+\newcommand{\postwarslide}{%
 \begin{frame}
 \plainbar
-\sectiontitle{战后回归：从战俘营到法兰西公学院 (1945–1978)}{三十三年的教职——从巴黎大学到 Collège de France}
+\sectiontitle{战后回归：Collège de France (1945–1978)}{三十三年的教职——从战俘营到法兰西公学院}
 \vspace{-0.4cm}
 \begin{center}
 \begin{tikzpicture}[
@@ -285,8 +287,8 @@
 \end{frame}
 }
 
-% --- 9. 回到分析 ---
-\newcommand{\analysisSlide}{%
+% --- 9. 回到分析：剩余流与 Leray–Schauder ---
+\newcommand{\analysisslide}{%
 \begin{frame}
 \plainbar
 \sectiontitle{从拓扑回到分析：剩余流与 Leray–Schauder 度}{晚年回归——在非线性分析与复分析中的贡献}
@@ -310,17 +312,17 @@
 }
 
 % --- 10. 荣誉 ---
-\newcommand{\honorsSlide}{%
+\newcommand{\honorsslide}{%
 \begin{frame}
 \plainbar
-\sectiontitle{荣誉：Wolf 奖与 Lomonosov 金质奖章}{法国科学院院士 · 伦敦皇家学会外籍院士 · Feltrinelli 奖}
+\sectiontitle{荣誉：Wolf 奖与 Lomonosov 金质奖章}{法国科学院院士 · 皇家学会外籍院士 · Feltrinelli 奖 · 法兰西公学院终身教授}
 \vspace{-0.4cm}
 \begin{center}
 \begin{tikzpicture}[
   item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
 ]
   \node[item, fill=bluepanel, draw=badgeSS!55] at (0,2.9)
-    {\textbf{Wolf 数学奖 (1979)。}与 André Weil 共享——"表彰他在代数拓扑中的开创性工作：谱序列和层论。" Wolf 奖是菲尔兹奖之外的最高数学荣誉之一。};
+    {\textbf{Wolf 数学奖 (1979)。}与 André Weil 共享——表彰他在代数拓扑中的开创性工作：谱序列和层论。Wolf 奖是 Fields 奖之外的最高数学荣誉之一。};
   \node[item, fill=goldpanel, draw=badgeSheaf!45] at (0,1.55)
     {\textbf{Lomonosov 金质奖章 (1988)。}苏联/俄罗斯科学院颁发的最高荣誉——以 18 世纪俄国博学家 Lomonosov 命名。Leray 是少数获此殊荣的西方数学家。};
   \node[item, fill=graypanel, draw=badgeLegacy!35] at (0,0.35)
@@ -328,7 +330,7 @@
   \node[item, fill=greenpanel, draw=badgePDE!25] at (0,-0.85)
     {\textbf{Grand Prix des Sciences Mathématiques (1940)。}法国科学院数学大奖——正是在战俘营中的那年颁发的。Peccot 讲座 (1932)——法兰西公学为年轻数学家设立的荣誉讲座。};
   \node[draw=coveraccent!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.35) {
-    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他的工作在战后被世界认可——从战俘营的阴影到数学的最高荣誉。}
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他的工作在战后被世界认可——从战俘营的阴影到数学的最高荣誉殿堂。}
   };
 \end{tikzpicture}
 \end{center}
@@ -336,7 +338,7 @@
 }
 
 % --- 11. 遗产 ---
-\newcommand{\legacySlide}{%
+\newcommand{\legacyslide}{%
 \begin{frame}
 \plainbar
 \sectiontitle{遗产：那些以 Leray 命名的概念}{七个概念——从谱序列到 Leray–Schauder 度}
@@ -347,13 +349,13 @@
               font=\fontsize{6.8}{8.8}\selectfont, align=center}
 ]
   \node[leg, fill=bluepanel, draw=badgeSS!50, line width=0.7pt] (a) at (-5.4,1.3)
-    {{\fontsize{9}{11.5}\selectfont\bfseries\color{white} 谱序列与拓扑}\\[3pt]Leray 谱序列\\Leray–Hirsch 定理\\Leray cover};
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSS} 谱序列与拓扑}\\[3pt]Leray 谱序列\\Leray–Hirsch 定理\\Leray cover};
   \node[leg, fill=goldpanel, draw=badgeSheaf!50, line width=0.7pt] (b) at (-1.8,1.3)
-    {{\fontsize{9}{11.5}\selectfont\bfseries\color{coverdark} 层论}\\[3pt]Leray 层 (faisceau)\\层的粘合条件\\Leray 截面};
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSheaf} 层论}\\[3pt]Leray 层 (faisceau)\\层的粘合条件\\Leray 截面};
   \node[leg, fill=greenpanel, draw=badgePDE!50, line width=0.7pt] (c) at (1.8,1.3)
-    {{\fontsize{9}{11.5}\selectfont\bfseries\color{white} 分析与 PDE}\\[3pt]Leray–Schauder 度\\Leray 投影\\Navier–Stokes 弱解};
-  \node[leg, fill=graypanel, draw=badgeLegacy!50, line width=0.7pt] (d) at (5.4,1.3)
-    {{\fontsize{9}{11.5}\selectfont\bfseries\color{coverdark} 传承与荣誉}\\[3pt]Wolf 奖\\Lomonosov 奖章\\Collège de France};
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePDE} 分析与 PDE}\\[3pt]Leray–Schauder 度\\Leray 投影\\Navier–Stokes 弱解};
+  \node[leg, fill=silverpanel, draw=badgeLegacy!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy} 传承与荣誉}\\[3pt]Wolf 奖\\Lomonosov 奖章\\Collège de France};
   \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {
     {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他在铁丝网后面发明了代数拓扑最强大的工具。}\\[4pt]
     {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
@@ -367,7 +369,7 @@
 }
 
 % --- 12. 结束页 ---
-\newcommand{\closingSlide}{%
+\newcommand{\closingslide}{%
 \begin{frame}[plain]
 \deckbackground
 \begin{tikzpicture}[remember picture, overlay]
@@ -384,7 +386,7 @@
     at ([yshift=-2.0cm]current page.center)
     {让·勒雷\quad Jean Leray\quad 1906 — 1998};
   \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
-    at ([yshift=0.35cm]current page.south) {\faIcon{shield-alt}\enspace 谱序列的发明者·层论的共同发现者·纳粹战俘营中的数学创造者\enspace|\enspace OpenMathAI};
+    at ([yshift=0.35cm]current page.south) {\faIcon{shield-alt}\enspace 谱序列·层论·Navier–Stokes·战俘营中的数学创造\enspace|\enspace OpenMathAI};
 \end{tikzpicture}
 \end{frame}
 }
@@ -394,13 +396,13 @@
 \titleslide
 \hookslide
 \earlyslide
-\powSlide
-\spectralSeqSlide
-\sheafSlide
-\applicationsSlide
-\postwarSlide
-\analysisSlide
-\honorsSlide
-\legacySlide
-\closingSlide
+\powslide
+\spectralslide
+\sheafslide
+\applicationsslide
+\postwarslide
+\analysisslide
+\honorsslide
+\legacyslide
+\closingslide
 \end{document}
