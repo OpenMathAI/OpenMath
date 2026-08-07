@@ -234,10 +234,6 @@ def main():
   \item[\textcolor{copssclr}{$\blacklozenge$}] \textbf{统计领域荣誉交叉}：R.A. Fisher Lectureship（9 人）；Guy 奖章（6 人）；MacArthur 天才奖（Bickel 1984·Barber 2024）。
 \end{itemize}
 }
-\vspace{0.20cm}
-\begin{center}
-{\small\color{mutedgray}详细交叉名录见 \texttt{cross\_ref/math\_awards\_allinone.pdf}}
-\end{center}
 \end{frame}
 """)
     out.append(r"\end{document}" + "\n")
