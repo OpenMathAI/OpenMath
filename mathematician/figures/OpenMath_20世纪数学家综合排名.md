@@ -52,7 +52,7 @@
 | 28 | 35 | **Heinz Hopf** | Hopf 纤维化与不变量的发现者、Poincaré–Hopf 定理的证明者、ETH 拓扑学派的缔造者 |
 | 29 | 31 | **陈省身** | 整体微分几何之父、Chern 类与Chern–Simons理论的创立者、南开数学研究所与MSRI的创始人 |
 | 30 | 86 | **Pierre Deligne** | Weil 猜想的证明者、Grothendieck 的火炬手、Fields+Wolf+Abel 三冠王 |
-| 31 | 100 | **Ernst Witt** | 二次型、Witt 环、代数与数论 |
+| 31 | 100 | **Ernst Witt** | Witt 环与Witt向量的创造者、PBW 定理的 W、二次型理论的代数大师 |
 | 32 | 82 | **R.A. Fisher** | 现代统计学的数学基础 |
 | 33 | 85 | **Claude Shannon** | 信息论之父，改变人类通信与计算的数学思想 |
 | 34 | 12 | **Igor Shafarevich** | 代数数论与代数几何的苏联支柱 |
