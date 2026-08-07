@@ -57,21 +57,21 @@
 | 33 | 85 | **Claude Shannon** | 信息论之父、通信数学的创立者、信息时代的理论奠基人 |
 | 34 | 12 | **Igor Shafarevich** | 代数数论与代数几何的苏联支柱、Shafarevich群的创立者、莫斯科学派的守护者 |
 | 35 | 13 | **Vladimir Arnold** | KAM理论与辛拓扑的创立者之一、动力系统与奇点理论的革命者、Arnold扩散的发现者 |
-| 36 | 80 | **David Mumford** | 代数几何、模式理论 |
-| 37 | 78 | **Jean Leray** | 谱序列、层论的发现者 |
-| 38 | 49 | **Samuel Eilenberg** | 范畴论与代数拓扑的共同创始人 |
-| 39 | 无 | **Saunders Mac Lane** | 范畴论的共同创始人、同调代数的系统化 |
-| 40 | 44 | **Atle Selberg** | 解析数论、Selberg 迹公式 |
-| 41 | 19 | **Carl Ludwig Siegel** | 数论、模形式、天体力学 |
-| 42 | 43 | **Lars Ahlfors** | 复分析，首届 Fields 奖得主 |
-| 43 | 57 | **Rolf Nevanlinna** | 值分布理论（Nevanlinna 理论） |
-| 44 | 20 | **Sergei Sobolev** | Sobolev 空间，现代 PDE 的语法创造者 |
-| 45 | 67 | **Lars Hörmander** | 线性 PDE、微分算子理论 |
-| 46 | 52 | **Stephen Smale** | 拓扑（Poincaré 猜想高维情形）、动力系统 |
-| 47 | 92 | **Mikhail Gromov** | 几何群论、辛拓扑、度量几何的革命者 |
-| 48 | 76 | **Harish-Chandra** | 半单李群的表示论 |
-| 49 | 无 | **Jacques-Louis Lions** | PDE、变分法、控制理论 |
-| 50 | 无 | **Vladimir Voevodsky** | 代数几何中的同伦论方法、Fields 奖 |
+| 36 | 80 | **David Mumford** | Fields奖得主、几何不变量理论与模空间的创立者、代数几何与计算机视觉的跨界先驱 |
+| 37 | 78 | **Jean Leray** | 谱序列与层论的发现者、Leray–Schauder不动点理论、偏微分拓扑的先驱 |
+| 38 | 49 | **Samuel Eilenberg** | 范畴论与代数拓扑的共同创始人、Eilenberg–MacLane空间的创立者、同调代数的奠基人 |
+| 39 | 无 | **Saunders Mac Lane** | 范畴论的共同创始人、同调代数系统化的缔造者、《范畴论工作者》的作者 |
+| 40 | 44 | **Atle Selberg** | Selberg迹公式的创立者、解析数论的巨人、Fields奖与Abel奖得主 |
+| 41 | 19 | **Carl Ludwig Siegel** | 数论与模形式的巨人、天体力学大师、20世纪最博学的数学家之一 |
+| 42 | 43 | **Lars Ahlfors** | 复分析大师、首届Fields奖得主、Ahlfors–Bers理论的创立者 |
+| 43 | 57 | **Rolf Nevanlinna** | Nevanlinna值分布理论的创立者、复分析芬兰学派的领袖、ICMI主席 |
+| 44 | 20 | **Sergei Sobolev** | Sobolev空间的创立者、现代PDE理论的语法奠基人、分布理论的先驱 |
+| 45 | 67 | **Lars Hörmander** | 线性偏微分算子理论的集大成者、微局部分析的创立者、Fields奖得主 |
+| 46 | 52 | **Stephen Smale** | 高维Poincaré猜想的证明者、动力系统与经济学数学的先驱、Fields奖得主 |
+| 47 | 92 | **Mikhail Gromov** | 几何群论的创立者、辛拓扑与度量几何的革命者、Wolf奖与Abel奖得主 |
+| 48 | 76 | **Harish-Chandra** | 半单李群表示论的创立者、Harish-Chandra模与Plancherel公式、Langlands纲领的先驱 |
+| 49 | 无 | **Jacques-Louis Lions** | 变分法与偏微分方程的大师、分布控制理论的创立者、法国应用数学的奠基人 |
+| 50 | 无 | **Vladimir Voevodsky** | A1同伦论的创立者、代数簇motivic上同调的构造者、Fields奖得主 |
 
 ---
 
