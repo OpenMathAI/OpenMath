@@ -53,10 +53,10 @@
 | 29 | 31 | **陈省身** | 整体微分几何之父、Chern 类与Chern–Simons理论的创立者、南开数学研究所与MSRI的创始人 |
 | 30 | 86 | **Pierre Deligne** | Weil 猜想的证明者、Grothendieck 的火炬手、Fields+Wolf+Abel 三冠王 |
 | 31 | 100 | **Ernst Witt** | Witt 环与Witt向量的创造者、PBW 定理的 W、二次型理论的代数大师 |
-| 32 | 82 | **R.A. Fisher** | 现代统计学的数学基础 |
-| 33 | 85 | **Claude Shannon** | 信息论之父，改变人类通信与计算的数学思想 |
-| 34 | 12 | **Igor Shafarevich** | 代数数论与代数几何的苏联支柱 |
-| 35 | 13 | **Vladimir Arnold** | 动力系统、KAM 理论、辛拓扑 |
+| 32 | 82 | **R.A. Fisher** | 现代统计学的数学奠基人、极大似然估计与方差分析的创立者、实验设计之父 |
+| 33 | 85 | **Claude Shannon** | 信息论之父、通信数学的创立者、信息时代的理论奠基人 |
+| 34 | 12 | **Igor Shafarevich** | 代数数论与代数几何的苏联支柱、Shafarevich群的创立者、莫斯科学派的守护者 |
+| 35 | 13 | **Vladimir Arnold** | KAM理论与辛拓扑的创立者之一、动力系统与奇点理论的革命者、Arnold扩散的发现者 |
 | 36 | 80 | **David Mumford** | 代数几何、模式理论 |
 | 37 | 78 | **Jean Leray** | 谱序列、层论的发现者 |
 | 38 | 49 | **Samuel Eilenberg** | 范畴论与代数拓扑的共同创始人 |
