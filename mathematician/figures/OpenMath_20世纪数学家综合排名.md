@@ -43,7 +43,7 @@
 | 19 | 50 | **Michael Atiyah** | 指标定理、K-理论，几何与分析的深度统一 |
 | 20 | 无 | **William Thurston** | 低维拓扑革命、几何化猜想 |
 | 21 | 42 | **G.H. Hardy** | 解析数论与分析学派领袖、Ramanujan 的伯乐、英国数学的改革者 |
-| 22 | 56 | **J.E. Littlewood** | 与 Hardy 并称的分析与数论大师 |
+| 22 | 56 | **J.E. Littlewood** | π(x) 无穷振荡·Littlewood–Paley 调和分析·与 Hardy 并称的解析数论大师 |
 | 23 | 74 | **L.E.J. Brouwer** | 拓扑学（不动点定理）与直觉主义 |
 | 24 | 55 | **Oscar Zariski** | 代数几何的代数化先驱 |
 | 25 | 无 | **Marston Morse** | Morse 理论，微分拓扑的基本工具 |
