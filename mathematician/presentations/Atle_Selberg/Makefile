@@ -29,8 +29,8 @@ all: pdf
 pdf: $(MAIN).pdf
 
 $(MAIN).pdf: $(MAIN).tex
-	$(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode -f $(MAIN).tex
-	$(LATEXMK) -c $(MAIN).tex
+	-$(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode -f $(MAIN).tex
+	-$(LATEXMK) -c $(MAIN).tex
 	rm -f $(MAIN).{nav,snm,xdv}
 
 images: $(IMAGES_DIR)/.done
