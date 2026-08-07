@@ -44,7 +44,7 @@
 | 20 | 无 | **William Thurston** | 低维拓扑革命、几何化猜想 |
 | 21 | 42 | **G.H. Hardy** | 解析数论与分析学派领袖、Ramanujan 的伯乐、英国数学的改革者 |
 | 22 | 56 | **J.E. Littlewood** | π(x) 无穷振荡·Littlewood–Paley 调和分析·与 Hardy 并称的解析数论大师 |
-| 23 | 74 | **L.E.J. Brouwer** | 拓扑学（不动点定理）与直觉主义 |
+| 23 | 74 | **L.E.J. Brouwer** | 现代拓扑学的奠基人之一、直觉主义革命的发起者、Brouwer–Hilbert 论战 |
 | 24 | 55 | **Oscar Zariski** | 代数几何的代数化先驱 |
 | 25 | 无 | **Marston Morse** | Morse 理论，微分拓扑的基本工具 |
 | 26 | 23 | **Hassler Whitney** | 微分拓扑的开山鼻祖、Whitney 嵌入定理 |

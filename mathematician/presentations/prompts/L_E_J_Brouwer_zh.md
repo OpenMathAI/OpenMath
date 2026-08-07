@@ -7,7 +7,7 @@
 ## 背景信息
 
 - **目标数学家**: Luitzen Egbertus Jan Brouwer (1881–1966)
-- **气质关键词**: **拓扑学奠基人、直觉主义革命者、排除中律的拒绝者、与 Hilbert 的史诗对决、浪漫的悲观主义者、被车撞死的隐士**
+- **气质关键词**: **拓扑学奠基人、直觉主义革命者、排中律的拒绝者、与 Hilbert 的史诗对决、浪漫的悲观主义者、被车撞死的隐士**
 - **Wikipedia 页面**: ✅ 已下载至 `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/L._E._J._Brouwer/`
 
 ---
@@ -31,7 +31,7 @@
 - **重要盟友**: Hermann Weyl（Hilbert 的明星学生，1920年倒向 Brouwer 阵营）
 
 ### 关键时间线:
-- 1881: 2月27日生于 Overschie，荷兰新教家庭
+- 1881: 2月27日生于荷兰 Overschie，新教家庭
 - 1904: 与 Korteweg 的首次会面——Korteweg 将成为导师
 - 1905: 24岁出版《生命、艺术与神秘主义》——被 Martin Davis 描述为"沉浸于浪漫的悲观主义"
 - 1907: 博士论文《论数学基础》——Korteweg 拒绝接受第二章，"充满了悲观主义和神秘主义态度……这不是数学"
