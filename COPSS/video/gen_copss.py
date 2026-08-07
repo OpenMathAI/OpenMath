@@ -666,7 +666,7 @@ def make_cover_slide(people, ep_dir, title, sub, note, badge,
   \\node[anchor=center, font=\\fontsize{17}{22}\\selectfont\\bfseries, text=coverdark]
     at ([yshift=2.60cm]current page.center) {%s};
   \\node[anchor=center, font=\\fontsize{12}{15}\\selectfont, text=coverprimary!85!black]
-    at ([yshift=1.70cm]current page.center) {%s};
+    at ([yshift=1.80cm]current page.center) {%s};
   \\draw[coverprimary, line width=1.4pt] ([yshift=0.75cm, xshift=-5.2cm]current page.center)
     -- ([yshift=0.75cm, xshift=5.2cm]current page.center);
   \\node[anchor=center, font=\\fontsize{9.5}{12.5}\\selectfont\\bfseries, text=coveramber!58!black]
