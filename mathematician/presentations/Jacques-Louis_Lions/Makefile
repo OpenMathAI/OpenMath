@@ -8,8 +8,8 @@
 #   make clean      remove intermediate files
 #   make distclean  remove generated PDF/images/video
 
-MAIN        = Jean_Leray_zh
-VIDEO_NAME  = Jean_Leray_zh
+MAIN        = Jacques-Louis_Lions_zh
+VIDEO_NAME  = Jacques-Louis_Lions_zh
 OUTPUT_DIR  = output
 IMAGES_DIR  = $(OUTPUT_DIR)/images
 SLIDES_TXT  = $(OUTPUT_DIR)/slides.txt
