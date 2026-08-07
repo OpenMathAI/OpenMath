@@ -544,6 +544,9 @@ def synthesis_slide(ep):
 def make_episode_tex(ep_key, ep_dir, main, title, subtitle, rng, note):
     people = PEOPLE[ep_key]
     out = [HEADER.replace("{EP}", ep_key[-1]).replace("{TITLE}", title).replace("{RANGE}", title)]
+    # cover (portrait grid, same style as allinone cover)
+    out.append(make_cover_slide(people, ep_dir, *EP_COVERS[ep_key],
+                                foot="%s · %d 位得主" % (rng, len(people))))
     out.append("\n% ========== SLIDES ==========\n")
     # person slides
     for p in people:
@@ -554,9 +557,7 @@ def make_episode_tex(ep_key, ep_dir, main, title, subtitle, rng, note):
     names = [cmd_name(p[0]) for p in people]
     body = "\n".join("\\%sslide" % n for n in names)
     out.append("\n% ========== MAIN ==========\n\\begin{document}\n")
-    out.append("\\titleslide{%s}{%s}{%s}{%s}{%s}{%s}\n" % (
-        "第 %s 集" % ep_key[-1], title, subtitle, rng,
-        "%s · %d 位得主" % (note, len(people)), NAMES_BAR[ep_key]))
+    out.append("\\coverslide\n")
     out.append(body + "\n")
     out.append("\\synthesisslide\n")
     out.append("\\end{document}\n")
@@ -610,19 +611,36 @@ CHAPTER_SLIDE = r"""
 """
 
 
-def make_coverslide(ep_dir):
-    """Cover slide: title + 46 portrait thumbnails grid (16x3)."""
-    people = []
-    for num, prefix, title, subtitle, rng, ep_key in CHAPTERS:
-        people.extend(PEOPLE[ep_key])
-    N_COLS, N_ROWS = 16, 3
-    W, H, GAP = 0.60, 0.70, 0.05
+def grid_dims(n):
+    """(cols, rows, W, H, GAP) for the portrait grid on a cover."""
+    if n <= 6:
+        return 3, 2, 1.50, 1.80, 0.14
+    if n <= 10:
+        return 5, 2, 1.35, 1.65, 0.14
+    if n <= 15:
+        return 8, 2, 1.10, 1.35, 0.12
+    return 16, 3, 0.60, 0.70, 0.05
+
+
+def make_cover_slide(people, ep_dir, title, sub, note, badge,
+                     cover_name="coverslide", foot="1981–2026"):
+    """Parameterized cover: title block + portrait grid + cross-award badge line."""
+    N_COLS, N_ROWS, W, H, GAP = grid_dims(len(people))
     TOTAL_W = (N_COLS - 1) * (W + GAP)
     TOTAL_H = (N_ROWS - 1) * (H + GAP)
     START_X = -TOTAL_W / 2
     START_Y = TOTAL_H / 2
+    # Layout: small sets (≤10) place note+badge BELOW grid; large set (46) keeps them around grid
+    if len(people) <= 10:
+        center_y = -0.30
+        note_y = center_y - TOTAL_H / 2 - 0.85   # note line below grid (+40px shift)
+        badge_y = note_y - 0.55                 # badge line below note
+    else:
+        center_y = -1.50
+        note_y = 0.10                          # note line above grid
+        badge_y = center_y - TOTAL_H / 2 - 0.65   # badge line below grid
     grid = []
-    grid.append(r'  \node[anchor=center] at ([yshift=-1.50cm]current page.center) {')
+    grid.append('  \\node[anchor=center] at ([yshift=%.2fcm]current page.center) {' % center_y)
     grid.append(r'    \begin{tikzpicture}[scale=1]')
     count = 0
     for row in range(N_ROWS):
@@ -640,29 +658,52 @@ def make_coverslide(ep_dir):
     grid.append(r'    \end{tikzpicture}')
     grid.append(r'  };')
     grid_tikz = '\n'.join(grid)
-    return (r'''\newcommand{\coverslide}{%
-\begin{frame}[plain]
-\begin{tikzpicture}[remember picture, overlay]
-  \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
-  \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
-  \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
-  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
-  \node[anchor=center, font=\fontsize{20}{25}\selectfont\bfseries, text=coverdark]
-    at ([yshift=2.60cm]current page.center) {COPSS 会长奖：统计学界的最高礼赞（1981–2026）};
-  \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
-    at ([yshift=1.45cm]current page.center) {COPSS Presidents' Award（考普斯会长奖）· 全 46 位得主};
-  \draw[coverprimary, line width=1.4pt] ([yshift=0.75cm, xshift=-5.2cm]current page.center)
+    return ('''\\newcommand{\\%s}{%%\n\\begin{frame}[plain]\n\\begin{tikzpicture}[remember picture, overlay]
+  \\fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
+  \\fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \\fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
+  \\fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
+  \\node[anchor=center, font=\\fontsize{20}{25}\\selectfont\\bfseries, text=coverdark]
+    at ([yshift=2.60cm]current page.center) {%s};
+  \\node[anchor=center, font=\\fontsize{12}{15}\\selectfont, text=coverprimary!85!black]
+    at ([yshift=1.55cm]current page.center) {%s};
+  \\draw[coverprimary, line width=1.4pt] ([yshift=0.75cm, xshift=-5.2cm]current page.center)
     -- ([yshift=0.75cm, xshift=5.2cm]current page.center);
-  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\bfseries, text=coveramber!58!black]
-    at ([yshift=0.10cm]current page.center) {与菲尔兹·沃尔夫·阿贝尔·陈省身奖无交叉；Donoho 另获高斯奖 2018 与邵逸夫奖 2013};
-''' + grid_tikz + r'''
-  \node[anchor=center, font=\fontsize{7.8}{9.6}\selectfont, text=coverprimary!78!black]
-    at ([yshift=-2.90cm]current page.center) {兼录高斯奖·邵逸夫奖·MacArthur·R.A. Fisher·Guy 奖章交叉得主};
-  \node[anchor=south, font=\scriptsize, text=coverdark!40]
-    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace COPSS Presidents' Award\enspace|\enspace 1981–2026\enspace|\enspace 合集};
-\end{tikzpicture}
-\end{frame}
-}''')
+  \\node[anchor=center, font=\\fontsize{9.5}{12.5}\\selectfont\\bfseries, text=coveramber!58!black]
+    at ([yshift=%.2fcm]current page.center) {%s};
+''' % (cover_name, title, sub, note_y, note)) + grid_tikz + ('''
+  \\node[anchor=center, font=\\fontsize{7.8}{9.6}\\selectfont, text=coverprimary!78!black]
+    at ([yshift=%.2fcm]current page.center) {%s};
+  \\node[anchor=south, font=\\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\\faIcon{medal}\\enspace COPSS Presidents\\' Award\\enspace|\\enspace %s};
+\\end{tikzpicture}
+\\end{frame}
+}''' % (badge_y, badge, foot))
+
+
+# 各集封面文案（与合集封面同款：标题 + 网格 + 交叉荣誉行）
+EP_COVERS = {
+    "ep01": ("COPSS 会长奖 · 奠基年代（1981–1990）",
+             "COPSS Presidents' Award（考普斯会长奖）· 第 1 集 · 10 位得主",
+             "统计理论大厦的奠基 · 从 Bickel 到 McCullagh",
+             "主要荣誉：R.A. Fisher ×6 · Guy ×2 · NAS ×1 · MacArthur ×1"),
+    "ep02": ("COPSS 会长奖 · 贝叶斯复兴与计算革命（1991–2000）",
+             "COPSS Presidents' Award（考普斯会长奖）· 第 2 集 · 10 位得主",
+             "MCMC、小波与 LASSO · 从 Silverman 到 Fan",
+             "主要荣誉：Guy ×3 · 高斯/邵逸夫 ×1 · Fisher ×2 · IMO ×1"),
+    "ep03": ("COPSS 会长奖 · 生物统计爆发与华人崛起（2001–2010）",
+             "COPSS Presidents' Award（考普斯会长奖）· 第 3 集 · 10 位得主",
+             "基因组时代与统计计算 · 从 Meng 到 Dunson",
+             "主要荣誉：晨兴数学金奖 ×1"),
+    "ep04": ("COPSS 会长奖 · 高维统计与机器学习融合（2011–2020）",
+             "COPSS Presidents' Award（考普斯会长奖）· 第 4 集 · 10 位得主",
+             "高维推断与数据科学 · 从 Chatterjee 到 Barber",
+             "主要荣誉：Spiegelman ×3 · Sloan/Guggenheim ×2 · MacArthur ×1"),
+    "ep05": ("COPSS 会长奖 · 数据科学、AI 与贝叶斯革新（2021–2026）",
+             "COPSS Presidents' Award（考普斯会长奖）· 第 5 集 · 6 位得主",
+             "统计学站上 AI 前沿 · 从 Leek 到 Su",
+             "主要荣誉：Spiegelman ×2"),
+}
 
 
 def make_allinone_tex():
@@ -670,7 +711,16 @@ def make_allinone_tex():
     main = "copss_allinone_zh"
     out = [HEADER.replace("{EP}", "allinone").replace("{TITLE}", "合集").replace("{RANGE}", "1981–2026")]
     out.append(CHAPTER_SLIDE)
-    out.append(make_coverslide(ep_dir))
+    all_people = []
+    for num, prefix, title, subtitle, rng, ep_key in CHAPTERS:
+        all_people.extend(PEOPLE[ep_key])
+    out.append(make_cover_slide(
+        all_people, ep_dir,
+        "COPSS 会长奖：统计学界的最高礼赞（1981–2026）",
+        "COPSS Presidents' Award（考普斯会长奖）· 全 46 位得主",
+        "与菲尔兹·沃尔夫·阿贝尔·陈省身奖无交叉；Donoho 另获高斯奖 2018 与邵逸夫奖 2013",
+        "兼录高斯奖·邵逸夫奖·MacArthur·R.A. Fisher·Guy 奖章交叉得主",
+        foot="1981–2026 · 全 46 位得主"))
     out.append("\n% ========== SLIDES ==========\n")
     # per-chapter person slides with unique prefixes
     for num, prefix, title, subtitle, rng, ep_key in CHAPTERS:
