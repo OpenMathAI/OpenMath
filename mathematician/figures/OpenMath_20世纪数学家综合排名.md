@@ -94,7 +94,7 @@
 | 53 | 36 | **小平邦彦** (Kodaira Kunihiko) | 复流形与代数几何的日本巨匠，Kodaira 消灭定理，Fields 奖 | 🔲 | 🔲 |
 | 54 | 47 | **Solomon Lefschetz** (莱夫谢茨) | 拓扑学方法引入代数几何，普林斯顿数学王朝的缔造者 | 🔲 | 🔲 |
 | 55 | 25 | **René Thom** (托姆) | 配边理论与突变论的创立者，Fields 奖 | 🔲 | 🔲 |
-| 56 | 9 | **Norbert Wiener** (维纳) | 控制论之父，Wiener 过程——数学向工程与生物扩散的枢纽 | 🔲 | 🔲 |
+| 56 | 9 | **Norbert Wiener** (维纳) | 控制论之父，Wiener 过程——数学向工程与生物扩散的枢纽 | ✅ | ✅ |
 | 57 | 73 | **Srinivasa Ramanujan** (拉马努金) | 印度天才，mock theta 函数，直觉穿越时代的数学家 | ✅ | ✅ |
 | 58 | 30 | **Erich Hecke** (赫克) | Hecke 算子，模形式理论的奠基人，Langlands 纲领的数学源头 | 🔲 | 🔲 |
 | 59 | 32 | **Ernst Zermelo** (策梅罗) | ZFC 公理体系——现代数学大厦最深层的地基之一 | 🔲 | 🔲 |
