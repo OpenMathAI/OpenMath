@@ -9,9 +9,17 @@
 
 - **目标数学家**: Srinivasa Ramanujan (1887–1920)
 - **气质关键词**: **印度天才、直觉穿越时代的数学家、mock theta 函数、1729、燃烧的32年、上帝以无限级数思考**
-- **Wikipedia 页面**: ⚠️ **尚未下载。** 第一步需要运行下载脚本：
+- **Wikipedia 页面**: ✅ 已下载并完成 Review
   - 页面路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Srinivasa_Ramanujan/`
   - Wikipedia 英文条目: `Srinivasa Ramanujan`
+  - **Review 状态**: ✅ 第1轮完成 — 肖像+国籍+格式检查；第2轮完成 — 逐页 Wikipedia 交叉核查
+- **Beamer 文件**: `mathematician/presentations/Srinivasa_Ramanujan/Srinivasa_Ramanujan_zh.tex` (517行, 17页)
+  - 编译: `make distclean && make` — 272KB PDF, 零警告
+- **Review 发现的关键修正**:
+  - P0: 添加肖像标注 `S. Ramanujan, c.1913`
+  - P0: Carr's Synopsis 年龄 15→16（Wikipedia: "in 1903, when he was 16"）
+  - P0: Hook 页加入 Hardy 最高评价 "a mathematician of the highest quality, a man of altogether exceptional originality and power"
+  - 措辞: "耗尽两位寄住大学生的数学知识" → "已无法再教他数学"
 - **参考模板**: `hardy/`, `riemann/`, `grothendieck/` 的完整源码
 - **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
 
@@ -55,7 +63,7 @@
 
 - 1887: 12 月 22 日生于印度南部泰米尔纳德邦的 Erode，家境贫寒的婆罗门家庭
 - 1897–1903: 在 Kumbakonam 的 Town Higher Secondary School 展露惊人数学天赋 —— 12 岁独立推导出三角学公式
-- 1903: 借到 G. S. Carr 的 *A Synopsis of Elementary Results in Pure and Applied Mathematics*（两卷本，含约 5000 条定理，无证明，仅为公式列表）—— 这本书成为 Ramanujan 的数学启蒙，并深远影响了他独特的"跳跃式"证明风格
+- 1903: 16 岁时，借到 G. S. Carr 的 *A Synopsis of Elementary Results in Pure and Applied Mathematics*（两卷本，含约 5000 条定理，无证明，仅为公式列表）—— 这本书成为 Ramanujan 的数学启蒙，并深远影响了他独特的"跳跃式"证明风格
 - 1904: 获得数学奖学金进入 Government Arts College, Kumbakonam —— 但因沉迷数学、其他科目不及格而失去奖学金，最终退学
 - 1906–1912: 贫困与孤独的自学岁月 —— 在马德拉斯一带靠零工为生，在石板上演算数学，极度贫困，多次患病
 - 1912: 在马德拉斯港务局做三等职员（月薪 30 卢比），上司 Narayana Iyer 是印度数学会成员，发现了他的天赋
