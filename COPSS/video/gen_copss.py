@@ -520,11 +520,65 @@ CHAPTER_SLIDE = r"""
 """
 
 
+def make_coverslide(ep_dir):
+    """Cover slide: title + 46 portrait thumbnails grid (16x3)."""
+    people = []
+    for num, prefix, title, subtitle, rng, ep_key in CHAPTERS:
+        people.extend(PEOPLE[ep_key])
+    N_COLS, N_ROWS = 16, 3
+    W, H, GAP = 0.60, 0.70, 0.05
+    TOTAL_W = (N_COLS - 1) * (W + GAP)
+    TOTAL_H = (N_ROWS - 1) * (H + GAP)
+    START_X = -TOTAL_W / 2
+    START_Y = TOTAL_H / 2
+    grid = []
+    grid.append(r'  \node[anchor=center] at ([yshift=-1.50cm]current page.center) {')
+    grid.append(r'    \begin{tikzpicture}[scale=1]')
+    count = 0
+    for row in range(N_ROWS):
+        for col in range(N_COLS):
+            if count >= len(people):
+                break
+            p = people[count]
+            img = resolve_img(p, ep_dir)
+            x = START_X + col * (W + GAP)
+            y = START_Y - row * (H + GAP)
+            grid.append('      \\node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (%.2f,%.2f) {' % (x, y))
+            grid.append('        \\includegraphics[width=%scm,height=%scm,keepaspectratio]{%s}' % (W, H, img))
+            grid.append('      };')
+            count += 1
+    grid.append(r'    \end{tikzpicture}')
+    grid.append(r'  };')
+    grid_tikz = '\n'.join(grid)
+    return (r'''\newcommand{\coverslide}{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
+  \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
+  \node[anchor=center, font=\fontsize{24}{30}\selectfont\bfseries, text=coverdark]
+    at ([yshift=2.60cm]current page.center) {COPSS 会长奖 · 全部得主};
+  \node[anchor=center, font=\fontsize{12.5}{16}\selectfont, text=coverprimary!85!black]
+    at ([yshift=1.45cm]current page.center) {COPSS Presidents' Award · 统计学界的最高荣誉 · 全 46 位得主合集};
+  \draw[coverprimary, line width=1.4pt] ([yshift=0.75cm, xshift=-5.2cm]current page.center)
+    -- ([yshift=0.75cm, xshift=5.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{10.5}{14}\selectfont\bfseries, text=coveramber!58!black]
+    at ([yshift=0.05cm]current page.center) {1981–2026 · 从 Bickel 到 Su · 46 位统计学家};
+''' + grid_tikz + r'''
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace COPSS Presidents' Award\enspace|\enspace 1981–2026\enspace|\enspace 合集};
+\end{tikzpicture}
+\end{frame}
+}''')
+
+
 def make_allinone_tex():
     ep_dir = "episode-allinone"
     main = "copss_allinone_zh"
     out = [HEADER.replace("{EP}", "allinone").replace("{TITLE}", "合集").replace("{RANGE}", "1981–2026")]
     out.append(CHAPTER_SLIDE)
+    out.append(make_coverslide(ep_dir))
     out.append("\n% ========== SLIDES ==========\n")
     # per-chapter person slides with unique prefixes
     for num, prefix, title, subtitle, rng, ep_key in CHAPTERS:
@@ -532,8 +586,7 @@ def make_allinone_tex():
             out.append(person_slide(p, prefix=prefix, ep_dir=ep_dir))
     # main: cover + chapter dividers + person slides
     out.append("\n% ========== MAIN ==========\n\\begin{document}\n")
-    out.append("\\titleslide{合集}{COPSS 会长奖 · 全部得主}{46 位统计学家 · 1981–2026}{1981 – 2026}"
-               "{从 Bickel 到 Su，统计学四十五年}{46 位得主 · 9 位华人 · 6 位女性}\n")
+    out.append("\\coverslide\n")
     for num, prefix, title, subtitle, rng, ep_key in CHAPTERS:
         out.append("\\chapterslide{%s}{%s}{%s}{%s}\n" % (num, title, subtitle, rng))
         body = "\n".join("\\%s%sslide" % (prefix, cmd_name(p[0])) for p in PEOPLE[ep_key])
