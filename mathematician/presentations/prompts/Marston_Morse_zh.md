@@ -106,7 +106,7 @@ Morse 以好斗和固执著称。他与导师 Birkhoff 长期竞争——两人�
 
 ### 1. 封面 — 《莫尔斯：临界点的诗人》
 - 大标题：马斯顿·莫尔斯
-- 副标题：Marston Morse · 1892 — 1986
+- 副标题：Marston Morse · 1892 — 1977
 - 标签：Morse 理论 · 变分法 · 微分拓扑 · Thue–Morse 序列
 - 引用：Oppenheimer: "almost a statesman of mathematics."
 - 底部：Bôcher 奖 1933 · 国家科学奖章 1964 · IAS Princeton

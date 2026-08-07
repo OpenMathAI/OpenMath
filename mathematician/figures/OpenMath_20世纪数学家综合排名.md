@@ -46,7 +46,7 @@
 | 22 | 56 | **J.E. Littlewood** | π(x) 无穷振荡·Littlewood–Paley 调和分析·与 Hardy 并称的解析数论大师 |
 | 23 | 74 | **L.E.J. Brouwer** | 现代拓扑学的奠基人之一、直觉主义革命的发起者、Brouwer–Hilbert 论战 |
 | 24 | 55 | **Oscar Zariski** | Zariski 拓扑的创立者、代数几何的代数化先驱、意大利学派的超越者 |
-| 25 | 无 | **Marston Morse** | Morse 理论，微分拓扑的基本工具 |
+| 25 | 无 | **Marston Morse** | Morse 理论的创立者、临界点与拓扑的诗人、微分拓扑的建筑师 |
 | 26 | 23 | **Hassler Whitney** | 微分拓扑的开山鼻祖、Whitney 嵌入定理 |
 | 27 | 38 | **Claude Chevalley** | 代数群、李型有限单群的构造 |
 | 28 | 35 | **Heinz Hopf** | 代数拓扑（Hopf 不变量、Hopf 纤维化） |
