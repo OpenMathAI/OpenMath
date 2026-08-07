@@ -6,6 +6,7 @@ Data source: ../copss_winners.md (46 laureates, 1981-2026).
 Run from COPSS/video/:  python3 gen_copss.py
 """
 import os
+import unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -13,35 +14,35 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # name_en | name_zh(subtitle) | year | life | country | inst | tag | contrib | img | credit/initials
 PEOPLE = {
     "ep01": [
-        ("Peter J. Bickel", "彼得·比克尔 \\enspace·\\enspace 首位 COPSS 得主", 1981, "1940–", "美国", "UC Berkeley",
-         "非参数与半参数统计", "经验过程理论、自适应估计、半参数效率界。他以严格的数学为统计推断奠定现代基础。",
+        ("Peter J. Bickel", "彼得·比克尔 \\enspace·\\enspace 首位 COPSS 得主", 1981, "1940–", "美国（生于罗马尼亚）", "UC Berkeley",
+         "非参数与半参数统计", "经验过程理论、自适应估计、半参数效率界。他以严格的数学为统计推断奠定现代基础，其学生包括范剑青、吴建福等。",
          "images/bickel.jpg", "Wikipedia"),
-        ("Stephen Fienberg", "斯蒂芬·费恩伯格", 1982, "1942–2016", "美国", "Carnegie Mellon University",
-         "列联表与社会统计", "列联表分析、统计与法律、数据隐私。他推动统计方法进入司法与公共政策领域。",
+        ("Stephen Fienberg", "斯蒂芬·费恩伯格", 1982, "1942–2016", "美国（生于加拿大）", "Carnegie Mellon University",
+         "列联表与社会统计", "对数线性模型、列联表分析、统计与法律、数据隐私。他推动统计方法进入司法与公共政策领域。",
          "none", "S.F."),
         ("Tze Leung Lai", "黎子良 \\enspace·\\enspace 首位华人得主", 1983, "1945–2023", "美国（生于香港）", "Stanford University",
-         "序贯分析与随机逼近", "序贯分析、随机逼近渐近理论、变化点问题。他在自适应试验设计上影响深远。",
+         "序贯分析与随机逼近", "序贯分析、随机逼近渐近理论、变化点问题。他在自适应试验设计与金融统计上影响深远。",
          "none", "T.L.L."),
-        ("David V. Hinkley", "戴维·欣克利", 1984, "1944–", "美国（生于英国）", "UC Santa Barbara",
-         "Bootstrap 与渐近理论", "Bootstrap 变换法、鞍点近似、渐近理论。他与 Efron 共同发展了 Bootstrap 的理论基础。",
+        ("David V. Hinkley", "戴维·欣克利", 1984, "1944–2019", "美国（生于英国）", "UC Santa Barbara",
+         "Bootstrap 与渐近理论", "Bootstrap 变换法、鞍点近似、渐近理论。他与 Efron 共同发展了 Bootstrap 的理论基础，导师为大卫·考克斯。",
          "none", "D.H."),
-        ("James O. Berger", "詹姆斯·伯杰", 1985, "1950–", "美国", "Duke University",
+        ("James O. Berger", "詹姆斯·伯杰", 1985, "1950–", "美国", "Purdue University",
          "统计决策与贝叶斯", "统计决策论、客观贝叶斯分析、模型选择。他是贝叶斯学派现代复兴的核心人物。",
          "images/berger.jpg", "Wikipedia"),
-        ("Ross L. Prentice", "罗斯·普伦蒂斯", 1986, "1941–", "美国/加拿大", "Fred Hutchinson Cancer Research Center",
+        ("Ross L. Prentice", "罗斯·普伦蒂斯", 1986, "1946–", "加拿大", "Fred Hutchinson Cancer Research Center",
          "生存分析与流行病学", "生存分析、临床试验设计、营养流行病学。Cox 模型在应用中的标准框架由他系统建立。",
          "none", "R.P."),
         ("C. F. Jeff Wu", "吴建福", 1987, "1949–", "美国（生于台湾）", "Georgia Institute of Technology",
-         "试验设计与工业统计", "试验设计、鲁棒参数设计、EM 算法收敛理论。他为工程统计学奠定现代方法论。",
+         "试验设计与工业统计", "试验设计、鲁棒参数设计、EM 算法收敛定理。他为工程统计学奠定现代方法论。",
          "images/wu.jpg", "Wikipedia"),
-        ("Raymond J. Carroll", "雷蒙德·卡罗尔", 1988, "1949–", "美国", "Texas A&M University",
-         "测量误差模型", "测量误差模型、函数型数据、生物统计方法。测量误差的统计理论以他为核心奠基人。",
+        ("Raymond J. Carroll", "雷蒙德·卡罗尔", 1988, "1949–", "美国（生于日本）", "Texas A&M University",
+         "测量误差模型", "测量误差模型、非参数回归、函数型数据、生物统计方法。测量误差的统计理论以他为核心奠基人。",
          "none", "R.C."),
         ("Peter Hall", "彼得·霍尔 \\enspace·\\enspace 首位澳大利亚得主", 1989, "1951–2016", "澳大利亚", "Australian National University",
          "非参数统计与 Bootstrap", "Bootstrap 渐近理论、非参数曲线估计、经验似然。他是非参数统计领域最高产的奠基者之一。",
          "images/hall.jpg", "Wikipedia"),
-        ("Peter McCullagh", "彼得·麦卡拉", 1990, "1952–", "美国（生于爱尔兰）", "University of Chicago",
-         "广义线性模型", "广义线性模型（GLM）、张量方法、分类数据分析。他与 Nelder 合著的 GLM 经典改变了应用统计。",
+        ("Peter McCullagh", "彼得·麦卡拉", 1990, "1952–", "美国（生于北爱尔兰）", "University of Chicago",
+         "广义线性模型", "广义线性模型（GLM）、张量方法、分类数据分析。他与 Nelder 合著的 GLM 经典改变了应用统计，2026 年获 Guy 金奖章。",
          "none", "P.M."),
     ],
     "ep02": [
@@ -174,6 +175,14 @@ EPISODES = [
     ("ep05", "episode-05-data-science-ai-2021-2026", "copss_ep05_zh",
      "数据科学、AI 与贝叶斯革新", "2021–2026 · 统计学站上 AI 前沿", "2021 – 2026", "从 Leek 到 Su"),
 ]
+
+NAMES_BAR = {
+    "ep01": "Bickel · Fienberg · Lai · Hinkley · Berger · Prentice · Wu · Carroll · Hall · McCullagh",
+    "ep02": "Silverman · Reid · Wong · Donoho · Johnstone · R. Tibshirani · Roeder · Massart · Wasserman · Fan",
+    "ep03": "Meng · Liu · Gelman · Newton · van der Laan · Lin · Rosenthal · Cai · Irizarry · Dunson",
+    "ep04": "Chatterjee · Kou · Suchard · Wainwright · Storey · Meinshausen · VanderWeele · Samworth · Wickham · Barber",
+    "ep05": "Leek · Witten · R. Tibshirani · Ročková · Mackey · Su",
+}
 
 SYNTHESIS = {
     "ep01": {
@@ -323,25 +332,39 @@ HEADER = r"""% COPSS Presidents' Award Video — Episode {EP}
 \end{frame}
 }
 
-% ---- Title slide: #1 big #2 sub #3 range #4 note ----
-\newcommand{\titleslide}[4]{%
+% ---- Title slide: #1 集数徽章 #2 大标题 #3 副标题 #4 年份范围 #5 说明 #6 得主名字条 ----
+\newcommand{\titleslide}[6]{%
 \begin{frame}[plain]
 \begin{tikzpicture}[remember picture, overlay]
-  \fill[coverprimary!7] (current page.north west) rectangle (current page.south east);
-  \fill[coverprimary!12] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
-  \fill[coveraccent!12] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
-  \fill[coveramber!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
-  \fill[coverpurple!8] (current page.south west) ++(3.1,3.1) circle (1.60cm);
-  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverdark]
-    at ([yshift=1.8cm]current page.center) {#1};
-  \node[anchor=center, font=\fontsize{14}{18}\selectfont, text=coverprimary!82!black]
-    at ([yshift=0.7cm]current page.center) {#2};
-  \draw[coverprimary, line width=1.4pt] ([yshift=-0.15cm, xshift=-4.55cm]current page.center)
-    -- ([yshift=-0.15cm, xshift=4.55cm]current page.center);
-  \node[anchor=center, font=\fontsize{12}{15}\selectfont\bfseries, text=coveramber!58!black]
-    at ([yshift=-0.85cm]current page.center) {#3};
+  \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
+  \fill[coverprimary!14] ([xshift=-4.1cm,yshift=3.2cm]current page.west) rectangle ([xshift=-3.7cm,yshift=-3.2cm]current page.west);
+  \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
+  \fill[coveramber!12] (current page.south west) ++(2.8,1.7) circle (1.2cm);
+  % 集数徽章
+  \node[rounded corners=7pt, fill=coveraccent, inner xsep=10pt, inner ysep=5pt,
+        font=\fontsize{9.5}{11}\selectfont\bfseries, text=white,
+        drop shadow={shadow xshift=0.4pt, shadow yshift=-0.4pt, opacity=0.15}]
+    at ([yshift=3.30cm]current page.center) {#1};
+  % 大标题
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverdark]
+    at ([yshift=2.00cm]current page.center) {#2};
+  % 副标题
+  \node[anchor=center, font=\fontsize{13.5}{17}\selectfont, text=coverprimary!85!black]
+    at ([yshift=1.00cm]current page.center) {#3};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.18cm, xshift=-4.55cm]current page.center)
+    -- ([yshift=0.18cm, xshift=4.55cm]current page.center);
+  % 年份范围
+  \node[anchor=center, font=\fontsize{13}{16}\selectfont\bfseries, text=coveramber!70!black]
+    at ([yshift=-0.62cm]current page.center) {#4};
+  % 说明
   \node[anchor=center, font=\fontsize{8.5}{10.5}\selectfont, text=covermuted]
-    at ([yshift=-1.5cm]current page.center) {#4};
+    at ([yshift=-1.30cm]current page.center) {#5};
+  % 得主名字条
+  \node[anchor=center, font=\fontsize{7.2}{8.6}\selectfont\bfseries, text=coverdark!70]
+    at ([yshift=-2.25cm]current page.center) {#6};
+  % 底部角标
   \node[anchor=south, font=\scriptsize, text=coverdark!40]
     at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace COPSS Presidents' Award\enspace|\enspace 1981–2026};
 \end{tikzpicture}
@@ -351,15 +374,31 @@ HEADER = r"""% COPSS Presidents' Award Video — Episode {EP}
 
 
 def cmd_name(name):
-    return name.replace(".", "").replace("-", "").replace(" ", "").replace("'", "").lower()
+    s = name.replace(".", "").replace("-", "").replace(" ", "").replace("'", "")
+    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode()
+    return s.lower()
 
 
 def esc(s):
     return str(s).replace("&", "\\&")
 
 
-def person_slide(p, prefix=""):
+def resolve_img(p, ep_dir):
+    """If a laureate has no photo ('none') but a non-empty images/<name>.<ext>
+    file exists in the episode dir, use it automatically."""
     name, subtitle, year, life, country, inst, tag, contrib, img, credit = p
+    if img == "none" and ep_dir:
+        base = cmd_name(name)
+        for ext in (".jpg", ".jpeg", ".png", ".webp"):
+            cand = os.path.join(HERE, ep_dir, "images", base + ext)
+            if os.path.exists(cand) and os.path.getsize(cand) > 0:
+                return "images/" + base + ext
+    return img
+
+
+def person_slide(p, prefix="", ep_dir=None):
+    name, subtitle, year, life, country, inst, tag, contrib, img, credit = p
+    img = resolve_img(p, ep_dir)
     body = "研究方向：%s。%s" % (tag, contrib)
     cname = prefix + cmd_name(name)
     return ("\\newcommand{\\%sslide}{\\personslide\n"
@@ -418,14 +457,16 @@ def make_episode_tex(ep_key, ep_dir, main, title, subtitle, rng, note):
     out.append("\n% ========== SLIDES ==========\n")
     # person slides
     for p in people:
-        out.append(person_slide(p))
+        out.append(person_slide(p, ep_dir=ep_dir))
     # synthesis
     out.append(synthesis_slide(ep_key))
     # main
     names = [cmd_name(p[0]) for p in people]
     body = "\n".join("\\%sslide" % n for n in names)
     out.append("\n% ========== MAIN ==========\n\\begin{document}\n")
-    out.append("\\titleslide{%s}{%s}{%s}{%s}\n" % (title, subtitle, rng, note))
+    out.append("\\titleslide{%s}{%s}{%s}{%s}{%s}{%s}\n" % (
+        "第 %s 集" % ep_key[-1], title, subtitle, rng,
+        "%s · %d 位得主" % (note, len(people)), NAMES_BAR[ep_key]))
     out.append(body + "\n")
     out.append("\\synthesisslide\n")
     out.append("\\end{document}\n")
@@ -488,10 +529,11 @@ def make_allinone_tex():
     # per-chapter person slides with unique prefixes
     for num, prefix, title, subtitle, rng, ep_key in CHAPTERS:
         for p in PEOPLE[ep_key]:
-            out.append(person_slide(p, prefix=prefix))
+            out.append(person_slide(p, prefix=prefix, ep_dir=ep_dir))
     # main: cover + chapter dividers + person slides
     out.append("\n% ========== MAIN ==========\n\\begin{document}\n")
-    out.append("\\titleslide{COPSS 会长奖 · 全部得主}{46 位统计学家 · 1981–2026}{1981 – 2026}{从 Bickel 到 Su，统计学四十五年}\n")
+    out.append("\\titleslide{合集}{COPSS 会长奖 · 全部得主}{46 位统计学家 · 1981–2026}{1981 – 2026}"
+               "{从 Bickel 到 Su，统计学四十五年}{46 位得主 · 9 位华人 · 6 位女性}\n")
     for num, prefix, title, subtitle, rng, ep_key in CHAPTERS:
         out.append("\\chapterslide{%s}{%s}{%s}{%s}\n" % (num, title, subtitle, rng))
         body = "\n".join("\\%s%sslide" % (prefix, cmd_name(p[0])) for p in PEOPLE[ep_key])
