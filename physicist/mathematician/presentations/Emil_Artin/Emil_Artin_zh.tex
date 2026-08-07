@@ -1,0 +1,567 @@
+% =============================================================
+%  现代代数的共同奠基者：埃米尔·阿廷 (Emil Artin)
+%  Beamer 演示 —— 参照 Weyl / Weil / Banach 版式
+%  资料来源：mathematician/pages/Emil_Artin + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：阿廷 —— 深林翡翠绿 + 暖铜金 + 象牙白（代数根基 + 数论温暖 + 结构美感）=====
+\definecolor{bgmain}{RGB}{245,243,240}
+\definecolor{coverprimary}{HTML}{1A3C34}     % 深林翡翠 — 代数根基、结构之美
+\definecolor{coveraccent}{HTML}{D4A84B}      % 暖铜金 — 数论温暖、音乐之光
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{20,48,40}
+\definecolor{muteddark}{RGB}{90,100,85}
+\definecolor{greenpanel}{RGB}{220,238,226}    % 浅翡翠面板
+\definecolor{bluepanel}{RGB}{210,225,236}     % 深海蓝面板
+\definecolor{amberpanel}{RGB}{255,242,225}    % 暖铜面板
+\definecolor{purplepanel}{RGB}{235,228,250}   % 浅紫面板
+\definecolor{goldpanel}{RGB}{252,246,228}     % 暖金面板
+\definecolor{graypanel}{RGB}{242,244,248}
+% 阿廷四大支柱
+\definecolor{badgealgebra}{HTML}{1A3C34}      % 抽象代数 — 翡翠绿
+\definecolor{badgenumber}{HTML}{D4A84B}       % 数论/类域论 — 暖铜金
+\definecolor{badgetopos}{HTML}{2C6080}        % 辫群/拓扑 — 深海蓝
+\definecolor{badgemot}{HTML}{7A3B4A}          % 猜想/理论深度 — 深酒红
+\definecolor{coverteal}{HTML}{009688}          % 青绿 — 来自 openmath_page
+\definecolor{coverwarm}{HTML}{FFB300}          % 暖金 — 来自 openmath_page
+\definecolor{badgecomputation}{HTML}{00BFA5}   % 来自 openmath_page
+\definecolor{badgeAI}{HTML}{5C6BC0}            % 来自 openmath_page
+\definecolor{badgebio}{HTML}{FFA000}           % 来自 openmath_page
+\definecolor{badgephilosophy}{HTML}{8D6E63}    % 来自 openmath_page
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgealgebra!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgetopos!10] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coveraccent!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgenumber!8] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{square-root-alt}\enspace 现代抽象代数的共同奠基者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {埃米尔·阿廷};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Emil Artin\enspace·\enspace 1898 — 1962};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {类域论 · L-函数 · 辫群理论 · Hilbert 第 17 问题};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgealgebra, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {抽象代数 Algebra};
+      \node[rounded corners=8pt, fill=badgenumber, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {类域论 CFT};
+      \node[rounded corners=8pt, fill=badgetopos, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {辫群 Braids};
+      \node[rounded corners=8pt, fill=badgemot, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {L-函数 Conj.};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"我们全都相信数学是一门艺术。" —— 埃米尔·阿廷};
+  % Artin 肖像（右上）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.1cm]current page.center)
+    {\includegraphics[width=2.5cm,height=3.2cm,keepaspectratio]{EmilArtin.jpg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.3cm]current page.center)
+    {Emil Artin, 1930s};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{medal}\enspace Ackermann–Teubner 纪念奖 1932 · 美国艺术与科学院院士 1957\enspace|\enspace Hamburg · Indiana · Princeton};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么阿廷是"奠基者"}{类域论 · 抽象代数 · 拓扑 · 数论 —— 四线交织的一生}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=greenpanel, draw=badgealgebra!50, text=coverprimary!85!black]
+    (a) at (-5.7,1.05) {抽象代数\\环·群·域·理想};
+  \node[nodebox, fill=goldpanel, draw=badgenumber!50, text=badgenumber!85!black]
+    (b) at (-1.9,1.05) {类域论\\互反律 · L-函数};
+  \node[nodebox, fill=bluepanel, draw=badgetopos!50, text=badgetopos!85!black]
+    (c) at (1.9,1.05) {辫群理论\\代数拓扑的先驱};
+  \node[nodebox, fill=amberpanel, draw=badgemot!50, text=badgemot!85!black]
+    (d) at (5.7,1.05) {两个猜想\\Artin 猜想 · 原根猜想};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 与 Emmy Noether 并称现代抽象代数之父。van der Waerden 的《代数学》源自他与 Noether 的思想。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 他重新定义了代数数论的语言 —— Artin 互反律是类域论的皇冠，L-函数连接了表示论与数论。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年与求学之路 ---
+\newcommand{\earlylife}{%
+\begin{frame}
+\plainbar
+\sectiontitle{早年与求学之路 (1898–1921)}{维也纳 → 莱比锡 → 哥廷根 —— 走向数学之都}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgemot!35] at (0,2.55)
+    {\textbf{1898 · 生于维也纳。}父亲是亚美尼亚裔奥地利人，母亲是歌剧演员。他的亚美尼亚姓氏原为 Artinian，后简化为 Artin。父亲在他 8 岁时因梅毒去世，母亲改嫁至 Bohemia 的制造商。};
+  \node[item, fill=greenpanel, draw=badgealgebra!35] at (0,1.05)
+    {\textbf{1916 · 数学兴趣"姗姗来迟"。}在 Reichenberg 的实科中学，他早期的数学成绩只是"及格"。他后来自述："我对数学的偏好直到 16 岁才显现，在此之前根本谈不上有什么数学天赋。"};
+  \node[item, fill=bluepanel, draw=badgetopos!25] at (0,-0.25)
+    {\textbf{1916–1921 · 维也纳 → 莱比锡 → 博士。}先在维也纳大学随 Furtwängler 学习，1918 年短暂服役于奥匈帝国军队（在意大利用法语当翻译）。1919 年转至莱比锡大学，师从 Gustav Herglotz，1921 年以"极优"成绩获博士学位。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{7.8}{9.8}\selectfont\bfseries\color{coverdark!88} 1921 年秋，他前往哥廷根 —— 当时的世界数学中心 —— 进行博士后研究，遇到了 Emmy Noether。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 汉堡岁月 ---
+\newcommand{\hamburgyears}{%
+\begin{frame}
+\plainbar
+\sectiontitle{汉堡岁月 (1922–1937)}{德国最年轻的数学教授之一 · 类域论的黄金时代}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgealgebra!40] at (0,2.25)
+    {\textbf{1922 · 任职汉堡大学。}在 Richard Courant 的推荐下，24 岁的 Artin 来到新成立的汉堡大学。1923 年完成任教资格论文 (Habilitation)，1925 年升为副教授，1926 年成为正教授 —— 与 Helmut Hasse 同为德国最年轻的数学教授。};
+  \node[item, fill=goldpanel, draw=badgenumber!35] at (0,0.8)
+    {\textbf{1923–1927 · 类域论的突破。}在这五年间，Artin 完成了类域论最核心的工作。1927 年发表的 Artin 互反律 —— 将 Galois 群的表示与数域的 L-函数联系起来 —— 至今是数论的基石。};
+  \node[item, fill=bluepanel, draw=badgetopos!25] at (0,-0.45)
+    {\textbf{"Ma" —— 数学的化身。}在汉堡期间，他获得了终身昵称"Ma"(Mathematics 的缩写)。但他绝非狭隘的数学家 —— 他同样教授力学和相对论，在化学、天文学、生物学方面都有深入的业余研究。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Artin 互反律被公认为 20 世纪数论最伟大的成就之一 —— 它是类域论的"基本定理"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Artin 互反律 ---
+\newcommand{\reciprocityslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Artin 互反律：类域论的皇冠 (1927)}{将 Galois 群表示与 L-函数连接起来的桥梁}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgenumber!45] at (0,2.35)
+    {\textbf{什么是 Artin 互反律？}对于数域的 Abel 扩张，Artin 互反律给出了一个显式的同构：将 Galois 群映射到理想类群。它将看似抽象的对偶性变成了可计算、可操作的数学工具。};
+  \node[item, fill=greenpanel, draw=badgealgebra!35] at (0,0.85)
+    {\textbf{为什么重要？}在 Artin 之前，类域论的证明依赖于复杂的解析方法。Artin 的互反律将问题转化为纯代数的、Galois 理论的语言 —— 这是从"分析证明"到"代数理解"的范式转变。};
+  \node[item, fill=purplepanel, draw=badgemot!25] at (0,-0.45)
+    {\textbf{影响延续至今。}Langlands 纲领 —— 被许多人视为 21 世纪数学最大的统一事业 —— 其核心思想正是 Artin 互反律的非 Abel 推广。Artin 种下的种子，至今仍在开花。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 如果说 Hilbert 的《数论报告》是 19 世纪数论的总结，那 Artin 互反律就是 20 世纪数论的起点。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 与 Noether：抽象代数的奠基 ---
+\newcommand{\noetherslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{与 Noether：抽象代数的奠基}{两位大师 —— 改变了"代数"一词的含义}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgealgebra!45] at (0,2.35)
+    {\textbf{哥廷根的相遇。}Artin 在哥廷根博士后期间与 Emmy Noether 密切合作。Noether 的公理化方法（理想、环、模、链条件）与 Artin 的具体计算天赋形成了完美的互补。};
+  \node[item, fill=goldpanel, draw=badgenumber!35] at (0,0.85)
+    {\textbf{van der Waerden 的《代数学》。}B. L. van der Waerden 的经典教材《Moderne Algebra》被公认主要来源于 Noether 和 Artin 的思想。这部书定义了整个 20 世纪代数教育的标准语言。};
+  \node[item, fill=amberpanel, draw=badgemot!35] at (0,-0.45)
+    {\textbf{1932 · 共享荣誉。}Artin 与 Noether 共同获得 Ackermann–Teubner 纪念奖 —— 这是对他们"共同改变了代数语言"的认可。Artinian 环、Artin–Wedderburn 定理等都成为代数的基础概念。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 今天的代数教材中随处可见"Artinian""Noetherian" ——\\这两个名字本身就是现代代数诞生的标志。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Hilbert 第 17 问题 ---
+\newcommand{\hilbertslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{解决 Hilbert 第 17 问题 (1927)}{正定有理函数是否可以表示为平方和？}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgealgebra!45] at (0,2.35)
+    {\textbf{Hilbert 第 17 问题。}一个在 $\mathbb{R}^n$ 上处处非负的有理函数，是否一定可以表示为有理函数的平方和？Hilbert 在 1900 年提出这个问题时，答案远非显然。};
+  \node[item, fill=goldpanel, draw=badgenumber!40] at (0,0.85)
+    {\textbf{Artin 的解答 (1927)。}Artin 与 Otto Schreier 合作，利用他们此前建立的"实域"（formally real fields）理论，给出了一个优美的肯定答案。证明的核心是 Artin–Schreier 理论 —— 有序域与实闭域的结构定理。};
+  \node[item, fill=purplepanel, draw=badgemot!35] at (0,-0.45)
+    {\textbf{深远影响。}Artin–Schreier 理论后来成为实代数几何（real algebraic geometry）的基础。在优化理论、半定规划中，平方和表示至今是一个活跃的研究领域。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=6pt, inner sep=7pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个 25 年前的 Hilbert 问题，被 Artin 用全新的代数工具优雅解决。\\这正是 Artin 风格的典型：用结构代替计算。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. Artin L-函数 ---
+\newcommand{\lfunctions}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Artin L-函数}{Galois 表示 → 解析不变量 —— 连接表示论与数论的桥梁}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgenumber!45] at (0,2.35)
+    {\textbf{Artin L-函数的定义。}给定 Galois 群的有限维复表示，Artin 构造了与之关联的 L-函数 $L(s,\rho)$。它将 Galois 群的表示论信息编码为解析函数的性质 —— 这一思想极为深远。};
+  \node[item, fill=greenpanel, draw=badgealgebra!35] at (0,0.85)
+    {\textbf{与类域论的联系。}对于一维表示，Artin L-函数退化为 Dirichlet L-函数，这使 Artin 互反律可以用 L-函数的语言重新表述。高维表示的情况则导致了 Artin 猜想。};
+  \node[item, fill=purplepanel, draw=badgemot!30] at (0,-0.45)
+    {\textbf{Langlands 纲领的源头。}Artin L-函数是 Langlands 纲领中最基本的自守 L-函数的原型。Langlands 对 Artin 猜想的推广 —— 将 Galois 表示与自守表示对应起来 —— 是整个纲领的核心动力。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从 L-函数到 Langlands 纲领 —— Artin 的思想为 21 世纪数学规划了方向。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 辫群理论 ---
+\newcommand{\braidtheory}{%
+\begin{frame}
+\plainbar
+\sectiontitle{辫群理论：代数拓扑的先驱 (1925/1947)}{一种全新的代数结构 —— 辫子、纽结与量子群的源头}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgetopos!45] at (0,2.35)
+    {\textbf{辫群 (Braid Group)。}Artin 在 1925 年定义了辫群 $B_n$ —— 由 $n$ 条线的编织方式构成的群，带有自然的生成元和关系。这是代数拓扑中第一个被显式描述的无限离散群。};
+  \node[item, fill=greenpanel, draw=badgealgebra!35] at (0,0.85)
+    {\textbf{代数结构与拓扑。}Artin 证明辫群可以与映射类群联系起来，并将辫子闭合成纽结。这一思想后来被发展成"辫群 → 纽结"的 Markov 定理 —— 纽结理论的现代代数基础。};
+  \node[item, fill=amberpanel, draw=badgemot!35] at (0,-0.45)
+    {\textbf{量子群与 Jones 多项式。}1980 年代，Vaughan Jones 在研究算子代数时重新发现了辫群 —— 并由此创立了 Jones 多项式，获得 Fields 奖。量子群、拓扑量子场论都源于 Artin 的辫群。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个 1925 年提出的简单代数结构，在 60 年后引爆了低维拓扑的革命。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 纳粹阴影与被迫流亡 ---
+\newcommand{\naziemigration}{%
+\begin{frame}
+\plainbar
+\sectiontitle{纳粹阴影与被迫流亡 (1933–1937)}{因为妻子的犹太血统被解职 · 逃离德国}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgemot!45] at (0,2.35)
+    {\textbf{1929·婚姻。}Artin 与 Natalia (Natascha) Jasny —— 一位俄裔犹太学生 —— 结婚。她后来成为出色的摄影师，为 Artin 留下了最珍贵的影像记录。他们育有三子，其中包括后来的代数几何学家 Michael Artin。};
+  \node[item, fill=greenpanel, draw=badgealgebra!30] at (0,0.85)
+    {\textbf{1933–1937 · 逐渐收紧的绞索。}纳粹上台后，Artin 因妻子有犹太血统而面临越来越大的压力。同事 Hasse 和 Blaschke 曾试图帮助"雅利安化"他的孩子，但未成功。1937 年 7 月 15 日，他被强制"退休"。};
+  \node[item, fill=bluepanel, draw=badgetopos!25] at (0,-0.45)
+    {\textbf{1937 年 10 月 · 逃离。}在 Courant 和 Lefschetz 的帮助下，Artin 获得 Notre Dame 大学的职位。全家将全部家当 —— 包括一把双排大键琴 —— 装船运往美国。女儿 Karin 在登船当日高烧，他们冒险隐瞒，成功出逃。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 当他被问及数学是否是科学时，Artin 毫不犹豫地回答："不。是一门艺术。"}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 美国岁月 ---
+\newcommand{\americanyears}{%
+\begin{frame}
+\plainbar
+\sectiontitle{美国岁月 (1937–1958)}{Notre Dame → Indiana → Princeton · 流亡数学家的新家园}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgealgebra!40] at (0,2.35)
+    {\textbf{1937–1938 · Notre Dame。}在 South Bend 的短暂停留。Artin 一家随后移居 Indiana 大学所在的 Bloomington。在那里，他很快就买了一架钢琴，然后是一台 Hammond 电子管风琴 —— 主要为了演奏巴赫。};
+  \node[item, fill=bluepanel, draw=badgetopos!35] at (0,0.85)
+    {\textbf{1938–1946 · Indiana 大学。}在 Bloomington 的八年。他坚持在家中只讲德语，给孩子们朗读歌德和马克·吐温。家里的收音机只在周日早晨打开 —— 听管风琴广播 —— 战争期间则用来听战况新闻。};
+  \node[item, fill=goldpanel, draw=badgenumber!35] at (0,-0.45)
+    {\textbf{1946–1958 · 普林斯顿。}战后，Artin 被任命为普林斯顿大学教授。他的博士生包括 Serge Lang、John Tate、Max Zorn、Hans Zassenhaus。他以不用讲稿、优雅清晰的讲课而闻名 —— 甚至亲自教大一微积分荣誉班。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 哥廷根倒下了，普林斯顿站起来了 —— Artin 是这场数学大迁徙的核心人物之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 导师与学生 ---
+\newcommand{\studentsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{导师与学生}{三十余位博士生 · 其中不乏改变数学史的人物}
+\vspace{-0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=8pt, inner ysep=3pt, text width=5.7cm, font=\fontsize{6.5}{8.2}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgenumber!40] at (-3.9,1.55)
+    {\textbf{John Tate}\\[1pt]类域论的革新者\\Abel 奖得主 (2010)\\Artin–Tate 引理};
+  \node[item, fill=greenpanel, draw=badgealgebra!35] at (3.9,1.55)
+    {\textbf{Serge Lang}\\[1pt]多产的代数学家\\Langlands 纲领传播者\\《Algebra》教材作者};
+  \node[item, fill=bluepanel, draw=badgetopos!30] at (-3.9,-0.05)
+    {\textbf{Bernard Dwork}\\[1pt]p-进分析的先驱\\用 p-进方法证明\\Weil 猜想的一部分};
+  \node[item, fill=amberpanel, draw=badgemot!35] at (3.9,-0.05)
+    {\textbf{Hans Zassenhaus}\\[1pt]群论与计算代数\\Zassenhaus 群\\Zassenhaus 算法};
+  \node[item, fill=purplepanel, draw=badgealgebra!25] at (0,-1.55)
+    {\textbf{Max Zorn} · Zorn 引理（选择公理的等价形式）\quad|\quad
+     \textbf{Harold N. Shapiro} · 解析数论\quad|\quad
+     \textbf{O. Timothy O'Meara} · 二次型};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=5pt, text width=13.4cm, align=center] at (0,-2.85) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} "他的主要交流媒介是教学和对话。他从不会厌倦解释必要的东西。"\\—— Frei \& Roquette，《Emil Artin 传》}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 重返故土 ---
+\newcommand{\lasthamburg}{%
+\begin{frame}
+\plainbar
+\sectiontitle{重返故土与晚年 (1958–1962)}{三十年后回汉堡 · 直到生命的最后一刻仍在做数学}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgealgebra!40] at (0,2.35)
+    {\textbf{1958 · 返回汉堡。}在离开德国 21 年后，Artin 于 1958 年接受汉堡大学的邀请回到故乡。他已不再持有德国国籍 —— 后重新获得 —— 但对故土的眷恋驱使他完成了这趟回归之旅。};
+  \node[item, fill=bluepanel, draw=badgetopos!35] at (0,0.85)
+    {\textbf{家庭与晚年。}回汉堡后与数学家 Hel Braun 共同生活。妻子 Natascha 留在美国。1962 年获得 Clermont-Ferrand 大学荣誉博士学位（此前还有弗莱堡大学 1957 年授予的荣誉博士）。};
+  \node[item, fill=amberpanel, draw=badgemot!25] at (0,-0.45)
+    {\textbf{1962 年 12 月 20 日 · 在汉堡去世。}因心脏病发作去世，享年 64 岁。他工作到了生命的最后一刻。汉堡大学于 2005 年将数学学院最大的讲堂命名为 "Emil-Artin-Hörsaal"。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 儿子 Michael Artin 成为 MIT 的代数几何学家。女儿 Karin 嫁给了 John Tate。\\Artin 的数学血脉延续在家人与 30+ 位博士生的学术传承中。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 著作与教材 ---
+\newcommand{\booksslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{著作与教材}{影响几代数学家的经典文本}
+\vspace{-0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, text width=12.4cm, font=\fontsize{6.8}{8.6}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgealgebra!40] at (0,2.25)
+    {\textbf{《Galois 理论》 (1942/1944)。}也许是史上最优雅的 Galois 理论教材 —— 以极短的篇幅揭示了域扩张与群论之间最本质的联系。至今被广泛使用，被誉为"数学写作的典范"。};
+  \node[item, fill=goldpanel, draw=badgenumber!35] at (0,0.95)
+    {\textbf{《几何代数》 (1957)。}在 NYU 讲授几何基础课程的讲义。从基础的射影几何出发，延伸至辛几何 —— 展现了 Artin 用代数语言统一几何的独特视角。};
+  \node[item, fill=bluepanel, draw=badgetopos!30] at (0,-0.25)
+    {\textbf{《类域论》 (与 Tate 合著, 1967)。}Artin 与 John Tate 合作的讲义 —— 以群上同调的全新语言重新表述类域论。这部薄薄的书定义了类域论的标准现代叙述。};
+  \node[item, fill=amberpanel, draw=badgemot!25] at (0,-1.35)
+    {\textbf{《代数数论》 (1959) · 《Γ 函数》 (1931) · 《环与极小条件》 (1944)。}每一部都以简洁、深刻著称 —— Artin 的写作风格如同他的数学：去掉一切多余，只留下结构本身。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=5pt, text width=12.4cm, align=center] at (0,-2.6) {
+    {\fontsize{7.8}{9.8}\selectfont\bfseries\color{coverdark!88} 他的《Collected Papers》只有一卷 —— 但这一卷的密度和深度令人敬畏。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. Artin 的两个猜想 ---
+\newcommand{\conjectureslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Artin 的两个猜想}{尚未完全解决的遗产 —— 激励了几代数学家的未解之谜}
+\vspace{-0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, text width=12.4cm, font=\fontsize{6.8}{8.6}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgenumber!45] at (0,2.1)
+    {\textbf{Artin L-函数的全纯性猜想。}Artin 猜想：对于非平凡的不可约 Galois 表示，其 L-函数 $L(s,\rho)$ 是整函数（在 $\mathbb{C}$ 上全纯）。这是 Langlands 纲领中最核心的未解决问题之一。};
+  \node[item, fill=greenpanel, draw=badgealgebra!35] at (0,0.7)
+    {\textbf{Artin 原根猜想。}对于一个非完全平方的整数 $a \neq -1$，存在无穷多个素数 $p$ 使得 $a$ 是模 $p$ 的原根。1967 年，Hooley 在广义 Riemann 假设下给出了条件性证明 —— 但无条件证明仍未完成。};
+  \node[item, fill=purplepanel, draw=badgemot!35] at (0,-0.55)
+    {\textbf{未完成的交响乐。}这两个猜想至今未解。它们代表了 Artin 最深远的洞察：他看到了连他自己也无法完全证明的结构 —— 但他确信它们存在。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=5pt, text width=12.4cm, align=center] at (0,-1.95) {
+    {\fontsize{7.8}{9.8}\selectfont\bfseries\color{coverdark!88} 有一些问题，提出问题的人比解决问题的人更伟大。Artin 就是这样的问题提出者。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 音乐、摄影与生活 ---
+\newcommand{\lifearts}{%
+\begin{frame}
+\plainbar
+\sectiontitle{音乐、摄影与生活}{"数学不是科学，是一门艺术" —— Artin 的数学家之外}
+\vspace{-0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=8pt, inner ysep=3pt, text width=5.7cm, font=\fontsize{6.5}{8.2}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgemot!40] at (-3.9,1.75)
+    {\textbf{音乐人生}\\[1pt]演奏键盘乐器\\长笛演奏家\\双排大键琴\\室内乐常客\\巴赫是挚爱};
+  \node[item, fill=greenpanel, draw=badgealgebra!35] at (3.9,1.75)
+    {\textbf{摄影之眼}\\[1pt]徕卡 A 型相机\\与妻子 Natascha\\共同创作\\2001 年汉堡\\美术馆个展};
+  \node[item, fill=bluepanel, draw=badgetopos!35] at (-3.9,-0.3)
+    {\textbf{天文爱好者}\\[1pt]自制 6 英寸望远镜\\研磨镜片数周\\订阅 Sky \& Telescope};
+  \node[item, fill=goldpanel, draw=badgenumber!30] at (3.9,-0.3)
+    {\textbf{冰岛探险 (1925)}\\[1pt]Wandervogel\\青年运动\\徒步 450 公里\\地质观察记录\\近 200 张照片};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=5pt, text width=13.4cm, align=center] at (0,-2.05) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} "数学是逻辑的，毫无疑问，每一个结论都从之前推导的陈述中得出。\\然而真正的艺术品，不是线性的；甚至更糟的是，对它的感知应该是瞬间的。" —— 阿廷}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 16. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{阿廷的遗产}{类域论 · 抽象代数 · L-函数 · 辫群 —— 贯穿现代数学的版图}
+\vspace{-0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=5pt, inner ysep=7pt, text width=3.05cm,
+              font=\fontsize{6.5}{8.5}\selectfont, align=center}
+]
+  \node[leg, fill=greenpanel, draw=badgealgebra!50, line width=0.7pt] (a) at (-5.4,1.1)
+    {{\fontsize{8.5}{11}\selectfont\bfseries\color{coverprimary!85!black} 抽象代数}\\[2pt]Artin 环\\Artin–Wedderburn\\Artin–Schreier};
+  \node[leg, fill=goldpanel, draw=badgenumber!50, line width=0.7pt] (b) at (-1.8,1.1)
+    {{\fontsize{8.5}{11}\selectfont\bfseries\color{badgenumber} 类域论}\\[2pt]互反律\\L-函数\\Artin–Tate};
+  \node[leg, fill=bluepanel, draw=badgetopos!50, line width=0.7pt] (c) at (1.8,1.1)
+    {{\fontsize{8.5}{11}\selectfont\bfseries\color{badgetopos} 拓扑/几何}\\[2pt]辫群\\映射类群\\几何代数};
+  \node[leg, fill=purplepanel, draw=badgemot!50, line width=0.7pt] (d) at (5.4,1.1)
+    {{\fontsize{8.5}{11}\selectfont\bfseries\color{badgemot} 猜想与传承}\\[2pt]Artin 猜想\\Galois 理论\\Collected Papers};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=8pt, text width=13.4cm, align=center] at (0,-1.5) {
+    {\fontsize{9.0}{12.0}\selectfont\bfseries\color{coverprimary!90!black} 他不是一个计算家 —— 他是代数的建筑师。}\\[3pt]
+    {\fontsize{7.2}{9.4}\selectfont\color{coverdark!85}
+      从类域论到辫群，从 Galois 理论到 L-函数，\\
+      从维也纳到汉堡到普林斯顿，从 Noether 到 Langlands —— \\
+      Artin 用结构取代了计算，用代数重新定义了数论。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 17. 结尾页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.9cm]current page.center) {他让代数变成了语言，};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.0cm]current page.center) {而不仅仅是工具。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=0.15cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=0.15cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-0.9cm]current page.center)
+    {"数学是逻辑的，但真正的艺术品，不是线性的。"};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-2.4cm]current page.center)
+    {埃米尔·阿廷\quad Emil Artin\quad 1898 — 1962};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{infinity}\enspace 现代抽象代数的共同奠基者\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlylife
+\hamburgyears
+\reciprocityslide
+\noetherslide
+\hilbertslide
+\lfunctions
+\braidtheory
+\naziemigration
+\americanyears
+\studentsslide
+\lasthamburg
+\booksslide
+\conjectureslide
+\lifearts
+\legacyslide
+\closingslide
+\end{document}

@@ -1,0 +1,489 @@
+% =============================================================
+%  纯数学的守护者：G.H. 哈代 (G.H. Hardy)
+%  Beamer 演示 —— 参照 Milnor / Atiyah / Thurston 版式
+%  资料来源：mathematician/pages/G._H._Hardy + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：剑桥蓝 + 印度藏红花橙 + 板球绿 + 象牙白 =====
+\definecolor{bgmain}{RGB}{248,246,244}
+\definecolor{coverprimary}{HTML}{1A1A2E}
+\definecolor{coveraccent}{HTML}{1B3A5C}         % 剑桥蓝
+\definecolor{badgeRamanujan}{HTML}{D4782F}       % 印度藏红花橙
+\definecolor{badgeAnalysis}{HTML}{1B3A5C}        % 剑桥蓝
+\definecolor{badgeApology}{HTML}{A68A56}          % 象牙白变体
+\definecolor{badgeLegacy}{HTML}{2E5F3E}           % 板球绿
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{20,18,40}
+\definecolor{muteddark}{RGB}{90,80,90}
+\definecolor{ramanujanpanel}{RGB}{254,240,230}
+\definecolor{analysispanel}{RGB}{230,238,248}
+\definecolor{apologypanel}{RGB}{250,246,238}
+\definecolor{legacypanel}{RGB}{236,245,236}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeRamanujan!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeAnalysis!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeApology!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{pen-fancy}\enspace 纯数学的守护者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {G.H. 哈代};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {G.H. Hardy\enspace·\enspace 1877 — 1947};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {解析数论 · 拉马努金 · 《一个数学家的辩白》· 英国学派};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeRamanujan, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {拉马努金\\Ramanujan};
+      \node[rounded corners=8pt, fill=badgeAnalysis, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {解析数论\\Analytic NT};
+      \node[rounded corners=8pt, fill=badgeApology, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=badgeApology!70!black] at (1.8,0) {数学辩白\\Apology};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {英国学派\\British School};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"我从未做过任何'有用'的事" —— G.H. Hardy,《一个数学家的辩白》};
+  % 肖像（右上）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.0cm,height=2.7cm,keepaspectratio]{G_H_Hardy.jpg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.4cm]current page.center)
+    {G.H. Hardy, c.1927};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{university}\enspace Cambridge · Oxford · Princeton\enspace|\enspace Royal + De Morgan + Sylvester + Copley};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么哈代定义了英国数学的灵魂}{拉马努金 · Hardy–Littlewood · 辩白 · 板球}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=11pt,inner ysep=9pt,font=\fontsize{8}{10}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=ramanujanpanel,draw=badgeRamanujan!50,text=badgeRamanujan!85!black]
+    (a) at (-5.7,1.05) {发现 Ramanujan (1913)\\[2pt]"一生中唯一的\\浪漫事件"};
+  \node[nodebox,fill=analysispanel,draw=badgeAnalysis!50,text=badgeAnalysis!85!black]
+    (b) at (-1.9,1.05) {Hardy–Littlewood\\[2pt]35年合作·圆法\\"第三个数学家"};
+  \node[nodebox,fill=apologypanel,draw=badgeApology!50,text=badgeApology!80!black]
+    (c) at (1.9,1.05) {《数学家的辩白》\\[2pt]1940·纯数学的\\终极宣言};
+  \node[nodebox,fill=legacypanel,draw=badgeLegacy!50,text=badgeLegacy!85!black]
+    (d) at (5.7,1.05) {英国数学改革\\[2pt]《纯数学教程》\\严格性革命};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=12pt,text width=13.4cm,align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 智力自评：Hardy 25 · Littlewood 30 · Hilbert 80 · Ramanujan 100}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 一个人的伟大不在于他证明了什么——而在于他发现了谁。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{神童的童年 (1877–1900)}{两岁分解赞美诗 · Winchester · Trinity}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=analysispanel,draw=badgeAnalysis!50] at (0,2.55)
+    {\textbf{1877 · 生于英国萨里郡 Cranleigh 教师家庭。}父亲是 Cranleigh School 的财务主管兼美术教师，母亲曾在林肯师范学院任教。两人都有数学天分但均未上大学。妹妹 Gertrude 是他一生的照料者。};
+  \node[item,fill=ramanujanpanel,draw=badgeRamanujan!35] at (0,1.05)
+    {\textbf{两岁的神童。}两岁时能写数字到百万位。被带去教堂时不听布道——而是在心里因式分解赞美诗的编号。这是他数学天赋最早的显现。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.25)
+    {\textbf{1896–1900 · 剑桥三一学院。}入读剑桥后，最初感到 Tripos 训练枯燥乏味——一度考虑转学历史。直到导师 Love 推荐他读 Jordan 的《分析教程》，他才第一次理解"数学到底是什么意思"。1900 年当选 Prize Fellowship。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个在教堂里分解数字的孩子——上帝给了他数学，他就不要上帝了。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 改革 ---
+\newcommand{\reformslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{改革英国数学 (1906–1908)}{《纯数学教程》· Hardy–Weinberg 原理}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,2.55)
+    {\textbf{1908 · 《纯数学教程》——英国数学教育的革命。}20世纪初，英国数学仍沉浸在对牛顿的崇拜中——重应用、轻严格。Hardy 以法国分析学派为武器，写出了英国第一本现代分析教材。它定义了此后半个世纪的英国数学教育。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!35] at (0,0.85)
+    {\textbf{1908 · Hardy–Weinberg 原理。}在与遗传学家 Reginald Punnett 打板球时，对方提起了一个遗传学问题。Hardy 用纯数学方法给出了答案——这就是群体遗传学的基石。"非常简单。"他说。他从未意识到这个结果有多重要。};
+  \node[item,fill=apologypanel,draw=badgeApology!20] at (0,-0.45)
+    {\textbf{每天四小时。}Hardy 每天只工作四小时做数学。其余时间：谈话、板球、绅士活动。但他四小时的工作量足以改变英国数学。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他声称"从未做过任何有用的事"。但连板球聊天都生成了遗传学基石。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Ramanujan 来信 ---
+\newcommand{\ramanujanLetterSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{"一生中唯一的浪漫事件" (1913)}{收到 Ramanujan 来信——数学史上最著名的第一封信}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=ramanujanpanel,draw=badgeRamanujan!55] at (0,2.55)
+    {\textbf{1913年1月16日。}一个印度马德拉斯港务局的小职员给 Hardy 寄来了一封信，附有大约120个定理——没有证明，只有公式。Hardy 晨读时以为遇到了疯子或恶作剧。但到了晚上，他意识到："伟大的数学家比如此高超的骗子更常见"。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!35] at (0,0.85)
+    {\textbf{改变一切的邀请。}Hardy 立即回信邀请 Ramanujan 来剑桥。Ramanujan 因种姓禁忌险些无法成行——他的母亲声称女神 Namagiri 在梦中允许了这次旅行。1914年，Ramanujan 登船前往英国。};
+  \node[item,fill=graypanel,draw=badgeApology!20] at (0,-0.45)
+    {\textbf{当 Erdős 问 Hardy 他最大的贡献是什么。}Hardy 毫不犹豫地回答："发现 Ramanujan。"——不是圆法，不是 Tauberian 定理，不是 Hardy 空间。是发现一个人。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "我和他的联系是我一生中唯一的浪漫事件。" —— Hardy 关于 Ramanujan 的演讲}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. Hardy–Ramanujan 合作 ---
+\newcommand{\hardyramanujanSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Hardy–Ramanujan 合作}{分拆函数 · 1729 · 天才的燃烧 (1914–1919)}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=ramanujanpanel,draw=badgeRamanujan!55] at (0,2.35)
+    {\textbf{分拆函数的渐近公式 (1917)。}整数 n 有多少种写成分拆的方式？p(200) $\approx$ 3.97万亿。Hardy 和 Ramanujan 给出了 p(n) 的惊人精确渐近公式——它后来在量子物理中用于计算原子核的量子分拆函数（Niels Bohr 首先使用）。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!35] at (0,0.85)
+    {\textbf{1729 ——最著名的出租车号码。}Hardy 去医院看望病中的 Ramanujan，说："我坐的出租车号码很无趣——1729。" Ramanujan 立刻回答："不，Hardy！1729 是最小的可以用两种方式表示为两个立方数之和的数：$1^3+12^3=9^3+10^3$。"};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.45)
+    {\textbf{智力天平。}Hardy 的名言——数学能力自评：Hardy=25，Littlewood=30，Hilbert=80，Ramanujan=100。他把自己排在最末。这不是谦逊——这是他对天赋的精确判断。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1729 不再无趣。因为它被一个天才、在病床上、用了一秒钟赋予了意义。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Hardy–Littlewood ---
+\newcommand{\hardylittlewoodSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{"Hardy–Littlewood"：第三个数学家 (1911–1945)}{35年合作 · 圆法 · "只有三个真正伟大的英国数学家"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,2.55)
+    {\textbf{1911–1945 · 数学史上最伟大的合作之一。}J.E. Littlewood 是 Hardy 的完美搭档。Hardy 提供优雅的形式化，Littlewood 提供深刻的洞察。他们的合作规则只有一条：互不干扰对方的写作风格。};
+  \node[item,fill=ramanujanpanel,draw=badgeRamanujan!35] at (0,0.85)
+    {\textbf{Harald Bohr 的名言。}"现在只有三个真正伟大的英国数学家：Hardy、Littlewood和Hardy–Littlewood。" 他们的联合署名成了一个独立的存在——一个比两者之和更强大的数学实体。};
+  \node[item,fill=graypanel,draw=badgeApology!20] at (0,-0.45)
+    {\textbf{合作的方式。}Littlewood 提供想法，Hardy 负责写作。"我希望你能想办法激励 Littlewood 写点东西，"Hardy 向 Russell 抱怨道。"在我们的合作中，他只贡献想法……所有的繁琐部分都得由我做。"};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个人是天才，两个人是 Hardy–Littlewood——数学史上的第三个名字。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 圆法与素数 ---
+\newcommand{\circlemethodSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{圆法与素数}{Waring 问题 · Hardy–Littlewood 猜想——解析数论的核心}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,2.55)
+    {\textbf{Hardy–Littlewood 圆法 (1920)。}将数论问题转化为复平面上的围道积分——沿单位圆上的"优弧"和"劣弧"分别估计。圆法是 20 世纪解析数论最强大的工具。Vinogradov 用它证明了三素数定理。};
+  \node[item,fill=ramanujanpanel,draw=badgeRamanujan!35] at (0,0.85)
+    {\textbf{Waring 问题。}每个正整数可以表示为多少个 k 次幂之和？Hardy 和 Littlewood 用圆法给出了 G(k) 的突破性上界。这是解析数论对加法数论的决定性胜利。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.45)
+    {\textbf{Hardy–Littlewood 猜想 (1923)。}关于孪生素数分布和哥德巴赫猜想的定量版本。第一猜想至今未完全证明，但它指导了近一个世纪的素数分布研究。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 将素数问题转化为复积分——这就是 Hardy 的魔法。圆法至今仍在被使用。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. Hardy 空间 ---
+\newcommand{\hardyspaceSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Hardy 空间与分析}{调和分析 · Tauberian 定理 · 不等式——纯粹分析的遗产}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,2.55)
+    {\textbf{Hardy 空间 Hᵖ。}Hardy 在 1915 年研究幂级数的边界行为时定义了 Hardy 空间——现在它是复分析、调和分析和算子理论的核心概念。$H^2$ 是 Hilbert 空间，$H^1$ 和 BMO 的对偶关系是 Fefferman 定理的基石。};
+  \node[item,fill=apologypanel,draw=badgeApology!35] at (0,0.85)
+    {\textbf{Tauberian 定理 (1914)。}如果级数在某种意义下"可求和"，何时它在通常意义下收敛？Hardy 和 Littlewood 的一系列 Tauberian 定理为发散级数理论奠定了严格基础。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!20] at (0,-0.45)
+    {\textbf{Hardy–Littlewood–Pólya《不等式》(1934)。}一部经典——Hardy、Littlewood、Pólya 三巨头合著。Hardy 不等式、Hardy–Littlewood 极大函数——调和分析的基石。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Hardy 空间、Hardy 不等式、Hardy 极大函数——名字刻在分析的每一个角落。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 辩白 ---
+\newcommand{\apologySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《一个数学家的辩白》(1940)}{"我从未做过任何有用的事" —— 纯数学的终极宣言}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=apologypanel,draw=badgeApology!55] at (0,2.55)
+    {\textbf{失去创造力后的数学讣告。}1939年心脏病后，Hardy 失去了创造性数学能力。他在深重的抑郁中写下了《辩白》——这不是一本自传，而是一封写给纯数学的情书。Graham Greene 将其与 Henry James 笔记并列。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!35] at (0,0.85)
+    {\textbf{"我从未做过任何'有用'的事。"}这句话是《辩白》中最著名的句子——但它有讽刺的续篇：Hardy–Weinberg 原理成为群体遗传学基石；分拆函数应用在核物理中；数论成为密码学的基础。他无心插柳柳成荫。};
+  \node[item,fill=graypanel,draw=badgeRamanujan!20] at (0,-0.45)
+    {\textbf{纯数学的尊严。}"数学家也许可以庆幸：至少有一门科学，因其远离日常人类活动而保持了温柔与洁净。"——这是硬核的反战宣言，也是纯数学最动人的辩护。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "一位创造性的艺术家……渴望他最好的作品被后世纪念。" —— 1940年的Hardy已经知道，他做到了。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 人格 ---
+\newcommand{\personalitySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{板球 · 镜子 · 使徒}{害羞怪人与他的精英圈子}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,2.55)
+    {\textbf{板球疯。}数学的最高水平是"Hobbs 级"（Jack Hobbs），后来 Bradman 出现后升级为"Bradman 级"。Keynes 感叹：如果他每天用读板球比分的热情读半小时股市，他就是富翁了。他的新年决心第二条：在 Oval 打出 211 not out。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!35] at (0,0.85)
+    {\textbf{恐惧镜子。}极其害羞——住酒店时用毛巾盖住所有镜子。无法忍受被介绍给陌生人。领奖时无法面对全校师生。这种极端内向在 Bloomsbury 团体和剑桥使徒中找到了归属。};
+  \node[item,fill=ramanujanpanel,draw=badgeRamanujan!20] at (0,-0.45)
+    {\textbf{六条新年决心。}（1）证明黎曼假设；（2）在 Oval 打出 211 not out；（3）找到说服大众的上帝不存在证明；（4）登顶珠峰第一人；（5）担任英德苏联总统；（6）暗杀墨索里尼。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个不敢照镜子的男人——却有勇气为纯数学的尊严辩护一生。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. Oxford–Cambridge ---
+\newcommand{\oxbridgeSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Oxford–Cambridge 十二年 (1919–1931)}{Russell 事件 · Princeton 交换 · 回归}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,2.55)
+    {\textbf{1919 · 离开剑桥。}一战期间 Bertrand Russell 因反战立场被剥夺 Trinity 教职。Hardy 愤而离开剑桥，接受了牛津的 Savilian 几何教授席位。这不是一次普通的跳槽——这是一个原则声明。};
+  \node[item,fill=apologypanel,draw=badgeApology!35] at (0,0.85)
+    {\textbf{1928–1929 · 普林斯顿。}与 Oswald Veblen 交换，在普林斯顿度过一年。Hardy 发表 Gibbs 讲座，带来了剑桥的分析传统。美国数学因他而更严格。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!20] at (0,-0.45)
+    {\textbf{1931 · 回归剑桥。}接受了 Sadleirian 纯粹数学教授席位。传闻他离开牛津是因为牛津65岁强制退休——而剑桥没有这一限制。他不想在任何年龄停止做数学。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 离开是一种抗议，回来是一种归属。剑桥永远是他的精神故乡。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 荣誉 ---
+\newcommand{\awardsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Royal · De Morgan · Sylvester · Copley}{英国数学的最高荣誉——从 Smith's Prize 到 Copley Medal}
+\begin{center}
+\begin{tikzpicture}
+  \node[rounded corners=5pt,fill=analysispanel,draw=badgeAnalysis!50,line width=0.6pt,
+        inner sep=6pt,text width=3.0cm,font=\fontsize{4.8}{6}\selectfont,align=center]
+    at (-5.7,1.05) {\small\faIcon{trophy}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeAnalysis}Royal Medal (1920)}\\[2pt]解析数论与分析\\的突破性贡献};
+  \node[rounded corners=5pt,fill=apologypanel,draw=badgeApology!50,line width=0.6pt,
+        inner sep=6pt,text width=3.0cm,font=\fontsize{4.8}{6}\selectfont,align=center]
+    at (-1.9,1.05) {\small\faIcon{medal}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeApology}De Morgan (1929)}\\[2pt]LMS 最高荣誉\\纯数学的守护者};
+  \node[rounded corners=5pt,fill=legacypanel,draw=badgeLegacy!50,line width=0.6pt,
+        inner sep=6pt,text width=3.0cm,font=\fontsize{4.8}{6}\selectfont,align=center]
+    at (1.9,1.05) {\small\faIcon{award}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeLegacy}Sylvester (1940)}\\[2pt]皇家学会\\研究终身成就};
+  \node[rounded corners=5pt,fill=ramanujanpanel,draw=badgeRamanujan!50,line width=0.6pt,
+        inner sep=6pt,text width=3.0cm,font=\fontsize{4.8}{6}\selectfont,align=center]
+    at (5.7,1.05) {\small\faIcon{crown}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeRamanujan}Copley (1947)}\\[2pt]皇家学会最高荣誉\\逝世当年};
+  \node[rounded corners=6pt,fill=graypanel,draw=coveraccent!55,line width=0.8pt,
+        inner sep=9pt,text width=13cm,font=\fontsize{7}{9}\selectfont,align=center]
+    at (0,-1.35) {
+    {\fontsize{8}{10.5}\selectfont\bfseries\color{coverprimary!90!black} 更多荣誉}\\[2pt]
+    {\color{coverdark!80} {\fontsize{6.5}{8.5}\selectfont Smith's Prize (1901) · FRS (1910) · Chauvenet Prize (1932)}\\[2pt]
+    {\fontsize{6.5}{8.5}\selectfont 美国国家科学院外籍院士 (1927) · 美国哲学会 (1939)}}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 遗产 ---
+\newcommand{\legacySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{哈代的遗产}{教材 · Hardy 空间 · 1729 · 圆法——名字刻在数学的每一个角落}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt,inner xsep=7pt,inner ysep=9pt,text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont,align=center}
+]
+  \node[leg,fill=ramanujanpanel,draw=badgeRamanujan!50,line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeRamanujan}发现 Ramanujan}\\[3pt]分拆函数\\1729\\"一生中唯一的浪漫"};
+  \node[leg,fill=analysispanel,draw=badgeAnalysis!50,line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAnalysis}解析数论}\\[3pt]圆法\\Tauberian 定理\\Hardy 猜想};
+  \node[leg,fill=apologypanel,draw=badgeApology!50,line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeApology}分析}\\[3pt]Hardy 空间\\不等式\\极大函数};
+  \node[leg,fill=legacypanel,draw=badgeLegacy!50,line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy}教育与哲学}\\[3pt]《纯数学教程》\\《辩白》\\改革英国数学};
+  \node[draw=coveraccent!65,fill=graypanel,rounded corners=6pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他发现了人，创造了方法，写出了宣言。}\\[4pt]
+    {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      Hardy–Weinberg 原理是遗传学基石。圆法是解析数论之剑。\\
+      Hardy 空间是调和分析的殿堂。《辩白》是每个数学家的必读。\\
+      他的 1729、他的板球、他的自评 25——成了一个数学传奇。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {他一生追求"无用"的纯数学：};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {却无意中给出了遗传学、核物理、};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!70!black]
+    at ([yshift=-0.5cm]current page.center) {密码学的基石。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-1.1cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-1.1cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-2.0cm]current page.center)
+    {但他最伟大的贡献——按他自己的说法——是发现了一个来自马德拉斯的年轻小职员。};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!60!black]
+    at ([yshift=-2.8cm]current page.center)
+    {G.H. 哈代\quad Godfrey Harold Hardy\quad 1877 — 1947};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{infinity}\enspace 解析数论·分析·Ramanujan 的伯乐·英国数学的改革者\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\reformslide
+\ramanujanLetterSlide
+\hardyramanujanSlide
+\hardylittlewoodSlide
+\circlemethodSlide
+\hardyspaceSlide
+\apologySlide
+\personalitySlide
+\oxbridgeSlide
+\awardsslide
+\legacySlide
+\closingslide
+\end{document}

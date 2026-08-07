@@ -1,0 +1,516 @@
+% =============================================================
+%  泛函分析的奠基人：斯特凡·巴拿赫 (Stefan Banach)
+%  Beamer 演示 —— 参照 Weil / Kolmogorov / Gödel 版式
+%  资料来源：mathematician/pages/Stefan_Banach + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：巴拿赫 —— 深琥珀 + 深松绿 + 象牙米白 + 暗红陶 =====
+\definecolor{bgmain}{RGB}{245,242,240}
+\definecolor{coverprimary}{HTML}{5D3A1A}   % 深琥珀棕 — 波兰蜂蜜酒 + 咖啡馆暖木
+\definecolor{coveraccent}{HTML}{F5EDDA}    % 象牙米白 — 泛函分析论文纸色
+\definecolor{covergreen}{HTML}{2E5A47}     % 深松绿 — 分析深度 + 波兰森林
+\definecolor{coveramber}{HTML}{C77A33}     % 暖琥珀 — 咖啡与伏特加
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{80,40,15}
+\definecolor{muteddark}{RGB}{110,85,65}
+\definecolor{amberpanel}{RGB}{250,240,225}
+\definecolor{greenpanel}{RGB}{224,241,234}
+\definecolor{goldpanel}{RGB}{252,248,232}
+\definecolor{graypanel}{RGB}{242,244,248}
+\definecolor{redpanel}{RGB}{250,235,238}
+\definecolor{bluepanel}{RGB}{225,235,242}
+% 巴拿赫四大支柱
+\definecolor{badgespace}{HTML}{2E5A47}      % Banach 空间/泛函分析 — 深松绿
+\definecolor{badgetheorem}{HTML}{B8860B}    % 三大基本定理 — 暗金铜
+\definecolor{badgecafe}{HTML}{C77A33}       % Lwów学派/咖啡馆 — 暖琥珀
+\definecolor{badgewarsaw}{HTML}{A52A2A}     % 波兰/战争 — 暗红陶
+\definecolor{coverteal}{HTML}{009688}       % 青绿 — 来自 openmath_page
+\definecolor{coverwarm}{HTML}{FFB300}        % 暖金 — 来自 openmath_page
+\definecolor{badgecomputation}{HTML}{00BFA5} % 来自 openmath_page
+\definecolor{badgeAI}{HTML}{5C6BC0}          % 来自 openmath_page
+\definecolor{badgebio}{HTML}{FFA000}         % 来自 openmath_page
+\definecolor{badgephilosophy}{HTML}{8D6E63} % 来自 openmath_page
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgespace!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgewarsaw!10] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coveramber!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgecafe!8] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveramber}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveramber!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{coffee}\enspace 泛函分析的奠基人};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {斯特凡·巴拿赫};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Stefan Banach\enspace·\enspace 1892 — 1945};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveramber!70!black]
+    at ([yshift=1.1cm]current page.center) {自学天才 · Lwów 学派灵魂 · 苏格兰咖啡馆 · 波兰数学的荣耀};
+  \draw[coveramber!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgespace, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {泛函分析 Analysis};
+      \node[rounded corners=8pt, fill=badgetheorem, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {三大定理 Theorems};
+      \node[rounded corners=8pt, fill=badgecafe, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {咖啡馆 Café};
+      \node[rounded corners=8pt, fill=badgewarsaw, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {波兰 Poland};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"在咖啡馆的烟雾中，一群波兰数学家发明了现代分析的语言。"};
+  % Banach 肖像（右上）
+  \node[draw=coveramber!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=2.8cm]current page.center)
+    {\includegraphics[width=2.5cm,height=3.2cm,keepaspectratio]{images.jpeg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=0.95cm]current page.center)
+    {Stefan Banach, 1930s};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{award}\enspace 波兰科学院成员 1924 · ICM 奥斯陆 1936\enspace|\enspace 克拉科夫 · Lwów};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么巴拿赫改变了分析的面貌}{Banach 空间 · 三大基本定理 · 苏格兰咖啡馆 · 波兰学派的灵魂}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=greenpanel, draw=badgespace!50, text=coverprimary!85!black]
+    (a) at (-5.7,1.05) {Banach 空间\\完备赋范\\公理化定义};
+  \node[nodebox, fill=goldpanel, draw=badgetheorem!50, text=badgetheorem!85!black]
+    (b) at (-1.9,1.05) {三大定理\\Hahn–Banach\\一致有界·开映射};
+  \node[nodebox, fill=amberpanel, draw=badgecafe!50, text=badgecafe!85!black]
+    (c) at (1.9,1.05) {苏格兰咖啡馆\\193 个问题\\活鹅的承诺};
+  \node[nodebox, fill=redpanel, draw=badgewarsaw!50, text=badgewarsaw!85!black]
+    (d) at (5.7,1.05) {波兰学派\\Lwów · 两次大战间\\被战争摧毁};
+  \node[draw=coveramber!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} Banach 不是第一个使用函数空间的人 —— Hilbert 空间早于他。\\但他是第一个给出公理化定义的人。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} "完备赋范向量空间" —— 这个简单到可以写在一行里的定义，统一了整个现代分析。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 私生子与自学 ---
+\newcommand{\originslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{克拉科夫的私生子 (1892–1916)}{由洗衣女工抚养 · 自学数学 · 从不按课程走}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgecafe!40] at (0,2.55)
+    {\textbf{1892 · 生于克拉科夫（时属奥匈帝国，今属波兰）。}父亲是奥匈帝国军官 Stefan Greczek，母亲 Katarzyna Banach 是未婚洗衣女工。Banach 随母姓，由祖母抚养长大。父亲提供了抚养费并送他上学，但从未给予正式承认。};
+  \node[item, fill=greenpanel, draw=badgespace!30] at (0,1.05)
+    {\textbf{Lwów 理工大学（未毕业）。}Banach 只上自己感兴趣的课，从不按学位要求走——从未取得正式工程学位。他的数学完全来自自学和朋友间的讨论。这是一个自学成才的天才。};
+  \node[item, fill=goldpanel, draw=badgetheorem!30] at (0,-0.25)
+    {\textbf{一战期间的自我修炼。}1914–1918 年，Banach 逃回克拉科夫，利用战争期间的"强制休息"完成了数学基础的系统自学。这一时期他奠定了后来所有工作的根基。};
+  \node[draw=coveramber!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他没有老师 —— 他的老师是咖啡馆里的朋友、印刷品上的公式、和自己的大脑。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 公园偶遇 ---
+\newcommand{\parkmeetslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{公园长椅上的偶遇 (1916)}{Steinhaus： "我一生中最重要的数学发现——我发现的是一个人。"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgecafe!55] at (0,2.35)
+    {\textbf{1916 · 克拉科夫 Planty 公园。}Hugo Steinhaus——一位已在学术界站稳脚跟的数学家——在公园散步时，偶然听到两个年轻人在讨论 Lebesgue 积分。其中一人就是 Stefan Banach。};
+  \node[item, fill=goldpanel, draw=badgetheorem!35] at (0,0.85)
+    {\textbf{"我的发现"。}Steinhaus 后来回忆："这是我一生中最重要的数学发现。"他发现的不是一个定理，而是一个人——一个完全自学成才、却已经在独立工作中取得了重要进展的数学天才。};
+  \node[item, fill=greenpanel, draw=badgespace!30] at (0,-0.45)
+    {\textbf{伯乐与千里马。}Steinhaus 成为 Banach 的终生合作者和导师。两人性格截然相反——Steinhaus 严肃保守，Banach 开朗爱酒——但这种互补成就了数学史上最伟大的伙伴关系之一。};
+  \node[draw=coveramber!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 数学史上最著名的偶遇 —— 在公园长椅上，一位教授"捡到"了一位天才。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Banach 空间 ---
+\newcommand{\spaceslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Banach 空间 (1920–1922)}{完备赋范向量空间的公理化定义 —— 现代泛函分析的基石}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgespace!55] at (0,2.35)
+    {\textbf{1920 · 博士论文。}Banach 的博士论文《论抽象集合中的运算及其在积分方程中的应用》包含了 Banach 空间的核心定义。他的博士培养是"逆向"的：先做出一流成果，再补走程序——口试委员会不得不适应他的"非标准"知识结构。};
+  \node[item, fill=goldpanel, draw=badgetheorem!35] at (0,0.85)
+    {\textbf{Banach 空间 = 完备赋范向量空间。}$\|\cdot\|$（范数）+ 完备性（每个 Cauchy 序列收敛）。这个定义简单到极致，但它是 $L^p$、$C[0,1]$、$\ell^p$、Sobolev 空间等一切现代函数空间的共同语言。};
+  \node[item, fill=amberpanel, draw=badgecafe!30] at (0,-0.45)
+    {\textbf{从具体到抽象。}Hilbert 空间（内积 + 完备）是 Banach 空间的特殊情形。Banach 的洞察在于：很多分析定理不依赖于内积，只依赖于范数和完备性。他的公理化打开了现代泛函分析的大门。};
+  \node[draw=coveramber!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一行定义，统一了从 PDE 到量子力学的全部函数空间。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 三大基本定理 ---
+\newcommand{\theoremsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{三大基本定理}{Hahn–Banach · Banach–Steinhaus · 开映射/闭图像}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgetheorem!55] at (0,2.35)
+    {\textbf{Hahn–Banach 定理（线性泛函延拓）。}在一个 Banach 空间的子空间上定义的线性泛函，可以保范地延拓到整个空间。简言之：局部的"测量"可以一致地推广到全局。这是泛函分析三大基本定理的第一个。};
+  \node[item, fill=greenpanel, draw=badgespace!40] at (0,0.85)
+    {\textbf{Banach–Steinhaus 定理（一致有界原理）。}如果一族线性算子逐点有界，则它们是一致有界的。这是"点态条件推全局条件"的经典模式——也是分析中最重要的推理工具之一。};
+  \node[item, fill=amberpanel, draw=badgecafe!30] at (0,-0.45)
+    {\textbf{开映射定理 / 闭图像定理。}如果 Banach 空间之间的有界线性算子是满射，则它是开映射——自动有连续逆。闭图像定理是它的等价形式：处处定义的闭算子自动连续。};
+  \node[draw=coveramber!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 三个定理，一个主题：在 Banach 空间中，局部自动蕴含全局。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 苏格兰咖啡馆 ---
+\newcommand{\cafeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{苏格兰咖啡馆与 Lwów 学派}{伏特加、咖啡与数学 —— 20 世纪最著名的数学聚集地}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgecafe!55] at (0,2.35)
+    {\textbf{苏格兰咖啡馆 (Kawiarnia Szkocka)。}在 Lwów 的苏格兰咖啡馆，Banach 和他的同事——Mazur、Ulam、Schauder、Orlicz 等——在烟雾缭绕中讨论数学，用铅笔在桌布和大理石桌面上书写公式。这不是浪漫化——这是 Lwów 学派的实际工作方式。};
+  \node[item, fill=goldpanel, draw=badgetheorem!35] at (0,0.85)
+    {\textbf{日常的咖啡馆。}几乎每天，这群人从早晨待到深夜。咖啡馆老板为他们保留固定的桌子，用越来越浓的咖啡（"cafe turk"）和伏特加作燃料。Banach 的许多最重要的想法都是在这个环境中诞生的。};
+  \node[item, fill=greenpanel, draw=badgespace!30] at (0,-0.45)
+    {\textbf{Lwów 学派的黄金时代。}两次大战之间（1918–1939），Lwów 是世界泛函分析的中心。Banach 创办了《Studia Mathematica》（1929）——世界上第一本泛函分析专业期刊。当时 Lwów 的数学声誉不亚于巴黎和哥廷根。};
+  \node[draw=coveramber!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 在咖啡馆里，一群波兰数学家创建了现代分析最基本的语言。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 苏格兰咖啡馆问题集 ---
+\newcommand{\scottishbookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{苏格兰咖啡馆问题集}{193 个未解决问题 · 活鹅的承诺 · 数学共同体精神}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgecafe!55] at (0,2.35)
+    {\textbf{1935 · Mazur 买了一个笔记本。}为了不在大理桌面上丢失想法，Stanisław Mazur 购买了一本专用笔记本，记录了咖啡馆讨论中产生的未解决问题。这就是著名的"苏格兰咖啡馆问题集"(Scottish Book)。};
+  \node[item, fill=goldpanel, draw=badgetheorem!40] at (0,0.85)
+    {\textbf{活鹅的承诺。}问题 153 的奖励是一只活鹅。1972 年，当瑞典数学家 Per Enflo 解决了该问题时，Mazur 在华沙的一次公开仪式上，将一只活鹅交给了他。这是数学史上最著名（也是最奇特）的颁奖。};
+  \node[item, fill=greenpanel, draw=badgespace!30] at (0,-0.45)
+    {\textbf{193 个问题。}这些问题涵盖泛函分析、拓扑、测度论、逼近论。许多问题直到今天仍在被研究。这本笔记本是数学共同体精神的最高象征——不是为了竞争，而是为了共同探索未知。};
+  \node[draw=coveramber!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1972 年，一只活鹅被郑重交到 Per Enflo 手中——因为 1935 年的一个承诺。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 《线性算子理论》 ---
+\newcommand{\bookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《线性算子理论》(1931)}{泛函分析的"圣经" —— 统一了整片数学疆域}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgetheorem!55] at (0,2.55)
+    {\textbf{1931 · Théorie des opérations linéaires。}Banach 用法文出版了这本专著（波兰数学家习惯用法文在国际上发表）。这不是简单的定理合集，而是为整个泛函分析领域建立了统一语言和框架体系。};
+  \node[item, fill=greenpanel, draw=badgespace!40] at (0,1.05)
+    {\textbf{Banach 空间 → Banach 代数 → C* 代数。}Banach 在书中提出了 Banach 代数的原型——有界线性算子构成的代数。这一概念后来被 Gelfand 发展为 C* 代数理论，成为现代数学物理的核心语言。};
+  \node[item, fill=amberpanel, draw=badgecafe!30] at (0,-0.25)
+    {\textbf{持久影响。}直到今天，每个泛函分析研究生都会引用这本书。Banach 为后来的所有工作——Schwartz 分布理论、Sobolev 空间、Gelfand 的交换 Banach 代数——提供了语法。};
+  \node[draw=coveramber!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1931 年，一位从未正式毕业的波兰人用法文写下了现代分析的语法书。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. Banach–Tarski 悖论 ---
+\newcommand{\paradoxslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Banach–Tarski 悖论 (1924)}{选择公理的惊人后果 —— 一个球变成两个}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgespace!50] at (0,2.35)
+    {\textbf{1924 · 与 Alfred Tarski 合作。}Banach 和 Tarski 严格证明了：在三维空间中，一个实心球可以分解为有限块，重新组合后得到两个与原来大小完全相同的球。};
+  \node[item, fill=amberpanel, draw=badgecafe!35] at (0,0.85)
+    {\textbf{选择公理的"荒谬"后果。}这不是物理悖论——它是纯数学定理，根源在于选择公理 (AC) 允许构造不可测集。Banach 本人对此冷静看待：它是一个关于 AC 的推论，不说明现实世界的法则被违背。};
+  \node[item, fill=goldpanel, draw=badgetheorem!30] at (0,-0.45)
+    {\textbf{测度论的边界。}Banach–Tarski 悖论精确地揭示了传统体积概念（Lebesgue 测度）在 AC 下的局限性：某些集合不可测量。这推动了测度论和集合论的深度发展。};
+  \node[draw=coveramber!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 数学可以证明一个球等于两个球——在逻辑的王国里，直觉不是终极权威。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 战争岁月 ---
+\newcommand{\warslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{被战争撕裂 (1939–1944)}{苏联占领 · 纳粹占领 · 在 Weigl 研究所喂虱子求生}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgewarsaw!50] at (0,2.35)
+    {\textbf{1939 · 二战爆发。}Lwów 先被苏联占领（1939–1941），后被纳粹占领（1941–1944）。大学关闭，波兰知识分子遭到系统性迫害。Lwów 学派的黄金时代在一夜之间终结。苏联占领期间，Kolmogorov 和 Sobolev 等苏联数学家曾亲自访问 Banach——在学术真空中保持了一丝联系。};
+  \node[item, fill=amberpanel, draw=badgecafe!35] at (0,0.85)
+    {\textbf{Weigl 研究所。}纳粹占领期间，Banach 在 Rudolf Weigl 的斑疹伤寒疫苗研究所工作——具体工作是喂养感染斑疹伤寒的虱子。这是一种极端艰苦但保护他不被送往集中营的工作（虱子被装在绑在腿上的小盒子里，以人体血液喂养）。};
+  \node[item, fill=goldpanel, draw=badgetheorem!30] at (0,-0.45)
+    {\textbf{秘密教学。}即使在这样极端的环境下，Banach 仍在秘密组织数学讨论和教学。他从未停止思考数学——战争可以摧毁大学和城市，但不能摧毁一个数学家对真理的追求。};
+  \node[draw=coveramber!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个曾经在咖啡馆讨论 Banach 空间的数学家，被迫用身体喂养虱子以换取生存。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 被摧毁的学派 ---
+\newcommand{\lostscholarslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{被摧毁的 Lwów 学派}{Schauder 之死 · Ulam 流亡 · Lwów 永远改变了}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgewarsaw!55] at (0,2.55)
+    {\textbf{Juliusz Schauder (1899–1943)。}Schauder 不动点定理的发明者之一（Schauder–Leray 定理），1943 年在 Lwów 被纳粹盖世太保杀害——他是犹太人。他的死是整个 Lwów 学派被摧毁的最核心的悲剧事件。};
+  \node[item, fill=amberpanel, draw=badgecafe!35] at (0,1.05)
+    {\textbf{Stanisław Ulam (1909–1984)。}Lwów 学派成员，幸运地逃脱了战争的毁灭——后来在 Los Alamos 与 von Neumann 共同发明了 Monte Carlo 方法。他是 Lwów"失落的一代"中少数的幸存者。};
+  \node[item, fill=goldpanel, draw=badgetheorem!30] at (0,-0.25)
+    {\textbf{Lwów 不再属于波兰。}战后 Lwów 划归苏联（今乌克兰利沃夫）。Banach 的 Lwów 不复存在。Schauder 被杀、Ulam 离开、Orlicz 流亡——一个世界级的数学中心在两场战争中彻底消失了。};
+  \node[draw=coveramber!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 苏格兰咖啡馆还在，但坐在那张桌子旁的人已经不在了。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 战后与早逝 ---
+\newcommand{\postwarslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{战后的最后一年 (1944–1945)}{雅盖隆大学的召唤 · 53 岁肺癌去世}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgetheorem!50] at (0,2.35)
+    {\textbf{1944 · 苏军解放 Lwów。}Sobolev 等苏联数学家主动联系 Banach，试图帮助他重建学术生涯。他被邀请去克拉科夫的雅盖隆大学（波兰最高学术机构）担任数学系主任——这是他应得的最高荣誉。};
+  \node[item, fill=redpanel, draw=badgewarsaw!40] at (0,0.85)
+    {\textbf{1945 年 8 月 31 日 · 肺癌。}Banach 未能上任。战争期间的营养不良和极端艰苦的生活条件严重损害了他的健康。他在 53 岁的年龄因肺癌去世，距离二战结束仅不到一年。};
+  \node[item, fill=amberpanel, draw=badgecafe!30] at (0,-0.45)
+    {\textbf{历史的残酷。}Banach 活着看到了纳粹的失败，但无法活着看到波兰数学的复兴。他的早逝——与 Schauder 的被杀、Ulam 的流亡一起——成为 20 世纪数学最惨重的损失之一。};
+  \node[draw=coveramber!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他有机会成为波兰数学的"院长"，却没能等到这个机会。53 岁——最不应该的结局。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{巴拿赫的遗产}{Banach 空间是整个现代泛函分析的 DNA}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=greenpanel, draw=badgespace!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgespace} Banach 空间}\\[3pt]泛函分析\\PDE\\量子力学};
+  \node[leg, fill=goldpanel, draw=badgetheorem!50, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgetheorem!85!black} 三大定理}\\[3pt]Hahn–Banach\\一致有界\\开映射};
+  \node[leg, fill=amberpanel, draw=badgecafe!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgecafe} 学派传承}\\[3pt]Lwów 学派\\问题集\\《Studia Math.》};
+  \node[leg, fill=redpanel, draw=badgewarsaw!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgewarsaw} 后继发展}\\[3pt]C* 代数\\Sobolev 空间\\分布理论};
+  \node[draw=coveramber!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他不是某一个定理的发现者 ——\\他是现代泛函分析这门语言的创造者。}\\[4pt]
+{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      Banach 空间 → Banach 代数 → C* 代数 → 量子场论，\\
+      Hahn–Banach → 凸分析 → 优化理论 → 经济学，\\
+      反应扩散方程 → 高斯测度 → Malliavin 分析 → 金融数学。\\
+      在每一个现代分析的角落，你都能找到 Banach 的语法。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 升起海水 ---
+\newcommand{\epitaphslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center] at ([yshift=2.2cm]current page.center) {
+    \begin{tikzpicture}
+      \node[draw=coverprimary!20, line width=0.8pt, fill=white, rounded corners=4pt, inner sep=2pt]
+        {\includegraphics[width=5.5cm,keepaspectratio]{tomb.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{18}{24}\selectfont\bfseries, text=coverprimary!90!black,
+        align=center, text width=13cm]
+    at ([yshift=-0.6cm]current page.center) {在咖啡馆的烟雾中，};
+  \node[anchor=center, font=\fontsize{18}{24}\selectfont\bfseries, text=coverprimary!90!black,
+        align=center, text width=13cm]
+    at ([yshift=-1.6cm]current page.center) {一群波兰数学家发明了现代分析的语言。};
+  \draw[coveramber!60, line width=1.3pt] ([yshift=-2.4cm, xshift=-2.5cm]current page.center)
+    -- ([yshift=-2.4cm, xshift=2.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-3.3cm]current page.center)
+    {斯特凡·巴拿赫\quad Stefan Banach\quad 1892 — 1945};
+  \node[anchor=south, font=\fontsize{6.5}{8}\selectfont, text=coverdark!45]
+    at ([yshift=0.35cm]current page.south) {Lwów · 利沃夫};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 16. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {他说：给我一个完备的};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveramber!85!black]
+    at ([yshift=0.4cm]current page.center) {赋范向量空间，我把它命名为家。};
+  \draw[coveramber!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.5cm]current page.center)
+    {斯特凡·巴拿赫\quad Stefan Banach\quad 1892 — 1945};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{coffee}\enspace 泛函分析的奠基人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\originslide
+\parkmeetslide
+\spaceslide
+\theoremsslide
+\cafeslide
+\scottishbookslide
+\bookslide
+\paradoxslide
+\warslide
+\lostscholarslide
+\postwarslide
+\legacyslide
+\epitaphslide
+\closingslide
+\end{document}

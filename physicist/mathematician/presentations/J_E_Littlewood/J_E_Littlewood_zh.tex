@@ -1,0 +1,438 @@
+% =============================================================
+%  "Hardy–Littlewood"的另一半：J.E. 李特尔伍德 (J.E. Littlewood)
+%  Beamer 演示 —— 参照 Milnor / Atiyah / Hardy 版式
+%  资料来源：mathematician/pages/J._E._Littlewood + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：剑桥蓝 + Hardy 金 + 弹道红 + 冬青绿 =====
+\definecolor{bgmain}{RGB}{248,246,244}
+\definecolor{coverprimary}{HTML}{1A1628}
+\definecolor{coveraccent}{HTML}{1B3A5C}          % 剑桥蓝
+\definecolor{badgeHardy}{HTML}{B8860B}            % Hardy 金（伙伴）
+\definecolor{badgePrime}{HTML}{1B3A5C}            % 剑桥蓝（数论）
+\definecolor{badgeRadar}{HTML}{8B2500}             % 弹道红（战争）
+\definecolor{badgeLegacy}{HTML}{3A5F40}            % 冬青绿（长寿/杂集）
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{20,18,40}
+\definecolor{muteddark}{RGB}{90,80,90}
+\definecolor{hardypanel}{RGB}{252,246,232}
+\definecolor{primepanel}{RGB}{232,238,248}
+\definecolor{radarpanel}{RGB}{252,236,232}
+\definecolor{legacypanel}{RGB}{236,242,236}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeHardy!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgePrime!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeRadar!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{user-friends}\enspace "Hardy–Littlewood"的另一半};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {J.E. 李特尔伍德};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {J.E. Littlewood\enspace·\enspace 1885 — 1977};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {解析数论 · Hardy–Littlewood · $\pi(x)$ 振荡 · 炮弹与雷达 · 《杂集》};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeHardy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.65cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {Hardy–Littlewood\\35年合作};
+      \node[rounded corners=8pt, fill=badgePrime, inner xsep=8pt, inner ysep=5pt,
+            text width=2.65cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {$\pi(x)$ 振荡\\解析数论};
+      \node[rounded corners=8pt, fill=badgeRadar, inner xsep=8pt, inner ysep=5pt,
+            text width=2.65cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {炮弹与雷达\\WWI+WWII};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.65cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {《杂集》\\92年人生};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"Landau 不相信 Littlewood 的存在——他从德国飞到剑桥来亲眼核实。他只见到了 Hardy。"};
+  % 肖像（右上）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+{\includegraphics[width=2.0cm,height=2.7cm,keepaspectratio]{J_E_Littlewood.png}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.4cm]current page.center)
+    {J.E. Littlewood, 1905};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{university}\enspace Cambridge Trinity · Manchester · Rouse Ball Professor\enspace|\enspace Smith + Royal + Sylvester + Copley\enspace|\enspace \faIcon{globe}\enspace 英国};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么他是"第三个数学家"}{Bohr 的名言 · $\pi(x)$ 振荡 · Landau 的怀疑 · Cartwright 雷达}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=7pt,inner ysep=9pt,font=\fontsize{8}{10}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=hardypanel,draw=badgeHardy!50,text=badgeHardy!85!black]
+    (a) at (-5.5,1.05) {Hardy–Littlewood\\[2pt]35年合作·圆法\\"第三个数学家"};
+  \node[nodebox,fill=primepanel,draw=badgePrime!50,text=badgePrime!85!black]
+    (b) at (-1.8,1.05) {$\pi(x)-\operatorname{Li}(x)$ 振荡\\[2pt]1914·推翻所有\\数值直觉};
+  \node[nodebox,fill=radarpanel,draw=badgeRadar!50,text=badgeRadar!85!black]
+    (c) at (1.8,1.05) {炮弹与雷达\\[2pt]WWI弹道·Cartwright\\动力系统先驱};
+  \node[nodebox,fill=legacypanel,draw=badgeLegacy!50,text=badgeLegacy!85!black]
+    (d) at (5.5,1.05) {92年数学人生\\[2pt]《杂集》·Paley\\Skewes 数};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=12pt,text width=13.0cm,align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} "只有三个真正伟大的英国数学家：Hardy、Littlewood、Hardy–Littlewood"}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} ——Harald Bohr, 1947。他既是三分之一的数学家，也是三分之二的数学家。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 南非 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{南非的童年 (1885–1903)}{Kent → Cape Town → St Paul's · 旁观者的眼睛}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=primepanel,draw=badgePrime!50] at (0,2.55)
+    {\textbf{1885 · 生于英国肯特郡 Rochester。}长子，父亲 Edward Thornton Littlewood 是校长。1892年，父亲接受南非 Wynberg 的校长职位，7岁的 Littlewood 随全家移居开普敦。他在南非度过了童年——一个英国男孩，在不列颠帝国的边缘长大。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!35] at (0,1.05)
+    {\textbf{1900 · 独自返回英国。}15岁时回英国入读 St Paul's School，师从代数几何学家 Francis Sowerby Macaulay。从热带到雾都，从殖民地到帝国中心——他成了一个旁观者。};
+  \node[item,fill=graypanel,draw=badgeHardy!20] at (0,-0.25)
+    {\textbf{1903 · Trinity College, Cambridge。}进入剑桥。1905年 Senior Wrangler（与 James Mercer 并列）。这种至高的 Tripos 排名是英国数学教育的顶峰——同时也是它的墓碑。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个在异国长大的英国人——他学会了从不属于任何地方，只属于数学。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. Barnes ---
+\newcommand{\barnesslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{导师的建议：证明黎曼假设 (1906)}{"试试看"——英国数学的孤立与重生}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=primepanel,draw=badgePrime!55] at (0,2.55)
+    {\textbf{Ernest Barnes 的荒唐建议。}1906年开始博士研究。导师 Barnes 建议："试试证明黎曼假设。"没有指点，没有方向——就一句"try it"。Littlewood 没能证明。但他发现如果 RH 成立，素数定理就成立，并给出了误差项。};
+  \node[item,fill=radarpanel,draw=badgeRadar!35] at (0,0.85)
+    {\textbf{英国数学的孤立。}Littlewood 后来在《杂集》中写道：RH $\Rightarrow$ PNT 的关联在欧洲大陆早已为人所知。他"重新发现"了这个结果——这正是英国数学在20世纪初落后于欧洲大陆的缩影。Hardy 和 Littlewood 将是改变这一切的人。};
+  \node[item,fill=graypanel,draw=badgeHardy!20] at (0,-0.45)
+    {\textbf{1908 · Trinity Fellow + Smith's Prize。}同时获得 Fellowship 和奖。去 Manchester 做了三年 Richardson 讲师。1910年回到剑桥——此后近70年，他再也没有离开过 Trinity。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 导师：试试黎曼假设。学生：没成功。但从此走上了解析数论之路。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Hardy–Littlewood ---
+\newcommand{\hardylittlewoodSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{"Hardy–Littlewood" 的诞生 (1911)}{35年合作，通过信件——"他只贡献想法，我得写所有烦人的部分"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=hardypanel,draw=badgeHardy!55] at (0,2.55)
+    {\textbf{1911 · 最伟大的数学合作开始。}Hardy 和 Littlewood 开始合作——两人都是 Trinity 的 Fellow。他们的合作规则只有一条：互不干扰对方的写作风格。Hardy 负责形式化，Littlewood 提供深刻的技术洞察。};
+  \node[item,fill=primepanel,draw=badgePrime!35] at (0,0.85)
+    {\textbf{Hardy 抱怨。}"在我们的合作中，他只贡献想法……所有的繁琐部分都得由我做。" Hardy 向 Russell 抱怨。但正是 Littlewood 的想法驱动了圆法、Tauberian 定理、素数分布猜想。他是 Hardy–Littlewood 双引擎中的"引擎"。};
+  \node[item,fill=graypanel,draw=badgeRadar!20] at (0,-0.45)
+    {\textbf{发现 Ramanujan 的另一只眼睛。}1913年被叫去审视 Ramanujan 的来信。Littlewood 看完后说："我相信他至少和 Jacobi 一样伟大。" Hardy 计算后：Hardy=25, Littlewood=30, Hilbert=80, Ramanujan=100。Littlewood 高出5分。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个人是天才。两个人是 Hardy–Littlewood。三个伟大的英国数学家。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. π(x) 振荡 ---
+\newcommand{\pioscSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{$\pi(x) - \operatorname{Li}(x)$ 的惊天振荡 (1914)}{推翻所有数值证据——素数比对数积分有时更大}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=primepanel,draw=badgePrime!55] at (0,2.55)
+    {\textbf{数值的暴政。}素数计数函数 $\pi(x)$ 和对数积分 $\operatorname{Li}(x)$：所有可计算的 $x$ 都显示 $\pi(x) < \operatorname{Li}(x)$。Gauss、Riemann 等人都相信这是永恒的规律。Littlewood 在 1914 年证明：$\pi(x) - \operatorname{Li}(x)$ 变号无穷多次。——数值证据是错误的。};
+  \node[item,fill=hardypanel,draw=badgeHardy!35] at (0,0.85)
+    {\textbf{第一个变号在哪？}Littlewood 没有给出第一个变号点。他的学生 Stanley Skewes 在 1933 年给出了一个上界——Skewes 数 $\approx$ $10^{10^{10^{34}}}$。这是比宇宙中原子数更大的数。超越一切物理直觉。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.45)
+    {\textbf{解析数论的经典。}这个结果展示了数学证明超越数值计算的力量。Littlewood 不需要计算机——他用复分析和解析延拓就推翻了所有人的直觉。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 数学证明可以战胜所有计算机。你只需要一个想法——和一个足够大的数。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Littlewood–Paley ---
+\newcommand{\paleySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Littlewood–Paley 理论}{调和分析的基石——与 Raymond Paley 的合作 (1930s)}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=primepanel,draw=badgePrime!55] at (0,2.55)
+    {\textbf{合作名单。}Littlewood 的独立合作者包括 Raymond Paley (调和分析)、Cyril Offord (随机和)、Mary Cartwright (微分方程)。与 Hardy 的合作只是他最重要的——不是他唯一的。};
+  \node[item,fill=hardypanel,draw=badgeHardy!35] at (0,0.85)
+    {\textbf{Littlewood–Paley 理论。}这是 Fourier 分析的里程碑：将函数的 $L^p$ 范数与 dyadic 分解联系起来。Littlewood–Paley $g$ 函数、dyadic blocks——这些概念至今是所有调和分析教材的核心章节。};
+  \node[item,fill=graypanel,draw=badgeRadar!20] at (0,-0.45)
+    {\textbf{Littlewood 4/3 不等式 (1930)。}关于双线性形式的不等式——后来被 Grothendieck 推广为张量范数理论的核心。又一个纯数学无意中为其他领域奠基的例子。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 大家只记得 Hardy–Littlewood。但 Littlewood 自己的名字也刻在了 Fourier 分析的中心。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 战争 ---
+\newcommand{\warslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{炮弹与雷达}{WWI 弹道学 · Cartwright 微分方程 —— 纯数学为战争服务}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=radarpanel,draw=badgeRadar!55] at (0,2.55)
+    {\textbf{WWI · 皇家要塞炮兵少尉。}Littlewood 在一战中服役于皇家要塞炮兵，从事弹道学计算。纯数学家计算炮弹的轨迹——这是 Hardy 永远不会做的事。但 Littlewood 做了，而且做得很好。};
+  \node[item,fill=primepanel,draw=badgePrime!35] at (0,0.85)
+    {\textbf{1930s末 · 雷达与 Mary Cartwright。}英国国防部需要纯数学家研究雷达放大器中的非线性微分方程。Littlewood 和 Cartwright 独立工作了20年。他们的发现预见了现代动力系统理论——包括混沌。在混沌这个术语出现之前。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.45)
+    {\textbf{纯数学的"用处"。}Hardy 在《辩白》中骄傲地宣称数学的无用。而他的合作者 Littlewood 在两次世界大战中都为国家做了关键的应用工作。历史比宣言更复杂。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 炮兵的炮弹·雷达的方程·混沌的种子——纯数学家双手沾满了"用处"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 荣誉 ---
+\newcommand{\awardsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Smith · Royal · De Morgan · Sylvester · Copley}{一枚接一枚——跨越半个世纪的奖章链}
+\begin{center}
+\begin{tikzpicture}
+  \node[rounded corners=5pt,fill=primepanel,draw=badgePrime!50,line width=0.6pt,
+        inner sep=6pt,text width=2.8cm,font=\fontsize{4.8}{6}\selectfont,align=center]
+    at (-5.3,1.05) {\small\faIcon{trophy}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgePrime}Smith's Prize (1908)}\\[2pt]Trinity Fellow\\RH $\Rightarrow$ PNT};
+  \node[rounded corners=5pt,fill=hardypanel,draw=badgeHardy!50,line width=0.6pt,
+        inner sep=6pt,text width=2.8cm,font=\fontsize{4.8}{6}\selectfont,align=center]
+    at (-1.7,1.05) {\small\faIcon{medal}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeHardy}Royal Medal (1929)}\\[2pt]皇家学会\\解析数论};
+  \node[rounded corners=5pt,fill=radarpanel,draw=badgeRadar!50,line width=0.6pt,
+        inner sep=6pt,text width=2.8cm,font=\fontsize{4.8}{6}\selectfont,align=center]
+    at (1.7,1.05) {\small\faIcon{award}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeRadar}Sylvester (1943)}\\[2pt]战时研究\\弹道与雷达};
+  \node[rounded corners=5pt,fill=legacypanel,draw=badgeLegacy!50,line width=0.6pt,
+        inner sep=6pt,text width=2.8cm,font=\fontsize{4.8}{6}\selectfont,align=center]
+    at (5.3,1.05) {\small\faIcon{crown}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeLegacy}Copley (1958)}\\[2pt]皇家学会最高荣誉\\73岁的加冕};
+  \node[rounded corners=6pt,fill=graypanel,draw=coveraccent!55,line width=0.8pt,
+        inner sep=9pt,text width=13cm,font=\fontsize{7}{9}\selectfont,align=center]
+    at (0,-1.35) {
+    {\fontsize{8}{10.5}\selectfont\bfseries\color{coverprimary!90!black} 更多荣誉}\\[2pt]
+    {\color{coverdark!80} {\fontsize{6.5}{8.5}\selectfont FRS (1916, 31岁) · De Morgan Medal (1938)}\\[2pt]
+    {\fontsize{6.5}{8.5}\selectfont LMS 主席 (1941–1943) · Senior Berwick Prize (1960, 75岁)}}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. Landau ---
+\newcommand{\landauSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Landau 的"虚构猜想"}{"Littlewood 不存在——他是 Hardy 的笔名"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=hardypanel,draw=badgeHardy!55] at (0,2.55)
+    {\textbf{德国数学家的怀疑。}Edmund Landau 仔细阅读 Hardy 的论文后得出了一个结论：Littlewood 不存在。他推测这是 Hardy 为自己较次的工作起的笔名——好的归 Hardy，差的归 Littlewood。};
+  \node[item,fill=primepanel,draw=badgePrime!35] at (0,0.85)
+    {\textbf{跨海验证。}Landau 专程从德国来到剑桥，要求见 Littlewood 本人。他见到了 Hardy 很多次——却始终没见到 Littlewood（他向来低调，极少出现在社交场合）。Landau 满意地回国：猜想被证实了。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!20] at (0,-0.45)
+    {\textbf{Wiener 版本。}类似的故事后来被安在了 Norbert Wiener 身上——他在自传中"激烈否认"。但 Landau 的版本是真实的剑桥传说。它说明了 Littlewood 隐身术的成功。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 隐身到让同行以为你不存在——这也许是一个数学家最高级别的安静。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 杂集 ---
+\newcommand{\miscellanySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《一个数学家的杂集》(1953)}{数学的八卦、笑话与真相 —— 92年生命中的 whispering gallery}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,2.55)
+    {\textbf{一部独一无二的书。}《A Mathematician's Miscellany》（1986年新版改名《Littlewood's Miscellany》，Bollobás 编辑）。这不是自传，不是教材——是一篮子数学故事：关于 Hardy、Ramanujan、Russell、Wittgenstein……};
+  \node[item,fill=hardypanel,draw=badgeHardy!35] at (0,0.85)
+    {\textbf{"码头上的 n, n alpha, n beta"。}Donald Spencer 1941年返回美国参战，即将登船。Littlewood 跑到码头大喊："n, n alpha, n beta!"——这是他关于丢番图逼近猜想的参数。在战争阴影下，他关心的仍是数学。};
+  \node[item,fill=graypanel,draw=badgePrime!20] at (0,-0.45)
+    {\textbf{Littlewood 定律。}"每个人可以期待大约每月经历一次'奇迹'"——不是宗教意义上的奇迹，而是统计意义上的：一个月有百万秒，百万分之一概率的事件每月发生一次。这是数学家的幽默。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一本数学家的八卦书——比所有教材加起来更诚实，也比所有传记更有趣。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 遗产 ---
+\newcommand{\legacySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{九十二年的数学人生}{"Hardy–Littlewood"· Skewes 数 · Paley 理论 · 杂集 · Littlewood 定律}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt,inner xsep=7pt,inner ysep=9pt,text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont,align=center}
+]
+  \node[leg,fill=hardypanel,draw=badgeHardy!50,line width=0.7pt] (a) at (-5.0,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeHardy}Hardy–Littlewood}\\[3pt]圆法·Tauberian\\素数分布\\"第三个数学家"};
+  \node[leg,fill=primepanel,draw=badgePrime!50,line width=0.7pt] (b) at (-1.65,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePrime}$\pi(x)$ 振荡}\\[3pt]Skewes 数\\Littlewood 猜想\\Paley 理论};
+  \node[leg,fill=radarpanel,draw=badgeRadar!50,line width=0.7pt] (c) at (1.65,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeRadar}战争数学}\\[3pt]弹道学\\Cartwright 方程\\混沌先驱};
+  \node[leg,fill=legacypanel,draw=badgeLegacy!50,line width=0.7pt] (d) at (5.0,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy}长寿传奇}\\[3pt]《杂集》\\92年\\Littlewood 定律};
+  \node[draw=coveraccent!65,fill=graypanel,rounded corners=6pt,inner sep=11pt,text width=13.0cm,align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他活了三代人的长度——看了三个时代的数学。}\\[4pt]
+    {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      从 Senior Wrangler 到 Copley Medal，从弹道计算到混沌先驱。\\
+      他的名字被写进 Hardy–Littlewood 的每一个定理——也被写进所有关于合作的故事。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {他的一生是一场安静的反转：};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {Landau 认为他不存在，};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!70!black]
+    at ([yshift=-0.5cm]current page.center) {Bohr 说他是一个半数学家。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-1.1cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-1.1cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-2.0cm]current page.center)
+    {但他证明的东西——从素数到弹道到混沌——构成了20世纪分析的脊梁。};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!60!black]
+    at ([yshift=-2.8cm]current page.center)
+    {J.E. 李特尔伍德\quad John Edensor Littlewood\quad 1885 — 1977};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{infinity}\enspace $\pi(x)$ 无穷振荡·Littlewood–Paley·"Hardy–Littlewood"的另一半\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\barnesslide
+\hardylittlewoodSlide
+\pioscSlide
+\paleySlide
+\warslide
+\awardsslide
+\landauSlide
+\miscellanySlide
+\legacySlide
+\closingslide
+\end{document}

@@ -1,0 +1,492 @@
+% =============================================================
+%  代数几何的严格化者：奥斯卡·扎里斯基 (Oscar Zariski)
+%  Beamer 演示 —— 参照 Lebesgue / Cartan / Weyl 版式
+%  资料来源：mathematician/pages/Oscar_Zariski + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：扎里斯基 —— 哈佛深红 + 白俄罗斯暖金 + 石板灰 + 靛蓝（代数几何的严格化者）=====
+\definecolor{bgmain}{RGB}{248,245,240}
+\definecolor{coverprimary}{HTML}{3B2F2F}    % 深棕 — 大地的颜色，俄国→意大利→美国的足迹
+\definecolor{coveraccent}{HTML}{A51C30}     % 哈佛深红 — Zariski 拓扑的革命性
+\definecolor{coveramber}{HTML}{D4A017}      % 暖金 — 双有理变换的光芒
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{45,35,30}
+\definecolor{muteddark}{RGB}{95,80,75}
+\definecolor{redpanel}{RGB}{252,235,238}     % 浅哈佛深红面板
+\definecolor{goldpanel}{RGB}{252,246,225}    % 暖金面板
+\definecolor{amberpanel}{RGB}{255,242,220}   % 古铜面板
+\definecolor{graypanel}{RGB}{242,244,248}    % 石板灰面板
+\definecolor{bluepanel}{RGB}{225,232,242}    % 靛蓝面板
+\definecolor{greenpanel}{RGB}{224,244,235}   % 浅绿面板
+\definecolor{purplepanel}{RGB}{238,230,252}  % 浅紫面板
+% 扎里斯基四大支柱
+\definecolor{badgeZtop}{HTML}{A51C30}        % Zariski 拓扑 — 哈佛深红
+\definecolor{badgebirat}{HTML}{D4A017}       % 双有理/代数化 — 暖金
+\definecolor{badgecomm}{HTML}{5A5A5A}        % 交换代数 — 石板灰
+\definecolor{badgelegacy}{HTML}{2E4057}      % 传承/学生 — 靛蓝
+\definecolor{coverteal}{HTML}{009688}        % 青绿 — 来自 openmath_page
+\definecolor{coverwarm}{HTML}{FFB300}        % 暖金 — 来自 openmath_page
+\definecolor{badgecomputation}{HTML}{00BFA5} % 来自 openmath_page
+\definecolor{badgeAI}{HTML}{5C6BC0}          % 来自 openmath_page
+\definecolor{badgebio}{HTML}{FFA000}         % 来自 openmath_page
+\definecolor{badgephilosophy}{HTML}{8D6E63}  % 来自 openmath_page
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeZtop!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgecomm!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coveraccent!10] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgebirat!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{balance-scale}\enspace 代数几何的严格化者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {奥斯卡·扎里斯基};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Oscar Zariski\enspace·\enspace 1899 — 1986};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {Zariski 拓扑 · 双有理变换 · 交换代数 · 代数曲面};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeZtop, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {Zariski 拓扑};
+      \node[rounded corners=8pt, fill=badgebirat, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {双有理变换};
+      \node[rounded corners=8pt, fill=badgecomm, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {交换代数};
+      \node[rounded corners=8pt, fill=badgelegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {代数曲面};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"我不相信几何直觉——我要求代数证明。" —— 扎里斯基};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.2cm,height=3.0cm,keepaspectratio]{portrait.jpeg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.3cm]current page.center)
+    {Oscar Zariski};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{medal}\enspace Wolf 奖 1981 · 美国国家科学奖章 1965 · Steele 奖 1981\enspace|\enspace Harvard · Johns Hopkins\enspace|\enspace \faIcon{globe}\enspace 美国};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{从意大利的直觉到代数的严格}{Castelnuovo 的学生 · 意大利学派的"终结者" · Grothendieck 的先驱}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=goldpanel, draw=badgebirat!50, text=coverprimary!85!black]
+    (a) at (-5.7,1.05) {意大利学派嫡传\\Castelnuovo 门下\\罗马大学 1925};
+  \node[nodebox, fill=redpanel, draw=badgeZtop!50, text=badgeZtop!85!black]
+    (b) at (-1.9,1.05) {发现"直觉"的不足\\画图证明不严格\\决定用代数重建};
+  \node[nodebox, fill=graypanel, draw=badgecomm!50, text=badgecomm!85!black]
+    (c) at (1.9,1.05) {赋值环 + 局部环\\双有理变换的\\代数化};
+  \node[nodebox, fill=bluepanel, draw=badgelegacy!50, text=badgelegacy!85!black]
+    (d) at (5.7,1.05) {为 Grothendieck 铺路\\Zariski 拓扑\\→ 概形论};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他学的是几何，用的是代数的刀。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 一个白俄罗斯的犹太孩子，三次被迫离开家园——最终在代数几何中建立了永恒的基础。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年与求学：俄→意→美 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{早年与求学 (1899–1927)}{白俄罗斯 → 意大利 → 美国 —— 三次被迫的迁移}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgebirat!40] at (0,2.55)
+    {\textbf{1899 · 生于白俄罗斯 Kobryn（当时属俄罗斯帝国）。}Ascher Zaritsky 出生于俄罗斯帝国统治下的 Kobryn（今白俄罗斯）。犹太家庭。父亲是学者。幼年体弱多病，但展现出非凡的数学天赋。从小在多语言环境中成长——俄语、意第绪语、波兰语。};
+  \node[item, fill=redpanel, draw=badgeZtop!30] at (0,1.05)
+    {\textbf{1918 · 俄国革命 → 流亡意大利。}布尔什维克革命和随后的反犹迫害迫使年轻的 Zaritsky 逃离。他穿越战乱的东欧，徒步和搭火车到达意大利。途中失去了多位家人。到达罗马时，他一无所有——除了对数学的热爱。};
+  \node[item, fill=graypanel, draw=badgecomm!25] at (0,-0.25)
+{\textbf{1921–1925 · 罗马大学时光。}入读罗马大学，师从 Guido Castelnuovo——意大利代数几何学派的泰斗。这里还有 Severi 和 Enriques。他吸收了意大利学派的"几何直觉"传统，博士论文关于伽罗瓦理论（由 Castelnuovo 命题），发表于 1926 年。发表时他将名字从 Ascher Zaritsky 改为 Oscar Zariski。1927 年因墨索里尼反犹政策，再次移民——这次去美国。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 三次被迫离开家园——最终在数学中找到了永恒的故乡。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 意大利学派的辉煌与"缺陷" ---
+\newcommand{\italianslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{意大利代数几何学派的辉煌与"缺陷"}{Castelnuovo · Enriques · Severi —— 无与伦比的直觉，不严格的证明}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgebirat!55] at (0,2.35)
+    {\textbf{意大利学派的成就。}Castelnuovo, Enriques, Severi 用纯几何直觉分类了大量代数曲面。他们"看到"了曲面的分类——就像鸟瞰一片大陆。很多发现后来被证明完全正确。这是数学史上最伟大的直觉成就之一。};
+  \node[item, fill=redpanel, draw=badgeZtop!40] at (0,0.85)
+    {\textbf{方法论的问题。}(1) 依赖"图形论证"——画图替代证明 (2) "显然可约"有时不显然 (3) 缺乏严格的代数基础 (4) 很多"证明"后来被发现存在空隙甚至错误。Zariski 自己说：\textquotedblleft 我不相信几何直觉——我要求代数证明。\textquotedblright };
+  \node[item, fill=graypanel, draw=badgecomm!25] at (0,-0.45)
+    {\textbf{Zariski 的态度：尊重发现，但不接受方法。}他从未公开攻击自己的导师。但他决定做一件更激进的事：用代数和拓扑重建一切。把 Enriques 的"直觉奇迹"变成可验证的严格定理。这是一场安静的革命。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他们的眼睛看到了真相——但他们的手没有证明它。Zariski 决定做那只手。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Zariski 拓扑 (1940) ---
+\newcommand{\ztopslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Zariski 拓扑 (1940)}{代数簇上的"新眼睛" —— 闭集 = 代数子簇}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeZtop!55] at (0,2.35)
+    {\textbf{定义。}在代数簇 $V$ 上定义拓扑：闭集 = 代数子簇（即多项式方程组的零点集）。开集 = 代数子簇的补集。这不是一个基于"距离"的拓扑——它基于"代数方程"。这是一个革命性的视角转换。};
+  \node[item, fill=graypanel, draw=badgecomm!40] at (0,0.85)
+    {\textbf{非同寻常的特性。}(1) 非常粗糙——开集很少，很多点不可被开集分离 (2) 非 Hausdorff——两点不一定有不相交的开邻域 (3) 但恰好捕捉了代数簇的"代数"结构——连续函数 = 正则函数。};
+  \node[item, fill=bluepanel, draw=badgelegacy!30] at (0,-0.45)
+    {\textbf{深远影响。}(1) 让"连续性"和"代数性"可以对话 (2) 为层论 (sheaf theory) 提供了自然的底空间 (3) Grothendieck 在 Zariski 拓扑上建造了概形 (scheme) 理论——开启了代数几何的新纪元。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他给代数簇装上了一套新的神经系统。Grothendieck 后来在这套系统上建造了整个概形论。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 双有理变换的代数化 ---
+\newcommand{\biratslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{双有理变换的代数化 (1930s–1940s)}{吹胀、收缩、赋值环 —— 用代数替代几何直觉}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgebirat!55] at (0,2.35)
+    {\textbf{意大利学派的处理方式。}"吹胀"(blow up) 和"收缩"(blow down) 是意大利学派常用的几何操作。他们在黑板上画出曲面，指着某一点说"这里吹胀"——但严格意义下，这些操作对应什么样的数学对象？这个问题没有被回答。};
+  \node[item, fill=redpanel, draw=badgeZtop!35] at (0,0.85)
+    {\textbf{Zariski 的方案：赋值环。}每个双有理变换对应一个赋值环 (valuation ring)。一个点在簇上的"无穷小邻域"对应一个赋值环。这个洞见将双有理几何转化为赋值论——从"看"变成了"算"。};
+  \node[item, fill=graypanel, draw=badgecomm!30] at (0,-0.45)
+    {\textbf{Zariski 主定理 (Zariski's Main Theorem)。}正规簇的双有理态射，如果拟有限，则它是开浸入。这是一系列"主定理"的鼻祖——后来的 Grothendieck 版、Deligne 版都起源于此。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他说：不要画图，写下方程。这就是代数几何从艺术变为科学的关键一步。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 奇点理论与局部环 ---
+\newcommand{\singularslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{奇点理论与局部环 (1950s)}{代数簇上的"缺陷" —— 用局部环解码奇点}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeZtop!50] at (0,2.35)
+    {\textbf{什么是奇点？}代数簇上"不平滑"的点——切线不唯一或不存在。例如 $y^2 = x^3$ 在原点 $(0,0)$ 有一个尖点奇点。奇点是代数几何的核心研究对象之一。};
+  \node[item, fill=graypanel, draw=badgecomm!45] at (0,0.85)
+{\textbf{局部环方法。}Zariski 用局部环 (local ring) 研究奇点。一个点在簇上是光滑的 $\Longleftrightarrow$ 对应的局部环是正则局部环。这使得奇点理论可以完全用交换代数的语言表述——不再需要画图。};
+  \node[item, fill=bluepanel, draw=badgelegacy!25] at (0,-0.45)
+    {\textbf{奇点解消猜想。}任何代数簇都可以通过有限次 blow-up 变为光滑簇。Zariski 证明了曲面（维数 2）情形，并提出了三维的猜想。他发展了整套局部环工具——等待后来者完成证明。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 奇点不是缺陷——它们是代数几何的 DNA。解码奇点，就是解码代数簇的本质。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. Hironaka 与奇点解消 ---
+\newcommand{\hironakaslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Hironaka 与奇点解消 (1964)}{学生完成导师的梦想 —— Fields 奖的传承}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgelegacy!55] at (0,2.35)
+    {\textbf{Heisuke Hironaka (広中平祐)。}Zariski 在哈佛的学生，日本数学家。在 Zariski 的指导下，他继承了奇点解消问题的全部工具——局部环理论、blow-up 的代数描述、赋值论。};
+  \node[item, fill=redpanel, draw=badgeZtop!40] at (0,0.85)
+    {\textbf{1964 年定理。}特征 0 的代数簇上，奇点解消总是可能的——对任意维数。Hironaka 的证明超过 200 页，发表于《数学年刊》(Annals of Mathematics)。这是 20 世纪代数几何最重大的成果之一。};
+  \node[item, fill=goldpanel, draw=badgebirat!25] at (0,-0.45)
+{\textbf{Fields 奖 1970。}Hironaka 因此获 Fields 奖。Zariski 本人因年龄限制（40 岁以下）未获 Fields 奖，但他的学生做到了。导师证明了 dim$\leq$2、提出了 dim=3 的猜想、建造了全部工具——学生登顶。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 导师画了地图，学生登上了顶峰——这是数学史上最动人的师承故事之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 《交换代数》(1958) ---
+\newcommand{\commalgslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《交换代数》(1958)}{与 Pierre Samuel 合著 —— 一代数学家的必修经典}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=graypanel, draw=badgecomm!55] at (0,2.35)
+    {\textbf{两卷本经典。}卷一：基础理论——理想、模、局部化、整扩张、Noether 环。卷二：赋值论——赋值环、Dedekind 整环、完备化、多项式环。至今仍是交换代数最权威的入门教材之一。};
+  \node[item, fill=redpanel, draw=badgeZtop!30] at (0,0.85)
+    {\textbf{"Zariski-Samuel" 品牌。}数学界说到 "Zariski-Samuel"，就如计算机界说到 "Knuth"。它不是让你欣赏的——是让你学会交换代数的。每一页都是精炼的、严格的、毫无装饰的 Zariski 风格。};
+  \node[item, fill=bluepanel, draw=badgelegacy!25] at (0,-0.45)
+    {\textbf{历史影响。}(1) 直接哺育了 Grothendieck 的 EGA/SGA 项目 (2) 成为全球代数几何研究生第一年必读 (3) "在 Zariski-Samuel 中查一下"成为数学家的口头禅。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 这本书不是让你欣赏——是让你学会交换代数。而且它成功了。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 哈佛岁月 ---
+\newcommand{\harvardslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{哈佛岁月 (1947–1969)}{美国代数几何学派的奠基人}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeZtop!45] at (0,2.55)
+    {\textbf{来哈佛之前。}约翰·霍普金斯大学 (1927–1945) —— 在那里他完成了 Zariski 拓扑的原创工作。巴西圣保罗大学 (1944–1946) —— 与 André Weil 深入交流代数几何的严格化。伊利诺伊大学 (1946–47) —— 短暂一年。1947 年，受聘哈佛大学 Dwight Parker Robinson 讲席教授。};
+  \node[item, fill=goldpanel, draw=badgebirat!35] at (0,1.05)
+    {\textbf{哈佛的影响。}(1) 建立了美国代数几何学派的传统 (2) 培养了 Hironaka, Mumford, Artin, Kleiman, Lipman 等一代大师 (3) 使哈佛成为 1950–70 年代代数几何的世界中心之一，与巴黎 (Grothendieck/Serre) 和莫斯科 (Shafarevich) 三足鼎立。};
+  \node[item, fill=graypanel, draw=badgecomm!25] at (0,-0.25)
+    {\textbf{安静的导师。}Zariski 的学生们回忆：他从不张扬。他在办公室里安静地工作，对学生极其耐心。他不会告诉你答案——他会给你一个更好的问题。他的办公室门永远开着——对任何愿意讨论代数几何的人。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他从意大利带来了种子，在哈佛种下了一片森林。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 意大利学派的终结 ---
+\newcommand{\italyfinale}{%
+\begin{frame}
+\plainbar
+\sectiontitle{意大利学派的终结者}{一场安静的革命 —— 没有硝烟，只有方程}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgebirat!50] at (0,2.35)
+    {\textbf{不是对抗，是超越。}Zariski 从未公开攻击意大利学派——毕竟，那是他的老师。他没有发表檄文，没有论战。他只是安静地把意大利学派的所有成果用代数和拓扑严格证明了一遍。};
+  \node[item, fill=redpanel, draw=badgeZtop!40] at (0,0.85)
+{\textbf{《代数曲面》(1935, 增补 1971)。}这本书是 Zariski 对意大利学派遗产的"翻译"。Enriques 用直觉"看到"的每一条关于代数曲面的定理，Zariski 都用代数给出了严格证明。意大利学派的发现没有消失——它们被吸收进了严格化的代数几何。};
+  \node[item, fill=graypanel, draw=badgecomm!25] at (0,-0.45)
+    {\textbf{历史意义。}Zariski 是意大利学派的"终结者"——但不是毁灭者，而是翻译者和继承者。他把意大利学派的直觉财富转化为代数几何的严格基础。从此，代数几何不再是"看"的学问，而是"证明"的学问。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他没有推翻大厦——他换了地基。从此，这座大厦可以承受任何风暴。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 学生：三代 Fields 奖得主链 ---
+\newcommand{\studentsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{学生：三代 Fields 奖得主链}{Castelnuovo → Zariski → Hironaka \& Mumford}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgebirat!50] at (0,2.55)
+    {\textbf{导师 · Guido Castelnuovo (1865–1952)。}意大利代数几何学派的领袖。他的学生 Zariski 没有继承他的方法——但继承了他的问题。这是最好的师承：不是复制，而是超越。};
+  \node[item, fill=bluepanel, draw=badgelegacy!45] at (0,1.05)
+    {\textbf{学生 · Heisuke Hironaka (1931– )。}Fields 奖 1970。证明特征 0 奇点解消定理。Zariski 给出了维数 2 的证明和维数 3 的猜想——Hironaka 完成了任意维数的证明。};
+  \node[item, fill=redpanel, draw=badgeZtop!30] at (0,-0.25)
+    {\textbf{学生 · David Mumford (1937– )。}Fields 奖 1974。模空间 (moduli space) 理论、代数几何与不变理论。Zariski 的代数化传统在 Mumford 手中开花结果。};
+  \node[item, fill=graypanel, draw=badgecomm!25] at (0,-1.35)
+    {\textbf{学生 · Michael Artin (1934– )。}代数空间理论 (Artin stack 的前身)、Étale 同调。Emil Artin 之子，继承了 Zariski 代数化的基因。虽未获 Fields 奖（一度被提名），是 20 世纪代数几何的巨匠之一。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.7) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他没有拿到那个奖（因年龄限制）——但他的学生拿了两个 Fields 奖。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. Wolf 奖与荣誉 ---
+\newcommand{\honorsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{荣誉与认可}{Wolf 奖 · Cole Prize · 国家科学奖章 · Steele 奖}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgebirat!55] at (0,2.9)
+    {\textbf{Wolf 数学奖 1981（首届）。}与 Lars Ahlfors 共享首届 Wolf 数学奖。评语：\textquotedblleft 表彰他对代数几何的代数基础的根本性贡献。\textquotedblright 距离他第一次接触代数几何已过去 60 年。};
+  \node[item, fill=redpanel, draw=badgeZtop!40] at (0,1.55)
+    {\textbf{Cole 代数奖 (1944) · 国家科学奖章 (1965)。}Cole Prize in Algebra —— 代数几何最早的重大奖项认可。20 年后由总统 Lyndon B. Johnson 颁发国家科学奖章，美国最高科学荣誉。};
+  \node[item, fill=graypanel, draw=badgecomm!35] at (0,0.35)
+    {\textbf{Steele 终身成就奖 (1981) · Guggenheim Fellowship (1939)。}AMS Leroy P. Steele Prize 表彰终身贡献。Guggenheim 奖金资助早期独立研究。伦敦数学会荣誉会员。美国国家科学院 + 艺术与科学院院士。};
+  \node[item, fill=bluepanel, draw=badgelegacy!25] at (0,-0.85)
+    {\textbf{AMS 主席 (1969–1970)。}退休之际当选美国数学会主席——同行的最高认可。哈佛大学荣誉退休教授。他的四卷论文集由 MIT Press 出版。1997 年在奥地利 Obergurgl 举行了以他命名的国际学术会议。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.35) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从 1944 年 Cole Prize 到 1981 年 Wolf Prize —— 数学界用了 37 年完整地承认了他的贡献。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 扎里斯基的遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{扎里斯基的遗产}{Zariski 拓扑之后 —— 代数几何从艺术变为科学}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=redpanel, draw=badgeZtop!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeZtop} Zariski 拓扑}\\[3pt]概形论的底空间\\层论的温床\\代数-拓扑桥梁};
+  \node[leg, fill=goldpanel, draw=badgebirat!50, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgebirat} 双有理几何}\\[3pt]赋值环方法\\Zariski 主定理\\blow-up 的代数化};
+  \node[leg, fill=graypanel, draw=badgecomm!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgecomm} 交换代数}\\[3pt]Zariski-Samuel 经典\\局部环理论\\奇点理论};
+  \node[leg, fill=bluepanel, draw=badgelegacy!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgelegacy} 传承谱系}\\[3pt]Hironaka · Mumford\\Artin · Kleiman\\三代 Fields 奖};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他发明的不是某一个定理 ——\\他改变了代数几何的思维方式。}\\[4pt]
+{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      Zariski 拓扑 → 概形论 (Grothendieck) → 现代代数几何。\\
+      以他命名的概念超过十个：Zariski 拓扑、Zariski 主定理、Zariski 切空间、Zariski 环……\\
+      一个概念以一个人命名是荣誉。十多个概念以同一个人命名——是基石。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {我不相信几何直觉——};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {我要求代数证明。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.5cm]current page.center)
+    {奥斯卡·扎里斯基\quad Oscar Zariski\quad 1899 — 1986};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{balance-scale}\enspace Zariski 拓扑·代数几何的代数化\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\italianslide
+\ztopslide
+\biratslide
+\singularslide
+\hironakaslide
+\commalgslide
+\harvardslide
+\italyfinale
+\studentsslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

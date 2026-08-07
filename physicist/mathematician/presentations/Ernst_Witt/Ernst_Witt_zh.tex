@@ -1,0 +1,477 @@
+% =============================================================
+%  二次型的代数大师：恩斯特·维特 (Ernst Witt)
+%  Beamer 演示 —— 参照 Cartan / Chevalley / Deligne 版式
+%  资料来源: mathematician/pages/Ernst_Witt + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：维特 — 丹麦灰蓝 + 酒红 + 德国深灰 + 银灰 =====
+\definecolor{bgmain}{RGB}{248,246,243}
+\definecolor{coverprimary}{HTML}{111827}
+\definecolor{coveraccent}{HTML}{2C4A6B}          % 丹麦灰蓝 — Witt 环的深邃
+\definecolor{coveramber}{HTML}{722F37}            % 酒红 — Witt 向量的灼热
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{18,20,30}
+\definecolor{muteddark}{RGB}{75,70,60}
+\definecolor{bluepanel}{RGB}{215,228,240}         % 灰蓝面板
+\definecolor{redpanel}{RGB}{255,235,238}           % 酒红面板
+\definecolor{darkpanel}{RGB}{228,230,235}          % 深灰面板
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{242,244,248}
+\definecolor{amberpanel}{RGB}{255,244,225}
+\definecolor{silverpanel}{RGB}{240,240,242}
+% Witt 四大支柱
+\definecolor{badgeRing}{HTML}{2C4A6B}              % Witt 环 — 丹麦灰蓝
+\definecolor{badgeVector}{HTML}{722F37}             % Witt 向量 — 酒红
+\definecolor{badgeLie}{HTML}{1F2937}                % 李代数/PBW — 德国深灰
+\definecolor{badgeLegacy}{HTML}{A8A8A8}             % 遗产 — 银灰
+\definecolor{coverteal}{HTML}{009688}
+\definecolor{coverwarm}{HTML}{FFB300}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeRing!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeVector!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeLie!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{cubes}\enspace 二次型的代数大师};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {恩斯特·维特};
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.8cm, yshift=-0.8cm]current page.north east) {
+    \includegraphics[width=2.4cm, keepaspectratio]{Ernst_Witt.jpg}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Ernst Witt\enspace·\enspace 1911 — 1991};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {Witt 环 · Witt 向量 · PBW 定理 · 二次型};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeRing, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {二次型};
+      \node[rounded corners=8pt, fill=badgeVector, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {p-adic};
+      \node[rounded corners=8pt, fill=badgeLie, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {李代数};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {传承};
+    \end{tikzpicture}
+  };
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{university}\enspace Hamburg 1937-79\enspace|\enspace {\faIcon{globe}\enspace 德国}\enspace|\enspace Witt 环 1937 · Witt 向量 1936 · PBW 1937};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{二次型的代数之家}{Witt 环 · Witt 向量 · PBW 定理 · Noether 的沉默学生}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=bluepanel, draw=badgeRing!50, text=badgeRing!85!black]
+    (a) at (-5.7,1.05) {Witt 环\\任意域上二次型\\的代数分类, 1937};
+  \node[nodebox, fill=redpanel, draw=badgeVector!50, text=badgeVector!85!black]
+    (b) at (-1.9,1.05) {Witt 向量\\从有限域构造\\p-adic 世界, 1936};
+  \node[nodebox, fill=darkpanel, draw=badgeLie!50, text=badgeLie!85!black]
+    (c) at (1.9,1.05) {PBW 定理\\李代数包络代数\\的基定理, 1937};
+  \node[nodebox, fill=silverpanel, draw=badgeLegacy!50, text=badgeLegacy!85!black]
+    (d) at (5.7,1.05) {Noether 的学生\\博士题目来自她\\导师被纳粹驱逐};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他给了二次型一个代数之家——但他的道德选择让后人永远无法只看他的数学。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 生于丹麦海岸，长于中国内陆，学于哥廷根——他的一生充满了反差与追问。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年：中国→德国 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{早年：中国 $\to$ 德国 (1911–1930)}{生于丹麦海岸，长于中国内陆 —— 一个被遗忘的跨文化童年}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgeRing!40] at (0,2.55)
+    {\textbf{1911 · 生于 Alsen 岛（时为德意志帝国，今属丹麦）。}父母为路德宗传教士。Alsen 是波罗的海上的一座小岛——这里是他生命的起点，但他很快将离开。};
+  \node[item, fill=bluepanel, draw=badgeRing!40] at (0,1.05)
+    {\textbf{1912–1920 · 在中国度过童年。}父母移居中国传教。Witt 在中国度过了人生的前九年——一个几乎从未在数学史中被讨论的跨文化背景。他后来从未公开谈论这段经历。};
+  \node[item, fill=darkpanel, draw=badgeLie!30] at (0,-0.25)
+    {\textbf{1920 · 9 岁返回欧洲。}Freiburg → Göttingen 求学。在中国的九年塑造了他内向、沉默寡言的性格——他很少在公共场合谈论自己。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 生于丹麦海岸，长于中国内陆——一个注定不凡的童年。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 博士与 Noether ---
+\newcommand{\noetherslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{博士与 Noether (1931–1933)}{"她给了我的论文一个题目，纳粹夺走了我的导师"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeRing!55] at (0,2.35)
+    {\textbf{Göttingen 时代。}Emmy Noether 建议了他的博士论文题目——超复数中的 Riemann-Roch 定理与 $\zeta$ 函数。但正式博士导师是 **Gustav Herglotz**。1933 年获博士学位。};
+  \node[item, fill=redpanel, draw=badgeVector!40] at (0,0.85)
+    {\textbf{1933 · Noether 被驱逐。}纳粹上台后，Noether 因犹太血统被驱逐出 Göttingen。她被迫流亡美国。Witt **保持了沉默**——没有公开抗议，没有辞职抗议。};
+  \node[item, fill=darkpanel, draw=badgeLie!25] at (0,-0.45)
+    {\textbf{1933 · 加入 NSDAP。}同年加入纳粹党——**活跃成员**，不是随大流的名义入党。这是 Witt 一生中最令人不安的选择。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Noether 给了他的博士论文一个题目。纳粹夺走了他的导师。他选择了沉默。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Witt 环 ---
+\newcommand{\ringslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Witt 环 (1937) — 二次型的代数之家}{从"分类"到"结构"——代数思维的最高境界}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeRing!60] at (0,2.35)
+    {\textbf{Witt 消去定理。}如果 $q_1 \oplus r \cong q_2 \oplus r$，则 $q_1 \cong q_2$。换句话说——"加上同一个东西不会改变本质"。这是二次型理论的基石。它使得分类变得可能。};
+  \node[item, fill=darkpanel, draw=badgeRing!40] at (0,0.85)
+    {\textbf{Witt 环 $W(F)$。}域 $F$ 上所有非退化二次型的等价类构成交换环。加法 = 正交直和。乘法 = 张量积。$W(F)$ 是域的不变量——两种不同的域有不同的 Witt 环。};
+  \node[item, fill=goldpanel, draw=badgeLegacy!25] at (0,-0.45)
+    {\textbf{深远影响。}Witt 环现在是二次型理论、代数 K-理论、Milnor 猜想 (Voevodsky 证明) 的中心对象。Pfister 的理论、Merkurjev 定理全都建立在 Witt 的工作之上。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 在 Witt 之前，二次型是分类的混乱世界。在 Witt 之后，二次型有了自己的代数。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. Witt 向量 ---
+\newcommand{\vectorslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Witt 向量 (1936) — p-adic 世界的建造工具}{从有限域出发，建造特征 0 的世界}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeVector!60] at (0,2.35)
+    {\textbf{问题与构造。}如何从特征 $p$ 的有限域 $\mathbb{F}_p$ 出发，构造特征 0 的完备赋值环？Witt 的答案：Witt 向量环 $W(\mathbb{F}_p) \cong \mathbb{Z}_p$。加法与乘法由无穷级数定义——极其非平凡。};
+  \node[item, fill=bluepanel, draw=badgeRing!40] at (0,0.85)
+    {\textbf{代数之美。}Witt 向量的加法和乘法由神秘的多项式定义。表面上看起来非常复杂——但正是这种复杂性让它成为从特征 $p$ 到特征 0 的完美桥梁。};
+  \node[item, fill=darkpanel, draw=badgeLie!25] at (0,-0.45)
+    {\textbf{无处不在。}p-adic Hodge 理论 · crystalline 上同调 · Serre 局部类域论 · de Rham–Witt 复形。Witt 向量是现代算术几何和数论的基础语言——它在每一个特征 $p$ 的角落等待着。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从有限域出发，他用 Witt 向量建造了 p-adic 数的世界。这是数学构造力量的最美展示。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Witt 定理与设计 ---
+\newcommand{\theoremslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Witt 定理与 Witt 设计}{刚性定理与极值对称 —— 一个定理让二次型变得刚硬}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeRing!55] at (0,2.35)
+    {\textbf{Witt 定理 (1937)。}向量空间上给定二次型，任意两个子空间之间的等距映射都可以扩展为全空间的等距映射。这是二次型理论的"刚性"定理——部分决定整体。};
+  \node[item, fill=darkpanel, draw=badgeLie!40] at (0,0.85)
+    {\textbf{Witt 设计 (1938)。}$5$-$(12,6,1)$ 设计——一个具有极大对称性的组合结构。与 Mathieu 群 $M_{12}$ 紧密关联。这个设计中的 12 个点可以被 132 个 6-元块覆盖，每 5 个点恰在一个块中。};
+  \node[item, fill=goldpanel, draw=badgeLegacy!25] at (0,-0.45)
+    {\textbf{数学与对称。}Witt 设计是组合设计和有限群论的交汇点。它证明了 Galois 的洞见——对称性不只存在于几何中，也存在于离散的组合结构中。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个定理让二次型变得刚硬——一个设计让对称变得可见。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. PBW 定理 ---
+\newcommand{\pbwslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Poincaré–Birkhoff–Witt 定理 (1937)}{李代数的"线性化"——PBW 中的 W}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=darkpanel, draw=badgeLie!60] at (0,2.35)
+    {\textbf{定理。}李代数 $\mathfrak{g}$ 的泛包络代数 $U(\mathfrak{g})$ 具有基 $\{x_1^{e_1} \cdots x_n^{e_n} \mid e_i \ge 0\}$，其中 $\{x_i\}$ 是 $\mathfrak{g}$ 的有序基。包络代数是结合代数——李代数被"线性化"了。};
+  \node[item, fill=bluepanel, draw=badgeRing!40] at (0,0.85)
+    {\textbf{历史。}Poincaré (1900) 发现了部分结果。Garrett Birkhoff 和 Ernst Witt 在 1937 年独立给出完整证明。Witt 的证明以简洁著称——他找到了一个优雅的参数化方法。};
+  \node[item, fill=redpanel, draw=badgeVector!25] at (0,-0.45)
+    {\textbf{意义。}PBW 是李理论和表示论的基石。从李代数的表示到包络代数的表示——PBW 让这一切成为可能。量子群、Verma 模、Harish-Chandra 同态——一切从 PBW 开始。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Poincaré 猜想它，Birkhoff 证明了它，Witt 让它变得如此简单——以至于我们现在称之为 PBW。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. OKW/Chi ---
+\newcommand{\okwslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{OKW/Chi：纳粹密码破译员 (1939–1945)}{代数天才服务于战争机器 —— 数学史最沉重的章节之一}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeVector!55] at (0,2.55)
+    {\textbf{OKW/Chi。}德军最高统帅部密码局 (Cipher Department of the High Command of the Wehrmacht)。Witt 被 Wilhelm Fenner 招募，与 Oswald Teichmüller, Georg Aumann 等人组成数学研究部门。};
+  \node[item, fill=darkpanel, draw=badgeLie!40] at (0,1.05)
+    {\textbf{密码破译。}负责密码分析和密码设计。Witt 的代数专长——二次型、Witt 向量、超复数——很可能被用于设计或破解代数密码系统。具体贡献因保密而不可知。};
+  \node[item, fill=silverpanel, draw=badgeLegacy!25] at (0,-0.25)
+    {\textbf{历史评价。}Witt 不是被迫的——他是主动的纳粹党员。他的数学被用于服务战争机器。这与 Noether 的遭遇形成了数学史上最尖锐的对比：一边是流亡，一边是沉默。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他的代数天才被用于密码破译——不是为了保护，而是为了毁灭。这是数学史上一个沉重的现实。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 汉堡大学 42 年 ---
+\newcommand{\hamburgslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{汉堡大学 42 年 (1937–1979)}{同一间办公室 —— 汉堡大学因他成为代数的圣地}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeRing!55] at (0,2.35)
+    {\textbf{1937 · 入职汉堡大学。}Habilitation 导师 Helmut Hasse。从此在同一所大学工作了 42 年——直到 1979 年退休。在汉堡大学建立了强大的代数研究传统。};
+  \node[item, fill=darkpanel, draw=badgeLie!40] at (0,0.85)
+    {\textbf{学生。}Günter Harder（数论/代数群）、Ina Kersten（二次型/Witt 环的权威）、Walter Borho（李代数/包络代数）、Bernhard Banaschewski（范畴论/拓扑）。};
+  \node[item, fill=goldpanel, draw=badgeLegacy!25] at (0,-0.45)
+    {\textbf{教学风格。}以极端的清晰和严格著称。他不用多余的符号——每个证明都紧凑到最短的篇幅。他的学生 Kersten 后来编辑了他的文集——Witt 的数学风格通过学生延续了下来。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他在同一间办公室里坐了 42 年——汉堡大学因 Witt 成为了代数的圣地。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. Leech 格 ---
+\newcommand{\leechslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Leech 格的幽灵 (1940 / 1970)}{他在 1940 年就看见了——但战争让他沉默了 30 年}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=darkpanel, draw=badgeLie!55] at (0,2.35)
+    {\textbf{Leech 格 (1965)。}John Leech 发现的 24 维空间中球堆积的最优格。与 Golay 码、Mathieu 群 $M_{24}$、魔群月光 (monstrous moonshine) 相关联——数学和物理中最迷人的结构之一。};
+  \node[item, fill=goldpanel, draw=badgeRing!40] at (0,0.85)
+    {\textbf{1970s · Witt 的声称。}Witt 声称他在 **1940 年**就发现了这个格——比 Leech 早 25 年。他留下了部分笔记，但从未发表。学界一般认为他可能确实独立发现了它——但没有证据。};
+  \node[item, fill=silverpanel, draw=badgeLegacy!25] at (0,-0.45)
+    {\textbf{发表很重要。}这个故事是数学史上最经典的"如果"之一。如果他在 1940 年发表了——Leech 格应该叫 Witt 格。但战争让他沉默了。25 年后，荣誉归于 Leech。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他在 1940 年就看见了 Leech 格——但战争让他沉默了。25 年后，荣誉归于另一个人。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. Bourbaki–Witt 与其他 ---
+\newcommand{\othersslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Bourbaki–Witt 定理与其他}{从不动点到有限域 —— Witt 的触角伸向每一个角落}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=darkpanel, draw=badgeLie!55] at (0,2.55)
+    {\textbf{Bourbaki–Witt 定理。}完备偏序集上保序映射的不动点定理。被 Bourbaki 在《集合论》卷中采用。在计算机科学（指称语义学）和集合论中广泛应用。};
+  \node[item, fill=redpanel, draw=badgeVector!40] at (0,1.05)
+    {\textbf{Hasse–Witt 矩阵。}有限域上代数曲线的半线性 Frobenius 作用的矩阵。决定曲线的 $p$-秩——一个关键的算术不变量。现代算术几何中的基础工具。};
+  \node[item, fill=bluepanel, draw=badgeRing!25] at (0,-0.25)
+    {\textbf{Witt 代数。}单李代数的一族——多项式环上的导子李代数。与 Virasoro 代数和共形场论有深刻联系。从李理论到弦论——Witt 的影响出人意料地广泛。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从集合论的不动点定理到有限域的几何——Witt 的触角伸向了代数的每一个角落。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 沉默的代价 ---
+\newcommand{\silenceslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{沉默的代价：天才与道德}{伟大的数学能否脱离数学家的道德？—— 一个没有答案的问题}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeVector!55] at (0,2.55)
+    {\textbf{一个不可回避的问题。}Witt 是伟大的数学家。他也是纳粹政权的积极参与者——活跃党员、密码破译员、Noether 被驱逐时的沉默者。他可以欣赏他的数学而不认可他的选择吗？};
+  \node[item, fill=darkpanel, draw=badgeLie!40] at (0,1.05)
+    {\textbf{Noether 的沉默。}1933 年 Noether 被驱逐。Witt 保持了沉默。不是因为他不能抗议——他选择了不抗议。他的沉默是主动的选择，不是被动的服从。};
+  \node[item, fill=silverpanel, draw=badgeLegacy!25] at (0,-0.25)
+    {\textbf{数学史的意义。}Witt 的故事提醒我们：数学不是道德中立的。每个数学家都生活在历史中，都面对道德选择。数学之美不能掩盖选择的沉重——但数学之美也不因选择而被抹杀。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他的数学是纯粹的美。他的选择是沉重的历史。两者都不可否认——两者都必须面对。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{那些以 Witt 命名的概念}{从二次型到李代数 —— 他是代数基础语言的缔造者之一}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=bluepanel, draw=badgeRing!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeRing} 二次型}\\[3pt]Witt 环 · Witt 群\\Witt 消去定理\\Witt 定理};
+  \node[leg, fill=redpanel, draw=badgeVector!50, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeVector} 数论}\\[3pt]Witt 向量\\Hasse–Witt 矩阵\\p-adic Hodge 理论};
+  \node[leg, fill=darkpanel, draw=badgeLie!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLie} 李与组合}\\[3pt]PBW 定理 · Witt 代数\\Witt 设计\\Bourbaki–Witt};
+  \node[leg, fill=silverpanel, draw=badgeLegacy!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy} 传承}\\[3pt]Hamburg 42年\\Leech 格(声称)\\Collected Papers};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他给予数学的不只是定理——而是整个代数结构。}\\[4pt]
+    {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      Witt 环 $\to$ Witt 向量 $\to$ PBW 定理 $\to$ Witt 消去 $\to$ Witt 代数\\
+      $\to$ Hasse–Witt 矩阵 $\to$ Bourbaki–Witt $\to$ Witt 设计 $\to$ Witt 群\\
+      以他命名的概念超过十个——从二次型到李代数，从 p-adic 数到有限域——他的名字是代数本身的语言。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {Jedes quadratische Form hat eine Heimat.};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {每一个二次型都有一个家。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.2cm]current page.center)
+    {— Ernst Witt};
+  \node[anchor=center, font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black]
+    at ([yshift=-2.0cm]current page.center)
+    {恩斯特·维特\quad Ernst Witt\quad 1911 — 1991};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{cubes}\enspace Witt 环·Witt 向量·PBW 定理的 W·汉堡学派\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\noetherslide
+\ringslide
+\vectorslide
+\theoremslide
+\pbwslide
+\okwslide
+\hamburgslide
+\leechslide
+\othersslide
+\silenceslide
+\legacyslide
+\closingslide
+\end{document}

@@ -1,0 +1,52 @@
+# 阿达玛 (Jacques Hadamard) 立传提示词
+
+> 严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
+
+---
+
+## 背景信息
+
+- **目标数学家**: Jacques Hadamard (1865–1963)
+- **关键词**: **素数定理的证明者、Hadamard矩阵、微分几何、长寿老人**
+- **Wikipedia**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Jacques_Hadamard/`
+
+---
+
+## 第 0 步：下载并校验
+
+- **生卒日期**：1865-12-08 ~ 1963-10-17，享年 **98 岁**（几乎是所有数学家中最长寿的之一）
+- **国籍**：法国
+- **博士导师**：Émile Picard
+- **博士论文**：1892
+- **主要任职**：法兰西公学院、巴黎综合理工学院
+- **学生**：André Weil, Maurice Fréchet, Paul Lévy
+- **表哥**：Alfred Dreyfus — 德雷福斯事件的当事人。Hadamard 积极参与为 Dreyfus 辩护（这是一个重要的历史注脚）
+
+### 核心贡献：
+- **素数定理** — 1896 年独立证明（与 de la Vallée-Poussin 同时独立）。证明了 π(x) ~ x/ln x
+- **Hadamard 矩阵** — 组合设计与编码理论的基石
+- **Hadamard 有限部分 (partie finie)** — 发散积分的正则化，后来发展为广义函数理论
+- **微分几何** — Hadamard 曲面、负曲率曲面上的测地线
+- **《数学领域的发明心理学》** — 1945 年出版，影响深远的数学创造心理学经典。这是一本数学家写的关于"数学家如何思考"的深刻著作
+
+### ★ 叙事亮点：
+1. **素数定理** — 1896 年，千年猜想终被证明。Gauss 和 Legendre 猜测了近100年的结论
+2. **98 岁** — 他几乎是所有同代数学家中最长寿的，见证了几乎所有 20 世纪的数学发展
+3. **Dreyfus 事件** — 他积极参与为被错误定罪的表哥 Dreyfus 辩护
+4. **《数学创造心理学》** — 影响了 Poincaré、Polya 等人对数学创造的研究
+
+### 配色：法国古典棕 + 素数定理金
+
+### 幻灯片（11 页）：
+```
+01  封面 — 《阿达玛：素数定理的证明者》
+02  素数定理 (1896) — 与 de la Vallée-Poussin 的独立证明
+03  Hadamard 矩阵 — 组合设计的基石
+04  负曲率几何 — Hadamard 曲面
+05  Dreyfus 事件 — 数学家的正义
+06  数学创造心理学 — 数学如何被发现
+07  98年的长寿见证
+08  思想回响 + 结束页
+```
+
+> **开始执行。**

@@ -1,0 +1,539 @@
+% =============================================================
+%  超级连接者：赫尔曼·外尔 (Hermann Weyl)
+%  Beamer 演示 —— 参照 Noether / Neumann / Kolmogorov / Poincaré 版式
+%  资料来源：mathematician/pages/Hermann_Weyl + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：外尔 —— 深琥珀金 + 星夜紫 + 象牙白（对称与秩序 + 宇宙深邃 + 哲学温暖）=====
+\definecolor{bgmain}{RGB}{245,243,240}
+\definecolor{coverprimary}{HTML}{3D2B1A}   % 深琥珀棕 — 学者底蕴、古老书卷
+\definecolor{coveraccent}{HTML}{C9A227}    % 琥珀金 — 对称之美、数学秩序的光辉
+\definecolor{coveramber}{HTML}{B87333}     % 暖铜对比
+\definecolor{coverpurple}{HTML}{3D2B6B}    % 星夜紫 — 规范理论、宇宙深邃
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{40,24,10}
+\definecolor{muteddark}{RGB}{100,82,60}
+\definecolor{bluepanel}{RGB}{210,225,236}    % 深海蓝面板
+\definecolor{greenpanel}{RGB}{224,241,234}   % 浅松绿面板
+\definecolor{amberpanel}{RGB}{255,242,225}   % 暖铜面板
+\definecolor{purplepanel}{RGB}{235,228,250}  % 浅紫面板
+\definecolor{goldpanel}{RGB}{252,246,228}    % 暖金面板
+\definecolor{graypanel}{RGB}{242,244,248}
+% 外尔四大支柱
+\definecolor{badgegroup}{HTML}{C9A227}       % 李群/表示论 — 琥珀金
+\definecolor{badgegauge}{HTML}{3D2B6B}       % 规范理论/物理 — 星夜紫
+\definecolor{badgegeometry}{HTML}{1B4D6B}    % 黎曼面/谱理论 — 深海蓝
+\definecolor{badgephilosophy}{HTML}{A08C6B}  % 数学基础/哲学 — 砂岩暖
+\definecolor{coverteal}{HTML}{009688}       % 青绿 — 来自 openmath_page
+\definecolor{coverwarm}{HTML}{FFB300}        % 暖金 — 来自 openmath_page
+\definecolor{badgecomputation}{HTML}{00BFA5} % 来自 openmath_page
+\definecolor{badgeAI}{HTML}{5C6BC0}          % 来自 openmath_page
+\definecolor{badgebio}{HTML}{FFA000}         % 来自 openmath_page
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgegroup!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgegeometry!10] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coveraccent!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgegauge!8] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{infinity}\enspace 几何与物理之间的超级连接者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {赫尔曼·外尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Hermann Weyl\enspace·\enspace 1885 — 1955};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {Hilbert的传人 · 规范理论的先驱 · 对称之美的哲学家};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgegroup, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {李群 Group};
+      \node[rounded corners=8pt, fill=badgegauge, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {规范理论 Gauge};
+      \node[rounded corners=8pt, fill=badgegeometry, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {黎曼面 Geom.};
+      \node[rounded corners=8pt, fill=badgephilosophy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {数学哲学 Phil.};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"他从来不只是数学家或物理学家，他总是两者兼备。" —— 据 Einstein 评价转述};
+  % 外尔肖像（右上）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+{\includegraphics[width=2.5cm,height=3.2cm,keepaspectratio]{Hermann_Weyl_ETH-Bib_Portr_00890.jpg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.2cm]current page.center)
+    {Hermann Weyl, 1885–1955};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{medal}\enspace Lobachevsky 奖 1927 · 英国皇家学会外籍院士 · Gibbs Lecture 1948\enspace|\enspace Göttingen · ETH · IAS};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么 Weyl 是"连接者"}{群论 ↔ 物理 ↔ 几何 ↔ 哲学 —— 四维交织的一生}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=goldpanel, draw=badgegroup!50, text=coverprimary!85!black]
+    (a) at (-5.7,1.05) {李群表示论\\特征标公式 · Peter–Weyl};
+  \node[nodebox, fill=purplepanel, draw=badgegauge!50, text=badgegauge!85!black]
+    (b) at (-1.9,1.05) {规范理论\\Eichinvarianz · 粒子物理};
+  \node[nodebox, fill=bluepanel, draw=badgegeometry!50, text=badgegeometry!85!black]
+    (c) at (1.9,1.05) {几何与分析\\黎曼面 · 谱理论};
+  \node[nodebox, fill=amberpanel, draw=badgephilosophy!50, text=badgephilosophy!85!black]
+    (d) at (5.7,1.05) {数学哲学\\对称 · 数学与自然科学};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} Hilbert 最钟爱的弟子，Einstein 最尊重的对话者，Noether 最坚定的支持者。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 他的一生就是在看似无关的数学世界之间架桥 —— 而这座桥后来成了现代物理的主动脉。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 哥廷根的学生 ---
+\newcommand{\studentlife}{%
+\begin{frame}
+\plainbar
+\sectiontitle{哥廷根的学生 (1904–1913)}{Hilbert 最钟爱的弟子 · 27 岁成为正教授}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgegroup!35] at (0,2.55)
+    {\textbf{1885 · 生于德国 Elmshorn。}父亲是银行主管。先后在慕尼黑大学和哥廷根大学学习数学与物理，师从 David Hilbert —— 这是当时世界上最好的数学教育。};
+  \node[item, fill=bluepanel, draw=badgegeometry!30] at (0,1.05)
+    {\textbf{1908 · 获博士学位。}博士论文研究奇异积分方程。Hilbert 对他极为器重，亲自为他谋得哥廷根的教职——后来更指定他接替自己的讲席。这被公认为 20 世纪数学界最珍贵的学术传承。};
+  \node[item, fill=purplepanel, draw=badgegauge!25] at (0,-0.25)
+    {\textbf{1913 · 27 岁任 ETH 正教授。}受聘苏黎世联邦理工学院，与 Albert Einstein 成为亲密同事。在苏黎世的 17 年，是他创造力最旺盛的黄金岁月。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{7.8}{9.8}\selectfont\bfseries\color{coverdark!88} Hilbert 最钟爱的学生 —— 这不是主观判断，而是 Hilbert 自己指定 Weyl 接替他的教席。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 黎曼面的理念 ---
+\newcommand{\riemannslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{黎曼面的理念 (1913)}{《Die Idee der Riemannschen Fläche》—— 几何直觉的巅峰}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgegeometry!40] at (0,2.35)
+    {\textbf{黎曼面的统一理论。}Weyl 的这本书将所有已知的黎曼面理论统一在一个严格的框架下。他将复分析、拓扑和微分几何融为一体——这种"跨领域综合"成为他一生的标志。};
+  \node[item, fill=goldpanel, draw=badgegroup!30] at (0,0.95)
+    {\textbf{影响深远。}这本书奠定了现代复几何的语言。后来的 Hodge 理论、Teichmüller 理论、乃至弦论中的黎曼面计算，都可以追溯到这个源头。};
+  \node[item, fill=purplepanel, draw=badgegauge!25] at (0,-0.25)
+    {\textbf{"理念"而非"理论"。}书名中的"Idee"不是随意的——Weyl 认为数学不仅是定理的集合，更是概念和直觉的体系。这种"哲学式的数学写作"贯穿他全部著作。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.85) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一本 1913 年的书，至今仍是研究生课程的必读经典。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 规范理论的诞生 ---
+\newcommand{\gaugeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{规范理论的诞生 (1918)}{一个"美丽的数学失败"，50 年后成为粒子物理的基石}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=purplepanel, draw=badgegauge!45] at (0,2.35)
+    {\textbf{1918 · 《空间、时间、物质》。}同年，Weyl 出版了广义相对论教材 *Raum, Zeit, Materie*，追踪了 Einstein 理论的最新进展，4 年内再版 4 次。同年在另一篇论文中，他首次提出了规范不变性的原始构想。};
+  \node[item, fill=bluepanel, draw=badgegeometry!30] at (0,0.85)
+    {\textbf{Eichinvarianz（刻度不变性）。}Weyl 试图用"每一点独立选择测量标尺"的思想统一引力和电磁学。Einstein 立刻指出了物理缺陷：长度标准不能是任意的，原子的谱线是绝对的。};
+  \node[item, fill=goldpanel, draw=badgegroup!35] at (0,-0.45)
+    {\textbf{1929 · 两种重生。}量子力学出现后，规范变换被重新解释为波函数的相位变换（Weyl 本人参与了修正）。同年，Weyl 还提出了描述无质量费米子的 Weyl 方程——2015 年实验发现 Weyl 半金属，引爆拓扑材料研究。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 一个被 Einstein 否定的 idea，50 年后成为理解宇宙基本力的钥匙。这是数学史上最壮丽的"延迟回报"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 群论与量子力学 ---
+\newcommand{\groupquantum}{%
+\begin{frame}
+\plainbar
+\sectiontitle{群论与量子力学 (1928)}{李群表示论如何改变物理学家对对称性的理解}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgegroup!45] at (0,2.55)
+    {\textbf{1927 · Weyl 量化。}Weyl 提出了将经典力学可观测量映射为量子力学算符的系统方法——"现存最佳的经典/量子物理学桥梁"。这一思想深刻影响了量子场论的数学基础。};
+  \node[item, fill=purplepanel, draw=badgegauge!35] at (0,1.05)
+    {\textbf{1925–1928 · 群论核心。}与 Fritz Peter 合作证明了连通紧李群上的完备表示定理（Peter–Weyl 定理）。随后发表的《群论与量子力学》将李群表示论系统应用于量子力学——物理学家第一次看到对称性如何决定量子态的分类。};
+  \node[item, fill=bluepanel, draw=badgegeometry!30] at (0,-0.3)
+    {\textbf{Wigner 的继承。}Eugene Wigner 深受 Weyl 影响，后来以"群论在量子力学中的应用"获得 1963 年诺贝尔物理学奖。Weyl 种下的种子，在物理学中开出了花。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.85) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 群论从纯数学的"抽象游戏"变成了物理学的核心语言 —— Weyl 是这一转变的关键人物。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Hilbert 与 Brouwer 之间 ---
+\newcommand{\foundationslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Hilbert 与 Brouwer 之间}{形式主义 vs 直觉主义 —— 站在两座高峰之间的人}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgephilosophy!50] at (0,2.35)
+    {\textbf{1918 · *Das Kontinuum*。}同年，Weyl 出版了《连续统》——在数学基础领域的奠基之作。他在不使用选择公理和反证法的前提下，发展了大部分经典分析。这预示了他后来对直觉主义的关注。};
+  \node[item, fill=goldpanel, draw=badgegroup!35] at (0,0.85)
+    {\textbf{1920–1921 · 短暂的直觉主义。}Weyl 一度被 Brouwer 的直觉主义说服。1918 年他还与 Pólya 打赌：20 年内数学家将认识到实数、集合等概念的"模糊性"——他输掉了赌局。后来与 Brouwer 产生严重分歧，最终回归 Hilbert 的形式主义。};
+  \node[item, fill=purplepanel, draw=badgegauge!25] at (0,-0.45)
+    {\textbf{理解而非站队。}Weyl 是少数能够真正理解双方立场的数学家。他不简单地"支持谁"，而是在两种哲学之间寻找第三种可能性——这使他的哲学著作格外深刻。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他的一生都在证明：数学家可以同时相信形式的严谨和直觉的力量。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 继承 Hilbert 衣钵 ---
+\newcommand{\successionslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{继承 Hilbert 衣钵 (1930–1933)}{回到哥廷根 · 3 年后被迫离开}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgegroup!40] at (0,2.35)
+    {\textbf{1930 · 最高学术荣誉。}Hilbert 退休后，指定 Weyl 接替他在哥廷根大学的教席。这不是一个普通职位——这是 20 世纪数学界最尊贵的学术传承。};
+  \node[item, fill=purplepanel, draw=badgegauge!30] at (0,0.85)
+    {\textbf{1933 · 纳粹上台。}《恢复职业公务员法》通过，Weyl 的妻子是犹太人，全家被迫离开德国。他只享受了三年的"Hilbert 继任者"荣光。};
+  \node[item, fill=bluepanel, draw=badgegeometry!25] at (0,-0.45)
+    {\textbf{赴美。}Oswald Veblen 帮助 Weyl 加入新成立的普林斯顿高等研究院（IAS）。他本不愿离开故土，但当 IAS 再次发出邀请时——纳粹的阴影已成现实——他选择了接受。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1933 年，哥廷根数学学派被纳粹连根拔起 —— Weyl 的离开是一个时代的终结。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 为 Noether 而战 ---
+\newcommand{\noetherslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为 Noether 而战 (1933)}{纳粹之下 · 为犹太同事争取 IAS 职位}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgephilosophy!45] at (0,2.35)
+    {\textbf{1933 · 拯救同事。}纳粹驱逐犹太学者后，Weyl 和 Einstein 联合为 Emmy Noether 争取 IAS 的访问学者职位。虽然只是临时职位，但这让她得以逃离纳粹德国。};
+  \node[item, fill=purplepanel, draw=badgegauge!35] at (0,0.85)
+    {\textbf{1935 · 最后的悼词。}Noether 在 Bryn Mawr 去世后，Weyl 亲自从普林斯顿前往致悼词。他在悼词中说："她是一位伟大的数学家……她的数学想象力有着非凡的原创力和深度。"};
+  \node[item, fill=goldpanel, draw=badgegroup!30] at (0,-0.45)
+    {\textbf{不只是学术尊重。}Weyl 对 Noether 的支持超越了学术——它是人格的体现。在一个迫害同事的时代，他选择了保护而非沉默。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 在人类最黑暗的年代，他选择了光明。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. IAS 岁月 ---
+\newcommand{\iasslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{IAS 岁月 (1933–1951)}{普林斯顿的新家园 · 美国数学的黄金时代}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgegeometry!40] at (0,2.35)
+    {\textbf{普林斯顿高等研究院。}IAS 成立于 1930 年，Weyl 是早期核心成员。同事包括 Einstein、Gödel、von Neumann、Veblen —— 有史以来最密集的智力聚集。};
+  \node[item, fill=goldpanel, draw=badgegroup!35] at (0,0.85)
+    {\textbf{流亡数学家的港湾。}随着纳粹在欧洲的扩张，IAS 成为流亡数学家的避难所。Weyl 是这一运动的积极推动者，帮助了无数同事逃离迫害。};
+  \node[item, fill=amberpanel, draw=badgephilosophy!35] at (0,-0.45)
+    {\textbf{学术巅峰。}在 IAS 期间，Weyl 完成了《经典群》(1939)、《对称》(1952)等最重要的著作。美国数学从欧洲的"学生"变成了世界的中心——Weyl 功不可没。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他不是一个逃离者，他是一个建设者——把哥廷根的精神带到了普林斯顿。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 经典群 ---
+\newcommand{\classicalgroups}{%
+\begin{frame}
+\plainbar
+\sectiontitle{经典群与不变量理论 (1939)}{《The Classical Groups》—— 一座数学丰碑}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgegroup!45] at (0,2.35)
+    {\textbf{经典群的系统理论。}Weyl 将 19 世纪的"不变量理论"（invariant theory）用现代李群和表示论的语言重建。这是数学从古典到现代的完美过渡。};
+  \node[item, fill=bluepanel, draw=badgegeometry!30] at (0,0.85)
+    {\textbf{不变量理论的现代重建。}Weyl 以李群和表示论的全新语言系统重建了 19 世纪的不变量理论——涵盖了对称群、一般线性群、正交群和辛群。书中的 Weyl 特征标公式至今是表示论的核心工具。};
+  \node[item, fill=purplepanel, draw=badgegauge!25] at (0,-0.45)
+    {\textbf{一座桥梁。}这本书完美体现了 Weyl 的"连接者"气质——它同时是代数、几何、分析和物理的教科书，没有一个领域被孤立对待。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Dyson 将 Weyl 与 Poincaré、Hilbert 并列为"最后的普适数学家"——能同时在纯数学和理论物理的最前沿做出原创贡献。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 谱理论与均匀分布 ---
+\newcommand{\spectralslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{谱理论与均匀分布}{Weyl 渐近律 · Weyl 一致分布定理}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgegeometry!45] at (0,2.35)
+    {\textbf{Weyl 渐近律 (1911–1913)。}证明了有界区域上 Laplace 算子的特征值个数与区域体积成正比。这是谱几何的开端——"你能从鼓声听到鼓的形状吗？"问题的数学源头。};
+  \node[item, fill=goldpanel, draw=badgegroup!35] at (0,0.85)
+    {\textbf{Weyl 一致分布定理 (1916)。}给出了一个数列在 [0,1] 上均匀分布的充要条件（Weyl 判据）。这是解析数论和遍历理论的基本工具，证明了 π、e 等常数的许多小数分布性质。};
+  \node[item, fill=amberpanel, draw=badgephilosophy!30] at (0,-0.45)
+    {\textbf{两座基石。}这两个结果一个属于分析/几何、一个属于数论——再次展示了 Weyl 跨领域思考的能力。今天它们在量子混沌、Monte Carlo 方法中仍有广泛应用。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从几何到数论，Weyl 的工具箱里总有让人意想不到的武器。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 对称之美 ---
+\newcommand{\symmetryslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{对称之美 (1952)}{从雪花到基本粒子 —— 一门关于秩序的普遍科学}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgephilosophy!45] at (0,2.35)
+    {\textbf{1952 · 《对称》。}Weyl 在普林斯顿发表了关于对称的系列讲座，后整理成书。这是数学科普的经典——不依赖公式，仅用图像和思想来讲述对称的普适性。};
+  \node[item, fill=goldpanel, draw=badgegroup!35] at (0,0.85)
+    {\textbf{从艺术到物理。}Weyl 从古代建筑中的对称、中世纪装饰艺术中的群论结构，一直讲到量子力学中的对称性原理。他在艺术和数学之间建立起令人惊叹的桥梁。};
+  \node[item, fill=purplepanel, draw=badgegauge!30] at (0,-0.45)
+    {\textbf{著名的开场白。}"对称，无论是广义还是狭义，是一种人类自古以来就试图通过它来理解和创造秩序、美和完美的观念。"——这段话至今被广泛引用。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 一本不写公式的数学书，却比大多数教科书更深刻地揭示了数学的本质。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 数学哲学 ---
+\newcommand{\philosophyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数学与自然科学哲学 (1927/1949)}{一位数学家如何看待自然世界}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgephilosophy!50] at (0,2.35)
+    {\textbf{1927 初版 · 1949 修订版。}Weyl 将一生对数学和物理的哲学思考浓缩在这本书中。与 Russell 和 Whitehead 的《数学原理》不同，Weyl 强调"人"在数学创造中的角色。};
+  \node[item, fill=purplepanel, draw=badgegauge!35] at (0,0.85)
+    {\textbf{核心论点。}Weyl 认为数学不是"发现"自然规律的工具，而是人类构造的一种"符号系统"——它之所以有效，是因为我们选择了让它有效的方式。这一观点影响了后来的科学哲学。};
+  \node[item, fill=goldpanel, draw=badgegroup!30] at (0,-0.45)
+    {\textbf{Dyson 的评价。}Dyson 曾将 Weyl 与 Poincaré、Hilbert 并列为最后的普适数学家——能同时在纯数学和理论物理最前沿做出原创贡献，唯此三人而已。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} Weyl 不只是数学家——他是数学的哲学家，是数学与人文之间的摆渡人。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{外尔的遗产}{规范理论 · 李群 · 黎曼面 · 对称 —— 贯穿现代数学物理}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=purplepanel, draw=badgegauge!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgegauge} 规范理论}\\[3pt]粒子物理\\标准模型\\Weyl 半金属};
+  \node[leg, fill=goldpanel, draw=badgegroup!50, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{coverprimary!85!black} 李群}\\[3pt]表示论\\经典群\\特征标公式};
+  \node[leg, fill=bluepanel, draw=badgegeometry!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgegeometry} 几何}\\[3pt]黎曼面\\谱理论\\Weyl 张量};
+  \node[leg, fill=amberpanel, draw=badgephilosophy!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgephilosophy} 哲学}\\[3pt]对称\\数学基础\\科学哲学};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他不是某一个领域的大师 ——\\他是让各个领域彼此对话的人。}\\[4pt]
+    {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      从规范场论到李群表示，从黎曼面到数学哲学，\\
+      从哥廷根到普林斯顿，从 Hilbert 到 Einstein —— \\
+      Weyl 的每一次"连接"都改变了数学和物理的版图。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 16. 升起海水 ---
+\newcommand{\epitaphslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center] at ([yshift=2.2cm]current page.center) {
+    \begin{tikzpicture}
+      \node[draw=coverprimary!20, line width=0.8pt, fill=white, rounded corners=4pt, inner sep=2pt]
+        {\includegraphics[width=4.5cm,keepaspectratio]{with_peschl.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{15}{22}\selectfont\bfseries, text=coverprimary!90!black,
+        align=center, text width=13cm]
+    at ([yshift=-0.9cm]current page.center) {他用对称和规范的思想，};
+  \node[anchor=center, font=\fontsize{15}{22}\selectfont\bfseries, text=coverprimary!90!black,
+        align=center, text width=13cm]
+    at ([yshift=-1.9cm]current page.center) {提前 50 年预言了基本粒子的数学结构。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-2.7cm, xshift=-2.5cm]current page.center)
+    -- ([yshift=-2.7cm, xshift=2.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-3.6cm]current page.center)
+    {赫尔曼·外尔\quad Hermann Weyl\quad 1885 — 1955};
+  \node[anchor=center, font=\fontsize{7.0}{8.5}\selectfont\itshape, text=coverdark!40]
+    at ([yshift=-4.15cm]current page.center)
+    {泛神论者 · 数学与自然统一的信仰者};
+  \node[anchor=south, font=\fontsize{6.5}{8}\selectfont, text=coverdark!45]
+    at ([yshift=0.35cm]current page.south) {Zürich · 苏黎世\enspace|\enspace 骨灰 1999 年迁入 Princeton Cemetery};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 17. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.9cm]current page.center) {他从来不只是数学家};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.0cm]current page.center) {或物理学家，他总是两者兼备。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=0.15cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=0.15cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-0.9cm]current page.center)
+    {—— 据 Einstein 对 Weyl 的评价转述};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-2.4cm]current page.center)
+    {赫尔曼·外尔\quad Hermann Weyl\quad 1885 — 1955};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{infinity}\enspace 几何与物理之间的超级连接者\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\studentlife
+\riemannslide
+\gaugeslide
+\groupquantum
+\foundationslide
+\successionslide
+\noetherslide
+\iasslide
+\classicalgroups
+\spectralslide
+\symmetryslide
+\philosophyslide
+\legacyslide
+\epitaphslide
+\closingslide
+\end{document}
