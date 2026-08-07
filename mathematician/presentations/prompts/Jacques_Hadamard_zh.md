@@ -157,3 +157,16 @@
 | 三个儿子 | Wikipedia 记录有三子二女，但"全部阵亡"此说未见于 Wikipedia。传播时需核实来源 |
 | 无神论者 | Wikipedia 明确记载"professed to be an atheist" |
 | 97 岁 | 1963 年去世，经历了从拿破仑三世到戴高乐的全部法国史 |
+
+## 第 12 步：背景音乐选择 ✅
+
+- **选定曲目**: **The Flow of Time** — Alex-Productions (56k views)
+- **风格**: 时间感 / 纪录片 / 经典数论 / 数学史时间线
+- **匹配理由**:
+  - "时间感" 直接对应 Hadamard 97 年寿命——从法国第二帝国到第五共和国的时间长河
+  - "经典数论" 匹配素数定理证明（1896）——Hadamard 最著名的成就
+  - "数学史时间线" 对应从 Picard 到 Fréchet/Lévy/Weil 的法国数学传承线
+  - 不像 "New Lands" 过于宏大，不像 "Tragedy" 过于悲伤——稳重的时间流逝感正合 Hadamard 的学者气质
+- **本地路径**: `music_audio/alex-productions/35-jqIDnltiDRI-The-Flow-of-Time.wav` → `presentations/Jacques_Hadamard/The-Flow-of-Time.wav`
+- **时长**: 147 秒 (≈2.5 分钟) > 13 页 × 7 秒 = 91 秒 → ffmpeg `-shortest` 自动对齐
+- **Makefile**: `BGM = $(wildcard *.wav)` — 自动检测并混入

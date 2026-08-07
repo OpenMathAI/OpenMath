@@ -1,0 +1,406 @@
+% =============================================================
+%  几何统一的宣言者：费利克斯·克莱因 (Felix Klein)
+%  Beamer 演示 —— 参照 Markov / Wiener 版式
+%  资料来源：mathematician/pages/Felix_Klein + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：爱尔朗根深蓝 + 学术金 + 拓扑绿 + 象牙白 =====
+\definecolor{bgmain}{RGB}{247,246,243}
+\definecolor{coverprimary}{HTML}{1B2A4A}
+\definecolor{coveraccent}{HTML}{C4A24C}
+\definecolor{badgeErlangen}{HTML}{1B4A6B}      % 爱尔朗根深蓝
+\definecolor{badgeGoettingen}{HTML}{C4A24C}    % 哥廷根金
+\definecolor{badgeTopology}{HTML}{2D7A6A}      % 拓扑绿
+\definecolor{badgeLegacy}{HTML}{4A5568}         % 石版灰
+\definecolor{coverdark}{HTML}{1A2030}
+\definecolor{covermuted}{HTML}{6B7A8C}
+\definecolor{titlecolor}{RGB}{18,28,48}
+\definecolor{muteddark}{RGB}{78,88,108}
+\definecolor{erlangenpanel}{RGB}{229,238,246}
+\definecolor{goettingenpanel}{RGB}{252,248,235}
+\definecolor{topologypanel}{RGB}{224,244,238}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!2] (current page.north west) rectangle (current page.south east);
+  \fill[badgeErlangen!6] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeGoettingen!5] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeTopology!5] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!5] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.03, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.03, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+  \node[badgeErlangen!5, font=\fontsize{28}{34}\selectfont] at ([xshift=0.3cm, yshift=-1.0cm]current page.north west) {$\mathbb{G}$};
+  \node[badgeGoettingen!4, font=\fontsize{26}{32}\selectfont] at ([xshift=-0.5cm, yshift=1.2cm]current page.south east) {$G$};
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.8cm, yshift=-0.7cm]current page.north east) {
+    \begin{tikzpicture}
+      \clip[rounded corners=6pt] (0,0) rectangle (2.6,3.2);
+      \node[anchor=center] at (1.3,1.6) {\includegraphics[width=2.6cm, height=3.2cm, keepaspectratio]{images/portrait.jpg}};
+    \end{tikzpicture}
+  };
+  \draw[coveraccent!50, line width=1.2pt, rounded corners=6pt] ([xshift=-0.8cm, yshift=-0.7cm]current page.north east) rectangle ++(-2.6cm,-3.2cm);
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=-2.1cm, yshift=-3.98cm]current page.north east) {Max Liebermann, 1912};
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=badgeErlangen!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{university}\enspace 几何统一的宣言者 · 哥廷根的建筑师};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {费利克斯·克莱因};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Felix Klein\enspace·\enspace 1849 — 1925};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {爱尔兰根纲领 · 克莱因瓶 · 群论与几何 · 自守函数 · 数学教育改革};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeErlangen, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {Erlangen 纲领\\1872};
+      \node[rounded corners=8pt, fill=badgeTopology, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {克莱因瓶\\拓扑学经典};
+      \node[rounded corners=8pt, fill=badgeGoettingen, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {哥廷根 \\Hilbert · Noether};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {教育改革\\德摩根 · 科普利奖};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"每一种几何学研究的是在某个变换群下保持不变的性质。" —— 爱尔兰根纲领, 1872};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace 德国 Düsseldorf → Göttingen\enspace|\enspace 埃尔朗根·慕尼黑·莱比锡·哥廷根\enspace|\enspace 76 岁};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么克莱因独一无二}{爱尔兰根纲领宣言者 · 哥廷根的缔造者 · 几何统一的大师}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=11pt,inner ysep=9pt,font=\fontsize{8}{10}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=erlangenpanel,draw=badgeErlangen!55,text=badgeErlangen!85!black]
+    (a) at (-5.7,1.05) {Erlangen 纲领 (1872)\\[2pt]仅 23 岁！\\用群论统一全部几何学\\"几何=群+不变量"};
+  \node[nodebox,fill=topologypanel,draw=badgeTopology!55,text=badgeTopology!85!black]
+    (b) at (-1.9,1.05) {克莱因瓶\\[2pt]不可定向闭曲面\\3D Möbius 带\\拓扑学永恒的标志};
+  \node[nodebox,fill=goettingenpanel,draw=badgeGoettingen!55,text=badgeGoettingen!85!black]
+    (c) at (1.9,1.05) {哥廷根的建筑师\\[2pt]1895 邀 Hilbert 加盟\\创建世界数学中心\\编纂数学百科全书};
+  \node[nodebox,fill=legacypanel,draw=badgeLegacy!55,text=badgeLegacy!85!black]
+    (d) at (5.7,1.05) {教育改革的先驱\\[2pt]ICMI 首任主席\\初等数学从高观点看\\女数学家先驱导师};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=12pt,text width=13.4cm,align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} Plücker 的学生 · Clebsch 的赞赏者 · Hilbert 的伯乐 · Poincaré 的竞争对手\\[1pt]自守函数 · 非欧几何的捍卫者 · 群论与几何的桥梁 · 20 世纪数学教育的奠基人}\\[1pt]
+    {\fontsize{8.0}{10}\selectfont\color{covermuted} 他不是某个细分领域的专家——他是整个数学视野的统一者。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年与教育 ---
+\newcommand{\earlylifeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{早年与教育 (1849–1872)}{Düsseldorf 出生 · 波恩大学 · Plücker 门下 · 普法战争}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=erlangenpanel,draw=badgeErlangen!55] at (0,2.55)
+    {\textbf{早年。}1849 年 4 月 25 日生于普鲁士 Düsseldorf。父亲 Caspar Klein 是政府官员秘书。在 Düsseldorf 文理中学就读后，1865 年进入波恩大学，本想成为物理学家——但命运另有安排。};
+  \node[item,fill=goettingenpanel,draw=badgeGoettingen!35] at (0,0.95)
+    {\textbf{Plücker 的助手。}Julius Plücker 是波恩的数学与实验物理学教授。Klein 1866 年成为他的助手时，Plücker 的兴趣已完全转向线几何学。这一转向决定了 Klein 一生的方向——几何，而非物理。1868 年获博士学位（21 岁），导师 Plücker。};
+  \node[item,fill=graypanel,draw=badgeTopology!20] at (0,-0.45)
+    {\textbf{Plücker 遗业与游学。}1868 年 Plücker 去世，留下了未完成的线几何著作。Klein 受命完成下卷，由此结识了 Alfred Clebsch——这位比他年长 16 岁的 Georg-August-Universität Göttingen 教授，后来成为他的关键提携人。1870 年游学巴黎，普法战争爆发，被迫离法，短暂担任普鲁士军队医护兵。1871 年初成为哥廷根 Privatdozent。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Clebsch 说 Klein"可能成为同时代最杰出的数学家"。他不只是预言——他是 Klein 的起跳板。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 爱尔兰根纲领 ---
+\newcommand{\erlangenSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{爱尔兰根纲领 (Erlangen Programm, 1872)}{\faIcon{star}\enspace 23 岁的就职演讲 · 用群论统一全部几何学}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=erlangenpanel,draw=badgeErlangen!55] at (0,2.65)
+    {\textbf{23 岁的教授。}1872 年，Clebsch 力荐年仅 23 岁的 Klein 出任埃尔朗根大学教授。Klein 的就职演讲稿《Vergleichende Betrachtungen über neuere geometrische Forschungen》（近代几何学研究的比较考察）——后来被称为"爱尔兰根纲领"——成为数学史上最有影响力的就职演讲之一。};
+  \node[item,fill=goettingenpanel,draw=badgeGoettingen!55] at (0,0.95)
+    {\textbf{核心思想：几何 = 群 + 不变量。}"每一种几何学研究的是在某个变换群下保持不变的性质。"欧氏几何对应刚体运动群，射影几何对应射影变换群，非欧几何对应双曲/椭圆运动群——所有几何学在群的框架下得到了统一。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{来自 Lie 和 Jordan 的影响。}Sophus Lie 在 1869–1870 年间向 Klein 介绍了群的概念，Camille Jordan 的工作也影响了 Klein。Lie 群、Jordan 定理——群论从代数工具变成了几何的灵魂。这是一个思想的杂交：代数的方法 + 几何的直觉。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 纲领未被立即接受——但它的思想最终渗透了整个 20 世纪数学。Grothendieck 方案是它的代数几何回响。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 非欧几何 ---
+\newcommand{\noneuclidSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{非欧几何的捍卫者}{Cayley–Klein 度量 · Beltrami–Klein 模型 · 终结了几何学的千年争论}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=erlangenpanel,draw=badgeErlangen!55] at (0,2.55)
+    {\textbf{1871 年：两篇划时代论文。}Klein 在哥廷根发表了两篇"论所谓的非欧几何"的论文。他展示了欧氏几何和非欧几里得几何都可以看作由一个 Cayley–Klein 度量决定的度量空间。这一洞察具有重大推论：非欧几何一致 $\Leftrightarrow$ 欧氏几何一致。};
+  \node[item,fill=topologypanel,draw=badgeTopology!55] at (0,0.85)
+    {\textbf{Beltrami–Klein 模型。}Klein 独立给出了非欧几何的射影模型——单位圆盘内，弦代表直线，非欧距离通过交比计算。与 Poincaré 圆盘模型不同，Klein 模型中"直线"即真的直线段。这给出非欧几何最直观的视觉呈现。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.55)
+    {\textbf{千年争论的终结。}Klein 的工作意味着：非欧几何与欧氏几何地位平等。如果欧氏几何无矛盾，非欧几何也无矛盾。持续千年的平行公理争论——结束了。Cayley 至死没有接受这个结论，认为它循环论证。但历史站在了 Klein 一边。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 几何学不再是绝对的——它是相对的。每种几何都是合法的，就像每种语言都有其语法。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 克莱因瓶 ---
+\newcommand{\kleinbottleSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{克莱因瓶 (Klein Bottle)}{\faIcon{circle}\enspace 不可定向的经典 · 拓扑学的永恒标志 · 一个翻译错误成就的名字}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=topologypanel,draw=badgeTopology!55] at (0,2.65)
+    {\textbf{克莱因瓶是什么？}一个单侧的（不可定向的）、无边界的闭曲面。它无法在三维欧氏空间中嵌入（必然自交），但可以在四维及更高维空间中嵌入。它可以想象为将圆柱体的一端穿过自身从内部接到另一端。};
+  \node[item,fill=erlangenpanel,draw=badgeErlangen!55] at (0,0.95)
+    {\textbf{"Flasche" 还是 "Fläche"？}德国原名 "Kleinsche Fläche"（Klein 曲面/面）。当翻译成英文时，"Fläche"（面）被误听/误写为 "Flasche"（瓶）。于是诞生了著名的 "Klein bottle"——一个数学史上最美丽的翻译错误。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{Möbius 带的 3D 亲属。}克莱因瓶是三维的 Möbius 带——将两个 Möbius 带的边缘粘合起来即得。它优雅地展示了拓扑学中"定向性"这一核心概念。Klein 用它来说明：有些几何对象本质上不是局部几何所能描述的——它们有全局拓扑性质。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个数学概念，一个翻译错误，一段永恒传奇——Klein bottle 成为拓扑学的公共面孔。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 自守函数与 Poincaré ---
+\newcommand{\automorphicSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{自守函数与 Poincaré 的竞争}{自守函数 · 正二十面体 · 五次方程 · 哮喘发作中的灵感}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=erlangenpanel,draw=badgeErlangen!55] at (0,2.65)
+    {\textbf{Klein vs Poincaré。}1881 年 Poincaré 发表了自守函数理论的概要。Klein 立刻意识到这是他的领地——他与 Poincaré 展开了一场友好而激烈的竞争。这场竞赛是 19 世纪末数学界最著名的事件之一。};
+  \node[item,fill=goettingenpanel,draw=badgeGoettingen!55] at (0,0.95)
+    {\textbf{一根弦上的证明。}Klein 成功地表述并证明了统一化定理（uniformization theorem）的大战略。传奇般的时刻：1882 年 3 月 23 日凌晨 2:30，在一次哮喘发作中，他完成了证明。数学史上最不可思议的灵感时刻之一。};
+  \node[item,fill=topologypanel,draw=badgeTopology!55] at (0,-0.55)
+    {\textbf{正二十面体与五次方程 (1884)。}Klein 用二十面体群解决了一般五次方程的超越解法问题。他在《正二十面体讲义》中将代数、几何和群论编织在一起——这是一部真正的杰作，展示了"用几何眼光看代数"的克莱因风格。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 与 Poincaré 的竞赛耗尽了他的健康——1882 年崩溃，此后两年抑郁——但数学因此向前迈进了一大步。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 哥廷根的建筑师 ---
+\newcommand{\goettingenSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{哥廷根的建筑师 (1886–1913)}{把 Hilbert 请来的人 · 创建世界数学中心 · 数学教育先驱}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=goettingenpanel,draw=badgeGoettingen!55] at (0,2.75)
+    {\textbf{1895：关键一招。}1886 年 Klein 接受了哥廷根大学的教授席位。此后近 30 年，他将哥廷根从一个普通大学转化为世界数学中心。最重要的是 1895 年——他从柯尼斯堡大学邀来了 David Hilbert。这可能是数学史上最重要的招聘决策之一。};
+  \node[item,fill=erlangenpanel,draw=badgeErlangen!55] at (0,1.05)
+    {\textbf{建造数学帝国。}Klein 在哥廷根创建了数学阅览室和图书馆，引入了每周讨论班制度，建立了连接数学与物理（特别是力学和势论）的讲座体系。他主导的《Mathematische Annalen》成为世界顶级数学期刊——超越了柏林大学的 Crelle 杂志。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.35)
+    {\textbf{Noether 与女性数学家。}1893 年，由于 Klein 的努力，哥廷根开始接收女生。他指导了 Grace Chisholm Young——哥廷根第一位获得数学博士学位的女性。1915 年，Klein 和 Hilbert 共同邀请 Emmy Noether 来哥廷根。Noether 在这里将 Einstein 引入了群论与对称性。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 人们记得 Hilbert，但哥廷根的黄金时代始于 Klein。他是舞台的搭建者，Hilbert 是聚光灯下的演员。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 复分析与模函数 ---
+\newcommand{\complexSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{复分析与椭圆模函数}{Riemann 理论的几何解读 · Klein 四次曲面 · 模形式的先驱}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=erlangenpanel,draw=badgeErlangen!55] at (0,2.65)
+    {\textbf{Klein 自认为这是他最重要的贡献。}Klein 最看重自己在复分析领域的工作——特别是连接 Riemann 思想与不变理论的那条线索。1882 年《论 Riemann 代数函数及其积分理论》以几何方式处理复分析，连接势论与共形映射，汲取了流体动力学的思想。};
+  \node[item,fill=topologypanel,draw=badgeTopology!55] at (0,0.85)
+    {\textbf{Klein 四次曲面 (Klein Quartic, 1879)。}他考察了 PSL(2,7)（168 阶）在模群下的作用，得到了一个显式的 Riemann 面表示——Klein 四次曲面：$x^3y + y^3z + z^3x = 0$。其对称群正是 PSL(2,7)。这是代数曲线中最著名的对象之一。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.55)
+    {\textbf{模函数与模形式。}Klein 展示了模群如何移动复平面的基本域以铺满整个平面。他与 Robert Fricke 合作，花了 20 年时间完成了四卷关于自守函数和椭圆模函数的巨著。这部著作是模形式理论的奠基性文献。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 复数平面上的铺砌——Klein 把分析变成了几何，把代数变成了形状。这是他最克莱因的贡献。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 数学教育 ---
+\newcommand{\educationSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数学教育改革的先驱}{ICMI 首任主席 · 从高观点看初等数学 · 函数概念入中学}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=goettingenpanel,draw=badgeGoettingen!55] at (0,2.65)
+    {\textbf{1905：Meran 方案。}Klein 主导制定了"Meraner Reformvorschläge"——建议在中学阶段引入解析几何、微积分基础以及函数概念。这一方案后来被世界各国逐步采纳——你今天在高中学的函数，部分根源就来自 Klein 的倡议。};
+  \node[item,fill=erlangenpanel,draw=badgeErlangen!55] at (0,0.95)
+    {\textbf{《从高观点看初等数学》(1908)。}Klein 在这部经典中展示了如何从高级数学的视角理解初等数学——分数、负数、无理数有什么深层结构？为什么中学这样教几何？这部著作影响了全世界整整一个世纪的数学教师培训。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{ICMI 的创始人。}1908 年，在罗马举行的第四届国际数学家大会上，Klein 当选国际数学教育委员会（ICMI）第一任主席。他指导德国分会出版了多卷关于各级数学教育的报告。ICMI 是 Klein 留给数学教育界的持久遗产。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 数学研究 + 数学教育 = Klein 的两条腿。他相信数学家必须关注下一代如何学习数学。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 荣誉、晚年与遗产 ---
+\newcommand{\legacySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{荣誉、晚年与遗产}{科普利奖章 · 德摩根奖章 · 百科全书 · 一个数学时代的终结}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=goettingenpanel,draw=badgeGoettingen!55] at (0,2.65)
+    {\textbf{荣誉满身。}1885：当选英国皇家学会外籍会员；1893：伦敦数学会德摩根奖章 + 芝加哥国际数学家大会主讲人；1912：科普利奖章（英国最高科学荣誉）；1914：Ackermann–Teubner 纪念奖。他的学术地位得到了整个欧洲学界的认可。};
+  \node[item,fill=erlangenpanel,draw=badgeErlangen!55] at (0,0.95)
+    {\textbf{《数学百科全书》(1894–1935)。}Klein 发起编纂的《Encyklopädie der mathematischen Wissenschaften》持续到 1935 年，涵盖纯数学与所有应用领域。这是一项不朽的学术工程——20 世纪数学的"百科全书"。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{争议与黄昏。}一战期间，Klein 签了《九十三人宣言》支持德国入侵比利时——晚年对此有所修正。1913 年因健康原因退休，但仍在家中继续教学。1925 年逝世于哥廷根。他的一生跨越了德国数学从地方性到世界领先的完整历程。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从 Plücker 到 Klein，从 Klein 到 Hilbert —— 德国数学的黄金传承线。Klein 是中间的那一环。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.2cm]current page.center) {"每一种几何学研究的是在某个变换群下};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.2cm]current page.center) {保持不变的性质。"};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.8cm, xshift=-3.5cm]current page.center)
+    -- ([yshift=-0.8cm, xshift=3.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.6cm]current page.center)
+    {—— 爱尔兰根纲领, 1872};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-2.4cm]current page.center)
+    {费利克斯·克莱因\quad Felix Klein\quad 1849 — 1925};
+  \node[anchor=center, font=\fontsize{6.5}{8}\selectfont, text=badgeLegacy!60]
+    at ([yshift=-3.1cm]current page.center)
+    {从爱尔兰根纲领到克莱因瓶，从哥廷根到全世界的课堂——Klein 统一了我们的几何视野。};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{university}\enspace Erlangen 纲领 \enspace|\enspace 克莱因瓶 \enspace|\enspace 哥廷根 \enspace|\enspace 自守函数 \enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlylifeslide
+\erlangenSlide
+\noneuclidSlide
+\kleinbottleSlide
+\automorphicSlide
+\goettingenSlide
+\complexSlide
+\educationSlide
+\legacySlide
+\closingslide
+\end{document}

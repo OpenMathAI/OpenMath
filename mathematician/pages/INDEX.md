@@ -1,6 +1,6 @@
 # 数学家完整页面索引
 
-> 生成时间：2026-08-07 22:37:46
+> 生成时间：2026-08-07 23:28:42
 > 共 **1** 人
 
-- [Andrey Markov](Andrey_Markov/page.md) （1856–1922） — Russian mathematician
+- [Jacques Hadamard](Jacques_Hadamard/page.md) （1865–1963） — French mathematician (1865–1963)
