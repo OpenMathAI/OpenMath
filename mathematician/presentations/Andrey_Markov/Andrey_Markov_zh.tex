@@ -1,0 +1,408 @@
+% =============================================================
+%  随机世界的建筑师：安德雷·马尔可夫 (Andrey Markov)
+%  Beamer 演示 —— 参照 Wiener / Hardy 版式
+%  资料来源：mathematician/pages/Andrey_Markov + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：链金 + 俄式深红 + 概率红 + 象牙纸 =====
+\definecolor{bgmain}{RGB}{252,249,244}
+\definecolor{coverprimary}{HTML}{2D1B0A}
+\definecolor{coveraccent}{HTML}{C44536}
+\definecolor{badgeChains}{HTML}{C4893C}       % 链金
+\definecolor{badgeProbability}{HTML}{C44536}   % 概率红
+\definecolor{badgeNumberTheory}{HTML}{3A6B5C}  % 数论青
+\definecolor{badgeLegacy}{HTML}{4A5568}        % 石版灰
+\definecolor{coverdark}{HTML}{2A1A0A}
+\definecolor{covermuted}{HTML}{7A6A58}
+\definecolor{titlecolor}{RGB}{28,18,8}
+\definecolor{muteddark}{RGB}{95,75,55}
+\definecolor{chainpanel}{RGB}{252,242,225}
+\definecolor{probpanel}{RGB}{252,232,230}
+\definecolor{numtheorypanel}{RGB}{228,244,238}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{graypanel}{RGB}{244,243,240}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!3] (current page.north west) rectangle (current page.south east);
+  \fill[badgeChains!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeProbability!7] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeNumberTheory!7] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+  % subtle chain motif
+  \node[badgeChains!6, font=\fontsize{28}{34}\selectfont] at ([xshift=0.3cm, yshift=-1.0cm]current page.north west) {$\infty$};
+  \node[badgeProbability!5, font=\fontsize{26}{32}\selectfont] at ([xshift=-0.5cm, yshift=1.2cm]current page.south east) {$P$};
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  % --- 右上角头像 ---
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.8cm, yshift=-0.7cm]current page.north east) {
+    \begin{tikzpicture}
+      \clip[rounded corners=6pt] (0,0) rectangle (2.6,3.2);
+      \node[anchor=center] at (1.3,1.6) {\includegraphics[width=2.6cm, height=3.2cm, keepaspectratio]{images/portrait.jpg}};
+    \end{tikzpicture}
+  };
+  \draw[coveraccent!50, line width=1.2pt, rounded corners=6pt] ([xshift=-0.8cm, yshift=-0.7cm]current page.north east) rectangle ++(-2.6cm,-3.2cm);
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=-2.1cm, yshift=-3.98cm]current page.north east) {A. A. Markov, c.1886};
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=badgeChains!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{link}\enspace 随机世界的建筑师};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {安德雷·马尔可夫};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Andrey Markov\enspace·\enspace 1856 — 1922};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {Markov 链 · 随机过程 · 概率论 · 数论 · Chebyshev 的传人};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeChains, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {Markov 链\\Markov Chains};
+      \node[rounded corners=8pt, fill=badgeProbability, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {概率论\\Probability};
+      \node[rounded corners=8pt, fill=badgeNumberTheory, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {数论\\Number Theory};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {遗产\\Legacy};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"他从 Pushkin 的长诗中摘取了 Markov 链的第一颗种子。" —— 从叶甫盖尼·奥涅金到 PageRank};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace 俄罗斯 Ryazan → Petrograd\enspace|\enspace 圣彼得堡大学 1880–1905\enspace|\enspace 圣彼得堡科学院\enspace|\enspace 66 岁};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么马尔可夫独一无二}{Markov 链之父 · 随机过程的先驱 · 一个意外的革命}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=11pt,inner ysep=9pt,font=\fontsize{8}{10}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=chainpanel,draw=badgeChains!55,text=badgeChains!85!black]
+    (a) at (-5.7,1.05) {Markov 链\\[2pt]1906 年首次提出\\从 Pushkin 诗歌\\到 Google PageRank};
+  \node[nodebox,fill=probpanel,draw=badgeProbability!55,text=badgeProbability!85!black]
+    (b) at (-1.9,1.05) {Markov 不等式\\[2pt]概率论基本不等式\\大数定律·中心极限\\Chebyshev 的继承者};
+  \node[nodebox,fill=numtheorypanel,draw=badgeNumberTheory!55,text=badgeNumberTheory!85!black]
+    (c) at (1.9,1.05) {数论贡献\\[2pt]Markov 数·连分数\\丢番图逼近\\Markov 兄弟不等式};
+  \node[nodebox,fill=legacypanel,draw=badgeLegacy!55,text=badgeLegacy!85!black]
+    (d) at (5.7,1.05) {科学家的风骨\\[2pt]拒绝监控学生\\主动要求被逐出教会\\无畏的独立思考者};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=12pt,text width=13.4cm,align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} Chebyshev 的学生 · 圣彼得堡概率学派的第二代领袖\\[1pt]Markov 链 → 信息时代的基础设施 · 随机过程 → 现代科学的核心语言}\\[1pt]
+    {\fontsize{8.0}{10}\selectfont\color{covermuted} 他并非刻意创造历史——他只是想证明：随机性不需要神。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年 ---
+\newcommand{\earlylifeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{早年与教育 (1856–1880)}{Ryazan 出生 · 圣彼得堡大学 · Chebyshev 门下}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=chainpanel,draw=badgeChains!55] at (0,2.55)
+    {\textbf{早年。}1856 年 6 月 14 日生于俄罗斯 Ryazan。在圣彼得堡文法学校，除了数学之外成绩平平——有些老师甚至认为他是个叛逆的学生。然而正是这个"叛逆者"，后来成为俄罗斯数学史上最伟大的概率论学者之一。};
+  \node[item,fill=probpanel,draw=badgeProbability!35] at (0,0.95)
+    {\textbf{圣彼得堡大学时代。}进入圣彼得堡帝国大学后，师从数学界的群星：Yulian Sokhotski（微积分）、Konstantin Posse（解析几何）、Yegor Zolotarev（积分学）、Aleksandr Korkin（微分方程），以及最重要的——\textbf{Pafnuty Chebyshev}（数论与概率论）。};
+  \node[item,fill=graypanel,draw=badgeNumberTheory!20] at (0,-0.45)
+    {\textbf{1877 年·金牌论文。}21 岁便因出色解决"用连分数积分微分方程"的问题获得大学金牌。次年通过候选人考试，留校准备讲师资格。1880 年完成硕士论文"论正行列式的二元二次型"，导师为 Korkin 和 Zolotarev。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Chebyshev 看到了这个年轻人的潜力——Markov 将成为圣彼得堡概率学派最杰出的继承者。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. Markov 链的诞生 ---
+\newcommand{\markovchainBirthSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Markov 链的诞生：一个意外的革命 (1906)}{挑战宗教论证 · Eugene Onegin 的字母统计 · 依赖随机变量的数学}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=chainpanel,draw=badgeChains!55] at (0,2.65)
+    {\textbf{一场宗教争论的副产品。}1900 年代初，数学家 Pavel Nekrasov 声称大数定律仅适用于独立随机变量——"因为上帝创造的世界中，事物的独立性体现了自由意志"。Markov 对此极为反感，决定用数学本身来反驳。};
+  \node[item,fill=probpanel,draw=badgeProbability!55] at (0,0.95)
+    {\textbf{证明：依赖也可以。}1906 年，Markov 发表了划时代论文"大数定律对相依变量的推广"。他证明了即使随机变量之间存在依赖关系——只要依赖遵循某种链式结构——大数定律仍然成立。Markov 链就此诞生。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.55)
+    {\textbf{Eugene Onegin：第一组经验数据。}1913 年，Markov 选取 Pushkin 的《叶甫盖尼·奥涅金》前 20,000 个字母，统计元音与辅音的转移概率——这是 Markov 链的首次经验应用。他将诗歌简化为纯粹的符号序列。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他本想否定神学的论证——却意外创造了 20 世纪最重要的数学工具之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 从 Pushkin 到 PageRank ---
+\newcommand{\pagerankSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{从 Pushkin 到 PageRank}{Markov 链的世纪之旅 · 信息时代的地下基石}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=chainpanel,draw=badgeChains!55] at (0,2.55)
+    {\textbf{PageRank 的灵魂。}1998 年，Larry Page 和 Sergey Brin 创立 Google，其核心算法 PageRank 正是一个稳态 Markov 链：每个网页是一个状态，链接是转移概率，PageRank 值就是平稳分布。Markov 当年分析 Pushkin 诗歌的方法，100 年后驱动着互联网搜索。};
+  \node[item,fill=probpanel,draw=badgeProbability!55] at (0,0.95)
+    {\textbf{无处不在的 Markov 链。}语音识别（HMM 中的状态转移）、自然语言处理（n-gram 模型）、金融建模（信用评级迁移矩阵）、生物信息学（基因序列分析）、物理（Monte Carlo 方法）——从物理学到语言学到华尔街，Markov 链已成为现代科学的通用语言。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.45)
+    {\textbf{信息论之根。}Claude Shannon 在 1948 年《通信的数学理论》中大量使用 Markov 链模型描述自然语言的信息结构。Shannon 写道："Markov 链是对离散信息源最自然的数学描述。"};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1906 年的一个挑衅——变成了今天信息社会的地下基础设施。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. MDP 与强化学习 ---
+\newcommand{\mdpSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Markov 决策过程 (MDP) 与强化学习}{\faIcon{robot}\enspace 当 Markov 链遇见奖励和决策 —— AI 的核心数学框架}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=chainpanel,draw=badgeChains!55] at (0,2.75)
+    {\textbf{从 Markov 链到 MDP。}Markov 链描述了状态之间的随机转移。MDP 在 Markov 链的基础上增加两个关键元素：\textbf{动作（action）}——智能体可以选择做什么；\textbf{奖励（reward）}——每个动作产生一个即时收益。这是从"被动观察"走向"主动决策"的飞跃。};
+  \node[item,fill=probpanel,draw=badgeProbability!55] at (0,1.05)
+    {\textbf{强化学习的数学骨架。}AlphaGo、ChatGPT 的 RLHF（人类反馈强化学习）、自动驾驶——所有这些现代 AI 突破的核心数学框架都是 MDP。智能体（agent）在状态空间中按 Markov 性质转移，策略函数 $\pi(a|s)$ 决定在每个状态下采取什么动作，目标是最大化累积奖励。};
+  \node[item,fill=numtheorypanel,draw=badgeNumberTheory!55] at (0,-0.45)
+    {\textbf{MDP 的核心概念。}状态价值函数 $V(s)$：从状态 $s$ 出发的期望累积奖励；Q 函数 $Q(s,a)$：在状态 $s$ 采取动作 $a$ 后的期望累积奖励。Bellman 最优方程：$V^*(s) = \max_a \big[R(s,a) + \gamma \sum_{s'} P(s'|s,a) V^*(s')\big]$。这个递推方程,根就在 Markov 链的转移概率。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.15) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Markov 链 + 动作 + 奖励 = MDP。1906 年的那一组转移概率，一百年后变成了 AI 决策的核心语言。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Markov 不等式 ---
+\newcommand{\inequalitySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{概率论的基石}{Markov 不等式 · 大数定律 · 中心极限定理的推广}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=probpanel,draw=badgeProbability!55] at (0,2.55)
+    {\textbf{Markov 不等式。}若 $X$ 是非负随机变量，则 $P(X \geq a) \leq E[X]/a$。这个看起来简单的不等式，是整个概率论中最重要的上界工具之一——Chebyshev 不等式、Chernoff 界、大偏差理论……都可以追溯到它。};
+  \node[item,fill=chainpanel,draw=badgeChains!55] at (0,0.95)
+    {\textbf{大数定律的推广。}Markov 最主要的成就之一是将大数定律从独立变量推广到相依变量。他的方法——计算转移概率矩阵的幂——为整个 Markov 过程理论奠定了基础。这是概率论从"独立世界"走向"相依世界"的转折点。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.55)
+    {\textbf{从 Chebyshev 到 Markov。}Chebyshev 首先发现 Markov 不等式（当时未正式发表），但 Markov 将其系统化为概率论的核心工具。后人命名为"Markov 不等式"以表彰他的推广和系统化工作。这是一种罕见的学术美德：老师发现种子，学生种出森林。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} $P(X \geq a) \leq \frac{E[X]}{a}$ —— 概率论中最优美的不等式之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. Chebyshev 的传人 ---
+\newcommand{\chebyshevSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Chebyshev 的传人}{圣彼得堡概率学派的第二代领袖 · 从 Chebyshev 到 Kolmogorov 的桥梁}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=probpanel,draw=badgeProbability!55] at (0,2.65)
+    {\textbf{学术传承。}Chebyshev 于 1882 年离开圣彼得堡大学后，Markov 接替了他的概率论课程。1896 年，Markov 当选科学院正式院士——接替的正是 Chebyshev 留下的席位。这是圣彼得堡概率学派薪火相传的象征。};
+  \node[item,fill=chainpanel,draw=badgeChains!55] at (0,1.05)
+    {\textbf{杰出的学生们。}Markov 的学生名单本身就是一部俄罗斯数学史：Abram Besicovitch（实分析）、Alexander Friedmann（宇宙膨胀方程——Friedmann 方程）、Veniamin Kagan（张量分析）、Jacob Tamarkin（泛函分析）、Georgy Voronoy（Voronoi 图）……};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.35)
+    {\textbf{从 Markov 到 Kolmogorov。}Markov 引入相依变量的严格处理方法，为 Kolmogorov 在 1933 年建立概率论的公理化体系铺平了道路。Chebyshev $\to$ Markov $\to$ Kolmogorov ——这是概率论史上最辉煌的学术传承线。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 概率论的三大山脉：Chebyshev 奠基，Markov 拓展，Kolmogorov 公理化。Markov 是承上启下的一环。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 数论 ---
+\newcommand{\numbertheorySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数论与连分数}{Markov 数 · 丢番图逼近 · Markov 兄弟不等式}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=numtheorypanel,draw=badgeNumberTheory!55] at (0,2.55)
+    {\textbf{Markov 数（1879–1880）。}Markov 在硕士论文和博士论文中研究了丢番图方程 $x^2 + y^2 + z^2 = 3xyz$ 的正整数解。这些解被称为\textbf{Markov 数}：1, 2, 5, 13, 29, 34, 89, 169, 194, 233, 433, 610, …\ 它们与连分数理论和双曲几何有着深刻的联系。};
+  \node[item,fill=chainpanel,draw=badgeChains!55] at (0,0.85)
+    {\textbf{Markov 方程与 Markov 树。}Markov 发现所有解可以通过一个简单的递推关系生成——这就是 Markov 树。这棵树的结构与双曲平面的三角剖分和 Fermat 数的几何之间存在着令人惊叹的联系（Fricke 恒等式）。};
+  \node[item,fill=graypanel,draw=badgeProbability!20] at (0,-0.55)
+    {\textbf{Markov 兄弟不等式（1892）。}与弟弟 Vladimir Markov 合作，证明了多项式及其导数在区间上的最大值之间的最佳不等式。这一定理在逼近理论中具有基础性地位。弟弟年仅 25 岁死于肺结核——这篇论文是兄弟二人唯一的合作。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Markov 数 —— 一个简单方程中蕴含的深邃结构，至今仍有大量未解之谜。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 反叛者 ---
+\newcommand{\rebelslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{无畏的独立灵魂}{拒绝监控学生 · 主动被逐出教会 · 数学与良知的统一}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=probpanel,draw=badgeProbability!55] at (0,2.75)
+    {\textbf{拒绝充当"政权的代理人"。}1908 年，因学生骚乱，政府要求教授们监控学生。Markov 公开拒绝接受这一指令，写信声明他不愿担任"政府的密探"。为此，他被禁止在圣彼得堡大学继续授课，被迫退休。};
+  \node[item,fill=chainpanel,draw=badgeChains!55] at (0,1.05)
+    {\textbf{主动要求被逐出教会。}Markov 是一个坚定的无神论者。1912 年，Leo Tolstoy 被东正教会正式逐出教会。作为一种抗议——或者说是一种冷幽默——Markov 写信给神圣宗教会议，要求也把自己逐出教会。教会照办了。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.35)
+    {\textbf{迟来的荣誉。}1913 年，圣彼得堡评议会选举 Markow 为荣誉会员——但被教育大臣否决。直到 1917 年二月革命后才获确认。他重新站上讲台，讲授概率论与差分学，一直到 1922 年生命终结。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 独立思考不只是一种数学态度——它贯穿了他的一生。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 家族与遗产 ---
+\newcommand{\familySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Markov 家族与持久遗产}{弟弟 Vladimir · 儿子 Andrey Markov Jr. · 以 Markov 命名的一切}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=chainpanel,draw=badgeChains!55] at (0,2.75)
+    {\textbf{Vladimir Markov（1871–1897）。}弟弟也是一位优秀的数学家。兄弟二人合作的 Markov 兄弟不等式至今是逼近理论的核心定理。Vladimir 年仅 25 岁死于肺结核——如果他活着，数学史可能会多出一位巨星。};
+  \node[item,fill=numtheorypanel,draw=badgeNumberTheory!55] at (0,1.05)
+    {\textbf{Andrey Markov Jr.（1903–1979）。}儿子继承父业，成为著名的构造性数学与递归函数论专家。他证明了维数 $\ge 4$ 的拓扑流形的同胚分类是算法不可解的（Markov 定理）。父子二人分别在不同的领域中改变了数学的走向。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.35)
+    {\textbf{以 Markov 命名的一切。}Markov 链、Markov 过程、Markov 不等式、Markov 性质、Markov 决策过程、Markov 模型、隐 Markov 模型、Markov 网络、Markov 数、Markov 兄弟不等式、Gauss–Markov 定理……以 Markov 命名的数学概念数量在数学史上名列前茅。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 父亲开创了随机过程，儿子开拓了构造性数学——Markov 家族两代人在完全不同的方向上重塑了数学。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.2cm]current page.center) {"他只想反驳一个神学的论证——};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.2cm]current page.center) {却为 AI 时代写下了第一行数学语言。"};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.8cm, xshift=-3.5cm]current page.center)
+    -- ([yshift=-0.8cm, xshift=3.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.6cm]current page.center)
+    {—— 安德雷·马尔可夫, 1906–1922};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-2.4cm]current page.center)
+    {安德雷·马尔可夫\quad Andrey Markov\quad 1856 — 1922};
+  \node[anchor=center, font=\fontsize{6.5}{8}\selectfont, text=badgeLegacy!60]
+    at ([yshift=-3.1cm]current page.center)
+    {从 Pushkin 诗歌到 Google PageRank，从 Markov 链到 AlphaGo —— 最简单的方式，最深远的力量。};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{link}\enspace Markov 链 \enspace|\enspace MDP \enspace|\enspace 随机过程 \enspace|\enspace 强化学习 \enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlylifeslide
+\markovchainBirthSlide
+\pagerankSlide
+\mdpSlide
+\inequalitySlide
+\chebyshevSlide
+\numbertheorySlide
+\rebelslide
+\familySlide
+\closingslide
+\end{document}
