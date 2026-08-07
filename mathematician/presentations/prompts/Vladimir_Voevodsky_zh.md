@@ -1,85 +1,147 @@
-# 沃埃沃茨基 (Vladimir Voevodsky) 立传提示词
+# 沃埃沃茨基 (Vladimir Voevodsky) 立传提示词 — 优化版
 
-> 严格遵循 [Mathematician_Biography_Guide.md]。参考: cartan, weyl。
+> 严格遵循 [Mathematician_Biography_Guide.md](../Mathematician_Biography_Guide.md)。
+> 模板版本: v2.0 (2026-08-07)，参考: Grothendieck, Milnor, Morel, Suslin, Friedlander。
 
 ---
 
-## 背景
+## 一、结构化元数据
 
-- **目标**: Vladimir Voevodsky (1966–2017)
-- **气质**: **代数几何中的同伦论革命者、2002 年 Fields 奖得主、∞-范畴与同伦类型论的开拓者**
-- **Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Vladimir_Voevodsky/`
+| 字段 | 值 | 来源 |
+|------|-----|------|
+| 全名 | Vladimir Alexandrovich Voevodsky (Владимир Александрович Воеводский) | Wikidata Q369662 |
+| 生卒 | 1966-06-04 ~ 2017-09-30 (51岁，动脉瘤骤逝) | Wikidata |
+| 国籍 | 苏联 → 美国 | Wikidata |
+| 出生地 | Moscow, Soviet Union | Wikipedia |
+| 逝世地 | Princeton, New Jersey, United States | Wikipedia |
+| 父母 | 父: Aleksander Voevodsky (核物理学家, 高能轻子实验室主任), 母: Tatyana (化学家) | Wikipedia |
+| 博士导师 | David Kazhdan (Harvard) | Wikidata |
+| 博士论文 | 1992, Harvard — 未经正式申请, 无本科学位即获博士 | Wikipedia |
+| 教育 | Moscow State University (被开除, 无学位), Harvard PhD 1992 | Wikipedia |
+| 任职 | IAS Princeton (2002–2017, 终身教授) | Wikipedia |
+| 荣誉 | Fields Medal (2002), 哥德堡大学荣誉博士 (2016) | Wikidata |
+| 知名合作者 | Fabien Morel (A¹-同伦论), Andrei Suslin, Eric Friedlander (motivic 上同调) | Wikipedia |
+| 知名工作 | A¹-同伦论 (Morel–Voevodsky), motivic 上同调, Milnor 猜想证明 (1996), Bloch–Kato 猜想证明 (2009), 单价基础 (HoTT), UniMath | Wikidata + Wikipedia |
+| 影响领域 | 代数几何, 代数拓扑, 动机理论, 数论, 数学基础, 类型论, 计算机形式化 | Wikipedia |
+| 历史地位 | 代数几何同伦论革命的领袖; Grothendieck 动机梦想的实现者; HoTT/单价基础的奠基人之一; 51岁骤逝留下未完成的数学基础革命 | Wikipedia |
 
-## 第 0 步：校验
+## 二、精确时间线
 
-- **生卒**：1966-06-04 ~ 2017-09-30，享年 51 岁（英年早逝）
-- **国籍**：俄罗斯→美国
-- **出生地**：Moscow, USSR
-- **博士导师**：David Kazhdan（哈佛大学）
-- **博士论文**：1992
-- **任职**：普林斯顿 IAS (1998–2017，终身教授)
-- **荣誉**：Fields 奖 (2002)
+| 年份 | 事件 |
+|------|------|
+| 1966.06.04 | 生于苏联 Moscow |
+| 1980s前期 | 进入莫斯科国立大学 — 拒绝上课, 成绩不及格, 被开除 (无本科学位) |
+| 1980s | 导师 George Shabat 给他 Grothendieck 的《Esquisse d'un Programme》— 为读懂它自学法语 |
+| 1990 | 独立发表多篇论文后, David Kazhdan 推荐他直接攻读哈佛博士 |
+| 1992 | Harvard 博士 — 未经正式申请, 无本科学位 |
+| 1996 | A¹-同伦论 (与 Fabien Morel 合作) — 概形上的同伦理论 |
+| 1996 | 证明 Milnor 猜想 — $K_n^M(F)/2 \cong H_{\text{ét}}^n(F, \mathbb{Z}/2)$ |
+| 1998 | ICM 柏林大会报告 (A¹-Homotopy Theory) |
+| 2000 | Cycles, Transfers and Motivic Homology Theories (与 Suslin, Friedlander 合著) |
+| 2002 | Fields Medal — 北京 ICM (因 SARS 推迟至 2010 颁发) |
+| 2002 | 加入 IAS Princeton 终身教授 |
+| 2006 | 转向 Homotopy Type Theory (HoTT) — 发现类型论与同伦论的深刻联系 |
+| 2009 | Grothendieck 纪念会议 — 宣布 Bloch–Kato 猜想完全证明 |
+| 2009 | 在单纯集中构造了单价 (univalent) 模型 |
+| 2010s | 启动 UniMath 项目 — 在 Coq 中用单价基础形式化数学 |
+| 2016 | 哥德堡大学荣誉博士 |
+| 2017.09.30 | 在 Princeton 家中因动脉瘤 (aneurysm) 骤逝, 享年 51 岁 |
 
-### 时间线
-- 1966: 生于莫斯科
-- 1989: 莫斯科国立大学毕业
-- 1990: 到哈佛读研
-- 1992: 博士（导师 Kazhdan）
-- 1996: 引入 A¹-同伦论——代数几何的"同伦革命"
-- 2000: 引入 Voevodsky motives（导出范畴版本）
-- 2002: Fields 奖（因 motivic 上同调和 Bloch–Kato 猜想）
-- 2006: 转向同伦类型论 (HoTT)
-- 2017: 在普林斯顿家中去世（主动脉瘤）
+## 三、核心贡献表
 
-### 核心
-| 领域 | 贡献 | 年代 |
+| 领域 | 贡献 | 关键年份 |
 |------|------|:--:|
-| 代数几何 | A¹-同伦论 | 1996 |
-| 动机理论 | Voevodsky motives 的三角范畴 | 2000 |
-| K-理论 | Bloch–Kato 猜想的证明 | 1990s–2000s |
-| 逻辑 | 同伦类型论 (HoTT) 的推动 | 2006–2017 |
-| 计算机 | UniMath —— 基于同伦类型论的证明助手 | 2010s |
+| 代数几何 | A¹-同伦论 (Morel–Voevodsky) — 概形范畴上的同伦论 | 1996 |
+| 动机理论 | motivic 上同调 — Grothendieck 动机理论的"正确"上同调 | 1996–2000 |
+| K-理论 | Milnor 猜想证明 — K-理论与 Galois 上同调的同构 | 1996 |
+| 数论 | Bloch–Kato 猜想证明 — Milnor 猜想的全素数推广 | 2009 |
+| 数学基础 | 单价基础 (Univalent Foundations) — 同伦类型论的数学基础 | 2006–2014 |
+| 计算机 | UniMath — 基于 Coq 的形式化数学库 | 2010–2017 |
 
-### ★ 叙事
-1. **代数几何的同伦论革命** — Voevodsky 将拓扑中的同伦论完整地移植到代数几何中。这是 Grothendieck 动机理论的梦想实现
-2. **Bloch–Kato 猜想** — Milnor K-理论中的猜想。Voevodsky 用 motivic 上同调证明了它
-3. **Fields 奖 (2002)** — 在 2010 年 ICM 颁发（原定 2002 北京 ICM 因 SARS 推迟）
-4. **从代数几何到逻辑** — 2006 年后，他彻底转向同伦类型论 (HoTT)——一种基于同伦论的数学新基础
-5. **51 岁的早逝** — 2017 年因主动脉瘤突然去世。留下 Univalent Foundations 的未完成革命
+## 四、三幕叙事结构
 
-## ⚠️ 史实陷阱
-- **博士导师** — Kazhdan（哈佛），不是 Gelfand 也不是 Manin
-- **Fields 奖** — 2002，但在 2010 ICM 颁发（因 SARS 推迟）
-- **死因** — 主动脉瘤 (aortic aneurysm)，不是癌症
-- **Bloch–Kato 猜想** — 不是全部由 Voevodsky 证明。Merkurjev–Suslin 证明了低次部分
-- **HoTT** — Voevodsky 是推动者之一，不是"创始人"（Martin-Löf 类型论在先）
+### 第一幕: 被开除的天才 (1966–1992)
+- 1966年生于莫斯科科学家庭
+- 莫斯科大学 — 拒绝上课, 被开除
+- 为读懂 Grothendieck 的《Esquisse》自学法语
+- David Kazhdan 推荐 — 无本科学位获哈佛博士
 
-## ⚠️ 终审
-| 点 | 检查 |
-|----|------|
-| 出生 | Moscow 1966 |
-| 博士 | Kazhdan 1992 |
-| A¹-同伦 | 1996 |
-| Fields | 2002 |
-| 死因 | 主动脉瘤 2017.09.30 |
-| HoTT | 2006 后转向 |
+### 第二幕: 代数几何的同伦论革命 (1992–2006)
+- 1996: A¹-同伦论 + Milnor 猜想证明
+- 1998: ICM 柏林大会报告
+- 2000: motivic 上同调完整理论
+- 2002: Fields Medal (北京)
+- 2002: IAS Princeton 终身教授
 
-## 配色：同伦紫 + IAS 灰 + 动机金
-## 幻灯片（14 页）
-01 封面 — 《沃埃沃茨基：代数几何的同伦革命者》
-02 莫斯科→哈佛 (1966–1992)
-03 A¹-同伦论 (1996)
-04 Voevodsky motives
-05 Bloch–Kato 猜想的证明
-06 Fields 奖 (2002)
-07 同伦类型论 (HoTT) 的转向
-08 Univalent Foundations
-09 UniMath —— 计算机证明的未来
-10 IAS 二十年
-11 51 岁的早逝 (2017)
-12 遗产
-13 结束页 — 他在代数几何和逻辑之间建立了一座同伦论的桥梁
+### 第三幕: 数学的新地基 (2006–2017)
+- 2006: 转向 HoTT — 从纯代数几何到计算机逻辑
+- 2009: Bloch–Kato 完全证明 + 单价模型
+- 2010s: UniMath 项目
+- 2017: 51岁动脉瘤骤逝 — 数学基础革命未完成
 
-## 音乐: Timeless + Tragedy
+## 五、史实陷阱清单
 
-> **开始执行。** 特别提醒: 死因是主动脉瘤，不是癌症。Fields 2002 颁发推迟到 2010。
+| 陷阱 | 真相 |
+|------|------|
+| 本科 | ✅ 被莫斯科大学开除, 无本科学位 |
+| 博士 | ✅ Harvard 1992, David Kazhdan (未正式申请) |
+| Fields Medal 颁发 | ✅ 2002北京ICM, 因SARS推迟至2010年颁发 |
+| Milnor 猜想 | ✅ 1996 证明, 不是 Bloch–Kato |
+| Bloch–Kato | ✅ 2009 完全证明 (在 Grothendieck 纪念会议上宣布) |
+| A¹-同伦论 | ✅ 与 Fabien Morel 合作 (Morel–Voevodsky) |
+| 死因 | ✅ 动脉瘤 (aneurysm), 不是癌症, 不是心脏病 |
+| Fields 奖 | ✅ 2002, 同时获奖者为 Laurent Lafforgue |
+| HoTT | ✅ Voevodsky 是推动者 — Martin-Löf 类型论在先 |
+| 死于 | ✅ 2017-09-30, Princeton 家中 |
+| Grothendieck 影响 | ✅ 为读《Esquisse d'un Programme》自学法语 |
+
+## 六、配色方案
+
+**气质**: 同伦紫 + 动机金 + 单价森林绿
+
+| 变量 | 色值 | 用途 |
+|------|------|------|
+| `coverprimary` | `#4B0082` | 同伦紫 (靛蓝) — 封面主色 |
+| `coveraccent` | `#DAA520` | 动机金 — 强调/分隔线 |
+| `coverdark` | `#1F2937` | 深灰 — 正文文本 |
+| `bgmain` | `#F8F6F3` | 象牙白 — 背景 |
+| `badgeAH` | `#4B0082` | A¹-同伦论 紫 |
+| `badgeMC` | `#DAA520` | motivic 上同调 金 |
+| `badgeUF` | `#2E5A40` | 单价基础 森林绿 |
+| `badgeLegacy` | `#8A8A8A` | 遗产 灰 |
+
+## 七、幻灯片设计 (9 页)
+
+| 页 | 标题 | 核心内容 |
+|:--:|------|------|
+| 00 | OpenMath 首页 | 统一品牌 |
+| 01 | 封面 | 姓名、肖像、🇷🇺→🇺🇸、Fields2002、A¹-同伦+motivic+HoTT |
+| 02 | 总览 | A¹-同伦 + motivic + HoTT + 传奇 |
+| 03 | 早年 | 莫斯科→被开除→Grothendieck→法语→Harvard博士 |
+| 04 | A¹-同伦论 | Morel–Voevodsky, motivic 上同调 |
+| 05 | Milnor/Bloch–Kato | 1996 Milnor + 2009 Bloch–Kato |
+| 06 | 单价基础 | HoTT, UniMath, 数学的新地基 |
+| 07 | 遗产 | A¹-同伦→motivic→Milnor→Bloch–Kato→HoTT→UniMath |
+| 08 | 结束页 | "数学的终极目标是让证明不再出错" |
+
+## 八、国籍标识
+
+封面: `\faIcon{globe}\enspace 苏联 $\rightarrow$ 美国`
+
+## 九、音乐建议
+
+- 主轨道: 俄罗斯深沉交响 + 计算机脉冲电子
+- 情绪弧: 莫斯科阴影 → algebraic revolution → 数学未来的曙光
+
+## 十、编译验证清单
+
+- [ ] 生: 1966-06-04 ✅
+- [ ] 卒: 2017-09-30 (动脉瘤, 51岁) ✅
+- [ ] 博士: Kazhdan 1992 (未申请, 无本科学位) ✅
+- [ ] A¹-同伦论 1996 (Morel–Voevodsky) ✅
+- [ ] Milnor 猜想 1996 ✅
+- [ ] Bloch–Kato 2009 ✅
+- [ ] Fields 2002 ✅
+- [ ] HoTT/UniMath ✅
+
+> **开始执行。**

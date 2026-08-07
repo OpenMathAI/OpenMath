@@ -75,9 +75,9 @@
 | 47 | 92 | **Mikhail Gromov** | 几何群论的创立者、辛拓扑与度量几何的革命者、Wolf奖与Abel奖得主 | ✅ | ✅ |
 | 48 | 76 | **Harish-Chandra** | 半单李群表示论的创立者、Harish-Chandra模与Plancherel公式、Langlands纲领的先驱 | ✅ | ✅ |
 | 49 | 无 | **Jacques-Louis Lions** | 变分法与偏微分方程的大师、分布控制理论的创立者、法国应用数学的奠基人 | ✅ | ✅ |
-| 50 | 无 | **Vladimir Voevodsky** | A1同伦论的创立者、代数簇motivic上同调的构造者、Fields奖得主 | ✅ | 🔲 |
+| 50 | 无 | **Vladimir Voevodsky** | A1同伦论的创立者、代数簇motivic上同调的构造者、Fields奖得主 | ✅ | ✅ |
 
-> **进度摘要**：立传 50/50 ✅ · Review 2轮 8/50 · Review 1轮 41/50 · Review 未开始 1/50
+> **进度摘要**：立传 50/50 ✅ · Review 2轮 8/50 · Review 1轮 42/50 · Review 未开始 0/50
 
 ---
 
