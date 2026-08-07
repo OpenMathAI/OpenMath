@@ -67,7 +67,7 @@
 | 39 | 无 | **Saunders Mac Lane** | 范畴论的共同创始人、同调代数系统化的缔造者、《范畴论工作者》的作者 | ✅ | ✅✅ |
 | 40 | 44 | **Atle Selberg** | Selberg迹公式的创立者、解析数论的巨人、Fields奖与Abel奖得主 | ✅ | ✅ |
 | 41 | 19 | **Carl Ludwig Siegel** | 数论与模形式的巨人、天体力学大师、20世纪最博学的数学家之一 | ✅ | ✅ |
-| 42 | 43 | **Lars Ahlfors** | 复分析大师、首届Fields奖得主、Ahlfors–Bers理论的创立者 | ✅ | 🔲 |
+| 42 | 43 | **Lars Ahlfors** | 复分析大师、首届Fields奖得主、Ahlfors–Bers理论的创立者 | ✅ | ✅ |
 | 43 | 57 | **Rolf Nevanlinna** | Nevanlinna值分布理论的创立者、复分析芬兰学派的领袖、ICMI主席 | ✅ | 🔲 |
 | 44 | 20 | **Sergei Sobolev** | Sobolev空间的创立者、现代PDE理论的语法奠基人、分布理论的先驱 | ✅ | 🔲 |
 | 45 | 67 | **Lars Hörmander** | 线性偏微分算子理论的集大成者、微局部分析的创立者、Fields奖得主 | ✅ | 🔲 |
@@ -77,7 +77,7 @@
 | 49 | 无 | **Jacques-Louis Lions** | 变分法与偏微分方程的大师、分布控制理论的创立者、法国应用数学的奠基人 | ✅ | 🔲 |
 | 50 | 无 | **Vladimir Voevodsky** | A1同伦论的创立者、代数簇motivic上同调的构造者、Fields奖得主 | ✅ | 🔲 |
 
-> **进度摘要**：立传 50/50 ✅ · Review 2轮 8/50 · Review 1轮 33/50 · Review 未开始 9/50
+> **进度摘要**：立传 50/50 ✅ · Review 2轮 8/50 · Review 1轮 34/50 · Review 未开始 8/50
 
 ---
 
