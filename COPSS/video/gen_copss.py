@@ -663,7 +663,7 @@ def make_cover_slide(people, ep_dir, title, sub, note, badge,
   \\fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
   \\fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
   \\fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
-  \\node[anchor=center, font=\\fontsize{20}{25}\\selectfont\\bfseries, text=coverdark]
+  \\node[anchor=center, font=\\fontsize{17}{22}\\selectfont\\bfseries, text=coverdark]
     at ([yshift=2.60cm]current page.center) {%s};
   \\node[anchor=center, font=\\fontsize{12}{15}\\selectfont, text=coverprimary!85!black]
     at ([yshift=1.70cm]current page.center) {%s};
