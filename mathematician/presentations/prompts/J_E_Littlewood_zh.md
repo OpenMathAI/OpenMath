@@ -7,7 +7,7 @@
 ## 背景信息
 
 - **目标数学家**: John Edensor Littlewood FRS (1885–1977)
-- **气质关键词**: **长寿隐士、"Hardy–Littlewood 的另一半"、π(x) 符号振荡的发现者、炮弹与雷达中的数学家、玩笑般的第三个数学家**
+- **气质关键词**: **长寿隐士、"Hardy–Littlewood 的另一半"、π(x) 无穷振荡的发现者、炮弹与雷达中的数学家、玩笑般的第三个数学家**
 - **Wikipedia 页面**: ✅ 已下载至 `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/J._E._Littlewood/`
 
 ---
@@ -36,7 +36,7 @@
   - 1960: Senior Berwick Prize (75岁!)
 
 ### 关键时间线:
-- 1885: 6月9日生于 Rochester, Kent，长子
+- 1885: 6月9日生于英国肯特郡 Rochester，长子
 - 1892: 父亲接受南非 Cape Town Wynberg 学校校长职位，全家迁往南非
 - 1900: 独自返回英国，入读 St Paul's School，师从代数几何学家 Macaulay
 - 1903: 进入 Trinity College, Cambridge
