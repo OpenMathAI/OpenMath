@@ -269,8 +269,17 @@ HEADER = r"""% COPSS Presidents' Award Video — Episode {EP}
 \usepackage{fontspec}\usepackage{xeCJK}
 \setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
 \setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
-\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{ifthen}
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{ifthen}\usepackage{amssymb}
 \usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+% 交叉奖项徽标（菲尔兹奖式：姓名后上标字母）
+\newcommand{\gaussbadge}{\textsuperscript{\normalfont\tiny\color{coveraccent}$\blacklozenge$\kern-0.5pt G}}
+\newcommand{\shawbadge}{\textsuperscript{\normalfont\tiny\color{coverpurple}$\bigstar$\kern-0.5pt S}}
+\newcommand{\macarthurbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\blacklozenge$\kern-0.5pt M}}
+\newcommand{\fisherbadge}{\textsuperscript{\normalfont\tiny\color{coverprimary}$\diamond$\kern-0.5pt F}}
+\newcommand{\guybadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\clubsuit$\kern-0.5pt G}}
+\newcommand{\nasbadge}{\textsuperscript{\normalfont\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt N}}
+\newcommand{\imobadge}{\textsuperscript{\normalfont\tiny\color{coveraccent}$\bigstar$\kern-0.5pt I}}
 
 % ===== 配色：COPSS —— 统计蓝主色 + 统计红强调 + 暖金 + 紫罗兰 =====
 \definecolor{bgmain}{RGB}{238,244,251}
@@ -439,6 +448,27 @@ def resolve_img(p, ep_dir):
     return img
 
 
+def badges_for(name):
+    """Award badges appended after the name (Fields-style superscript)."""
+    h = HONORS.get(name, "")
+    b = ""
+    if "高斯奖" in h:
+        b += r"\gaussbadge"
+    if "邵逸夫" in h:
+        b += r"\shawbadge"
+    if "MacArthur" in h:
+        b += r"\macarthurbadge"
+    if "Fisher" in h:
+        b += r"\fisherbadge"
+    if "Guy 奖章" in h:
+        b += r"\guybadge"
+    if "美国科学院" in h:
+        b += r"\nasbadge"
+    if "IMO" in h:
+        b += r"\imobadge"
+    return b
+
+
 def person_slide(p, prefix="", ep_dir=None):
     name, subtitle, year, life, country, inst, tag, contrib, img, credit = p
     img = resolve_img(p, ep_dir)
@@ -454,8 +484,8 @@ def person_slide(p, prefix="", ep_dir=None):
             "  {%s}{%s}{%s}{%s}\n"
             "  {%s}}\n" % (
                 cname,
-                esc(name), esc(subtitle), img, credit, year_str, esc(life),
-                esc(country), esc(inst), esc(body)))
+                esc(name) + badges_for(name), esc(subtitle), img, credit, year_str,
+                esc(life), esc(country), esc(inst), esc(body)))
 
 
 def synthesis_slide(ep):
@@ -494,6 +524,15 @@ def synthesis_slide(ep):
             "  };\n"
             "\\end{tikzpicture}\n"
             "\\end{center}\n"
+            "\\vspace{0.10cm}\n"
+            "{\\fontsize{6.2}{7.4}\\selectfont\\color{covermuted} "
+            "徽标：\\textcolor{coveraccent}{$\\blacklozenge$G} 高斯奖 \\enspace "
+            "\\textcolor{coverpurple}{$\\bigstar$S} 邵逸夫奖 \\enspace "
+            "\\textcolor{coveramber}{$\\blacklozenge$M} MacArthur \\enspace "
+            "\\textcolor{coverprimary}{$\\diamond$F} R.A. Fisher \\enspace "
+            "\\textcolor{coveramber}{$\\clubsuit$G} Guy 奖章 \\enspace "
+            "\\textcolor{coverprimary}{$\\blacklozenge$N} 美国科学院 \\enspace "
+            "\\textcolor{coveraccent}{$\\bigstar$I} IMO 金牌}\n"
             "\\end{frame}\n"
             "}\n" % (s["title"], s["sub"], chipblock, esc(s["summary"])))
 
@@ -611,7 +650,9 @@ def make_coverslide(ep_dir):
   \draw[coverprimary, line width=1.4pt] ([yshift=0.75cm, xshift=-5.2cm]current page.center)
     -- ([yshift=0.75cm, xshift=5.2cm]current page.center);
   \node[anchor=center, font=\fontsize{10.5}{14}\selectfont\bfseries, text=coveramber!58!black]
-    at ([yshift=0.05cm]current page.center) {1981–2026 · 从 Bickel 到 Su · 46 位统计学家};
+    at ([yshift=0.10cm]current page.center) {1981–2026 · 从 Bickel 到 Su · 46 位统计学家};
+  \node[anchor=center, font=\fontsize{7.8}{9.6}\selectfont, text=coverprimary!78!black]
+    at ([yshift=-0.32cm]current page.center) {兼录高斯奖·邵逸夫奖·MacArthur·R.A. Fisher·Guy 奖章交叉得主};
 ''' + grid_tikz + r'''
   \node[anchor=south, font=\scriptsize, text=coverdark!40]
     at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace COPSS Presidents' Award\enspace|\enspace 1981–2026\enspace|\enspace 合集};
