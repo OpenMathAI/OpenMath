@@ -18,7 +18,7 @@
 | 博士论文 | 1936, _On the Topological Applications of Maps onto a Circle_ | Wikidata |
 | 教育 | 华沙大学 | Wikidata |
 | 主要任职 | Michigan (1940–45), Indiana (1945–46), Columbia (1947–1981) | Wikidata |
-| 荣誉 | Wolf Prize (1986), Steele Prize (1987), NAS Member (1959), Guggenheim Fellow | Wikidata |
+| 荣誉 | Wolf Prize (1986), Steele Prize (1987), AAAS Member (1959), NAS Member (1965), Guggenheim Fellow | Wikidata |
 | 主要学生 | Daniel Kan, William Lawvere, Myles Tierney, David Buchsbaum, Jonathan Beck (20位博士) | Wikidata |
 | 知名工作 | Eilenberg–Steenrod axioms, Eilenberg–MacLane space, Cartan–Eilenberg, Eilenberg–Zilber theorem, Chevalley–Eilenberg algebra, Eilenberg swindle, Eilenberg–Moore spectral sequence | Wikidata |
 | Bourbaki | 成员 | Wikidata |
@@ -41,7 +41,8 @@
 | 1952 | 与 Steenrod 出版 "Foundations of Algebraic Topology" |
 | 1953 | Eilenberg–Zilber 定理 |
 | 1956 | 与 Cartan 出版 "Homological Algebra" (Cartan–Eilenberg) — 同调代数圣经 |
-| 1959 | 当选美国国家科学院院士 |
+| 1959 | 当选 AAAS 院士 |
+| 1965 | 当选美国国家科学院院士 |
 | 1986 | Wolf 奖 (与 Atle Selberg 共享) |
 | 1987 | Steele 奖 |
 | 1991–1992 | 大都会艺术博物馆举办 Eilenberg 捐赠藏品展 "The Lotus Transcendent" |

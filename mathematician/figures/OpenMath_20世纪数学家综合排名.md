@@ -63,7 +63,7 @@
 | 35 | 13 | **Vladimir Arnold** | KAM理论与辛拓扑的创立者之一、动力系统与奇点理论的革命者、Arnold扩散的发现者 | ✅ | ✅ |
 | 36 | 80 | **David Mumford** | Fields奖得主、几何不变量理论与模空间的创立者、代数几何与计算机视觉的跨界先驱 | ✅ | ✅ |
 | 37 | 78 | **Jean Leray** | 谱序列与层论的发现者、Leray–Schauder不动点理论、偏微分拓扑的先驱 | ✅ | ✅ |
-| 38 | 49 | **Samuel Eilenberg** | 范畴论与代数拓扑的共同创始人、Eilenberg–MacLane空间的创立者、同调代数的奠基人 | ✅ | ✅ |
+| 38 | 49 | **Samuel Eilenberg** | 范畴论与代数拓扑的共同创始人、Eilenberg–MacLane空间的创立者、同调代数的奠基人 | ✅ | ✅✅ |
 | 39 | 无 | **Saunders Mac Lane** | 范畴论的共同创始人、同调代数系统化的缔造者、《范畴论工作者》的作者 | ✅ | ✅ |
 | 40 | 44 | **Atle Selberg** | Selberg迹公式的创立者、解析数论的巨人、Fields奖与Abel奖得主 | ✅ | ✅ |
 | 41 | 19 | **Carl Ludwig Siegel** | 数论与模形式的巨人、天体力学大师、20世纪最博学的数学家之一 | ✅ | 🔲 |
@@ -77,7 +77,7 @@
 | 49 | 无 | **Jacques-Louis Lions** | 变分法与偏微分方程的大师、分布控制理论的创立者、法国应用数学的奠基人 | ✅ | 🔲 |
 | 50 | 无 | **Vladimir Voevodsky** | A1同伦论的创立者、代数簇motivic上同调的构造者、Fields奖得主 | ✅ | 🔲 |
 
-> **进度摘要**：立传 50/50 ✅ · Review 2轮 6/50 · Review 1轮 34/50 · Review 未开始 10/50
+> **进度摘要**：立传 50/50 ✅ · Review 2轮 7/50 · Review 1轮 33/50 · Review 未开始 10/50
 
 ---
 
