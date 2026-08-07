@@ -48,7 +48,7 @@
 | 24 | 55 | **Oscar Zariski** | Zariski 拓扑的创立者、代数几何的代数化先驱、意大利学派的超越者 |
 | 25 | 无 | **Marston Morse** | Morse 理论的创立者、临界点与拓扑的诗人、微分拓扑的建筑师 |
 | 26 | 23 | **Hassler Whitney** | 微分拓扑的开山鼻祖、嵌入定理与Stiefel–Whitney类的创立者、奇点分类的先驱 |
-| 27 | 38 | **Claude Chevalley** | 代数群、李型有限单群的构造 |
+| 27 | 38 | **Claude Chevalley** | Chevalley 群的构造者、Bourbaki 创始成员、有限单群分类的基石奠基人 |
 | 28 | 35 | **Heinz Hopf** | 代数拓扑（Hopf 不变量、Hopf 纤维化） |
 | 29 | 31 | **陈省身** | 整体微分几何之父、Chern 类、Chern–Simons 理论 |
 | 30 | 86 | **Pierre Deligne** | 证明 Weil 猜想，代数几何与数论的融合 |
