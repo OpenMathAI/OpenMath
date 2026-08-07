@@ -471,7 +471,11 @@ def badges_for(name):
 
 def person_slide(p, prefix="", ep_dir=None):
     name, subtitle, year, life, country, inst, tag, contrib, img, credit = p
-    img = resolve_img(p, ep_dir)
+    if img == "none" and ep_dir:
+        resolved = resolve_img(p, ep_dir)
+        if resolved != "none":
+            img = resolved
+            credit = "Wikipedia"  # 补图后图片来源字段不再用姓名缩写
     body = "研究方向：%s。%s" % (tag, contrib)
     if name in HONORS:
         body += "\\\\\\textbf{主要荣誉}：%s" % HONORS[name]
@@ -643,17 +647,17 @@ def make_coverslide(ep_dir):
   \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
   \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
   \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
-  \node[anchor=center, font=\fontsize{24}{30}\selectfont\bfseries, text=coverdark]
-    at ([yshift=2.60cm]current page.center) {统计学界的最高礼赞};
-  \node[anchor=center, font=\fontsize{12.5}{16}\selectfont, text=coverprimary!85!black]
-    at ([yshift=1.45cm]current page.center) {COPSS Presidents' Award(考普斯会长奖) · 全 46 位得主合集};
+  \node[anchor=center, font=\fontsize{20}{25}\selectfont\bfseries, text=coverdark]
+    at ([yshift=2.60cm]current page.center) {COPSS 会长奖：统计学界的最高礼赞（1981–2026）};
+  \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
+    at ([yshift=1.45cm]current page.center) {COPSS Presidents' Award（考普斯会长奖）· 全 46 位得主};
   \draw[coverprimary, line width=1.4pt] ([yshift=0.75cm, xshift=-5.2cm]current page.center)
     -- ([yshift=0.75cm, xshift=5.2cm]current page.center);
-  \node[anchor=center, font=\fontsize{10.5}{14}\selectfont\bfseries, text=coveramber!58!black]
-    at ([yshift=0.10cm]current page.center) {1981–2026 · 从 Bickel 到 Su · 46 位统计学家};
-  \node[anchor=center, font=\fontsize{7.8}{9.6}\selectfont, text=coverprimary!78!black]
-    at ([yshift=-0.32cm]current page.center) {兼录高斯奖·邵逸夫奖·MacArthur·R.A. Fisher·Guy 奖章交叉得主};
+  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\bfseries, text=coveramber!58!black]
+    at ([yshift=0.10cm]current page.center) {与菲尔兹·沃尔夫·阿贝尔·陈省身奖无交叉；Donoho 另获高斯奖 2018 与邵逸夫奖 2013};
 ''' + grid_tikz + r'''
+  \node[anchor=center, font=\fontsize{7.8}{9.6}\selectfont, text=coverprimary!78!black]
+    at ([yshift=-2.90cm]current page.center) {兼录高斯奖·邵逸夫奖·MacArthur·R.A. Fisher·Guy 奖章交叉得主};
   \node[anchor=south, font=\scriptsize, text=coverdark!40]
     at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace COPSS Presidents' Award\enspace|\enspace 1981–2026\enspace|\enspace 合集};
 \end{tikzpicture}
