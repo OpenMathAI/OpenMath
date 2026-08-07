@@ -1,6 +1,6 @@
 # 数学家完整页面索引
 
-> 生成时间：2026-08-07 17:56:51
+> 生成时间：2026-08-07 22:23:58
 > 共 **1** 人
 
-- [Srinivasa Ramanujan](Srinivasa_Ramanujan/page.md) （1887–1920） — Indian mathematician (1887–1920)
+- [Norbert Wiener](Norbert_Wiener/page.md) （1894–1964） — American mathematician, scientist in cybernetics and artificial intelligence (1894–1964)
