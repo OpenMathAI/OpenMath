@@ -1,4 +1,4 @@
-# Makefile for Jean Leray beamer deck.
+# Makefile for Sergei Sobolev beamer deck.
 #
 # Usage:
 #   make            build the PDF
@@ -30,9 +30,8 @@ all: pdf
 pdf: $(MAIN).pdf
 
 $(MAIN).pdf: $(MAIN).tex
-	$(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode $(MAIN).tex || \
-	  (rm -f $(MAIN).fdb_latexmk && $(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode -f $(MAIN).tex)
-	$(LATEXMK) -c $(MAIN).tex
+	-$(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode -f $(MAIN).tex
+	-$(LATEXMK) -c $(MAIN).tex
 	rm -f $(MAIN).{nav,snm,xdv}
 
 images: $(IMAGES_DIR)/.done
