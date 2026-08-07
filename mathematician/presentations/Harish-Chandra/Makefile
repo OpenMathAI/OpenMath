@@ -1,21 +1,37 @@
 # Makefile for Harish-Chandra beamer deck.
+#
+# Usage:
+#   make            build the PDF
+#   make pdf        same as above
+#   make images     generate slide PNGs from the PDF
+#   make video      synthesize an MP4 from slide images (+ optional BGM)
+#   make clean      remove intermediate files
+#   make distclean  remove generated PDF/images/video
+
 MAIN        = Harish-Chandra_zh
 VIDEO_NAME  = Harish-Chandra_zh
 OUTPUT_DIR  = output
 IMAGES_DIR  = $(OUTPUT_DIR)/images
 SLIDES_TXT  = $(OUTPUT_DIR)/slides.txt
+
 DURATION    = 7
+# Optional background music: drop a .wav here and set BGM to its name.
 BGM         = $(wildcard *.wav)
+
 LATEXMK     = latexmk
 PDFTOPPM    = pdftoppm
 FFMPEG      = ffmpeg
 PYTHON      = python3
+
 .PHONY: all pdf images video clean distclean
+
 all: pdf
+
 pdf: $(MAIN).pdf
+
 $(MAIN).pdf: $(MAIN).tex
-	$(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode -f $(MAIN).tex || true
-	$(LATEXMK) -c $(MAIN).tex
+	-$(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode -f $(MAIN).tex
+	-$(LATEXMK) -c $(MAIN).tex
 	rm -f $(MAIN).{nav,snm,xdv}
 images: $(IMAGES_DIR)/.done
 $(IMAGES_DIR)/.done: $(MAIN).pdf
