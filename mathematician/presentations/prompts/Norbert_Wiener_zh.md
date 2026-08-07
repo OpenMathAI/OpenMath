@@ -288,17 +288,21 @@
 
 ---
 
-## 第 14 步：音乐选择
+## 第 14 步：背景音乐选择 ✅
 
-> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/`
-
-维纳的气质：**神童的创伤 + 控制论的冷峻 + 伦理的温暖 + 机器与人之思辨**
-
-| 优先级 | 曲目 | 来源 | 理由 |
-|:--:|------|------|------|
-| ★★★ | Timeless | alex-productions | 信息时代的永恒预言——他比时代早了 50 年 |
-| ★★ | Expedition | alex-productions | 从数学到生物到社会的远征 |
-| ★ | Through the Darkness | inspiring-electronic | 神童的创伤·战时研究·伦理挣扎 |
+- **选定曲目**: **Timeless** — Alex-Productions (132k views, 最高受众)
+- **风格**: 沉稳 / 纪录片 / 长期纲领
+- **匹配理由**:
+  - "沉稳" 匹配控制论的冷峻理性与 Wiener 的智性气质 —— 他不像 von Neumann 那样是鹰派英雄，更像一个跨越时代的先知
+  - "纪录片" 匹配传记体叙事 —— 从神童创伤到 AI 遗产的 14 页旅程
+  - "Timeless" = 永恒 —— 信息时代在他笔下首先成为一门科学，"他比时代早了 50 年"
+  - 不像 Expedition 过于"史诗"（Wiener 不是征服者），不像 Through the Darkness 过于"黑暗"（创伤是底色但不是基调）
+- **备选** (未采用):
+  - ★★ Expedition — "远征式叙事" 匹配跨学科旅程，但"史诗"标签过重
+  - ★ Through the Darkness — "黑暗/推进" 匹配神童创伤与战时研究，但整体过于灰暗
+- **本地路径**: `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` → `presentations/Norbert_Wiener/Timeless.wav`
+- **时长**: 128 秒 (≈2.1 分钟) > 14 页 × 7 秒 = 98 秒 → ffmpeg `-shortest` 自动对齐
+- **Makefile**: `BGM = $(wildcard *.wav)` — 自动检测并混入
 
 ---
 

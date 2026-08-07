@@ -1,6 +1,6 @@
-# Makefile for G. H. Hardy beamer deck.
+# Makefile for Norbert Wiener beamer deck.
 MAIN = Norbert_Wiener_zh
-VIDEO_NAME  = G_H_Hardy_zh
+VIDEO_NAME  = Norbert_Wiener_zh
 OUTPUT_DIR  = output
 IMAGES_DIR  = $(OUTPUT_DIR)/images
 SLIDES_TXT  = $(OUTPUT_DIR)/slides.txt
