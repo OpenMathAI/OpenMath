@@ -6,7 +6,10 @@
 \usetheme{default}\usecolortheme{default}\setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
 \usepackage{fontspec}\usepackage{xeCJK}
-\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
 \usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{fontawesome5}
 \usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
 
@@ -22,15 +25,30 @@
 \setbeamercolor{background canvas}{bg=bgmain}
 
 \newcommand{\plainbar}{\begin{tikzpicture}[remember picture, overlay]\fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);\draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);\end{tikzpicture}}
-\newcommand{\sectiontitle}[2]{\vspace{-0.52cm}\begin{center}{\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]{\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]\textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}\end{center}\vspace{0.06cm}}
+\newcommand{\sectiontitle}[2]{\vspace{-0.52cm}\begin{center}{\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]{\fontsize{7.5}{9.5}\selectfont\slshape\color{muteddark} #2}\\[3pt]\textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}\end{center}\vspace{0.06cm}}
 \input{../cover/openmath_page.tex}
 
-\newcommand{\titleslide}{\begin{frame}[plain]\begin{tikzpicture}[remember picture, overlay]
-\fill[coverprimary!3] (current page.north west) rectangle (current page.south east);
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeHG!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHP!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeSY!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2}
+    {\draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);}
+  \foreach \y in {-0.2,0.7,...,9.3}
+    {\draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\titleslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
 \node[font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=3.55cm]current page.center) {\faIcon{project-diagram}\enspace 几何世界的建筑师};
 \node[font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black] at ([yshift=2.45cm]current page.center) {米哈伊尔·格罗莫夫};
+\node[anchor=north east, inner sep=0pt] at ([xshift=-0.8cm, yshift=-0.8cm]current page.north east) {\includegraphics[width=3.2cm]{Mikhael_Gromov.jpg}};
 \node[font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black] at ([yshift=1.55cm]current page.center) {Mikhael Gromov\enspace·\enspace 生于 1943};
-\node[font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black] at ([yshift=1.1cm]current page.center) {双曲群 · h-原理 · Gromov–Witten 不变量 · 辛几何 · Wolf + Abel 双奖};
+\node[font=\fontsize{9}{12}\selectfont\slshape, text=coveraccent!70!black] at ([yshift=1.1cm]current page.center) {双曲群 · h-原理 · Gromov–Witten 不变量 · 辛几何 · Wolf + Abel 双奖};
 \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center) -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
 \node at ([yshift=-0.75cm]current page.center) {\begin{tikzpicture}
 \node[rounded corners=8pt, fill=badgeHG, inner xsep=8pt, inner ysep=5pt, text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {几何群论};
@@ -38,9 +56,9 @@
 \node[rounded corners=8pt, fill=badgeSY, inner xsep=8pt, inner ysep=5pt, text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {辛几何};
 \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt, text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {传承};
 \end{tikzpicture}};
-\node[font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=13cm] at ([yshift=-2.35cm]current page.center) {"Gromov 的每一个想法都足以开创一个全新的数学领域。"};
+\node[font=\fontsize{10}{14}\selectfont\slshape, text=muteddark, align=center, text width=13cm] at ([yshift=-2.35cm]current page.center) {"Gromov 的每一个想法都足以开创一个全新的数学领域。"};
 \node[font=\fontsize{7}{8.5}\selectfont, text=coverdark!55] at ([yshift=0.38cm]current page.south)
-  {\faIcon{globe}\enspace 苏联 → 法国/美国\enspace|\enspace\faIcon{medal}\enspace Wolf 1993 · Abel 2009\enspace|\enspace IHÉS · NYU};
+  {\faIcon{globe}\enspace 苏联 $\rightarrow$ 法国/美国\enspace|\enspace\faIcon{medal}\enspace Wolf 1993 · Abel 2009\enspace|\enspace IHÉS · NYU};
 \end{tikzpicture}\end{frame}}
 
 \newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{几何世界的建筑师：Gromov 的思想帝国}{双曲群 · h-原理 · 辛几何 · 填充不变量——每一个想法都是一场革命}
@@ -49,13 +67,13 @@
 \node[nodebox, fill=goldpanel, draw=badgeHP!50, text=badgeHP!85!black] (b) at (-1.9,1.05) {h-原理\\同伦原理\\凸积分 1973};
 \node[nodebox, fill=bluepanel, draw=badgeSY!50, text=badgeSY!85!black] (c) at (1.9,1.05) {辛几何\\Gromov–Witten 不变量\\J-全纯曲线};
 \node[nodebox, fill=silverpanel, draw=badgeLegacy!50, text=badgeLegacy!85!black] (d) at (5.7,1.05) {荣誉\\Wolf 1993\\Abel 2009\\Kyoto 奖};
-\node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他是那种罕见的数学家——在每一个涉足的领域都留下了以自己名字命名的深刻概念。}}\end{tikzpicture}\end{center}\end{frame}}
+\node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他是那种罕见的数学家——在每一个涉足的领域都留下了以自己名字命名的深刻概念。}}\end{tikzpicture}\end{center}\end{frame}}
 
 \newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：从列宁格勒到 IHÉS (1943–1981)}{Rokhlin 的学生 · 列宁格勒拓扑学派的传承 · 移民法国的决定}
 \vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
 \node[item, fill=redpanel, draw=badgeHG!55] at (0,2.35) {\textbf{1943 · 生于苏联 Boksitogorsk。}二战期间出生。列宁格勒大学 (圣彼得堡大学) 毕业, 师从 Vladimir Rokhlin——苏联拓扑学派的杰出代表。};
-\node[item, fill=goldpanel, draw=badgeHP!25] at (0,0.75) {\textbf{1969 · 博士 → 1981 · 移民。}在苏联时期发表了大量影响深远的论文——凸积分 (convex integration), h-原理的早期形态。1981 年移居法国, 加入 IHÉS (Bures-sur-Yvette)。};
-\node[item, fill=bluepanel, draw=badgeSY!25] at (0,-0.65) {\textbf{IHÉS → NYU。}在 IHÉS 成为终身教授 (1981–present), 同时兼任纽约大学 Courant 研究所教授。他选择了法国——这个唯一无条件欢迎他的国家。};
+\node[item, fill=goldpanel, draw=badgeHP!25] at (0,0.75) {\textbf{1969 · 博士 $\rightarrow$ 1981 · 移民。}在苏联时期发表了大量影响深远的论文——凸积分 (convex integration), h-原理的早期形态。1981 年移居法国, 加入 IHÉS (Bures-sur-Yvette)。};
+\node[item, fill=bluepanel, draw=badgeSY!25] at (0,-0.65) {\textbf{IHÉS $\rightarrow$ NYU。}在 IHÉS 成为终身教授 (1981–present), 同时兼任纽约大学 Courant 研究所教授。他选择了法国——这个唯一无条件欢迎他的国家。};
 \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.9) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从苏联封闭研究环境到国际数学界的自由——Gromov 的思想需要无拘无束才能盛放。}}\end{tikzpicture}\end{center}\end{frame}}
 
 \newcommand{\hprincipleslide}{\begin{frame}\plainbar\sectiontitle{h-原理 (Homotopy Principle) — "柔性"几何的革命}{当拓扑学和几何学相遇——微分关系的同伦方法}
@@ -85,15 +103,14 @@
 \node[leg, fill=goldpanel, draw=badgeHP!50,line width=0.7pt] (b) at (-1.8,1.5) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeHP} h-原理}\\[3pt]凸积分 1973\\微分关系\\Nash 嵌入统一};
 \node[leg, fill=bluepanel, draw=badgeSY!50,line width=0.7pt] (c) at (1.8,1.5) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSY} 辛几何与几何}\\[3pt]Gromov–Witten\\非挤压定理\\Gromov–Hausdorff};
 \node[leg, fill=silverpanel, draw=badgeLegacy!50,line width=0.7pt] (d) at (5.4,1.5) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy} 荣誉}\\[3pt]Wolf 1993\\Abel 2009\\Kyoto 奖};
-\node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 一位数学家——却开创了至少四个数学子领域。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 凸积分 → h-原理 (微分拓扑) → 双曲群 (几何群论) → J-全纯曲线 (辛几何) → Gromov–Witten (弦论)\\ "Gromov 的头脑是一个数学宇宙。" — 数学界的共识。}}\end{tikzpicture}\end{center}\end{frame}}
+\node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\mdseries\color{coverprimary!90!black} 一位数学家——却开创了至少四个数学子领域。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 凸积分 $\rightarrow$ h-原理 (微分拓扑) $\rightarrow$ 双曲群 (几何群论) $\rightarrow$ J-全纯曲线 (辛几何) $\rightarrow$ Gromov–Witten (弦论)\\ "Gromov 的头脑是一个数学宇宙。" — 数学界的共识。}}\end{tikzpicture}\end{center}\end{frame}}
 
-\newcommand{\closingslide}{\begin{frame}[plain]\begin{tikzpicture}[remember picture, overlay]
-\fill[coverprimary!3] (current page.north west) rectangle (current page.south east);
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
 \node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {数学中最深刻的思想——};
 \node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {往往来自不同领域的意外碰撞。};
 \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
 \node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {米哈伊尔·格罗莫夫\quad Mikhael Gromov\quad 生于 1943};
-\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{project-diagram}\enspace Wolf 1993 · Abel 2009 · 双曲群 · h-原理 · Gromov–Witten\enspace|\enspace 俄法美数学家 · OpenMathAI};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{project-diagram}\enspace Wolf 1993 · Abel 2009 · 双曲群 · h-原理 · Gromov–Witten\enspace|\enspace OpenMathAI};
 \end{tikzpicture}\end{frame}}
 
 \begin{document}

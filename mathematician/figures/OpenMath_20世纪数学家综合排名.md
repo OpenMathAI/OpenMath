@@ -72,12 +72,12 @@
 | 44 | 20 | **Sergei Sobolev** | Sobolev空间的创立者、现代PDE理论的语法奠基人、分布理论的先驱 | ✅ | ✅ |
 | 45 | 67 | **Lars Hörmander** | 线性偏微分算子理论的集大成者、微局部分析的创立者、Fields奖得主 | ✅ | ✅ |
 | 46 | 52 | **Stephen Smale** | 高维Poincaré猜想的证明者、动力系统与经济学数学的先驱、Fields奖得主 | ✅ | ✅ |
-| 47 | 92 | **Mikhail Gromov** | 几何群论的创立者、辛拓扑与度量几何的革命者、Wolf奖与Abel奖得主 | ✅ | 🔲 |
+| 47 | 92 | **Mikhail Gromov** | 几何群论的创立者、辛拓扑与度量几何的革命者、Wolf奖与Abel奖得主 | ✅ | ✅ |
 | 48 | 76 | **Harish-Chandra** | 半单李群表示论的创立者、Harish-Chandra模与Plancherel公式、Langlands纲领的先驱 | ✅ | 🔲 |
 | 49 | 无 | **Jacques-Louis Lions** | 变分法与偏微分方程的大师、分布控制理论的创立者、法国应用数学的奠基人 | ✅ | 🔲 |
 | 50 | 无 | **Vladimir Voevodsky** | A1同伦论的创立者、代数簇motivic上同调的构造者、Fields奖得主 | ✅ | 🔲 |
 
-> **进度摘要**：立传 50/50 ✅ · Review 2轮 8/50 · Review 1轮 38/50 · Review 未开始 4/50
+> **进度摘要**：立传 50/50 ✅ · Review 2轮 8/50 · Review 1轮 39/50 · Review 未开始 3/50
 
 ---
 
