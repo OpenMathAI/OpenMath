@@ -50,7 +50,7 @@
 | 26 | 23 | **Hassler Whitney** | 微分拓扑的开山鼻祖、嵌入定理与Stiefel–Whitney类的创立者、奇点分类的先驱 |
 | 27 | 38 | **Claude Chevalley** | Chevalley 群的构造者、Bourbaki 创始成员、有限单群分类的基石奠基人 |
 | 28 | 35 | **Heinz Hopf** | Hopf 纤维化与不变量的发现者、Poincaré–Hopf 定理的证明者、ETH 拓扑学派的缔造者 |
-| 29 | 31 | **陈省身** | 整体微分几何之父、Chern 类、Chern–Simons 理论 |
+| 29 | 31 | **陈省身** | 整体微分几何之父、Chern 类与Chern–Simons理论的创立者、南开数学研究所与MSRI的创始人 |
 | 30 | 86 | **Pierre Deligne** | 证明 Weil 猜想，代数几何与数论的融合 |
 | 31 | 100 | **Ernst Witt** | 二次型、Witt 环、代数与数论 |
 | 32 | 82 | **R.A. Fisher** | 现代统计学的数学基础 |
