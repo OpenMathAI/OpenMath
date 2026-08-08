@@ -633,14 +633,7 @@ def make_episode_tex(ep_key, ep_dir, main, title, subtitle, rng, note):
     print("wrote", path)
 
 
-def make_makefile(ep_dir, main):
-    tmpl = os.path.join(HERE, "video", "episode-00-what-is-turing-award")
-    os.makedirs(tmpl, exist_ok=True)
-    mk = os.path.join(tmpl, "Makefile")
-    if os.path.exists(mk):
-        content = open(mk, encoding="utf-8").read()
-    else:
-        content = r"""# Makefile for Turing video episode.
+MAKEFILE_TEMPLATE = r"""# Makefile for Turing video episode.
 MAIN        = {MAIN}
 VIDEO_NAME  = {MAIN}
 OUTPUT_DIR  = output
@@ -705,15 +698,19 @@ distclean: clean
 	rm -f $(MAIN).pdf
 	rm -rf $(IMAGES_DIR)
 	rm -f $(OUTPUT_DIR)/$(VIDEO_NAME).mp4 $(VIDEO_NAME).mp4
-""".replace("{MAIN}", main)
-        open(mk, "w", encoding="utf-8").write(content)
-    # write into episode dir
+"""
+
+
+def make_makefile(ep_dir, main):
+    content = MAKEFILE_TEMPLATE.replace("{MAIN}", main)
     ep_mk = os.path.join(HERE, "video", ep_dir, "Makefile")
-    if not os.path.exists(ep_mk):
-        shutil.copy(mk, ep_mk)
+    os.makedirs(os.path.dirname(ep_mk), exist_ok=True)
+    with open(ep_mk, "w", encoding="utf-8") as f:
+        f.write(content)
 
 
 def main():
+    make_makefile("episode-00-what-is-turing-award", "turing_ep00_zh")
     for ep_key, ep_dir, main, title, subtitle, rng, note in EPISODES:
         people = DATA[ep_key]
         sync_photos(people, ep_dir)

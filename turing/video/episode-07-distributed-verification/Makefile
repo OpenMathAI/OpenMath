@@ -1,6 +1,6 @@
 # Makefile for Turing video episode.
-MAIN        = turing_ep01_zh
-VIDEO_NAME  = turing_ep01_zh
+MAIN        = turing_ep07_zh
+VIDEO_NAME  = turing_ep07_zh
 OUTPUT_DIR  = output
 IMAGES_DIR  = $(OUTPUT_DIR)/images
 SLIDES_TXT  = $(OUTPUT_DIR)/slides.txt
