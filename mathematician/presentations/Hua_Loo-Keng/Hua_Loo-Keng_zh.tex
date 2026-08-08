@@ -1,0 +1,433 @@
+% =============================================================
+%  中国现代数学的旗帜：华罗庚 (Hua Loo-Keng)
+%  Beamer 演示 —— 参照 Hadamard / Chern 版式
+%  资料来源：Wikipedia + 清华大学校史
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：中国红 + 清华紫 + 金坛金 + 数论蓝 =====
+\definecolor{bgmain}{RGB}{247,246,243}
+\definecolor{coverprimary}{HTML}{1B1B2F}
+\definecolor{coveraccent}{HTML}{C41E3A}
+\definecolor{badgeNT}{HTML}{C41E3A}            % 中国红 (数论/堆垒)
+\definecolor{badgeAna}{HTML}{6B3FA0}           % 清华紫 (分析/多复变)
+\definecolor{badgeApp}{HTML}{DAA520}           % 金坛金 (应用/优选统筹)
+\definecolor{badgeLegacy}{HTML}{2C3E6C}         % 数论蓝 (传承)
+\definecolor{coverdark}{HTML}{151528}
+\definecolor{covermuted}{HTML}{6B7A8C}
+\definecolor{titlecolor}{RGB}{18,18,42}
+\definecolor{muteddark}{RGB}{78,88,108}
+\definecolor{ntpanel}{RGB}{252,230,234}
+\definecolor{anapanel}{RGB}{238,228,252}
+\definecolor{apppanel}{RGB}{252,246,228}
+\definecolor{legacypanel}{RGB}{232,236,248}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!2] (current page.north west) rectangle (current page.south east);
+  \fill[badgeNT!6] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeAna!5] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeApp!5] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!5] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.03, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.03, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+  \node[badgeNT!6, font=\fontsize{28}{34}\selectfont] at ([xshift=0.3cm, yshift=-1.0cm]current page.north west) {$\sum_p$};
+  \node[badgeAna!4, font=\fontsize{26}{32}\selectfont] at ([xshift=-0.5cm, yshift=1.2cm]current page.south east) {$\mathbb{C}^n$};
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.8cm, yshift=-0.7cm]current page.north east) {
+    \begin{tikzpicture}
+      \clip[rounded corners=6pt] (0,0) rectangle (2.6,3.2);
+      \node[anchor=center] at (1.3,1.6) {\includegraphics[width=2.6cm, height=3.2cm, keepaspectratio]{images/portrait.jpg}};
+    \end{tikzpicture}
+  };
+  \draw[coveraccent!50, line width=1.2pt, rounded corners=6pt] ([xshift=-0.8cm, yshift=-0.7cm]current page.north east) rectangle ++(-2.6cm,-3.2cm);
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=-2.1cm, yshift=-3.98cm]current page.north east) {华罗庚, 约1950年代};
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=badgeNT!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{infinity}\enspace 自学成才的天才 · 数论大师 · 人民数学家 · 中国现代数学的旗帜};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {华罗庚};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Hua Loo-Keng\enspace·\enspace 1910 — 1985};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {堆垒素数论 · 多复变典型域 · 华-王方法 · 优选法与统筹法};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeNT, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {堆垒素数论\\1940\\圆法·三角和};
+      \node[rounded corners=8pt, fill=badgeAna, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {多复变函数\\1958\\典型域调和分析};
+      \node[rounded corners=8pt, fill=badgeApp, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {华-王方法\\优选统筹\\数值积分};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {人民数学家\\科学院首任所长\\中国数学旗帜};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.83cm]current page.center)
+    {"梁园虽好，非久居之地"——1950 年放弃美国优渥生活，义无反顾回到新中国。};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace 江苏金坛 → 清华·剑桥·西南联大·普林斯顿\enspace|\enspace 自学成才\enspace|\enspace 74 岁};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么华罗庚是中国数学的旗帜}{自学成才的传奇 · 从杂货铺到世界数学殿堂 · 死在讲台上的数学家}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=11pt,inner ysep=9pt,font=\fontsize{8}{10}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=ntpanel,draw=badgeNT!55,text=badgeNT!85!black]
+    (a) at (-5.7,1.05) {自学成才\\[2pt]仅九年正式教育\\在杂货铺里自学\\高中+大学全部数学};
+  \node[nodebox,fill=anapanel,draw=badgeAna!55,text=badgeAna!85!black]
+    (b) at (-1.9,1.05) {数论突破\\[2pt]Waring 问题·Goldbach\\Vinogradov 中值定理\\《堆垒素数论》};
+  \node[nodebox,fill=apppanel,draw=badgeApp!55,text=badgeApp!85!black]
+    (c) at (1.9,1.05) {应用数学\\[2pt]华-王方法\\优选法与统筹法\\走遍中国工厂田间};
+  \node[nodebox,fill=legacypanel,draw=badgeLegacy!55,text=badgeLegacy!85!black]
+    (d) at (5.7,1.05) {民族脊梁\\[2pt]1950 年回国\\科学院首任所长\\死在东京讲台上};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=12pt,text width=13.4cm,align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 熊庆来的伯乐之眼 · Hardy 的剑桥之门 · 西南联大的防空洞 · 毛泽东的亲笔信\\[1pt]数论·多复变·矩阵几何·运筹学——华罗庚是一个人撑起中国数学的"国家队"}\\[1pt]
+    {\fontsize{8.0}{10}\selectfont\color{covermuted} 从金坛杂货铺到普林斯顿高等研究院——华罗庚的一生就是中国现代数学的缩影。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年与自学 ---
+\newcommand{\earlylifeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{早年与自学 (1910–1931)}{金坛出生 · 杂货铺里的数学 · 伤寒与残疾 · 第一篇论文}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=ntpanel,draw=badgeNT!55] at (0,2.55)
+    {\textbf{金坛少年。}1910 年 11 月 12 日生于江苏金坛一个小商人家庭。初中时遇到一位慧眼识珠的数学老师，鼓励他阅读高阶数学教材。1925 年考入上海中华职业学校，因家贫无力支付生活费，一个学期后辍学回家。1927 年起帮父亲看店——金坛杂货铺的柜台，成了他的第一间数学实验室。};
+  \node[item,fill=anapanel,draw=badgeAna!35] at (0,0.85)
+    {\textbf{自学数学。}在杂货铺的三年里，华罗庚用仅有的几本书自学了高中和大学低年级的全部数学课程。他后来回忆："冬天最舒服——账册堆得高，躲在后面谁也看不见。"1929 年感染伤寒，卧床半年，留下左腿终身残疾。同年 12 月，在《科学》杂志发表第一篇论文《Sturm 定理之研究》。};
+  \node[item,fill=graypanel,draw=badgeApp!20] at (0,-0.55)
+    {\textbf{被"发现"的时刻。}1930 年，华罗庚在《科学》上指出苏家驹关于五次方程"可解"的论文是错误的。这篇短小精悍的驳论引起了清华大学数学系主任{\bfseries 熊庆来}的注意。熊庆来惊叹："这人是谁？"——他不知道的是，那个"华罗庚"只是金坛初中的一个事务员。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1931 年，熊庆来破格邀请没有任何大学学位的华罗庚来到清华——这是中国数学史上最英明的决定之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 清华与剑桥 ---
+\newcommand{\tsinghuaSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{清华与剑桥 (1931–1938)}{\faIcon{university}\enspace 图书馆员 → 教授 · 熊庆来的伯乐之眼 · Hardy–Littlewood 圆法}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=anapanel,draw=badgeAna!55] at (0,2.65)
+    {\textbf{清华的奇迹。}1931 年进入清华，起点是图书馆员。一年后升助教，两年后升讲师，1938 年归国后直升教授——整个过程{\bfseries 没有通过任何学位授予程序}。1935–1936 年间，Jacques Hadamard 和 Norbert Wiener 先后访问清华讲学，华罗庚参加了两人的讲座并留下深刻印象。};
+  \node[item,fill=ntpanel,draw=badgeNT!55] at (0,0.85)
+    {\textbf{剑桥的突破。}Wiener 访问英国时向 G.H. Hardy 推荐了这位中国天才。1936 年，华罗庚接受 Hardy 的邀请前往剑桥大学访问两年。在剑桥，他用 Hardy–Littlewood 圆法处理 Waring 问题，取得了一系列突破性成果，从此奠定了在国际数论界的声誉。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{抗战与归国。}1938 年全面抗战爆发后，华罗庚放弃剑桥的安稳环境，回到战火中的祖国。清华、北大、南开合并为西南联合大学（昆明），华罗庚被任命为西南联大教授——没有学位，没有洋博士头衔，但学生和同事都知道：这个从金坛走出来的残疾青年，已经是世界级的数论家了。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.57) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Hadamard → Wiener → Hardy → 华罗庚：三位 20 世纪数学巨人接力引荐一位中国天才。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 堆垒素数论 ---
+\newcommand{\additiveNTslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《堆垒素数论》：昆明防空洞里的数论经典}{\faIcon{book}\enspace Waring 问题 · Goldbach 猜想 · Vinogradov 中值定理 · Hardy–Littlewood 圆法}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=ntpanel,draw=badgeNT!55] at (0,2.65)
+    {\textbf{什么是堆垒素数论？}堆垒数论（Additive Number Theory）研究整数的加性表示。核心问题：每个充分大的整数是否可以写成若干个素数的和？Goldbach 猜想（每个偶数 = 两个素数之和）是其终极形式。华罗庚用 Hardy–Littlewood 圆法系统推进了这一领域。};
+  \node[item,fill=anapanel,draw=badgeAna!55] at (0,0.85)
+    {\textbf{Vinogradov 中值定理的改进。}苏联数论大师 Vinogradov 发明了估计三角和的"Vinogradov 方法"。华罗庚在昆明期间，将 Vinogradov 的三角和估计改进为更精确的形式——这就是后来闻名世界的 Vinogradov 中值定理的华氏版本。这一结果对 Hilbert–Waring 定理和 Riemann zeta 函数研究都有深远影响。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{一部在战火中诞生的经典。}华罗庚将昆明八年的研究成果写成《堆垒素数论》。1940 年完稿，因战争直到 1947 年才由苏联 Steklov 研究所正式出版。这部著作后来成为解析数论的必读文献，Springer 出版英译本。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 昆明八年，贫困、轰炸、学术隔绝——但华罗庚写出了世界一流的数论。他用数学证明：天才不需要安静的书房，只需要一个运转的大脑。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 多复变与矩阵几何 ---
+\newcommand{\multivariateSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{多复变函数与矩阵几何 (1946–1950)}{IAS 普林斯顿 · 伊利诺伊 · 典型域的调和分析 · 矩阵分类}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=anapanel,draw=badgeAna!55] at (0,2.65)
+    {\textbf{普林斯顿高等研究院。}1946–1948 年，华罗庚受邀访问 IAS。在这里，他从数论转向了矩阵理论、多复变函数论和群论——展现出惊人的数学适应力。期间正值国共内战，为方便旅行，民国政府给他护照上标注了"将军"军衔。};
+  \node[item,fill=ntpanel,draw=badgeNT!55] at (0,0.85)
+    {\textbf{多复变函数的华罗庚学派。}1948–1950 年任伊利诺伊大学厄巴纳-香槟分校正教授。1958 年出版《多复变函数论中的典型域的调和分析》，成为该领域的中国学派奠基之作。华罗庚在典型域（Cartan 域）上建立了完整的调和分析理论。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.55)
+    {\textbf{矩阵几何学。}在 IAS 期间，华罗庚对矩阵几何做出了重要贡献，研究了各种矩阵空间上的几何结构。这项工作与他的多复变函数研究相互辉映——华罗庚是少数能在代数、分析、几何之间自如穿梭的数学家。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从数论到多复变，从矩阵几何到群论——华罗庚的数学版图在 IAS 完成了惊人的扩展。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 1950 年的选择 ---
+\newcommand{\choiceSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{1950 年的选择：梁园虽好，非久居之地}{\faIcon{home}\enspace 放弃伊利诺伊终身教职 · 携全家回国 · 新中国数学事业的奠基}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=apppanel,draw=badgeApp!55] at (0,2.55)
+    {\textbf{美国的优渥生活。}1948–1950，华罗庚在伊利诺伊大学拥有终身教职、舒适的住房、稳定的收入。他在学术上正值盛年——数论、多复变、矩阵几何三线并进。留在美国，他可以安静地做纯数学，继续攀登世界高峰。};
+  \node[item,fill=ntpanel,draw=badgeNT!55] at (0,0.65)
+    {\textbf{他选择了另一条路。}1949 年 10 月，中华人民共和国成立。华罗庚决定回国。他说了一句后来广为流传的话：{\bfseries "梁园虽好，非久居之地"}。1950 年，他带着妻子和儿女回到了百废待兴的祖国——没有犹豫，没有条件。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.85)
+    {\textbf{建设从零开始的中国数学。}回国后，华罗庚立即投身于中国数学的体制建设。1952 年，中国科学院数学研究所成立，他出任首任所长。1958 年，中国科学技术大学成立，他任数学系首任主任和副校长。从科研到教育，从教材编写到人才培养，他亲自参与了新中国数学事业的每一个环节。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.3) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 如果留在美国，他可能获得更多个人荣誉。但他选择成为新中国数学的"总工程师"——这个选择改变了千万中国数学人的命运。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 华-王方法与数值积分 ---
+\newcommand{\huaWangSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{华-王方法：数论与计算数学的完美结合}{\faIcon{calculator}\enspace 用数论做数值积分 · 与王元的合作 · Monte Carlo 的替代方案}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=apppanel,draw=badgeApp!55] at (0,2.55)
+    {\textbf{大跃进的冲击。}1958 年大跃进开始，纯数学遭到猛烈批判。知识分子被要求"理论联系实际"。华罗庚迅速调整方向，将数学才能转向应用——他开始研究线性规划、运筹学和高维数值积分。};
+  \node[item,fill=ntpanel,draw=badgeNT!55] at (0,0.65)
+    {\textbf{华-王方法的诞生。}华罗庚与王元合作，开创性地将数论方法应用于高维数值积分。传统 Monte Carlo 方法依赖随机抽样，而华-王方法使用代数数论中的一致分布点列——{\bfseries 确定性的，但效果优于随机的}。1978 年出版《数论在数值分析中的应用》，1981 年 Springer 出版英译本。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.85)
+    {\textbf{为什么说这是天才之举？}数论——最"无用"的纯数学——被华罗庚变成了计算数学的利器。这是数学史上最优雅的"纯 → 用"转化之一。华-王方法的哲学是：素数的分布虽然没有随机性，但它的{\bfseries 伪随机性}恰恰是数值积分的理想工具。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.3) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Monte Carlo 用随机打败确定性；华-王方法用伪随机的素数打败 Monte Carlo。这是数论送给计算科学的最美礼物。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 人民数学家 ---
+\newcommand{\peoplesMathSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{人民数学家 (1958–1976)}{\faIcon{users}\enspace 优选法 · 统筹法 · 走遍全中国 · 毛泽东的亲笔信}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=apppanel,draw=badgeApp!55] at (0,2.65)
+    {\textbf{走进工厂和田间。}1960 年代，华罗庚带领一支由助手和学生组成的队伍，走遍全中国——工厂、矿山、农村、油田。他发明了两大法宝：{\bfseries 优选法}（实验设计的数学优化）和{\bfseries 统筹法}（网络计划技术），用最简单的数学帮助工人提高生产效率。};
+  \node[item,fill=ntpanel,draw=badgeNT!55] at (0,0.85)
+    {\textbf{数学的"群众路线"。}无论是工厂里的即兴解题会，还是田间地头的露天教学，华罗庚把数学从象牙塔搬到了车间和田野。他用一种天生的亲和力和化繁为简的才能，让不识字的工人都能理解数学方法的力量。他成了真正的"人民数学家"。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{毛泽东的表扬。}1964 年，毛泽东致信华罗庚："壮志凌云，可喜可贺。"在文革的动荡年代里，这封信是一道宝贵的护身符。华罗庚的"双法"推广运动持续了二十多年，足迹遍布 26 个省市自治区，培训了数以百万计的工人和农民。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个普林斯顿出来的世界级数论家，选择把后半生献给了中国工人的数学启蒙。这是一种难以复制的伟大。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 文革岁月 ---
+\newcommand{\culturalRevSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{文革岁月与毛泽东的保护 (1966–1976)}{知识分子的劫难 · 毛泽东的护身符 · 逆境中的坚守}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=ntpanel,draw=badgeNT!55] at (0,2.55)
+    {\textbf{风暴来临。}1966 年文化大革命爆发，知识分子首当其冲。华罗庚的学术权威和海外背景使他成为潜在的批斗对象。但毛泽东 1964 年的亲笔信和他的"人民数学家"身份提供了一定程度的保护——虽然不是完全安全的。};
+  \node[item,fill=apppanel,draw=badgeApp!55] at (0,0.65)
+    {\textbf{坚持推广"双法"。}在动荡中，华罗庚仍坚持在全国推广优选法和统筹法。因为这项工作"直接为工农兵服务"，获得了政治正当性。他的小分队继续走遍工厂矿山——在最黑暗的年代里，他用数学保持着与社会的连接。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.85)
+    {\textbf{幸存者。}华罗庚的特殊之处在于：他是极少数既在西方获得学术声誉、又在中国政治风暴中幸存下来的知识分子。他的策略不是对抗，而是{\bfseries 将数学融入时代的需要}。这使他保持了学术生命的延续。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.3) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 不是所有的坚持都需要呐喊。华罗庚用数学的"有用"守护了数学的"尊严"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 陈景润与华罗庚 ---
+\newcommand{\chenJingrunSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{伯乐与千里马：陈景润与华罗庚}{\faIcon{star}\enspace 发掘天才 · Goldbach 猜想的"1+2" · 中国数论的薪火相传}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=ntpanel,draw=badgeNT!55] at (0,2.65)
+    {\textbf{发现陈景润。}1950 年代，华罗庚注意到一位名叫陈景润的厦门大学青年教师。陈景润性格内向、不善言辞，但华罗庚从他的论文中看到了一种罕见的数学直觉。他力排众议将陈景润调到中国科学院数学研究所——就像当年熊庆来发掘了他自己一样。};
+  \node[item,fill=anapanel,draw=badgeAna!55] at (0,0.85)
+    {\textbf{陈氏定理 ("1+2")。}1966 年，陈景润证明了：每个充分大的偶数可以表示为一个素数和一个不超过两个素数的乘积之和。这就是轰动世界的"陈氏定理"——Goldbach 猜想方向上的最佳结果，至今无人超越。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{薪火相传。}华罗庚对陈景润的培养重新定义了"伯乐"的含义。他不仅给了陈景润一个平台，还把自己的堆垒素数论传承给他。熊庆来→华罗庚→陈景润——这是中国数论的一条完整血脉。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 当年熊庆来发现了一个没学历的杂货铺小伙；现在华罗庚发现了一个不善言辞的厦门青年——数学的传承就这样完成了。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 晚年与回归世界 ---
+\newcommand{\laterYearsSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{晚年与回归世界 (1979–1985)}{重开国门 · 文化大使 · 加州理工 · 最后的东京演讲}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,2.55)
+    {\textbf{重新走向世界。}文革结束后，华罗庚恢复了与西方数学界的联系。1979 年访问英国伯明翰大学，担任英国科学研究委员会访问研究员。1980 年起，他作为中国的"文化大使"频繁出访欧洲、美国和日本，重新建立起被文革断绝的学术纽带。};
+  \node[item,fill=anapanel,draw=badgeAna!55] at (0,0.65)
+    {\textbf{荣誉纷至。}1982 年当选美国国家科学院外籍院士——这是中国数学家首次获得这一荣誉。1983 年当选第三世界科学院院士。1983–1984 年任加州理工学院 Sherman Fairchild 杰出学者。1985 年当选全国政协副主席。};
+  \node[item,fill=ntpanel,draw=badgeNT!55] at (0,-0.85)
+    {\textbf{最后的讲台。}1985 年 6 月 12 日，华罗庚应邀在日本东京大学做数学演讲。演讲结束时，他突然心脏病发作，倒在讲台上。他的最后一句话是用英语说出的："{\bfseries Thank you.}"——正如他常说的，死在讲台上是一个数学教师最好的归宿。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.3) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "像战士死在战场，像水手死在海洋"——华罗庚死在了他毕生挚爱的数学面前。东京，1985 年 6 月 12 日。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.2cm]current page.center) {"梁园虽好，非久居之地。"};
+  \node[anchor=center, font=\fontsize{16}{22}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.2cm]current page.center) {从金坛杂货铺到普林斯顿高等研究院};
+  \node[anchor=center, font=\fontsize{16}{22}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=-0.6cm]current page.center) {从防空洞里的堆垒素数论到亿万工人的"双法"};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-1.3cm, xshift=-3.5cm]current page.center)
+    -- ([yshift=-1.3cm, xshift=3.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-2.0cm]current page.center)
+    {—— 华罗庚, 1910–1985};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-2.8cm]current page.center)
+    {华罗庚\quad Hua Loo-Keng\quad 1910 — 1985};
+  \node[anchor=center, font=\fontsize{6.5}{8}\selectfont, text=badgeLegacy!60]
+    at ([yshift=-3.5cm]current page.center)
+    {从杂货铺到世界数学殿堂——华罗庚是中国数学最坚韧的脊梁。};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{infinity}\enspace 堆垒素数论 \enspace|\enspace 华-王方法 \enspace|\enspace 优选统筹 \enspace|\enspace 人民数学家 \enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlylifeslide
+\tsinghuaSlide
+\additiveNTslide
+\multivariateSlide
+\choiceSlide
+\huaWangSlide
+\peoplesMathSlide
+\culturalRevSlide
+\chenJingrunSlide
+\laterYearsSlide
+\closingslide
+\end{document}
