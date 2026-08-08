@@ -194,3 +194,16 @@
 > 4. Markov 不等式是最优美的简单不等式之一——可以适当突出
 > 5. Markov 数是一个容易被忽略但极其优美的数论贡献
 > 6. 结尾应回归"偶然与必然"的主题
+
+## 第 14 步：背景音乐选择 ✅
+
+- **选定曲目**: **SEA** — Alex-Productions (75k views)
+- **风格**: 流动 / 平稳 / 概率、动力系统、连续叙事
+- **匹配理由**:
+  - "概率" — 曲目库中唯一标注"概率"标签的曲目，与 Markov 链/随机过程核心领域直接重合
+  - "流动" — Markov 链 = 状态之间的流动转移，"链"的隐喻完美匹配 SEA 的平稳律动
+  - "连续叙事" — 从 Pushkin 诗歌字母统计到 PageRank 的世纪叙事
+  - 不像 "New Lands" 过于宏大，不像 "Savage" 过于紧张——平稳推进的气质正合 Markov 推演数学的风格
+- **本地路径**: `music_audio/alex-productions/92-WEqfdRXU3IU-SEA.wav` → `presentations/Andrey_Markov/SEA.wav`
+- **时长**: 177 秒 (≈3 分钟) > 12 页 × 7 秒 = 84 秒 → ffmpeg `-shortest` 自动对齐
+- **Makefile**: `BGM = $(wildcard *.wav)` — 自动检测并混入
