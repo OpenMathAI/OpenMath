@@ -1,0 +1,268 @@
+% Turing Award — Intro Episode（序章）
+% 什么是图灵奖 / What is the ACM Turing Award
+% 参照 COPSS/Fields 系列 ep00 的 Beamer 版式
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+% ===== 配色：图灵紫 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{coverprimary}{HTML}{5B2D8E}
+\definecolor{coveraccent}{HTML}{B03A2E}
+\definecolor{coveramber}{HTML}{D9A441}
+\definecolor{coverpurple}{HTML}{1E8E8E}
+\definecolor{coverdark}{HTML}{241A33}
+\definecolor{covermuted}{HTML}{6B6478}
+\definecolor{coverlight}{HTML}{EFEAF7}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{bluepanel}{RGB}{231,222,245}
+\definecolor{redpanel}{RGB}{250,227,225}
+\definecolor{goldpanel}{RGB}{250,243,226}
+\definecolor{purplepanel}{RGB}{224,237,237}
+\definecolor{graypanel}{RGB}{240,238,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[coverpurple!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[coveraccent!10] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coveramber!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[coverprimary!8] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========== SLIDES ==========
+
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{24}{30}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=3.20cm]current page.center) {计算机科学界的最高礼赞: 图灵奖};
+  \node[anchor=center, font=\fontsize{15}{19}\selectfont, text=coverprimary!70!black]
+    at ([yshift=2.00cm]current page.center) {序章\enspace·\enspace 计算机科学没有诺贝尔奖，但它有自己的最高荣誉};
+  \draw[coverprimary!50, line width=1.4pt] ([yshift=0.60cm, xshift=-4.55cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.55cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.20cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=coverprimary, inner xsep=7pt, inner ysep=5pt,
+            font=\small\bfseries, text=white] at (-5.0,0) {1966 年设立};
+      \node[rounded corners=8pt, fill=coveraccent, inner xsep=7pt, inner ysep=5pt,
+            font=\small\bfseries, text=white] at (-1.9,0) {ACM 颁发};
+      \node[rounded corners=8pt, fill=coveramber, inner xsep=7pt, inner ysep=5pt,
+            font=\small\bfseries, text=white] at (1.9,0) {终身成就};
+      \node[rounded corners=8pt, fill=coverpurple, inner xsep=7pt, inner ysep=5pt,
+            font=\small\bfseries, text=white] at (5.0,0) {100 万美元};
+    \end{tikzpicture}
+  };
+  \node[anchor=north, draw=coverprimary!22, line width=0.6pt, fill=white, rounded corners=3pt, inner sep=2pt,
+        drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.10}]
+    at ([yshift=-0.90cm]current page.center) {%
+    \begin{tikzpicture}
+      \node[circle, fill=coverprimary!12, draw=coverprimary!40, minimum size=3.4cm]
+        {\fontsize{30}{36}\selectfont\bfseries\color{coverprimary!80!black} TURING};
+    \end{tikzpicture}};
+  \node[font=\fontsize{5}{6}\selectfont, text=black, anchor=north, align=center]
+    at ([yshift=-2.70cm]current page.center) {ACM A.M. Turing Award\\ 美国计算机协会·图灵奖};
+  \node[anchor=south, font=\scriptsize, text=black]
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace ACM Turing Award\enspace|\enspace 序章\enspace|\enspace 1966–2025};
+\end{tikzpicture}
+\end{frame}
+}
+
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么需要图灵奖？}{计算机科学最高的荣誉体系}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=14pt, inner ysep=9pt, font=\fontsize{8.5}{10.2}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black]
+    (a) at (-5.5,1.0) {数学界\\有菲尔兹、阿贝尔};
+  \node[nodebox, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black]
+    (b) at (-1.83,1.0) {物理学界\\有诺贝尔};
+  \node[nodebox, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black]
+    (c) at (1.83,1.0) {计算机界\\有什么？};
+  \node[nodebox, fill=redpanel, draw=coveraccent!35, text=coveraccent!85!black]
+    (d) at (5.5,1.0) {答案就是\\图灵奖};
+  \node[draw=coverprimary!55, fill=bluepanel, rounded corners=5pt, inner sep=12pt, text width=13.2cm, align=center] at (0,-1.3) {
+    {\fontsize{9}{11}\selectfont\bfseries\color{coverdark!85} 计算机科学的最高荣誉}\\[0pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 由 ACM 颁发，致敬阿兰·图灵——覆盖算法、系统、AI、网络、密码学的全部版图。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\turingman}{%
+\begin{frame}
+\plainbar
+\sectiontitle{阿兰·图灵：为什么要以他命名？}{Alan Turing（1912–1954）}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+  \centering
+  \begin{tikzpicture}
+    \node[circle, fill=coverprimary!10, draw=coverprimary!40, minimum size=5.4cm]
+      {\fontsize{28}{34}\selectfont\bfseries\color{coverprimary!80!black} A.M. Turing};
+  \end{tikzpicture}
+  {\par\vspace{3pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 1912–1954 · 计算机科学之父\par}
+\end{column}
+\begin{column}{0.5\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, anchor=north west] at (0,0) {
+      {\fontsize{8.2}{10}\selectfont\bfseries\color{coverprimary!82!black} 图灵的三大贡献}\\[4pt]
+      {\fontsize{7}{8.5}\selectfont\color{coverdark!84}
+      \begin{itemize}\setlength\itemsep{3pt}
+        \item \textbf{图灵机}（1936）：形式化「可计算」概念，计算理论之基石
+        \item \textbf{恩尼格玛破译}（二战）：密码学与机器智能的实践
+        \item \textbf{图灵测试}（1950）：定义机器智能的经典判据
+      \end{itemize}}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+\newcommand{\factsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{谁有资格？怎么评选？}{面向终身成就的年度荣誉}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+  \begin{tikzpicture}
+    \node[fill=coverprimary, rounded corners=5pt, minimum height=0.72cm, text width=6.2cm,
+          align=center, anchor=north west] at (0,0)
+      {\fontsize{7.6}{9}\selectfont\bfseries\color{white} 资格与机制};
+    \node[draw=coverprimary!45, fill=bluepanel, rounded corners=6pt, inner sep=7pt,
+          text width=6.2cm, anchor=north west] at (0,-0.60) {
+      {\fontsize{7}{8.5}\selectfont\color{coverdark!84}
+      \begin{itemize}
+        \setlength\itemsep{1pt}
+        \item \textbf{无年龄限制}：奖励终身成就
+        \item 每年 1–3 人，个别年份无人
+        \item 表彰奠基性、持续性的重大贡献
+        \item 由 ACM 委员会评选
+      \end{itemize}
+      }
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.5\textwidth}
+  \begin{tikzpicture}
+    \node[fill=coveraccent!85!black, rounded corners=5pt, minimum height=0.72cm, text width=6.2cm,
+          align=center, anchor=north west] at (0,0)
+      {\fontsize{7.6}{9}\selectfont\bfseries\color{white} 奖金与地位};
+    \node[draw=coveraccent!45, fill=redpanel, rounded corners=6pt, inner sep=7pt,
+          text width=6.2cm, anchor=north west] at (0,-0.60) {
+      {\fontsize{7}{8.5}\selectfont\color{coverdark!84}
+      \begin{itemize}
+        \setlength\itemsep{1pt}
+        \item 奖金 \textbf{100 万美元}（2014 年起，Google 赞助）
+        \item 与菲尔兹奖、诺贝尔奖并称科学最高荣誉
+        \item 覆盖算法、系统、AI、网络、密码学全部领域
+        \item 截至 2025 年共有 \textbf{81 位}得主
+      \end{itemize}
+      }
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+\newcommand{\milestonesslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{六十年的里程碑}{从 Perlis 到 Bennett 与 Brassard}
+\begin{center}
+\begin{tikzpicture}[
+  yl/.style={rounded corners=5pt, inner sep=5pt, text width=3.5cm, align=center, font=\fontsize{7}{8.4}\selectfont},
+  ar/.style={-{Stealth[length=2.2mm]}, coveraccent!70, line width=1.1pt}
+]
+  \node[yl, fill=bluepanel, draw=coverprimary!45] (a) at (-5.2,1.4) {{\bfseries\color{coverprimary!85!black} 1966}\\ Perlis 首位得主};
+  \node[yl, fill=goldpanel, draw=coveramber!40] (b) at (0,1.4) {{\bfseries\color{coveramber!85!black} 1983}\\ Unix 与 C（Thompson/Ritchie）};
+  \node[yl, fill=redpanel, draw=coveraccent!40] (c) at (5.2,1.4) {{\bfseries\color{coveraccent!85!black} 2000}\\ Yao 首位华人};
+  \node[yl, fill=purplepanel, draw=coverpurple!40] (d) at (-2.6,-1.4) {{\bfseries\color{coverpurple!85!black} 2006}\\ Allen 首位女性};
+  \node[yl, fill=bluepanel, draw=coverprimary!40] (e) at (2.6,-1.4) {{\bfseries\color{coverprimary!85!black} 2018}\\ 深度学习三杰};
+  \node[yl, fill=goldpanel, draw=coveramber!40] (f) at (5.2,-1.4) {{\bfseries\color{coveramber!85!black} 2025}\\ 量子信息（Bennett/Brassard）};
+  \draw[ar] (a) -- (b); \draw[ar] (b) -- (c);
+  \draw[ar] (c) to[bend left=18] (e); \draw[ar] (e) -- (d);
+  \draw[ar] (e) -- (f);
+\end{tikzpicture}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=4pt, text width=13cm, align=center] at (0,0) {
+    {\fontsize{7.4}{9}\selectfont\bfseries\color{coverprimary!80!black} 81 位得主 · 3 位女性 · 1 位华人（Yao 2000）}\\[1pt]
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!72} 唯一诺奖双料：Simon（图灵 1975 + 诺贝尔经济 1978）}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark] (current page.north west) rectangle (current page.south east);
+  \fill[coverprimary!30, opacity=0.35] (current page.north west) ++(2.0,-1.6) circle (2.6cm);
+  \fill[coveraccent!25, opacity=0.30] (current page.south east) ++(-2.2,1.7) circle (2.9cm);
+  \node[anchor=center, font=\fontsize{20}{25}\selectfont\bfseries, text=white]
+    at ([yshift=2.4cm]current page.center) {计算机科学没有诺贝尔奖};
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont, text=coverlight]
+    at ([yshift=1.2cm]current page.center) {但它有图灵奖};
+  \node[anchor=center, font=\fontsize{10}{13}\selectfont\itshape, text=white!60]
+    at ([yshift=-0.1cm]current page.center) {从 Perlis 的编译器，到 Bennett 的量子密码——};
+  \node[anchor=center, font=\fontsize{10}{13}\selectfont\itshape, text=white!60]
+    at ([yshift=-0.6cm]current page.center) {这份名单记录着计算机科学如何改变世界。};
+  \draw[coverprimary!70, line width=1.2pt] ([yshift=-1.5cm, xshift=-5.5cm]current page.center)
+    -- ([yshift=-1.5cm, xshift=5.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{11}{14}\selectfont\bfseries, text=coveramber!70]
+    at ([yshift=-2.2cm]current page.center) {—— 接下来十集，逐一认识 81 位得主};
+  \node[anchor=center, font=\fontsize{8}{10}\selectfont, text=white!30]
+    at ([yshift=-3.0cm]current page.center) {ACM Turing Award\enspace|\enspace 序章\enspace|\enspace 1966–2025};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========== MAIN ==========
+\begin{document}
+\titleslide
+\hookslide
+\turingman
+\factsslide
+\milestonesslide
+\closingslide
+\end{document}

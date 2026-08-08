@@ -1,0 +1,262 @@
+% Turing Award Video — Episode 1
+% 理论计算机科学（1966 – 2023）
+% Beamer layout mirrors COPSS/Fields video series
+% Source: turing/pages 离线页面 + turing_award_winners.md + Wikipedia
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{ifthen}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+% ===== 配色：图灵紫 + 琥珀金 + 青绿（区别于菲尔兹金/阿贝尔蓝/陈省身青/COPSS统计蓝）=====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{coverprimary}{HTML}{5B2D8E}
+\definecolor{coveraccent}{HTML}{B03A2E}
+\definecolor{coveramber}{HTML}{D9A441}
+\definecolor{coverpurple}{HTML}{1E8E8E}
+\definecolor{coverdark}{HTML}{241A33}
+\definecolor{covermuted}{HTML}{6B6478}
+\definecolor{coverlight}{HTML}{EFEAF7}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{bluepanel}{RGB}{231,222,245}
+\definecolor{redpanel}{RGB}{250,227,225}
+\definecolor{goldpanel}{RGB}{250,243,226}
+\definecolor{purplepanel}{RGB}{224,237,237}
+\definecolor{graypanel}{RGB}{240,238,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 交叉奖项徽标（参考 Fields/COPSS 系列）
+\newcommand{\nobelbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
+\newcommand{\kyotobadge}{\textsuperscript{\normalfont\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
+\newcommand{\godelbadge}{\textsuperscript{\normalfont\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
+\newcommand{\abelbadge}{\textsuperscript{\normalfont\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
+\newcommand{\shannonbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ---- Person slide: #1 name #2 subtitle #3 img/none #4 credit/缩写 #5 获奖(年+岁) #6 life #7 country #8 inst #9 contribution ----
+\newcommand{\personslide}[9]{%
+\begin{frame}
+\plainbar
+\vspace{-0.45cm}
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{coverdark} #1}\\[2pt]
+  {\fontsize{9.5}{11.5}\selectfont\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+\begin{columns}[c]
+\begin{column}{0.22\textwidth}
+  \centering
+  \ifthenelse{\equal{#3}{none}}{%
+    \begin{tikzpicture}
+      \node[circle, fill=coverprimary!12, draw=coverprimary!38, minimum size=2.6cm]
+        {\fontsize{16}{19}\selectfont\bfseries\color{coverprimary!75!black} #4};
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 暂无公开照片\par}
+  }{%
+    \begin{tikzpicture}
+      \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=3pt, inner sep=2.5pt, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.12}] {
+        \includegraphics[width=2.2cm,height=2.7cm,keepaspectratio]{#3}
+      };
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 图片来源：#4\par}
+  }
+\end{column}
+\begin{column}{0.28\textwidth}
+  \begin{tikzpicture}
+    \node[fill=goldpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=3.8cm, align=left] {
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 国别}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 机构}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #8}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, anchor=north west] at (0,0) {
+      {\fontsize{8.2}{10}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\\[3pt]
+      {\fontsize{7}{8.5}\selectfont\color{coverdark!84} #9}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+\newcommand{\coverslide}{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
+  \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
+  \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
+    at ([yshift=2.60cm]current page.center) {ACM 图灵奖 · 理论计算机科学（1966–2023）};
+  \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
+    at ([yshift=1.55cm]current page.center) {ACM Turing Award · 11 位得主};
+  \draw[coverprimary, line width=1.4pt] ([yshift=0.75cm, xshift=-5.2cm]current page.center)
+    -- ([yshift=0.75cm, xshift=5.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\bfseries, text=coveramber!58!black]
+    at ([yshift=0.10cm]current page.center) {计算复杂性 · 算法 · 随机性 · 从 Cook 到 Wigderson};
+  \node[anchor=center] at ([yshift=-1.50cm]current page.center) {
+    \begin{tikzpicture}[scale=1]
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.43,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/stephencook.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.06,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/richardkarp.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.69,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/johnhopcroft.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.69,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/roberttarjan.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.06,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/jurishartmanis.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.43,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/richardestearns.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.43,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/manuelblum.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.06,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/donaldknuth.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.69,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/michaelorabin.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.69,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/leslievaliant.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.06,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/aviwigderson.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace ACM Turing Award\enspace|\enspace 1966–2023 · 11 位得主};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========== SLIDES ==========
+
+\newcommand{\stephencookslide}{\personslide
+  {Stephen Cook}{史蒂芬·库克}
+  {images/stephencook.jpg}{Wikipedia}
+  {1982（43岁）}{1939–}{美国/加拿大}{University of Toronto}
+  {P 与 NP 问题、Cook-Levin 定理，计算复杂性理论奠基人之一。}}
+
+\newcommand{\richardkarpslide}{\personslide
+  {Richard Karp}{理查德·卡普}
+  {images/richardkarp.jpg}{Wikipedia}
+  {1985（50岁）}{1935–}{美国}{UC Berkeley}
+  {NP 完全性理论、Karp 归约，组合优化的算法大师。}}
+
+\newcommand{\johnhopcroftslide}{\personslide
+  {John Hopcroft}{约翰·霍普克罗夫特}
+  {images/johnhopcroft.jpg}{Wikipedia}
+  {1986（47岁）}{1939–}{美国}{Cornell University}
+  {算法设计与自动机理论，图算法经典教材作者。}}
+
+\newcommand{\roberttarjanslide}{\personslide
+  {Robert Tarjan}{罗伯特·塔扬}
+  {images/roberttarjan.jpg}{Wikipedia}
+  {1986（38岁）}{1948–}{美国}{Princeton University}
+  {并查集、最近公共祖先、强连通分量等图算法的发明者。}}
+
+\newcommand{\jurishartmanisslide}{\personslide
+  {Juris Hartmanis}{尤里斯·哈特马尼斯}
+  {images/jurishartmanis.jpg}{Wikipedia}
+  {1993（65岁）}{1928–2022}{美国/拉脱维亚}{Cornell University}
+  {计算复杂性分层定理，复杂性理论共同奠基人。}}
+
+\newcommand{\richardestearnsslide}{\personslide
+  {Richard E. Stearns}{理查德·斯特恩斯}
+  {images/richardestearns.jpg}{Wikipedia}
+  {1993（57岁）}{1936–}{美国}{SUNY Albany}
+  {计算复杂性理论奠基，与 Hartmanis 同获 1993 年奖。}}
+
+\newcommand{\manuelblumslide}{\personslide
+  {Manuel Blum}{曼努埃尔·布鲁姆}
+  {images/manuelblum.jpg}{Wikipedia}
+  {1995（57岁）}{1938–}{美国}{Carnegie Mellon University}
+  {计算复杂性、Blum Blum Shub 伪随机生成器。}}
+
+\newcommand{\donaldknuthslide}{\personslide
+  {Donald Knuth\kyotobadge}{唐纳德·高德纳}
+  {images/donaldknuth.jpg}{Wikipedia}
+  {1974（36岁）}{1938–}{美国}{Stanford University}
+  {《计算机程序设计艺术》、算法分析、TeX 排版系统。\\\textbf{主要荣誉}：京都奖 1996；美国国家科学奖章}}
+
+\newcommand{\michaelorabinslide}{\personslide
+  {Michael O. Rabin}{迈克尔·拉宾}
+  {images/michaelorabin.jpg}{Wikipedia}
+  {1976（45岁）}{1931–}{以色列/美国}{Harvard University}
+  {非确定性自动机、随机算法、米勒-拉宾素性检验。}}
+
+\newcommand{\leslievaliantslide}{\personslide
+  {Leslie Valiant}{莱斯利·瓦利安特}
+  {images/leslievaliant.jpg}{Wikipedia}
+  {2010（61岁）}{1949–}{英国/美国}{Harvard University}
+  {PAC 学习理论、VLSI 计算复杂度，学习理论奠基人。\\\textbf{主要荣誉}：EATCS 奖；内万林纳奖 1986}}
+
+\newcommand{\aviwigdersonslide}{\personslide
+  {Avi Wigderson\godelbadge\abelbadge}{阿维·威格德森}
+  {images/aviwigderson.jpg}{Wikipedia}
+  {2023（67岁）}{1956–}{以色列/美国}{Institute for Advanced Study}
+  {随机性与计算、伪随机性与去随机化，理论计算机巨星。\\\textbf{主要荣誉}：哥德尔奖 2009；阿贝尔奖 2021}}
+
+\newcommand{\synthesisslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{理论之光：计算到底能算多快？}{P/NP 与随机性——计算复杂性的黄金时代}
+\begin{center}
+\begin{tikzpicture}[
+  chip/.style={rounded corners=4pt, inner xsep=4pt, inner ysep=3pt, text width=1.9cm, align=center, font=\fontsize{6}{7.2}\selectfont}
+]
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (-5.0,1.75) {\textbf{1982}\\Cook};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (-2.5,1.75) {\textbf{1985}\\Karp};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (0.0,1.75) {\textbf{1986}\\Hopcroft};
+  \node[chip, fill=redpanel, draw=coveraccent!35, text=coveraccent!85!black] at (2.5,1.75) {\textbf{1986}\\Tarjan};
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (5.0,1.75) {\textbf{1993}\\Hartmanis};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (-5.0,0.25) {\textbf{1993}\\Stearns};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (-2.5,0.25) {\textbf{1995}\\Blum};
+  \node[chip, fill=redpanel, draw=coveraccent!35, text=coveraccent!85!black] at (0.0,0.25) {\textbf{1974}\\Knuth};
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (2.5,0.25) {\textbf{1976}\\Rabin};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (5.0,0.25) {\textbf{2010}\\Valiant};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (-5.0,-1.25) {\textbf{2023}\\Wigderson};
+\end{tikzpicture}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=8pt, text width=13.4cm, align=center] at (0,0) {%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverdark!80} 本集综述}\par\vspace{3pt}
+    {\fontsize{7.4}{8.8}\selectfont\color{coverdark!72} 从 Cook-Levin 定理到 Wigderson 的去随机化，这一代数学家严格回答了「什么问题算得快、什么问题不可能」。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% ========== MAIN ==========
+\begin{document}
+
+\coverslide
+
+\stephencookslide
+\richardkarpslide
+\johnhopcroftslide
+\roberttarjanslide
+\jurishartmanisslide
+\richardestearnsslide
+\manuelblumslide
+\donaldknuthslide
+\michaelorabinslide
+\leslievaliantslide
+\aviwigdersonslide
+
+\synthesisslide
+
+\end{document}

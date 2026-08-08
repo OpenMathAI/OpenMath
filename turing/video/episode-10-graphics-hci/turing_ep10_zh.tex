@@ -1,0 +1,208 @@
+% Turing Award Video — Episode 0
+% 计算机图形学与人机交互（1988 – 2019）
+% Beamer layout mirrors COPSS/Fields video series
+% Source: turing/pages 离线页面 + turing_award_winners.md + Wikipedia
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{ifthen}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+% ===== 配色：图灵紫 + 琥珀金 + 青绿（区别于菲尔兹金/阿贝尔蓝/陈省身青/COPSS统计蓝）=====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{coverprimary}{HTML}{5B2D8E}
+\definecolor{coveraccent}{HTML}{B03A2E}
+\definecolor{coveramber}{HTML}{D9A441}
+\definecolor{coverpurple}{HTML}{1E8E8E}
+\definecolor{coverdark}{HTML}{241A33}
+\definecolor{covermuted}{HTML}{6B6478}
+\definecolor{coverlight}{HTML}{EFEAF7}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{bluepanel}{RGB}{231,222,245}
+\definecolor{redpanel}{RGB}{250,227,225}
+\definecolor{goldpanel}{RGB}{250,243,226}
+\definecolor{purplepanel}{RGB}{224,237,237}
+\definecolor{graypanel}{RGB}{240,238,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 交叉奖项徽标（参考 Fields/COPSS 系列）
+\newcommand{\nobelbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
+\newcommand{\kyotobadge}{\textsuperscript{\normalfont\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
+\newcommand{\godelbadge}{\textsuperscript{\normalfont\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
+\newcommand{\abelbadge}{\textsuperscript{\normalfont\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
+\newcommand{\shannonbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ---- Person slide: #1 name #2 subtitle #3 img/none #4 credit/缩写 #5 获奖(年+岁) #6 life #7 country #8 inst #9 contribution ----
+\newcommand{\personslide}[9]{%
+\begin{frame}
+\plainbar
+\vspace{-0.45cm}
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{coverdark} #1}\\[2pt]
+  {\fontsize{9.5}{11.5}\selectfont\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+\begin{columns}[c]
+\begin{column}{0.22\textwidth}
+  \centering
+  \ifthenelse{\equal{#3}{none}}{%
+    \begin{tikzpicture}
+      \node[circle, fill=coverprimary!12, draw=coverprimary!38, minimum size=2.6cm]
+        {\fontsize{16}{19}\selectfont\bfseries\color{coverprimary!75!black} #4};
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 暂无公开照片\par}
+  }{%
+    \begin{tikzpicture}
+      \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=3pt, inner sep=2.5pt, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.12}] {
+        \includegraphics[width=2.2cm,height=2.7cm,keepaspectratio]{#3}
+      };
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 图片来源：#4\par}
+  }
+\end{column}
+\begin{column}{0.28\textwidth}
+  \begin{tikzpicture}
+    \node[fill=goldpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=3.8cm, align=left] {
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 国别}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 机构}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #8}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, anchor=north west] at (0,0) {
+      {\fontsize{8.2}{10}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\\[3pt]
+      {\fontsize{7}{8.5}\selectfont\color{coverdark!84} #9}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+\newcommand{\coverslide}{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
+  \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
+  \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
+    at ([yshift=2.60cm]current page.center) {ACM 图灵奖 · 计算机图形学与人机交互（1988–2019）};
+  \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
+    at ([yshift=1.55cm]current page.center) {ACM Turing Award · 5 位得主};
+  \draw[coverprimary, line width=1.4pt] ([yshift=0.75cm, xshift=-5.2cm]current page.center)
+    -- ([yshift=0.75cm, xshift=5.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\bfseries, text=coveramber!58!black]
+    at ([yshift=0.10cm]current page.center) {图形 · 鼠标 · 可视化 · 从 Sutherland 到 Hanrahan};
+  \node[anchor=center] at ([yshift=-0.30cm]current page.center) {
+    \begin{tikzpicture}[scale=1]
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.64,0.97) {\includegraphics[width=1.5cm,height=1.8cm,keepaspectratio]{images/ivansutherland.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.00,0.97) {\includegraphics[width=1.5cm,height=1.8cm,keepaspectratio]{images/douglasengelbart.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.64,0.97) {\includegraphics[width=1.5cm,height=1.8cm,keepaspectratio]{images/charlespthacker.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.64,-0.97) {\includegraphics[width=1.5cm,height=1.8cm,keepaspectratio]{images/edwincatmull.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.00,-0.97) {\includegraphics[width=1.5cm,height=1.8cm,keepaspectratio]{images/pathanrahan.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace ACM Turing Award\enspace|\enspace 1988–2019 · 5 位得主};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========== SLIDES ==========
+
+\newcommand{\ivansutherlandslide}{\personslide
+  {Ivan Sutherland}{伊万·萨瑟兰}
+  {images/ivansutherland.jpg}{Wikipedia}
+  {1988（50岁）}{1938–}{美国}{—}
+  {Sketchpad 交互式图形系统，计算机图形学之父。}}
+
+\newcommand{\douglasengelbartslide}{\personslide
+  {Douglas Engelbart}{道格拉斯·恩格尔巴特}
+  {images/douglasengelbart.jpg}{Wikipedia}
+  {1997（72岁）}{1925–2013}{美国}{—}
+  {鼠标发明者、超文本、图形交互（NLS）。}}
+
+\newcommand{\charlespthackerslide}{\personslide
+  {Charles P. Thacker}{查尔斯·萨克}
+  {images/charlespthacker.jpg}{Wikipedia}
+  {2009（66岁）}{1943–2017}{美国}{Microsoft Research}
+  {Alto 个人电脑、以太网、平板显示。}}
+
+\newcommand{\edwincatmullslide}{\personslide
+  {Edwin Catmull}{埃德温·卡特穆尔}
+  {images/edwincatmull.jpg}{Wikipedia}
+  {2019（74岁）}{1945–}{美国}{Pixar}
+  {计算机图形学、纹理映射、皮克斯联合创始人。}}
+
+\newcommand{\pathanrahanslide}{\personslide
+  {Pat Hanrahan}{帕特·汉拉汉}
+  {images/pathanrahan.jpg}{Wikipedia}
+  {2019（64岁）}{1955–}{美国}{Stanford University}
+  {RenderMan 渲染系统、图形着色语言。}}
+
+\newcommand{\synthesisslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{看见与触摸：图形与人机交互}{计算机图形学——从 Sketchpad 到 RenderMan}
+\begin{center}
+\begin{tikzpicture}[
+  chip/.style={rounded corners=4pt, inner xsep=4pt, inner ysep=3pt, text width=1.9cm, align=center, font=\fontsize{6}{7.2}\selectfont}
+]
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (-5.0,1.75) {\textbf{1988}\\Sutherland};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (-2.5,1.75) {\textbf{1997}\\Engelbart};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (0.0,1.75) {\textbf{2009}\\Thacker};
+  \node[chip, fill=redpanel, draw=coveraccent!35, text=coveraccent!85!black] at (2.5,1.75) {\textbf{2019}\\Catmull};
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (5.0,1.75) {\textbf{2019}\\Hanrahan};
+\end{tikzpicture}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=8pt, text width=13.4cm, align=center] at (0,0) {%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverdark!80} 本集综述}\par\vspace{3pt}
+    {\fontsize{7.4}{8.8}\selectfont\color{coverdark!72} Sutherland 的画笔、Engelbart 的鼠标、Catmull 的皮克斯——让人类与机器温柔对话。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% ========== MAIN ==========
+\begin{document}
+
+\coverslide
+
+\ivansutherlandslide
+\douglasengelbartslide
+\charlespthackerslide
+\edwincatmullslide
+\pathanrahanslide
+
+\synthesisslide
+
+\end{document}

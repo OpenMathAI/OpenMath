@@ -1,0 +1,235 @@
+% Turing Award Video — Episode 7
+% 分布式系统与形式验证（1972 – 2013）
+% Beamer layout mirrors COPSS/Fields video series
+% Source: turing/pages 离线页面 + turing_award_winners.md + Wikipedia
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{ifthen}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+% ===== 配色：图灵紫 + 琥珀金 + 青绿（区别于菲尔兹金/阿贝尔蓝/陈省身青/COPSS统计蓝）=====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{coverprimary}{HTML}{5B2D8E}
+\definecolor{coveraccent}{HTML}{B03A2E}
+\definecolor{coveramber}{HTML}{D9A441}
+\definecolor{coverpurple}{HTML}{1E8E8E}
+\definecolor{coverdark}{HTML}{241A33}
+\definecolor{covermuted}{HTML}{6B6478}
+\definecolor{coverlight}{HTML}{EFEAF7}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{bluepanel}{RGB}{231,222,245}
+\definecolor{redpanel}{RGB}{250,227,225}
+\definecolor{goldpanel}{RGB}{250,243,226}
+\definecolor{purplepanel}{RGB}{224,237,237}
+\definecolor{graypanel}{RGB}{240,238,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 交叉奖项徽标（参考 Fields/COPSS 系列）
+\newcommand{\nobelbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
+\newcommand{\kyotobadge}{\textsuperscript{\normalfont\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
+\newcommand{\godelbadge}{\textsuperscript{\normalfont\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
+\newcommand{\abelbadge}{\textsuperscript{\normalfont\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
+\newcommand{\shannonbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ---- Person slide: #1 name #2 subtitle #3 img/none #4 credit/缩写 #5 获奖(年+岁) #6 life #7 country #8 inst #9 contribution ----
+\newcommand{\personslide}[9]{%
+\begin{frame}
+\plainbar
+\vspace{-0.45cm}
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{coverdark} #1}\\[2pt]
+  {\fontsize{9.5}{11.5}\selectfont\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+\begin{columns}[c]
+\begin{column}{0.22\textwidth}
+  \centering
+  \ifthenelse{\equal{#3}{none}}{%
+    \begin{tikzpicture}
+      \node[circle, fill=coverprimary!12, draw=coverprimary!38, minimum size=2.6cm]
+        {\fontsize{16}{19}\selectfont\bfseries\color{coverprimary!75!black} #4};
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 暂无公开照片\par}
+  }{%
+    \begin{tikzpicture}
+      \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=3pt, inner sep=2.5pt, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.12}] {
+        \includegraphics[width=2.2cm,height=2.7cm,keepaspectratio]{#3}
+      };
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 图片来源：#4\par}
+  }
+\end{column}
+\begin{column}{0.28\textwidth}
+  \begin{tikzpicture}
+    \node[fill=goldpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=3.8cm, align=left] {
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 国别}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 机构}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #8}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, anchor=north west] at (0,0) {
+      {\fontsize{8.2}{10}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\\[3pt]
+      {\fontsize{7}{8.5}\selectfont\color{coverdark!84} #9}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+\newcommand{\coverslide}{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
+  \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
+  \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
+    at ([yshift=2.60cm]current page.center) {ACM 图灵奖 · 分布式系统与形式验证（1972–2013）};
+  \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
+    at ([yshift=1.55cm]current page.center) {ACM Turing Award · 8 位得主};
+  \draw[coverprimary, line width=1.4pt] ([yshift=0.75cm, xshift=-5.2cm]current page.center)
+    -- ([yshift=0.75cm, xshift=5.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\bfseries, text=coveramber!58!black]
+    at ([yshift=0.10cm]current page.center) {并发 · 共识 · 模型检验 · 从 Dijkstra 到 Lamport};
+  \node[anchor=center] at ([yshift=-0.30cm]current page.center) {
+    \begin{tikzpicture}[scale=1]
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.98,0.90) {\includegraphics[width=1.35cm,height=1.65cm,keepaspectratio]{images/edsgerwdijkstra.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.49,0.90) {\includegraphics[width=1.35cm,height=1.65cm,keepaspectratio]{images/butlerwlampson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.00,0.90) {\includegraphics[width=1.35cm,height=1.65cm,keepaspectratio]{images/amirpnueli.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.49,0.90) {\includegraphics[width=1.35cm,height=1.65cm,keepaspectratio]{images/edmundmclarke.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.98,0.90) {\includegraphics[width=1.35cm,height=1.65cm,keepaspectratio]{images/eallenemerson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.98,-0.90) {\includegraphics[width=1.35cm,height=1.65cm,keepaspectratio]{images/josephsifakis.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.49,-0.90) {\includegraphics[width=1.35cm,height=1.65cm,keepaspectratio]{images/leslielamport.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.00,-0.90) {\includegraphics[width=1.35cm,height=1.65cm,keepaspectratio]{images/barbaraliskov.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace ACM Turing Award\enspace|\enspace 1972–2013 · 8 位得主};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========== SLIDES ==========
+
+\newcommand{\edsgerwdijkstraslide}{\personslide
+  {Edsger W. Dijkstra}{埃德加·迪杰斯特拉}
+  {images/edsgerwdijkstra.jpg}{Wikipedia}
+  {1972（42岁）}{1930–2002}{荷兰}{Eindhoven University of Technology}
+  {结构化编程、Dijkstra 最短路径算法、并发原语。}}
+
+\newcommand{\butlerwlampsonslide}{\personslide
+  {Butler W. Lampson}{巴特勒·兰普森}
+  {images/butlerwlampson.jpg}{Wikipedia}
+  {1992（49岁）}{1943–}{美国}{Microsoft Research}
+  {分布式系统、安全与容错，个人计算愿景。}}
+
+\newcommand{\amirpnuelislide}{\personslide
+  {Amir Pnueli}{阿米尔·普努利}
+  {images/amirpnueli.jpg}{Wikipedia}
+  {1996（55岁）}{1941–2009}{以色列}{Weizmann Institute}
+  {时态逻辑、程序验证，反应系统形式化。}}
+
+\newcommand{\edmundmclarkeslide}{\personslide
+  {Edmund M. Clarke}{埃德蒙·克拉克}
+  {images/edmundmclarke.jpg}{Wikipedia}
+  {2007（62岁）}{1945–2020}{美国}{Carnegie Mellon University}
+  {模型检验（Model Checking）奠基人。}}
+
+\newcommand{\eallenemersonslide}{\personslide
+  {E. Allen Emerson}{艾伦·埃默森}
+  {images/eallenemerson.jpg}{Wikipedia}
+  {2007（53岁）}{1954–}{美国}{University of Texas at Austin}
+  {模型检验、时态逻辑。}}
+
+\newcommand{\josephsifakisslide}{\personslide
+  {Joseph Sifakis}{约瑟夫·西法基斯}
+  {images/josephsifakis.jpg}{Wikipedia}
+  {2007（61岁）}{1946–}{法国/希腊}{Verimag}
+  {模型检验、并发系统验证。}}
+
+\newcommand{\leslielamportslide}{\personslide
+  {Leslie Lamport}{莱斯利·兰波特}
+  {images/leslielamport.jpg}{Wikipedia}
+  {2013（72岁）}{1941–}{美国}{Microsoft Research}
+  {Paxos 共识算法、时序逻辑、LaTeX。\\\textbf{主要荣誉}：IEEE 冯诺依曼奖；美国国家科学奖章}}
+
+\newcommand{\barbaraliskovslide}{\personslide
+  {Barbara Liskov}{芭芭拉·利斯科夫}
+  {images/barbaraliskov.jpg}{Wikipedia}
+  {2008（69岁）}{1939–}{美国}{MIT}
+  {分布式系统、数据抽象、Liskov 替换原则，第二位女性得主。\\\textbf{主要荣誉}：美国国家科学奖章 2005}}
+
+\newcommand{\synthesisslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{并发的秩序：分布式与验证}{分布式系统与形式验证——共识、时态逻辑与模型检验}
+\begin{center}
+\begin{tikzpicture}[
+  chip/.style={rounded corners=4pt, inner xsep=4pt, inner ysep=3pt, text width=1.9cm, align=center, font=\fontsize{6}{7.2}\selectfont}
+]
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (-5.0,1.75) {\textbf{1972}\\Dijkstra};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (-2.5,1.75) {\textbf{1992}\\Lampson};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (0.0,1.75) {\textbf{1996}\\Pnueli};
+  \node[chip, fill=redpanel, draw=coveraccent!35, text=coveraccent!85!black] at (2.5,1.75) {\textbf{2007}\\Clarke};
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (5.0,1.75) {\textbf{2007}\\Emerson};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (-5.0,0.25) {\textbf{2007}\\Sifakis};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (-2.5,0.25) {\textbf{2013}\\Lamport};
+  \node[chip, fill=redpanel, draw=coveraccent!35, text=coveraccent!85!black] at (0.0,0.25) {\textbf{2008}\\Liskov};
+\end{tikzpicture}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=8pt, text width=13.4cm, align=center] at (0,0) {%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverdark!80} 本集综述}\par\vspace{3pt}
+    {\fontsize{7.4}{8.8}\selectfont\color{coverdark!72} Dijkstra 的并发原语、Lamport 的 Paxos、Clarke 的模型检验——让复杂系统在并发中依然可信。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% ========== MAIN ==========
+\begin{document}
+
+\coverslide
+
+\edsgerwdijkstraslide
+\butlerwlampsonslide
+\amirpnuelislide
+\edmundmclarkeslide
+\eallenemersonslide
+\josephsifakisslide
+\leslielamportslide
+\barbaraliskovslide
+
+\synthesisslide
+
+\end{document}

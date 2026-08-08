@@ -1,0 +1,298 @@
+% Turing Award Video — Episode 2
+% 程序设计语言与软件方法学（1966 – 2020）
+% Beamer layout mirrors COPSS/Fields video series
+% Source: turing/pages 离线页面 + turing_award_winners.md + Wikipedia
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{ifthen}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+% ===== 配色：图灵紫 + 琥珀金 + 青绿（区别于菲尔兹金/阿贝尔蓝/陈省身青/COPSS统计蓝）=====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{coverprimary}{HTML}{5B2D8E}
+\definecolor{coveraccent}{HTML}{B03A2E}
+\definecolor{coveramber}{HTML}{D9A441}
+\definecolor{coverpurple}{HTML}{1E8E8E}
+\definecolor{coverdark}{HTML}{241A33}
+\definecolor{covermuted}{HTML}{6B6478}
+\definecolor{coverlight}{HTML}{EFEAF7}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{bluepanel}{RGB}{231,222,245}
+\definecolor{redpanel}{RGB}{250,227,225}
+\definecolor{goldpanel}{RGB}{250,243,226}
+\definecolor{purplepanel}{RGB}{224,237,237}
+\definecolor{graypanel}{RGB}{240,238,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 交叉奖项徽标（参考 Fields/COPSS 系列）
+\newcommand{\nobelbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
+\newcommand{\kyotobadge}{\textsuperscript{\normalfont\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
+\newcommand{\godelbadge}{\textsuperscript{\normalfont\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
+\newcommand{\abelbadge}{\textsuperscript{\normalfont\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
+\newcommand{\shannonbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ---- Person slide: #1 name #2 subtitle #3 img/none #4 credit/缩写 #5 获奖(年+岁) #6 life #7 country #8 inst #9 contribution ----
+\newcommand{\personslide}[9]{%
+\begin{frame}
+\plainbar
+\vspace{-0.45cm}
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{coverdark} #1}\\[2pt]
+  {\fontsize{9.5}{11.5}\selectfont\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+\begin{columns}[c]
+\begin{column}{0.22\textwidth}
+  \centering
+  \ifthenelse{\equal{#3}{none}}{%
+    \begin{tikzpicture}
+      \node[circle, fill=coverprimary!12, draw=coverprimary!38, minimum size=2.6cm]
+        {\fontsize{16}{19}\selectfont\bfseries\color{coverprimary!75!black} #4};
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 暂无公开照片\par}
+  }{%
+    \begin{tikzpicture}
+      \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=3pt, inner sep=2.5pt, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.12}] {
+        \includegraphics[width=2.2cm,height=2.7cm,keepaspectratio]{#3}
+      };
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 图片来源：#4\par}
+  }
+\end{column}
+\begin{column}{0.28\textwidth}
+  \begin{tikzpicture}
+    \node[fill=goldpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=3.8cm, align=left] {
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 国别}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 机构}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #8}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, anchor=north west] at (0,0) {
+      {\fontsize{8.2}{10}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\\[3pt]
+      {\fontsize{7}{8.5}\selectfont\color{coverdark!84} #9}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+\newcommand{\coverslide}{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
+  \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
+  \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
+    at ([yshift=2.60cm]current page.center) {ACM 图灵奖 · 程序设计语言与软件方法学（1966–2020）};
+  \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
+    at ([yshift=1.55cm]current page.center) {ACM Turing Award · 15 位得主};
+  \draw[coverprimary, line width=1.4pt] ([yshift=0.75cm, xshift=-5.2cm]current page.center)
+    -- ([yshift=0.75cm, xshift=5.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\bfseries, text=coveramber!58!black]
+    at ([yshift=0.10cm]current page.center) {编译 · 语言 · 工程 · 从 Perlis 到 Ullman};
+  \node[anchor=center] at ([yshift=-1.50cm]current page.center) {
+    \begin{tikzpicture}[scale=1]
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.43,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/alanjperlis.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.06,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/johnbackus.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.69,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/robertwfloyd.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.69,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/kennetheiverson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.06,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/tonyhoare.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.43,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/niklauswirth.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.43,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/danascott.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.06,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/robinmilner.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.69,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/olejohandahl.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.69,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/kristennygaard.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.06,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/alankay.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.43,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/peternaur.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.43,-1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/fredbrooks.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=1.125cm, inner sep=0pt] at (-2.06,-1.62) {\fontsize{5}{6}\selectfont\color{covermuted} A.A.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=1.125cm, inner sep=0pt] at (-0.69,-1.62) {\fontsize{5}{6}\selectfont\color{covermuted} J.U.};
+    \end{tikzpicture}
+  };
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace ACM Turing Award\enspace|\enspace 1966–2020 · 15 位得主};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========== SLIDES ==========
+
+\newcommand{\alanjperlisslide}{\personslide
+  {Alan J. Perlis}{艾伦·佩利斯}
+  {images/alanjperlis.jpg}{Wikipedia}
+  {1966（44岁）}{1922–1990}{美国}{Carnegie Mellon University}
+  {首届得主，Algol 语言与编译技术先驱。}}
+
+\newcommand{\johnbackusslide}{\personslide
+  {John Backus}{约翰·巴克斯}
+  {images/johnbackus.jpg}{Wikipedia}
+  {1977（53岁）}{1924–2007}{美国}{IBM}
+  {Fortran 语言之父，BNF 文法描述编程语言语法。}}
+
+\newcommand{\robertwfloydslide}{\personslide
+  {Robert W. Floyd}{罗伯特·弗洛伊德}
+  {images/robertwfloyd.jpg}{Wikipedia}
+  {1978（42岁）}{1936–2001}{美国}{Stanford University}
+  {程序设计方法学、Floyd 算法（判圈/最短路径）。}}
+
+\newcommand{\kennetheiversonslide}{\personslide
+  {Kenneth E. Iverson}{肯尼思·艾弗森}
+  {images/kennetheiverson.jpg}{Wikipedia}
+  {1979（59岁）}{1920–2004}{加拿大}{IBM}
+  {APL 语言，交互式数组编程。}}
+
+\newcommand{\tonyhoareslide}{\personslide
+  {Tony Hoare}{托尼·霍尔}
+  {images/tonyhoare.jpg}{Wikipedia}
+  {1980（46岁）}{1934–}{英国}{University of Oxford}
+  {快速排序、Hoare 逻辑（程序验证）、CSP 通信顺序进程。}}
+
+\newcommand{\niklauswirthslide}{\personslide
+  {Niklaus Wirth}{尼克劳斯·沃斯}
+  {images/niklauswirth.jpg}{Wikipedia}
+  {1984（50岁）}{1934–}{瑞士}{ETH Zurich}
+  {Pascal、Modula 语言，结构化程序设计。}}
+
+\newcommand{\danascottslide}{\personslide
+  {Dana Scott}{达纳·斯科特}
+  {images/danascott.jpg}{Wikipedia}
+  {1976（44岁）}{1932–}{美国}{Carnegie Mellon University}
+  {域理论，为程序语义学奠定数学基础。}}
+
+\newcommand{\robinmilnerslide}{\personslide
+  {Robin Milner}{罗宾·米尔纳}
+  {images/robinmilner.jpg}{Wikipedia}
+  {1991（57岁）}{1934–2010}{英国}{University of Edinburgh}
+  {ML 语言、LCF 定理证明、π 演算（并发理论）。}}
+
+\newcommand{\olejohandahlslide}{\personslide
+  {Ole-Johan Dahl}{奥利-约翰·达尔}
+  {images/olejohandahl.jpg}{Wikipedia}
+  {2001（70岁）}{1931–2002}{挪威}{University of Oslo}
+  {面向对象编程（Simula 语言），OOP 先驱。}}
+
+\newcommand{\kristennygaardslide}{\personslide
+  {Kristen Nygaard}{克里斯汀·尼加德}
+  {images/kristennygaard.jpg}{Wikipedia}
+  {2001（75岁）}{1926–2002}{挪威}{University of Oslo}
+  {面向对象编程（Simula 语言），与 Dahl 同获 2001 年奖。}}
+
+\newcommand{\alankayslide}{\personslide
+  {Alan Kay}{艾伦·凯}
+  {images/alankay.jpg}{Wikipedia}
+  {2003（63岁）}{1940–}{美国}{—}
+  {Smalltalk、面向对象思想、图形用户界面，个人计算愿景。}}
+
+\newcommand{\peternaurslide}{\personslide
+  {Peter Naur}{彼得·诺尔}
+  {images/peternaur.jpg}{Wikipedia}
+  {2005（77岁）}{1928–2016}{丹麦}{—}
+  {Algol 60、BNF 文法、软件工程方法论。}}
+
+\newcommand{\fredbrooksslide}{\personslide
+  {Fred Brooks}{弗雷德·布鲁克斯}
+  {images/fredbrooks.jpg}{Wikipedia}
+  {1999（68岁）}{1931–2022}{美国}{University of North Carolina}
+  {OS/360 软件工程、《人月神话》作者。}}
+
+\newcommand{\alfredahoslide}{\personslide
+  {Alfred Aho}{阿尔弗雷德·阿霍}
+  {none}{A.A.}
+  {2020（79岁）}{1941–}{美国}{Columbia University}
+  {编译器理论、《龙书》合著者。}}
+
+\newcommand{\jeffreyullmanslide}{\personslide
+  {Jeffrey Ullman}{杰弗里·乌尔曼}
+  {none}{J.U.}
+  {2020（78岁）}{1942–}{美国}{Stanford University}
+  {编译、数据库、数据挖掘、《龙书》合著者。}}
+
+\newcommand{\synthesisslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{语言与程序：人如何指挥机器}{编程语言与软件方法学——从 Fortran 到《龙书》}
+\begin{center}
+\begin{tikzpicture}[
+  chip/.style={rounded corners=4pt, inner xsep=4pt, inner ysep=3pt, text width=1.9cm, align=center, font=\fontsize{6}{7.2}\selectfont}
+]
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (-5.0,1.75) {\textbf{1966}\\Perlis};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (-2.5,1.75) {\textbf{1977}\\Backus};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (0.0,1.75) {\textbf{1978}\\Floyd};
+  \node[chip, fill=redpanel, draw=coveraccent!35, text=coveraccent!85!black] at (2.5,1.75) {\textbf{1979}\\Iverson};
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (5.0,1.75) {\textbf{1980}\\Hoare};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (-5.0,0.25) {\textbf{1984}\\Wirth};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (-2.5,0.25) {\textbf{1976}\\Scott};
+  \node[chip, fill=redpanel, draw=coveraccent!35, text=coveraccent!85!black] at (0.0,0.25) {\textbf{1991}\\Milner};
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (2.5,0.25) {\textbf{2001}\\Dahl};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (5.0,0.25) {\textbf{2001}\\Nygaard};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (-5.0,-1.25) {\textbf{2003}\\Kay};
+  \node[chip, fill=redpanel, draw=coveraccent!35, text=coveraccent!85!black] at (-2.5,-1.25) {\textbf{2005}\\Naur};
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (0.0,-1.25) {\textbf{1999}\\Brooks};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (2.5,-1.25) {\textbf{2020}\\Aho};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (5.0,-1.25) {\textbf{2020}\\Ullman};
+\end{tikzpicture}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=8pt, text width=13.4cm, align=center] at (0,0) {%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverdark!80} 本集综述}\par\vspace{3pt}
+    {\fontsize{7.4}{8.8}\selectfont\color{coverdark!72} Fortran、Algol、Pascal、ML、Smalltalk——每一种语言都是一次抽象革命；《龙书》与《人月神话》定义了编译与工程。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% ========== MAIN ==========
+\begin{document}
+
+\coverslide
+
+\alanjperlisslide
+\johnbackusslide
+\robertwfloydslide
+\kennetheiversonslide
+\tonyhoareslide
+\niklauswirthslide
+\danascottslide
+\robinmilnerslide
+\olejohandahlslide
+\kristennygaardslide
+\alankayslide
+\peternaurslide
+\fredbrooksslide
+\alfredahoslide
+\jeffreyullmanslide
+
+\synthesisslide
+
+\end{document}

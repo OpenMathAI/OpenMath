@@ -1,0 +1,271 @@
+% Turing Award Video — Episode 3
+% 人工智能与机器学习（1969 – 2024）
+% Beamer layout mirrors COPSS/Fields video series
+% Source: turing/pages 离线页面 + turing_award_winners.md + Wikipedia
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{ifthen}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+% ===== 配色：图灵紫 + 琥珀金 + 青绿（区别于菲尔兹金/阿贝尔蓝/陈省身青/COPSS统计蓝）=====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{coverprimary}{HTML}{5B2D8E}
+\definecolor{coveraccent}{HTML}{B03A2E}
+\definecolor{coveramber}{HTML}{D9A441}
+\definecolor{coverpurple}{HTML}{1E8E8E}
+\definecolor{coverdark}{HTML}{241A33}
+\definecolor{covermuted}{HTML}{6B6478}
+\definecolor{coverlight}{HTML}{EFEAF7}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{bluepanel}{RGB}{231,222,245}
+\definecolor{redpanel}{RGB}{250,227,225}
+\definecolor{goldpanel}{RGB}{250,243,226}
+\definecolor{purplepanel}{RGB}{224,237,237}
+\definecolor{graypanel}{RGB}{240,238,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 交叉奖项徽标（参考 Fields/COPSS 系列）
+\newcommand{\nobelbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
+\newcommand{\kyotobadge}{\textsuperscript{\normalfont\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
+\newcommand{\godelbadge}{\textsuperscript{\normalfont\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
+\newcommand{\abelbadge}{\textsuperscript{\normalfont\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
+\newcommand{\shannonbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ---- Person slide: #1 name #2 subtitle #3 img/none #4 credit/缩写 #5 获奖(年+岁) #6 life #7 country #8 inst #9 contribution ----
+\newcommand{\personslide}[9]{%
+\begin{frame}
+\plainbar
+\vspace{-0.45cm}
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{coverdark} #1}\\[2pt]
+  {\fontsize{9.5}{11.5}\selectfont\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+\begin{columns}[c]
+\begin{column}{0.22\textwidth}
+  \centering
+  \ifthenelse{\equal{#3}{none}}{%
+    \begin{tikzpicture}
+      \node[circle, fill=coverprimary!12, draw=coverprimary!38, minimum size=2.6cm]
+        {\fontsize{16}{19}\selectfont\bfseries\color{coverprimary!75!black} #4};
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 暂无公开照片\par}
+  }{%
+    \begin{tikzpicture}
+      \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=3pt, inner sep=2.5pt, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.12}] {
+        \includegraphics[width=2.2cm,height=2.7cm,keepaspectratio]{#3}
+      };
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 图片来源：#4\par}
+  }
+\end{column}
+\begin{column}{0.28\textwidth}
+  \begin{tikzpicture}
+    \node[fill=goldpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=3.8cm, align=left] {
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 国别}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 机构}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #8}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.48\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, anchor=north west] at (0,0) {
+      {\fontsize{8.2}{10}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\\[3pt]
+      {\fontsize{7}{8.5}\selectfont\color{coverdark!84} #9}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+\newcommand{\coverslide}{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
+  \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
+  \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
+    at ([yshift=2.60cm]current page.center) {ACM 图灵奖 · 人工智能与机器学习（1969–2024）};
+  \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
+    at ([yshift=1.55cm]current page.center) {ACM Turing Award · 12 位得主};
+  \draw[coverprimary, line width=1.4pt] ([yshift=0.75cm, xshift=-5.2cm]current page.center)
+    -- ([yshift=0.75cm, xshift=5.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\bfseries, text=coveramber!58!black]
+    at ([yshift=0.10cm]current page.center) {AI 奠基 · 深度学习 · 强化学习 · 从 Minsky 到 Sutton};
+  \node[anchor=center] at ([yshift=-1.50cm]current page.center) {
+    \begin{tikzpicture}[scale=1]
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.43,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/marvinminsky.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.06,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/johnmccarthy.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.69,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/allennewell.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.69,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/herbertasimon.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.06,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/edwardfeigenbaum.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.43,1.62) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/rajreddy.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.43,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/judeapearl.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.06,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/yoshuabengio.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.69,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/geoffreyhinton.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.69,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/yannlecun.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.06,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/andrewbarto.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.43,0.00) {\includegraphics[width=1.25cm,height=1.5cm,keepaspectratio]{images/richardssutton.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace ACM Turing Award\enspace|\enspace 1969–2024 · 12 位得主};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========== SLIDES ==========
+
+\newcommand{\marvinminskyslide}{\personslide
+  {Marvin Minsky}{马文·明斯基}
+  {images/marvinminsky.jpg}{Wikipedia}
+  {1969（42岁）}{1927–2016}{美国}{MIT}
+  {人工智能奠基人，框架理论、神经网络早期研究。\\\textbf{主要荣誉}：日本国际奖 1990；美国国家科学奖章}}
+
+\newcommand{\johnmccarthyslide}{\personslide
+  {John McCarthy\kyotobadge}{约翰·麦卡锡}
+  {images/johnmccarthy.jpg}{Wikipedia}
+  {1971（44岁）}{1927–2011}{美国}{Stanford University}
+  {AI 奠基人，提出「人工智能」一词，Lisp 之父。\\\textbf{主要荣誉}：京都奖 1988；美国国家科学奖章}}
+
+\newcommand{\allennewellslide}{\personslide
+  {Allen Newell}{艾伦·纽厄尔}
+  {images/allennewell.jpg}{Wikipedia}
+  {1975（48岁）}{1927–1992}{美国}{Carnegie Mellon University}
+  {人工智能、认知科学，逻辑理论机。}}
+
+\newcommand{\herbertasimonslide}{\personslide
+  {Herbert A. Simon\nobelbadge}{赫伯特·西蒙}
+  {images/herbertasimon.jpg}{Wikipedia}
+  {1975（59岁）}{1916–2001}{美国}{Carnegie Mellon University}
+  {认知科学，另获诺贝尔经济学奖（1978）——图灵+诺奖双料。\\\textbf{主要荣誉}：诺贝尔经济学奖 1978；美国国家科学奖章}}
+
+\newcommand{\edwardfeigenbaumslide}{\personslide
+  {Edward Feigenbaum}{爱德华·费根鲍姆}
+  {images/edwardfeigenbaum.jpg}{Wikipedia}
+  {1994（58岁）}{1936–}{美国}{Stanford University}
+  {专家系统、知识工程，AI 应用先驱。}}
+
+\newcommand{\rajreddyslide}{\personslide
+  {Raj Reddy}{拉吉·雷迪}
+  {images/rajreddy.jpg}{Wikipedia}
+  {1994（57岁）}{1937–}{美国/印度}{Carnegie Mellon University}
+  {人工智能、语音识别。}}
+
+\newcommand{\judeapearlslide}{\personslide
+  {Judea Pearl}{朱迪亚·珀尔}
+  {images/judeapearl.jpg}{Wikipedia}
+  {2011（75岁）}{1936–}{美国/以色列}{UCLA}
+  {贝叶斯网络、因果推断，AI 概率推理奠基人。\\\textbf{主要荣誉}：鲁梅哈特奖；美国国家科学奖章 2014}}
+
+\newcommand{\yoshuabengioslide}{\personslide
+  {Yoshua Bengio}{约书亚·本吉奥}
+  {images/yoshuabengio.jpg}{Wikipedia}
+  {2018（54岁）}{1964–}{加拿大/法国}{Université de Montréal}
+  {深度学习三杰之一，表示学习与生成模型。\\\textbf{主要荣誉}：加拿大总督奖；英国皇家学会院士}}
+
+\newcommand{\geoffreyhintonslide}{\personslide
+  {Geoffrey Hinton}{杰弗里·辛顿}
+  {images/geoffreyhinton.jpg}{Wikipedia}
+  {2018（71岁）}{1947–}{英国/加拿大}{University of Toronto}
+  {深度学习三杰之一，反向传播、神经网络复兴。\\\textbf{主要荣誉}：日本国际奖 2016；英国皇家学会院士}}
+
+\newcommand{\yannlecunslide}{\personslide
+  {Yann LeCun}{杨立昆}
+  {images/yannlecun.jpg}{Wikipedia}
+  {2018（58岁）}{1960–}{法国/美国}{New York University}
+  {深度学习三杰之一，卷积神经网络（CNN）之父。\\\textbf{主要荣誉}：美国国家科学奖章 2023；英国皇家学会院士}}
+
+\newcommand{\andrewbartoslide}{\personslide
+  {Andrew Barto}{安德鲁·巴托}
+  {images/andrewbarto.jpg}{Wikipedia}
+  {2024（76岁）}{1948–}{美国}{University of Massachusetts}
+  {强化学习奠基人，时间差分学习。}}
+
+\newcommand{\richardssuttonslide}{\personslide
+  {Richard S. Sutton}{理查德·萨顿}
+  {images/richardssutton.jpg}{Wikipedia}
+  {2024（68岁）}{1956–}{加拿大/美国}{University of Alberta}
+  {强化学习奠基人，《强化学习导论》合著者。}}
+
+\newcommand{\synthesisslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{机器的智能：从推理到学习}{人工智能与机器学习——从符号推理到深度学习}
+\begin{center}
+\begin{tikzpicture}[
+  chip/.style={rounded corners=4pt, inner xsep=4pt, inner ysep=3pt, text width=1.9cm, align=center, font=\fontsize{6}{7.2}\selectfont}
+]
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (-5.0,1.75) {\textbf{1969}\\Minsky};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (-2.5,1.75) {\textbf{1971}\\McCarthy};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (0.0,1.75) {\textbf{1975}\\Newell};
+  \node[chip, fill=redpanel, draw=coveraccent!35, text=coveraccent!85!black] at (2.5,1.75) {\textbf{1975}\\Simon};
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (5.0,1.75) {\textbf{1994}\\Feigenbaum};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (-5.0,0.25) {\textbf{1994}\\Reddy};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (-2.5,0.25) {\textbf{2011}\\Pearl};
+  \node[chip, fill=redpanel, draw=coveraccent!35, text=coveraccent!85!black] at (0.0,0.25) {\textbf{2018}\\Bengio};
+  \node[chip, fill=bluepanel, draw=coverprimary!35, text=coverprimary!85!black] at (2.5,0.25) {\textbf{2018}\\Hinton};
+  \node[chip, fill=goldpanel, draw=coveramber!35, text=coveramber!85!black] at (5.0,0.25) {\textbf{2018}\\LeCun};
+  \node[chip, fill=purplepanel, draw=coverpurple!35, text=coverpurple!85!black] at (-5.0,-1.25) {\textbf{2024}\\Barto};
+  \node[chip, fill=redpanel, draw=coveraccent!35, text=coveraccent!85!black] at (-2.5,-1.25) {\textbf{2024}\\Sutton};
+\end{tikzpicture}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=8pt, text width=13.4cm, align=center] at (0,0) {%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverdark!80} 本集综述}\par\vspace{3pt}
+    {\fontsize{7.4}{8.8}\selectfont\color{coverdark!72} 从明斯基的框架到 Hinton 的反向传播再到 Sutton 的强化学习，AI 用六十年完成从模仿思维到自动学习的跃迁。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% ========== MAIN ==========
+\begin{document}
+
+\coverslide
+
+\marvinminskyslide
+\johnmccarthyslide
+\allennewellslide
+\herbertasimonslide
+\edwardfeigenbaumslide
+\rajreddyslide
+\judeapearlslide
+\yoshuabengioslide
+\geoffreyhintonslide
+\yannlecunslide
+\andrewbartoslide
+\richardssuttonslide
+
+\synthesisslide
+
+\end{document}
