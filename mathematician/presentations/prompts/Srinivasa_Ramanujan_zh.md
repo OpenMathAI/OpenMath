@@ -320,6 +320,21 @@ Ramanujan 的气质：**印度天才、孤独燃烧、直觉穿越时代、东�
 
 ---
 
+## 第 14 步：背景音乐选择 ✅
+
+- **选定曲目**: **Timeless** — Alex-Productions (132k views)
+- **风格**: 沉稳 / 纪录片 / 永恒、代数几何、数论
+- **匹配理由**:
+  - "永恒" — mock theta 函数等了 82 年才被 Zwegers 理解；三本笔记本 + Lost Notebook 至今仍在产出新定理
+  - "数论" — Ramanujan 的核心领域：分拆函数、τ 猜想、Rogers-Ramanujan 恒等式
+  - "沉稳纪录片" — 不同于英雄式史诗（Expedition）或悲情叙事（Lonesome），Timeless 的平稳推进气质正合 Ramanujan 的悲剧但庄严的生命历程
+  - 从 1729 出租车的日常轶事到 τ 猜想→Deligne→Fields 奖的世纪回响——Timeless 的叙事感贯穿始终
+- **本地路径**: `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` → `presentations/Srinivasa_Ramanujan/Timeless.wav`
+- **时长**: 128 秒 (≈2:08) > 17 页 × 7 秒 = 119 秒 → ffmpeg `-shortest` 自动对齐
+- **Makefile**: `BGM = $(wildcard *.wav)` — 自动检测并混入
+
+---
+
 ## 第 18 步：Makefile
 
 复制任一已有 Makefile（如 `G_H_Hardy/Makefile` 或 `Bernhard_Riemann/Makefile`），修改：
