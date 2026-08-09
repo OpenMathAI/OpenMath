@@ -532,7 +532,7 @@ def grid_dims(n):
         return 5, 2, 1.35, 1.65, 0.14
     if n <= 15:
         return 6, 3, 1.25, 1.50, 0.12
-    return 13, 7, 0.62, 0.76, 0.05
+    return 17, 5, 0.55, 0.66, 0.04
 
 
 def make_cover_slide(people, title, sub, note, foot, ep_dir, cover_name="coverslide"):
