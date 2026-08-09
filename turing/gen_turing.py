@@ -349,9 +349,9 @@ HEADER = r"""% Turing Award Video — Episode {EP}
     {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 图片来源：#4\par}
   }
 \end{column}
-\begin{column}{0.38\textwidth}
+\begin{column}{0.40\textwidth}
   \begin{tikzpicture}
-    \node[fill=goldpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=3.8cm, align=left] {
+    \node[fill=goldpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=4.0cm, align=left] {
       {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
       {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
       {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 国别}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
@@ -359,9 +359,9 @@ HEADER = r"""% Turing Award Video — Episode {EP}
     };
   \end{tikzpicture}
 \end{column}
-\begin{column}{0.40\textwidth}
+\begin{column}{0.38\textwidth}
   \begin{tikzpicture}
-    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=4.0cm, minimum height=2.8cm, align=left] {
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=3.8cm, minimum height=2.8cm, align=left] {
       {\fontsize{8.2}{10}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\\[3pt]
       {\fontsize{7}{8.5}\selectfont\color{coverdark!84} #9}
     };
@@ -808,7 +808,11 @@ def person_slide_all(p, cname):
         body += "\\\\\\textbf{主要荣誉}：%s" % esc(HONORS[name])
     age = compute_age(year, life)
     edition = year - 1965  # ACM Turing Award: 1966 = 1st edition
-    year_str = "%d 年 · 第 %d 届（%s）" % (year, edition, age) if age else "%d 年 · 第 %d 届" % (year, edition)
+    # 届数加粗彩色（coveraccent 红）让数字醒目
+    if age:
+        year_str = "%d 年 · 第{\\bfseries\\color{coveraccent} %d} 届（%s）" % (year, edition, age)
+    else:
+        year_str = "%d 年 · 第{\\bfseries\\color{coveraccent} %d} 届" % (year, edition)
     img_path = os.path.join(HERE, "video", "episode-allinone", "images", cmd_name(name) + ".jpg")
     if os.path.exists(img_path) and os.path.getsize(img_path) > 0:
         img, credit = "images/%s.jpg" % cmd_name(name), "Wikipedia"
