@@ -438,12 +438,56 @@ def find_portrait(name, year):
     return None
 
 
+FIGURES_DIR = os.path.join(HERE, "video", "episode-allinone", "figures")
+
+
+def fig_key(fname):
+    """Normalize a figures/ filename (e.g. 'Donald Knuth.jpeg', 'john_hopcroft.jpg')
+    to the same lowercase key used by cmd_name()."""
+    s = os.path.splitext(fname)[0]
+    s = s.replace("_", " ")
+    return cmd_name(s)
+
+
+def find_figure(name):
+    """Look for a manually calibrated portrait in episode-allinone/figures/."""
+    if not os.path.isdir(FIGURES_DIR):
+        return None
+    key = cmd_name(name)
+    for f in os.listdir(FIGURES_DIR):
+        if f.startswith("."):
+            continue
+        if fig_key(f) == key:
+            return os.path.join(FIGURES_DIR, f)
+    return None
+
+
+def copy_figure(src, dst):
+    """Copy figures/ portrait to dst .jpg, converting webp if needed."""
+    if src.lower().endswith(".webp"):
+        try:
+            from PIL import Image
+            Image.open(src).convert("RGB").save(dst, "JPEG", quality=95)
+            return
+        except Exception:
+            pass
+    shutil.copy(src, dst)
+
+
 def sync_photos(people, ep_dir):
     img_dir = os.path.join(HERE, "video", ep_dir, "images")
     os.makedirs(img_dir, exist_ok=True)
     for name, _cn, year, _life, _c, _i, _contrib in people:
-        src = find_portrait(name, year)
         dst = os.path.join(img_dir, cmd_name(name) + ".jpg")
+        # figures/ takes absolute priority: always force-overwrite
+        fig = find_figure(name)
+        if fig:
+            copy_figure(fig, dst)
+            continue
+        # not in figures/: keep existing calibrated/current portrait; only fill missing
+        if os.path.exists(dst) and os.path.getsize(dst) > 0:
+            continue
+        src = find_portrait(name, year)
         if src and os.path.exists(src):
             shutil.copy(src, dst)
         else:
