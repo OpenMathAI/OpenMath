@@ -848,7 +848,7 @@ def make_allinone_tex(all_people):
     out.append(make_cover_slide(
         all_people, "ACM 图灵奖：计算机科学的最高礼赞（1966–2025）",
         "ACM Turing Award（图灵奖）· 全 81 位得主",
-        "从 Perlis 到 Brassard · 计算机界诺贝尔奖",
+        "从 Perlis 到 Brassard · 计算机界诺贝尔奖 · 兼获诺奖与阿贝尔奖的双料得主",
         "1966–2025 · 全 81 位得主", ep_dir, cover_name="coverslide"))
     out.append("\n% ========== SLIDES (sorted by year/edition) ==========\n")
     names = []
