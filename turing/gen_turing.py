@@ -298,11 +298,12 @@ HEADER = r"""% Turing Award Video — Episode {EP}
 \setbeamercolor{background canvas}{bg=bgmain}
 
 % 交叉奖项徽标（参考 Fields/COPSS 系列）
-\newcommand{\nobelbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
-\newcommand{\kyotobadge}{\textsuperscript{\normalfont\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
-\newcommand{\godelbadge}{\textsuperscript{\normalfont\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
-\newcommand{\abelbadge}{\textsuperscript{\normalfont\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
-\newcommand{\shannonbadge}{\textsuperscript{\normalfont\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+% 用 \raisebox 而非 \textsuperscript：避免 22pt 标题触发 15.4pt 数学字体缺失警告
+\newcommand{\nobelbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
+\newcommand{\kyotobadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
+\newcommand{\godelbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
+\newcommand{\abelbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
+\newcommand{\shannonbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]
