@@ -781,17 +781,15 @@ def make_allinone_tex(all_people):
         "ACM Turing Award（图灵奖）· 全 81 位得主",
         "从 Perlis 到 Brassard · 计算机界诺贝尔奖",
         "1966–2025 · 全 81 位得主", ep_dir, cover_name="coverslide"))
-    out.append("\n% ========== SLIDES ==========\n")
+    out.append("\n% ========== SLIDES (sorted by year/edition) ==========\n")
     names = []
-    ch_prefix = {"ep01": "chone", "ep02": "chtwo", "ep03": "chthree", "ep04": "chfour",
-                 "ep05": "chfive", "ep06": "chsix", "ep07": "chseven", "ep08": "cheight",
-                 "ep09": "chnine", "ep10": "chten"}
-    for ep_key, _ep_dir, _m, title, _s, _r, _n in EPISODES:
-        for p in DATA[ep_key]:
-            cname = "%s%s" % (ch_prefix[ep_key], cmd_name(p[0]))
-            # person_slide with unique prefix (allinone)
-            out.append(person_slide_all(p, cname))
-            names.append("\\%s" % cname)
+    # sort by award year (1966 → 2025); same-year keep stable by name
+    ordered = sorted(all_people, key=lambda p: (p[2], p[0]))
+    for p in ordered:
+        cname = cmd_name(p[0])
+        # person_slide with unique command name (allinone, names unique)
+        out.append(person_slide_all(p, cname))
+        names.append("\\%s" % cname)
     out.append("\n% ========== MAIN ==========\n\\begin{document}\n")
     out.append("\\coverslide\n")
     out.append("\n".join(names) + "\n")
@@ -808,7 +806,8 @@ def person_slide_all(p, cname):
     if name in HONORS:
         body += "\\\\\\textbf{主要荣誉}：%s" % esc(HONORS[name])
     age = compute_age(year, life)
-    year_str = "%d（%s）" % (year, age) if age else str(year)
+    edition = year - 1965  # ACM Turing Award: 1966 = 1st edition
+    year_str = "%d 年 · 第 %d 届（%s）" % (year, edition, age) if age else "%d 年 · 第 %d 届" % (year, edition)
     img_path = os.path.join(HERE, "video", "episode-allinone", "images", cmd_name(name) + ".jpg")
     if os.path.exists(img_path) and os.path.getsize(img_path) > 0:
         img, credit = "images/%s.jpg" % cmd_name(name), "Wikipedia"
