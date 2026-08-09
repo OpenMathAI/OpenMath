@@ -361,7 +361,7 @@ HEADER = r"""% Turing Award Video — Episode {EP}
 \end{column}
 \begin{column}{0.38\textwidth}
   \begin{tikzpicture}
-    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=3.8cm, minimum height=2.8cm, align=left] {
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=3.8cm, align=left] {
       {\fontsize{8.2}{10}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\\[3pt]
       {\fontsize{7}{8.5}\selectfont\color{coverdark!84} #9}
     };
@@ -503,11 +503,18 @@ def initials(name):
     return parts[0][:2].upper() + "."
 
 
+def _honor_block(name):
+    """Format HONORS as a multi-line block, each '；'-separated honor on its own line."""
+    if name not in HONORS:
+        return ""
+    items = [esc(h).strip() for h in HONORS[name].split("；") if h.strip()]
+    return "\\\\\\textbf{主要荣誉}\\\\" + " \\\\ ".join(items)
+
+
 def person_slide(p, prefix="", ep_dir=""):
     name, cn, year, life, country, inst, contrib = p
     body = esc(contrib)
-    if name in HONORS:
-        body += "\\\\\\textbf{主要荣誉}\\\\%s" % esc(HONORS[name])
+    body += _honor_block(name)
     cname = prefix + cmd_name(name)
     age = compute_age(year, life)
     year_str = "%d（%s）" % (year, age) if age else str(year)
@@ -804,8 +811,7 @@ def make_allinone_tex(all_people):
 def person_slide_all(p, cname):
     name, cn, year, life, country, inst, contrib = p
     body = esc(contrib)
-    if name in HONORS:
-        body += "\\\\\\textbf{主要荣誉}\\\\%s" % esc(HONORS[name])
+    body += _honor_block(name)
     age = compute_age(year, life)
     edition = year - 1965  # ACM Turing Award: 1966 = 1st edition
     # 届数加粗彩色（coveraccent 红）让数字醒目
