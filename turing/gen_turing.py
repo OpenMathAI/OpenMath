@@ -246,7 +246,7 @@ HONORS = {
     "Andrew Yao":         "京都奖 2012；美国国家科学奖章",
     "Leslie Valiant":     "EATCS 奖；内万林纳奖 1986",
     "Judea Pearl":        "鲁梅哈特奖；美国国家科学奖章 2014",
-    "Geoffrey Hinton":    "日本国际奖 2016；英国皇家学会院士",
+    "Geoffrey Hinton":    "日本国际奖 2016；诺贝尔物理学奖 2024；英国皇家学会院士",
     "Yann LeCun":         "美国国家科学奖章 2023；英国皇家学会院士",
     "Yoshua Bengio":      "加拿大总督奖；英国皇家学会院士",
     "Shafi Goldwasser":   "哥德尔奖 1993/2001；美国科学院院士",
