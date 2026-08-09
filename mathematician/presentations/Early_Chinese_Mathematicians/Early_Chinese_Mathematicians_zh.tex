@@ -1,0 +1,296 @@
+% =============================================================
+%  上古至汉唐：中国古代数学先驱 合传
+%  张苍 · 刘歆 · 张衡 · 一行 · 王孝通
+%  Beamer 演示 —— 从《九章算术》到《缉古算经》
+%  资料来源：Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：汉唐古韵 — 陶土·朱砂·青铜·竹青 =====
+\definecolor{bgmain}{RGB}{245,240,230}
+\definecolor{coverprimary}{HTML}{8B4513}
+\definecolor{coveraccent}{HTML}{C73E3A}
+\definecolor{badgeMath}{HTML}{8B4513}
+\definecolor{badgeAstro}{HTML}{3B5998}
+\definecolor{badgeEng}{HTML}{4A6741}
+\definecolor{badgeLegacy}{HTML}{C9A227}
+\definecolor{coverdark}{HTML}{1A1A00}
+\definecolor{covermuted}{HTML}{6B7A8C}
+\definecolor{titlecolor}{RGB}{24,20,10}
+\definecolor{muteddark}{RGB}{80,72,60}
+\definecolor{mathpanel}{RGB}{245,238,225}
+\definecolor{astropanel}{RGB}{228,236,248}
+\definecolor{engpanel}{RGB}{228,242,228}
+\definecolor{legacypanel}{RGB}{252,246,228}
+\definecolor{graypanel}{RGB}{244,240,232}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!3] (current page.north west) rectangle (current page.south east);
+  \fill[badgeMath!5] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeAstro!4] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeEng!4] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!4] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.03, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.03, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+  \node[badgeMath!5, font=\fontsize{28}{34}\selectfont] at ([xshift=0.3cm, yshift=-1.0cm]current page.north west) {$\bigcirc$};
+  \node[badgeAstro!3, font=\fontsize{24}{30}\selectfont] at ([xshift=-0.5cm, yshift=1.2cm]current page.south east) {$\star$};
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{14.5}\selectfont\bfseries, text=badgeMath!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace 秦汉 $\rightarrow$ 唐 (约前 250 — 725 CE)\enspace|\enspace 五人合传};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {上古至汉唐：中国古代数学先驱};
+  \node[anchor=center, font=\fontsize{11}{14.5}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {张苍\enspace·\enspace 刘歆\enspace·\enspace 张衡\enspace·\enspace 一行\enspace·\enspace 王孝通};
+  \node[anchor=center, font=\fontsize{8}{10.5}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {从《九章算术》到《缉古算经》——八百年的数学演进};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeMath, inner xsep=8pt, inner ysep=5pt,
+            text width=2.75cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {奠基\\[2pt]张苍·刘歆\\整理《九章》\\$\pi \approx 3.1547$};
+      \node[rounded corners=8pt, fill=badgeAstro, inner xsep=8pt, inner ysep=5pt,
+            text width=2.75cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {通才\\[2pt]张衡\\$\pi \approx \sqrt{10}$\\浑天仪·地动仪};
+      \node[rounded corners=8pt, fill=badgeEng, inner xsep=8pt, inner ysep=5pt,
+            text width=2.75cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {突破\\[2pt]王孝通\\三次方程数值解\\《缉古算经》};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.75cm, align=center, font=\footnotesize\bfseries, text=white!92] at (5.5,0) {巅峰\\[2pt]一行\\子午线实测\\《大衍历》};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8}{11.5}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.70cm]current page.center)
+    {从焚书的余烬中整理出"九章"，到三次方程的数值求解——五个人，八百年，改变了中国数学的面貌。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace 秦汉至唐 (约前250–725)\enspace|\enspace 张苍·刘歆·张衡·王孝通·一行\enspace|\enspace OpenMath 中国古代数学家系列};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 总览 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{五位先驱 · 八百年演进}{从《九章算术》到《缉古算经》——中国古代数学的算法传统}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{6.5}{8.5}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=mathpanel,draw=badgeMath!55,text=badgeMath!85!black]
+    (a) at (-5.5,1.3) {张苍\enspace·\enspace 刘歆\\[2pt]《九章算术》整理\\$\pi \approx 3.1547$\\三统历\\前253–23};
+  \node[nodebox,fill=astropanel,draw=badgeAstro!55,text=badgeAstro!85!black]
+    (b) at (-1.85,1.3) {张衡 (78–139)\\[2pt]$\pi \approx \sqrt{10}$\\浑天仪·地动仪\\月食成因\\汉赋大家};
+  \node[nodebox,fill=engpanel,draw=badgeEng!55,text=badgeEng!85!black]
+    (c) at (1.85,1.3) {王孝通 (580–640)\\[2pt]25个三次方程\\《缉古算经》\\"开带从立方"\\比 Cardano 早 900 年};
+  \node[nodebox,fill=legacypanel,draw=badgeLegacy!55,text=badgeLegacy!85!black]
+    (d) at (5.5,1.3) {一行 (683–727)\\[2pt]《大衍历》\\首次子午线实测\\高次插值\\43 岁英年早逝};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从秦始皇焚书到盛唐开元——五位数学家用八百年时间，\\[1pt]将中国数学从焚书的灰烬中重新点燃，推进到方程求解的世界前沿。}\\[2pt]
+    {\fontsize{6.8}{8.8}\selectfont\color{covermuted} 共同遗产：从"算经十书"之首的《九章算术》到同列十书的《缉古算经》——中国数学的算法传统在此成形。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 奠基时代：张苍与刘歆 ---
+\newcommand{\eraSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{奠基时代：张苍与《九章算术》}{整理经典 · 首次 $\pi$ 近似 · 三统历——秦汉数学的双重奠基}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=mathpanel,draw=badgeMath!55] at (0,2.85)
+    {\textbf{张苍 (前253–前152)：从丞相到数学奠基人。}张苍师从荀子（与贾谊同门），秦时任御史。秦亡汉兴，他经历了焚书坑儒之后的文化重建。汉文帝时期，张苍位至丞相——而他的真正遗产，是整理并增补了《九章算术》。"方田·粟米·衰分·少广·商功·均输·盈不足·方程·勾股"——这九个章节的框架，此后的 1500 年里一直是中国数学的核心教材。享年约 101 岁，历仕四朝。};
+  \node[item,fill=astropanel,draw=badgeAstro!55] at (0,0.95)
+    {\textbf{刘歆 (前50–23)：第一个精确计算圆周率的中国人。}汉宗室出身（楚元王后裔），刘向之子。他利用嘉量（标准量器）的铭文数据，推算出 $\pi \approx 3.1547$——这是中国历史上第一个非整数的 $\pi$ 近似值（载于《隋书·律历志》）。同时编制《三统历》，将历法体系化，这一范式影响了此后中国近两千年的历法编制。他还是古文经学的奠基人之一——经学与天算并通的全才。};
+  \node[item,fill=graypanel,draw=coveraccent!55] at (0,-0.70)
+    {\textbf{秦汉数学的双重奠基。}张苍整理经典（"九章"），刘歆追求精度（$\pi$ + 历法）。一人奠定了中国数学的教材体系，另一人开创了数值精确化的传统。两人分别在秦砖汉瓦的年代，为中国数学找到了两个核心方向——\textbf{算法框架}与\textbf{数值精度}。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.85) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 从焚书的余烬中整理出的"九章"，从嘉量的铭文中推演出的 $\pi$——这就是中国数学的起点。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 通才之光：张衡 ---
+\newcommand{\zhangHengSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{通才之光：张衡 (78–139)}{$\pi \approx \sqrt{10}$ · 浑天仪 · 地动仪 · 月食成因 · 汉赋——Archimedes 式的百科全书学者}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=mathpanel,draw=badgeMath!55] at (0,2.65)
+    {\textbf{数学与天文。}张衡在《灵宪》中提出 $\pi \approx \sqrt{10} \approx 3.1623$。虽然精度不及刘歆的 3.1547，但张衡另辟几何蹊径——他用正方形对角线来逼近圆周，体现了独立的数学思维。公元 117 年，他制造了\textbf{浑天仪}——一台水力驱动的天体计算机，能模拟日月星辰的运行。他还正确解释了月食成因：月球进入地球的阴影，这一认识早于西方同类观点。};
+  \node[item,fill=engpanel,draw=badgeEng!55] at (0,0.50)
+    {\textbf{地动仪与工程。}公元 132 年，张衡发明了\textbf{候风地动仪}——世界第一台地震检测仪器。它是一个精铜铸造的大型容器，内有精巧的杠杆机构，地震波能从八个方向触发龙口中的铜球落入下方蟾蜍口中，从而指示震中方向。原件已失传，但后世多次尝试复原。这个发明使张衡成为地震学的先驱。};
+  \node[item,fill=graypanel,draw=coveraccent!55] at (0,-0.95)
+    {\textbf{超越学科的天才。}张衡还是汉赋四大家之一——《二京赋》耗时十年，辞藻华丽，结构宏大。《归田赋》和《四愁诗》则是中国文学史上的经典。John Needham 评价他为"\textbf{两汉四百年间最伟大的学者}"。数学·天文学·地震学·工程·文学——五个领域都达到了时代的顶峰。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.4) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 中国历史上罕见的、不偏科的通才——用浑天仪观测星空，用地动仪感知大地，用汉赋拥抱文学。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 天算巅峰：一行 ---
+\newcommand{\yiXingSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{天算巅峰：一行 (683–727)}{《大衍历》· 世界首次子午线实测 · 高次插值——盛唐天文数学的巅峰}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=astropanel,draw=badgeAstro!55] at (0,2.65)
+    {\textbf{从僧人到天文学家。}一行，俗名张遂，出家为僧，法号一行。公元 721 年，唐玄宗召他入朝修订历法——这是中国历史上最雄心勃勃的历法改革之一。一行面临的挑战是：制造一部比以往任何时候都更精确的历法，而这需要前所未有的数学工具和观测数据。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,0.75)
+    {\textbf{《大衍历》的数学创新。}一行在历法计算中使用了\textbf{高次差分插值法}——远比前辈的线性插值先进，能更精确地计算日月的不均匀运动。他还制作了类似正切函数的数值表。公元 729 年《大衍历》正式颁行，成为唐代最精密的历法。令人惋惜的是，一行在 727 年完成大衍历后不久逝世，年仅 43 岁——"完成使命后离去的天才"。};
+  \node[item,fill=engpanel,draw=badgeEng!55] at (0,-0.85)
+    {\textbf{世界首次子午线实测 (724–725)。}一行组织了一次大规模测量——从北纬 50° 的贝加尔湖以南到北纬 17° 的交州（今越南），共设 13 个观测站点，跨度约 3800 公里。值得注意的是，一行并不知晓地球是球形的——但他实测的每度弧长（约 131.3 km/度）已相当接近今日值（111 km/度）。这是人类历史上\textbf{第一次}有组织的大规模大地测量，比阿拉伯人早约 90 年。国际天文学界以"一行"命名了月球环形山和小行星。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.30) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一个僧人，用数学重新丈量了地球。他的名字刻在月球上，也刻在了人类测量世界的历史中。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 方程突破：王孝通 ---
+\newcommand{\wangXiaotongSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{方程突破：王孝通与三次方程}{《缉古算经》· 20 道三次方程 · "开带从立方" · 早于 Cardano 900 年}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=mathpanel,draw=badgeMath!55] at (0,2.65)
+    {\textbf{唐初的工程数学家。}王孝通 (580–640) 活跃于唐初，官至算历博士、太史丞。他的时代面临一个实际问题：大规模的堤坝、水渠和运河工程，需要精确计算土方体积——这些体积计算常常导致\textbf{三次方程}。王孝通没有回避这个问题，而是直面它——并写出了《缉古算经》。};
+  \node[item,fill=engpanel,draw=badgeEng!55] at (0,0.55)
+    {\textbf{《缉古算经》：世界最早的方程论著之一。}全书包含 \textbf{25 个三次方程}问题（外加 2 个二次方程和 2 个双重二次方程），全部来自土木工程实际。王孝通使用"\textbf{开带从立方}"法——一种数值迭代方法，求解形如 $x^3 + px^2 + qx = N$ 的方程。这不仅是世界最早的系统性三次方程研究，更是一种实用的工程数学。唐代将其列为"算经十书"之一——也是十书中最难的一部。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-1.25)
+    {\textbf{领先世界的算法。}王孝通的三次方程数值解法比 Omar Khayyám (11 世纪，几何解) 更实用，比 Cardano 的公式解 (1545) 早约 900 年。与 Khayyám 用圆锥曲线相交求解不同，王孝通的数值解法可以直接应用于工程计算。他和刘徽的"方 程术"(Gaussian 消元法) 一样，证明了中国古代数学在方程求解领域长期领先世界。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.45) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 从堤坝的土方量到三次方程——王孝通证明了最深的数学，往往来自最实际的问题。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 千年传承 ---
+\newcommand{\legacySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{八百年传承：从《九章》到《缉古》}{算法传统的形成 · "算经十书" · 一场穿越千年的数学接力}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=mathpanel,draw=badgeMath!55] at (0,2.65)
+    {\textbf{从一本书开始。}张苍整理《九章算术》，刘歆首次精确计算 $\pi$——这是中国数学的奠基时刻（前 2 世纪）。此后，张衡将数学与天文学、地震学融合（2 世纪），成为百科全书式的通才。初唐时期，王孝通用《缉古算经》将方程求解推向三次（7 世纪），而一行在盛唐用《大衍历》和子午线实测将中国的天文数学推向全球巅峰（8 世纪）。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,0.55)
+    {\textbf{"算经十书"的双重见证。}唐代汇编的"算经十书"——中国古代最重要的十部数学著作——以张苍整理的《九章算术》为首，以王孝通创作的《缉古算经》结尾。一头一尾，一部是整理、一部是原创；一部是秦汉的经典、一部是唐初的突破。两书同列十书，是中国数学八百年演进的最好见证。};
+  \node[item,fill=graypanel,draw=badgeAstro!20] at (0,-1.10)
+    {\textbf{算法传统的确立。}这五位先驱的共同遗产，是中国古代数学最核心的特征——\textbf{算法传统}：以具体问题为导向，以数值求解为目标，以算筹为工具。从线性方程组到三次方程，从圆周率近似到子午线实测——这一传统在宋元时期达到世界巅峰（贾宪三角、秦九韶的大衍求一术、朱世杰的四元术）。而现在我们知道：这场千年接力赛的第一棒，就是由这五个人递出的。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.45) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 他们不知道谁会在未来接住自己抛出的问题。但他们相信，一定会有人接住——这就是数学的传承。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {从焚书余烬到全球首创};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {八百年间，五个人改变了中国数学的面貌};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {张苍 · 刘歆 · 张衡 · 王孝通 · 一行};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {《九章算术》→《缉古算经》→《大衍历》};
+  \node[anchor=center, font=\fontsize{6.5}{8.5}\selectfont, text=badgeLegacy!65]
+    at ([yshift=-2.1cm]current page.center) {从竹简上的九章到子午线的实测——五个人，八百年，一场未竟的数学长征。};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace 张苍 · 刘歆 \enspace|\enspace 张衡 \enspace|\enspace 王孝通 \enspace|\enspace 一行 \enspace|\enspace OpenMath 中国古代数学家系列};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\eraSlide
+\zhangHengSlide
+\yiXingSlide
+\wangXiaotongSlide
+\legacySlide
+\closingslide
+\end{document}
