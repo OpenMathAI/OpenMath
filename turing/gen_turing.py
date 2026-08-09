@@ -277,7 +277,6 @@ HEADER = r"""% Turing Award Video — Episode {EP}
 \setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
 \setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
 \usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{ifthen}\usepackage{amssymb}
-\usepackage{booktabs}\usepackage{array}\usepackage{colortbl}
 \usetikzlibrary{positioning,calc,arrows.meta,shadows}
 
 % ===== 配色：图灵紫 + 琥珀金 + 青绿（区别于菲尔兹金/阿贝尔蓝/陈省身青/COPSS统计蓝）=====
@@ -298,19 +297,44 @@ HEADER = r"""% Turing Award Video — Episode {EP}
 \definecolor{graypanel}{RGB}{240,238,244}
 \setbeamercolor{background canvas}{bg=bgmain}
 
+\providecommand{\personhonors}{}
+
 % 交叉奖项徽标（参考 Fields/COPSS 系列）
 % 用 \raisebox 而非 \textsuperscript：避免 22pt 标题触发 15.4pt 数学字体缺失警告
+% 符号+字母+品牌色：◆N 诺贝尔 · ★K 京都 · ◇G 哥德尔 · ★A 阿贝尔 · ★S 香农
 \newcommand{\nobelbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
 \newcommand{\kyotobadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
 \newcommand{\godelbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
 \newcommand{\abelbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
 \newcommand{\shannonbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+% ♥J 日本国际 · ▲N 内万林纳 · □E EATCS · ●M 马可尼 · ▲V 冯·诺依曼 · ◆T 千禧科技
+\newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
+\newcommand{\nevanlinnabadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt N}}
+\newcommand{\eatcsbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\square$\kern-0.5pt E}}
+\newcommand{\marconibadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bullet$\kern-0.5pt M}}
+\newcommand{\neumannbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacktriangle$\kern-0.5pt V}}
+\newcommand{\millenniumbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\blacklozenge$\kern-0.5pt T}}
+% ♠M 国家科学奖章 · ■N 美国科学院 · ✓R 皇家学会 · ◆C 加拿大总督 · ◇R 鲁梅哈特
+\newcommand{\nsmbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\spadesuit$\kern-0.5pt M}}
+\newcommand{\nasbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacksquare$\kern-0.5pt N}}
+\newcommand{\frsbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\checkmark$\kern-0.5pt R}}
+\newcommand{\govbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\blacklozenge$\kern-0.5pt C}}
+\newcommand{\rumelhartbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamondsuit$\kern-0.5pt R}}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]
   \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
   \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
 \end{tikzpicture}%
+}
+
+% 底部交叉荣誉边框：#1 = 图标串（\godelbadge 哥德尔奖 2009 ...）
+\newcommand{\honorbar}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south, draw=coverprimary!55, fill=coverlight, rounded corners=6pt,
+          inner xsep=8pt, inner ysep=5pt, yshift=0.55cm, text=coverdark!85] at (current page.south) {%
+      \fontsize{7.5}{9.5}\selectfont\bfseries{\color{coverprimary} 交叉荣誉}\enspace #1};
+  \end{tikzpicture}%
 }
 
 \newcommand{\sectiontitle}[2]{%
@@ -369,6 +393,7 @@ HEADER = r"""% Turing Award Video — Episode {EP}
   \end{tikzpicture}
 \end{column}
 \end{columns}
+\if\relax\detokenize\expandafter{\personhonors}\relax\else\honorbar{\personhonors}\fi
 \end{frame}
 }
 """
@@ -396,20 +421,54 @@ def compute_age(year, life):
     return "%d岁" % (year - int(part))
 
 
+# 奖项 → (徽标命令, 显示名)
+AWARD_ICONS = [
+    ("诺贝尔", r"\nobelbadge", "诺贝尔奖"),
+    ("京都", r"\kyotobadge", "京都奖"),
+    ("哥德尔", r"\godelbadge", "哥德尔奖"),
+    ("阿贝尔", r"\abelbadge", "阿贝尔奖"),
+    ("香农", r"\shannonbadge", "香农奖"),
+    ("日本国际", r"\japanbadge", "日本国际奖"),
+    ("内万林纳", r"\nevanlinnabadge", "内万林纳奖"),
+    ("EATCS", r"\eatcsbadge", "EATCS 奖"),
+    ("马可尼", r"\marconibadge", "马可尼奖"),
+    ("冯", r"\neumannbadge", "冯·诺依曼奖"),
+    ("千禧", r"\millenniumbadge", "千禧科技奖"),
+    ("国家科学奖章", r"\nsmbadge", "国家科学奖章"),
+    ("科学院院士", r"\nasbadge", "美国科学院院士"),
+    ("皇家学会院士", r"\frsbadge", "皇家学会院士"),
+    ("加拿大总督", r"\govbadge", "加拿大总督奖"),
+    ("鲁梅哈特", r"\rumelhartbadge", "鲁梅哈特奖"),
+]
+
+
 def badges_for(name):
     h = HONORS.get(name, "")
     b = ""
-    if "诺贝尔" in h:
-        b += r"\nobelbadge"
-    if "京都" in h:
-        b += r"\kyotobadge"
-    if "哥德尔" in h:
-        b += r"\godelbadge"
-    if "阿贝尔" in h:
-        b += r"\abelbadge"
-    if "香农" in h:
-        b += r"\shannonbadge"
+    for key, cmd, _label in AWARD_ICONS:
+        if key in h:
+            b += cmd
     return b
+
+
+def honor_icons_for(name):
+    """Bottom honor-bar icons: e.g. \\godelbadge 哥德尔奖 2009 \\enspace \\abelbadge 阿贝尔奖 2021"""
+    h = HONORS.get(name, "")
+    if not h:
+        return ""
+    parts = []
+    for key, cmd, label in AWARD_ICONS:
+        if key in h:
+            # extract year(s) right after the keyword within the same '；' chunk
+            year = ""
+            for chunk in h.split("；"):
+                if key in chunk:
+                    m = re.search(r'(19|20)\d{2}(?:\s*/\s*(19|20)\d{2})?', chunk)
+                    if m:
+                        year = " " + m.group(0)
+                    break
+            parts.append("%s %s%s" % (cmd, label, year))
+    return " \\enspace ".join(parts)
 
 
 def find_portrait(name, year):
@@ -524,12 +583,13 @@ def person_slide(p, prefix="", ep_dir=""):
         img, credit = "images/%s.jpg" % cmd_name(name), "Wikipedia"
     else:
         img, credit = "none", initials(name)
-    return ("\\newcommand{\\%sslide}{\\personslide\n"
+    honors = honor_icons_for(name)
+    return ("\\newcommand{\\%sslide}{\\gdef\\personhonors{%s}\\personslide\n"
             "  {%s}{%s}\n"
             "  {%s}{%s}\n"
             "  {%s}{%s}{%s}{%s}\n"
             "  {%s}}\n" % (
-                cname,
+                cname, honors,
                 esc(name) + badges_for(name), esc(cn), img, credit, year_str,
                 esc(life), esc(country), esc(inst), body))
 
@@ -799,15 +859,9 @@ def make_allinone_tex(all_people):
         # person_slide with unique command name (allinone, names unique)
         out.append(person_slide_all(p, cname))
         names.append("\\%s" % cname)
-    # 交叉名录帧（参照 medal_list_allinone/cross_ref）
-    cross = make_cross_slides(ep_dir)
-    out.append("\n% ========== CROSS-REFERENCE ==========\n")
-    out.append(cross)
     out.append("\n% ========== MAIN ==========\n\\begin{document}\n")
     out.append("\\coverslide\n")
     out.append("\n".join(names) + "\n")
-    out.append("\\crossframeone\n\\crossframetwo\n\\crossframethree\n\\crossframefour\n"
-               "\\crossframefive\n\\crossframesix\n\\crossframeseven\n\\crossframeeight\n\\crossframenine\n")
     out.append("\\end{document}\n")
     path = os.path.join(HERE, "video", ep_dir, main + ".tex")
     with open(path, "w", encoding="utf-8") as f:
@@ -815,113 +869,6 @@ def make_allinone_tex(all_people):
     print("wrote", path)
 
 
-# 交叉名录数据：(类别标签, [(姓名, 中文名, 图灵年, 交叉奖项, 国籍, 领域)])
-CROSS_TABLE = [
-    ("★★★ 三奖得主 · 图灵 + 两项大奖", [
-        ("Avi Wigderson", "阿维·威格德森", 2023, "哥德尔奖 2009 · 阿贝尔奖 2021", "以色列/美国", "随机性、去随机化"),
-        ("Herbert A. Simon", "赫伯特·西蒙", 1975, "诺贝尔经济学奖 1978", "美国", "认知科学、AI"),
-    ]),
-    ("★★ 双奖 · 图灵 + 京都奖", [
-        ("Donald Knuth", "唐纳德·高德纳", 1974, "京都奖 1996", "美国", "算法分析、TeX"),
-        ("John McCarthy", "约翰·麦卡锡", 1971, "京都奖 1988", "美国", "AI 奠基、Lisp"),
-        ("Andrew Yao", "姚期智", 2000, "京都奖 2012", "美国/中国", "密码学、量子计算"),
-    ]),
-    ("★★ 双奖 · 图灵 + 哥德尔奖", [
-        ("Shafi Goldwasser", "沙菲·戈德瓦瑟", 2012, "哥德尔奖 1993/2001 · 美国科学院院士", "美国/以色列", "零知识证明"),
-        ("Silvio Micali", "西尔维奥·米卡利", 2012, "哥德尔奖 1993 · 美国科学院院士", "意大利/美国", "零知识证明"),
-    ]),
-    ("★★ 双奖 · 图灵 + IEEE 香农奖", [
-        ("Richard Hamming", "理查德·汉明", 1968, "香农奖 1996", "美国", "纠错码、信息论"),
-        ("Whitfield Diffie", "惠特菲尔德·迪菲", 2015, "香农奖 2021", "美国", "公钥密码学"),
-        ("Martin Hellman", "马丁·赫尔曼", 2015, "香农奖 2021", "美国", "公钥密码学"),
-    ]),
-    ("★★ 双奖 · 图灵 + 日本国际奖", [
-        ("Marvin Minsky", "马文·明斯基", 1969, "日本国际奖 1990", "美国", "AI 奠基"),
-        ("Geoffrey Hinton", "杰弗里·辛顿", 2018, "日本国际奖 2016 · 皇家学会院士", "英国/加拿大", "深度学习"),
-    ]),
-    ("★★ 双奖 · 图灵 + 内万林纳奖 / EATCS 奖", [
-        ("Leslie Valiant", "莱斯利·瓦利安特", 2010, "内万林纳奖 1986 · EATCS 奖", "英国/美国", "PAC 学习"),
-    ]),
-    ("★★ 双奖 · 图灵 + 马可尼奖", [
-        ("Vint Cerf", "文顿·瑟夫", 2004, "马可尼奖", "美国", "TCP/IP"),
-        ("Whitfield Diffie", "惠特菲尔德·迪菲", 2015, "马可尼奖", "美国", "公钥密码学"),
-        ("Martin Hellman", "马丁·赫尔曼", 2015, "马可尼奖", "美国", "公钥密码学"),
-    ]),
-    ("★★ 双奖 · 图灵 + IEEE 冯·诺依曼奖", [
-        ("Ken Thompson", "肯·汤普森", 1983, "冯·诺依曼奖", "美国", "Unix、C"),
-        ("Leslie Lamport", "莱斯利·兰波特", 2013, "冯·诺依曼奖", "美国", "Paxos、LaTeX"),
-    ]),
-    ("★★ 双奖 · 图灵 + 千禧科技奖", [
-        ("Tim Berners-Lee", "蒂姆·伯纳斯-李", 2016, "千禧科技奖 2004 · 皇家学会院士", "英国", "万维网"),
-    ]),
-    ("其他重要荣誉 · 国家级 / 院士（Ⅰ）", [
-        ("William Kahan", "威廉·卡汉", 1989, "美国国家科学奖章 1989", "加拿大/美国", "IEEE 754"),
-        ("Barbara Liskov", "芭芭拉·利斯科夫", 2008, "美国国家科学奖章 2005", "美国", "分布式系统"),
-        ("Judea Pearl", "朱迪亚·珀尔", 2011, "国家科学奖章 2014 · 鲁梅哈特奖", "美国/以色列", "因果推断"),
-    ]),
-    ("其他重要荣誉 · 国家级 / 院士（Ⅱ）", [
-        ("Yann LeCun", "杨立昆", 2018, "国家科学奖章 2023 · 皇家学会院士", "法国/美国", "CNN"),
-        ("Yoshua Bengio", "约书亚·本吉奥", 2018, "皇家学会院士 · 加拿大总督奖", "加拿大/法国", "深度学习"),
-        ("Robert Metcalfe", "罗伯特·梅特卡夫", 2022, "美国国家科学奖章 2003", "美国", "以太网"),
-        ("Jack Dongarra", "杰克·唐加拉", 2021, "美国国家科学奖章 2020", "美国", "高性能计算"),
-    ]),
-]
-
-# 每帧最多容纳的类别数（24 人分 4 帧，每帧 2-3 类）
-CROSS_FRAME_GROUPS = [
-    ["★★★ 三奖得主 · 图灵 + 两项大奖"],
-    ["★★ 双奖 · 图灵 + 京都奖"],
-    ["★★ 双奖 · 图灵 + 哥德尔奖"],
-    ["★★ 双奖 · 图灵 + IEEE 香农奖"],
-    ["★★ 双奖 · 图灵 + 日本国际奖"],
-    ["★★ 双奖 · 图灵 + 内万林纳奖 / EATCS 奖", "★★ 双奖 · 图灵 + 马可尼奖"],
-    ["★★ 双奖 · 图灵 + IEEE 冯·诺依曼奖", "★★ 双奖 · 图灵 + 千禧科技奖"],
-    ["其他重要荣誉 · 国家级 / 院士（Ⅰ）"],
-    ["其他重要荣誉 · 国家级 / 院士（Ⅱ）"],
-]
-
-
-def cross_slide_frame(ep_dir, labels, cmd):
-    """One allinone frame listing cross-honor laureates (mirrors cross_ref table style)."""
-    cat = {c[0]: c[1] for c in CROSS_TABLE}
-    rows = []
-    for lab in labels:
-        rows.append("  \\rowcolor{coverlight}\n"
-                    "  \\multicolumn{4}{l}{\\bfseries\\color{coverprimary}\\small %s} \\\\[2pt]\n" % esc(lab))
-        for name, cn, year, cross, country, field in cat[lab]:
-            rows.append("  {\\footnotesize\\bfseries\\color{coverdark}\\mbox{%s}}%s\\\\[0pt]\n  {\\tiny\\color{covermuted}\\mbox{%s}} & %d & %s & %s \\\\[1pt]" % (
-                esc(name), badges_for(name), esc(cn),
-                year, esc(cross), esc(country)))
-    body = "\n".join(rows)
-    return (r"""\newcommand{\%s}{%%
-\begin{frame}
-\plainbar
-\sectiontitle{交叉荣誉 · 图灵 + 其他顶级奖项}{ACM Turing Award Cross-Reference · 81 位得主中的交叉获奖者}
-\footnotesize
-\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.0}
-\begin{center}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\textwidth}
-                 >{\raggedright\arraybackslash}p{0.07\textwidth}
-                 >{\raggedright\arraybackslash}p{0.33\textwidth}
-                 >{\raggedright\arraybackslash}p{0.21\textwidth}@{}}
-\rowcolor{coverprimary!14}
-{\footnotesize\textbf{\color{coverprimary}姓名（徽标）}} & {\footnotesize\textbf{\color{coverprimary}图灵}} & {\footnotesize\textbf{\color{coverprimary}交叉奖项}} & {\footnotesize\textbf{\color{coverprimary}国籍}} \\
-\midrule
-%s
-\end{tabular}
-\end{center}
-\end{frame}
-}""" % (cmd, body))
-
-
-def make_cross_slides(ep_dir):
-    """Return all cross-reference frames, each as a unique \newcommand definition."""
-    out = []
-    cmds = ["crossframeone", "crossframetwo", "crossframethree", "crossframefour",
-            "crossframefive", "crossframesix", "crossframeseven", "crossframeeight", "crossframenine"]
-    for i, labels in enumerate(CROSS_FRAME_GROUPS):
-        out.append(cross_slide_frame(ep_dir, labels, cmds[i]))
-    return "\n".join(out)
 
 
 def person_slide_all(p, cname):
@@ -940,12 +887,13 @@ def person_slide_all(p, cname):
         img, credit = "images/%s.jpg" % cmd_name(name), "Wikipedia"
     else:
         img, credit = "none", initials(name)
-    return ("\\newcommand{\\%s}{\\personslide\n"
+    honors = honor_icons_for(name)
+    return ("\\newcommand{\\%s}{\\gdef\\personhonors{%s}\\personslide\n"
             "  {%s}{%s}\n"
             "  {%s}{%s}\n"
             "  {%s}{%s}{%s}{%s}\n"
             "  {%s}}\n" % (
-                cname,
+                cname, honors,
                 esc(name) + badges_for(name), esc(cn),
                 img, credit,
                 year_str, esc(life), esc(country), esc(inst), body))

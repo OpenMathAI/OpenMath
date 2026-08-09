@@ -30,19 +30,44 @@
 \definecolor{graypanel}{RGB}{240,238,244}
 \setbeamercolor{background canvas}{bg=bgmain}
 
+\providecommand{\personhonors}{}
+
 % 交叉奖项徽标（参考 Fields/COPSS 系列）
 % 用 \raisebox 而非 \textsuperscript：避免 22pt 标题触发 15.4pt 数学字体缺失警告
+% 符号+字母+品牌色：◆N 诺贝尔 · ★K 京都 · ◇G 哥德尔 · ★A 阿贝尔 · ★S 香农
 \newcommand{\nobelbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
 \newcommand{\kyotobadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
 \newcommand{\godelbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
 \newcommand{\abelbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
 \newcommand{\shannonbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+% ♥J 日本国际 · ▲N 内万林纳 · □E EATCS · ●M 马可尼 · ▲V 冯·诺依曼 · ◆T 千禧科技
+\newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
+\newcommand{\nevanlinnabadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt N}}
+\newcommand{\eatcsbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\square$\kern-0.5pt E}}
+\newcommand{\marconibadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bullet$\kern-0.5pt M}}
+\newcommand{\neumannbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacktriangle$\kern-0.5pt V}}
+\newcommand{\millenniumbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\blacklozenge$\kern-0.5pt T}}
+% ♠M 国家科学奖章 · ■N 美国科学院 · ✓R 皇家学会 · ◆C 加拿大总督 · ◇R 鲁梅哈特
+\newcommand{\nsmbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\spadesuit$\kern-0.5pt M}}
+\newcommand{\nasbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacksquare$\kern-0.5pt N}}
+\newcommand{\frsbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\checkmark$\kern-0.5pt R}}
+\newcommand{\govbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\blacklozenge$\kern-0.5pt C}}
+\newcommand{\rumelhartbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamondsuit$\kern-0.5pt R}}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]
   \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
   \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
 \end{tikzpicture}%
+}
+
+% 底部交叉荣誉边框：#1 = 图标串（\godelbadge 哥德尔奖 2009 ...）
+\newcommand{\honorbar}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south, draw=coverprimary!55, fill=coverlight, rounded corners=6pt,
+          inner xsep=8pt, inner ysep=5pt, yshift=0.55cm, text=coverdark!85] at (current page.south) {%
+      \fontsize{7.5}{9.5}\selectfont\bfseries{\color{coverprimary} 交叉荣誉}\enspace #1};
+  \end{tikzpicture}%
 }
 
 \newcommand{\sectiontitle}[2]{%
@@ -101,6 +126,7 @@
   \end{tikzpicture}
 \end{column}
 \end{columns}
+\if\relax\detokenize\expandafter{\personhonors}\relax\else\honorbar{\personhonors}\fi
 \end{frame}
 }
 
@@ -143,73 +169,73 @@
 
 % ========== SLIDES ==========
 
-\newcommand{\marvinminskyslide}{\personslide
-  {Marvin Minsky}{马文·明斯基}
+\newcommand{\marvinminskyslide}{\gdef\personhonors{\japanbadge 日本国际奖 1990 \enspace \nsmbadge 国家科学奖章}\personslide
+  {Marvin Minsky\japanbadge\nsmbadge}{马文·明斯基}
   {images/marvinminsky.jpg}{Wikipedia}
   {1969（42岁）}{1927–2016}{美国}{MIT}
   {人工智能奠基人，框架理论、神经网络早期研究。\\\textbf{主要荣誉}\\日本国际奖 1990 \\ 美国国家科学奖章}}
 
-\newcommand{\johnmccarthyslide}{\personslide
-  {John McCarthy\kyotobadge}{约翰·麦卡锡}
+\newcommand{\johnmccarthyslide}{\gdef\personhonors{\kyotobadge 京都奖 1988 \enspace \nsmbadge 国家科学奖章}\personslide
+  {John McCarthy\kyotobadge\nsmbadge}{约翰·麦卡锡}
   {images/johnmccarthy.jpg}{Wikipedia}
   {1971（44岁）}{1927–2011}{美国}{Stanford University}
   {AI 奠基人，提出「人工智能」一词，Lisp 之父。\\\textbf{主要荣誉}\\京都奖 1988 \\ 美国国家科学奖章}}
 
-\newcommand{\allennewellslide}{\personslide
+\newcommand{\allennewellslide}{\gdef\personhonors{}\personslide
   {Allen Newell}{艾伦·纽厄尔}
   {images/allennewell.jpg}{Wikipedia}
   {1975（48岁）}{1927–1992}{美国}{Carnegie Mellon University}
   {人工智能、认知科学，逻辑理论机。}}
 
-\newcommand{\herbertasimonslide}{\personslide
-  {Herbert A. Simon\nobelbadge}{赫伯特·西蒙}
+\newcommand{\herbertasimonslide}{\gdef\personhonors{\nobelbadge 诺贝尔奖 1978 \enspace \nsmbadge 国家科学奖章}\personslide
+  {Herbert A. Simon\nobelbadge\nsmbadge}{赫伯特·西蒙}
   {images/herbertasimon.jpg}{Wikipedia}
   {1975（59岁）}{1916–2001}{美国}{Carnegie Mellon University}
   {认知科学，另获诺贝尔经济学奖（1978）——图灵+诺奖双料。\\\textbf{主要荣誉}\\诺贝尔经济学奖 1978 \\ 美国国家科学奖章}}
 
-\newcommand{\edwardfeigenbaumslide}{\personslide
+\newcommand{\edwardfeigenbaumslide}{\gdef\personhonors{}\personslide
   {Edward Feigenbaum}{爱德华·费根鲍姆}
   {images/edwardfeigenbaum.jpg}{Wikipedia}
   {1994（58岁）}{1936–}{美国}{Stanford University}
   {专家系统、知识工程，AI 应用先驱。}}
 
-\newcommand{\rajreddyslide}{\personslide
+\newcommand{\rajreddyslide}{\gdef\personhonors{}\personslide
   {Raj Reddy}{拉吉·雷迪}
   {images/rajreddy.jpg}{Wikipedia}
   {1994（57岁）}{1937–}{美国/印度}{Carnegie Mellon University}
   {人工智能、语音识别。}}
 
-\newcommand{\judeapearlslide}{\personslide
-  {Judea Pearl}{朱迪亚·珀尔}
+\newcommand{\judeapearlslide}{\gdef\personhonors{\nsmbadge 国家科学奖章 2014 \enspace \rumelhartbadge 鲁梅哈特奖}\personslide
+  {Judea Pearl\nsmbadge\rumelhartbadge}{朱迪亚·珀尔}
   {images/judeapearl.jpg}{Wikipedia}
   {2011（75岁）}{1936–}{美国/以色列}{UCLA}
   {贝叶斯网络、因果推断，AI 概率推理奠基人。\\\textbf{主要荣誉}\\鲁梅哈特奖 \\ 美国国家科学奖章 2014}}
 
-\newcommand{\yoshuabengioslide}{\personslide
-  {Yoshua Bengio}{约书亚·本吉奥}
+\newcommand{\yoshuabengioslide}{\gdef\personhonors{\frsbadge 皇家学会院士 \enspace \govbadge 加拿大总督奖}\personslide
+  {Yoshua Bengio\frsbadge\govbadge}{约书亚·本吉奥}
   {images/yoshuabengio.jpg}{Wikipedia}
   {2018（54岁）}{1964–}{加拿大/法国}{Université de Montréal}
   {深度学习三杰之一，表示学习与生成模型。\\\textbf{主要荣誉}\\加拿大总督奖 \\ 英国皇家学会院士}}
 
-\newcommand{\geoffreyhintonslide}{\personslide
-  {Geoffrey Hinton}{杰弗里·辛顿}
+\newcommand{\geoffreyhintonslide}{\gdef\personhonors{\japanbadge 日本国际奖 2016 \enspace \frsbadge 皇家学会院士}\personslide
+  {Geoffrey Hinton\japanbadge\frsbadge}{杰弗里·辛顿}
   {images/geoffreyhinton.jpg}{Wikipedia}
   {2018（71岁）}{1947–}{英国/加拿大}{University of Toronto}
   {深度学习三杰之一，反向传播、神经网络复兴。\\\textbf{主要荣誉}\\日本国际奖 2016 \\ 英国皇家学会院士}}
 
-\newcommand{\yannlecunslide}{\personslide
-  {Yann LeCun}{杨立昆}
+\newcommand{\yannlecunslide}{\gdef\personhonors{\nsmbadge 国家科学奖章 2023 \enspace \frsbadge 皇家学会院士}\personslide
+  {Yann LeCun\nsmbadge\frsbadge}{杨立昆}
   {images/yannlecun.jpg}{Wikipedia}
   {2018（58岁）}{1960–}{法国/美国}{New York University}
   {深度学习三杰之一，卷积神经网络（CNN）之父。\\\textbf{主要荣誉}\\美国国家科学奖章 2023 \\ 英国皇家学会院士}}
 
-\newcommand{\andrewbartoslide}{\personslide
+\newcommand{\andrewbartoslide}{\gdef\personhonors{}\personslide
   {Andrew Barto}{安德鲁·巴托}
   {images/andrewbarto.jpg}{Wikipedia}
   {2024（76岁）}{1948–}{美国}{University of Massachusetts}
   {强化学习奠基人，时间差分学习。}}
 
-\newcommand{\richardssuttonslide}{\personslide
+\newcommand{\richardssuttonslide}{\gdef\personhonors{}\personslide
   {Richard S. Sutton}{理查德·萨顿}
   {images/richardssutton.jpg}{Wikipedia}
   {2024（68岁）}{1956–}{加拿大/美国}{University of Alberta}

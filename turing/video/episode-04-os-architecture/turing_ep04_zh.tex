@@ -30,19 +30,44 @@
 \definecolor{graypanel}{RGB}{240,238,244}
 \setbeamercolor{background canvas}{bg=bgmain}
 
+\providecommand{\personhonors}{}
+
 % 交叉奖项徽标（参考 Fields/COPSS 系列）
 % 用 \raisebox 而非 \textsuperscript：避免 22pt 标题触发 15.4pt 数学字体缺失警告
+% 符号+字母+品牌色：◆N 诺贝尔 · ★K 京都 · ◇G 哥德尔 · ★A 阿贝尔 · ★S 香农
 \newcommand{\nobelbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
 \newcommand{\kyotobadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
 \newcommand{\godelbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
 \newcommand{\abelbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
 \newcommand{\shannonbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+% ♥J 日本国际 · ▲N 内万林纳 · □E EATCS · ●M 马可尼 · ▲V 冯·诺依曼 · ◆T 千禧科技
+\newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
+\newcommand{\nevanlinnabadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt N}}
+\newcommand{\eatcsbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\square$\kern-0.5pt E}}
+\newcommand{\marconibadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bullet$\kern-0.5pt M}}
+\newcommand{\neumannbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacktriangle$\kern-0.5pt V}}
+\newcommand{\millenniumbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\blacklozenge$\kern-0.5pt T}}
+% ♠M 国家科学奖章 · ■N 美国科学院 · ✓R 皇家学会 · ◆C 加拿大总督 · ◇R 鲁梅哈特
+\newcommand{\nsmbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\spadesuit$\kern-0.5pt M}}
+\newcommand{\nasbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacksquare$\kern-0.5pt N}}
+\newcommand{\frsbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\checkmark$\kern-0.5pt R}}
+\newcommand{\govbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\blacklozenge$\kern-0.5pt C}}
+\newcommand{\rumelhartbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamondsuit$\kern-0.5pt R}}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]
   \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
   \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
 \end{tikzpicture}%
+}
+
+% 底部交叉荣誉边框：#1 = 图标串（\godelbadge 哥德尔奖 2009 ...）
+\newcommand{\honorbar}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south, draw=coverprimary!55, fill=coverlight, rounded corners=6pt,
+          inner xsep=8pt, inner ysep=5pt, yshift=0.55cm, text=coverdark!85] at (current page.south) {%
+      \fontsize{7.5}{9.5}\selectfont\bfseries{\color{coverprimary} 交叉荣誉}\enspace #1};
+  \end{tikzpicture}%
 }
 
 \newcommand{\sectiontitle}[2]{%
@@ -101,6 +126,7 @@
   \end{tikzpicture}
 \end{column}
 \end{columns}
+\if\relax\detokenize\expandafter{\personhonors}\relax\else\honorbar{\personhonors}\fi
 \end{frame}
 }
 
@@ -139,49 +165,49 @@
 
 % ========== SLIDES ==========
 
-\newcommand{\mauricewilkesslide}{\personslide
+\newcommand{\mauricewilkesslide}{\gdef\personhonors{}\personslide
   {Maurice Wilkes}{莫里斯·威尔克斯}
   {images/mauricewilkes.jpg}{Wikipedia}
   {1967（54岁）}{1913–2010}{英国}{University of Cambridge}
   {EDSAC 存储程序计算机、微程序设计。}}
 
-\newcommand{\kenthompsonslide}{\personslide
-  {Ken Thompson}{肯·汤普森}
+\newcommand{\kenthompsonslide}{\gdef\personhonors{\neumannbadge 冯·诺依曼奖 \enspace \nsmbadge 国家科学奖章}\personslide
+  {Ken Thompson\neumannbadge\nsmbadge}{肯·汤普森}
   {images/kenthompson.jpg}{Wikipedia}
   {1983（40岁）}{1943–}{美国}{Bell Labs}
   {Unix 操作系统与 C 语言共同之父。\\\textbf{主要荣誉}\\IEEE 冯诺依曼奖 \\ 美国国家科学奖章}}
 
-\newcommand{\dennisritchieslide}{\personslide
+\newcommand{\dennisritchieslide}{\gdef\personhonors{}\personslide
   {Dennis Ritchie}{丹尼斯·里奇}
   {images/dennisritchie.jpg}{Wikipedia}
   {1983（42岁）}{1941–2011}{美国}{Bell Labs}
   {C 语言设计者、Unix 共同作者。}}
 
-\newcommand{\johncockeslide}{\personslide
+\newcommand{\johncockeslide}{\gdef\personhonors{}\personslide
   {John Cocke}{约翰·科克}
   {images/johncocke.jpg}{Wikipedia}
   {1987（62岁）}{1925–2002}{美国}{IBM}
   {RISC 架构、编译器优化，IBM 体系结构先驱。}}
 
-\newcommand{\fernandojcorbatoslide}{\personslide
+\newcommand{\fernandojcorbatoslide}{\gdef\personhonors{}\personslide
   {Fernando J. Corbató}{费尔南多·科巴托}
   {images/fernandojcorbato.jpg}{Wikipedia}
   {1990（64岁）}{1926–2019}{美国}{MIT}
   {分时系统 CTSS、Multics，操作系统奠基人。}}
 
-\newcommand{\franceseallenslide}{\personslide
+\newcommand{\franceseallenslide}{\gdef\personhonors{}\personslide
   {Frances E. Allen}{弗朗西丝·艾伦}
   {images/franceseallen.jpg}{Wikipedia}
   {2006（74岁）}{1932–2020}{美国}{IBM}
   {编译器优化、并行计算，首位女性图灵奖得主。}}
 
-\newcommand{\johnlhennessyslide}{\personslide
+\newcommand{\johnlhennessyslide}{\gdef\personhonors{}\personslide
   {John L. Hennessy}{约翰·亨尼西}
   {images/johnlhennessy.jpg}{Wikipedia}
   {2017（65岁）}{1952–}{美国}{Stanford University}
   {RISC 体系结构，计算机体系结构教科书作者。}}
 
-\newcommand{\davidpattersonslide}{\personslide
+\newcommand{\davidpattersonslide}{\gdef\personhonors{}\personslide
   {David Patterson}{大卫·帕特森}
   {images/davidpatterson.jpg}{Wikipedia}
   {2017（70岁）}{1947–}{美国}{UC Berkeley}

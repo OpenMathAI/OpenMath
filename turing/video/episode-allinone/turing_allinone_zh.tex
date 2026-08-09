@@ -10,7 +10,6 @@
 \setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
 \setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
 \usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{ifthen}\usepackage{amssymb}
-\usepackage{booktabs}\usepackage{array}\usepackage{colortbl}
 \usetikzlibrary{positioning,calc,arrows.meta,shadows}
 
 % ===== 配色：图灵紫 + 琥珀金 + 青绿（区别于菲尔兹金/阿贝尔蓝/陈省身青/COPSS统计蓝）=====
@@ -31,19 +30,44 @@
 \definecolor{graypanel}{RGB}{240,238,244}
 \setbeamercolor{background canvas}{bg=bgmain}
 
+\providecommand{\personhonors}{}
+
 % 交叉奖项徽标（参考 Fields/COPSS 系列）
 % 用 \raisebox 而非 \textsuperscript：避免 22pt 标题触发 15.4pt 数学字体缺失警告
+% 符号+字母+品牌色：◆N 诺贝尔 · ★K 京都 · ◇G 哥德尔 · ★A 阿贝尔 · ★S 香农
 \newcommand{\nobelbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
 \newcommand{\kyotobadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
 \newcommand{\godelbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
 \newcommand{\abelbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
 \newcommand{\shannonbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+% ♥J 日本国际 · ▲N 内万林纳 · □E EATCS · ●M 马可尼 · ▲V 冯·诺依曼 · ◆T 千禧科技
+\newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
+\newcommand{\nevanlinnabadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt N}}
+\newcommand{\eatcsbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\square$\kern-0.5pt E}}
+\newcommand{\marconibadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bullet$\kern-0.5pt M}}
+\newcommand{\neumannbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacktriangle$\kern-0.5pt V}}
+\newcommand{\millenniumbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\blacklozenge$\kern-0.5pt T}}
+% ♠M 国家科学奖章 · ■N 美国科学院 · ✓R 皇家学会 · ◆C 加拿大总督 · ◇R 鲁梅哈特
+\newcommand{\nsmbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\spadesuit$\kern-0.5pt M}}
+\newcommand{\nasbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacksquare$\kern-0.5pt N}}
+\newcommand{\frsbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\checkmark$\kern-0.5pt R}}
+\newcommand{\govbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\blacklozenge$\kern-0.5pt C}}
+\newcommand{\rumelhartbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamondsuit$\kern-0.5pt R}}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]
   \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
   \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
 \end{tikzpicture}%
+}
+
+% 底部交叉荣誉边框：#1 = 图标串（\godelbadge 哥德尔奖 2009 ...）
+\newcommand{\honorbar}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south, draw=coverprimary!55, fill=coverlight, rounded corners=6pt,
+          inner xsep=8pt, inner ysep=5pt, yshift=0.55cm, text=coverdark!85] at (current page.south) {%
+      \fontsize{7.5}{9.5}\selectfont\bfseries{\color{coverprimary} 交叉荣誉}\enspace #1};
+  \end{tikzpicture}%
 }
 
 \newcommand{\sectiontitle}[2]{%
@@ -102,6 +126,7 @@
   \end{tikzpicture}
 \end{column}
 \end{columns}
+\if\relax\detokenize\expandafter{\personhonors}\relax\else\honorbar{\personhonors}\fi
 \end{frame}
 }
 
@@ -213,742 +238,492 @@
 
 % ========== SLIDES (sorted by year/edition) ==========
 
-\newcommand{\alanjperlis}{\personslide
+\newcommand{\alanjperlis}{\gdef\personhonors{}\personslide
   {Alan J. Perlis}{艾伦·佩利斯}
   {images/alanjperlis.jpg}{Wikipedia}
   {1966 年 · 第{\bfseries\color{coveraccent} 1} 届（44岁）}{1922–1990}{美国}{Carnegie Mellon University}
   {首届得主，Algol 语言与编译技术先驱。}}
 
-\newcommand{\mauricewilkes}{\personslide
+\newcommand{\mauricewilkes}{\gdef\personhonors{}\personslide
   {Maurice Wilkes}{莫里斯·威尔克斯}
   {images/mauricewilkes.jpg}{Wikipedia}
   {1967 年 · 第{\bfseries\color{coveraccent} 2} 届（54岁）}{1913–2010}{英国}{University of Cambridge}
   {EDSAC 存储程序计算机、微程序设计。}}
 
-\newcommand{\richardhamming}{\personslide
+\newcommand{\richardhamming}{\gdef\personhonors{\shannonbadge 香农奖 1996}\personslide
   {Richard Hamming\shannonbadge}{理查德·汉明}
   {images/richardhamming.jpg}{Wikipedia}
   {1968 年 · 第{\bfseries\color{coveraccent} 3} 届（53岁）}{1915–1998}{美国}{Bell Labs}
   {数值方法、纠错码（汉明码），信息论先驱。\\\textbf{主要荣誉}\\IEEE 香农奖 1996}}
 
-\newcommand{\marvinminsky}{\personslide
-  {Marvin Minsky}{马文·明斯基}
+\newcommand{\marvinminsky}{\gdef\personhonors{\japanbadge 日本国际奖 1990 \enspace \nsmbadge 国家科学奖章}\personslide
+  {Marvin Minsky\japanbadge\nsmbadge}{马文·明斯基}
   {images/marvinminsky.jpg}{Wikipedia}
   {1969 年 · 第{\bfseries\color{coveraccent} 4} 届（42岁）}{1927–2016}{美国}{MIT}
   {人工智能奠基人，框架理论、神经网络早期研究。\\\textbf{主要荣誉}\\日本国际奖 1990 \\ 美国国家科学奖章}}
 
-\newcommand{\jameshwilkinson}{\personslide
+\newcommand{\jameshwilkinson}{\gdef\personhonors{}\personslide
   {James H. Wilkinson}{詹姆斯·威尔金森}
   {images/jameshwilkinson.jpg}{Wikipedia}
   {1970 年 · 第{\bfseries\color{coveraccent} 5} 届（51岁）}{1919–1986}{英国}{National Physical Laboratory}
   {数值分析、舍入误差分析，线性代数数值算法。}}
 
-\newcommand{\johnmccarthy}{\personslide
-  {John McCarthy\kyotobadge}{约翰·麦卡锡}
+\newcommand{\johnmccarthy}{\gdef\personhonors{\kyotobadge 京都奖 1988 \enspace \nsmbadge 国家科学奖章}\personslide
+  {John McCarthy\kyotobadge\nsmbadge}{约翰·麦卡锡}
   {images/johnmccarthy.jpg}{Wikipedia}
   {1971 年 · 第{\bfseries\color{coveraccent} 6} 届（44岁）}{1927–2011}{美国}{Stanford University}
   {AI 奠基人，提出「人工智能」一词，Lisp 之父。\\\textbf{主要荣誉}\\京都奖 1988 \\ 美国国家科学奖章}}
 
-\newcommand{\edsgerwdijkstra}{\personslide
+\newcommand{\edsgerwdijkstra}{\gdef\personhonors{}\personslide
   {Edsger W. Dijkstra}{埃德加·迪杰斯特拉}
   {images/edsgerwdijkstra.jpg}{Wikipedia}
   {1972 年 · 第{\bfseries\color{coveraccent} 7} 届（42岁）}{1930–2002}{荷兰}{Eindhoven University of Technology}
   {结构化编程、Dijkstra 最短路径算法、并发原语。}}
 
-\newcommand{\charlesbachman}{\personslide
+\newcommand{\charlesbachman}{\gdef\personhonors{}\personslide
   {Charles Bachman}{查尔斯·巴赫曼}
   {images/charlesbachman.jpg}{Wikipedia}
   {1973 年 · 第{\bfseries\color{coveraccent} 8} 届（49岁）}{1924–2017}{美国}{—}
   {CODASYL 网状数据库模型，数据库系统奠基人。}}
 
-\newcommand{\donaldknuth}{\personslide
-  {Donald Knuth\kyotobadge}{唐纳德·高德纳}
+\newcommand{\donaldknuth}{\gdef\personhonors{\kyotobadge 京都奖 1996 \enspace \nsmbadge 国家科学奖章}\personslide
+  {Donald Knuth\kyotobadge\nsmbadge}{唐纳德·高德纳}
   {images/donaldknuth.jpg}{Wikipedia}
   {1974 年 · 第{\bfseries\color{coveraccent} 9} 届（36岁）}{1938–}{美国}{Stanford University}
   {《计算机程序设计艺术》、算法分析、TeX 排版系统。\\\textbf{主要荣誉}\\京都奖 1996 \\ 美国国家科学奖章}}
 
-\newcommand{\allennewell}{\personslide
+\newcommand{\allennewell}{\gdef\personhonors{}\personslide
   {Allen Newell}{艾伦·纽厄尔}
   {images/allennewell.jpg}{Wikipedia}
   {1975 年 · 第{\bfseries\color{coveraccent} 10} 届（48岁）}{1927–1992}{美国}{Carnegie Mellon University}
   {人工智能、认知科学，逻辑理论机。}}
 
-\newcommand{\herbertasimon}{\personslide
-  {Herbert A. Simon\nobelbadge}{赫伯特·西蒙}
+\newcommand{\herbertasimon}{\gdef\personhonors{\nobelbadge 诺贝尔奖 1978 \enspace \nsmbadge 国家科学奖章}\personslide
+  {Herbert A. Simon\nobelbadge\nsmbadge}{赫伯特·西蒙}
   {images/herbertasimon.jpg}{Wikipedia}
   {1975 年 · 第{\bfseries\color{coveraccent} 10} 届（59岁）}{1916–2001}{美国}{Carnegie Mellon University}
   {认知科学，另获诺贝尔经济学奖（1978）——图灵+诺奖双料。\\\textbf{主要荣誉}\\诺贝尔经济学奖 1978 \\ 美国国家科学奖章}}
 
-\newcommand{\danascott}{\personslide
+\newcommand{\danascott}{\gdef\personhonors{}\personslide
   {Dana Scott}{达纳·斯科特}
   {images/danascott.jpg}{Wikipedia}
   {1976 年 · 第{\bfseries\color{coveraccent} 11} 届（44岁）}{1932–}{美国}{Carnegie Mellon University}
   {域理论，为程序语义学奠定数学基础。}}
 
-\newcommand{\michaelorabin}{\personslide
+\newcommand{\michaelorabin}{\gdef\personhonors{}\personslide
   {Michael O. Rabin}{迈克尔·拉宾}
   {images/michaelorabin.jpg}{Wikipedia}
   {1976 年 · 第{\bfseries\color{coveraccent} 11} 届（45岁）}{1931–}{以色列/美国}{Harvard University}
   {非确定性自动机、随机算法、米勒-拉宾素性检验。}}
 
-\newcommand{\johnbackus}{\personslide
+\newcommand{\johnbackus}{\gdef\personhonors{}\personslide
   {John Backus}{约翰·巴克斯}
   {images/johnbackus.jpg}{Wikipedia}
   {1977 年 · 第{\bfseries\color{coveraccent} 12} 届（53岁）}{1924–2007}{美国}{IBM}
   {Fortran 语言之父，BNF 文法描述编程语言语法。}}
 
-\newcommand{\robertwfloyd}{\personslide
+\newcommand{\robertwfloyd}{\gdef\personhonors{}\personslide
   {Robert W. Floyd}{罗伯特·弗洛伊德}
   {images/robertwfloyd.jpg}{Wikipedia}
   {1978 年 · 第{\bfseries\color{coveraccent} 13} 届（42岁）}{1936–2001}{美国}{Stanford University}
   {程序设计方法学、Floyd 算法（判圈/最短路径）。}}
 
-\newcommand{\kennetheiverson}{\personslide
+\newcommand{\kennetheiverson}{\gdef\personhonors{}\personslide
   {Kenneth E. Iverson}{肯尼思·艾弗森}
   {images/kennetheiverson.jpg}{Wikipedia}
   {1979 年 · 第{\bfseries\color{coveraccent} 14} 届（59岁）}{1920–2004}{加拿大}{IBM}
   {APL 语言，交互式数组编程。}}
 
-\newcommand{\tonyhoare}{\personslide
+\newcommand{\tonyhoare}{\gdef\personhonors{}\personslide
   {Tony Hoare}{托尼·霍尔}
   {images/tonyhoare.jpg}{Wikipedia}
   {1980 年 · 第{\bfseries\color{coveraccent} 15} 届（46岁）}{1934–}{英国}{University of Oxford}
   {快速排序、Hoare 逻辑（程序验证）、CSP 通信顺序进程。}}
 
-\newcommand{\edgarfcodd}{\personslide
+\newcommand{\edgarfcodd}{\gdef\personhonors{}\personslide
   {Edgar F. Codd}{埃德加·科德}
   {images/edgarfcodd.jpg}{Wikipedia}
   {1981 年 · 第{\bfseries\color{coveraccent} 16} 届（58岁）}{1923–2003}{英国/美国}{IBM}
   {关系数据库模型，SQL 的理论根基。}}
 
-\newcommand{\stephencook}{\personslide
+\newcommand{\stephencook}{\gdef\personhonors{}\personslide
   {Stephen Cook}{史蒂芬·库克}
   {images/stephencook.jpg}{Wikipedia}
   {1982 年 · 第{\bfseries\color{coveraccent} 17} 届（43岁）}{1939–}{美国/加拿大}{University of Toronto}
   {P 与 NP 问题、Cook-Levin 定理，计算复杂性理论奠基人之一。}}
 
-\newcommand{\dennisritchie}{\personslide
+\newcommand{\dennisritchie}{\gdef\personhonors{}\personslide
   {Dennis Ritchie}{丹尼斯·里奇}
   {images/dennisritchie.jpg}{Wikipedia}
   {1983 年 · 第{\bfseries\color{coveraccent} 18} 届（42岁）}{1941–2011}{美国}{Bell Labs}
   {C 语言设计者、Unix 共同作者。}}
 
-\newcommand{\kenthompson}{\personslide
-  {Ken Thompson}{肯·汤普森}
+\newcommand{\kenthompson}{\gdef\personhonors{\neumannbadge 冯·诺依曼奖 \enspace \nsmbadge 国家科学奖章}\personslide
+  {Ken Thompson\neumannbadge\nsmbadge}{肯·汤普森}
   {images/kenthompson.jpg}{Wikipedia}
   {1983 年 · 第{\bfseries\color{coveraccent} 18} 届（40岁）}{1943–}{美国}{Bell Labs}
   {Unix 操作系统与 C 语言共同之父。\\\textbf{主要荣誉}\\IEEE 冯诺依曼奖 \\ 美国国家科学奖章}}
 
-\newcommand{\niklauswirth}{\personslide
+\newcommand{\niklauswirth}{\gdef\personhonors{}\personslide
   {Niklaus Wirth}{尼克劳斯·沃斯}
   {images/niklauswirth.jpg}{Wikipedia}
   {1984 年 · 第{\bfseries\color{coveraccent} 19} 届（50岁）}{1934–}{瑞士}{ETH Zurich}
   {Pascal、Modula 语言，结构化程序设计。}}
 
-\newcommand{\richardkarp}{\personslide
+\newcommand{\richardkarp}{\gdef\personhonors{}\personslide
   {Richard Karp}{理查德·卡普}
   {images/richardkarp.jpg}{Wikipedia}
   {1985 年 · 第{\bfseries\color{coveraccent} 20} 届（50岁）}{1935–}{美国}{UC Berkeley}
   {NP 完全性理论、Karp 归约，组合优化的算法大师。}}
 
-\newcommand{\johnhopcroft}{\personslide
+\newcommand{\johnhopcroft}{\gdef\personhonors{}\personslide
   {John Hopcroft}{约翰·霍普克罗夫特}
   {images/johnhopcroft.jpg}{Wikipedia}
   {1986 年 · 第{\bfseries\color{coveraccent} 21} 届（47岁）}{1939–}{美国}{Cornell University}
   {算法设计与自动机理论，图算法经典教材作者。}}
 
-\newcommand{\roberttarjan}{\personslide
+\newcommand{\roberttarjan}{\gdef\personhonors{}\personslide
   {Robert Tarjan}{罗伯特·塔扬}
   {images/roberttarjan.jpg}{Wikipedia}
   {1986 年 · 第{\bfseries\color{coveraccent} 21} 届（38岁）}{1948–}{美国}{Princeton University}
   {并查集、最近公共祖先、强连通分量等图算法的发明者。}}
 
-\newcommand{\johncocke}{\personslide
+\newcommand{\johncocke}{\gdef\personhonors{}\personslide
   {John Cocke}{约翰·科克}
   {images/johncocke.jpg}{Wikipedia}
   {1987 年 · 第{\bfseries\color{coveraccent} 22} 届（62岁）}{1925–2002}{美国}{IBM}
   {RISC 架构、编译器优化，IBM 体系结构先驱。}}
 
-\newcommand{\ivansutherland}{\personslide
+\newcommand{\ivansutherland}{\gdef\personhonors{}\personslide
   {Ivan Sutherland}{伊万·萨瑟兰}
   {images/ivansutherland.jpg}{Wikipedia}
   {1988 年 · 第{\bfseries\color{coveraccent} 23} 届（50岁）}{1938–}{美国}{—}
   {Sketchpad 交互式图形系统，计算机图形学之父。}}
 
-\newcommand{\williamkahan}{\personslide
-  {William Kahan}{威廉·卡汉}
+\newcommand{\williamkahan}{\gdef\personhonors{\nsmbadge 国家科学奖章 1989}\personslide
+  {William Kahan\nsmbadge}{威廉·卡汉}
   {images/williamkahan.jpg}{Wikipedia}
   {1989 年 · 第{\bfseries\color{coveraccent} 24} 届（56岁）}{1933–}{加拿大/美国}{UC Berkeley}
   {IEEE 754 浮点标准，数值分析大师。\\\textbf{主要荣誉}\\美国国家科学奖章 1989}}
 
-\newcommand{\fernandojcorbato}{\personslide
+\newcommand{\fernandojcorbato}{\gdef\personhonors{}\personslide
   {Fernando J. Corbató}{费尔南多·科巴托}
   {images/fernandojcorbato.jpg}{Wikipedia}
   {1990 年 · 第{\bfseries\color{coveraccent} 25} 届（64岁）}{1926–2019}{美国}{MIT}
   {分时系统 CTSS、Multics，操作系统奠基人。}}
 
-\newcommand{\robinmilner}{\personslide
+\newcommand{\robinmilner}{\gdef\personhonors{}\personslide
   {Robin Milner}{罗宾·米尔纳}
   {images/robinmilner.jpg}{Wikipedia}
   {1991 年 · 第{\bfseries\color{coveraccent} 26} 届（57岁）}{1934–2010}{英国}{University of Edinburgh}
   {ML 语言、LCF 定理证明、π 演算（并发理论）。}}
 
-\newcommand{\butlerwlampson}{\personslide
+\newcommand{\butlerwlampson}{\gdef\personhonors{}\personslide
   {Butler W. Lampson}{巴特勒·兰普森}
   {images/butlerwlampson.jpg}{Wikipedia}
   {1992 年 · 第{\bfseries\color{coveraccent} 27} 届（49岁）}{1943–}{美国}{Microsoft Research}
   {分布式系统、安全与容错，个人计算愿景。}}
 
-\newcommand{\jurishartmanis}{\personslide
+\newcommand{\jurishartmanis}{\gdef\personhonors{}\personslide
   {Juris Hartmanis}{尤里斯·哈特马尼斯}
   {images/jurishartmanis.jpg}{Wikipedia}
   {1993 年 · 第{\bfseries\color{coveraccent} 28} 届（65岁）}{1928–2022}{美国/拉脱维亚}{Cornell University}
   {计算复杂性分层定理，复杂性理论共同奠基人。}}
 
-\newcommand{\richardestearns}{\personslide
+\newcommand{\richardestearns}{\gdef\personhonors{}\personslide
   {Richard E. Stearns}{理查德·斯特恩斯}
   {images/richardestearns.jpg}{Wikipedia}
   {1993 年 · 第{\bfseries\color{coveraccent} 28} 届（57岁）}{1936–}{美国}{SUNY Albany}
   {计算复杂性理论奠基，与 Hartmanis 同获 1993 年奖。}}
 
-\newcommand{\edwardfeigenbaum}{\personslide
+\newcommand{\edwardfeigenbaum}{\gdef\personhonors{}\personslide
   {Edward Feigenbaum}{爱德华·费根鲍姆}
   {images/edwardfeigenbaum.jpg}{Wikipedia}
   {1994 年 · 第{\bfseries\color{coveraccent} 29} 届（58岁）}{1936–}{美国}{Stanford University}
   {专家系统、知识工程，AI 应用先驱。}}
 
-\newcommand{\rajreddy}{\personslide
+\newcommand{\rajreddy}{\gdef\personhonors{}\personslide
   {Raj Reddy}{拉吉·雷迪}
   {images/rajreddy.jpg}{Wikipedia}
   {1994 年 · 第{\bfseries\color{coveraccent} 29} 届（57岁）}{1937–}{美国/印度}{Carnegie Mellon University}
   {人工智能、语音识别。}}
 
-\newcommand{\manuelblum}{\personslide
+\newcommand{\manuelblum}{\gdef\personhonors{}\personslide
   {Manuel Blum}{曼努埃尔·布鲁姆}
   {images/manuelblum.jpg}{Wikipedia}
   {1995 年 · 第{\bfseries\color{coveraccent} 30} 届（57岁）}{1938–}{美国}{Carnegie Mellon University}
   {计算复杂性、Blum Blum Shub 伪随机生成器。}}
 
-\newcommand{\amirpnueli}{\personslide
+\newcommand{\amirpnueli}{\gdef\personhonors{}\personslide
   {Amir Pnueli}{阿米尔·普努利}
   {images/amirpnueli.jpg}{Wikipedia}
   {1996 年 · 第{\bfseries\color{coveraccent} 31} 届（55岁）}{1941–2009}{以色列}{Weizmann Institute}
   {时态逻辑、程序验证，反应系统形式化。}}
 
-\newcommand{\douglasengelbart}{\personslide
+\newcommand{\douglasengelbart}{\gdef\personhonors{}\personslide
   {Douglas Engelbart}{道格拉斯·恩格尔巴特}
   {images/douglasengelbart.jpg}{Wikipedia}
   {1997 年 · 第{\bfseries\color{coveraccent} 32} 届（72岁）}{1925–2013}{美国}{—}
   {鼠标发明者、超文本、图形交互（NLS）。}}
 
-\newcommand{\jimgray}{\personslide
+\newcommand{\jimgray}{\gdef\personhonors{}\personslide
   {Jim Gray}{吉姆·格雷}
   {images/jimgray.jpg}{Wikipedia}
   {1998 年 · 第{\bfseries\color{coveraccent} 33} 届（54岁）}{1944–2012}{美国}{Microsoft Research}
   {事务处理、数据库系统与在线分析处理。}}
 
-\newcommand{\fredbrooks}{\personslide
+\newcommand{\fredbrooks}{\gdef\personhonors{}\personslide
   {Fred Brooks}{弗雷德·布鲁克斯}
   {images/fredbrooks.jpg}{Wikipedia}
   {1999 年 · 第{\bfseries\color{coveraccent} 34} 届（68岁）}{1931–2022}{美国}{University of North Carolina}
   {OS/360 软件工程、《人月神话》作者。}}
 
-\newcommand{\andrewyao}{\personslide
-  {Andrew Yao\kyotobadge}{姚期智}
+\newcommand{\andrewyao}{\gdef\personhonors{\kyotobadge 京都奖 2012 \enspace \nsmbadge 国家科学奖章}\personslide
+  {Andrew Yao\kyotobadge\nsmbadge}{姚期智}
   {images/andrewyao.jpg}{Wikipedia}
   {2000 年 · 第{\bfseries\color{coveraccent} 35} 届（54岁）}{1946–}{美国/中国}{Princeton University / Tsinghua}
   {通信复杂性、密码学、量子计算——首位华人图灵奖得主。\\\textbf{主要荣誉}\\京都奖 2012 \\ 美国国家科学奖章}}
 
-\newcommand{\kristennygaard}{\personslide
+\newcommand{\kristennygaard}{\gdef\personhonors{}\personslide
   {Kristen Nygaard}{克里斯汀·尼加德}
   {images/kristennygaard.jpg}{Wikipedia}
   {2001 年 · 第{\bfseries\color{coveraccent} 36} 届（75岁）}{1926–2002}{挪威}{University of Oslo}
   {面向对象编程（Simula 语言），与 Dahl 同获 2001 年奖。}}
 
-\newcommand{\olejohandahl}{\personslide
+\newcommand{\olejohandahl}{\gdef\personhonors{}\personslide
   {Ole-Johan Dahl}{奥利-约翰·达尔}
   {images/olejohandahl.jpg}{Wikipedia}
   {2001 年 · 第{\bfseries\color{coveraccent} 36} 届（70岁）}{1931–2002}{挪威}{University of Oslo}
   {面向对象编程（Simula 语言），OOP 先驱。}}
 
-\newcommand{\adishamir}{\personslide
+\newcommand{\adishamir}{\gdef\personhonors{}\personslide
   {Adi Shamir}{阿迪·沙米尔}
   {images/adishamir.jpg}{Wikipedia}
   {2002 年 · 第{\bfseries\color{coveraccent} 37} 届（50岁）}{1952–}{以色列}{Weizmann Institute}
   {RSA 三杰之一，Shamir 秘密共享、密码分析。}}
 
-\newcommand{\leonardadleman}{\personslide
+\newcommand{\leonardadleman}{\gdef\personhonors{}\personslide
   {Leonard Adleman}{伦纳德·阿德尔曼}
   {images/leonardadleman.jpg}{Wikipedia}
   {2002 年 · 第{\bfseries\color{coveraccent} 37} 届（57岁）}{1945–}{美国}{MIT}
   {RSA 三杰之一，DNA 计算先驱。}}
 
-\newcommand{\ronaldrivest}{\personslide
+\newcommand{\ronaldrivest}{\gdef\personhonors{}\personslide
   {Ronald Rivest}{罗纳德·里维斯特}
   {images/ronaldrivest.jpg}{Wikipedia}
   {2002 年 · 第{\bfseries\color{coveraccent} 37} 届（55岁）}{1947–}{美国}{MIT}
   {RSA 公钥密码学三杰之一。}}
 
-\newcommand{\alankay}{\personslide
+\newcommand{\alankay}{\gdef\personhonors{}\personslide
   {Alan Kay}{艾伦·凯}
   {images/alankay.jpg}{Wikipedia}
   {2003 年 · 第{\bfseries\color{coveraccent} 38} 届（63岁）}{1940–}{美国}{—}
   {Smalltalk、面向对象思想、图形用户界面，个人计算愿景。}}
 
-\newcommand{\robertkahn}{\personslide
+\newcommand{\robertkahn}{\gdef\personhonors{}\personslide
   {Robert Kahn}{罗伯特·卡恩}
   {images/robertkahn.jpg}{Wikipedia}
   {2004 年 · 第{\bfseries\color{coveraccent} 39} 届（66岁）}{1938–}{美国}{—}
   {TCP/IP 协议共同设计者，互联网架构奠基。}}
 
-\newcommand{\vintcerf}{\personslide
-  {Vint Cerf}{文顿·瑟夫}
+\newcommand{\vintcerf}{\gdef\personhonors{\marconibadge 马可尼奖 \enspace \nsmbadge 国家科学奖章}\personslide
+  {Vint Cerf\marconibadge\nsmbadge}{文顿·瑟夫}
   {images/vintcerf.jpg}{Wikipedia}
   {2004 年 · 第{\bfseries\color{coveraccent} 39} 届（61岁）}{1943–}{美国}{—}
   {TCP/IP 协议共同设计者，互联网之父之一。\\\textbf{主要荣誉}\\美国国家科学奖章 \\ 马可尼奖}}
 
-\newcommand{\peternaur}{\personslide
+\newcommand{\peternaur}{\gdef\personhonors{}\personslide
   {Peter Naur}{彼得·诺尔}
   {images/peternaur.jpg}{Wikipedia}
   {2005 年 · 第{\bfseries\color{coveraccent} 40} 届（77岁）}{1928–2016}{丹麦}{—}
   {Algol 60、BNF 文法、软件工程方法论。}}
 
-\newcommand{\franceseallen}{\personslide
+\newcommand{\franceseallen}{\gdef\personhonors{}\personslide
   {Frances E. Allen}{弗朗西丝·艾伦}
   {images/franceseallen.jpg}{Wikipedia}
   {2006 年 · 第{\bfseries\color{coveraccent} 41} 届（74岁）}{1932–2020}{美国}{IBM}
   {编译器优化、并行计算，首位女性图灵奖得主。}}
 
-\newcommand{\eallenemerson}{\personslide
+\newcommand{\eallenemerson}{\gdef\personhonors{}\personslide
   {E. Allen Emerson}{艾伦·埃默森}
   {images/eallenemerson.jpg}{Wikipedia}
   {2007 年 · 第{\bfseries\color{coveraccent} 42} 届（53岁）}{1954–}{美国}{University of Texas at Austin}
   {模型检验、时态逻辑。}}
 
-\newcommand{\edmundmclarke}{\personslide
+\newcommand{\edmundmclarke}{\gdef\personhonors{}\personslide
   {Edmund M. Clarke}{埃德蒙·克拉克}
   {images/edmundmclarke.jpg}{Wikipedia}
   {2007 年 · 第{\bfseries\color{coveraccent} 42} 届（62岁）}{1945–2020}{美国}{Carnegie Mellon University}
   {模型检验（Model Checking）奠基人。}}
 
-\newcommand{\josephsifakis}{\personslide
+\newcommand{\josephsifakis}{\gdef\personhonors{}\personslide
   {Joseph Sifakis}{约瑟夫·西法基斯}
   {images/josephsifakis.jpg}{Wikipedia}
   {2007 年 · 第{\bfseries\color{coveraccent} 42} 届（61岁）}{1946–}{法国/希腊}{Verimag}
   {模型检验、并发系统验证。}}
 
-\newcommand{\barbaraliskov}{\personslide
-  {Barbara Liskov}{芭芭拉·利斯科夫}
+\newcommand{\barbaraliskov}{\gdef\personhonors{\nsmbadge 国家科学奖章 2005}\personslide
+  {Barbara Liskov\nsmbadge}{芭芭拉·利斯科夫}
   {images/barbaraliskov.jpg}{Wikipedia}
   {2008 年 · 第{\bfseries\color{coveraccent} 43} 届（69岁）}{1939–}{美国}{MIT}
   {分布式系统、数据抽象、Liskov 替换原则，第二位女性得主。\\\textbf{主要荣誉}\\美国国家科学奖章 2005}}
 
-\newcommand{\charlespthacker}{\personslide
+\newcommand{\charlespthacker}{\gdef\personhonors{}\personslide
   {Charles P. Thacker}{查尔斯·萨克}
   {images/charlespthacker.jpg}{Wikipedia}
   {2009 年 · 第{\bfseries\color{coveraccent} 44} 届（66岁）}{1943–2017}{美国}{Microsoft Research}
   {Alto 个人电脑、以太网、平板显示。}}
 
-\newcommand{\leslievaliant}{\personslide
-  {Leslie Valiant}{莱斯利·瓦利安特}
+\newcommand{\leslievaliant}{\gdef\personhonors{\nevanlinnabadge 内万林纳奖 1986 \enspace \eatcsbadge EATCS 奖}\personslide
+  {Leslie Valiant\nevanlinnabadge\eatcsbadge}{莱斯利·瓦利安特}
   {images/leslievaliant.jpg}{Wikipedia}
   {2010 年 · 第{\bfseries\color{coveraccent} 45} 届（61岁）}{1949–}{英国/美国}{Harvard University}
   {PAC 学习理论、VLSI 计算复杂度，学习理论奠基人。\\\textbf{主要荣誉}\\EATCS 奖 \\ 内万林纳奖 1986}}
 
-\newcommand{\judeapearl}{\personslide
-  {Judea Pearl}{朱迪亚·珀尔}
+\newcommand{\judeapearl}{\gdef\personhonors{\nsmbadge 国家科学奖章 2014 \enspace \rumelhartbadge 鲁梅哈特奖}\personslide
+  {Judea Pearl\nsmbadge\rumelhartbadge}{朱迪亚·珀尔}
   {images/judeapearl.jpg}{Wikipedia}
   {2011 年 · 第{\bfseries\color{coveraccent} 46} 届（75岁）}{1936–}{美国/以色列}{UCLA}
   {贝叶斯网络、因果推断，AI 概率推理奠基人。\\\textbf{主要荣誉}\\鲁梅哈特奖 \\ 美国国家科学奖章 2014}}
 
-\newcommand{\shafigoldwasser}{\personslide
-  {Shafi Goldwasser\godelbadge}{沙菲·戈德瓦瑟}
+\newcommand{\shafigoldwasser}{\gdef\personhonors{\godelbadge 哥德尔奖 1993/2001 \enspace \nasbadge 美国科学院院士}\personslide
+  {Shafi Goldwasser\godelbadge\nasbadge}{沙菲·戈德瓦瑟}
   {images/shafigoldwasser.jpg}{Wikipedia}
   {2012 年 · 第{\bfseries\color{coveraccent} 47} 届（54岁）}{1958–}{美国/以色列}{MIT / Weizmann}
   {概率加密、零知识证明，现代密码学奠基。\\\textbf{主要荣誉}\\哥德尔奖 1993/2001 \\ 美国科学院院士}}
 
-\newcommand{\silviomicali}{\personslide
-  {Silvio Micali\godelbadge}{西尔维奥·米卡利}
+\newcommand{\silviomicali}{\gdef\personhonors{\godelbadge 哥德尔奖 1993 \enspace \nasbadge 美国科学院院士}\personslide
+  {Silvio Micali\godelbadge\nasbadge}{西尔维奥·米卡利}
   {images/silviomicali.jpg}{Wikipedia}
   {2012 年 · 第{\bfseries\color{coveraccent} 47} 届（58岁）}{1954–}{意大利/美国}{MIT}
   {零知识证明、可验证随机函数。\\\textbf{主要荣誉}\\哥德尔奖 1993 \\ 美国科学院院士}}
 
-\newcommand{\leslielamport}{\personslide
-  {Leslie Lamport}{莱斯利·兰波特}
+\newcommand{\leslielamport}{\gdef\personhonors{\neumannbadge 冯·诺依曼奖 \enspace \nsmbadge 国家科学奖章}\personslide
+  {Leslie Lamport\neumannbadge\nsmbadge}{莱斯利·兰波特}
   {images/leslielamport.jpg}{Wikipedia}
   {2013 年 · 第{\bfseries\color{coveraccent} 48} 届（72岁）}{1941–}{美国}{Microsoft Research}
   {Paxos 共识算法、时序逻辑、LaTeX。\\\textbf{主要荣誉}\\IEEE 冯诺依曼奖 \\ 美国国家科学奖章}}
 
-\newcommand{\michaelstonebraker}{\personslide
+\newcommand{\michaelstonebraker}{\gdef\personhonors{}\personslide
   {Michael Stonebraker}{迈克尔·斯通布雷克}
   {images/michaelstonebraker.jpg}{Wikipedia}
   {2014 年 · 第{\bfseries\color{coveraccent} 49} 届（71岁）}{1943–}{美国}{MIT}
   {Ingres、PostgreSQL 数据库系统，流处理先驱。}}
 
-\newcommand{\martinhellman}{\personslide
-  {Martin Hellman\shannonbadge}{马丁·赫尔曼}
+\newcommand{\martinhellman}{\gdef\personhonors{\shannonbadge 香农奖 2021 \enspace \marconibadge 马可尼奖}\personslide
+  {Martin Hellman\shannonbadge\marconibadge}{马丁·赫尔曼}
   {images/martinhellman.jpg}{Wikipedia}
   {2015 年 · 第{\bfseries\color{coveraccent} 50} 届（70岁）}{1945–}{美国}{Stanford University}
   {公钥密码学（Diffie-Hellman 密钥交换）。\\\textbf{主要荣誉}\\马可尼奖 \\ IEEE 香农奖 2021}}
 
-\newcommand{\whitfielddiffie}{\personslide
-  {Whitfield Diffie\shannonbadge}{惠特菲尔德·迪菲}
+\newcommand{\whitfielddiffie}{\gdef\personhonors{\shannonbadge 香农奖 2021 \enspace \marconibadge 马可尼奖}\personslide
+  {Whitfield Diffie\shannonbadge\marconibadge}{惠特菲尔德·迪菲}
   {images/whitfielddiffie.jpg}{Wikipedia}
   {2015 年 · 第{\bfseries\color{coveraccent} 50} 届（71岁）}{1944–}{美国}{—}
   {公钥密码学（Diffie-Hellman 密钥交换）。\\\textbf{主要荣誉}\\马可尼奖 \\ IEEE 香农奖 2021}}
 
-\newcommand{\timbernerslee}{\personslide
-  {Tim Berners-Lee}{蒂姆·伯纳斯-李}
+\newcommand{\timbernerslee}{\gdef\personhonors{\millenniumbadge 千禧科技奖 2004 \enspace \frsbadge 皇家学会院士}\personslide
+  {Tim Berners-Lee\millenniumbadge\frsbadge}{蒂姆·伯纳斯-李}
   {images/timbernerslee.jpg}{Wikipedia}
   {2016 年 · 第{\bfseries\color{coveraccent} 51} 届（61岁）}{1955–}{英国}{W3C / MIT}
   {万维网（WWW）发明者，HTML、HTTP、URL。\\\textbf{主要荣誉}\\千禧科技奖 2004 \\ 英国皇家学会院士}}
 
-\newcommand{\davidpatterson}{\personslide
+\newcommand{\davidpatterson}{\gdef\personhonors{}\personslide
   {David Patterson}{大卫·帕特森}
   {images/davidpatterson.jpg}{Wikipedia}
   {2017 年 · 第{\bfseries\color{coveraccent} 52} 届（70岁）}{1947–}{美国}{UC Berkeley}
   {RISC、RAID，与 Hennessy 共同奠基现代体系结构。}}
 
-\newcommand{\johnlhennessy}{\personslide
+\newcommand{\johnlhennessy}{\gdef\personhonors{}\personslide
   {John L. Hennessy}{约翰·亨尼西}
   {images/johnlhennessy.jpg}{Wikipedia}
   {2017 年 · 第{\bfseries\color{coveraccent} 52} 届（65岁）}{1952–}{美国}{Stanford University}
   {RISC 体系结构，计算机体系结构教科书作者。}}
 
-\newcommand{\geoffreyhinton}{\personslide
-  {Geoffrey Hinton}{杰弗里·辛顿}
+\newcommand{\geoffreyhinton}{\gdef\personhonors{\japanbadge 日本国际奖 2016 \enspace \frsbadge 皇家学会院士}\personslide
+  {Geoffrey Hinton\japanbadge\frsbadge}{杰弗里·辛顿}
   {images/geoffreyhinton.jpg}{Wikipedia}
   {2018 年 · 第{\bfseries\color{coveraccent} 53} 届（71岁）}{1947–}{英国/加拿大}{University of Toronto}
   {深度学习三杰之一，反向传播、神经网络复兴。\\\textbf{主要荣誉}\\日本国际奖 2016 \\ 英国皇家学会院士}}
 
-\newcommand{\yannlecun}{\personslide
-  {Yann LeCun}{杨立昆}
+\newcommand{\yannlecun}{\gdef\personhonors{\nsmbadge 国家科学奖章 2023 \enspace \frsbadge 皇家学会院士}\personslide
+  {Yann LeCun\nsmbadge\frsbadge}{杨立昆}
   {images/yannlecun.jpg}{Wikipedia}
   {2018 年 · 第{\bfseries\color{coveraccent} 53} 届（58岁）}{1960–}{法国/美国}{New York University}
   {深度学习三杰之一，卷积神经网络（CNN）之父。\\\textbf{主要荣誉}\\美国国家科学奖章 2023 \\ 英国皇家学会院士}}
 
-\newcommand{\yoshuabengio}{\personslide
-  {Yoshua Bengio}{约书亚·本吉奥}
+\newcommand{\yoshuabengio}{\gdef\personhonors{\frsbadge 皇家学会院士 \enspace \govbadge 加拿大总督奖}\personslide
+  {Yoshua Bengio\frsbadge\govbadge}{约书亚·本吉奥}
   {images/yoshuabengio.jpg}{Wikipedia}
   {2018 年 · 第{\bfseries\color{coveraccent} 53} 届（54岁）}{1964–}{加拿大/法国}{Université de Montréal}
   {深度学习三杰之一，表示学习与生成模型。\\\textbf{主要荣誉}\\加拿大总督奖 \\ 英国皇家学会院士}}
 
-\newcommand{\edwincatmull}{\personslide
+\newcommand{\edwincatmull}{\gdef\personhonors{}\personslide
   {Edwin Catmull}{埃德温·卡特穆尔}
   {images/edwincatmull.jpg}{Wikipedia}
   {2019 年 · 第{\bfseries\color{coveraccent} 54} 届（74岁）}{1945–}{美国}{Pixar}
   {计算机图形学、纹理映射、皮克斯联合创始人。}}
 
-\newcommand{\pathanrahan}{\personslide
+\newcommand{\pathanrahan}{\gdef\personhonors{}\personslide
   {Pat Hanrahan}{帕特·汉拉汉}
   {images/pathanrahan.jpg}{Wikipedia}
   {2019 年 · 第{\bfseries\color{coveraccent} 54} 届（64岁）}{1955–}{美国}{Stanford University}
   {RenderMan 渲染系统、图形着色语言。}}
 
-\newcommand{\alfredaho}{\personslide
+\newcommand{\alfredaho}{\gdef\personhonors{}\personslide
   {Alfred Aho}{阿尔弗雷德·阿霍}
   {images/alfredaho.jpg}{Wikipedia}
   {2020 年 · 第{\bfseries\color{coveraccent} 55} 届（79岁）}{1941–}{美国}{Columbia University}
   {编译器理论、《龙书》合著者。}}
 
-\newcommand{\jeffreyullman}{\personslide
+\newcommand{\jeffreyullman}{\gdef\personhonors{}\personslide
   {Jeffrey Ullman}{杰弗里·乌尔曼}
   {images/jeffreyullman.jpg}{Wikipedia}
   {2020 年 · 第{\bfseries\color{coveraccent} 55} 届（78岁）}{1942–}{美国}{Stanford University}
   {编译、数据库、数据挖掘、《龙书》合著者。}}
 
-\newcommand{\jackdongarra}{\personslide
-  {Jack Dongarra}{杰克·唐加拉}
+\newcommand{\jackdongarra}{\gdef\personhonors{\nsmbadge 国家科学奖章 2020}\personslide
+  {Jack Dongarra\nsmbadge}{杰克·唐加拉}
   {images/jackdongarra.jpg}{Wikipedia}
   {2021 年 · 第{\bfseries\color{coveraccent} 56} 届（71岁）}{1950–}{美国}{University of Tennessee}
   {LINPACK/LAPACK、MPI，高性能计算奠基人。\\\textbf{主要荣誉}\\美国国家科学奖章 2020}}
 
-\newcommand{\robertmetcalfe}{\personslide
-  {Robert Metcalfe}{罗伯特·梅特卡夫}
+\newcommand{\robertmetcalfe}{\gdef\personhonors{\nsmbadge 国家科学奖章 2003}\personslide
+  {Robert Metcalfe\nsmbadge}{罗伯特·梅特卡夫}
   {images/robertmetcalfe.jpg}{Wikipedia}
   {2022 年 · 第{\bfseries\color{coveraccent} 57} 届（76岁）}{1946–}{美国}{MIT}
   {以太网（Ethernet）发明者，梅特卡夫定律。\\\textbf{主要荣誉}\\美国国家科学奖章 2003}}
 
-\newcommand{\aviwigderson}{\personslide
+\newcommand{\aviwigderson}{\gdef\personhonors{\godelbadge 哥德尔奖 2009 \enspace \abelbadge 阿贝尔奖 2021}\personslide
   {Avi Wigderson\godelbadge\abelbadge}{阿维·威格德森}
   {images/aviwigderson.jpg}{Wikipedia}
   {2023 年 · 第{\bfseries\color{coveraccent} 58} 届（67岁）}{1956–}{以色列/美国}{Institute for Advanced Study}
   {随机性与计算、伪随机性与去随机化，理论计算机巨星。\\\textbf{主要荣誉}\\哥德尔奖 2009 \\ 阿贝尔奖 2021}}
 
-\newcommand{\andrewbarto}{\personslide
+\newcommand{\andrewbarto}{\gdef\personhonors{}\personslide
   {Andrew Barto}{安德鲁·巴托}
   {images/andrewbarto.jpg}{Wikipedia}
   {2024 年 · 第{\bfseries\color{coveraccent} 59} 届（76岁）}{1948–}{美国}{University of Massachusetts}
   {强化学习奠基人，时间差分学习。}}
 
-\newcommand{\richardssutton}{\personslide
+\newcommand{\richardssutton}{\gdef\personhonors{}\personslide
   {Richard S. Sutton}{理查德·萨顿}
   {images/richardssutton.jpg}{Wikipedia}
   {2024 年 · 第{\bfseries\color{coveraccent} 59} 届（68岁）}{1956–}{加拿大/美国}{University of Alberta}
   {强化学习奠基人，《强化学习导论》合著者。}}
 
-\newcommand{\charleshbennett}{\personslide
+\newcommand{\charleshbennett}{\gdef\personhonors{}\personslide
   {Charles H. Bennett}{查尔斯·贝内特}
   {images/charleshbennett.jpg}{Wikipedia}
   {2025 年 · 第{\bfseries\color{coveraccent} 60} 届（82岁）}{1943–}{美国}{IBM}
   {量子信息科学、BB84 量子密钥分发、可逆计算。}}
 
-\newcommand{\gillesbrassard}{\personslide
+\newcommand{\gillesbrassard}{\gdef\personhonors{}\personslide
   {Gilles Brassard}{吉勒·布拉萨}
   {images/gillesbrassard.jpg}{Wikipedia}
   {2025 年 · 第{\bfseries\color{coveraccent} 60} 届（70岁）}{1955–}{加拿大}{Université de Montréal}
   {量子密码学、BB84 协议、量子纠缠理论。}}
 
-
-% ========== CROSS-REFERENCE ==========
-
-\newcommand{\crossframeone}{%
-\begin{frame}
-\plainbar
-\sectiontitle{交叉荣誉 · 图灵 + 其他顶级奖项}{ACM Turing Award Cross-Reference · 81 位得主中的交叉获奖者}
-\footnotesize
-\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.0}
-\begin{center}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\textwidth}
-                 >{\raggedright\arraybackslash}p{0.07\textwidth}
-                 >{\raggedright\arraybackslash}p{0.33\textwidth}
-                 >{\raggedright\arraybackslash}p{0.21\textwidth}@{}}
-\rowcolor{coverprimary!14}
-{\footnotesize\textbf{\color{coverprimary}姓名（徽标）}} & {\footnotesize\textbf{\color{coverprimary}图灵}} & {\footnotesize\textbf{\color{coverprimary}交叉奖项}} & {\footnotesize\textbf{\color{coverprimary}国籍}} \\
-\midrule
-  \rowcolor{coverlight}
-  \multicolumn{4}{l}{\bfseries\color{coverprimary}\small ★★★ 三奖得主 · 图灵 + 两项大奖} \\[2pt]
-
-  {\footnotesize\bfseries\color{coverdark}\mbox{Avi Wigderson}}\godelbadge\abelbadge\\[0pt]
-  {\tiny\color{covermuted}\mbox{阿维·威格德森}} & 2023 & 哥德尔奖 2009 · 阿贝尔奖 2021 & 以色列/美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Herbert A. Simon}}\nobelbadge\\[0pt]
-  {\tiny\color{covermuted}\mbox{赫伯特·西蒙}} & 1975 & 诺贝尔经济学奖 1978 & 美国 \\[1pt]
-\end{tabular}
-\end{center}
-\end{frame}
-}
-\newcommand{\crossframetwo}{%
-\begin{frame}
-\plainbar
-\sectiontitle{交叉荣誉 · 图灵 + 其他顶级奖项}{ACM Turing Award Cross-Reference · 81 位得主中的交叉获奖者}
-\footnotesize
-\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.0}
-\begin{center}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\textwidth}
-                 >{\raggedright\arraybackslash}p{0.07\textwidth}
-                 >{\raggedright\arraybackslash}p{0.33\textwidth}
-                 >{\raggedright\arraybackslash}p{0.21\textwidth}@{}}
-\rowcolor{coverprimary!14}
-{\footnotesize\textbf{\color{coverprimary}姓名（徽标）}} & {\footnotesize\textbf{\color{coverprimary}图灵}} & {\footnotesize\textbf{\color{coverprimary}交叉奖项}} & {\footnotesize\textbf{\color{coverprimary}国籍}} \\
-\midrule
-  \rowcolor{coverlight}
-  \multicolumn{4}{l}{\bfseries\color{coverprimary}\small ★★ 双奖 · 图灵 + 京都奖} \\[2pt]
-
-  {\footnotesize\bfseries\color{coverdark}\mbox{Donald Knuth}}\kyotobadge\\[0pt]
-  {\tiny\color{covermuted}\mbox{唐纳德·高德纳}} & 1974 & 京都奖 1996 & 美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{John McCarthy}}\kyotobadge\\[0pt]
-  {\tiny\color{covermuted}\mbox{约翰·麦卡锡}} & 1971 & 京都奖 1988 & 美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Andrew Yao}}\kyotobadge\\[0pt]
-  {\tiny\color{covermuted}\mbox{姚期智}} & 2000 & 京都奖 2012 & 美国/中国 \\[1pt]
-\end{tabular}
-\end{center}
-\end{frame}
-}
-\newcommand{\crossframethree}{%
-\begin{frame}
-\plainbar
-\sectiontitle{交叉荣誉 · 图灵 + 其他顶级奖项}{ACM Turing Award Cross-Reference · 81 位得主中的交叉获奖者}
-\footnotesize
-\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.0}
-\begin{center}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\textwidth}
-                 >{\raggedright\arraybackslash}p{0.07\textwidth}
-                 >{\raggedright\arraybackslash}p{0.33\textwidth}
-                 >{\raggedright\arraybackslash}p{0.21\textwidth}@{}}
-\rowcolor{coverprimary!14}
-{\footnotesize\textbf{\color{coverprimary}姓名（徽标）}} & {\footnotesize\textbf{\color{coverprimary}图灵}} & {\footnotesize\textbf{\color{coverprimary}交叉奖项}} & {\footnotesize\textbf{\color{coverprimary}国籍}} \\
-\midrule
-  \rowcolor{coverlight}
-  \multicolumn{4}{l}{\bfseries\color{coverprimary}\small ★★ 双奖 · 图灵 + 哥德尔奖} \\[2pt]
-
-  {\footnotesize\bfseries\color{coverdark}\mbox{Shafi Goldwasser}}\godelbadge\\[0pt]
-  {\tiny\color{covermuted}\mbox{沙菲·戈德瓦瑟}} & 2012 & 哥德尔奖 1993/2001 · 美国科学院院士 & 美国/以色列 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Silvio Micali}}\godelbadge\\[0pt]
-  {\tiny\color{covermuted}\mbox{西尔维奥·米卡利}} & 2012 & 哥德尔奖 1993 · 美国科学院院士 & 意大利/美国 \\[1pt]
-\end{tabular}
-\end{center}
-\end{frame}
-}
-\newcommand{\crossframefour}{%
-\begin{frame}
-\plainbar
-\sectiontitle{交叉荣誉 · 图灵 + 其他顶级奖项}{ACM Turing Award Cross-Reference · 81 位得主中的交叉获奖者}
-\footnotesize
-\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.0}
-\begin{center}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\textwidth}
-                 >{\raggedright\arraybackslash}p{0.07\textwidth}
-                 >{\raggedright\arraybackslash}p{0.33\textwidth}
-                 >{\raggedright\arraybackslash}p{0.21\textwidth}@{}}
-\rowcolor{coverprimary!14}
-{\footnotesize\textbf{\color{coverprimary}姓名（徽标）}} & {\footnotesize\textbf{\color{coverprimary}图灵}} & {\footnotesize\textbf{\color{coverprimary}交叉奖项}} & {\footnotesize\textbf{\color{coverprimary}国籍}} \\
-\midrule
-  \rowcolor{coverlight}
-  \multicolumn{4}{l}{\bfseries\color{coverprimary}\small ★★ 双奖 · 图灵 + IEEE 香农奖} \\[2pt]
-
-  {\footnotesize\bfseries\color{coverdark}\mbox{Richard Hamming}}\shannonbadge\\[0pt]
-  {\tiny\color{covermuted}\mbox{理查德·汉明}} & 1968 & 香农奖 1996 & 美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Whitfield Diffie}}\shannonbadge\\[0pt]
-  {\tiny\color{covermuted}\mbox{惠特菲尔德·迪菲}} & 2015 & 香农奖 2021 & 美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Martin Hellman}}\shannonbadge\\[0pt]
-  {\tiny\color{covermuted}\mbox{马丁·赫尔曼}} & 2015 & 香农奖 2021 & 美国 \\[1pt]
-\end{tabular}
-\end{center}
-\end{frame}
-}
-\newcommand{\crossframefive}{%
-\begin{frame}
-\plainbar
-\sectiontitle{交叉荣誉 · 图灵 + 其他顶级奖项}{ACM Turing Award Cross-Reference · 81 位得主中的交叉获奖者}
-\footnotesize
-\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.0}
-\begin{center}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\textwidth}
-                 >{\raggedright\arraybackslash}p{0.07\textwidth}
-                 >{\raggedright\arraybackslash}p{0.33\textwidth}
-                 >{\raggedright\arraybackslash}p{0.21\textwidth}@{}}
-\rowcolor{coverprimary!14}
-{\footnotesize\textbf{\color{coverprimary}姓名（徽标）}} & {\footnotesize\textbf{\color{coverprimary}图灵}} & {\footnotesize\textbf{\color{coverprimary}交叉奖项}} & {\footnotesize\textbf{\color{coverprimary}国籍}} \\
-\midrule
-  \rowcolor{coverlight}
-  \multicolumn{4}{l}{\bfseries\color{coverprimary}\small ★★ 双奖 · 图灵 + 日本国际奖} \\[2pt]
-
-  {\footnotesize\bfseries\color{coverdark}\mbox{Marvin Minsky}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{马文·明斯基}} & 1969 & 日本国际奖 1990 & 美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Geoffrey Hinton}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{杰弗里·辛顿}} & 2018 & 日本国际奖 2016 · 皇家学会院士 & 英国/加拿大 \\[1pt]
-\end{tabular}
-\end{center}
-\end{frame}
-}
-\newcommand{\crossframesix}{%
-\begin{frame}
-\plainbar
-\sectiontitle{交叉荣誉 · 图灵 + 其他顶级奖项}{ACM Turing Award Cross-Reference · 81 位得主中的交叉获奖者}
-\footnotesize
-\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.0}
-\begin{center}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\textwidth}
-                 >{\raggedright\arraybackslash}p{0.07\textwidth}
-                 >{\raggedright\arraybackslash}p{0.33\textwidth}
-                 >{\raggedright\arraybackslash}p{0.21\textwidth}@{}}
-\rowcolor{coverprimary!14}
-{\footnotesize\textbf{\color{coverprimary}姓名（徽标）}} & {\footnotesize\textbf{\color{coverprimary}图灵}} & {\footnotesize\textbf{\color{coverprimary}交叉奖项}} & {\footnotesize\textbf{\color{coverprimary}国籍}} \\
-\midrule
-  \rowcolor{coverlight}
-  \multicolumn{4}{l}{\bfseries\color{coverprimary}\small ★★ 双奖 · 图灵 + 内万林纳奖 / EATCS 奖} \\[2pt]
-
-  {\footnotesize\bfseries\color{coverdark}\mbox{Leslie Valiant}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{莱斯利·瓦利安特}} & 2010 & 内万林纳奖 1986 · EATCS 奖 & 英国/美国 \\[1pt]
-  \rowcolor{coverlight}
-  \multicolumn{4}{l}{\bfseries\color{coverprimary}\small ★★ 双奖 · 图灵 + 马可尼奖} \\[2pt]
-
-  {\footnotesize\bfseries\color{coverdark}\mbox{Vint Cerf}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{文顿·瑟夫}} & 2004 & 马可尼奖 & 美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Whitfield Diffie}}\shannonbadge\\[0pt]
-  {\tiny\color{covermuted}\mbox{惠特菲尔德·迪菲}} & 2015 & 马可尼奖 & 美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Martin Hellman}}\shannonbadge\\[0pt]
-  {\tiny\color{covermuted}\mbox{马丁·赫尔曼}} & 2015 & 马可尼奖 & 美国 \\[1pt]
-\end{tabular}
-\end{center}
-\end{frame}
-}
-\newcommand{\crossframeseven}{%
-\begin{frame}
-\plainbar
-\sectiontitle{交叉荣誉 · 图灵 + 其他顶级奖项}{ACM Turing Award Cross-Reference · 81 位得主中的交叉获奖者}
-\footnotesize
-\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.0}
-\begin{center}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\textwidth}
-                 >{\raggedright\arraybackslash}p{0.07\textwidth}
-                 >{\raggedright\arraybackslash}p{0.33\textwidth}
-                 >{\raggedright\arraybackslash}p{0.21\textwidth}@{}}
-\rowcolor{coverprimary!14}
-{\footnotesize\textbf{\color{coverprimary}姓名（徽标）}} & {\footnotesize\textbf{\color{coverprimary}图灵}} & {\footnotesize\textbf{\color{coverprimary}交叉奖项}} & {\footnotesize\textbf{\color{coverprimary}国籍}} \\
-\midrule
-  \rowcolor{coverlight}
-  \multicolumn{4}{l}{\bfseries\color{coverprimary}\small ★★ 双奖 · 图灵 + IEEE 冯·诺依曼奖} \\[2pt]
-
-  {\footnotesize\bfseries\color{coverdark}\mbox{Ken Thompson}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{肯·汤普森}} & 1983 & 冯·诺依曼奖 & 美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Leslie Lamport}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{莱斯利·兰波特}} & 2013 & 冯·诺依曼奖 & 美国 \\[1pt]
-  \rowcolor{coverlight}
-  \multicolumn{4}{l}{\bfseries\color{coverprimary}\small ★★ 双奖 · 图灵 + 千禧科技奖} \\[2pt]
-
-  {\footnotesize\bfseries\color{coverdark}\mbox{Tim Berners-Lee}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{蒂姆·伯纳斯-李}} & 2016 & 千禧科技奖 2004 · 皇家学会院士 & 英国 \\[1pt]
-\end{tabular}
-\end{center}
-\end{frame}
-}
-\newcommand{\crossframeeight}{%
-\begin{frame}
-\plainbar
-\sectiontitle{交叉荣誉 · 图灵 + 其他顶级奖项}{ACM Turing Award Cross-Reference · 81 位得主中的交叉获奖者}
-\footnotesize
-\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.0}
-\begin{center}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\textwidth}
-                 >{\raggedright\arraybackslash}p{0.07\textwidth}
-                 >{\raggedright\arraybackslash}p{0.33\textwidth}
-                 >{\raggedright\arraybackslash}p{0.21\textwidth}@{}}
-\rowcolor{coverprimary!14}
-{\footnotesize\textbf{\color{coverprimary}姓名（徽标）}} & {\footnotesize\textbf{\color{coverprimary}图灵}} & {\footnotesize\textbf{\color{coverprimary}交叉奖项}} & {\footnotesize\textbf{\color{coverprimary}国籍}} \\
-\midrule
-  \rowcolor{coverlight}
-  \multicolumn{4}{l}{\bfseries\color{coverprimary}\small 其他重要荣誉 · 国家级 / 院士（Ⅰ）} \\[2pt]
-
-  {\footnotesize\bfseries\color{coverdark}\mbox{William Kahan}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{威廉·卡汉}} & 1989 & 美国国家科学奖章 1989 & 加拿大/美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Barbara Liskov}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{芭芭拉·利斯科夫}} & 2008 & 美国国家科学奖章 2005 & 美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Judea Pearl}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{朱迪亚·珀尔}} & 2011 & 国家科学奖章 2014 · 鲁梅哈特奖 & 美国/以色列 \\[1pt]
-\end{tabular}
-\end{center}
-\end{frame}
-}
-\newcommand{\crossframenine}{%
-\begin{frame}
-\plainbar
-\sectiontitle{交叉荣誉 · 图灵 + 其他顶级奖项}{ACM Turing Award Cross-Reference · 81 位得主中的交叉获奖者}
-\footnotesize
-\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.0}
-\begin{center}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.39\textwidth}
-                 >{\raggedright\arraybackslash}p{0.07\textwidth}
-                 >{\raggedright\arraybackslash}p{0.33\textwidth}
-                 >{\raggedright\arraybackslash}p{0.21\textwidth}@{}}
-\rowcolor{coverprimary!14}
-{\footnotesize\textbf{\color{coverprimary}姓名（徽标）}} & {\footnotesize\textbf{\color{coverprimary}图灵}} & {\footnotesize\textbf{\color{coverprimary}交叉奖项}} & {\footnotesize\textbf{\color{coverprimary}国籍}} \\
-\midrule
-  \rowcolor{coverlight}
-  \multicolumn{4}{l}{\bfseries\color{coverprimary}\small 其他重要荣誉 · 国家级 / 院士（Ⅱ）} \\[2pt]
-
-  {\footnotesize\bfseries\color{coverdark}\mbox{Yann LeCun}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{杨立昆}} & 2018 & 国家科学奖章 2023 · 皇家学会院士 & 法国/美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Yoshua Bengio}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{约书亚·本吉奥}} & 2018 & 皇家学会院士 · 加拿大总督奖 & 加拿大/法国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Robert Metcalfe}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{罗伯特·梅特卡夫}} & 2022 & 美国国家科学奖章 2003 & 美国 \\[1pt]
-  {\footnotesize\bfseries\color{coverdark}\mbox{Jack Dongarra}}\\[0pt]
-  {\tiny\color{covermuted}\mbox{杰克·唐加拉}} & 2021 & 美国国家科学奖章 2020 & 美国 \\[1pt]
-\end{tabular}
-\end{center}
-\end{frame}
-}
 
 % ========== MAIN ==========
 \begin{document}
@@ -1036,15 +811,5 @@
 \richardssutton
 \charleshbennett
 \gillesbrassard
-
-\crossframeone
-\crossframetwo
-\crossframethree
-\crossframefour
-\crossframefive
-\crossframesix
-\crossframeseven
-\crossframeeight
-\crossframenine
 
 \end{document}

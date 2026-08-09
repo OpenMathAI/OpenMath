@@ -30,19 +30,44 @@
 \definecolor{graypanel}{RGB}{240,238,244}
 \setbeamercolor{background canvas}{bg=bgmain}
 
+\providecommand{\personhonors}{}
+
 % 交叉奖项徽标（参考 Fields/COPSS 系列）
 % 用 \raisebox 而非 \textsuperscript：避免 22pt 标题触发 15.4pt 数学字体缺失警告
+% 符号+字母+品牌色：◆N 诺贝尔 · ★K 京都 · ◇G 哥德尔 · ★A 阿贝尔 · ★S 香农
 \newcommand{\nobelbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
 \newcommand{\kyotobadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
 \newcommand{\godelbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
 \newcommand{\abelbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
 \newcommand{\shannonbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+% ♥J 日本国际 · ▲N 内万林纳 · □E EATCS · ●M 马可尼 · ▲V 冯·诺依曼 · ◆T 千禧科技
+\newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
+\newcommand{\nevanlinnabadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt N}}
+\newcommand{\eatcsbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\square$\kern-0.5pt E}}
+\newcommand{\marconibadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bullet$\kern-0.5pt M}}
+\newcommand{\neumannbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacktriangle$\kern-0.5pt V}}
+\newcommand{\millenniumbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\blacklozenge$\kern-0.5pt T}}
+% ♠M 国家科学奖章 · ■N 美国科学院 · ✓R 皇家学会 · ◆C 加拿大总督 · ◇R 鲁梅哈特
+\newcommand{\nsmbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\spadesuit$\kern-0.5pt M}}
+\newcommand{\nasbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacksquare$\kern-0.5pt N}}
+\newcommand{\frsbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\checkmark$\kern-0.5pt R}}
+\newcommand{\govbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\blacklozenge$\kern-0.5pt C}}
+\newcommand{\rumelhartbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamondsuit$\kern-0.5pt R}}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]
   \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
   \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
 \end{tikzpicture}%
+}
+
+% 底部交叉荣誉边框：#1 = 图标串（\godelbadge 哥德尔奖 2009 ...）
+\newcommand{\honorbar}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south, draw=coverprimary!55, fill=coverlight, rounded corners=6pt,
+          inner xsep=8pt, inner ysep=5pt, yshift=0.55cm, text=coverdark!85] at (current page.south) {%
+      \fontsize{7.5}{9.5}\selectfont\bfseries{\color{coverprimary} 交叉荣誉}\enspace #1};
+  \end{tikzpicture}%
 }
 
 \newcommand{\sectiontitle}[2]{%
@@ -101,6 +126,7 @@
   \end{tikzpicture}
 \end{column}
 \end{columns}
+\if\relax\detokenize\expandafter{\personhonors}\relax\else\honorbar{\personhonors}\fi
 \end{frame}
 }
 
@@ -141,61 +167,61 @@
 
 % ========== SLIDES ==========
 
-\newcommand{\andrewyaoslide}{\personslide
-  {Andrew Yao\kyotobadge}{姚期智}
+\newcommand{\andrewyaoslide}{\gdef\personhonors{\kyotobadge 京都奖 2012 \enspace \nsmbadge 国家科学奖章}\personslide
+  {Andrew Yao\kyotobadge\nsmbadge}{姚期智}
   {images/andrewyao.jpg}{Wikipedia}
   {2000（54岁）}{1946–}{美国/中国}{Princeton University / Tsinghua}
   {通信复杂性、密码学、量子计算——首位华人图灵奖得主。\\\textbf{主要荣誉}\\京都奖 2012 \\ 美国国家科学奖章}}
 
-\newcommand{\ronaldrivestslide}{\personslide
+\newcommand{\ronaldrivestslide}{\gdef\personhonors{}\personslide
   {Ronald Rivest}{罗纳德·里维斯特}
   {images/ronaldrivest.jpg}{Wikipedia}
   {2002（55岁）}{1947–}{美国}{MIT}
   {RSA 公钥密码学三杰之一。}}
 
-\newcommand{\adishamirslide}{\personslide
+\newcommand{\adishamirslide}{\gdef\personhonors{}\personslide
   {Adi Shamir}{阿迪·沙米尔}
   {images/adishamir.jpg}{Wikipedia}
   {2002（50岁）}{1952–}{以色列}{Weizmann Institute}
   {RSA 三杰之一，Shamir 秘密共享、密码分析。}}
 
-\newcommand{\leonardadlemanslide}{\personslide
+\newcommand{\leonardadlemanslide}{\gdef\personhonors{}\personslide
   {Leonard Adleman}{伦纳德·阿德尔曼}
   {images/leonardadleman.jpg}{Wikipedia}
   {2002（57岁）}{1945–}{美国}{MIT}
   {RSA 三杰之一，DNA 计算先驱。}}
 
-\newcommand{\shafigoldwasserslide}{\personslide
-  {Shafi Goldwasser\godelbadge}{沙菲·戈德瓦瑟}
+\newcommand{\shafigoldwasserslide}{\gdef\personhonors{\godelbadge 哥德尔奖 1993/2001 \enspace \nasbadge 美国科学院院士}\personslide
+  {Shafi Goldwasser\godelbadge\nasbadge}{沙菲·戈德瓦瑟}
   {images/shafigoldwasser.jpg}{Wikipedia}
   {2012（54岁）}{1958–}{美国/以色列}{MIT / Weizmann}
   {概率加密、零知识证明，现代密码学奠基。\\\textbf{主要荣誉}\\哥德尔奖 1993/2001 \\ 美国科学院院士}}
 
-\newcommand{\silviomicalislide}{\personslide
-  {Silvio Micali\godelbadge}{西尔维奥·米卡利}
+\newcommand{\silviomicalislide}{\gdef\personhonors{\godelbadge 哥德尔奖 1993 \enspace \nasbadge 美国科学院院士}\personslide
+  {Silvio Micali\godelbadge\nasbadge}{西尔维奥·米卡利}
   {images/silviomicali.jpg}{Wikipedia}
   {2012（58岁）}{1954–}{意大利/美国}{MIT}
   {零知识证明、可验证随机函数。\\\textbf{主要荣誉}\\哥德尔奖 1993 \\ 美国科学院院士}}
 
-\newcommand{\whitfielddiffieslide}{\personslide
-  {Whitfield Diffie\shannonbadge}{惠特菲尔德·迪菲}
+\newcommand{\whitfielddiffieslide}{\gdef\personhonors{\shannonbadge 香农奖 2021 \enspace \marconibadge 马可尼奖}\personslide
+  {Whitfield Diffie\shannonbadge\marconibadge}{惠特菲尔德·迪菲}
   {images/whitfielddiffie.jpg}{Wikipedia}
   {2015（71岁）}{1944–}{美国}{—}
   {公钥密码学（Diffie-Hellman 密钥交换）。\\\textbf{主要荣誉}\\马可尼奖 \\ IEEE 香农奖 2021}}
 
-\newcommand{\martinhellmanslide}{\personslide
-  {Martin Hellman\shannonbadge}{马丁·赫尔曼}
+\newcommand{\martinhellmanslide}{\gdef\personhonors{\shannonbadge 香农奖 2021 \enspace \marconibadge 马可尼奖}\personslide
+  {Martin Hellman\shannonbadge\marconibadge}{马丁·赫尔曼}
   {images/martinhellman.jpg}{Wikipedia}
   {2015（70岁）}{1945–}{美国}{Stanford University}
   {公钥密码学（Diffie-Hellman 密钥交换）。\\\textbf{主要荣誉}\\马可尼奖 \\ IEEE 香农奖 2021}}
 
-\newcommand{\charleshbennettslide}{\personslide
+\newcommand{\charleshbennettslide}{\gdef\personhonors{}\personslide
   {Charles H. Bennett}{查尔斯·贝内特}
   {images/charleshbennett.jpg}{Wikipedia}
   {2025（82岁）}{1943–}{美国}{IBM}
   {量子信息科学、BB84 量子密钥分发、可逆计算。}}
 
-\newcommand{\gillesbrassardslide}{\personslide
+\newcommand{\gillesbrassardslide}{\gdef\personhonors{}\personslide
   {Gilles Brassard}{吉勒·布拉萨}
   {images/gillesbrassard.jpg}{Wikipedia}
   {2025（70岁）}{1955–}{加拿大}{Université de Montréal}

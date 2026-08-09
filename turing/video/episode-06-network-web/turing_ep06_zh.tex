@@ -30,19 +30,44 @@
 \definecolor{graypanel}{RGB}{240,238,244}
 \setbeamercolor{background canvas}{bg=bgmain}
 
+\providecommand{\personhonors}{}
+
 % 交叉奖项徽标（参考 Fields/COPSS 系列）
 % 用 \raisebox 而非 \textsuperscript：避免 22pt 标题触发 15.4pt 数学字体缺失警告
+% 符号+字母+品牌色：◆N 诺贝尔 · ★K 京都 · ◇G 哥德尔 · ★A 阿贝尔 · ★S 香农
 \newcommand{\nobelbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt N}}
 \newcommand{\kyotobadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
 \newcommand{\godelbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
 \newcommand{\abelbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
 \newcommand{\shannonbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+% ♥J 日本国际 · ▲N 内万林纳 · □E EATCS · ●M 马可尼 · ▲V 冯·诺依曼 · ◆T 千禧科技
+\newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
+\newcommand{\nevanlinnabadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt N}}
+\newcommand{\eatcsbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\square$\kern-0.5pt E}}
+\newcommand{\marconibadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bullet$\kern-0.5pt M}}
+\newcommand{\neumannbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacktriangle$\kern-0.5pt V}}
+\newcommand{\millenniumbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\blacklozenge$\kern-0.5pt T}}
+% ♠M 国家科学奖章 · ■N 美国科学院 · ✓R 皇家学会 · ◆C 加拿大总督 · ◇R 鲁梅哈特
+\newcommand{\nsmbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\spadesuit$\kern-0.5pt M}}
+\newcommand{\nasbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacksquare$\kern-0.5pt N}}
+\newcommand{\frsbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\checkmark$\kern-0.5pt R}}
+\newcommand{\govbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\blacklozenge$\kern-0.5pt C}}
+\newcommand{\rumelhartbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamondsuit$\kern-0.5pt R}}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]
   \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
   \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
 \end{tikzpicture}%
+}
+
+% 底部交叉荣誉边框：#1 = 图标串（\godelbadge 哥德尔奖 2009 ...）
+\newcommand{\honorbar}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south, draw=coverprimary!55, fill=coverlight, rounded corners=6pt,
+          inner xsep=8pt, inner ysep=5pt, yshift=0.55cm, text=coverdark!85] at (current page.south) {%
+      \fontsize{7.5}{9.5}\selectfont\bfseries{\color{coverprimary} 交叉荣誉}\enspace #1};
+  \end{tikzpicture}%
 }
 
 \newcommand{\sectiontitle}[2]{%
@@ -101,6 +126,7 @@
   \end{tikzpicture}
 \end{column}
 \end{columns}
+\if\relax\detokenize\expandafter{\personhonors}\relax\else\honorbar{\personhonors}\fi
 \end{frame}
 }
 
@@ -135,26 +161,26 @@
 
 % ========== SLIDES ==========
 
-\newcommand{\vintcerfslide}{\personslide
-  {Vint Cerf}{文顿·瑟夫}
+\newcommand{\vintcerfslide}{\gdef\personhonors{\marconibadge 马可尼奖 \enspace \nsmbadge 国家科学奖章}\personslide
+  {Vint Cerf\marconibadge\nsmbadge}{文顿·瑟夫}
   {images/vintcerf.jpg}{Wikipedia}
   {2004（61岁）}{1943–}{美国}{—}
   {TCP/IP 协议共同设计者，互联网之父之一。\\\textbf{主要荣誉}\\美国国家科学奖章 \\ 马可尼奖}}
 
-\newcommand{\robertkahnslide}{\personslide
+\newcommand{\robertkahnslide}{\gdef\personhonors{}\personslide
   {Robert Kahn}{罗伯特·卡恩}
   {images/robertkahn.jpg}{Wikipedia}
   {2004（66岁）}{1938–}{美国}{—}
   {TCP/IP 协议共同设计者，互联网架构奠基。}}
 
-\newcommand{\timbernersleeslide}{\personslide
-  {Tim Berners-Lee}{蒂姆·伯纳斯-李}
+\newcommand{\timbernersleeslide}{\gdef\personhonors{\millenniumbadge 千禧科技奖 2004 \enspace \frsbadge 皇家学会院士}\personslide
+  {Tim Berners-Lee\millenniumbadge\frsbadge}{蒂姆·伯纳斯-李}
   {images/timbernerslee.jpg}{Wikipedia}
   {2016（61岁）}{1955–}{英国}{W3C / MIT}
   {万维网（WWW）发明者，HTML、HTTP、URL。\\\textbf{主要荣誉}\\千禧科技奖 2004 \\ 英国皇家学会院士}}
 
-\newcommand{\robertmetcalfeslide}{\personslide
-  {Robert Metcalfe}{罗伯特·梅特卡夫}
+\newcommand{\robertmetcalfeslide}{\gdef\personhonors{\nsmbadge 国家科学奖章 2003}\personslide
+  {Robert Metcalfe\nsmbadge}{罗伯特·梅特卡夫}
   {images/robertmetcalfe.jpg}{Wikipedia}
   {2022（76岁）}{1946–}{美国}{MIT}
   {以太网（Ethernet）发明者，梅特卡夫定律。\\\textbf{主要荣誉}\\美国国家科学奖章 2003}}
