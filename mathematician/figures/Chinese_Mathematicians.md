@@ -144,4 +144,4 @@ Blaschke (博士导师) · Élie Cartan (巴黎导师)
 
 ---
 
-> **引用说明**：本名单基于 OpenMath 项目内部排名整理，排名标准见 [OpenMath_20世纪数学家综合排名.md](OpenMath_20世纪数学家综合排名.md)。并非官方权威排名，仅供项目内部参考。
+> **引用说明**：本名单基于 OpenMath 项目内部排名整理，排名标准见 [OpenMath_20th_Century_Comprehensive_Ranking.md](OpenMath_20th_Century_Comprehensive_Ranking.md)。并非官方权威排名，仅供项目内部参考。

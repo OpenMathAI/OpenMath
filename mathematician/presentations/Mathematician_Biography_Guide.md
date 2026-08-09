@@ -1107,7 +1107,7 @@ make video
 
 ### 19.1 两个标志位
 
-在 [OpenMath_20世纪数学家综合排名.md](../figures/OpenMath_20世纪数学家综合排名.md) 中为每位数学家维护两个标志位：
+在 [OpenMath_20th_Century_Comprehensive_Ranking.md](../figures/OpenMath_20th_Century_Comprehensive_Ranking.md) 中为每位数学家维护两个标志位：
 
 | 标志位 | 含义 | 取值 |
 |--------|------|------|
