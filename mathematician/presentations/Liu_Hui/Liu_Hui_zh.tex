@@ -1,0 +1,349 @@
+% =============================================================
+%  两大注经者：刘徽 & 赵爽合传
+%  Beamer 演示 —— 《九章算术注》×《周髀算经注》
+%  资料来源：Wikipedia (Liu Hui + Zhoubi Suanjing)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：墨竹黑 + 竹青 + 古铜 + 古金 =====
+\definecolor{bgmain}{RGB}{242,239,230}
+\definecolor{coverprimary}{HTML}{2D2D1C}
+\definecolor{coveraccent}{HTML}{8B7355}
+\definecolor{badgeGeometry}{HTML}{5B8C5A}
+\definecolor{badgeAlgebra}{HTML}{8B7355}
+\definecolor{badgeSurvey}{HTML}{4A6FA5}
+\definecolor{badgeLegacy}{HTML}{C9A227}
+\definecolor{coverdark}{HTML}{1A1A1A}
+\definecolor{covermuted}{HTML}{6B7A8C}
+\definecolor{titlecolor}{RGB}{24,24,16}
+\definecolor{muteddark}{RGB}{78,88,108}
+\definecolor{geopanel}{RGB}{232,246,232}
+\definecolor{algebraepanel}{RGB}{246,238,228}
+\definecolor{surveypanel}{RGB}{228,236,248}
+\definecolor{legacypanel}{RGB}{252,246,228}
+\definecolor{graypanel}{RGB}{244,240,232}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!3] (current page.north west) rectangle (current page.south east);
+  \fill[badgeGeometry!5] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeAlgebra!4] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeSurvey!4] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!4] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.03, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.03, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+  \node[badgeGeometry!5, font=\fontsize{28}{34}\selectfont] at ([xshift=0.3cm, yshift=-1.0cm]current page.north west) {$\bigcirc$};
+  \node[badgeAlgebra!3, font=\fontsize{24}{30}\selectfont] at ([xshift=-0.5cm, yshift=1.2cm]current page.south east) {$\square$};
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{19}{23}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=badgeGeometry!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{book}\enspace 三国·曹魏\enspace|\enspace 《九章算术注》\enspace|\enspace 《周髀算经注》};
+  \node[anchor=center, font=\fontsize{28}{34}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {刘徽\enspace\& \enspace 赵爽};
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Liu Hui \enspace fl. 3世纪\enspace ·\enspace Zhao Shuang \enspace fl. 3世纪};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {割圆术 · $\pi$ 近似 · 弦图 · 勾股定理 · Gaussian 消元 · 牟合方盖};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.80cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeGeometry, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\small\bfseries, text=white] at (-5.5,0) {割圆术\\[2pt]$\pi \approx 3.14159$\\超越阿基米德\\极限思想起源};
+      \node[rounded corners=8pt, fill=badgeAlgebra, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\small\bfseries, text=white!92] at (-1.85,0) {弦图\\[2pt]现存最早\\勾股定理图示证明\\$a^2+b^2=c^2$};
+      \node[rounded corners=8pt, fill=badgeSurvey, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\small\bfseries, text=white] at (1.85,0) {算法体系\\[2pt]Gaussian 消元\\负数·十进制小数\\Cavalieri 先驱};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\small\bfseries, text=white!92] at (5.5,0) {未竟的接力\\[2pt]牟合方盖\\留给祖冲之父子\\千年后完成};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.85cm]current page.center)
+    {"割之弥细，所失弥少，割之又割，以至于不可割，则与圆周合体而无所失矣。" —— 刘徽};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace 曹魏 (三国时期)\enspace|\enspace 刘徽注《九章算术》· 赵爽注《周髀算经》\enspace|\enspace 3 世纪};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 总览 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{两大注经者：乱世中的数学革命}{《九章算术注》×《周髀算经注》 — 以述为作的注疏传统}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.5}{9.5}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=geopanel,draw=badgeGeometry!55,text=badgeGeometry!85!black]
+    (a) at (-5.5,0.8) {刘徽 · 割圆术\\[2pt]3072 边形\\$\pi \approx 3.14159$\\超越阿基米德};
+  \node[nodebox,fill=algebraepanel,draw=badgeAlgebra!55,text=badgeAlgebra!85!black]
+    (b) at (-1.85,0.8) {赵爽 · 弦图\\[2pt]勾股定理视觉证明\\$c^2 = a^2 + b^2$\\现存最早图示};
+  \node[nodebox,fill=surveypanel,draw=badgeSurvey!55,text=badgeSurvey!85!black]
+    (c) at (1.85,0.8) {刘徽 · 算法体系\\[2pt]Gaussian 消元\\负数·十进制小数\\《海岛算经》};
+  \node[nodebox,fill=legacypanel,draw=badgeLegacy!55,text=badgeLegacy!85!black]
+    (d) at (5.5,0.8) {千年接力\\[2pt]牟合方盖 → 祖冲之\\Cavalieri → 祖暅之\\弦图 → 中学课本};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{9.0}{11.0}\selectfont\bfseries\color{coverdark!88} 公元 3 世纪，三国鼎立的乱世中，两位数学家做着同样的事：\\[1pt]在经典上做注——刘徽注《九章》，赵爽注《周髀》。他们以述为作，注出了全新的数学世界。}\\[2pt]
+    {\fontsize{7.8}{9.8}\selectfont\color{covermuted} 刘徽：割圆术·极限思想·算法体系。\quad 赵爽：弦图·勾股定理的视觉证明。\quad 两人的影响穿越千年，直达今日。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 乱世注经 ---
+\newcommand{\eraSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{乱世中的两个注经者 (3 世纪, 曹魏)}{三国鼎立 · 竹简上的数学 · 以述为作的注疏传统}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=geopanel,draw=badgeGeometry!55] at (0,2.55)
+    {\textbf{三国的时代。}公元 220–280 年，曹魏·蜀汉·东吴三分天下。这是中国历史上最著名的乱世——战场上的英雄（曹操·诸葛亮·关羽），也是书案前的智者（刘徽·赵爽）。刘徽出身东汉淄乡侯后裔，赵爽（又名赵君卿）的生平几乎不为人知——两人可能终其一生互不相识，却在做着同样的事：给古代经典写注。};
+  \node[item,fill=algebraepanel,draw=badgeAlgebra!55] at (0,0.70)
+    {\textbf{注疏的传统。}"注"是中国知识分子的核心工作模式。形式上，是在经典文本的字里行间添加注释；实质上，是{\bfseries 以述为作}——在解释古人的同时，注入自己全新的思想。刘徽注《九章算术》（中国算术百科全书），赵爽注《周髀算经》（天文数学经典）。两部注疏，分别成为中国数学史上两个方向（算法/几何）的奠基之作。};
+  \node[item,fill=graypanel,draw=badgeSurvey!20] at (0,-0.55)
+    {\textbf{为什么要合传？}因为他们互补。刘徽是算法型天才——迭代、逼近、系统化；赵爽是几何直觉型天才——一张图胜过千言万语。一起看，才能看到 3 世纪中国数学的全貌：既有{\bfseries 割圆术}的无穷逼近，也有{\bfseries 弦图}的瞬间洞见。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 注经者的孤独——在竹简上写下没有人会立刻理解的数学。但千年后，他们的注疏定义了整个中国数学的走向。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 赵爽的弦图 ---
+\newcommand{\xiantuSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{赵爽的弦图：勾股定理的最早视觉证明}{弦图 · 大正方形 = 4×三角形 + 中心小正方形 · $a^2 + b^2 = c^2$}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=geopanel,draw=badgeGeometry!55] at (0,2.65)
+    {\textbf{一部天文书的数学附录。}赵爽为《周髀算经》作注。《周髀算经》本是一部天文著作，涉及日影测量和宇宙模型。赵爽在注释中加入了数学内容——其中最著名的是一张被称为{\bfseries "弦图"}的图示。这张图用面积分割的方法，直观地证明了勾股定理（中国古代称"勾股定理"，勾=短直角边，股=长直角边，弦=斜边）。};
+  \node[item,fill=algebraepanel,draw=badgeAlgebra!55] at (0,0.65)
+    {\textbf{弦图的证明逻辑。}用一个大正方形（边长 $a+b$）内接四个相同的直角三角形（勾 $a$，股 $b$，弦 $c$）。大正方形面积 = 四个三角形面积 + 中心小正方形面积：$(a+b)^2 = 4 \cdot \frac{1}{2}ab + c^2$。化简即得 $a^2 + b^2 = c^2$。整个过程{\bfseries 不需要任何文字}——只需看这张图。};
+  \node[item,fill=graypanel,draw=badgeSurvey!20] at (0,-0.65)
+    {\textbf{最早的记录。}Wikipedia (Zhoubi Suanjing) 记载：赵爽的弦图是现存最早的勾股定理图示证明。欧几里得《几何原本》虽然更早（约前 300 年），但其证明依赖于复杂的逻辑推理。赵爽的方法完全不同——它用{\bfseries 一张图}完成了整个证明，这是最直观、最东方的数学思维。今天，弦图仍在中国的中学数学课本中使用。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.2) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一张正方形的图，四个直角三角形，一个中心小方块——这就是人类最早也最优雅的 $c^2 = a^2 + b^2$ 证明之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 刘徽的割圆术 ---
+\newcommand{\yuanSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{刘徽的割圆术}{割圆术 · 3072 边形 · $\pi \approx 3.14159$ · 超越阿基米德}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=geopanel,draw=badgeGeometry!55] at (0,2.65)
+    {\textbf{从 6 边到 3072 边。}在中国数学中，$\pi$ 长期被粗略地视为 3。刘徽在《九章算术注》中提出了割圆术：从圆内接正六边形开始，不断将边数加倍——12, 24, 48, 96, 192, …, 直到{\bfseries 正 3072 边形}。每一步都计算新的边长，而每一步计算都依赖前一步的结果——这是一场精密的数学迭代。};
+  \node[item,fill=algebraepanel,draw=badgeAlgebra!55] at (0,0.65)
+    {\textbf{超越阿基米德。}用正 192 边形，刘徽得到了 $\pi \approx 157/50 = 3.14$。进一步用{\bfseries 正 3072 边形}，他得到了 $\pi \approx 3927/1250 = \mathbf{3.14159}$。这一精度超越了阿基米德的结果（阿基米德用 96 边形得到 $3.1408 < \pi < 3.1429$）。更重要的是，刘徽自己写道：理论上可以无限切割下去——这就是极限思想的东方起源。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.65)
+    {\textbf{"割之弥细，所失弥少。"}刘徽原文："割之弥细，所失弥少，割之又割，以至于不可割，则与圆周合体而无所失矣。" —— 这是中国数学史上关于{\bfseries 极限}的最清晰表述。他没有用"无限"这个词，但他描述的正是无限逼近的过程。这一思想在两百年后被祖冲之继承，祖冲之将 $\pi$ 算到了 $3.1415926–3.1415927$。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.2) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "割之又割，以至于不可割"——古希腊的穷竭法和中国的割圆术，在极限这个最深的数学概念上，竟然殊途同归。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 算法与几何的交响 ---
+\newcommand{\algorithmSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{刘徽的算法世界：比 Gauss 早 1500 年的数学}{Gaussian 消元 · 负数运算 · 十进制小数 · Cavalieri 原理先驱}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algebraepanel,draw=badgeAlgebra!55] at (0,2.55)
+    {\textbf{Gaussian 消元法。}刘徽在《九章算术注》中系统描述了"方 程术"——一种解多元一次线性方程组的方法。这个方法本质上就是今天全世界都在使用的 {\bfseries Gaussian 消元法}，但刘徽比 Carl Friedrich Gauss 早了{\bfseries 约 1500 年}。他用算筹（木棍）排列系数矩阵，逐列消去未知数——这正是矩阵行变换的原始形态。};
+  \node[item,fill=geopanel,draw=badgeGeometry!55] at (0,0.55)
+    {\textbf{负数的发现。}Wikipedia 明确记载：刘徽"可能是世界上第一个发现并使用负数的数学家"，确定早于印度数学家 Brahmagupta。在《九章算术注》中，他用红色算筹表示正数，黑色算筹表示负数——这是人类最早的{\bfseries 有符号数表示法}之一。};
+  \node[item,fill=surveypanel,draw=badgeSurvey!55] at (0,-0.80)
+    {\textbf{十进制小数与 Cavalieri 先驱。}刘徽用长度单位体系（1 尺 = 10 寸 = 100 分 = 1000 厘）来表达十进制小数，这是十进制记数法的重要先驱。在立体几何中，他使用了等截面原理（Cavalieri 原理）来求圆柱和正交圆柱交集的体积——虽未最终完成球体积，但为祖冲之父子指明了方向。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.3) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 刘徽的数学工具箱：消元法、负数、十进制小数、等截面原理——每一样都比西方早了一千年以上。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 《海岛算经》 ---
+\newcommand{\haidaoSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《海岛算经》：从书房走向大地的数学}{9 个测量问题 · 重差术 · 相似三角形 · 中国测量学的奠基}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=surveypanel,draw=badgeSurvey!55] at (0,2.65)
+    {\textbf{一本独立的测量学经典。}263 年，刘徽在《九章算术注》之外另著《海岛算经》（本名《重差》），这是世界上最早的独立测量学著作之一。全书只有 9 个问题——但每一个都展现了刘徽将几何原理转化为实用测量技术的非凡能力。};
+  \node[item,fill=geopanel,draw=badgeGeometry!55] at (0,0.65)
+    {\textbf{9 个问题，9 种不可能的任务。}测量海岛的高度（从海上）、测量远处城楼的尺寸、测量峡谷的深度、从山上测量平原上的塔高、测量河口的宽度、测量山谷的宽度、测量透明水池的深度……刘徽用{\bfseries "重差术"}——即使用两根标杆在不同位置进行两次测量，利用相似三角形计算不可直接测量的距离。};
+  \node[item,fill=graypanel,draw=badgeAlgebra!20] at (0,-0.65)
+    {\textbf{数学的有用之美。}《海岛算经》是数学最有说服力的广告：它告诉世人——你不需要走到海岛上，就能测量它的高度。这种方法后来被用于中国的地图绘制、水利工程和军事侦察。同时代的制图学家裴秀 (224–271) 正是利用了刘徽的测量原理，创建了中国最早的矩形网格地图。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.2) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 数学的最高境界——不是停留在竹简上，而是走出去，测量这个世界。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 牟合方盖 ---
+\newcommand{\mouheSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{未竟的问题：牟合方盖与留给后人的接力棒}{"敢不阙疑，以俟能言者" · 牟合方盖 · 球体积 · 祖冲之父子的接力}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=geopanel,draw=badgeGeometry!55] at (0,2.55)
+    {\textbf{一个无法解开的难题。}在《九章算术注》中，刘徽试图计算球体积。他发现球体积与一个特殊几何体有关——{\bfseries "牟合方盖"}，即两个半径相同的正交圆柱的交集。这个形状像一个去了角的立方体，刘徽知道它的体积与球体积有精确的比例关系，但他无法直接计算牟合方盖的体积。};
+  \node[item,fill=algebraepanel,draw=badgeAlgebra!55] at (0,0.50)
+    {\textbf{一个伟大数学家的诚实。}刘徽没有假装解出了这个问题。他在书中写道：{\bfseries "敢不阙疑，以俟能言者。"} —— "我不敢不存疑，等待后来能解决它的人。" 这是一种在中国古代数学中罕见的诚实和谦逊——承认自己做不到，把问题留给后人。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.90)
+    {\textbf{两百年的接力。}刘徽的问题等了两百年。5 世纪，祖冲之和祖暅之父子接过了这个接力棒。他们运用刘徽提出的等截面原理（今称 Cavalieri 原理），完成了牟合方盖体积的计算，从而得出了球体积公式 $V = \pi D^3 / 6$。刘徽提出、祖氏父子完成——这是中国数学史上最动人的接力故事。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.3) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "以俟能言者"——刘徽的这份诚实与信任，等来了两百年的答案。这是数学家之间的最高礼遇。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 千年接力 ---
+\newcommand{\relaySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{千年接力：从刘徽赵爽到今天}{刘徽 → 祖冲之 → 祖暅之 · 赵爽弦图 → 中学课本 · 经典如何穿越时间}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=geopanel,draw=badgeGeometry!55] at (0,2.55)
+    {\textbf{刘徽 → 祖冲之 → 祖暅之 —— $\pi$ 的千年传奇。}刘徽割圆术 (3世纪) → 祖冲之 $\pi = 3.1415926–3.1415927$ (5世纪) → 世界纪录保持近千年。刘徽牟合方盖 → 祖冲之/祖暅之球体积 (6世纪) → 祖暅原理比 Cavalieri 早 1100 年。刘徽的方 程术 → 千年后命名为 Gaussian 消元法。};
+  \node[item,fill=algebraepanel,draw=badgeAlgebra!55] at (0,0.55)
+    {\textbf{赵爽弦图 → 今天的教室。}赵爽的弦图是中国数学史上最持久的教学工具。1700 年后的今天，中国的中学数学课本中仍然使用弦图的逻辑来证明勾股定理。一张 3 世纪画在竹简上的图，穿越了纸张、雕版印刷、活字印刷、电子屏幕，出现在了每个中国学生的课本里。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.80)
+    {\textbf{注疏的力量。}《九章算术注》和《周髀算经注》的另一个遗产：它们确立了中国数学的"注疏"模式。汉代的经典 → 3 世纪的刘徽赵爽 → 7 世纪李淳风 → 13 世纪杨辉 —— 一代代注疏叠加，形成了一层又一层的思想沉淀。这是中国数学独特的知识生产方式。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.3) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 注经者从不孤独——他们不知道谁会在未来接住他们抛出的问题。但他们相信，一定会有人接住。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.6cm]current page.center) {割之弥细，所失弥少。};
+  \node[anchor=center, font=\fontsize{16}{22}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {割之又割，以至于不可割，};
+  \node[anchor=center, font=\fontsize{16}{22}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=-0.2cm]current page.center) {则与圆周合体而无所失矣。};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont, text=coverprimary!60!black]
+    at ([yshift=-0.9cm]current page.center) {—— 刘徽，《九章算术注》，公元 263 年};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-1.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-1.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-2.4cm]current page.center)
+    {刘徽 fl. 3世纪\quad 赵爽 fl. 3世纪\quad 曹魏 (三国时期)};
+  \node[anchor=center, font=\fontsize{6.5}{8}\selectfont, text=badgeLegacy!60]
+    at ([yshift=-3.1cm]current page.center)
+    {从竹简上的弦图到 $\pi$ 的千年纪录——他们是提问者，也是被千年后的回答者致敬的人。};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace 割圆术 \enspace|\enspace 弦图 \enspace|\enspace Gaussian 消元 \enspace|\enspace 牟合方盖 \enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\eraSlide
+\xiantuSlide
+\yuanSlide
+\algorithmSlide
+\haidaoSlide
+\mouheSlide
+\relaySlide
+\closingslide
+\end{document}
