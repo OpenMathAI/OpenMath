@@ -332,7 +332,7 @@ HEADER = r"""% Turing Award Video — Episode {EP}
 \newcommand{\honorbar}[1]{%
   \begin{tikzpicture}[remember picture, overlay]
     \node[anchor=south, draw=coverprimary!55, fill=coverlight, rounded corners=6pt,
-          inner xsep=8pt, inner ysep=5pt, yshift=0.55cm, text=coverdark!85] at (current page.south) {%
+          inner xsep=8pt, inner ysep=5pt, yshift=0.65cm, text=coverdark!85] at (current page.south) {%
       \fontsize{7.5}{9.5}\selectfont\bfseries{\color{coverprimary} 其他殊荣}\enspace #1};
   \end{tikzpicture}%
 }
