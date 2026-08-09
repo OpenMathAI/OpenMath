@@ -507,7 +507,7 @@ def person_slide(p, prefix="", ep_dir=""):
     name, cn, year, life, country, inst, contrib = p
     body = esc(contrib)
     if name in HONORS:
-        body += "\\\\\\textbf{主要荣誉}：%s" % esc(HONORS[name])
+        body += "\\\\\\textbf{主要荣誉}\\\\%s" % esc(HONORS[name])
     cname = prefix + cmd_name(name)
     age = compute_age(year, life)
     year_str = "%d（%s）" % (year, age) if age else str(year)
@@ -805,7 +805,7 @@ def person_slide_all(p, cname):
     name, cn, year, life, country, inst, contrib = p
     body = esc(contrib)
     if name in HONORS:
-        body += "\\\\\\textbf{主要荣誉}：%s" % esc(HONORS[name])
+        body += "\\\\\\textbf{主要荣誉}\\\\%s" % esc(HONORS[name])
     age = compute_age(year, life)
     edition = year - 1965  # ACM Turing Award: 1966 = 1st edition
     # 届数加粗彩色（coveraccent 红）让数字醒目
