@@ -414,6 +414,18 @@ def esc(s):
     return str(s).replace("&", "\\&")
 
 
+def format_life(life):
+    """Append 享年XX岁 for deceased laureates, e.g. '1922–1990' → '1922–1990（享年68岁）'."""
+    if not life:
+        return life
+    m = re.match(r'^\s*(\d{4})\s*[–-]\s*(\d{4})\s*$', life.replace("–", "-"))
+    if m:
+        y1, y2 = int(m.group(1)), int(m.group(2))
+        if y2 > y1:
+            return "%s（享年%d岁）" % (life, y2 - y1)
+    return life
+
+
 def cmd_name(name):
     s = name.replace(".", "").replace("-", "").replace("(", "").replace(")", "").replace(" ", "").replace("'", "")
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode()
@@ -603,7 +615,7 @@ def person_slide(p, prefix="", ep_dir=""):
             "  {%s}}\n" % (
                 cname, honors,
                 esc(name) + badges_for(name), esc(cn), img, credit, year_str,
-                esc(life), esc(country), esc(inst), body))
+                format_life(life), esc(country), esc(inst), body))
 
 
 def grid_dims(n):
@@ -795,8 +807,8 @@ $(SLIDES_TXT): $(IMAGES_DIR)/.done
 	import os; \
 	imgs = sorted([f for f in os.listdir('$(IMAGES_DIR)') if f.endswith('.png')]); \
 	lines = []; \
-	[lines.extend(['file 'images/' + f, 'duration $(DURATION)']) for f in imgs]; \
-	lines.append('file 'images/' + imgs[-1]); \
+	[lines.extend(['file ' + 'images/' + f, 'duration $(DURATION)']) for f in imgs]; \
+	lines.append('file ' + 'images/' + imgs[-1]); \
 	open('$(SLIDES_TXT)', 'w').write(chr(10).join(lines) + chr(10)); \
 	print(f'  slides.txt: {len(imgs)} slides x $(DURATION)s = {len(imgs)*$(DURATION)}s')"
 
@@ -908,7 +920,7 @@ def person_slide_all(p, cname):
                 cname, honors,
                 esc(name) + badges_for(name), esc(cn),
                 img, credit,
-                year_str, esc(life), esc(country), esc(inst), body))
+                year_str, format_life(life), esc(country), esc(inst), body))
 
 
 if __name__ == "__main__":
