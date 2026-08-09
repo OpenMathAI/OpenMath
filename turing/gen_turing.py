@@ -532,7 +532,7 @@ def grid_dims(n):
         return 5, 2, 1.35, 1.65, 0.14
     if n <= 15:
         return 6, 3, 1.25, 1.50, 0.12
-    return 17, 5, 0.55, 0.66, 0.04
+    return 17, 5, 0.50, 0.60, 0.04
 
 
 def make_cover_slide(people, title, sub, note, foot, ep_dir, cover_name="coverslide"):
@@ -543,8 +543,11 @@ def make_cover_slide(people, title, sub, note, foot, ep_dir, cover_name="coversl
     if len(people) <= 10:
         center_y, note_y = -0.30, None
         badge_y = None
-    else:
+    elif len(people) <= 15:
         center_y = -1.50
+    else:
+        # large grid (e.g. allinone 81): place below note line at yshift=0.10cm
+        center_y = -1.80
     grid = ['  \\node[anchor=center] at ([yshift=%.2fcm]current page.center) {' % center_y,
             r'    \begin{tikzpicture}[scale=1]']
     for i, p in enumerate(people):
