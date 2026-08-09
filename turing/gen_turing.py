@@ -56,7 +56,7 @@ DATA = {
         ("Dana Scott", "达纳·斯科特", 1976, "1932–", "美国", "Carnegie Mellon University",
          "域理论，为程序语义学奠定数学基础。"),
         ("Robin Milner", "罗宾·米尔纳", 1991, "1934–2010", "英国", "University of Edinburgh",
-         "ML 语言、LCF 定理证明、π 演算（并发理论）。"),
+         "ML 语言、LCF 定理证明、$\\pi$ 演算（并发理论）。"),
         ("Ole-Johan Dahl", "奥利-约翰·达尔", 2001, "1931–2002", "挪威", "University of Oslo",
          "面向对象编程（Simula 语言），OOP 先驱。"),
         ("Kristen Nygaard", "克里斯汀·尼加德", 2001, "1926–2002", "挪威", "University of Oslo",
