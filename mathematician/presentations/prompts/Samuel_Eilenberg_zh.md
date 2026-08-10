@@ -48,6 +48,40 @@
 | 1991–1992 | 大都会艺术博物馆举办 Eilenberg 捐赠藏品展 "The Lotus Transcendent" |
 | 1998-01-30 | 在纽约市去世, 享年84岁 |
 
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_eilenberg_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q535833` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `萨缪尔·艾伦伯格` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["范畴论的奠基者","Eilenberg-MacLane 空间","Eilenberg-Steenrod 公理"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1913-09-30` / `1998-01-30` | ⚠️ 仅年份 |
+| 6 | `people` | description | `Polish-American mathematician (1913–1998)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`topologist(1)`、`university teacher(2)`、`art collector(3)` | ⚠️ 需补（art collector 补字典） |
+| 8 | `person_field` | 领域 | `topology`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Wolf 1986`（已有）、`Steele 1987`、`Guggenheim`、`巴黎 VII 荣誉博士` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: Warsaw`；`employment: Michigan、Columbia、Princeton、Indiana` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Poland`、`United States` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见 4.5 步（7 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Kazimierz Kuratowski → Eilenberg | 有向 | ⚠️ 占位 |
+| 导师 | Karol Borsuk → Eilenberg | 有向 | ⚠️ 占位 |
+| 学生 | Eilenberg → William Lawvere | 有向 | ⚠️ 占位 |
+| 学生 | Eilenberg → Daniel Kan | 有向 | ⚠️ 占位 |
+| 合作者 | Saunders Mac Lane | 无向 | ✅ 在库（id=39，Eilenberg–MacLane 空间） |
+| 同事 | Norman Steenrod | 无向 | ✅ 在库（id=459，Eilenberg–Steenrod 公理） |
+| 同事 | Henri Cartan | 无向 | ✅ 在库（id=69，Cartan–Eilenberg） |
+
+- 缺失人物（4 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_eilenberg_relations.py`
+
 ## 三、核心贡献表
 
 | 领域 | 贡献 | 关键年份 |
