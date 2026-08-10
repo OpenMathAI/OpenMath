@@ -123,6 +123,30 @@
 
 ---
 
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。参考脚本：`MySQL/seed_weil_relations.py`（已执行，13 条关系 + 3 条补充，缺失 4 人占位）。
+
+**入库范围（提示词「人物关系」节，16 条）**：
+| 关系类型 | 人物 | 状态 |
+|---|---|---|
+| 妹妹（parent-child） | Simone Weil | ✅ 已入库 |
+| 导师（advisor-student） | Hadamard → Weil | ✅ 已入库 |
+| 继承人（advisor-student） | Weil → Deligne | ✅ 已入库 |
+| 合作者（collaborator） | 布尔巴基：Henri Cartan、Chevalley、Delsarte、Dieudonné、Mandelbrojt、de Possel | ✅ 已入库 |
+| 同事（colleague） | Einstein、Gödel、von Neumann、Oppenheimer、Nevanlinna、Veblen | ✅ 已入库 |
+| 后继者（advisor-student） | Grothendieck | ✅ 已入库 |
+
+**校验**：
+```sql
+SELECT a.name_en AS 甲, rt.name_zh AS 关系, b.name_en AS 乙, pr.note
+FROM person_relation pr JOIN people a ON a.id=pr.from_id
+JOIN people b ON b.id=pr.to_id JOIN relation_types rt ON rt.relation_key=pr.relation_type
+WHERE a.name_en='André Weil' OR b.name_en='André Weil';
+```
+
+---
+
 ## 第 5 步：设计配色方案
 
 - **建议配色：勃艮第深红 + 石板暖灰 + 象牙金** —— 法国数学的优雅 + 布尔巴基的严谨 + 印度智慧的温暖
