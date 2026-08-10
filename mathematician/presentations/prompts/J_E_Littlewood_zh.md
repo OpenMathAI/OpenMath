@@ -69,6 +69,45 @@
 
 ---
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_littlewood_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q353426` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `约翰·埃登瑟·李特尔伍德` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["哈代-李特尔伍德公式的合著者","分析学派双子星之一"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1885-06-09` / `1977-09-06` | ⚠️ **NULL 全缺** |
+| 6 | `people` | description | `English mathematician (1885–1977)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `mathematical analysis`、`number theory`、`differential equations` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Smith's 1908`、`Royal Medal 1929`、`De Morgan 1938`、`Sylvester 1943`、`Copley 1958`、`Senior Berwick 1960`、`FRS` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: Trinity、Cambridge、St Paul's`；`employment: Manchester、Cambridge` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `United Kingdom` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（6 条） | ⚠️ 仅 1 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_littlewood_relations.py` 补足。
+
+**入库范围（6 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Ernest Barnes → Littlewood | 有向 | ⚠️ 占位 |
+| 学生 | Littlewood → Harold Davenport | 有向 | ⚠️ 占位 |
+| 学生 | Littlewood → Sarvadaman Chowla | 有向 | ⚠️ 占位 |
+| 学生 | Littlewood → Peter Swinnerton-Dyer | 有向 | ⚠️ 占位 |
+| 合作者 | G. H. Hardy | 无向 | ✅ 在库（id=21） |
+| 同事 | Srinivasa Ramanujan | 无向 | ✅ 在库（id=57） |
+
+- 缺失人物（4 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心数学贡献
 
 | 领域 | 贡献 | 年代 |
