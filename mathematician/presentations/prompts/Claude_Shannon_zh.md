@@ -59,6 +59,47 @@ Shannon 可能是 20 世纪最"好玩"的天才。他在贝尔实验室的走廊
 
 但不要被他的玩具所迷惑。他在二战期间为美国国防部做密码分析和火力控制——用数学拯救生命。他的密码学论文（1945 年写成，1949 年公开）至今仍是现代密码学的基础。他还是可穿戴计算机的发明者之一——1961 年他和 Ed Thorp（后来的量化投资先驱）一起发明了能预测轮盘赌的隐藏计算机。
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_shannon_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q92760` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `克劳德·香农` | ✅ 已有 |
+| 3 | `people` | name_variants | `["信息论之父","比特的发明者","熵的命名者"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1916-04-30` / `2001-02-24` | ⚠️ **NULL 全缺** |
+| 6 | `people` | description | `American mathematician and information theorist (1916–2001)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`computer scientist(1)`、`cryptographer(2)`、`engineer(3)`、`inventor(4)`、`university teacher(5)`、`geneticist(6)` | ⚠️ 需补（inventor/geneticist 补字典） |
+| 8 | `person_field` | 领域 | `information theory`、`probability theory`、`cryptography`、`cybernetics`、`electrical engineering` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Alfred Noble 1939`、`Liebmann 1949`、`Ballantine 1955`、`IEEE Medal of Honor 1966`、`NMS 1966`、`Harvey 1972`、`Shannon Award 1973`、`Pender 1978`、`Fritz 1983`、`Kyoto 1985`、`Marconi 2000`、`ForMemRS` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: Michigan、MIT`；`employment: Bell Labs(1941–1972)、MIT(1956–1978)、IAS(1940–1941)` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `United States` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（8 条） | ⚠️ 仅 1 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_shannon_relations.py` 补足。
+
+**入库范围（8 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Vannevar Bush → Shannon | 有向 | ⚠️ 占位（差分分析机硕士论文） |
+| 导师 | Frank Lauren Hitchcock → Shannon | 有向 | ⚠️ 占位 |
+| 学生 | Shannon → Ivan Sutherland | 有向 | ✅ 在库（id=239） |
+| 学生 | Shannon → William Daniel Hillis | 有向 | ⚠️ 占位 |
+| 同事 | Alan Turing | 无向 | ✅ 在库（id=9，1943 贝尔实验室会面） |
+| 同事 | Norbert Wiener | 无向 | ✅ 在库（id=56，控制论） |
+| 同事 | John von Neumann | 无向 | ✅ 在库（id=3） |
+| 同事 | Richard Hamming | 无向 | ✅ 在库（id=215，贝尔实验室） |
+
+- 缺失人物（3 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心贡献
 
 | 领域 | 具体贡献 | 年代 |
