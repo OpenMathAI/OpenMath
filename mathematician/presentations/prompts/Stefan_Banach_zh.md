@@ -38,8 +38,8 @@
   - 1924: 波兰学习院成员（Polish Academy of Learning membership）— ★ 唯一同时代、可入库的荣誉
   - 1930: 波兰数学学会主席
   - 1936: 奥斯陆 ICM 全体大会报告
-  - ⚠️ **Order of the White Eagle（2018 追授）— 晚于数学家 73 年，按 §21.5 原则不收**
-  - ⚠️ 多次被提名但从未获得 Fields 奖（Fields 1936 年才设立，Banach 已 44 岁）
+  - Order of the White Eagle（2018 追授，死后 73 年）— **收录**（§21.2.4 全部收录原则）
+  - 多次被提名但从未获得 Fields 奖（Fields 1936 年才设立，Banach 已 44 岁）
 - **重要合作者/同事/学生**：
   - 发现者与合作者: Hugo Steinhaus（公园长椅"发现"）
   - Lwów 学派核心成员: Stanisław Mazur（学生/合作者）, Stanisław Ulam, Juliusz Schauder, Władysław Orlicz
@@ -66,7 +66,7 @@
 | 9 | `people` | primary_occupation | `mathematician` | ✅ |
 | 10 | `person_occupation` | 职业（rank 排序） | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补（现仅 mathematician） |
 | 11 | `person_field` | 领域（rank 排序） | `mathematics`、`functional analysis`、`topology`、`measure theory`、`set theory`、`Banach space`、`integral` | ✅ 7 项已有 |
-| 12 | `award_laureate` | 获奖（year/note） | `Member of the Polish Academy of Learning 1924` | ⚠️ 空（需补字典）；⚠️ **White Eagle 2018 追授不收** |
+| 12 | `award_laureate` | 获奖（year/note）★全部收录 | `Member of the Polish Academy of Learning 1924`、`Order of the White Eagle 2018(追授)` | ⚠️ 空（需补字典 2 个） |
 | 13 | `person_institution` | 教育/任职 | `education: Lviv Polytechnic、Jagiellonian University、Lviv University`；`employment: Lviv Polytechnic(1920–1922)、Lviv University(1922–1941)` | ⚠️ 全空 |
 | 14 | `person_nationality` | 国籍 | `Cisleithania`、`Second Polish Republic`、`Ukrainian SSR`、`Reichskommissariat Ukraine` | ✅ 4 项已有 |
 | 15 | `person_relation` | 社会关系 | 见第 4.5 步（8 条） | ⚠️ 全空 |
@@ -217,7 +217,7 @@ Banach 的故事有三条主线：泛函分析的创立 + Lwów 学派的传奇 
 | **Schauder 的死因** | Schauder 是犹太人，1943 年在 Lwów 被纳粹盖世太保杀害。这是 Lwów 学派被战争摧毁的核心悲剧事件。 |
 | **苏联占领的评价** | 苏联占领 Lwów 期间 Banach 受相对优待（Sobolev 和 Kolmogorov 访问了他）。但这不是"亲苏联"——这是生存策略。叙事保持中立。 |
 | **Lwów 的地理归属** | 战前 Lwów 属于波兰第二共和国。战后划归苏联（今乌克兰利沃夫）。不要说"Lwów 在乌克兰"来描述战前时期。 |
-| **白鹰勋章** | ★ Order of the White Eagle 是 **2018 年追授**（独立 100 周年仪式），晚于数学家 73 年。按 §21.5 原则不入库；Beamer 中可作为"迟到的荣誉"一句带过，但不可写成 Banach 在世时的成就。 |
+| **白鹰勋章** | ★ Order of the White Eagle 是 **2018 年追授**（独立 100 周年仪式），晚于数学家 73 年。**数据库收录**（§21.2.4 全部收录原则，award_type=honor）；Beamer 中可作为"迟到的荣誉"一句带过，但不可写成 Banach 在世时的成就。 |
 
 ### 术语清单
 
@@ -331,5 +331,5 @@ Banach 的故事有三条主线：泛函分析的创立 + Lwów 学派的传奇 
 > 6. 活鹅是真实的——这不需要过度渲染，它本身就很有力量
 > 7. 三大基本定理每一定理都需要一句话直观解释——不要只列名字
 > 8. **数据库同步**：先完成第 0.5 步（⚠️ 补全 people 主表的 gender/生卒/中文名，再补职业/获奖/机构）与第 4.5 步（8 条社会关系、5 人占位），再开始立传
-> 9. 白鹰勋章（2018 追授）不入库——只收同时代荣誉（波兰学习院 1924）
+> 9. 白鹰勋章（2018 追授）也要入库（§21.2.4 全部收录原则）——波兰学习院 1924 与 White Eagle 2018 都收
 > 10. 结尾主题句：**"在咖啡馆的烟雾中，一群波兰数学家发明了现代分析的语言。"**

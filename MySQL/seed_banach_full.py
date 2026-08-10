@@ -34,10 +34,12 @@ PERSON_OCCUPATIONS = [
 
 NEW_AWARDS = [
     ("Member of the Polish Academy of Learning", "波兰学习院院士", "honor", None, "Polish Academy of Learning", 1872),
+    ("Order of the White Eagle",                 "白鹰勋章",       "honor", None, "Poland", 1705),
 ]
 
 PERSON_AWARDS = [
     ("Member of the Polish Academy of Learning", 1924, None),
+    ("Order of the White Eagle", 2018, "追授（波兰独立 100 周年，死后 73 年）"),
 ]
 
 PERSON_INSTITUTIONS = [
@@ -107,7 +109,7 @@ def main():
         if cur.rowcount:
             n_award += 1
             print(f"    → {BANACH}: {award} {year}")
-    print(f"  → award_laureate +{n_award}（White Eagle 2018 追授未收）")
+    print(f"  → award_laureate +{n_award}（含 White Eagle 2018 追授）")
 
     # ---- 3) institutions ----
     cur.execute("SELECT id, name_en FROM institutions")

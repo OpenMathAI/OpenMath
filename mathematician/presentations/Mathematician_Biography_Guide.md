@@ -1292,7 +1292,12 @@ SELECT name_en, depth FROM lineage;
 - `award_laureate` 每行 = 一次获奖：
   - `year`（**必填**）、`edition`（届数，可空）、`share_type`（独享/shared）、`note`（获奖说明）、`source`（来源，如 `Wikipedia`）；
   - 主键 `(person_id, award_id, year)` 防重复——同年同奖不同届用 `edition` 区分。
-- 立传时从 metadata.json `award_received` + page.md「Awards」节提取。
+- ★ **收录原则：全部收录，不做主观筛选**。metadata.json `award_received` + page.md「Awards」节中的**所有**获奖记录均须入库，包括：
+  - **追授/死后授予**（如 Banach 的 White Eagle 2018，死后 73 年追授）—— 晚于数学家也要收；
+  - **政治/国家勋章**（如苏联列宁勋章、斯大林奖、功绩勋章）—— 即使「不足以证明数学成就」，也是史实，必须入库；
+  - **名誉类与资助类**（名誉学位、Guggenheim Fellowship 等）—— 一并入库。
+  - 类型用 `award_type` 字段（`math_top`/`math_hist`/`honor`/`nobel`/`cross`/`cs`/`statistics` 等）分类，**查询时按类型过滤**即可，无需入库时剔除。
+- 年份缺失时：优先 page.md infobox / 正文 grep；仍无则 `year` 置 `0`，`note` 标注「年份待查」，并在汇报中列出待补年份清单。
 
 #### 21.2.5 机构：`institutions` + `person_institution`
 
@@ -1365,12 +1370,14 @@ GROUP BY p.id;
 | 9 | `people` | primary_occupation | `mathematician` |
 | 10 | `person_occupation` | 职业（rank 排序） | `mathematician(0)`、`historian of mathematics(1)` |
 | 11 | `person_field` | 领域（rank 排序） | `number theory(0)`、`algebraic geometry(1)` |
-| 12 | `award_laureate` | 获奖记录（year/edition/share_type/note） | `Wolf Prize in Mathematics 1979(edition=2, shared)`、`Kyoto Prize 1980(edition=1)` |
+| 12 | `award_laureate` | 获奖记录（year/edition/share_type/note）★全部收录 | `Wolf Prize in Mathematics 1979(edition=2, shared)`、`Kyoto Prize 1980(edition=1)`、`Order of the White Eagle 2018(追授)` |
 | 13 | `person_institution` | 教育/任职（relation/起止年） | `education: ENS(1922–1925)`；`employment: Strasbourg(1933–1939)`… |
 | 14 | `person_nationality` | 国籍（历史政权用 successor 归并） | `France` |
 | 15 | `person_relation` | 社会关系 | 见 §二十（第 4.5 步） |
 | 16 | `rankings` | 榜单（list_key/rank/status） | `20th_century_ranking`、`rank=?`、`status=立传` |
 
 取值规则见 21.2；核对完成后按 21.4 一键校验。**此表为提示词模板的必含节，取代原先「输出以下信息供校验」的自由格式。**
+
+> ★ 奖项列注意：**全部收录**（含追授/政治勋章/名誉类，见 21.2.4），不做「是否足够伟大」「是否晚于数学家」的主观剔除。
 
 > 此章节供所有立传提示词引用（提示词模板中标注「数据库字段梳理见工作指南 §二十一」即可）。
