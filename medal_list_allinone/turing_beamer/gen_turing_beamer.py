@@ -27,25 +27,25 @@ TURINGBG = "turingbg"
 # 每帧人数（表格行数；照片行一张大图）
 ROWS_PER_FRAME = 5
 
-# 徽标命令：符号+字母+品牌色（与 gen_turing AWARD_ICONS 一致）
+# 徽标命令：符号+字母+品牌色+全称（与 gen_turing AWARD_ICONS 一致）
 BADGE_DEFS = {
-    "诺贝尔":      (r"\faIcon{award}", "nobelclr", "N"),
-    "京都":        (r"$\blacklozenge$", "kyotoclr", "K"),
-    "沃尔夫":      (r"$\bigstar$", "wolfclr", "W"),
-    "哥德尔":      (r"$\diamond$", "godelclr", "G"),
-    "阿贝尔":      (r"$\bigstar$", "abelclr", "A"),
-    "香农":        (r"$\bigstar$", "shannonclr", "S"),
-    "日本国际":    (r"$\heartsuit$", "japanclr", "J"),
-    "内万林纳":    (r"$\blacktriangle$", "nevanclr", "N"),
-    "EATCS":       (r"$\square$", "eatcsclr", "E"),
-    "马可尼":      (r"$\bullet$", "marconiclr", "M"),
-    "冯":          (r"$\blacktriangle$", "neumannclr", "V"),
-    "千禧":        (r"$\blacklozenge$", "millenniumclr", "T"),
-    "国家科学奖章": (r"$\spadesuit$", "nsmclr", "M"),
-    "科学院院士":   (r"$\blacksquare$", "nasclr", "N"),
-    "皇家学会院士": (r"$\checkmark$", "frsclr", "R"),
-    "加拿大总督":   (r"$\blacklozenge$", "govclr", "C"),
-    "鲁梅哈特":     (r"$\diamondsuit$", "rumelclr", "R"),
+    "诺贝尔":      (r"\faIcon{award}",     "nobelclr",      "N", "诺贝尔奖"),
+    "京都":        (r"$\blacklozenge$",    "kyotoclr",      "K", "京都奖"),
+    "沃尔夫":      (r"$\bigstar$",         "wolfclr",       "W", "沃尔夫奖"),
+    "哥德尔":      (r"$\diamond$",         "godelclr",      "G", "哥德尔奖"),
+    "阿贝尔":      (r"$\bigstar$",         "abelclr",       "A", "阿贝尔奖"),
+    "香农":        (r"$\bigstar$",         "shannonclr",    "S", "IEEE 香农奖"),
+    "日本国际":    (r"$\heartsuit$",       "japanclr",      "J", "日本国际奖"),
+    "内万林纳":    (r"$\blacktriangle$",   "nevanclr",      "N", "内万林纳奖"),
+    "EATCS":       (r"$\square$",          "eatcsclr",      "E", "EATCS 奖"),
+    "马可尼":      (r"$\bullet$",          "marconiclr",    "M", "马可尼奖"),
+    "冯":          (r"$\blacktriangle$",   "neumannclr",    "V", "IEEE 冯·诺依曼奖"),
+    "千禧":        (r"$\blacklozenge$",    "millenniumclr", "T", "千禧科技奖"),
+    "国家科学奖章": (r"$\spadesuit$",      "nsmclr",        "M", "美国国家科学奖章"),
+    "科学院院士":   (r"$\blacksquare$",    "nasclr",        "N", "美国科学院院士"),
+    "皇家学会院士": (r"$\checkmark$",       "frsclr",        "R", "英国皇家学会院士"),
+    "加拿大总督":   (r"$\blacklozenge$",   "govclr",        "C", "加拿大总督奖"),
+    "鲁梅哈特":     (r"$\diamondsuit$",    "rumelclr",      "R", "鲁梅哈特奖"),
 }
 
 COLORS = {
@@ -94,7 +94,7 @@ def header():
     badges = "\n".join(
         "\\newcommand{\\%s}{\\textsuperscript{\\normalfont\\tiny\\color{%s}%s\\kern-0.5pt %s}}"
         % (cmd, color, sym, letter)
-        for key, (sym, color, letter) in BADGE_DEFS.items()
+        for key, (sym, color, letter, _full) in BADGE_DEFS.items()
         for cmd in [_badge_cmd(key)])
     # 徽标命令名：key → badge 名（仅英文首字母+奖项缩写）
     return cols, badges
@@ -286,52 +286,66 @@ def table_slide(title, subject, people):
 
 
 def summary_slide(people):
-    """总结帧：按交叉奖项分组列出得主"""
-    rows = []
-    y = 0.0
+    """总结帧：2 列布局，11 个奖项分 6+5 排布；奖项写全称。"""
     by_award = {}
     for p in people:
         h = gt.HONORS.get(p[0], "")
         for key in BADGE_DEFS:
             if key in h:
                 by_award.setdefault(key, []).append(p[0])
-    for key, names in sorted(by_award.items(), key=lambda kv: -len(kv[1])):
-        sym, color, letter = BADGE_DEFS[key]
-        # 长名单每 5 人断行；y 步长按行数动态（防重叠）
-        def chunk(lst, n):
-            return ['\\;·\\;'.join(lst[i:i+n]) for i in range(0, len(lst), n)]
-        chunks = chunk(names, 5)
-        names_txt = " \\\\ ".join(chunks)
-        n_lines = len(chunks)
-        y_step = max(0.55, 0.22 * n_lines + 0.05)
-        rows.append(r"""  \node[fill=%s, rounded corners=3pt, text width=2.8cm, minimum height=0.55cm,
-        inner sep=0pt, align=center, anchor=north west] at (0,%.2f)
-    {\fontsize{4.5}{5.5}\selectfont\bfseries\color{white}%s\;\; %s\;\; %d人};
-  \node[anchor=north west, text width=7.7cm, align=left,
-        font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=%s!65!black]
-    at (3.05,%.2f) {%s};""" % (
-        color, y, sym, key.replace("奖章", "奖章"), len(names),
-        color, y - 0.20, names_txt))
-        y -= y_step
-    # 统计条
-    stats = r"""  \fill[turingbg, rounded corners=4pt] (0,%.2f) rectangle (\textwidth,%.2f);
+    items = sorted(by_award.items(), key=lambda kv: -len(kv[1]))
+    # 分两列：前 ceil(n/2) 项为左列，其余为右列
+    n = len(items)
+    mid = (n + 1) // 2
+    left = items[:mid]
+    right = items[mid:]
+
+    def block_rows(block, x_left_badge, x_names, y0):
+        """生成一个列的 rows；y 步长按行数动态。"""
+        rs = []
+        y = y0
+        for key, names in block:
+            sym, color, _letter, full = BADGE_DEFS[key]
+            def chunk(lst, n):
+                return ['\\;·\\;'.join(lst[i:i+n]) for i in range(0, len(lst), n)]
+            chunks = chunk(names, 4)  # 4 人/行（列宽更窄）
+            names_txt = " \\\\ ".join(chunks)
+            n_lines = len(chunks)
+            y_step = max(0.55, 0.24 * n_lines + 0.08)
+            rs.append(r"""  \node[fill=%s, rounded corners=4pt, text width=3.6cm, minimum height=0.55cm,
+        inner sep=0pt, align=center, anchor=north west] at (%.2f,%.2f)
+    {\fontsize{5}{6}\selectfont\bfseries\color{white}%s\;\; %s\;\; %d人};
+  \node[anchor=north west, text width=4.0cm, align=left,
+        font=\fontsize{5}{6}\selectfont, text=%s!70!black]
+    at (%.2f,%.2f) {%s};""" % (
+                color, x_left_badge, y, sym, full, len(names),
+                color, x_names, y, names_txt))
+            y -= y_step
+        return rs, y
+
+    left_rows, y_after_left = block_rows(left, -5.7, -1.95, 0.0)
+    right_rows, y_after_right = block_rows(right, 0.5, 4.25, 0.0)
+
+    # 底部统计条
+    y_stat = min(y_after_left, y_after_right) - 0.40
+    stats = r"""  \fill[turingbg, rounded corners=4pt] (-5.7,%.2f) rectangle (8.4,%.2f);
   \node[anchor=north, font=\fontsize{5.5}{7}\selectfont\bfseries, text=turingclr]
-    at (0.17\textwidth,%.2f) {首届\;\; Alan J. Perlis\;(1966)};
+    at (-3.8,%.2f) {首届\;\; Alan J. Perlis\;(1966)};
   \node[anchor=north, font=\fontsize{5.5}{7}\selectfont\bfseries, text=turingclr]
-    at (0.50\textwidth,%.2f) {60 届\;\; 81 位得主};
+    at (0.0,%.2f) {60 届\;\; 81 位得主};
   \node[anchor=north, font=\fontsize{5.5}{7}\selectfont\bfseries, text=turingclr]
-    at (0.83\textwidth,%.2f) {图灵+诺贝尔\;\; Simon\;·\;Hinton};""" % (
-        y - 0.75, y - 1.55, y - 0.90, y - 0.90, y - 0.90)
+    at (3.8,%.2f) {图灵+诺奖\;\; Simon\;·\;Hinton};""" % (
+        y_stat - 0.5, y_stat, y_stat - 0.10, y_stat - 0.10, y_stat - 0.10)
+    rows = left_rows + right_rows + [stats]
     return (r"""\def\framesubject{诺贝尔·沃尔夫·京都·哥德尔·阿贝尔·香农等交叉得主}
 \begin{frame}{交叉奖项总览}
 \vspace{-4pt}
 \centering
 \begin{tikzpicture}
 %s
-%s
 \end{tikzpicture}
 \end{frame}
-""" % ("\n".join(rows), stats))
+""" % "\n".join(rows))
 
 
 def build():
