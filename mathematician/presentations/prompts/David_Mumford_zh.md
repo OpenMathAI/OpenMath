@@ -58,6 +58,46 @@
 ### 人格画像
 Mumford 是一个"不满足于一个领域"的数学家。他在代数几何中达到了最高峰（Fields 奖）——然后，在 50 岁时，他转身离开，走进了一个全新的世界：教计算机如何"看"。他不是第一位从纯数学转向应用数学的数学家——但他可能是转型跨度最大的 Fields 奖得主。Zariski 教他代数几何的严格性——他将这种严格性带入了视觉科学。Grenander 的模式理论给了他新的数学语言。他的 Mumford–Shah 泛函至今仍是图像分割的经典方法。他在 80 岁时还在写关于视觉皮层的贝叶斯模型。他的职业生涯回答了这个问题：Fields 奖之后，数学家还能做什么？——答案是：重新开始。
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_mumford_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q334021` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `大卫·芒福德` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["模空间理论的建筑师","几何不变量理论的集大成者","从代数几何到计算机视觉的转型者"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1937-06-11` / `NULL`（在世） | ⚠️ 仅年份 |
+| 6 | `people` | description | `British-American mathematician (1937–)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `algebraic geometry`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Putnam 1955/1956`、`Sloan 1962`、`Fields 1974`（已有）、`MacArthur 1987`、`Shaw 2006`、`Steele 2007`、`Wolf 2008`（已有）、`NMS 2010`、`ForMemRS`、`BBVA 2012` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: Harvard、Phillips Exeter`；`employment: Harvard、Brown` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `United Kingdom`、`United States` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（7 条） | ⚠️ 仅 3 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_mumford_relations.py` 补足。
+
+**入库范围（7 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Oscar Zariski → Mumford | 有向 | ✅ 在库（id=24） |
+| 学生 | Mumford → Amnon Neeman | 有向 | ⚠️ 占位 |
+| 学生 | Mumford → Emma Previato | 有向 | ⚠️ 占位 |
+| 学生 | Mumford → Ching-Li Chai | 有向 | ⚠️ 占位 |
+| 同事 | Alexander Grothendieck | 无向 | ✅ 在库（id=7） |
+| 合作者 | Pierre Deligne | 无向 | ✅ 在库（id=30，Deligne–Mumford 叠） |
+| 同事 | Michael Artin | 无向 | ✅ 在库（id=190，同门） |
+
+- 缺失人物（3 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心贡献
 
 | 领域 | 具体贡献 | 年代 |
