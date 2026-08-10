@@ -26,6 +26,8 @@
 
 按照 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md) 第十一节「推荐制作流程」的步骤，依次完成。**每完成一步向我汇报进度**，遇到歧义时先征求我的意见再继续。
 
+> **数据库同步要求**：本提示词包含「社会关系梳理 + 入库」步骤（第 4.5 步），完整规范见工作指南 **§二十**。请将 Poincaré 的社会关系（导师 Hermite/Darboux、学生 Borel/Appell、双子星 Hilbert、竞争者 Klein/Einstein 等）写入 `greatminds` 数据库 `person_relation` 表，缺失人物先建占位、关系打 `[材料待展开]` 标识。参考脚本：`MySQL/seed_poincare_relations.py`。
+
 ---
 
 ## 第 0 步：下载 Wikipedia 页面并校验
@@ -170,6 +172,24 @@
 - **Einstein** — 相对论的对话者（实际上两人几乎没有直接交流）
 - **Borel, Appell** — 学生与合作者
 - **Raymond Poincaré** — 表弟，法国总统
+
+---
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。参考脚本：`MySQL/seed_poincare_relations.py`。
+
+1. **入库范围**：上表全部 8 类关系（导师 Hermite/Darboux、学生 Borel/Appell、双子星 Hilbert、竞争者 Klein/Einstein、同事 Lorentz、表弟 Raymond Poincaré）；
+2. **缺失人物先建占位**：Hermite、Darboux、Lorentz、Einstein、Appell、Raymond Poincaré（`has_biography=0`）；
+3. **关系打标识**：`note` 加 `[材料待展开]` 前缀；
+4. **校验**（一人一行）：
+   ```sql
+   SELECT a.name_en AS 甲, rt.name_zh AS 关系, b.name_en AS 乙, pr.note
+   FROM person_relation pr JOIN people a ON a.id=pr.from_id
+   JOIN people b ON b.id=pr.to_id JOIN relation_types rt ON rt.relation_key=pr.relation_type
+   WHERE a.name_en='Henri Poincaré' OR b.name_en='Henri Poincaré';
+   ```
+5. **汇报**：新建 X 人（占位）、新增 Y 条关系 + 校验结果。
 
 ---
 
