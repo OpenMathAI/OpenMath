@@ -154,6 +154,48 @@
 
 ---
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_chern_full.py` 补齐（库中 name_en=陈省身，pages 目录=Shiing-Shen_Chern）。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q328131` | ⚠️ 待核 |
+| 2 | `people` | name_en | `陈省身`（库中）/ `Shiing-Shen Chern`（Wikidata） | ✅ |
+| 3 | `people` | name_zh | `陈省身` | ✅ |
+| 4 | `people` | name_variants | `["整体微分几何之父","Chern 类之父","数学大师","Shiing-Shen Chern"]` | ⚠️ 空 |
+| 5 | `people` | gender | `male` | ⚠️ NULL |
+| 6 | `people` | birth_date / death_date | `1911-10-26` / `2004-12-03` | ⚠️ 仅年份 |
+| 7 | `people` | description | `Chinese-American mathematician (1911–2004)` | ⚠️ 待核 |
+| 8 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)`、`poet(2)` | ⚠️ 需补 |
+| 9 | `person_field` | 领域 | `differential geometry`、`topology`、`mathematics` | ⚠️ 待核 |
+| 10 | `award_laureate` | 获奖 ★全部收录 | `Wolf 1983`（已有）；补 `Chauvenet 1970`、`NMS 1975`、`ForMemRS 1985`、`Lobachevsky 2002`、`Shaw 2004`、`Steele`、`CAS 院士`、`荣誉博士×3` | ⚠️ 部分 |
+| 11 | `person_institution` | 教育/任职 | `education: Nankai、Tsinghua、Hamburg、Paris`；`employment: 西南联大、Peking、Princeton、Chicago、Berkeley、MSRI、Nankai、Chern Institute` | ⚠️ 全空 |
+| 12 | `person_nationality` | 国籍 | `China`、`United States` | ⚠️ 待核 |
+| 13 | `person_relation` | 社会关系 | 见第 4.5 步（8 条） | ⚠️ 全空 |
+| 14 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_chern_relations.py`。
+
+**入库范围（8 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Wilhelm Blaschke → 陈省身 | 有向 | ⚠️ 占位 |
+| 学生 | 陈省身 → Shing-Tung Yau（丘成桐） | 有向 | ✅ 在库（id=123） |
+| 学生 | 陈省身 → Louis Auslander | 有向 | ⚠️ 占位 |
+| 学生 | 陈省身 → Katsumi Nomizu | 有向 | ⚠️ 占位 |
+| 学生 | 陈省身 → Manfredo do Carmo | 有向 | ⚠️ 占位 |
+| 合作者 | André Weil | 无向 | ✅ 在库（id=8，Chern–Weil 理论） |
+| 合作者 | James Simons | 无向 | ⚠️ 占位（Chern–Simons 理论） |
+| 同事 | Hermann Weyl | 无向 | ✅ 在库（id=6，IAS 时期） |
+
+- 缺失人物（4 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 第 5 步：设计配色方案（已在上方给出）
 
 ---
