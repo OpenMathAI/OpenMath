@@ -43,6 +43,7 @@
 按照 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md) 第十一节「推荐制作流程」的步骤，依次完成。**每完成一步向我汇报进度**，遇到歧义时先征求我的意见再继续。
 
 > **数据库同步要求**：本提示词包含「社会关系梳理 + 入库」步骤（第 4.5 步），完整规范见工作指南 **§二十**。请将 Grothendieck 的社会关系（导师 Schwartz/Dieudonné、学生 Deligne/Illusie/Verdier 等）写入 `greatminds` 数据库 `person_relation` 表，缺失人物先建占位、关系打 `[材料待展开]` 标识。参考脚本：`MySQL/seed_grothendieck_relations.py`（已执行，12 条关系入库，缺失 7 人占位）。
+> 数据库全部字段（职业/领域/奖项/机构/国籍/排行榜）梳理规范见工作指南 **§二十一**；补全时使用 §21.5 内嵌核对表逐项填值并写入库脚本。
 
 ---
 

@@ -1038,6 +1038,7 @@ make video
 - [ ] 阅读本指南 **第十四节（进阶陷阱）** — 避免第一轮就踩坑
 - [ ] 阅读本指南 **第十五节（第二轮校改）** — 了解"不稳"是什么
 - [ ] 阅读本指南 **第十六节（Wikipedia 终审）** — 了解写完后的系统审核方法
+- [ ] 阅读本指南 **第二十一节（数据库字段梳理清单）** — 立传时需入库哪些字段、写入哪张表
 
 ### 制作中
 
@@ -1234,3 +1235,142 @@ SELECT name_en, depth FROM lineage;
 - **查询用例集**：`MySQL/use_cases.md` 用例 6「学术家谱」。
 
 > 此章节供所有立传提示词引用（提示词模板中标注「社会关系入库见工作指南 §二十」即可）。
+
+---
+
+## 二十一、数据库字段梳理清单（立传信息总纲 ★ 第 0 步/第 4.5 步共用）
+
+> 目的：`greatminds` 数据库共有 **16 张表**（另含 6 个视图），是立传信息的结构化落点。本节约定了「立传时需梳理哪些信息、写入哪张表、数据从哪里来、按什么格式写」，保证每位数学家入库存档完整、可查询、可交叉。**§二十 只覆盖社会关系；本节覆盖全部表字段。**
+
+### 21.1 全表总览（16 张表 → 立传信息）
+
+| # | 表名 | 用途 | 立传时需梳理的信息 | 数据来源 |
+|:--:|------|------|------------------|---------|
+| 1 | `people` | 人物主表 | 身份元数据（见 21.2.1） | metadata.json + page.md |
+| 2 | `occupations` / `person_occupation` | 职业字典 + 人↔职业 | 主职业 + 全部职业（见 21.2.2） | metadata.json + 判断 |
+| 3 | `fields` / `person_field` | 研究领域字典 + 人↔领域 | 研究领域清单（见 21.2.3） | metadata.json `field_of_work` |
+| 4 | `awards` / `award_laureate` | 奖项字典 + 人↔奖项 | 获奖记录（见 21.2.4） | metadata.json `award_received` + page.md |
+| 5 | `institutions` / `person_institution` | 机构字典 + 人↔机构 | 教育/任职机构与起止（见 21.2.5） | metadata.json `educated_at`/`employer` + page.md |
+| 6 | `countries` / `person_nationality` | 国家字典 + 人↔国籍 | 国籍（含历史政权）与演变（见 21.2.6） | metadata.json `nationality` + page.md |
+| 7 | `relation_types` / `person_relation` | 关系类型 + 人↔人 | 社会关系（★ 见 §二十，已覆盖） | metadata.json + page.md |
+| 8 | `rankings` | 排行榜 | 榜单排名（见 21.2.7） | 排名文件（`figures/OpenMath_..._Ranking.md`） |
+| 9 | `episodes` | 视频分集 | **无需人工梳理**（展示层） | 已由 gen_turing.py 灌入 |
+| 10 | `badge_defs` | 徽标定义 | **无需人工梳理**（由奖项派生） | 已由 Schema 灌入 |
+
+### 21.2 逐表字段与填写规范
+
+#### 21.2.1 `people`（人物主表 —— 每人都必须填全）
+
+| 字段 | 说明 | 示例（Weyl） | 来源 |
+|------|------|-------------|------|
+| `qid` | Wikidata 条目 ID | Q55466 | metadata.json |
+| `name_en` | 英文规范名（含变音符） | `Hermann Weyl` | metadata.json `name` |
+| `name_zh` | 中文名 | `赫尔曼·外尔` | 中文名提取（见 §三「称号」提取流程） |
+| `name_variants` | 称号 JSON 数组 | `["超级连接者","Hilbert 的传人"]` | 立传材料归纳 |
+| `gender` | 性别 | `male` | metadata.json |
+| `birth_date` / `death_date` | 生卒（`YYYY-MM-DD`） | `1885-11-09` / `1955-12-08` | metadata.json |
+| `description` | 一句话描述 | `German mathematician (1885–1955)` | metadata.json `description` |
+| `primary_occupation` | 主职业（`occupations` 字典键） | `mathematician` | 立传判断 |
+| `has_biography` | 立传标志 0/1 | `1`（立传完成） | 立传进度 |
+
+#### 21.2.2 职业：`occupations` + `person_occupation`
+
+- `occupations` 为字典（已有 13 种：mathematician、physicist、biologist、chemist、computer scientist、statistician、astronomer、economist、writer、poet、philosopher、artist、engineer），**不新增同义词**；
+- `person_occupation`：`person_id` + `occupation_id` + `rank`（主职业 `rank=0`，其余按序）。
+- 常见判断：数学-物理双栖（Weyl、Poincaré、von Neumann）、统计学家（Fisher）、计算机科学家（Turing）等。
+
+#### 21.2.3 研究领域：`fields` + `person_field`
+
+- `fields` 为字典（`name_en`/`name_zh`），已由 `MySQL/seed_fields.py` 从 Wikidata `field_of_work` 灌入 114 个；
+- `person_field`：`person_id` + `field_id` + `rank`（按重要性排序）；
+- 立传时从 metadata.json `field_of_work` 提取，核对该领域是否已在字典中，缺则先补字典再建关联；
+- ⚠️ 当前约 267 人（Fields/Wolf 等新增人物）缺领域，`rank` 可暂置 0，后续统一补。
+
+#### 21.2.4 奖项：`awards` + `award_laureate`
+
+- `awards` 为字典（40+ 项已内置，含 award_type/tier/org/established）；若人物获字典外奖项需先补字典；
+- `award_laureate` 每行 = 一次获奖：
+  - `year`（**必填**）、`edition`（届数，可空）、`share_type`（独享/shared）、`note`（获奖说明）、`source`（来源，如 `Wikipedia`）；
+  - 主键 `(person_id, award_id, year)` 防重复——同年同奖不同届用 `edition` 区分。
+- 立传时从 metadata.json `award_received` + page.md「Awards」节提取。
+
+#### 21.2.5 机构：`institutions` + `person_institution`
+
+- `institutions` 为字典（`name_en`/`name_zh`）；
+- `person_institution`：`person_id` + `inst_id` + `relation`（如 `education`/`employment`）+ `start_year`/`end_year`；
+- 来源：metadata.json `educated_at`（教育）+ `employer`（任职）+ page.md 时间线；主键 `(person_id, inst_id, relation)`。
+
+#### 21.2.6 国籍：`countries` + `person_nationality`
+
+- `countries`：现代国 `is_current=1` + `iso`；**历史政权** `is_current=0` + `era`（存续期）+ `successor`（归并的现代国）；
+- `person_nationality`：`person_id` + `country_id` + `rank`（Wikidata 顺序）+ `era_note`（如 `historical`）；
+- **关键规则**：按「当时所在实体」记，如 von Neumann = Hungary + USA、苏联数学家 = `Soviet Union`（successor=Russia）。**查询现代国时经 `successor` 归并**（见 §3.5 封面国籍书写规则）。
+
+#### 21.2.7 排行榜：`rankings`
+
+- `rankings`：`person_id` + `list_key`（榜单标识，如 `20th_century_ranking`）+ `rank`（榜单名次，`rank` 为 MySQL 保留字，SQL 中需反引号）+ `orig_rank`（原始排名，若被改）+ `tag`（标签，如年代）+ `status`（如 `立传`/`review`）；
+- 已由 `MySQL/seed_ranking.py` 灌入 108 人；立传后更新 `status` 与 `people.has_biography` 联动。
+
+### 21.3 立传时「信息梳理动作清单」（并入提示词）
+
+> 在提示词模板中，**第 0 步**（核对 metadata.json）与 **第 4.5 步**（入库）之间新增一条动作：**按 21.2 各表逐项核对/补齐字段**，避免只入库社会关系、漏掉职业/领域/机构/国籍/获奖。
+
+```
+第 0 步 核对 metadata.json → 输出：qid / name_en / name_zh / name_variants / gender /
+                             birth_date / death_date / description / primary_occupation
+第 4.5 步 入库（按表）：
+ ① people         — 主表字段（21.2.1）
+ ② person_occupation — 职业（21.2.2）
+ ③ person_field     — 研究领域（21.2.3）
+ ④ award_laureate  — 获奖记录（21.2.4）
+ ⑤ person_institution — 教育/任职机构（21.2.5）
+ ⑥ person_nationality — 国籍与历史政权（21.2.6）
+ ⑦ person_relation — 社会关系（★ 见 §二十）
+ ⑧ rankings.status — 排行榜状态联动（21.2.7）
+缺失人物先建占位（has_biography=0）；全部 INSERT IGNORE 幂等。
+```
+
+### 21.4 一键校验（一人全维度）
+
+```sql
+-- 某人全部维度一览（不含社会关系）
+SELECT p.name_en, p.name_zh, p.gender, p.birth_date, p.death_date, p.description,
+       GROUP_CONCAT(DISTINCT o.name_zh) AS occupations,
+       GROUP_CONCAT(DISTINCT f.name_en)  AS fields,
+       GROUP_CONCAT(DISTINCT c.name_zh)  AS nationalities
+FROM people p
+LEFT JOIN person_occupation po ON po.person_id=p.id LEFT JOIN occupations o ON o.id=po.occupation_id
+LEFT JOIN person_field     pf ON pf.person_id=p.id LEFT JOIN fields      f ON f.id=pf.field_id
+LEFT JOIN person_nationality pn ON pn.person_id=p.id LEFT JOIN countries c ON c.id=pn.country_id
+WHERE p.name_en='Hermann Weyl'
+GROUP BY p.id;
+```
+
+校验完成后向用户汇报：「新建/更新 X 人、职业 Y 条、领域 Z 条、奖项 A 条、机构 B 条、国籍 C 条、社会关系 D 条」。
+
+### 21.5 提示词内嵌「数据库字段核对表」模板（可直接复制到任意提示词）
+
+> 将下表插入提示词**第 0 步之后**作为独立小节，占位符替换为该人物实际值。产出即入库脚本的字段依据，保证「仅凭提示词即可补全数据库」。示例值取自 André Weil（metadata.json 实测）。
+
+| # | 表 | 字段 | 核对值（示例：André Weil） |
+|:--:|---|------|--------------------------|
+| 1 | `people` | qid | `Q323232` |
+| 2 | `people` | name_en | `André Weil` |
+| 3 | `people` | name_zh | `安德烈·韦伊` |
+| 4 | `people` | name_variants | `["布尔巴基的灵魂","Weil 猜想的预言者"]` |
+| 5 | `people` | gender | `male` |
+| 6 | `people` | birth_date | `1906-05-06` |
+| 7 | `people` | death_date | `1998-08-06` |
+| 8 | `people` | description | `French mathematician (1906-1998)` |
+| 9 | `people` | primary_occupation | `mathematician` |
+| 10 | `person_occupation` | 职业（rank 排序） | `mathematician(0)`、`historian of mathematics(1)` |
+| 11 | `person_field` | 领域（rank 排序） | `number theory(0)`、`algebraic geometry(1)` |
+| 12 | `award_laureate` | 获奖记录（year/edition/share_type/note） | `Wolf Prize in Mathematics 1979(edition=2, shared)`、`Kyoto Prize 1980(edition=1)` |
+| 13 | `person_institution` | 教育/任职（relation/起止年） | `education: ENS(1922–1925)`；`employment: Strasbourg(1933–1939)`… |
+| 14 | `person_nationality` | 国籍（历史政权用 successor 归并） | `France` |
+| 15 | `person_relation` | 社会关系 | 见 §二十（第 4.5 步） |
+| 16 | `rankings` | 榜单（list_key/rank/status） | `20th_century_ranking`、`rank=?`、`status=立传` |
+
+取值规则见 21.2；核对完成后按 21.4 一键校验。**此表为提示词模板的必含节，取代原先「输出以下信息供校验」的自由格式。**
+
+> 此章节供所有立传提示词引用（提示词模板中标注「数据库字段梳理见工作指南 §二十一」即可）。

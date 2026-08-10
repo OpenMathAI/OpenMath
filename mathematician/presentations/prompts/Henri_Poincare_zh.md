@@ -178,6 +178,7 @@
 ## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
 
 > 完整规范见工作指南 **§二十**。参考脚本：`MySQL/seed_poincare_relations.py`。
+> 数据库全部字段（职业/领域/奖项/机构/国籍/排行榜）梳理规范见工作指南 **§二十一**；补全时使用 §21.5 内嵌核对表逐项填值并写入库脚本。
 
 1. **入库范围**：上表全部 8 类关系（导师 Hermite/Darboux、学生 Borel/Appell、双子星 Hilbert、竞争者 Klein/Einstein、同事 Lorentz、表弟 Raymond Poincaré）；
 2. **缺失人物先建占位**：Hermite、Darboux、Lorentz、Einstein、Appell、Raymond Poincaré（`has_biography=0`）；

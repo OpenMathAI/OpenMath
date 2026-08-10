@@ -85,6 +85,33 @@
 
 ---
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 `pages/André_Weil/metadata.json` 逐项核对下表并填值，产出即入库脚本 `seed_weil_full.py` 的字段依据。无值写 `NULL` 并注明原因，不得留空。
+
+| # | 表 | 字段 | 核对值 |
+|:--:|---|------|--------|
+| 1 | `people` | qid | `Q323232` |
+| 2 | `people` | name_en | `André Weil` |
+| 3 | `people` | name_zh | `安德烈·韦伊` |
+| 4 | `people` | name_variants | `["布尔巴基的灵魂","Weil 猜想的预言者","在牢房里做数学的人"]` |
+| 5 | `people` | gender | `male` |
+| 6 | `people` | birth_date | `1906-05-06` |
+| 7 | `people` | death_date | `1998-08-06` |
+| 8 | `people` | description | `French mathematician (1906-1998)` |
+| 9 | `people` | primary_occupation | `mathematician` |
+| 10 | `person_occupation` | 职业（rank） | `mathematician(0)`、`historian of mathematics(1)`、`university teacher(2)` |
+| 11 | `person_field` | 领域（rank） | `number theory(0)`、`algebraic geometry(1)`、`mathematics(2)` |
+| 12 | `award_laureate` | 获奖（year/edition/share_type/note） | `Wolf Prize in Mathematics 1979(edition=2, shared with Jean Leray)`；`Kyoto Prize 1980(edition=1)`；`Foreign Member of Royal Society`；`Leroy P. Steele Prize`；`Guggenheim Fellowship`；`Cours Peccot`；`Prix Francoeur` |
+| 13 | `person_institution` | 教育/任职（relation/起止年） | `education: ENS、Science Faculty of Paris、Lycée Saint-Louis、Lycée Montaigne、Göttingen`；`employment: Strasbourg(1933–1939)、Aligarh(1930–1932)、Haverford(1941–1945)、São Paulo(1945–1947)、Chicago(1947–1958)、IAS(1958–1976)` |
+| 14 | `person_nationality` | 国籍 | `France` |
+| 15 | `person_relation` | 社会关系 | 见第 4.5 步（已入库 16 条） |
+| 16 | `rankings` | 榜单（list_key/rank/status） | `list_key=20th_century_ranking`、`rank=?`、`status=立传` |
+
+核对完成后：写 `MySQL/seed_weil_full.py`（`INSERT IGNORE` 幂等），入库后按 §21.4 一键校验并汇报：「新建/更新 X 人、职业 Y 条、领域 Z 条、奖项 A 条、机构 B 条、国籍 C 条、社会关系 D 条」。
+
+---
+
 ## 核心数学与科学贡献
 
 | 领域 | 贡献 | 年代 |
@@ -126,6 +153,7 @@
 ## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
 
 > 完整规范见工作指南 **§二十**。参考脚本：`MySQL/seed_weil_relations.py`（已执行，13 条关系 + 3 条补充，缺失 4 人占位）。
+> 数据库全部字段（职业/领域/奖项/机构/国籍/排行榜）梳理规范见工作指南 **§二十一**。
 
 **入库范围（提示词「人物关系」节，16 条）**：
 | 关系类型 | 人物 | 状态 |
