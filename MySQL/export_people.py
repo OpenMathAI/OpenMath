@@ -74,7 +74,6 @@ def render_sections(people):
         lines.append("|---|---|")
         for k, zh in [("qid", "qid"), ("name_en", "英文名"), ("name_zh", "中文名"),
                       ("gender", "性别"), ("birth_date", "出生"), ("death_date", "逝世"),
-                      ("birth_place", "出生地"), ("death_place", "逝世地"),
                       ("description", "描述"), ("primary_occupation", "主导职业")]:
             v = p[k]
             if v:

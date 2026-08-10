@@ -18,8 +18,6 @@ CREATE TABLE IF NOT EXISTS people (
     gender             VARCHAR(16),
     birth_date         VARCHAR(16),
     death_date         VARCHAR(16),
-    birth_place        VARCHAR(255),
-    death_place        VARCHAR(255),
     description        TEXT,
     primary_occupation VARCHAR(128),
     has_biography      TINYINT DEFAULT 0,
