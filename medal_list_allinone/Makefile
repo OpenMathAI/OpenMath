@@ -14,10 +14,11 @@ BEAMER_DIR  = fields_beamer
 WOLF_DIR    = wolf_beamer
 ABEL_DIR    = abel_beamer
 COPSS_DIR   = copss_beamer
+TURING_DIR  = turing_beamer
 
-.PHONY: all cross beamer wolf abel copss clean distclean
+.PHONY: all cross beamer wolf abel copss turing clean distclean
 
-all: cross beamer wolf abel copss
+all: cross beamer wolf abel copss turing
 
 cross:
 	$(MAKE) -C $(CROSS_DIR) pdf
@@ -34,12 +35,16 @@ abel:
 copss:
 	$(MAKE) -C $(COPSS_DIR) pdf
 
+turing:
+	$(MAKE) -C $(TURING_DIR) pdf
+
 clean:
 	$(MAKE) -C $(CROSS_DIR) clean
 	$(MAKE) -C $(BEAMER_DIR) clean
 	$(MAKE) -C $(WOLF_DIR) clean
 	$(MAKE) -C $(ABEL_DIR) clean
 	$(MAKE) -C $(COPSS_DIR) clean
+	$(MAKE) -C $(TURING_DIR) clean
 
 distclean: clean
 	$(MAKE) -C $(CROSS_DIR) distclean
@@ -47,3 +52,4 @@ distclean: clean
 	$(MAKE) -C $(WOLF_DIR) distclean
 	$(MAKE) -C $(ABEL_DIR) distclean
 	$(MAKE) -C $(COPSS_DIR) distclean
+	$(MAKE) -C $(TURING_DIR) distclean

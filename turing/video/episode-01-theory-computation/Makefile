@@ -32,8 +32,8 @@ $(SLIDES_TXT): $(IMAGES_DIR)/.done
 	import os; \
 	imgs = sorted([f for f in os.listdir('$(IMAGES_DIR)') if f.endswith('.png')]); \
 	lines = []; \
-	[lines.extend(['file 'images/' + f, 'duration $(DURATION)']) for f in imgs]; \
-	lines.append('file 'images/' + imgs[-1]); \
+	[lines.extend(['file ' + 'images/' + f, 'duration $(DURATION)']) for f in imgs]; \
+	lines.append('file ' + 'images/' + imgs[-1]); \
 	open('$(SLIDES_TXT)', 'w').write(chr(10).join(lines) + chr(10)); \
 	print(f'  slides.txt: {len(imgs)} slides x $(DURATION)s = {len(imgs)*$(DURATION)}s')"
 
