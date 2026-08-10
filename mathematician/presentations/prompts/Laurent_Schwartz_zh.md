@@ -84,6 +84,47 @@
 
 ---
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_schwartz_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q212081` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `洛朗·施瓦茨` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["分布论之父","菲尔兹奖捍卫者","数学家中的昆虫学家"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1915-03-05` / `2002-07-04` | ⚠️ 仅年份 |
+| 6 | `people` | description | `French mathematician (1915–2002)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)`、`entomologist(2)` | ⚠️ 需补（entomologist 补字典） |
+| 8 | `person_field` | 领域 | `distribution theory`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Fields 1950`（已有）、`Grand prix des sciences mathématiques`、`Prix de l'Etat`、`Concours général`、`Prix Francoeur`、`Cours Peccot`、`Heinz R. Pagels Award` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: ENS、Lycée Janson-de-Sailly`；`employment: Nancy、Grenoble、École polytechnique、Paris Diderot、Paris` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `France` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（8 条） | ⚠️ 仅 2 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_schwartz_relations.py` 补足。
+
+**入库范围（8 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Georges Valiron → Schwartz | 有向 | ⚠️ 占位 |
+| 学生 | Schwartz → Alexander Grothendieck | 有向 | ✅ 在库（id=7） |
+| 学生 | Schwartz → Jacques-Louis Lions | 有向 | ✅ 在库（id=49） |
+| 学生 | Schwartz → Bernard Malgrange | 有向 | ⚠️ 占位 |
+| 同事 | Jean Dieudonné | 无向 | ✅ 在库（id=370） |
+| 同事 | André Weil | 无向 | ✅ 在库（id=8） |
+| 同事 | René Thom | 无向 | ✅ 在库（id=55） |
+| 夫妻 | Marie-Hélène Schwartz | 无向 | ⚠️ 占位（数学家） |
+
+- 缺失人物（3 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心数学与科学贡献
 
 | 领域 | 贡献 | 年代 |
