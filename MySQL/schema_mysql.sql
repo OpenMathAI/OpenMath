@@ -21,8 +21,6 @@ CREATE TABLE IF NOT EXISTS people (
     birth_place        VARCHAR(255),
     death_place        VARCHAR(255),
     description        TEXT,
-    wiki_url           VARCHAR(512),
-    local_dir          VARCHAR(512) UNIQUE,
     primary_occupation VARCHAR(128),
     has_biography      TINYINT DEFAULT 0,
     created_at         DATETIME DEFAULT CURRENT_TIMESTAMP,

@@ -74,19 +74,19 @@ def main():
     cur.execute("SELECT id FROM awards WHERE name_en='Abel Prize'")
     aid = cur.fetchone()[0]
 
-    cur.execute("SELECT id, name_en, name_zh, wiki_url FROM people")
-    people = [(pid, en, zh, url, norm(en or ""), norm(zh or ""), tokens_norm(en or ""))
-              for pid, en, zh, url in cur.fetchall()]
+    cur.execute("SELECT id, name_en, name_zh FROM people")
+    people = [(pid, en, zh, norm(en or ""), norm(zh or ""), tokens_norm(en or ""))
+              for pid, en, zh in cur.fetchall()]
 
     def find(name):
         n = norm(name)
         tn = tokens_norm(name)
-        for pid, en, zh, url, ne, nz, tz in people:
+        for pid, en, zh, ne, nz, tz in people:
             if ne == n or nz == n or (tn and tn == tz):
                 return pid
         if name in ALIAS:
             an = norm(ALIAS[name])
-            for pid, en, zh, url, ne, nz, tz in people:
+            for pid, en, zh, ne, nz, tz in people:
                 if ne == an:
                     return pid
         return None
@@ -98,20 +98,18 @@ def main():
         pid = find(r["name"])
         if pid is None:
             cur.execute(
-                "INSERT INTO people(name_en, primary_occupation, has_biography, wiki_url) "
-                "VALUES (?, 'mathematician', 0, ?)",
-                (r["name"], r["url"]),
+                "INSERT INTO people(name_en, primary_occupation, has_biography) "
+                "VALUES (?, 'mathematician', 0)",
+                (r["name"],),
             )
             pid = cur.lastrowid
             cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, `rank`) "
                         "SELECT ?, id, 0 FROM occupations WHERE name_en='mathematician'", (pid,))
-            people.append((pid, r["name"], None, r["url"], norm(r["name"]), "", tokens_norm(r["name"])))
+            people.append((pid, r["name"], None, norm(r["name"]), "", tokens_norm(r["name"])))
             added_people += 1
             print(f"  + 新增(未立传): {r['name']}（{r['year']}）")
         else:
             existing += 1
-            # 回填 wiki_url（若缺失）
-            cur.execute("UPDATE people SET wiki_url=COALESCE(wiki_url, ?) WHERE id=?", (r["url"], pid))
 
         cur.execute(
             "INSERT OR IGNORE INTO award_laureate(person_id, award_id, year, source) VALUES (?,?,?, 'Abel_Prize_laureates')",

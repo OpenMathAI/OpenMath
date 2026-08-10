@@ -106,22 +106,17 @@ def main():
                 except Exception:
                     pass
 
-    # 3) 载入 people，按姓名匹配 pages 目录（不依赖 local_dir），顺带回填 local_dir
+    # 3) 载入 people，按姓名匹配 pages 目录（不依赖 local_dir）
     cur.execute("SELECT id, name_en, name_zh FROM people")
     people = cur.fetchall()
 
     meta_nats = {}
-    local_filled = 0
     for pid, en, zh in people:
         if not en and zh:
             en = zh
         dname = dir_norms.get(norm(en))
         if not dname:
             continue
-        cur.execute("UPDATE people SET local_dir=%s WHERE id=%s AND local_dir IS NULL",
-                    (f"pages/{dname}", pid))
-        if cur.rowcount:
-            local_filled += 1
         mf = PAGES / dname / "metadata.json"
         try:
             m = json.loads(mf.read_text(encoding="utf-8"))
@@ -131,7 +126,6 @@ def main():
         except Exception:
             pass
     conn.commit()
-    print(f"回填 local_dir: {local_filled} 人")
     print(f"有国籍 metadata 的人: {len(meta_nats)}")
 
     # 4) 灌入 person_nationality

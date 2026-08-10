@@ -45,9 +45,9 @@ def main():
 
     # 选目标人
     if args.only:
-        cur.execute("SELECT id, name_en, local_dir FROM people WHERE name_en LIKE %s", (f"%{args.only}%",))
+        cur.execute("SELECT id, name_en FROM people WHERE name_en LIKE %s", (f"%{args.only}%",))
     else:
-        cur.execute("SELECT id, name_en, local_dir FROM people WHERE id<=%s ORDER BY id", (args.n,))
+        cur.execute("SELECT id, name_en FROM people WHERE id<=%s ORDER BY id", (args.n,))
     targets = cur.fetchall()
     print(f"待处理: {len(targets)} 人")
 
@@ -56,23 +56,20 @@ def main():
     all_people = [(pid, en, norm(en or "")) for pid, en in cur.fetchall()]
     name_index = {n: pid for pid, en, n in all_people}
 
+    # pages 目录 -> 归一化名索引（替代 local_dir）
+    page_index = {}
+    for d in PAGES.iterdir():
+        if d.is_dir() and (d / "metadata.json").exists():
+            page_index.setdefault(norm(d.name), d)
+
     updated = 0
     relations_added = 0
     rel_skipped = 0
     skipped_notfound = 0
 
-    for pid, name_en, local_dir in targets:
-        # local_dir 形如 "pages/David_Hilbert" 或类似；映射到 metadata.json
-        page_dir = None
-        if local_dir:
-            page_dir = PAGES / Path(local_dir).name
-        if not page_dir or not (page_dir / "metadata.json").exists():
-            # 回退：按名字在 pages 下找匹配目录
-            target_norm = norm(name_en)
-            for d in PAGES.iterdir():
-                if d.is_dir() and norm(d.name) == target_norm:
-                    page_dir = d
-                    break
+    for pid, name_en in targets:
+        # 按名字在 pages 下找匹配目录（不依赖 local_dir）
+        page_dir = page_index.get(norm(name_en))
         if not page_dir or not (page_dir / "metadata.json").exists():
             print(f"  ⚠ 跳过（无 metadata）: {name_en}")
             continue
