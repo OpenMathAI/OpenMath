@@ -184,10 +184,79 @@
 - [ ] 二战 Purple 密码 ✅
 - [ ] 学生: Iyanaga, Kuroda, Nakayama, Shoda ✅
 
-## 十二、立传完成后操作（★ 勿遗漏）
+## 十二、Review 第1轮记录 (2026-08-10)
 
-- [ ] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第52行 高木立传列 `🔲 → ✅`
-- [ ] **数据库联动**: `rankings` 表 `status` 更新 + `people.has_biography` 设为 `1`
-- [ ] **提示词自查**: 确认本提示词含有此"立传完成操作"段落
+> 对照 Wikipedia (`pages/Teiji_Takagi/page.md`) 逐页核查。
+
+### 修复清单
+
+| # | 问题 | 位置 | 原内容 | 修正 |
+|:--:|------|------|------|------|
+| 1 | **缺少头像** | 封面 | 无 | 下载 `Teiji_Takagi.jpg` → 右上角 `\includegraphics[width=3.2cm]` |
+| 2 | **国旗 emoji** | 封面 + 第3页 | 🇯🇵 (不渲染) | `Japan` |
+| 3 | **错别字** | 第3页 | "无数学习教科书" | "数学教科书" |
+| 4 | **伪造引语** | 封面 | "在第一次世界大战的隔绝中……" — Hasse, Klassenkörperbericht, 1926 | 替换为 Wikipedia 事实陈述，去除伪造归属 |
+| 5 | **伪造引语** | 结束页 | "Takagi's work is the foundation of all of class field theory." (无出处) | 替换为 Wikipedia 原文 "internationally recognized as one of the world's leading number theorists" — DMV, 1926 |
+
+### 未发现问题
+
+- 生卒日期 (1875-04-21 ~ 1960-02-28) ✅
+- 博导 David Hilbert (哥廷根) ✅
+- Takagi 存在定理 1914–1918 独立完成, 1920 发表 ✅
+- 1922 Emil Artin 首先认识到重要性 ✅
+- 1925–26 Hasse Klassenkörperbericht 确立国际地位 ✅
+- Takagi 曲线 / Blancmange 曲线 ✅
+- Autonne–Takagi 分解 ✅
+- 1932 ICM 副主席 ✅
+- 1936 首届 Fields 奖评选委员 ✅
+- 日本文化勋章 (Order of Culture) ✅
+- Person of Cultural Merit ✅
+- 二战 Purple 密码 ✅
+- 学生: Iyanaga, Kuroda, Nakayama, Shoda ✅
+- 博士生还有 Hiroshi Uehara, Tarō Morishima (Wikidata 显示, slide 未列 — 不影响核心叙事) ℹ️
+
+### 结论
+
+第1轮 Review 通过。主要问题为: 缺头像、emoji 渲染、错别字、两处伪造引语。已全部修复。
+
+---
+
+## Review 第2轮记录 (2026-08-10)
+
+> 对照 Wikipedia (`pages/Teiji_Takagi/page.md`) 逐页精查。
+
+### 修复清单
+
+| # | 问题 | 位置 | 原内容 | 修正 |
+|:--:|------|------|------|------|
+| 1 | **村名不一致** | 第3页 | "Kasuga 村" (Wikidata) | "Kazuya 村" (Wikipedia 原文: "Kazuya village near Gifu") |
+| 2 | **无据断言** | 第3页 | "Hilbert 唯一的日本博士生" | "Hilbert 极少数来自日本的门徒之一" (Wikipedia 未确认"唯一") |
+| 3 | **无据断言** | 第6页 | "亚洲数学家首次在 ICM 担任高级职务" | "极少数早期亚洲数学家在 ICM 担任的高级职务" |
+| 4 | **引语归属** | 结束页 | "— DMV, 1926" (暗示DMV官方声明) | "— 自 1926 年 Klassenkörperbericht 之后" (Wikipedia 描述语) |
+
+### 逐页核查通过项
+
+| 页 | 核查内容 | 结果 |
+|:--:|------|:--:|
+| 封面 | 姓名、生卒(1875-04-21~1960-02-28,84岁)、国籍(Japan)、Hilbert学生、类域论、文化勋章、ICM年份(1920/1932/1936) | ✅ |
+| 总览 | "孤岛上的天才"叙事、Takagi存在定理描述、ICM Strasbourg无人听懂→1926 Klassenkörperbericht | ✅ |
+| 早年 | 岐阜→东京帝国大学→Salmon/Weber→哥廷根→Hilbert→Klein/Minkowski上下文 | ✅ |
+| 孤岛突破 | 一战隔绝(1914)、1914–1918独立完成、1920 ICM Strasbourg(德国数学家被排除)、论文标题原文保留 | ✅ |
+| 迟到的认可 | 1922 Artin、1925 Hasse DMV Danzig、Siegel同时指出、1926 Klassenkörperbericht 100页 | ✅ |
+| 日本数学之父 | 教科书、1932 ICM副主席、1936 Fields首届评委、Purple密码 | ✅ |
+| 荣誉传承 | 文化勋章+文化功劳者、4位学生(Iyanaga/Nakayama/Shoda/Kuroda)、Langlands GL(1)、类域论→Artin→Chevalley→Langlands→Wiles | ✅ |
+| 结束页 | 主题凝练、时间线完整、引语归属准确 | ✅ |
+
+### 结论
+
+**第2轮 Review 通过。** 4处修正均为措辞严谨性调整（无据断言、归属精度），核心史实全部准确，无需继续 Review。
+
+---
+
+## 十三、立传完成后操作（★ 勿遗漏）
+
+- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第52行 高木: 立传 `✅`, Review `✅✅` (第2轮完成)
+- [x] **数据库联动**: `rankings` 表 `status` 更新 + `people.has_biography` 设为 `1`
+- [x] **提示词自查**: 确认本提示词含有此"立传完成操作"段落
 
 > **开始执行。**

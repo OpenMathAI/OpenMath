@@ -231,7 +231,7 @@
 
 ## 十四、立传完成后操作（★ 勿遗漏）
 
-- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第51行 Gelfand: 立传 `🔲 → ✅`, Review `🔲 → ✅` (第1轮)
+- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第51行 Gelfand: 立传 `✅`, Review `✅✅` (第2轮完成)
 - [x] **数据库联动**: `rankings` 表 `status` 更新 + `people.has_biography` 设为 `1`
 - [x] **提示词自查**: 确认本提示词含有此"立传完成操作"段落
 

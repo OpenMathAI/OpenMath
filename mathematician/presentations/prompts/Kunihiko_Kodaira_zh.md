@@ -181,10 +181,48 @@
 - [ ] Wolf Prize 1984/5 ✅
 - [ ] 二战密码工作 ✅
 
-## 十二、立传完成后操作（★ 勿遗漏）
+## 十二、Review 第1轮记录 (2026-08-10)
 
-- [ ] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第53行 小平立传列 `🔲 → ✅`
-- [ ] **数据库联动**: `rankings` 表 `status` 更新 + `people.has_biography` 设为 `1`
-- [ ] **提示词自查**: 确认本提示词含有此"立传完成操作"段落
+> 对照 Wikipedia (`pages/Kunihiko_Kodaira/page.md`) 逐页核查。
+
+### 修复清单
+
+| # | 问题 | 位置 | 原内容 | 修正 |
+|:--:|------|------|------|------|
+| 1 | **缺少头像** | 封面 | 无 | 下载 `Kunihiko_Kodaira.jpg` → 右上角 `\includegraphics[width=3.2cm]` |
+| 2 | **国旗 emoji** | 封面 + 第3页 | 🇯🇵 (不渲染) | `Japan` |
+| 3 | **伪造引语** | 封面 | "K3 曲面的 'K' 代表 Kummer, Kähler — 和 Kodaira。" (自编诗意渲染) | 替换为 Wikipedia 事实陈述 |
+| 4 | **引语归属** | 结束页 | "K3 surfaces were named after Kummer, Kähler — and Kodaira." (无出处) | 添加出处: "— Wikipedia: K3 surface" |
+
+### 逐页核查通过项
+
+| 页 | 核查内容 | 结果 |
+|:--:|------|:--:|
+| 封面 | 姓名、生卒(1915-03-16~1997-07-26,82岁)、Fields 1954、Wolf 1984/5、博导 Iyanaga、Weyl 邀请、Spencer 合作 | ✅ |
+| 总览 | "日本代数几何之父"叙事、Hodge→形变→曲面分类三幕结构、师承链 Hilbert→高木→弥永→小平 | ✅ |
+| 早年 | 东京出生、数学+物理双学位(1938/1941)、二战孤岛自学 Hodge 理论、1944 密码工作、1949 博士 + Weyl 邀请 IAS | ✅ |
+| Hodge与复几何 | 消没定理 1953、嵌入定理 1954、调和积分、Bochner–Kodaira–Nakano 恒等式、Hirzebruch 评价 | ✅ |
+| 形变理论 | Kodaira–Spencer 映射、H¹(X,Θ)/H²(X,Θ)、模空间维度、Grothendieck 影响 | ✅ |
+| 曲面分类 | 七种曲面(5代数+2非代数)、K3 表征(quartic surface deformation)、小平维数 κ(X)、Mori MMP 延续 | ✅ |
+| 荣誉传承 | Fields 1954(与 Serre)、Wolf 1984/5、文化勋章 1957、日本学士院、NAS 外籍院士、师承链双方向 | ✅ |
+| 结束页 | 主题凝练、时间线完整、K3 引语有出处 | ✅ |
+
+### 未发现问题
+
+- 生卒日期、博导 Iyanaga(弥永昌吉)、Fields 1954 与 Serre 共享 — 全部准确 ✅
+- 消没定理/嵌入定理/形变理论/曲面分类 的核心内容和年代 — 与 Wikipedia 一致 ✅
+- 奖项列表(Fields、Wolf、Order of Culture、Japan Academy Prize、Fujiwara Prize) — 第7页略去了 Fujiwara 1975 和 Göttingen/LMS 荣誉会员，不影响核心叙事 ℹ️
+
+### 结论
+
+第1轮 Review 通过。主要问题: 缺头像、emoji 渲染、两处引语问题。已全部修复。
+
+---
+
+## 十三、立传完成后操作（★ 勿遗漏）
+
+- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第53行 小平: 立传 `✅`, Review `✅` (第1轮完成)
+- [x] **数据库联动**: `rankings` 表 `status` 更新 + `people.has_biography` 设为 `1`
+- [x] **提示词自查**: 确认本提示词含有此"立传完成操作"段落
 
 > **开始执行。**
