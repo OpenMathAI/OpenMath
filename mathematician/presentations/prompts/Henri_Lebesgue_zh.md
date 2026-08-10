@@ -38,6 +38,47 @@
 
 ---
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_lebesgue_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q206005` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `亨利·勒贝格` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["积分的革命者","现代实分析的奠基人","巴黎的安静巨人"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1875-06-28` / `1941-07-26` | ⚠️ NULL |
+| 6 | `people` | description | `French mathematician (1875–1941)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `mathematical analysis`、`measure theory`、`topology`、`Lebesgue integration` 等 | ✅ 8 项 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Poncelet 1914`、`ForMemRS 1934`、`Saintour`、`Petit d'Ormoy`、`Officer of the Legion of Honour`、`Cours Peccot` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: ENS、Lycée Louis-le-Grand`；`employment: Rennes(1902–1906)、Poitiers(1906–1910)、Paris(1910–1919)、Collège de France(1921–1941)` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `France` | ✅ |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（8 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。Lebesgue 当前 `person_relation` **全空**，新建 `MySQL/seed_lebesgue_relations.py`。
+
+**入库范围（8 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Émile Borel → Lebesgue | 有向 | ✅ 在库（id=68） |
+| 学生 | Lebesgue → Paul Montel | 有向 | ⚠️ 占位 |
+| 学生 | Lebesgue → Georges de Rham | 有向 | ⚠️ 占位 |
+| 学生 | Lebesgue → Zygmunt Janiszewski | 有向 | ⚠️ 占位 |
+| 同事 | Jacques Hadamard | 无向 | ✅ 在库（id=70） |
+| 同事 | René Baire | 无向 | ⚠️ 占位 |
+| 同事 | Camille Jordan | 无向 | ⚠️ 占位 |
+| 合作者 | Henri Poincaré | 无向 | ✅ 在库（id=2） |
+
+- 缺失人物（5 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心数学贡献
 
 | 领域 | 贡献 | 年代 |
