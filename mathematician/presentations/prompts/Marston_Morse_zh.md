@@ -50,6 +50,45 @@
 ### 人格画像
 Morse 以好斗和固执著称。他与导师 Birkhoff 长期竞争——两人在哈佛争夺同一个教席。但他也是一个深沉的数学思想家，用一生专注于一个主题（Morse 理论）。Oppenheimer 描述他为 "almost a statesman of mathematics"——政治家般的数学家。他的学生 Pitcher 说他"从不满足于表面的理解"。晚年他甚至制作了一部教学电影《Pits, Peaks, and Passes》，用直观方式向公众解释临界点理论。
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_morse_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q723627` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `马斯顿·莫尔斯` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["莫尔斯理论之父","拓扑与分析的双料大师","Thue-Morse 序列"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1892-03-24` / `1977-06-22` | ⚠️ **NULL 全缺** |
+| 6 | `people` | description | `American mathematician (1892–1977)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`topologist(1)`、`university teacher(2)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `topology`、`calculus of variations`、`differential topology` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Bôcher 1933`、`NMS 1964`、`Gibbs`、`Legion of Honour`、`Croix de guerre`、`巴黎/雷恩荣誉博士` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: Harvard、Colby`；`employment: Cornell、Brown、Harvard、IAS` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `United States` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（6 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_morse_relations.py`。
+
+**入库范围（6 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | George David Birkhoff → Morse | 有向 | ⚠️ 占位 |
+| 学生 | Morse → Gustav Hedlund | 有向 | ⚠️ 占位（动力系统） |
+| 学生 | Morse → Arthur Sard | 有向 | ⚠️ 占位（Sard 定理） |
+| 同事 | Hassler Whitney | 无向 | ✅ 在库（id=26） |
+| 同事 | Oswald Veblen | 无向 | ✅ 在库（id=368，IAS 拓扑圈） |
+| 同事 | Solomon Lefschetz | 无向 | ✅ 在库（id=54） |
+
+- 缺失人物（3 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心贡献
 
 | 领域 | 具体贡献 | 年代 |
