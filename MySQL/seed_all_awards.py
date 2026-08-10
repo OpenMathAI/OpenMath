@@ -79,7 +79,7 @@ def main():
     conn = get_conn()
     cur = conn.cursor()
 
-    cur.execute("SELECT id, name_en FROM people WHERE id<=11 ORDER BY id")
+    cur.execute("SELECT id, name_en FROM people WHERE id<=50 ORDER BY id")
     people = cur.fetchall()
 
     cur.execute("SELECT id, name_en FROM awards")
@@ -93,12 +93,22 @@ def main():
     unknown_year = []
     no_zh = []
 
+    # pages 目录名与库中 name_en 不一致的别名映射
+    DIR_ALIAS = {
+        "J.-P. Serre": "Jean-Pierre Serre",
+        "陈省身": "Shiing-Shen Chern",
+        "R.A. Fisher": "Ronald Fisher",
+        "G.H. Hardy": "G.H. Hardy",
+        "J.E. Littlewood": "J.E. Littlewood",
+        "L.E.J. Brouwer": "L.E.J. Brouwer",
+    }
+
     for pid, name_en in people:
-        dirs = glob.glob(os.path.join(ROOT, "*")) if False else []
-        # 定位 pages 目录（按 norm 匹配）
+        # 定位 pages 目录（按 norm 匹配；失败时尝试别名）
+        cand_name = DIR_ALIAS.get(name_en, name_en)
         pdir = None
         for cand in glob.glob(os.path.join(ROOT, "*")):
-            if norm(os.path.basename(cand)) == norm(name_en):
+            if norm(os.path.basename(cand)) == norm(cand_name):
                 pdir = cand
                 break
         if pdir is None:
