@@ -80,6 +80,49 @@
 
 ---
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_cartan_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q274639` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `埃利·嘉当` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["李群与微分几何大师","外微分形式之父"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1869-04-09` / `1951-05-06` | ⚠️ NULL |
+| 6 | `people` | description | `French mathematician (1869–1951)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)`、`physicist(2)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `differential geometry`、`general relativity`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Leconte 1930`、`Poncelet`、`Lobachevsky 1937`、`Commander of the Legion of Honour`、`ForMemRS 1947` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: ENS、University of Paris`；`employment: Montpellier、Lyon、Nancy、Science Faculty of Paris` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `France` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（10 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_cartan_relations.py`。
+
+**入库范围（10 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Jean Gaston Darboux → Cartan | 有向 | ⚠️ 占位 |
+| 导师 | Sophus Lie → Cartan | 有向 | ⚠️ 占位 |
+| 学生 | Cartan → Charles Ehresmann | 有向 | ⚠️ 占位 |
+| 学生 | Cartan → Georges de Rham | 有向 | ⚠️ 占位 |
+| 学生 | Cartan → Kentaro Yano | 有向 | ⚠️ 占位 |
+| 父子 | Cartan → Henri Cartan | 有向 | ✅ 在库（id=69） |
+| 同事 | André Weil | 无向 | ✅ 在库（id=8） |
+| 同事 | Jean Dieudonné | 无向 | ✅ 在库（id=370） |
+| 同事 | Claude Chevalley | 无向 | ✅ 在库（id=27） |
+| 同事 | Laurent Schwartz | 无向 | ✅ 在库（id=17） |
+
+- 缺失人物（5 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心数学与科学贡献
 
 | 领域 | 贡献 | 年代 |
