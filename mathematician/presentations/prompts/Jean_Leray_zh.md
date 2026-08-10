@@ -47,6 +47,39 @@
 
 ---
 
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_leray_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q441143` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `让·勒雷` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["谱序列之父","纳粹战俘营中的数学","Leray 谱序列"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1906-11-07` / `1998-11-10` | ⚠️ 仅年份 |
+| 6 | `people` | description | `French mathematician (1906–1998)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`topologist(1)`、`university teacher(2)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `topology`、`partial differential equation`、`mathematical analysis` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Prix Francoeur 1937`、`von Neumann Prize 1962`、`Feltrinelli 1971`、`Wolf 1979`（已有）、`Lomonosov 1988`、`ForMemRS`、`Cours Peccot` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: ENS`；`employment: Nancy、Paris、Collège de France` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `France` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见 4.5 步（6 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Henri Villat → Leray | 有向 | ⚠️ 占位 |
+| 学生 | Leray → Armand Borel | 有向 | ✅ 在库（id=402） |
+| 学生 | Leray → István Fáry | 有向 | ⚠️ 占位 |
+| 同事 | Henri Cartan | 无向 | ✅ 在库（id=69） |
+| 同事 | Jean-Pierre Serre | 无向 | ✅ 在库（id=12） |
+| 同事 | Laurent Schwartz | 无向 | ✅ 在库（id=17） |
+
+- 缺失人物（2 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_leray_relations.py`
+
 ## 三、核心贡献表
 
 | 领域 | 贡献 | 关键年份 |
