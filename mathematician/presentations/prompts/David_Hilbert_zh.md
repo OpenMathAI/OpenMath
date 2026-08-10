@@ -26,6 +26,8 @@
 
 按照 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md) 第十一节「推荐制作流程」的步骤，依次完成。**每完成一步向我汇报进度**，遇到歧义时先征求我的意见再继续。
 
+> **数据库同步要求**：本提示词包含「社会关系梳理 + 入库」步骤（第 4.5 步）。请严格按该步骤操作，将人物社会关系写入 `greatminds` 数据库（MySQL），这是 OpenMath 项目人物关系网络的一部分，与 Beamer 立传并行。
+
 ---
 
 ## 第 0 步：确认 Wikipedia 页面已就绪
@@ -97,6 +99,61 @@
 - **69 位博士生** — Weyl, Courant, Dehn, Zermelo, von Neumann, Noether …
 - **Gödel** — 不完备定理击碎了 Hilbert 纲领，但 Hilbert 以尊严接受
 - **纳粹** — 1933 年数学系被清洗，Hilbert 目睹一生心血流逝
+
+---
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> **目的**：将第 4 步梳理的人物关系写入 `greatminds` 数据库，形成可持续查询的人物关系网络。数据库与 Beamer 立传**并行推进**，此处入库的 `person_relation` 记录即是后续「人物关系图谱」页面的数据来源。
+
+### 4.5.1 梳理范围（从 Wikipedia page.md / metadata.json 提取）
+
+从以下来源梳理 Hilbert 的社会关系，**覆盖所有关系类型**（不仅限于第 4 步提到的）：
+
+| 关系类型 | relation_types 键 | 方向 | 说明 |
+|---------|------------------|------|------|
+| 老师 | `advisor-student` | 有向（师→生） | 博士导师 Ferdinand von Lindemann |
+| 学生 | `advisor-student` | 有向（师→生） | Weyl, Courant, Dehn, Zermelo, Noether, von Neumann 等 |
+| 挚友/同事 | `colleague` | 无向 | Minkowski（终身挚友）、Hurwitz（Königsberg 三人组） |
+| 合作者 | `collaborator` | 无向 | Klein（Göttingen 共事） |
+| 对手/争议 | `rival` / `controversy` | 无向 | 与 Gödel（不完备定理冲击，非敌对但有张力）等 |
+| 荣誉共同体 | `co-honored` | 无向 | — |
+
+### 4.5.2 入库操作（MySQL `greatminds` 库）
+
+1. **数据库连接**：
+   ```bash
+   mysql -u root greatminds    # 本机 MySQL，仅监听 127.0.0.1
+   ```
+
+2. **关系表结构**（`person_relation`）：
+   ```
+   from_id | to_id | relation_type | note | source
+   ```
+   - `relation_type` 取值见 `relation_types` 表（8 类：parent-child / advisor-student / colleague / collaborator / co-honored / rival / controversy / spouse）；
+   - `note` 写一句关系说明（如「终身挚友，Königsberg 三人组之一」）；
+   - `source` 填 `立传-<姓名>`（如 `立传-David_Hilbert`）。
+
+3. **人物不在库中怎么办**（★ 重要）：
+   - **先新建占位**：`INSERT INTO people (name_en, primary_occupation, has_biography) VALUES (..., 'mathematician', 0)`（`has_biography=0` 表示未立传）；
+   - 关系 `note` 加前缀 **`[材料待展开] `** 打标识，表示后续会展开详细介绍；
+   - 新建立传后，将 `has_biography` 改为 `1`，并移除 `[材料待展开]` 前缀。
+
+4. **匹配已有库中人物**：优先按英文名（`name_en`）归一化匹配；注意名序差异（如库中 `Takagi Teiji` vs 材料 `Teiji Takagi`），避免重复建人。
+
+5. **执行后校验**（一人一行查看关系）：
+   ```sql
+   SELECT a.name_en AS 甲, rt.name_zh AS 关系, b.name_en AS 乙, pr.note
+   FROM person_relation pr
+   JOIN people a ON a.id=pr.from_id
+   JOIN people b ON b.id=pr.to_id
+   JOIN relation_types rt ON rt.relation_key=pr.relation_type
+   WHERE a.name_en='David Hilbert' OR b.name_en='David Hilbert';
+   ```
+
+6. **汇报**：完成后向我汇报「新建 X 人（占位）、新增 Y 条关系」，并附上述校验查询结果。
+
+> **模板脚本**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/MySQL/seed_hilbert_relations.py`（Hilbert 关系梳理参考实现，含缺失人物建占位 + 关系打标识 + 幂等去重逻辑）。其他人物可参照此脚本模式。
 
 ---
 
@@ -320,6 +377,8 @@ pdftoppm -png -r 300 -f N -l N output/David_Hilbert_zh.pdf output/check
 | `mathematician/presentations/grothendieck/Alexander_Grothendieck_zh.tex` | Grothendieck 完整源码（教皇模板） |
 | `mathematician/presentations/riemann/Bernhard_Riemann_zh.tex` | Riemann 完整源码（克制天才模板） |
 | `mathematician/presentations/riemann/Makefile` | 构建脚本（直接复制） |
+| `MySQL/seed_hilbert_relations.py` | 社会关系入库参考脚本（第 4.5 步） |
+| `MySQL/schema_mysql.sql` | 数据库表结构（`person_relation` / `relation_types` 定义） |
 
 ---
 
