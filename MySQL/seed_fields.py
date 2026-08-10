@@ -9,12 +9,12 @@
 """
 import json
 import re
-import sqlite3
+import pymysql
+from db_mysql import get_conn
 import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-DB = ROOT / "greatminds.db"
 PAGES = ROOT.parent / "mathematician" / "pages"
 MD = ROOT.parent / "mathematician" / "figures" / "OpenMath_20th_Century_Comprehensive_Ranking.md"
 
@@ -121,8 +121,7 @@ def extract_from_tags():
 
 
 def main():
-    conn = sqlite3.connect(DB)
-    conn.execute("PRAGMA foreign_keys = ON")
+    conn = get_conn()
     cur = conn.cursor()
 
     wikidata_fields = get_field_of_work()
@@ -175,7 +174,7 @@ def main():
                 fid = cur.lastrowid
             else:
                 fid = fid[0]
-            cur.execute("INSERT OR IGNORE INTO person_field(person_id, field_id, rank) VALUES (?,?,0)",
+            cur.execute("INSERT OR IGNORE INTO person_field(person_id, field_id, `rank`) VALUES (?,?,0)",
                         (pid, fid))
         if src == "wikidata":
             matched_wd += 1

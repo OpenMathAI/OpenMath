@@ -7,12 +7,12 @@
 - 不存在：新增 people，has_biography=0，挂 computer scientist 职业 + Turing 记录
 """
 import re
-import sqlite3
+import pymysql
+from db_mysql import get_conn
 import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-DB = ROOT / "greatminds.db"
 MD = ROOT.parent / "turing" / "turing_award_winners.md"
 
 # 名字别名：表名 -> 库中已有 name_en
@@ -76,8 +76,7 @@ def main():
     rows = parse_rows()
     print(f"解析到图灵奖得主: {len(rows)} 人")
 
-    conn = sqlite3.connect(DB)
-    conn.execute("PRAGMA foreign_keys = ON")
+    conn = get_conn()
     cur = conn.cursor()
 
     cur.execute("SELECT id FROM awards WHERE name_en='ACM A.M. Turing Award'")
@@ -127,7 +126,7 @@ def main():
                 (r["name"], birth, death),
             )
             pid = cur.lastrowid
-            cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, rank) VALUES (?,?,0)",
+            cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, `rank`) VALUES (?,?,0)",
                         (pid, cs_occ))
             people.append((pid, r["name"], None, "computer scientist", norm(r["name"]), "", tokens_norm(r["name"])))
             added_people += 1
@@ -146,9 +145,9 @@ def main():
                         (pid, cs_occ))
             if not cur.fetchone():
                 # 追加为次职业（rank 取现有最大+1）
-                cur.execute("SELECT COALESCE(MAX(rank),0)+1 FROM person_occupation WHERE person_id=?", (pid,))
+                cur.execute("SELECT COALESCE(MAX(`rank`),0)+1 FROM person_occupation WHERE person_id=?", (pid,))
                 rk = cur.fetchone()[0]
-                cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, rank) VALUES (?,?,?)",
+                cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, `rank`) VALUES (?,?,?)",
                             (pid, cs_occ, rk))
 
         cur.execute(

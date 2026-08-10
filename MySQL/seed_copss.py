@@ -8,12 +8,12 @@
 - 已存在：补 COPSS 记录；不存在：新增 has_biography=0
 """
 import re
-import sqlite3
+import pymysql
+from db_mysql import get_conn
 import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-DB = ROOT / "greatminds.db"
 MD = ROOT.parent / "COPSS" / "copss_winners.md"
 
 # 华人得主：英文名 -> 中文名
@@ -73,8 +73,7 @@ def main():
     rows = parse_rows()
     print(f"解析到 COPSS 得主: {len(rows)} 人")
 
-    conn = sqlite3.connect(DB)
-    conn.execute("PRAGMA foreign_keys = ON")
+    conn = get_conn()
     cur = conn.cursor()
 
     cur.execute("SELECT id FROM awards WHERE name_en='COPSS Presidents'' Award'")
@@ -118,7 +117,7 @@ def main():
                 (r["name"], r["zh"], birth, death),
             )
             pid = cur.lastrowid
-            cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, rank) VALUES (?,?,0)",
+            cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, `rank`) VALUES (?,?,0)",
                         (pid, occ))
             people.append((pid, r["name"], r["zh"], norm(r["name"]), norm(r["zh"] or ""), tokens_norm(r["name"])))
             added_people += 1
@@ -136,9 +135,9 @@ def main():
             # 追加 statistician 职业
             cur.execute("SELECT 1 FROM person_occupation WHERE person_id=? AND occupation_id=?", (pid, occ))
             if not cur.fetchone():
-                cur.execute("SELECT COALESCE(MAX(rank),0)+1 FROM person_occupation WHERE person_id=?", (pid,))
+                cur.execute("SELECT COALESCE(MAX(`rank`),0)+1 FROM person_occupation WHERE person_id=?", (pid,))
                 rk = cur.fetchone()[0]
-                cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, rank) VALUES (?,?,?)",
+                cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, `rank`) VALUES (?,?,?)",
                             (pid, occ, rk))
 
         cur.execute(

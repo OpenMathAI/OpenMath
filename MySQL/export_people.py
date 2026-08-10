@@ -9,16 +9,25 @@
 输出：db/people_full.md（或 --out 指定）
 """
 import argparse
-import sqlite3
+import pymysql
+from db_mysql import get_conn, CompatDictCursor
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-DB = ROOT / "greatminds.db"
 OUT = ROOT / "people_full.md"
 
 
+
+def _now():
+    c = get_conn()
+    cur = c.cursor()
+    cur.execute('SELECT NOW()')
+    v = cur.fetchone()[0]
+    c.close()
+    return v
 def q(cur, sql, args=()):
-    return cur.execute(sql, args).fetchall()
+    cur.execute(sql, args)
+    return cur.fetchall()
 
 
 def collect(cur, people):
@@ -27,8 +36,8 @@ def collect(cur, people):
     for p in people:
         pid = p["id"]
         p["occupations"] = q(cur, """
-            SELECT o.name_en, o.name_zh, po.rank FROM person_occupation po
-            JOIN occupations o ON o.id=po.occupation_id WHERE po.person_id=? ORDER BY po.rank
+            SELECT o.name_en, o.name_zh, po.`rank` FROM person_occupation po
+            JOIN occupations o ON o.id=po.occupation_id WHERE po.person_id=? ORDER BY po.`rank`
         """, (pid,))
         p["fields"] = q(cur, """
             SELECT f.name_en, f.name_zh FROM person_field pf
@@ -39,8 +48,8 @@ def collect(cur, people):
             JOIN awards a ON a.id=al.award_id WHERE al.person_id=? ORDER BY al.year
         """, (pid,))
         p["rankings"] = q(cur, """
-            SELECT r.rank, r.orig_rank, r.tag, r.status FROM rankings r
-            WHERE r.person_id=? ORDER BY r.rank
+            SELECT r.`rank`, r.orig_rank, r.tag, r.status FROM rankings r
+            WHERE r.person_id=? ORDER BY r.`rank`
         """, (pid,))
     return people
 
@@ -48,7 +57,7 @@ def collect(cur, people):
 def render_sections(people):
     """每节一人（默认格式）。"""
     lines = ["# 人物信息总览（greatminds.db 导出）", ""]
-    lines.append(f"> 导出时间：{sqlite3.connect(DB).execute('SELECT datetime(\'now\',\'localtime\')').fetchone()[0]}")
+    lines.append(f"> 导出时间：{_now()}")
     lines.append(f"> 人物总数：**{len(people)}**")
     lines.append("> 说明：字段为空表示数据尚未采集（可后续抓取 Wikidata 补全）。")
     lines.append("")
@@ -135,7 +144,7 @@ def _row_fields(p):
 def render_oneline(people):
     """一人一行 Markdown 表格（便于复查对比；长列在渲染时可能折行）。"""
     lines = ["# 人物信息总览 · 一人一行（greatminds.db 导出）", ""]
-    lines.append(f"> 导出时间：{sqlite3.connect(DB).execute('SELECT datetime(\'now\',\'localtime\')').fetchone()[0]}")
+    lines.append(f"> 导出时间：{_now()}")
     lines.append(f"> 人物总数：**{len(people)}**")
     lines.append("> 说明：领域/奖项为多值，用 `；` 分隔；空字段表示尚未采集。")
     lines.append("")
@@ -165,13 +174,12 @@ def main():
     ap.add_argument("--tsv", action="store_true", help="一人一行 TSV 格式（tab 分隔，物理一行，Excel 友好）")
     args = ap.parse_args()
 
-    conn = sqlite3.connect(DB)
-    conn.row_factory = sqlite3.Row
-    cur = conn.cursor()
+    conn = get_conn()
+    cur = conn.cursor(CompatDictCursor)
 
     people = q(cur, """
         SELECT p.*,
-               (SELECT MIN(r.rank) FROM rankings r WHERE r.person_id=p.id) AS best_rank
+               (SELECT MIN(r.`rank`) FROM rankings r WHERE r.person_id=p.id) AS best_rank
         FROM people p
         ORDER BY best_rank IS NULL, best_rank, p.name_en
     """)

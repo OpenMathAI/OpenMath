@@ -8,12 +8,12 @@
   Shiing_Shen_Chern   -> Shiing-Shen Chern
 """
 import re
-import sqlite3
+import pymysql
+from db_mysql import get_conn
 import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-DB = ROOT / "greatminds.db"
 PRES = ROOT.parent / "mathematician" / "presentations"
 
 # 已知目录名 -> people.name_en 的别名映射（归一化后仍匹配不上的兜底）
@@ -66,7 +66,7 @@ def main():
                 biographed.setdefault(norm(DIR_ALIAS[d.name]), d.name)
     print(f"presentations 已立传目录: {len(biographed)}")
 
-    conn = sqlite3.connect(DB)
+    conn = get_conn()
     cur = conn.cursor()
     cur.execute("SELECT id, name_en, name_zh FROM people")
     people = cur.fetchall()

@@ -6,11 +6,11 @@
 奖项名映射到 awards 字典表；奖项缺失时自动补入 awards 表（award_type=math_top 或 honor）。
 """
 import re
-import sqlite3
+import pymysql
+from db_mysql import get_conn
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-DB = ROOT / "greatminds.db"
 MD = ROOT.parent / "mathematician" / "figures" / "OpenMath_20th_Century_Comprehensive_Ranking.md"
 
 # 排名文件中奖项缩写 -> awards.name_en（标准名）
@@ -99,8 +99,7 @@ def parse_md():
 def main():
     rows = parse_md()
     print(f"解析到 {len(rows)} 位数学家")
-    conn = sqlite3.connect(DB)
-    conn.execute("PRAGMA foreign_keys = ON")
+    conn = get_conn()
     cur = conn.cursor()
 
     # 确保 occupation: mathematician 存在
@@ -134,13 +133,13 @@ def main():
             inserted += 1
 
         # occupation 关联
-        cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, rank) VALUES (?,?,0)",
+        cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, `rank`) VALUES (?,?,0)",
                     (pid, occ_id))
 
         # ranking
         if r["list"]:
             cur.execute(
-                "INSERT OR REPLACE INTO rankings(person_id, list_key, rank, orig_rank, tag, status) VALUES (?,?,?,?,?,?)",
+                "INSERT OR REPLACE INTO rankings(person_id, list_key, `rank`, orig_rank, tag, status) VALUES (?,?,?,?,?,?)",
                 (pid, r["list"], r["rank"], r["orig"], r["tag"], f"{r['bio']}/{r['review']}"),
             )
 

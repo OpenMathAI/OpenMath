@@ -8,12 +8,12 @@
 - 不存在：新增 people，has_biography=0（未立传），挂 mathematician 职业 + Wolf 获奖记录
 """
 import re
-import sqlite3
+import pymysql
+from db_mysql import get_conn
 import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-DB = ROOT / "greatminds.db"
 MD = ROOT.parent / "Wolf_Prize" / "wolf_prize_winners.md"
 
 # 名字别名：表名 -> 库中已有 name_en（归一化无法对齐时用）
@@ -82,8 +82,7 @@ def main():
     rows = parse_rows()
     print(f"解析到沃尔夫奖得主: {len(rows)} 人")
 
-    conn = sqlite3.connect(DB)
-    conn.execute("PRAGMA foreign_keys = ON")
+    conn = get_conn()
     cur = conn.cursor()
 
     cur.execute("SELECT id FROM awards WHERE name_en='Wolf Prize in Mathematics'")
@@ -126,7 +125,7 @@ def main():
                 (r["name"], birth, death),
             )
             pid = cur.lastrowid
-            cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, rank) "
+            cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, `rank`) "
                         "SELECT ?, id, 0 FROM occupations WHERE name_en='mathematician'", (pid,))
             people.append((pid, r["name"], None, norm(r["name"]), "", tokens_norm(r["name"])))
             added_people += 1
@@ -160,13 +159,13 @@ def main():
     # 清理：Wolf 记录中 person_id 不属于 Wolf 表 68 人的（如排名来源误标的 Lefschetz 1978）
     removed = 0
     cur.execute("""
-        SELECT al.rowid, al.person_id, p.name_en FROM award_laureate al
+        SELECT al.person_id, p.name_en FROM award_laureate al
         JOIN people p ON p.id=al.person_id
         WHERE al.award_id=?
     """, (aid,))
-    for rowid, pid, nm in cur.fetchall():
+    for pid, nm in cur.fetchall():
         if pid not in valid_pids:
-            cur.execute("DELETE FROM award_laureate WHERE rowid=?", (rowid,))
+            cur.execute("DELETE FROM award_laureate WHERE person_id=? AND award_id=?", (pid, aid))
             removed += 1
             print(f"  ~ 清理错误 Wolf 记录: {nm}")
     conn.commit()

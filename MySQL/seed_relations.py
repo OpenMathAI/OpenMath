@@ -9,11 +9,11 @@
 
 缺失人物（祖冲之、祖暅之）先加入 people，再建立关系。
 """
-import sqlite3
+import pymysql
+from db_mysql import get_conn
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-DB = ROOT / "greatminds.db"
 
 # 待补充人物：(name_en, name_zh, occupation_en, has_biography)
 NEW_PEOPLE = [
@@ -39,8 +39,7 @@ def find(cur, name):
 
 
 def main():
-    conn = sqlite3.connect(DB)
-    conn.execute("PRAGMA foreign_keys = ON")
+    conn = get_conn()
     cur = conn.cursor()
 
     # 1) 补充缺失人物
@@ -51,7 +50,7 @@ def main():
                 (en, zh, "mathematician", 1 if has_bio else 0),
             )
             pid = cur.lastrowid
-            cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, rank) "
+            cur.execute("INSERT OR IGNORE INTO person_occupation(person_id, occupation_id, `rank`) "
                         "SELECT ?, id, 0 FROM occupations WHERE name_en='mathematician'", (pid,))
             print(f"新增人物: {en}（{zh}）")
         else:
