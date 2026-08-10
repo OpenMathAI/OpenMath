@@ -113,6 +113,27 @@
 
 ---
 
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。参考脚本：`MySQL/seed_weyl_relations.py`（已执行，10 条关系，缺失 2 人占位）。
+
+**入库范围（提示词「人物关系」节，10 条）**：
+| 关系类型 | 人物 | 状态 |
+|---|---|---|
+| 导师（advisor-student） | Hilbert → Weyl | ✅ 已入库 |
+| 学生（advisor-student） | Mac Lane | ✅ 已入库 |
+| 同事（colleague） | Einstein、Noether、von Neumann、Gödel、Veblen、Dyson | ✅ 已入库 |
+| 对手（rival） | Brouwer | ✅ 已入库 |
+
+**校验**：
+```sql
+SELECT a.name_en AS 甲, rt.name_zh AS 关系, b.name_en AS 乙, pr.note
+FROM person_relation pr JOIN people a ON a.id=pr.from_id
+JOIN people b ON b.id=pr.to_id JOIN relation_types rt ON rt.relation_key=pr.relation_type
+WHERE a.name_en='Hermann Weyl' OR b.name_en='Hermann Weyl';
+```
+
+---
 ## 第 5 步：设计配色方案
 
 - **建议配色：深琥珀金 + 星夜紫 + 象牙白** —— 对称与秩序的庄严感 + 黎曼面/广义相对论的宇宙深邃 + 哲学沉思的温暖
