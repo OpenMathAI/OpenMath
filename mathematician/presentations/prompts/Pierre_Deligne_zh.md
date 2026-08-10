@@ -50,6 +50,46 @@
 ### 人格画像
 Deligne 是 Grothendieck 最杰出的学生，但他与老师的风格截然相反：Grothendieck 宏大壮阔、滔滔不绝；Deligne 极简深邃、惜字如金。他的论文以简短著称——Weil I 仅 35 页，却改变了数学史。他以沉默和思考闻名——在数学会议上常常一言不发地坐着，然后说出一句话让所有人醍醐灌顶。当 Grothendieck 号召数学家抵制学术体制时，Deligne 是少数公开拒绝的人之一，理由简单而有力："数学大于任何个人。"他对名利毫不在意——获得 Abel 奖后，他说："我只是运气好，生在了一个数学的黄金时代。"他的论文风格被誉为"数学写作的典范"——每一句都是精炼的结果，没有一句废话。
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_deligne_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q334045` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `皮埃尔·德利涅` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["Weil 猜想的终结者","动机理论的建筑师","贝尔格莱德学派之外的反叛天才"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1944-10-03` / `NULL`（在世） | ⚠️ 仅年份 |
+| 6 | `people` | description | `Belgian mathematician (1944–)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `algebraic geometry`、`number theory`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Fields 1978`、`Wolf 2008`、`Abel 2013`（已有）；补 `Crafoord 1988`、`Balzan 2004`、`Cours Peccot`、`荣誉博士` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: Brussels、Paris-Sud`；`employment: IHÉS、IAS` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Belgium` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（7 条） | ⚠️ 仅 3 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_deligne_relations.py` 补足。
+
+**入库范围（7 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Alexander Grothendieck → Deligne | 有向 | ✅ 在库（id=7） |
+| 学生 | Deligne → Michael Rapoport | 有向 | ⚠️ 占位 |
+| 学生 | Deligne → Miles Reid | 有向 | ⚠️ 占位 |
+| 合作者 | David Mumford | 无向 | ✅ 在库（id=36，Deligne–Mumford 叠） |
+| 同事 | Jean-Pierre Serre | 无向 | ✅ 在库（id=12） |
+| 同事 | Alexander Beilinson | 无向 | ✅ 在库（id=194） |
+| 同事 | David Kazhdan | 无向 | ✅ 在库（id=439） |
+
+- 缺失人物（2 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心贡献
 
 | 领域 | 具体贡献 | 年代 |
