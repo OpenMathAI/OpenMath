@@ -327,7 +327,8 @@ def summary_slide(people):
         yb, yt = y_stat - 0.5, y_stat
         stats = ["  \\fill[turingbg, rounded corners=4pt] (-5.5,%.2f) rectangle (5.6,%.2f);" % (yb, yt)]
         for x, txt in stat_items:
-            stats.append("  \\node[anchor=north, font=\\fontsize{5.5}{7}\\selectfont\\bfseries, text=turingclr]\n"
+            stats.append("  \\node[anchor=north, text width=3.7cm, align=center,\n"
+                         "               font=\\fontsize{4.5}{5.5}\\selectfont\\bfseries, text=turingclr]\n"
                          "    at (%.2f,%.2f) {%s};" % (x, y_stat - 0.10, txt))
         body = "\n".join(rows + stats)
         return (r"""\def\framesubject{%s}
