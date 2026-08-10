@@ -219,9 +219,39 @@
 
 ---
 
+## Review 第2轮记录 (2026-08-10)
+
+> 对照 Wikipedia (`pages/Kunihiko_Kodaira/page.md`) 逐页精查。
+
+### 修复清单
+
+| # | 问题 | 位置 | 原内容 | 修正 |
+|:--:|------|------|------|------|
+| 1 | **计数矛盾** | 第6页 | "五种代数曲面 (有理曲面、直纹曲面、椭圆曲面、一般型曲面)" 列出4种却说5种 | 去掉数字量词 → "包括有理曲面、直纹曲面、椭圆曲面、一般型曲面等代数类型" |
+| 2 | **史实不确** | 第6页 | "K3 是紧 Kähler 曲面中唯一的非代数单连通型" (技术表述不准确: K3有代数也有非代数, Enriques分类中K3并非"唯一") | 改为 Wikipedia 原文: "小平将 K3 曲面表征为 P³ 中四次曲面的形变，并证明它们构成单一微分同胚类" |
+
+### 逐页核查通过项
+
+| 页 | 核查内容 | 结果 |
+|:--:|------|:--:|
+| 封面 | 姓名、生卒(1915-03-16~1997-07-26,82岁)、Japan国籍、Fields 1954、Wolf 1984/5、博导Iyanaga、Weyl邀请、师承链 | ✅ |
+| 总览 | "日本代数几何之父"叙事、三幕结构(Hodge→形变→曲面分类)、Hilbert→高木→弥永→小平师承链 | ✅ |
+| 早年 | 东京出生、数学(1938)+物理(1941)双学位、二战孤岛自学Hodge理论、1944密码工作、1949博士+Weyl邀请IAS | ✅ |
+| Hodge与复几何 | 消没定理1953、嵌入定理1954、调和积分→Bochner-Kodaira-Nakano恒等式、Hirzebruch评价 | ✅ |
+| 形变理论 | Kodaira-Spencer映射、H¹(X,Θ)/H²(X,Θ)、模空间维度h¹/h²、Deligne-Mumford代数叠、Grothendieck方案理论影响 | ✅ |
+| 曲面分类 | 七种曲面分类(已修正)、K3表征(deformation of quartics, single diffeomorphism class)、小平维数κ(X)、Mori MMP → BCHM Fields 2018 | ✅ |
+| 荣誉传承 | Fields 1954(与Serre同获)、Wolf 1984/5、文化勋章1957、日本学士院、NAS外籍院士、师承链双方向: Hilbert→...→小平→Iitaka/Miyaoka | ✅ |
+| 结束页 | 主题凝练、时间线完整、K3引语有出处(Wikipedia:K3 surface) | ✅ |
+
+### 结论
+
+**第2轮 Review 通过。** 2处修正均为技术严谨性调整——计数矛盾与K3曲面描述。核心史实全部准确，无需继续 Review。
+
+---
+
 ## 十三、立传完成后操作（★ 勿遗漏）
 
-- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第53行 小平: 立传 `✅`, Review `✅` (第1轮完成)
+- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第53行 小平: 立传 `✅`, Review `✅✅` (第2轮完成)
 - [x] **数据库联动**: `rankings` 表 `status` 更新 + `people.has_biography` 设为 `1`
 - [x] **提示词自查**: 确认本提示词含有此"立传完成操作"段落
 
