@@ -36,6 +36,46 @@
 - 1986: 出版《Mathematics, Form and Function》
 - 2005: 去世，95 岁
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_maclane_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q441223` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `桑德斯·麦克兰恩` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["范畴论的奠基者","Eilenberg-MacLane 空间","《现代代数学概览》作者"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1909-08-04` / `2005-04-14` | ⚠️ **NULL 全缺** |
+| 6 | `people` | description | `American mathematician (1909–2005)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `category theory`、`algebra`、`cohomology`、`abstract algebra`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Chauvenet 1941`、`Steele 1986`、`NMS 1989`、`Guggenheim`、`Procter`、`Humboldt` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: Yale、Chicago、Göttingen`；`employment: Harvard、Cornell、Chicago、Columbia` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `United States` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（7 条） | ⚠️ 仅 3 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_maclane_relations.py` 补足。
+
+**入库范围（7 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Hermann Weyl → Mac Lane | 有向 | ✅ 在库（id=6） |
+| 导师 | Paul Bernays → Mac Lane | 有向 | ⚠️ 占位 |
+| 学生 | Mac Lane → John G. Thompson | 有向 | ✅ 在库（id=117，有限单群） |
+| 学生 | Mac Lane → Irving Kaplansky | 有向 | ⚠️ 占位 |
+| 学生 | Mac Lane → David Eisenbud | 有向 | ⚠️ 占位 |
+| 合作者 | Samuel Eilenberg | 无向 | ✅ 在库（id=38，Eilenberg–MacLane 空间与范畴论） |
+| 同事 | Emil Artin | 无向 | ✅ 在库（id=13，芝加哥学派） |
+
+- 缺失人物（3 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心贡献
 | 领域 | 贡献 |
 |------|------|
