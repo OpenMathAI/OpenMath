@@ -286,7 +286,7 @@ def table_slide(title, subject, people):
 
 
 def summary_slide(people):
-    """总结帧：2 列布局，11 个奖项分 6+5 排布；奖项写全称。"""
+    """总结帧：拆成 2 页（8+7），每页一列布局；奖项写全称。"""
     by_award = {}
     for p in people:
         h = gt.HONORS.get(p[0], "")
@@ -294,50 +294,45 @@ def summary_slide(people):
             if key in h:
                 by_award.setdefault(key, []).append(p[0])
     items = sorted(by_award.items(), key=lambda kv: -len(kv[1]))
-    # 分两列：前 ceil(n/2) 项为左列，其余为右列
-    n = len(items)
-    mid = (n + 1) // 2
-    left = items[:mid]
-    right = items[mid:]
+    # 拆成 2 页：前 8 项一帧，后 7 项一帧
+    page1 = items[:8]
+    page2 = items[8:]
 
-    def block_rows(block, x_left_badge, x_names, y0):
-        """生成一个列的 rows；y 步长按行数动态。"""
+    def block_rows(block):
+        """生成一列的 rows；y 步长按行数动态。"""
         rs = []
-        y = y0
+        y = 0.0
         for key, names in block:
             sym, color, _letter, full = BADGE_DEFS[key]
             def chunk(lst, n):
                 return ['\\;·\\;'.join(lst[i:i+n]) for i in range(0, len(lst), n)]
-            chunks = chunk(names, 4)  # 4 人/行（列宽更窄）
+            chunks = chunk(names, 5)
             names_txt = " \\\\ ".join(chunks)
             n_lines = len(chunks)
-            y_step = max(0.55, 0.24 * n_lines + 0.08)
-            rs.append(r"""  \node[fill=%s, rounded corners=4pt, text width=3.6cm, minimum height=0.55cm,
-        inner sep=0pt, align=center, anchor=north west] at (%.2f,%.2f)
-    {\fontsize{5}{6}\selectfont\bfseries\color{white}%s\;\; %s\;\; %d人};
-  \node[anchor=north west, text width=4.0cm, align=left,
-        font=\fontsize{5}{6}\selectfont, text=%s!70!black]
-    at (%.2f,%.2f) {%s};""" % (
-                color, x_left_badge, y, sym, full, len(names),
-                color, x_names, y, names_txt))
+            y_step = max(0.55, 0.22 * n_lines + 0.10)
+            # 左侧徽标盒（窄，3.5cm），右侧人名（占满列宽）
+            rs.append(r"""  \node[fill=%s, rounded corners=4pt, text width=3.5cm, minimum height=0.55cm,
+        inner sep=0pt, align=center, anchor=north west] at (-5.4,%.2f)
+    {\fontsize{5.5}{6.5}\selectfont\bfseries\color{white}%s\;\; %s\;\; %d人};
+  \node[anchor=north west, text width=8.0cm, align=left,
+        font=\fontsize{5.5}{6.5}\selectfont, text=%s!70!black]
+    at (-1.70,%.2f) {%s};""" % (
+                color, y, sym, full, len(names),
+                color, y, names_txt))
             y -= y_step
         return rs, y
 
-    left_rows, y_after_left = block_rows(left, -5.7, -1.95, 0.0)
-    right_rows, y_after_right = block_rows(right, 0.8, 4.55, 0.0)
-
-    # 底部统计条
-    y_stat = min(y_after_left, y_after_right) - 0.40
-    stats = r"""  \fill[turingbg, rounded corners=4pt] (-5.7,%.2f) rectangle (8.4,%.2f);
+    def page_block(rows, y_stat, subject):
+        stats = r"""  \fill[turingbg, rounded corners=4pt] (-5.5,%.2f) rectangle (5.6,%.2f);
   \node[anchor=north, font=\fontsize{5.5}{7}\selectfont\bfseries, text=turingclr]
-    at (-3.8,%.2f) {首届\;\; Alan J. Perlis\;(1966)};
+    at (-3.6,%.2f) {首届\;\; Alan J. Perlis\;(1966)};
   \node[anchor=north, font=\fontsize{5.5}{7}\selectfont\bfseries, text=turingclr]
     at (0.0,%.2f) {60 届\;\; 81 位得主};
   \node[anchor=north, font=\fontsize{5.5}{7}\selectfont\bfseries, text=turingclr]
-    at (3.8,%.2f) {图灵+诺奖\;\; Simon\;·\;Hinton};""" % (
-        y_stat - 0.5, y_stat, y_stat - 0.10, y_stat - 0.10, y_stat - 0.10)
-    rows = left_rows + right_rows + [stats]
-    return (r"""\def\framesubject{诺贝尔·沃尔夫·京都·哥德尔·阿贝尔·香农等交叉得主}
+    at (3.6,%.2f) {图灵+诺奖\;\; Simon\;·\;Hinton};""" % (
+            y_stat - 0.5, y_stat, y_stat - 0.10, y_stat - 0.10, y_stat - 0.10)
+        body = "\n".join(rows + [stats])
+        return (r"""\def\framesubject{%s}
 \begin{frame}{交叉奖项总览}
 \vspace{-4pt}
 \centering
@@ -345,7 +340,15 @@ def summary_slide(people):
 %s
 \end{tikzpicture}
 \end{frame}
-""" % "\n".join(rows))
+""" % (subject, body))
+
+    rows1, y_after1 = block_rows(page1)
+    page1_tex = page_block(rows1, y_after1 - 0.40,
+                            "诺贝尔·沃尔夫·京都·哥德尔·阿贝尔·香农等交叉得主（I · 顶级交叉）")
+    rows2, y_after2 = block_rows(page2)
+    page2_tex = page_block(rows2, y_after2 - 0.40,
+                            "（II · 其他重要荣誉）")
+    return page1_tex + "\n" + page2_tex
 
 
 def build():
