@@ -118,7 +118,58 @@ SELECT * FROM v_award_matrix ORDER BY n_persons DESC;
 
 ---
 
-## 用例 6：国籍与历史政权
+## 用例 6：学术家谱（师生谱系）
+
+**需求**：从某人的老师/学生出发，推导学术传承关系（如「Lindemann → Hilbert → 学生 → 学生的学生…」）。
+
+**设计**：`advisor-student` 是**有向关系**（`relation_types.directed=1`），存储约定 `from_id=老师, to_id=学生`。因此：
+- 从学生（`to_id`）反查 `from_id` 即可得老师；
+- 用 `WITH RECURSIVE` 沿有向边递归，可得到完整学术家谱。
+
+```sql
+-- 1) 从学生反查老师（核心验证：学生的老师是谁）
+SELECT a.name_en AS 老师
+FROM person_relation pr
+JOIN people a ON a.id = pr.from_id
+WHERE pr.relation_type = 'advisor-student' AND pr.to_id = <学生id>;
+
+-- 2) 从老师查学生
+SELECT b.name_en AS 学生
+FROM person_relation pr
+JOIN people b ON b.id = pr.to_id
+WHERE pr.relation_type = 'advisor-student' AND pr.from_id = <老师id>;
+
+-- 3) 递归学术家谱：从 Lindemann 向下查全部后代（学生→学生的学生…）
+WITH RECURSIVE lineage AS (
+    SELECT id, name_en, 0 AS depth
+    FROM people WHERE name_en = 'Ferdinand von Lindemann'
+    UNION ALL
+    SELECT p.id, p.name_en, l.depth + 1
+    FROM lineage l
+    JOIN person_relation pr ON pr.from_id = l.id AND pr.relation_type = 'advisor-student'
+    JOIN people p ON p.id = pr.to_id
+)
+SELECT name_en, depth FROM lineage ORDER BY depth, name_en;
+
+-- 4) 递归向上：Hilbert 的全部师承祖先（老师→老师的老师…）
+WITH RECURSIVE ancestry AS (
+    SELECT id, name_en, 0 AS depth
+    FROM people WHERE name_en = 'David Hilbert'
+    UNION ALL
+    SELECT p.id, p.name_en, a.depth + 1
+    FROM ancestry a
+    JOIN person_relation pr ON pr.to_id = a.id AND pr.relation_type = 'advisor-student'
+    JOIN people p ON p.id = pr.from_id
+)
+SELECT name_en, depth FROM ancestry ORDER BY depth;
+```
+
+> **名序提示**：材料中的 `Teiji Takagi` 在库中为 `Takagi Teiji`，查询前注意归一化/别名，避免匹配不到。
+> **方向保证**：只要遵循「有向师→生」约定，`advisor-student` 记录的 `from_id` 必是老师、`to_id` 必是学生——反查无需额外存储反向边。
+
+---
+
+## 用例 7：国籍与历史政权
 
 **需求**：人物的国籍，以及国家改名/消失后的统一查询（100 年前 vs 现在）。
 
