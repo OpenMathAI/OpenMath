@@ -297,15 +297,22 @@ def summary_slide(people):
                 by_award.setdefault(key, []).append(p[0])
     for key, names in sorted(by_award.items(), key=lambda kv: -len(kv[1])):
         sym, color, letter = BADGE_DEFS[key]
-        names_txt = "\\;·\\;".join(names)
+        # 长名单每 5 人断行；y 步长按行数动态（防重叠）
+        def chunk(lst, n):
+            return ['\\;·\\;'.join(lst[i:i+n]) for i in range(0, len(lst), n)]
+        chunks = chunk(names, 5)
+        names_txt = " \\\\ ".join(chunks)
+        n_lines = len(chunks)
+        y_step = max(0.55, 0.22 * n_lines + 0.05)
         rows.append(r"""  \node[fill=%s, rounded corners=3pt, text width=2.8cm, minimum height=0.55cm,
         inner sep=0pt, align=center, anchor=north west] at (0,%.2f)
-    {\fontsize{6}{8}\selectfont\bfseries\color{white}%s\;\; %s\;\; %d人};
-  \node[anchor=north west, font=\fontsize{6}{8}\selectfont\bfseries, text=%s!65!black]
+    {\fontsize{4.5}{5.5}\selectfont\bfseries\color{white}%s\;\; %s\;\; %d人};
+  \node[anchor=north west, text width=7.7cm, align=left,
+        font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=%s!65!black]
     at (3.05,%.2f) {%s};""" % (
         color, y, sym, key.replace("奖章", "奖章"), len(names),
-        color, y - 0.22, names_txt))
-        y -= 0.75
+        color, y - 0.20, names_txt))
+        y -= y_step
     # 统计条
     stats = r"""  \fill[turingbg, rounded corners=4pt] (0,%.2f) rectangle (\textwidth,%.2f);
   \node[anchor=north, font=\fontsize{5.5}{7}\selectfont\bfseries, text=turingclr]
