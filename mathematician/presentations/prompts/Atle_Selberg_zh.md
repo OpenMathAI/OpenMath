@@ -54,6 +54,39 @@
 
 ---
 
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_selberg_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q211041` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `阿特勒·塞尔伯格` | ✅ 已有 |
+| 3 | `people` | name_variants | `["素数定理初等证明者","Selberg 迹公式","Selberg 类"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1917-06-14` / `2007-08-06` | ⚠️ 仅年份 |
+| 6 | `people` | description | `Norwegian mathematician (1917–2007)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `number theory`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Fields 1950`（已有）、`Wolf 1986`（已有）、`Gunnerus 2002`、`Abel 2002(荣誉)`、`St. Olav` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: Oslo`；`employment: Syracuse(1947–1948)、IAS(1949–2007)` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Norway`、`United States` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见二六（6 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 学生 | Selberg → Kai Man Tsang | 有向 | ⚠️ 占位 |
+| 同事 | Carl Ludwig Siegel | 无向 | ✅ 在库（id=41，IAS 数论圈） |
+| 同事 | Harish-Chandra | 无向 | ✅ 在库（id=48，迹公式与表示论） |
+| 同事 | Robert Langlands | 无向 | ✅ 在库（id=176，Langlands 程序） |
+| 同事 | André Weil | 无向 | ✅ 在库（id=8） |
+| 同事 | ？（补充一人） | 无向 | ⚠️ |
+
+- 缺失人物先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_selberg_relations.py`
+
 ## 三、核心贡献表
 
 | 领域 | 贡献 | 关键年份 |
