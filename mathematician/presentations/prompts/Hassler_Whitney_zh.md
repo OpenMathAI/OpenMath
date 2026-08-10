@@ -48,6 +48,45 @@
 ### 人格画像
 Whitney 是一个文艺复兴式的全才：物理学家、音乐家（小提琴和中提琴，在普林斯顿业余乐团演奏）、登山家（瑞士阿尔卑斯俱乐部成员，攀登瑞士大多数山峰）。他的学术世家背景深厚——外祖父 Simon Newcomb 是著名天文学家和数学家，高祖父 Roger Sherman 是美国开国元勋。他的学术跨度惊人：从图论到微分拓扑，从奇点理论到数学教育。晚年他全心投入小学数学教育改革，认为数学教育应该消除恐惧、联系生活。Chen Ning Yang（杨振宁）曾回忆，Whitney 在 IAS 是"最原创的数学家之一"。René Thom 说 Whitney 是"奇点理论真正的奠基人"。
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_whitney_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q742072` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `哈斯勒·惠特尼` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["嵌入定理之王","微分流形的拼图大师","惠特尼嵌入定理"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1907-03-23` / `1989-05-10` | ⚠️ 仅年份 |
+| 6 | `people` | description | `American mathematician (1907–1989)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `topology`、`graph theory`、`singularity theory`、`matroid theory`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `NMS 1976`、`Wolf 1982`（已有）、`Steele 1985`、`Ford Award` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: Harvard、Yale`；`employment: Harvard、IAS、Applied Mathematics Panel` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `United States` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（6 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_whitney_relations.py`。
+
+**入库范围（6 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | George David Birkhoff → Whitney | 有向 | ⚠️ 占位（与 Morse 同导师） |
+| 学生 | Whitney → Herbert Robbins | 有向 | ⚠️ 占位 |
+| 学生 | Whitney → James Eells | 有向 | ⚠️ 占位 |
+| 同事 | Marston Morse | 无向 | ✅ 在库（id=25） |
+| 同事 | Norman Steenrod | 无向 | ⚠️ 占位（纤维丛，Whitney–Steenrod） |
+| 同事 | Saunders Mac Lane | 无向 | ✅ 在库（id=39） |
+
+- 缺失人物（3 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心贡献
 
 | 领域 | 具体贡献 | 年代 |
