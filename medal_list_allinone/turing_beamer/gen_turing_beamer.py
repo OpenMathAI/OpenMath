@@ -262,8 +262,8 @@ def table_slide(title, subject, people):
 \centering
 \scriptsize
 \begin{tabular}{@{}
-  >{\raggedright}m{3.0cm}
-  >{\centering}m{0.85cm}
+  >{\raggedright}m{2.85cm}
+  >{\centering}m{1.0cm}
   >{\centering}m{1.55cm}
   >{\raggedright}m{1.5cm}
   >{\raggedright}m{2.2cm}
@@ -271,7 +271,7 @@ def table_slide(title, subject, people):
 @{}}
 \toprule
 \rowcolor{turingbg}
-\textbf{姓名} & \textbf{年份} & \textbf{生卒} & \textbf{国籍} & \textbf{机构} & \textbf{研究领域} \\
+\textbf{姓名} & \textbf{获奖年份} & \textbf{生卒} & \textbf{国籍} & \textbf{机构} & \textbf{研究领域} \\
 \midrule
 %s
 \bottomrule
