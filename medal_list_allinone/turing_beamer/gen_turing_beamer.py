@@ -322,16 +322,14 @@ def summary_slide(people):
             y -= y_step
         return rs, y
 
-    def page_block(rows, y_stat, subject):
-        stats = r"""  \fill[turingbg, rounded corners=4pt] (-5.5,%.2f) rectangle (5.6,%.2f);
-  \node[anchor=north, font=\fontsize{5.5}{7}\selectfont\bfseries, text=turingclr]
-    at (-3.6,%.2f) {首届\;\; Alan J. Perlis\;(1966)};
-  \node[anchor=north, font=\fontsize{5.5}{7}\selectfont\bfseries, text=turingclr]
-    at (0.0,%.2f) {60 届\;\; 81 位得主};
-  \node[anchor=north, font=\fontsize{5.5}{7}\selectfont\bfseries, text=turingclr]
-    at (3.6,%.2f) {图灵+诺奖\;\; Simon\;·\;Hinton};""" % (
-            y_stat - 0.5, y_stat, y_stat - 0.10, y_stat - 0.10, y_stat - 0.10)
-        body = "\n".join(rows + [stats])
+    def page_block(rows, y_stat, subject, stat_items):
+        """stat_items: [(x_cm, text), ...] 三个统计信息，按页定制。"""
+        yb, yt = y_stat - 0.5, y_stat
+        stats = ["  \\fill[turingbg, rounded corners=4pt] (-5.5,%.2f) rectangle (5.6,%.2f);" % (yb, yt)]
+        for x, txt in stat_items:
+            stats.append("  \\node[anchor=north, font=\\fontsize{5.5}{7}\\selectfont\\bfseries, text=turingclr]\n"
+                         "    at (%.2f,%.2f) {%s};" % (x, y_stat - 0.10, txt))
+        body = "\n".join(rows + stats)
         return (r"""\def\framesubject{%s}
 \begin{frame}{交叉奖项总览}
 \vspace{-4pt}
@@ -344,10 +342,16 @@ def summary_slide(people):
 
     rows1, y_after1 = block_rows(page1)
     page1_tex = page_block(rows1, y_after1 - 0.40,
-                            "诺贝尔·沃尔夫·京都·哥德尔·阿贝尔·香农等交叉得主（I · 顶级交叉）")
+                            "诺贝尔·沃尔夫·京都·哥德尔·阿贝尔·香农等交叉得主（I · 顶级交叉）",
+                            [(-3.6, "首届\\;\\; Alan J. Perlis\\;(1966)"),
+                             (0.0, "60 届\\;\\; 81 位得主"),
+                             (3.6, "最高频\\;\\; 国家科学奖章·15 人")])
     rows2, y_after2 = block_rows(page2)
     page2_tex = page_block(rows2, y_after2 - 0.40,
-                            "（II · 其他重要荣誉）")
+                            "（II · 其他重要荣誉）",
+                            [(-3.6, "图灵+诺奖\\;\\; Simon·Hinton"),
+                             (0.0, "图灵+沃尔夫\\;\\; Shamir·Bennett·Brassard"),
+                             (3.6, "图灵+哥德尔+阿贝尔\\;\\; Wigderson")])
     return page1_tex + "\n" + page2_tex
 
 
