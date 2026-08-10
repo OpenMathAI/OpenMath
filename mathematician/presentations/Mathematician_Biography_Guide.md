@@ -541,6 +541,9 @@ python3 fetch_full_pages.py --from-list names.txt
 第 3 步：收集图片 (portrait + 3–5 张辅助图片)
 第 4 步：阅读 Wikipedia / MacTutor / 机构官网，建立时间线
           ↓  参考 §十四「17 个进阶陷阱」逐条自检
+第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步，见 §二十）
+          ↓  梳理老师/学生/挚友/对手/争议 → 写入 greatminds 数据库
+          ↓  缺失人物先建占位 (has_biography=0)，关系 note 加「[材料待展开]」
 第 5 步：设计配色方案（反映人物气质，须与已有人物配色区分）
 第 6 步：编写骨干 slide (封面 → 生平 → 数学 → 遗产 → 结尾)
 第 7 步：逐页填充内容，每页编译验证
@@ -1146,3 +1149,88 @@ review: [名字] #[序号] — [修改摘要]
 - [ ] `text_width` 统一为 13.0cm（Hook + Legacy 两处）
 - [ ] `make pdf` 编译通过（仅允许预存 overfull）
 - [ ] 对应提示词同步修正
+
+---
+
+## 二十、社会关系梳理与数据库入库（★ 第 4.5 步）
+
+> 目的：将每位数学家的社会关系写入 `greatminds` 数据库（MySQL），形成可持续查询、可递归展开的人物关系网络。数据库与 Beamer 立传**并行推进**——此处入库的 `person_relation` 记录即是后续「人物关系图谱」的数据来源。
+
+### 20.1 梳理范围（数据源）
+
+从 `pages/{Name}/metadata.json`（`doctoral_advisor` / `doctoral_student`）与 `page.md` 正文中提取，**覆盖全部关系类型**：
+
+| 关系类型 | relation_types 键 | 方向 | 说明 |
+|---------|------------------|------|------|
+| 老师 | `advisor-student` | 有向（师→生） | 博士/学术导师 |
+| 学生 | `advisor-student` | 有向（师→生） | 门生、博士学生 |
+| 挚友/同事 | `colleague` | 无向 | 长期共事的同事、挚友 |
+| 合作者 | `collaborator` | 无向 | 联合研究/合著者 |
+| 对手/仇敌 | `rival` | 无向 | 学术对手、冲突人物 |
+| 争议 | `controversy` | 无向 | 优先权/思想之争（如牛顿-莱布尼茨） |
+| 荣誉共同体 | `co-honored` | 无向 | 并称（如「数学双星」） |
+| 父子/亲属 | `parent-child` | 有向（父→子） | 直系亲属 |
+
+### 20.2 入库操作（MySQL）
+
+```bash
+mysql -u root greatminds        # 本机 MySQL，仅监听 127.0.0.1
+```
+
+**关系表** `person_relation`：
+```
+from_id | to_id | relation_type | note | source
+```
+- 有向关系（师生/父子）：`from_id`=师/父，`to_id`=生/子——**方向约定保证**：`advisor-student` 记录的 `from_id` 必是老师，反查无需额外反向边；
+- 无向关系（同事/对手/争议/并称）：按 id 大小归一存储（`MIN→MAX`），查询双向命中；
+- `note`：一句关系说明（如「终身挚友，Königsberg 三人组之一」）；
+- `source`：`立传-<Name>`（如 `立传-David_Hilbert`）。
+
+### 20.3 缺失人物处理（★ 重要）
+
+**人物不在库中时**：
+1. **先新建占位**：
+   ```sql
+   INSERT INTO people (name_en, primary_occupation, has_biography) VALUES (..., 'mathematician', 0);
+   ```
+   `has_biography=0` = 未立传（后续为其立传后改为 `1`）；
+2. 关系 `note` 加前缀 **`[材料待展开] `** 打标识，表示后续会展开详细介绍；
+3. 新建立传完成后，将 `has_biography` 改为 `1`，并移除 `[材料待展开]` 前缀。
+
+### 20.4 去重与匹配
+
+- 优先按英文名（`name_en`）归一化匹配（去空格/标点/变音符）；
+- **注意名序差异**：如库中 `Takagi Teiji` vs 材料 `Teiji Takagi`，需别名映射，避免重复建人；
+- 入库用 `INSERT IGNORE` + 联合主键 `(from_id, to_id, relation_type)` 防重复。
+
+### 20.5 校验与汇报
+
+```sql
+-- 一人一行查看某人的全部关系
+SELECT a.name_en AS 甲, rt.name_zh AS 关系, b.name_en AS 乙, pr.note
+FROM person_relation pr
+JOIN people a ON a.id=pr.from_id
+JOIN people b ON b.id=pr.to_id
+JOIN relation_types rt ON rt.relation_key=pr.relation_type
+WHERE a.name_en='David Hilbert' OR b.name_en='David Hilbert';
+
+-- 递归学术家谱（Lindemann → Hilbert → 再传弟子…）
+WITH RECURSIVE lineage AS (
+    SELECT id, name_en, 0 AS depth FROM people WHERE name_en='Ferdinand von Lindemann'
+    UNION ALL
+    SELECT p.id, p.name_en, l.depth+1 FROM lineage l
+    JOIN person_relation pr ON pr.from_id=l.id AND pr.relation_type='advisor-student'
+    JOIN people p ON p.id=pr.to_id
+)
+SELECT name_en, depth FROM lineage;
+```
+
+完成后向用户汇报：「新建 X 人（占位）、新增 Y 条关系」，并附校验查询结果。
+
+### 20.6 参考实现
+
+- **Hilbert 完整示例**：`MySQL/seed_hilbert_relations.py`（含缺失人物建占位、关系打标识、幂等去重、名序别名）；
+- **表结构**：`MySQL/schema_mysql.sql`（`people` / `person_relation` / `relation_types` 定义）；
+- **查询用例集**：`MySQL/use_cases.md` 用例 6「学术家谱」。
+
+> 此章节供所有立传提示词引用（提示词模板中标注「社会关系入库见工作指南 §二十」即可）。
