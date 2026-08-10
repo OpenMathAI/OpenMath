@@ -121,24 +121,29 @@ print(rows)
 cd db
 rm -f greatminds.db
 sqlite3 greatminds.db < schema.sql
-python3 seed_ranking.py       # 20 世纪排名 108 人（people + rankings + 奖项）
-python3 seed_fields.py        # 研究领域（Wikidata field_of_work + 标签提取）
-python3 seed_biography.py     # 立传标志（扫描 presentations/）
-python3 seed_relations.py     # 社会关系 + 补充人物（祖冲之/祖暅之）
-python3 seed_fields_medal.py  # 菲尔兹奖 68 位得主（Fields_Medal/winners.md）
+python3 seed_ranking.py        # 20 世纪排名 108 人（people + rankings + 奖项）
+python3 seed_fields.py         # 研究领域（Wikidata field_of_work + 标签提取）
+python3 seed_biography.py      # 立传标志（扫描 presentations/）
+python3 seed_relations.py      # 社会关系 + 补充人物（祖冲之/祖暅之）
+python3 seed_fields_medal.py   # 菲尔兹奖 68 位得主
+python3 seed_wolf_prize.py     # 沃尔夫奖 68 位得主
+python3 seed_abel_prize.py     # 阿贝尔奖 29 位得主
+python3 seed_chern_medal.py    # 陈省身奖章 5 位得主
+python3 seed_turing.py         # 图灵奖 81 位得主
+python3 seed_copss.py          # COPSS 会长奖 46 位得主
 ```
 
 ## 八、当前表结构一览
 
 | 表 | 类型 | 行数 | 说明 |
 |---|---|---|---|
-| `people` | 实体 | 163 | 人物主表（数学家/物理学家/文学家…） |
-| `occupations` | 字典 | 13 | 职业 |
-| `person_occupation` | 多对多 | 163 | 人 ↔ 职业 |
+| `people` | 实体 | 336 | 人物主表（数学家/物理学家/文学家…） |
+| `occupations` | 字典 | 14 | 职业 |
+| `person_occupation` | 多对多 | 336 | 人 ↔ 职业 |
 | `fields` | 字典 | 114 | 研究领域 |
 | `person_field` | 多对多 | 383 | 人 ↔ 领域 |
 | `awards` | 字典 | 42 | 奖项（数学四大/图灵/诺贝尔家族/统计…） |
-| `award_laureate` | 多对多 | 100 | 人 ↔ 奖项（交叉荣誉核心） |
+| `award_laureate` | 多对多 | 298 | 人 ↔ 奖项（交叉荣誉核心） |
 | `rankings` | 字典 | 108 | 排行榜（20 世纪数学巨匠） |
 | `institutions` | 字典 | 0 | 机构 |
 | `person_institution` | 多对多 | 0 | 人 ↔ 机构 |
