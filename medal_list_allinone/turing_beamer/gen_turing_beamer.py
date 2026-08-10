@@ -239,8 +239,15 @@ def table_slide(title, subject, people):
     for p in people:
         name, cnz, year, life_, cty, instt, contrib_ = p
         badges = local_badges_for(p[0])
+        # 去世者生卒两行显示：「1922-1990 \\ 享年 68」
+        life_fmt = life_
+        m = re.match(r'^\s*(\d{4})\s*[–-]\s*(\d{4})\s*$', life_.replace("–", "-"))
+        if m:
+            y1, y2 = int(m.group(1)), int(m.group(2))
+            if y2 > y1:
+                life_fmt = "%s\\\\享年 %d" % (life_, y2 - y1)
         rows.append("  \\lrow{%s%s\\cn{%s}}{%d}{%s}{%s}{%s}{%s}" % (
-            gt.esc(p[0]), badges, gt.esc(cnz), year, gt.esc(life_),
+            gt.esc(p[0]), badges, gt.esc(cnz), year, gt.esc(life_fmt),
             gt.esc(cty), gt.esc(instt), gt.esc(contrib_)))
     table = "\n".join(rows)
     # 底部照片行
@@ -262,10 +269,10 @@ def table_slide(title, subject, people):
 \centering
 \scriptsize
 \begin{tabular}{@{}
-  >{\raggedright}m{2.85cm}
+  >{\raggedright}m{2.7cm}
   >{\centering}m{1.0cm}
-  >{\centering}m{1.55cm}
-  >{\raggedright}m{1.5cm}
+  >{\centering}m{1.7cm}
+  >{\raggedleft}m{1.5cm}
   >{\raggedright}m{2.2cm}
   >{\raggedright\arraybackslash}m{2.4cm}
 @{}}
