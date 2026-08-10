@@ -97,6 +97,45 @@ Wikipedia 已下载到 `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathemati
 
 ---
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_thurston_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q333927` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `威廉·瑟斯顿` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["几何化猜想之父","双曲几何之王","几何直观的宗师"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1946-10-30` / `2012-08-21` | ⚠️ 仅年份 |
+| 6 | `people` | description | `American mathematician (1946–2012)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`topologist(1)`、`university teacher(2)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `topology`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Fields 1982`（已有）；补 `Veblen 1976`、`Waterman 1979`、`NAS 1983`、`Doob 2005`、`Steele 2012` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: Berkeley、New College of Florida`；`employment: Cornell、Davis、Berkeley、Princeton、IAS、MIT、MSRI` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `United States` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（6 条） | ⚠️ 仅 1 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_thurston_relations.py` 补足。
+
+**入库范围（6 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Morris Hirsch → Thurston | 有向 | ⚠️ 占位 |
+| 学生 | Thurston → Oded Schramm | 有向 | ⚠️ 占位 |
+| 学生 | Thurston → David Gabai | 有向 | ⚠️ 占位 |
+| 学生 | Thurston → Benson Farb | 有向 | ⚠️ 占位 |
+| 合作者 | John Milnor | 无向 | ✅ 在库（id=18） |
+| 同事 | Dennis Sullivan | 无向 | ✅ 在库（id=186） |
+
+- 缺失人物（4 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心数学与科学贡献
 
 | 领域 | 贡献 | 年代 |
