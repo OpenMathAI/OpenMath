@@ -345,12 +345,12 @@ def summary_slide(people):
                             "诺贝尔·沃尔夫·京都·哥德尔·阿贝尔·香农等交叉得主（I · 顶级交叉）",
                             [(-3.6, "首届\\;\\; Alan J. Perlis\\;(1966)"),
                              (0.0, "60 届\\;\\; 81 位得主"),
-                             (3.6, "最高频\\;\\; 国家科学奖章·15 人")])
+                             (3.6, "图灵+沃尔夫\\;\\; Shamir·Bennett·Brassard")])
     rows2, y_after2 = block_rows(page2)
     page2_tex = page_block(rows2, y_after2 - 0.40,
                             "（II · 其他重要荣誉）",
                             [(-3.6, "图灵+诺奖\\;\\; Simon·Hinton"),
-                             (0.0, "图灵+沃尔夫\\;\\; Shamir·Bennett·Brassard"),
+                             (0.0, "图灵+哥德尔\\;\\; Goldwasser·Micali·Wigderson"),
                              (3.6, "图灵+哥德尔+阿贝尔\\;\\; Wigderson")])
     return page1_tex + "\n" + page2_tex
 
