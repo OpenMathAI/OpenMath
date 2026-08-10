@@ -43,6 +43,40 @@
 | 2006 | Steele 奖 — 终身成就与卓越数学写作 |
 | 2012.11.25 | 在 Lund 逝世 |
 
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_hormander_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q333941` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `拉尔斯·赫尔曼德尔` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["线性偏微分算子之王","伪微分算子理论","Hörmander 条件"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1931-01-24` / `2012-11-25` | ⚠️ 仅年份 |
+| 6 | `people` | description | `Swedish mathematician (1931–2012)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `partial differential equation`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Fields 1962`（已有）、`Wolf 1988`（已有）、`Steele 2006`、`AMS Fellow`、`巴黎 XI 荣誉博士` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: Lund`；`employment: Lund、Stockholm、IAS、Stanford` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Sweden` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见二六（7 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Marcel Riesz → Hörmander | 有向 | ⚠️ 占位 |
+| 导师 | Lars Gårding → Hörmander | 有向 | ✅ 在库（id=94） |
+| 学生 | Hörmander → Johannes Sjöstrand | 有向 | ⚠️ 占位 |
+| 学生 | Hörmander → Christer Kiselman | 有向 | ⚠️ 占位 |
+| 学生 | Hörmander → Jan Boman | 有向 | ⚠️ 占位 |
+| 同事 | Louis Nirenberg | 无向 | ✅ 在库（id=206，PDE 巨头） |
+| 同事 | Israel Gelfand | 无向 | ✅ 在库（id=436） |
+
+- 缺失人物（4 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_hormander_relations.py`
+
 ## 三、核心贡献表
 
 | 领域 | 贡献 | 关键年份 |
