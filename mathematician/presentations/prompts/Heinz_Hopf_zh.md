@@ -51,6 +51,46 @@
 ### 人格画像
 Hopf 是 20 世纪代数拓扑最伟大的建筑者之一。他以安静、谦逊但极有影响力著称。他的博士生名单读起来像是代数拓扑的名人录：Freudenthal, Hirzebruch, Kervaire, Eckmann, Stiefel, Specker。在一战期间他积极参军、两次负伤——这与许多被迫入伍的数学家不同。二战后他成为 IMU 主席 (1955-58)，在重建国际数学交流中发挥了关键作用。1942 年纳粹没收其财产（因其犹太血统）迫使他入籍瑞士——从一个"德国数学家"变成了"瑞士数学家"。他与 Alexandrov 的终身友谊是 20 世纪数学界最著名的合作之一。
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_hopf_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q78448` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `海因茨·霍普夫` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["霍普夫纤维化的发现者","ETH 拓扑学派创始人","Poincaré-Hopf 定理"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1894-11-19` / `1971-06-03` | ⚠️ **NULL 全缺** |
+| 6 | `people` | description | `German mathematician (1894–1971)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`topologist(1)`、`university teacher(2)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `algebraic topology`、`differential geometry`、`geometry`、`topology`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Lobachevsky`、`Iron Cross`、`巴黎荣誉博士` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: Berlin、Göttingen、Heidelberg、Princeton`；`employment: ETH Zurich` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Germany`、`Switzerland` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（7 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_hopf_relations.py`。
+
+**入库范围（7 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Ludwig Bieberbach → Hopf | 有向 | ⚠️ 占位 |
+| 导师 | Erhard Schmidt → Hopf | 有向 | ⚠️ 占位 |
+| 学生 | Hopf → Hans Freudenthal | 有向 | ⚠️ 占位 |
+| 学生 | Hopf → Friedrich Hirzebruch | 有向 | ✅ 在库（id=169） |
+| 学生 | Hopf → Michel Kervaire | 有向 | ⚠️ 占位 |
+| 同事 | Pavel Alexandrov | 无向 | ✅ 在库（id=362，合著《Topologie》） |
+| 同事 | Solomon Lefschetz | 无向 | ✅ 在库（id=54） |
+
+- 缺失人物（4 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心贡献
 
 | 领域 | 具体贡献 | 年代 |
