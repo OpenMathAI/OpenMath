@@ -49,6 +49,47 @@
 ### 人格画像
 Shafarevich 是苏联数学史上最"分裂"的人物。在数学上，他是代数几何和数论的巨人——Tate–Shafarevich 群是 BSD 猜想的核心、Shafarevich 猜想催生了 Faltings 的 Fields 奖工作、Shafarevich 定理解决了 Galois 逆问题的一大块。在政治上，他是苏联体制的尖刻批评者、Solzhenitsyn 的亲密朋友、持不同政见者。但他同时又因晚年的民族主义立场和反犹著作而饱受争议。他的故事提醒我们：伟大的数学和极端政治观点可以共存于同一人身上——正如 Witt 的故事一样。
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_shafarevich_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q710920` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `伊戈尔·沙法列维奇` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["算术代数几何的奠基者","Tate-Shafarevich 群的命名者","苏联异见数学家"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1923-06-03` / `2017-02-19` | ⚠️ **NULL 全缺** |
+| 6 | `people` | description | `Soviet and Russian mathematician (1923–2017)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)`、`human rights defender(2)`、`dissident(3)` | ⚠️ 需补（dissident 补字典） |
+| 8 | `person_field` | 领域 | `algebraic geometry`、`number theory`、`algebra`、`Galois theory`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Lenin Prize`、`Heineman`、`ForMemRS`、`Euler Gold 2017`、`巴黎 XI 荣誉博士` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: MSU、Steklov`；`employment: Steklov、MSU` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Soviet Union`、`Russia` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（8 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_shafarevich_relations.py`。
+
+**入库范围（8 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Boris Delaunay → Shafarevich | 有向 | ⚠️ 占位 |
+| 学生 | Shafarevich → Yuri Manin | 有向 | ⚠️ 占位 |
+| 学生 | Shafarevich → Suren Arakelov | 有向 | ⚠️ 占位 |
+| 学生 | Shafarevich → Igor Dolgachev | 有向 | ⚠️ 占位 |
+| 学生 | Shafarevich → Alexei Parshin | 有向 | ⚠️ 占位 |
+| 同事 | John Tate | 无向 | ✅ 在库（id=183，Tate–Shafarevich 群） |
+| 同事 | Andrey Kolmogorov | 无向 | ✅ 在库（id=5） |
+| 同事 | Israel Gelfand | 无向 | ✅ 在库（id=436） |
+
+- 缺失人物（5 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心贡献
 
 | 领域 | 具体贡献 | 年代 |
