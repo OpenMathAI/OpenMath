@@ -49,6 +49,40 @@
 
 ---
 
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_siegel_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q61721` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `卡尔·路德维希·西格尔` | ✅ 已有 |
+| 3 | `people` | name_variants | `["Thue-Siegel-Roth 定理","Siegel 模形式","数论的隐士巨擘"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1896-12-31` / `1981-04-04` | ⚠️ 仅年份 |
+| 6 | `people` | description | `German mathematician (1896–1981)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `number theory`、`function theory`、`celestial mechanics`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Wolf 1978`（已有，首届）；补 `Pour le Mérite`、`Order of Merit`、`Nancy/Vienna/Basel 荣誉博士` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: Göttingen、Berlin`；`employment: Frankfurt、Göttingen、IAS` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Weimar Republic`、`Nazi Germany`、`Germany` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见二六（7 条） | ⚠️ 仅 1 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Edmund Landau → Siegel | 有向 | ✅ 在库（id=71） |
+| 学生 | Siegel → Kurt Mahler | 有向 | ⚠️ 占位 |
+| 学生 | Siegel → Jürgen Moser | 有向 | ✅ 在库（id=175） |
+| 学生 | Siegel → Theodor Schneider | 有向 | ⚠️ 占位 |
+| 同事 | Atle Selberg | 无向 | ✅ 在库（id=40，IAS 数论圈） |
+| 合作者 | André Weil | 无向 | ✅ 在库（id=8，Siegel–Weil 公式） |
+| 同事 | Hermann Weyl | 无向 | ✅ 在库（id=6） |
+
+- 缺失人物（2 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_siegel_relations.py`
+
 ## 三、核心贡献表
 
 | 领域 | 贡献 | 关键年份 |
