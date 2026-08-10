@@ -51,6 +51,40 @@
 | 2007 | Wolf 数学奖 |
 | 2003–2012 | Toyota Technological Institute Chicago |
 
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_smale_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q315394` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `斯蒂芬·斯梅尔` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["高维庞加莱猜想的证明者","混沌动力学的先驱","斯梅尔猜想"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1930-07-15` / `NULL`（在世） | ⚠️ 仅年份 |
+| 6 | `people` | description | `American mathematician (1930–)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`computer scientist(1)`、`university teacher(2)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `topology`、`differential geometry`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Sloan 1960`、`Veblen 1966`、`Fields 1966`（已有）、`Chauvenet 1988`、`NMS 1996`、`Wolf 2007`（库中记为 2006 待核）、`Econometric Fellow` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: Michigan`；`employment: Chicago、Columbia、IAS、Berkeley、香港城市大学` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `United States` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见二六（7 条） | ⚠️ 仅 1 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Raoul Bott → Smale | 有向 | ✅ 在库（id=181） |
+| 学生 | Smale → Morris Hirsch | 有向 | ✅ 在库（id=432） |
+| 学生 | Smale → Michael Shub | 有向 | ⚠️ 占位 |
+| 学生 | Smale → Jacob Palis | 有向 | ⚠️ 占位 |
+| 学生 | Smale → Robert Devaney | 有向 | ⚠️ 占位 |
+| 同事 | John Milnor | 无向 | ✅ 在库（id=18，微分拓扑双雄） |
+| 同事 | René Thom | 无向 | ✅ 在库（id=55） |
+
+- 缺失人物（3 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_smale_relations.py`
+
 ## 三、核心贡献表
 
 | 领域 | 贡献 | 关键年份 |
