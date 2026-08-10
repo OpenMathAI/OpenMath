@@ -1,6 +1,6 @@
 # 图灵 (Alan Turing) 立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](../Mathematician_Biography_Guide.md)，以 von Neumann、Hilbert 等成品为参考模板，为图灵制作 Beamer 演示文稿。
+> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)，以 **Weil、Weyl** 等最新成品为参考模板（含 §二十 社会关系入库 + §二十一 数据库字段核对）。
 > 直接复制本文件内容到新对话中使用。
 
 ---
@@ -8,31 +8,24 @@
 ## 背景信息
 
 - **目标数学家**: Alan Turing (1912–1954)
-- **气质关键词**: **可计算性之父、密码破译者、人工智能先驱、悲剧英雄、"计算机科学的普罗米修斯"**
-- **Wikipedia 页面**: ⚠️ **尚未下载。** 第一步需要运行下载脚本：
-  - 页面路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Alan_Turing/`
-- **参考模板**: `von_neumann/`, `hilbert/`, `grothendieck/`, `riemann/` 等完整源码
+- **气质关键词**: **可计算性之父、密码破译者、人工智能先驱、悲剧英雄、"计算的普罗米修斯"**
+- **Wikipedia 页面**: ✅ **已下载**（`pages/Alan_Turing/` 完整，含 page.md + metadata.json + images.txt）
+- **参考模板**: `weil/`, `weyl/`, `neumann/`, `hilbert/`, `grothendieck/`, `riemann/` 等完整源码
 - **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+- **数据库**: `greatminds`（MySQL），Turing id=9 已在库
 
 ---
 
-## 你的任务
+## 第 0 步：核对元数据（metadata.json）
 
-按照 [Mathematician_Biography_Guide.md](../Mathematician_Biography_Guide.md) 第十一节「推荐制作流程」的步骤，依次完成。**每完成一步向我汇报进度**，遇到歧义时先征求我的意见再继续。
+对照 `pages/Alan_Turing/metadata.json` 核对以下字段，**确保 tex 与数据库一致**：
 
----
-
-## 第 0 步：下载 Wikipedia 页面并校验
-
-下载到 `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Alan_Turing/`
-
-输出以下信息供校验：
-
-- **生卒日期**：1912-06-23 ~ 1954-06-07，享年 41 岁（英年早逝）
-- **国籍**：英国
+- **qid**：Q7251（数据库中已填）
+- **生卒**：1912-06-23 ~ 1954-06-07，享年 41 岁（英年早逝）
+- **国籍**：英国（United Kingdom）
 - **出生地**：Maida Vale, London（后就读于 Sherborne School）
 - **死亡地**：Wilmslow, Cheshire（家中，氰化物中毒）
-- **博士导师**：Alonzo Church（普林斯顿大学, 1938 年获博士学位）
+- **博士导师**：Alonzo Church（普林斯顿大学，1938 年获博士学位）
 - **博士论文**：1938，《Systems of Logic Based on Ordinals》— 序数逻辑系统
 - **主要任职机构**：
   - 1936–1938: 普林斯顿大学（与 Church 合作）
@@ -40,52 +33,50 @@
   - 1945–1947: 国家物理实验室（NPL）— ACE 计算机设计
   - 1948–1954: 曼彻斯特大学（计算机实验室副主任）
 - **关键荣誉**：
+  - 1936: Smith's Prize（剑桥大学数学最高奖）
   - 1946: OBE（大英帝国官佐勋章，因战时密码破译贡献）
   - 1951: FRS（皇家学会会士，年仅 39 岁）
-  - 1952: 因同性恋行为被判"严重猥亵罪"，被迫接受化学阉割
   - 2009: 英国政府正式道歉
   - 2013: 伊丽莎白二世女王颁发皇家赦免令
 - **重要合作者/同事/学生**：
   - 博士导师: Alonzo Church（λ 演算发明者）
+  - 学生: Robin Gandy、Beatrice Worsley
   - Bletchley Park 同僚: Gordon Welchman, Hugh Alexander, Joan Clarke, Jack Good
   - 普林斯顿时期: John von Neumann (曾邀请 Turing 留任 IAS 助手)
   - 曼彻斯特时期: Max Newman (导师兼同事)
   - 密码学先驱: Claude Shannon (信息论之父，战时在贝尔实验室见过 Turing)
-
-### 关键时间线（15–20 个节点）：
-- 1912: 6 月 23 日出生于伦敦 Maida Vale
-- 1926–1931: 就读 Sherborne School（寄宿男校），数学天赋初显
-- 1931–1934: 剑桥大学国王学院，数学一等荣誉毕业
-- 1935: 年仅 22 岁当选剑桥国王学院 Fellow
-- 1936: 发表《论可计算数及其在判定问题上的应用》— Turing 机的诞生
-- 1936–1938: 在普林斯顿大学攻读博士（Church 指导）
-- 1938: 获博士学位后返回英国，von Neumann 提供 IAS 职位但 Turing 拒绝
-- 1939: 二战爆发，加入 Bletchley Park
-- 1939–1940: 设计 Bombe 机，破解德国 Enigma 密码
-- 1942: 赴美国协调密码破译工作，在贝尔实验室与 Shannon 会面
-- 1945: 获 OBE；加入 NPL，设计 ACE（自动计算机）
-- 1948: 加入曼彻斯特大学，任计算机实验室副主任
-- 1950: 发表《计算机器与智能》— 提出 Turing 测试，人工智能的开山之作
-- 1951: 当选皇家学会会士 (FRS)
-- 1952: 因同性恋行为被捕、定罪，被迫接受化学阉割（雌激素注射）
-- 1952: 发表《形态发生的化学基础》— 生物数学的先驱（反应扩散方程）
-- 1954: 6 月 7 日在 Wilmslow 家中去世（氰化物中毒，官方裁定自杀），年仅 41 岁
-- 2009: 英国首相 Gordon Brown 代表政府正式道歉
-- 2013: 伊丽莎白二世女王颁发皇家赦免令
-
-### 人格特质线索：
-- 极度内向、不善社交，但在亲密朋友面前幽默温暖
-- 跑步能力出色（曾差点入选 1948 年英国奥运马拉松队）
-- 在 Bletchley Park 穿着随便、被同事戏称 "Prof"（教授）
-- Christopher Morcom 的早逝（1930 年）深刻影响了 Turing 的世界观——他对心灵与物质关系的终身兴趣或源于此
-- 对植物学和形态发生学的业余热情 —— 将数学应用于解释自然图案
-- 1952 年被捕后，选择雌激素注射而非入狱以便能继续工作
-- 面对性取向迫害时的尊严与沉默——从未公开抗议，但也从未为此道歉
-- 爱读《白雪公主》——自杀现场留有一只咬了一口的氰化物浸泡苹果
+  - 剑桥时期: Ludwig Wittgenstein（数学哲学辩论）
 
 ---
 
-## 核心贡献
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。**「现状」列已标注库中是否已有；缺失项按 §21.5 写 `MySQL/seed_turing_full.py` 补齐（`INSERT IGNORE` 幂等）。**
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q7251` | ✅ 已填 |
+| 2 | `people` | name_en | `Alan Turing` | ✅ |
+| 3 | `people` | name_zh | `艾伦·图灵` | ✅ |
+| 4 | `people` | name_variants | `["计算的普罗米修斯","可计算性之父","人工智能先驱"]` | ✅（可补充） |
+| 5 | `people` | gender | `male` | ✅ |
+| 6 | `people` | birth_date | `1912-06-23` | ✅ |
+| 7 | `people` | death_date | `1954-06-07` | ✅ |
+| 8 | `people` | description | `English computer scientist (1912–1954)` | ✅ |
+| 9 | `people` | primary_occupation | `mathematician` | ✅ |
+| 10 | `person_occupation` | 职业（rank 排序） | `mathematician(0)`、`computer scientist(1)`、`university teacher(2)`、`cryptographer(3)`、`logician(4)`、`statistician(5)` | ⚠️ 需补（现仅 mathematician；**cryptographer 需补字典**） |
+| 11 | `person_field` | 领域（rank 排序） | `computer science`、`cryptanalysis`、`cryptography`、`logic`、`mathematics` | ✅ 5 项已有 |
+| 12 | `award_laureate` | 获奖（year/edition/note） | `Smith's Prize 1936`、`OBE 1946`、`Fellow of the Royal Society 1951` | ⚠️ 全空（前两项需补字典） |
+| 13 | `person_institution` | 教育/任职 | `education: King's College、Princeton University、Sherborne School、Hazlehurst`；`employment: Cambridge(1931–1936)、Bletchley Park/GCHQ(1939–1945)、NPL(1945–1947)、Manchester(1948–1954)` | ⚠️ 全空 |
+| 14 | `person_nationality` | 国籍 | `United Kingdom` | ✅ |
+| 15 | `person_relation` | 社会关系 | 见第 4.5 步（11 条） | ⚠️ 全空 |
+| 16 | `rankings` | 榜单（list_key/rank/status） | `OpenMath_20th_Century_Top50` 名次待查 | ⚠️ 待确认 |
+
+核对完成后：写 `MySQL/seed_turing_full.py`，入库后按 §21.4 一键校验并汇报：「新建/更新 X 人、职业 Y 条、领域 Z 条、奖项 A 条、机构 B 条、国籍 C 条、社会关系 D 条」。
+
+---
+
+## 核心数学与科学贡献
 
 | 领域 | 贡献 | 年代 |
 |------|------|:--:|
@@ -109,80 +100,40 @@
 7. **Turing 图案** — 在遭受化学阉割最痛苦的时期，他发表了关于动物皮毛图案形成的数学论文。这篇论文成为数学生物学领域的开山之作——斑马条纹、豹子斑点都可以用反应扩散方程解释。
 8. **国家机器的恶与迟到的正义** — Turing 为国家做出了英雄般的贡献，但国家却因为他的性取向摧毁了他。2009 年 Gordon Brown 代表政府正式道歉，2013 年获皇室赦免。
 
-### 人物关系
-
-- **Christopher Morcom** — 少年时代的挚友与初恋，1930 年猝逝，对 Turing 的终身影响深远
-- **Alonzo Church** — 博士导师，λ 演算发明者，归纳出 Church–Turing 论题
-- **John von Neumann** — 曾邀请 Turing 留任 IAS，两人均独立提出存储程序计算机架构
-- **Max Newman** — 剑桥讲师（首次向 Turing 介绍 Entscheidungsproblem），曼彻斯特大学同事
-- **Joan Clarke** — Bletchley Park 密码分析员，Turing 的短暂未婚妻（后因性取向分手）
-- **Gordon Welchman** — Bletchley Park 核心合作者
-- **Claude Shannon** — 1943 年在贝尔实验室与 Turing 会面，"信息论 × 可计算性"两大思想的交汇
-- **Jack Good** — Bletchley Park 统计学家，发展了 Banburismus 方法
-- **Ludwig Wittgenstein** — 剑桥时期与 Turing 在数学哲学上有过激烈讨论
-
 ---
 
-## 第 1 步：建立目录
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
 
-- 在 `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/` 下创建 `turing/` 子目录
-- 创建 `turing/images/` 子目录
+> 完整规范见工作指南 **§二十**。Turing 当前 `person_relation` **全空**，需新建脚本 `MySQL/seed_turing_relations.py` 全量入库。
+> 数据库全部字段核对见 §21.5（第 0.5 步）。
 
----
+**入库范围（11 条）**：
 
-## 第 2 步：复制 Makefile
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师（advisor-student） | Alonzo Church → Turing | 有向 | ⚠️ 占位（has_biography=0） |
+| 学生（advisor-student） | Turing → Robin Gandy | 有向 | ⚠️ 占位 |
+| 学生（advisor-student） | Turing → Beatrice Worsley | 有向 | ⚠️ 占位 |
+| 同事（colleague） | Max Newman | 无向 | ⚠️ 占位 |
+| 同事（colleague） | Gordon Welchman | 无向 | ⚠️ 占位 |
+| 合作者（collaborator） | Joan Clarke | 无向 | ⚠️ 占位 |
+| 合作者（collaborator） | Jack Good | 无向 | ⚠️ 占位 |
+| 同事（colleague） | John von Neumann | 无向 | ✅ 已在库（id=3） |
+| 合作者（collaborator） | Claude Shannon | 无向 | ✅ 已在库（id=33） |
+| 同事（colleague） | Ludwig Wittgenstein | 无向 | ⚠️ 占位 |
+| 挚友（colleague） | Christopher Morcom | 无向 | ⚠️ 占位（note 注明"少年挚友，非学术同事"） |
 
-- 将 `grothendieck/Makefile` 复制到 `turing/Makefile`
-- 将 `MAIN` 变量改为 `Alan_Turing_zh`
-- 将 `VIDEO_NAME` 变量改为 `Alan_Turing_zh`
+- 缺失人物（Church/Gandy/Worsley/Newman/Welchman/Clarke/Good/Wittgenstein/Morcom 共 9 人）先建占位：`INSERT INTO people (name_en, primary_occupation, has_biography) VALUES (..., 'mathematician', 0)`
+- 关系 `note` 加 `[材料待展开]` 前缀打标识
+- 幂等：`INSERT IGNORE` + 联合主键 `(from_id, to_id, relation_type)`
 
----
-
-## 第 3 步：收集图片
-
-- 从 `pages/Alan_Turing/images.txt` 中选出 4–6 张高质量图片
-- 优先级：
-  1. **经典肖像（1930s 国王学院时期）** — 最广为人知的 Turing 形象
-  2. Bletchley Park 外景 或 Bombe 机
-  3. 曼彻斯特 Ferranti Mark I 或其计算机相关图像
-  4. 跑步照片（如有） — 展现 Turing 的运动员一面
-  5. 墓碑或纪念雕塑（如 Sackville Park 的 Turing 铜像）
-- 下载到 `turing/images/`
-- ★ **特殊要求**：Turing 的照片在质量上参差不齐。选择时优先考虑学术气质和时代感，而非过度美化的版本
-
----
-
-## 第 4 步：建立时间线和叙事骨架
-
-图灵的一生是一个三重叙事：**思想的革命性** × **战争中的秘密英雄** × **国家机器的背叛**。
-
-### 生平阶段
-
-1. **剑桥的天才少年 (1912–1936)**：Sherborne → King's College → Fellow（22岁），Turing 机的诞生
-2. **普林斯顿与密码战争 (1936–1945)**：Church 博士、Bletchley Park、Enigma 密码的攻破
-3. **计算机与人工智能 (1945–1952)**：ACE 设计、Turing 测试、"计算机器与智能"
-4. **悲剧终章 (1952–1954)**：化学阉割、Turing 图案、41 岁的终点
-
-### ★ 图灵独有的叙事线索（重要）
-
-1. **Turing 机是数学而非工程** — 必须在一开始就澄清：1936 年的论文不是设计一台计算机，而是回答了 Hilbert 的 Entscheidungsproblem。Turing 机是一个**数学定义**。
-2. **从数学到战争到 AI 到生物** — 图灵的独特性在于每个跳跃都产生了一个新学科。这不是百科全书式的广度，而是某种核心洞察力（"计算即一切"）在不同领域的反复投射。
-3. **Christopher Morcom** — 16 岁的早逝初恋。这是理解 Turing 人格和精神世界的钥匙。
-4. **Turing 测试的哲学深度** — "机器能思考吗？"不是工程问题，是哲学问题。这篇论文应该作为 Turing 思维风格的巅峰来呈现。
-5. **悲剧不应该是故事的全部** — 叙事重点应该是 Turing 的思想和贡献。国家机器的迫害是背景，不是主角。Turing 不是受害者——他是改变了世界的人。
-6. **Turing 图案** — 在遭受化学阉割最痛苦的时期，他发表了数学生物学的奠基论文。这是最有力的叙事素材：在最黑暗的时刻，他的思想依然在创造新的科学。
-
-### 人物关系
-
-- **Christopher Morcom (1911–1930)** — 少年时代的挚友与初恋，16 岁死于牛结核病。这场早逝对 Turing 的精神世界产生了终身影响。他在给 Morcom 母亲的信中写道："他的影响将在我生命中持续存在。"
-- **Alonzo Church (1903–1995)** — 博士导师，λ 演算发明者，归纳出 Church–Turing 论题
-- **John von Neumann (1903–1957)** — 普林斯顿时期邀请 Turing 留任 IAS 助手；两人均独立提出存储程序计算机架构。von Neumann 一直高度评价 Turing
-- **Max Newman (1897–1984)** — 剑桥讲师，首次向 Turing 介绍 Entscheidungsproblem；后任曼彻斯特大学计算机实验室主任
-- **Joan Clarke (1917–1996)** — Bletchley Park 密码分析员，Turing 的短暂未婚妻（后因性取向坦白而分手）
-- **Gordon Welchman (1906–1985)** — Bletchley Park 核心合作者，Hut 6 负责人
-- **Claude Shannon (1916–2001)** — 1943 年 Turing 访美期间在贝尔实验室与之会面，两人讨论了"建造电子大脑"的可能性
-- **Jack Good (1916–2009)** — Bletchley Park 统计学家，与 Turing 发展了序贯分析的密码学应用
-- **Ludwig Wittgenstein (1889–1951)** — 剑桥同事，在数学基础哲学上有过多次著名辩论
+**校验**：
+```sql
+SELECT a.name_en AS 甲, rt.name_zh AS 关系, b.name_en AS 乙, pr.note
+FROM person_relation pr JOIN people a ON a.id=pr.from_id
+JOIN people b ON b.id=pr.to_id JOIN relation_types rt ON rt.relation_key=pr.relation_type
+WHERE a.name_en='Alan Turing' OR b.name_en='Alan Turing';
+```
 
 ---
 
@@ -262,27 +213,6 @@
 
 ---
 
-## 第 7 步：编写 Beamer 源码
-
-- 文件名：`/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Alan_Turing/Alan_Turing_zh.tex`
-- 完全参照已有模板的代码结构
-- 每页用 `\newcommand{\xxxslide}{% ... }` 定义
-
-### 关键要求
-
-- **每写完一页立即编译 (`make clean && make`)，不等待全部写完**
-- 编译失败立即修复，不要跳过
-- 中文正文，英文术语和公式保留原文
-- ★ **图灵的内容密度极高**（计算理论 + 密码 + AI + 生物 + 悲剧），每页文字量严格控制，必要时拆分
-
----
-
-## 第 8 步：布局检查 ★★★
-
-> 同已有模板，每写完一页检查溢出。
-
----
-
 ## 第 9 步：史实审查 + 术语审查
 
 ### 图灵特有的史实陷阱（★ 必须逐页扫描）
@@ -334,12 +264,6 @@
 
 ---
 
-## 第 10–12 步：同已有模板
-
-（布局微调、OpenMath 首页、最终编译）
-
----
-
 ## 第 13 步：Wikipedia 本地文档终审（★ 提交前必做）
 
 ### 终审执行流程
@@ -375,7 +299,7 @@
 
 ---
 
-## 音乐选择
+## 第 14 步：音乐选择
 
 > **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
 
@@ -388,9 +312,7 @@
 | ★★★ | Lonesome | inspiring-electronic | `music_audio/inspiring-electronic/16-xBLYHNv7C4Q-Lonesome.wav` | 悲伤电影感，悲剧英雄的孤独 |
 | ★★★ | Through the Darkness | inspiring-electronic | `music_audio/inspiring-electronic/14-Trn1cSsY2t8-Audiomachine - Through the Darkness.wav` | 史诗黑暗，破解 Enigma 的紧张推进 |
 | ★★ | Falling Apart | inspiring-electronic | `music_audio/inspiring-electronic/03-qtNSLNUd1VE-Michael FK & Andy Leech - Falling Apart.wav` | 电子渐进，化学阉割与 Turing 图案 |
-| ★ | Nostalgy | inspiring-electronic | `music_audio/inspiring-electronic/17-_DA0mdtL-jI-Nostalgy.wav` | 怀旧深沉，Bl
-
-etchley Park 的战后回顾 |
+| ★ | Nostalgy | inspiring-electronic | `music_audio/inspiring-electronic/17-_DA0mdtL-jI-Nostalgy.wav` | 怀旧深沉，Bletchley Park 的战后回顾 |
 
 **操作**：复制选定的 `.wav` 到 `Alan_Turing/` 目录，`make video` 自动混入。
 
@@ -400,12 +322,13 @@ etchley Park 的战后回顾 |
 
 | 文件 | 用途 |
 |------|------|
-| `mathematician/presentations/Mathematician_Biography_Guide.md` | 完整操作手册 |
+| `mathematician/presentations/Mathematician_Biography_Guide.md` | 完整操作手册（§二十 社会关系 / §二十一 字段梳理） |
 | `mathematician/pages/Alan_Turing/page.md` | Turing Wikipedia 正文 |
 | `mathematician/pages/Alan_Turing/metadata.json` | Turing Wikidata 元数据 |
 | `mathematician/pages/Alan_Turing/images.txt` | 图片 URL 清单 |
-| `mathematician/presentations/grothendieck/Alexander_Grothendieck_zh.tex` | Grothendieck 完整源码 |
-| `mathematician/presentations/hilbert/David_Hilbert_zh.tex` | Hilbert 完整源码 |
+| `MySQL/seed_turing_relations.py` | 社会关系入库脚本（第 4.5 步） |
+| `MySQL/seed_turing_full.py` | 全字段补全脚本（第 0.5 步） |
+| `mathematician/presentations/weil/Andre_Weil_zh.tex` | Weil 完整源码（最新参考） |
 | `mathematician/presentations/neumann/John_von_Neumann_zh.tex` | von Neumann 完整源码 |
 
 ---
@@ -419,4 +342,5 @@ etchley Park 的战后回顾 |
 > 4. Turing 图案是最被低估的贡献 —— 在化学阉割的痛苦中，他依然在创造科学
 > 5. 不要使用任何电影《模仿游戏》中的虚构情节 —— 所有事实必须来自 page.md
 > 6. Apple logo 传说绝对不要在 Beamer 中出现 —— 这不是历史事实
-> 7. 结尾主题句：**"他给了我们'可计算'的数学定义，世界从此不同。"**
+> 7. **数据库同步**：先完成第 0.5 步（字段核对表逐项填值）与第 4.5 步（11 条社会关系入库、9 人占位），再开始立传
+> 8. 结尾主题句：**"他给了我们'可计算'的数学定义，世界从此不同。"**
