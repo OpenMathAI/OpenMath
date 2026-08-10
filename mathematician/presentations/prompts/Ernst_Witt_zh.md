@@ -48,6 +48,46 @@
 ### 人格画像
 Witt 是 20 世纪数学中最令人不安的天才之一。他的数学是纯粹的、优雅的、影响深远的——Witt 环、Witt 向量、Witt 代数、PBW 定理——每一个都是代数的基础。但他同时是一个**活跃的纳粹党员**。1933 年纳粹一上台他就入党——不是随大流，是积极的。他在 OKW/Chi 为纳粹战争机器做密码破译。当 Noether 被驱逐出 Göttingen 时，他保持了沉默。他的故事提出了一个痛苦的数学史问题：伟大的数学和罪恶的政治可以共存于同一个人身上吗？本幻灯片不应美化也不应过度审判——而是呈现事实，让观众自己思考。
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_witt_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q68559` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `恩斯特·维特` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["Witt 向量之父","Witt 代数","Poincaré-Birkhoff-Witt 定理"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1911-06-26` / `1991-07-03` | ⚠️ **NULL 全缺** |
+| 6 | `people` | description | `German mathematician (1911–1991)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `mathematics`、`algebra` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | metadata 无获奖记录（据实为准） | ⚠️ 待核 |
+| 10 | `person_institution` | 教育/任职 | `education: Göttingen、Freiburg`；`employment: Hamburg、Göttingen、Wehrmacht` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Germany`、`Nazi Germany` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（7 条） | ⚠️ 仅 1 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_witt_relations.py` 补足。
+
+**入库范围（7 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Emmy Noether → Witt | 有向 | ✅ 在库（id=4） |
+| 导师 | Gustav Herglotz → Witt | 有向 | ✅ 在库（id=403，正式博士导师） |
+| 学生 | Witt → Günter Harder | 有向 | ⚠️ 占位 |
+| 学生 | Witt → Bernhard Banaschewski | 有向 | ⚠️ 占位 |
+| 学生 | Witt → Horst Leptin | 有向 | ⚠️ 占位 |
+| 同事 | Emil Artin | 无向 | ✅ 在库（id=13，汉堡学派） |
+| 同事 | Helmut Hasse | 无向 | ⚠️ 占位 |
+
+- 缺失人物（4 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心贡献
 
 | 领域 | 具体贡献 | 年代 |
