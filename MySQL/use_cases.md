@@ -1,7 +1,7 @@
 # greatminds 数据库 · 用例集
 
 > 适用：当前 337 人 / 万级（10000+）人物扩展后同样有效
-> 连接：`mysql -u root --default-character-set=utf8mb4 greatminds`
+> 连接：`mysql -u root greatminds`（已配置默认 utf8mb4，中文/法语重音直接显示）
 > 性能原则：见文末「万级数据优化」
 
 ---
