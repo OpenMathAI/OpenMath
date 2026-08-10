@@ -171,6 +171,29 @@ Kolmogorov 的一生是一个"全才叙事"——他不是某一个领域的专�
 
 ---
 
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。参考脚本：`MySQL/seed_kolmogorov_relations.py`（已执行，9 条关系，缺失 1 人占位）。
+
+**入库范围（提示词「人物关系」节，9 条）**：
+| 关系类型 | 人物 | 状态 |
+|---|---|---|
+| 导师（advisor-student） | Luzin → Kolmogorov | ✅ 已入库 |
+| 学生（advisor-student） | Arnold、Gelfand、Sinai | ✅ 已入库 |
+| 挚友/同事（colleague） | Alexandrov、Weyl、Courant | ✅ 已入库 |
+| 合作者（collaborator） | Khinchin | ✅ 已入库 |
+| 对手（rival） | von Neumann | ✅ 已入库 |
+
+**校验**：
+```sql
+SELECT a.name_en AS 甲, rt.name_zh AS 关系, b.name_en AS 乙, pr.note
+FROM person_relation pr JOIN people a ON a.id=pr.from_id
+JOIN people b ON b.id=pr.to_id JOIN relation_types rt ON rt.relation_key=pr.relation_type
+WHERE a.name_en='Andrey Kolmogorov' OR b.name_en='Andrey Kolmogorov';
+```
+
+---
+
 ## 第 5 步：设计配色方案
 
 - Kolmogorov 的气质关键词：**深邃、理性、广度、苏联学术的厚重、概率与确定性的张力**
