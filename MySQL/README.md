@@ -24,6 +24,16 @@ SHOW FULL TABLES WHERE TABLE_TYPE='VIEW';   -- 5 个视图
 DESCRIBE people;             -- 查看某表结构
 ```
 
+## 二·五、用例集
+
+完整用例（交叉奖项 + 获奖年限 + 研究领域、指定组合、潜藏信息挖掘等）见 **`use_cases.md`**。
+
+核心一行查询（多奖得主 + 奖项年限 + 研究领域）：
+
+```bash
+mysql -u root --default-character-set=utf8mb4 -e "USE greatminds; SELECT name_en, award_count, awards_detail, fields_detail FROM v_cross_summary WHERE award_count>=2 ORDER BY award_count DESC;"
+```
+
 ## 三、常用查询
 
 ```bash
@@ -113,3 +123,4 @@ python3 export_people.py --one-line            # Markdown 表格
 | `v_multi_award` | 35 | 多奖得主视图 |
 | `v_award_matrix` | 7 | 奖项组合矩阵 |
 | `v_award_full` | 298 | 人物-奖项全明细 |
+| `v_cross_summary` | 158 | 交叉汇总（获奖数 + 奖项年限 + 研究领域） |

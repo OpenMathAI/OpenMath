@@ -26,7 +26,9 @@ CREATE TABLE IF NOT EXISTS people (
     primary_occupation VARCHAR(128),
     has_biography      TINYINT DEFAULT 0,
     created_at         DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at         DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at         DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    KEY idx_name_en  (name_en),
+    KEY idx_has_bio  (has_biography)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------------------------------------------------------
@@ -342,3 +344,21 @@ SELECT p.id AS person_id, p.name_en, p.name_zh,
 FROM award_laureate al
 JOIN people p ON p.id = al.person_id
 JOIN awards a  ON a.id = al.award_id;
+
+-- 4) 交叉汇总视图：获奖数 + 奖项年限 + 研究领域（分开聚合，避免笛卡尔积；万级数据适用）
+CREATE OR REPLACE VIEW v_cross_summary AS
+SELECT p.id AS person_id, p.name_en, p.name_zh,
+       t.n AS award_count, t.awards_detail, f.fields_detail
+FROM people p
+JOIN (
+    SELECT person_id, COUNT(DISTINCT award_id) n,
+           GROUP_CONCAT(CONCAT(a.name_zh, ' ', al.year) ORDER BY al.year SEPARATOR '；') AS awards_detail
+    FROM award_laureate al JOIN awards a ON a.id = al.award_id
+    GROUP BY person_id
+) t ON t.person_id = p.id
+LEFT JOIN (
+    SELECT pf.person_id,
+           GROUP_CONCAT(DISTINCT f.name_en ORDER BY f.name_en SEPARATOR '、') AS fields_detail
+    FROM person_field pf JOIN fields f ON f.id = pf.field_id
+    GROUP BY pf.person_id
+) f ON f.person_id = p.id;
