@@ -45,6 +45,39 @@
 | 1981 | 耶鲁大学荣誉博士 |
 | 1983.10.16 | 在 Princeton 因心脏病逝世 (第5次发作), 享年60岁 |
 
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_harishchandra_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q1585395` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `哈里什-钱德拉` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["半单李群表示论之王","Harish-Chandra 互反律","分析学的隐者"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1923-10-11` / `1983-10-16` | ⚠️ **NULL 全缺** |
+| 6 | `people` | description | `Indian-American mathematician (1923–1983)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`physicist(1)`、`university teacher(2)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `representation theory`、`harmonic analysis`、`Lie group`、`mathematics`、`physics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Cole 1954`、`FRS`、`Ramanujan Medal`、`Padma Bhushan`、`Guggenheim` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: Allahabad、Cambridge、TIFR`；`employment: IAS、Harvard、Columbia、TIFR` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `British Raj`、`India`、`United States`、`Dominion of India` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见二六（6 条） | ⚠️ 仅 1 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Paul Dirac → Harish-Chandra | 有向 | ⚠️ 占位（剑桥博士导师） |
+| 合作者 | Armand Borel | 无向 | ✅ 在库（id=402，Borel–Harish-Chandra 定理） |
+| 同事 | Robert Langlands | 无向 | ✅ 在库（id=176） |
+| 同事 | Atle Selberg | 无向 | ✅ 在库（id=40，迹公式与表示论） |
+| 同事 | Israel Gelfand | 无向 | ✅ 在库（id=436） |
+| 同事 | Michael Atiyah | 无向 | ✅ 在库（id=19） |
+
+- 缺失人物（1 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_harishchandra_relations.py`
+
 ## 三、核心贡献表
 
 | 领域 | 贡献 | 关键年份 |
