@@ -45,6 +45,40 @@
 | 1996 | 法国科学院院长 + ForMemRS |
 | 2001.05.17 | 逝世于 Neuilly-sur-Seine, 享年73岁 |
 
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_lions_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q982534` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `雅克-路易·利翁` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["变分不等式的创立者","PDE 帝国的建筑师","最优控制之父"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1928-05-02` / `2001-05-17` | ⚠️ **NULL 全缺** |
+| 6 | `people` | description | `French mathematician (1928–2001)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)`、`professor(2)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `partial differential equation`、`mathematical analysis`、`numerical analysis`、`stochastic process`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Peccot 1958`、`von Neumann 1986`、`Harvey 1991`、`Japan 1991`、`ForMemRS 1996`、`Reid 1998`、`Legion of Honour`、`National Order of Merit`、`Rising Sun` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: ENS、Nancy、Paris`；`employment: Nancy、Paris、École polytechnique、Collège de France` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `France` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见二六（7 条） | ⚠️ 仅 1 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Laurent Schwartz → Lions | 有向 | ✅ 在库（id=17） |
+| 学生 | Lions → Haim Brezis | 有向 | ⚠️ 占位 |
+| 学生 | Lions → Roger Temam | 有向 | ⚠️ 占位 |
+| 学生 | Lions → Alain Bensoussan | 有向 | ⚠️ 占位 |
+| 学生 | Lions → Philippe Ciarlet | 有向 | ⚠️ 占位 |
+| 同事 | Jean Leray | 无向 | ✅ 在库（id=37，法国 PDE 传统） |
+| 合作者 | Enrico Magenes | 无向 | ⚠️ 占位（Lions–Magenes 引理） |
+
+- 缺失人物（5 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_lions_relations.py`
+
 ## 三、核心贡献表
 
 | 领域 | 贡献 | 关键年份 |
