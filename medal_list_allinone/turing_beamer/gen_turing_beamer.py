@@ -332,7 +332,7 @@ def summary_slide(people):
                          "    at (%.2f,%.2f) {%s};" % (x, y_stat - 0.10, txt))
         body = "\n".join(rows + stats)
         return (r"""\def\framesubject{%s}
-\begin{frame}{交叉奖项总览}
+\begin{frame}{双料与大满贯 · 图灵奖得主身份总览}
 \vspace{-4pt}
 \centering
 \begin{tikzpicture}
