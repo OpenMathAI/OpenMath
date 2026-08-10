@@ -1,6 +1,6 @@
 # 塞尔 (Jean-Pierre Serre) 立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)，以 Grothendieck、Riemann 和 Hilbert 成品为参考模板，为塞尔制作 Beamer 演示文稿。
+> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)，以 Gödel、Turing、Weil 等最新成品为参考模板（含 §二十 社会关系入库 + §二十一 数据库字段核对），为塞尔制作 Beamer 演示文稿。
 > 直接复制本文件内容到新对话中使用。
 
 ---
@@ -40,6 +40,33 @@
   - Bourbaki 成员身份
   - Wikipedia 正文中提取出的 **关键时间线**（按年份列出 15–20 个关键节点）
   - **人格特质线索**：关于他写作风格、教学方式、数学哲学的描述
+
+---
+
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。**「现状」列已标注库中是否已有；缺失项按 §21.5 写 `MySQL/seed_serre_full.py` 补齐（`INSERT IGNORE` 幂等）。**
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q212063` | ⚠️ 待核 |
+| 2 | `people` | name_en | `Jean-Pierre Serre`（库中为缩写 `J.-P. Serre`，可加入 name_variants） | ✅ |
+| 3 | `people` | name_zh | `让-皮埃尔·塞尔` | ⚠️ NULL 需补 |
+| 4 | `people` | name_variants | `["风格之神","跨领域大师","最年轻的菲尔兹奖得主","J.-P. Serre"]` | ⚠️ 空需补 |
+| 5 | `people` | gender | `male` | ⚠️ NULL 需补 |
+| 6 | `people` | birth_date | `1926-09-15` | ⚠️ 库中仅 `1926` 需补全 |
+| 7 | `people` | death_date | `NULL`（仍在世） | ✅ |
+| 8 | `people` | description | `French mathematician` | ⚠️ 待核 |
+| 9 | `people` | primary_occupation | `mathematician` | ✅ |
+| 10 | `person_occupation` | 职业（rank 排序） | `mathematician(0)`、`university teacher(1)`、`researcher(2)` | ⚠️ 需补 |
+| 11 | `person_field` | 领域（rank 排序） | `algebraic geometry`、`algebra`、`number theory`、`topology`、`mathematics`、`algebraic topology`、`algebraic number theory` | ⚠️ 待核 |
+| 12 | `award_laureate` | 获奖（year/note）★全部收录 | 已有 `Fields 1954`、`Wolf 2000`、`Abel 2003`；补 `ForMemRS 1974`、`Balzan 1985`、`CNRS Gold 1987`、`Steele 1995`、`Émile Picard`、`Legion of Honour`、`AMS Fellow`、`Cours Peccot` 等 | ⚠️ 部分 |
+| 13 | `person_institution` | 教育/任职 | `education: University of Paris、ENS`；`employment: CNRS(1948–1954)、Collège de France(1956–1994)、Nancy` | ⚠️ 全空 |
+| 14 | `person_nationality` | 国籍 | `France` | ⚠️ 空需补 |
+| 15 | `person_relation` | 社会关系 | 见第 4.5 步 | ⚠️ 仅 1 条 |
+| 16 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ 待确认 |
+
+核对完成后：写 `MySQL/seed_serre_full.py`，入库后按 §21.4 一键校验并汇报。
 
 ---
 
@@ -105,6 +132,39 @@
 - **Grothendieck** — 合作者与对话者，FAC → 概形，"Serre 铺路，Grothendieck 建造"
 - **Borel, Tate** — 长期合作者
 - **Deligne** — 学术后代，继承并发扬光大
+
+---
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。Serre 当前 `person_relation` 仅 1 条，需新建脚本 `MySQL/seed_serre_relations.py` 补足。
+> 数据库全部字段核对见 §21.5（第 0.5 步）。
+
+**入库范围（10 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师（advisor-student） | Henri Cartan → Serre | 有向 | ✅ 已在库（id=69） |
+| 学生（advisor-student） | Serre → Jean-Marc Fontaine | 有向 | ⚠️ 占位 |
+| 学生（advisor-student） | Serre → Michel Broué | 有向 | ⚠️ 占位 |
+| 学生（advisor-student） | Serre → Pierre Gabriel | 有向 | ⚠️ 占位 |
+| 同事（colleague） | Alexander Grothendieck | 无向 | ✅ 已在库（id=7） |
+| 同事（colleague） | André Weil | 无向 | ✅ 已在库（id=8） |
+| 合作者（collaborator） | Claude Chevalley | 无向 | ✅ 已在库（id=27） |
+| 合作者（collaborator） | Armand Borel | 无向 | 待查 |
+| 合作者（collaborator） | John Tate | 无向 | 待查 |
+| 学术后代（colleague） | Pierre Deligne | 无向 | ✅ 已在库（id=30） |
+
+- 缺失人物先建占位（has_biography=0），关系 `note` 加 `[材料待展开]`
+- 幂等：`INSERT IGNORE` + 联合主键 `(from_id, to_id, relation_type)`
+
+**校验**：
+```sql
+SELECT a.name_en AS 甲, rt.name_zh AS 关系, b.name_en AS 乙 FROM person_relation pr
+JOIN people a ON a.id=pr.from_id JOIN people b ON b.id=pr.to_id
+JOIN relation_types rt ON rt.relation_key=pr.relation_type
+WHERE a.name_en LIKE '%Serre%' OR b.name_en LIKE '%Serre%';
+```
 
 ---
 
