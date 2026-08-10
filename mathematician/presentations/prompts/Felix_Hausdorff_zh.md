@@ -74,6 +74,46 @@
 
 ---
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_hausdorff_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q75856` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `费利克斯·豪斯多夫` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["拓扑空间之父","豪斯多夫维数"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1868-11-08` / `1942-01-26` | ⚠️ NULL |
+| 6 | `people` | description | `German mathematician (1868–1942)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`topologist(1)`、`university teacher(2)`、`writer(3)`、`astronomer(4)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `topology`（另补 `set theory`） | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | metadata 无奖项（据实为准） | ⚠️ 待核 |
+| 10 | `person_institution` | 教育/任职 | `education: Leipzig`；`employment: Greifswald、Bonn、Leipzig` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `German Reich` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（7 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_hausdorff_relations.py`。
+
+**入库范围（7 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Heinrich Bruns → Hausdorff | 有向 | ⚠️ 占位 |
+| 导师 | Christian Gustav Adolph Mayer → Hausdorff | 有向 | ⚠️ 占位 |
+| 学生 | Hausdorff → Franz Hallenbach | 有向 | ⚠️ 占位 |
+| 同事 | Ernst Zermelo | 无向 | ⚠️ 占位（集合论同行） |
+| 同事 | Felix Bernstein | 无向 | ⚠️ 占位 |
+| 同事 | David Hilbert | 无向 | ✅ 在库（id=1） |
+| 夫妻 | Charlotte Hausdorff | 无向 | ⚠️ 占位（1942 年共同赴死） |
+
+- 缺失人物（6 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心数学与科学贡献
 
 | 领域 | 贡献 | 年代 |
