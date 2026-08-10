@@ -58,6 +58,40 @@
 | 1986 | Berkeley ICM 荣誉主席——庆祝获 Fields 奖 50 周年 |
 | 1996.10.11 | 因肺炎在 Pittsfield, MA 逝世, 享年 89 岁 |
 
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_ahlfors_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q211642` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `拉斯·阿尔福斯` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["首届菲尔兹奖得主","拟共形映射之父","芬兰复分析学派"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1907-04-18` / `1996-10-11` | ⚠️ 仅年份 |
+| 6 | `people` | description | `Finnish mathematician (1907–1996)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `complex analysis`、`mathematical analysis`、`function theory`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Fields 1936`（已有，首届）、`Wihuri 1968`、`Wolf 1981`（已有）、`Steele 1982`、`Guggenheim` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: Helsinki、Zurich、Paris`；`employment: Helsinki、Harvard、Zurich、ETH` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Grand Duchy of Finland`、`Russian Empire`、`Finland`、`United States` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见二六（7 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Ernst Leonard Lindelöf → Ahlfors | 有向 | ⚠️ 占位 |
+| 导师 | Rolf Nevanlinna → Ahlfors | 有向 | ✅ 在库（id=43） |
+| 学生 | Ahlfors → Robert Osserman | 有向 | ⚠️ 占位 |
+| 学生 | Ahlfors → Paul Garabedian | 有向 | ⚠️ 占位 |
+| 学生 | Ahlfors → Halsey Royden | 有向 | ⚠️ 占位 |
+| 同事 | Arne Beurling | 无向 | ⚠️ 占位 |
+| 同事 | Lipman Bers | 无向 | ⚠️ 占位（拟共形映射，Ahlfors–Bers） |
+
+- 缺失人物（5 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_ahlfors_relations.py`
+
 ## 三、核心贡献表
 
 | 领域 | 贡献 | 关键年份 |
