@@ -262,12 +262,12 @@ def table_slide(title, subject, people):
 \centering
 \scriptsize
 \begin{tabular}{@{}
-  >{\raggedright}m{3.6cm}
-  >{\centering}m{0.95cm}
-  >{\centering}m{1.05cm}
+  >{\raggedright}m{3.0cm}
+  >{\centering}m{0.85cm}
+  >{\centering}m{1.55cm}
   >{\raggedright}m{1.5cm}
-  >{\raggedright}m{2.4cm}
-  >{\raggedright\arraybackslash}m{2.6cm}
+  >{\raggedright}m{2.2cm}
+  >{\raggedright\arraybackslash}m{2.4cm}
 @{}}
 \toprule
 \rowcolor{turingbg}
