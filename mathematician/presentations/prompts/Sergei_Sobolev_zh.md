@@ -51,6 +51,40 @@
 | 1988 | Lomonosov 金质奖章 |
 | 1989.01.03 | 在莫斯科逝世 |
 
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_sobolev_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q323337` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `谢尔盖·索博列夫` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["Sobolev 空间之父","广义函数的先驱","数学物理的桥梁"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1908-09-23` / `1989-01-03` | ⚠️ **NULL 全缺** |
+| 6 | `people` | description | `Russian mathematician (1908–1989)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `Sobolev space`、`functional analysis`、`partial differential equation`、`mathematical physics`、`computational mathematics`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Stalin 1941/1951/1953`、`USSR State 1983`、`Lomonosov 1988`、`Order of Lenin`、`Hero of Socialist Labour 1951`、`October Revolution` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: Saint Petersburg`；`employment: Steklov、Kurchatov、MSU、Novosibirsk、Sobolev Institute` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Russian Empire`、`Soviet Union` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见二六（7 条） | ⚠️ 仅 1 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Vladimir Smirnov → Sobolev | 有向 | ⚠️ 占位 |
+| 导师 | Nikolai Günther → Sobolev | 有向 | ⚠️ 占位 |
+| 学生 | Sobolev → Olga Ladyzhenskaya | 有向 | ⚠️ 占位 |
+| 学生 | Sobolev → Mikhail Lavrentyev | 有向 | ⚠️ 占位 |
+| 学生 | Sobolev → Nikolai Bakhvalov | 有向 | ⚠️ 占位 |
+| 同事 | Andrey Kolmogorov | 无向 | ✅ 在库（id=5） |
+| 同事 | Israel Gelfand | 无向 | ✅ 在库（id=436） |
+
+- 缺失人物（5 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_sobolev_relations.py`
+
 ## 三、核心贡献表
 
 | 领域 | 贡献 | 关键年份 |
