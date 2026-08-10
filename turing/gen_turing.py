@@ -237,42 +237,42 @@ NAMES_BAR = {
     "ep10": "Sutherland · Engelbart · Thacker · Catmull · Hanrahan",
 }
 
-# 主要荣誉（Turing 之外的重要交叉荣誉，来源：Wikipedia 本地页 infobox，2026-08 全量核实）
+# 主要荣誉（Turing 之外的重要交叉荣誉，来源：Wikipedia 本地页 infobox 逐人核对，2026-08 修正）
 HONORS = {
     "Herbert A. Simon":   "诺贝尔经济学奖 1978；美国国家科学奖章 1986",
     "Donald Knuth":       "京都奖 1996；美国国家科学奖章 1979",
     "John McCarthy":      "京都奖 1988；美国国家科学奖章 1990",
-    "Marvin Minsky":      "日本国际奖 1990；美国国家科学奖章",
-    "Andrew Yao":         "京都奖 2021；美国国家科学奖章",
+    "Marvin Minsky":      "日本国际奖 1990",
+    "Andrew Yao":         "京都奖 2021",
     "Richard Karp":       "京都奖 2008；美国国家科学奖章 1996；EATCS 奖 2000",
-    "Tony Hoare":         "京都奖 2000",
+    "Tony Hoare":         "京都奖 2000；IEEE 冯诺依曼奖 2011",
     "Ivan Sutherland":    "京都奖；IEEE 冯诺依曼奖 1998",
     "Alan Kay":           "京都奖",
     "John Backus":        "美国国家科学奖章 1975",
-    "Dennis Ritchie":     "日本国际奖 2011",
-    "Ken Thompson":       "日本国际奖 2011；IEEE 冯诺依曼奖",
-    "Vint Cerf":          "日本国际奖 2008；马可尼奖；美国国家科学奖章",
+    "Dennis Ritchie":     "日本国际奖 2011；美国国家技术奖章 1998",
+    "Ken Thompson":       "日本国际奖 2011；美国国家技术奖章 1998",
+    "Vint Cerf":          "日本国际奖 2008；马可尼奖 1998；美国国家技术奖章 1997",
     "Ronald Rivest":      "马可尼奖 2007",
     "Adi Shamir":         "沃尔夫数学奖 2024；英国皇家学会院士 2018",
-    "Charles H. Bennett": "沃尔夫物理学奖 2018；香农奖 2020",
-    "Gilles Brassard":    "沃尔夫物理学奖 2018",
+    "Charles H. Bennett": "沃尔夫物理学奖 2018；IEEE 香农奖 2020",
+    "Gilles Brassard":    "沃尔夫物理学奖 2018；英国皇家学会院士 2013",
     "Leslie Valiant":     "内万林纳奖 1986；EATCS 奖 2008",
     "Judea Pearl":        "鲁梅哈特奖 2011；美国国家科学奖章 2014",
-    "Geoffrey Hinton":    "日本国际奖 2016；诺贝尔物理学奖 2024；英国皇家学会院士",
-    "Yann LeCun":         "美国国家科学奖章 2023；英国皇家学会院士",
-    "Yoshua Bengio":      "加拿大总督奖；英国皇家学会院士",
+    "Geoffrey Hinton":    "诺贝尔物理学奖 2024；英国皇家学会院士",
+    "Yann LeCun":         "美国国家科学奖章 2023；美国科学院院士 2021",
+    "Yoshua Bengio":      "英国皇家学会院士",
     "Shafi Goldwasser":   "哥德尔奖 1993/2001；美国科学院院士",
     "Silvio Micali":      "哥德尔奖 1993；美国科学院院士",
     "Avi Wigderson":      "哥德尔奖 2009；阿贝尔奖 2021；内万林纳奖 1994",
-    "Whitfield Diffie":   "马可尼奖 2000；IEEE 香农奖 2021",
-    "Martin Hellman":     "马可尼奖 2000；IEEE 香农奖 2021",
-    "Richard Hamming":    "IEEE 香农奖 1996",
+    "Whitfield Diffie":   "马可尼奖 2000；IEEE 汉明奖章 2010；英国皇家学会院士 2015",
+    "Martin Hellman":     "马可尼奖 2000；IEEE 汉明奖章 2010",
+    "Richard Hamming":    "IEEE 汉明奖章 1988",
     "William Kahan":      "美国国家科学奖章 1989",
-    "Jack Dongarra":      "美国国家科学奖章 2020",
-    "Barbara Liskov":     "美国国家科学奖章 2005",
-    "Leslie Lamport":     "IEEE 冯诺依曼奖 2008；美国国家科学奖章",
-    "Tim Berners-Lee":    "千禧科技奖 2004；英国皇家学会院士",
-    "Robert Metcalfe":    "美国国家科学奖章 2003",
+    "Jack Dongarra":      "美国国家科学奖章 2020；英国皇家学会院士 2019",
+    "Barbara Liskov":     "IEEE 冯诺依曼奖 2004",
+    "Leslie Lamport":     "IEEE 冯诺依曼奖 2008；美国科学院院士 2011",
+    "Tim Berners-Lee":    "英国皇家学会院士；美国科学院院士 2009",
+    "Robert Metcalfe":    "美国国家技术奖章；马可尼奖 2003",
 }
 
 HEADER = r"""% Turing Award Video — Episode {EP}
@@ -317,6 +317,8 @@ HEADER = r"""% Turing Award Video — Episode {EP}
 \newcommand{\godelbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamond$\kern-0.5pt G}}
 \newcommand{\abelbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
 \newcommand{\shannonbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt S}}
+\newcommand{\hammingbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\bigstar$\kern-0.5pt H}}
+\newcommand{\ntmbadge}{\raisebox{0.55ex}{\tiny\color{coverdark}$\star$\kern-0.5pt T}}
 % ★W 沃尔夫 · ♥J 日本国际 · ▲N 内万林纳 · □E EATCS · ●M 马可尼 · ▲V 冯·诺依曼 · ◆T 千禧科技
 \newcommand{\wolfbadge}{\raisebox{0.55ex}{\tiny\color{coveramber!70!black}$\bigstar$\kern-0.5pt W}}
 \newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
@@ -452,6 +454,7 @@ AWARD_ICONS = [
     ("哥德尔", r"\godelbadge", "哥德尔奖"),
     ("阿贝尔", r"\abelbadge", "阿贝尔奖"),
     ("香农", r"\shannonbadge", "香农奖"),
+    ("汉明", r"\hammingbadge", "IEEE 汉明奖章"),
     ("日本国际", r"\japanbadge", "日本国际奖"),
     ("内万林纳", r"\nevanlinnabadge", "内万林纳奖"),
     ("EATCS", r"\eatcsbadge", "EATCS 奖"),
@@ -459,6 +462,7 @@ AWARD_ICONS = [
     ("冯", r"\neumannbadge", "冯·诺依曼奖"),
     ("千禧", r"\millenniumbadge", "千禧科技奖"),
     ("国家科学奖章", r"\nsmbadge", "国家科学奖章"),
+    ("国家技术奖章", r"\ntmbadge", "美国国家技术奖章"),
     ("科学院院士", r"\nasbadge", "美国科学院院士"),
     ("皇家学会院士", r"\frsbadge", "皇家学会院士"),
     ("加拿大总督", r"\govbadge", "加拿大总督奖"),
