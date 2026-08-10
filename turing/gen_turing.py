@@ -257,6 +257,7 @@ HONORS = {
     "Charles H. Bennett": "沃尔夫物理学奖 2018；IEEE 香农奖 2020",
     "Gilles Brassard":    "沃尔夫物理学奖 2018；英国皇家学会院士 2013",
     "Leslie Valiant":     "内万林纳奖 1986；EATCS 奖 2008",
+    "Robert Tarjan":      "内万林纳奖 1982",
     "Judea Pearl":        "鲁梅哈特奖 2011；美国国家科学奖章 2014",
     "Geoffrey Hinton":    "诺贝尔物理学奖 2024；英国皇家学会院士",
     "Yann LeCun":         "美国国家科学奖章 2023；美国科学院院士 2021",
