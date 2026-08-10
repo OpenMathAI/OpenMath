@@ -119,6 +119,33 @@ CREATE TABLE IF NOT EXISTS person_institution (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------------------------------------------------------
+-- 5b) 国家/政权字典 + 人物-国籍（多对多，含历史政权）
+--      一人多国籍（如 von Neumann: Hungary + USA）；历史政权（Soviet Union 等）
+--      is_current=0，successor 指向现代后继国，可按现代国归一过滤
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS countries (
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    name_en    VARCHAR(128) UNIQUE NOT NULL,  -- 'Kingdom of Prussia' / 'Germany'
+    name_zh    VARCHAR(128),
+    is_current TINYINT DEFAULT 0,             -- 1=现代现存国，0=历史政权
+    era        VARCHAR(64),                   -- 存续期 '1701-1871'
+    successor  VARCHAR(128),                  -- 后继国（如 'Germany'）
+    iso        VARCHAR(8)                     -- 现代 ISO 代码（如 DE）；历史政权可空
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS person_nationality (
+    person_id  INT NOT NULL,
+    country_id INT NOT NULL,
+    `rank`     INT DEFAULT 0,                 -- Wikidata nationality 顺序
+    era_note   VARCHAR(128),                  -- 备注（如 'historical'）
+    PRIMARY KEY (person_id, country_id),
+    CONSTRAINT fk_pn_person  FOREIGN KEY (person_id) REFERENCES people(id) ON DELETE CASCADE,
+    CONSTRAINT fk_pn_country FOREIGN KEY (country_id) REFERENCES countries(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE INDEX idx_pn_country ON person_nationality(country_id);
+CREATE INDEX idx_pn_person  ON person_nationality(person_id);
+
+-- ----------------------------------------------------------------------------
 -- 6) 社会关系 + 关系类型
 -- ----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS relation_types (

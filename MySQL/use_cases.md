@@ -118,6 +118,42 @@ SELECT * FROM v_award_matrix ORDER BY n_persons DESC;
 
 ---
 
+## 用例 6：国籍与历史政权
+
+**需求**：人物的国籍，以及国家改名/消失后的统一查询（100 年前 vs 现在）。
+
+**设计**：`countries` 字典存「现代国 + 历史政权」，历史政权 `is_current=0`、`successor` 指向现代后继国；`person_nationality` 多对多（一人多国籍，含 rank 顺序）。
+
+```sql
+-- 某人全部国籍（Hilbert: 普鲁士王国→德意志帝国→魏玛共和国→纳粹德国）
+SELECT p.name_en, c.name_zh
+FROM person_nationality pn
+JOIN people p ON p.id = pn.person_id
+JOIN countries c ON c.id = pn.country_id
+WHERE p.name_en = 'David Hilbert'
+ORDER BY pn.`rank`;
+
+-- 按现代国归一：所有德国籍（含历史政权，国家改名/消失也能查全）
+SELECT p.name_en
+FROM person_nationality pn
+JOIN people p ON p.id = pn.person_id
+JOIN countries c ON c.id = pn.country_id
+WHERE c.name_en = 'Germany' OR c.successor = 'Germany'
+GROUP BY p.id;
+
+-- 多重现代国籍（如 von Neumann: 匈牙利 + 美国）
+SELECT p.name_en, COUNT(*) n
+FROM person_nationality pn
+JOIN people p ON p.id = pn.person_id
+JOIN countries c ON c.id = pn.country_id
+WHERE c.is_current = 1
+GROUP BY p.id HAVING n > 1;
+```
+
+---
+
+## 万级数据（10000+）优化要点
+
 ## 万级数据（10000+）优化要点
 
 1. **索引已就位**：

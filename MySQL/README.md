@@ -51,6 +51,12 @@ mysql -u root --default-character-set=utf8mb4 -e "USE greatminds; SELECT p.name_
 
 # 某人社会关系
 mysql -u root --default-character-set=utf8mb4 -e "USE greatminds; SELECT * FROM v_person_relations_bi WHERE person='G.H. Hardy';"
+
+# 某人的国籍（含历史政权，如 Hilbert: 普鲁士→德意志帝国→魏玛→纳粹德国）
+mysql -u root --default-character-set=utf8mb4 -e "USE greatminds; SELECT p.name_en, c.name_zh FROM person_nationality pn JOIN people p ON p.id=pn.person_id JOIN countries c ON c.id=pn.country_id WHERE p.name_en='David Hilbert' ORDER BY pn.\`rank\`;"
+
+# 按现代国归一（国家改名/消失后仍能查全，如所有德国籍含历史政权）
+mysql -u root --default-character-set=utf8mb4 -e "USE greatminds; SELECT p.name_en FROM person_nationality pn JOIN people p ON p.id=pn.person_id JOIN countries c ON c.id=pn.country_id WHERE c.name_en='Germany' OR c.successor='Germany' GROUP BY p.id;"
 ```
 
 ## 四、数据重建（从零）
@@ -72,6 +78,8 @@ python3 seed_abel_prize.py     # 阿贝尔奖 29 位得主
 python3 seed_chern_medal.py    # 陈省身奖章 5 位得主
 python3 seed_turing.py         # 图灵奖 81 位得主
 python3 seed_copss.py          # COPSS 会长奖 46 位得主
+python3 enrich_people.py       # 元数据补全 + 师生关系（有 metadata.json 的人）
+python3 seed_countries.py      # 国籍/政权字典 + 人物国籍
 ```
 
 > 脚本使用 `pymysql` 连接（见 `db_mysql.py`），自动将 SQLite 语法（`?` 占位符、`INSERT OR IGNORE`）转换为 MySQL。依赖：`pip3 install --break-system-packages pymysql`。
@@ -115,7 +123,9 @@ python3 export_people.py --one-line            # Markdown 表格
 | `institutions` | 0 | 机构（待灌入） |
 | `person_institution` | 0 | 人 ↔ 机构（待灌入） |
 | `relation_types` | 8 | 关系类型字典 |
-| `person_relation` | 3 | 人物关系 |
+| `person_relation` | 15 | 人物关系（含师生谱系） |
+| `countries` | 43 | 国家/政权字典（含历史政权） |
+| `person_nationality` | 97 | 人物-国籍（多对多） |
 | `episodes` | 10 | 图灵视频分集 |
 | `badge_defs` | 19 | 徽标定义 |
 | `v_person_relations` | 3 | 关系视图 |
