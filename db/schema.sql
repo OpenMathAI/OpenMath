@@ -26,6 +26,7 @@ CREATE TABLE people (
     wiki_url          TEXT,
     local_dir         TEXT UNIQUE,               -- pages/<Name>/ 相对路径，NULL=未抓取
     primary_occupation TEXT,                     -- 冗余展示快照（名称字符串），不参与检索
+    has_biography     INTEGER DEFAULT 0,         -- 是否已立传（presentations/<Name>/ 存在）：0=未立传 1=已立传
     created_at        TEXT DEFAULT (datetime('now')),
     updated_at        TEXT DEFAULT (datetime('now'))
 );
@@ -130,6 +131,21 @@ CREATE TABLE person_relation (
 CREATE INDEX idx_rel_type ON person_relation(relation_type);
 CREATE INDEX idx_rel_from ON person_relation(from_id);
 CREATE INDEX idx_rel_to   ON person_relation(to_id);
+
+-- ----------------------------------------------------------------------------
+-- 6b) 排行榜（OpenMath 内部主观排名，如 20 世纪数学巨匠）
+-- ----------------------------------------------------------------------------
+CREATE TABLE rankings (
+    id        INTEGER PRIMARY KEY,
+    person_id INTEGER NOT NULL REFERENCES people(id) ON DELETE CASCADE,
+    list_key  TEXT    NOT NULL,               -- 榜单标识，如 OpenMath_20th_Century
+    rank      INTEGER NOT NULL,               -- 本榜名次
+    orig_rank INTEGER,                        -- 原榜名次（NULL=新进/无原榜）
+    tag       TEXT,                           -- 核心标签（一句话）
+    status    TEXT,                           -- 立传/Review 状态（如 ✅ / 🔲 原文）
+    UNIQUE (person_id, list_key)
+);
+CREATE INDEX idx_rank_list ON rankings(list_key, rank);
 
 -- ----------------------------------------------------------------------------
 -- 7) 展示层（可选）：视频分集 + 徽标定义
@@ -271,3 +287,23 @@ INSERT INTO episodes (ep_key, dir, main, title_zh, subtitle_zh, year_range, note
  ('ep08', 'episode-08-crypto-security',    'turing_ep08_zh', '密码学与量子信息',     '公钥密码 · 零知识 · 量子密钥',  '2000 – 2025', '从 Yao 到 Brassard'),
  ('ep09', 'episode-09-numerical-hpc',      'turing_ep09_zh', '数值计算与高性能计算', '浮点 · 纠错码 · HPC',           '1968 – 2021', '从 Hamming 到 Dongarra'),
  ('ep10', 'episode-10-graphics-hci',       'turing_ep10_zh', '计算机图形学与人机交互','图形 · 鼠标 · 可视化',          '1988 – 2019', '从 Sutherland 到 Hanrahan');
+
+-- ============================================================================
+-- 视图：人物关系（含双向，查某人关系无需关心 from/to 方向）
+-- ============================================================================
+CREATE VIEW v_person_relations AS
+SELECT
+  a.name_en AS from_name, a.name_zh AS from_zh,
+  b.name_en AS to_name,   b.name_zh AS to_zh,
+  rt.name_zh AS relation, rt.relation_key,
+  pr.note, pr.source
+FROM person_relation pr
+JOIN people a ON a.id = pr.from_id
+JOIN people b ON b.id = pr.to_id
+JOIN relation_types rt ON rt.relation_key = pr.relation_type;
+
+-- 双向视图：每条关系一行（方向翻转），查「某人所有关系」更直观
+CREATE VIEW v_person_relations_bi AS
+SELECT from_name AS person, relation, to_name AS other, note, source FROM v_person_relations
+UNION ALL
+SELECT to_name  AS person, relation, from_name AS other, note, source FROM v_person_relations;

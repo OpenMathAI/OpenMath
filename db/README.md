@@ -68,6 +68,34 @@ sqlite3 -header -column db/greatminds.db "SELECT * FROM relation_types;"
 
 # 图灵奖视频分集
 sqlite3 -header -column db/greatminds.db "SELECT ep_key, title_zh, year_range FROM episodes;"
+
+# 某人的全部研究领域（多对多，含主次排序 rank）
+sqlite3 -header -column db/greatminds.db \
+  "SELECT p.name_en, f.name_en, pf.rank FROM person_field pf JOIN people p ON p.id=pf.person_id JOIN fields f ON f.id=pf.field_id WHERE p.name_en='John von Neumann' ORDER BY pf.rank;"
+
+# 谁同时擅长 泛函分析 + 概率论（多领域交集查询）
+sqlite3 -header -column db/greatminds.db \
+  "SELECT p.name_en FROM person_field pf1 JOIN person_field pf2 ON pf1.person_id = pf2.person_id JOIN people p ON p.id = pf1.person_id JOIN fields f1 ON f1.id = pf1.field_id AND f1.name_en='functional analysis' JOIN fields f2 ON f2.id = pf2.field_id AND f2.name_en='probability theory';"
+
+# 各领域有多少人（按人数排序）
+sqlite3 -header -column db/greatminds.db \
+  "SELECT f.name_en, COUNT(*) n FROM person_field pf JOIN fields f ON f.id = pf.field_id GROUP BY f.id ORDER BY n DESC LIMIT 10;"
+
+# 领域最多的通才 Top 10（一人多领域统计）
+sqlite3 -header -column db/greatminds.db \
+  "SELECT p.name_en, COUNT(*) n FROM person_field pf JOIN people p ON p.id=pf.person_id GROUP BY p.id ORDER BY n DESC LIMIT 10;"
+
+# ---- 社会关系（视图封装，一行即查） ----
+
+# 全部关系（单向视图）
+sqlite3 -header -column db/greatminds.db "SELECT from_name, relation, to_name, note FROM v_person_relations;"
+
+# 查某人所有关系（双向视图，无需关心方向）
+sqlite3 -header -column db/greatminds.db \
+  "SELECT person, relation, other, note FROM v_person_relations_bi WHERE person='G.H. Hardy';"
+
+# 关系类型字典
+sqlite3 -header -column db/greatminds.db "SELECT relation_key, name_zh FROM relation_types;"
 ```
 
 ## 五、图形界面（可选）
@@ -87,28 +115,35 @@ print(rows)
 
 ## 七、重建数据库
 
-数据或 schema 变更后，可删除库文件重新构建（字典种子会重新灌入；人物数据需重新跑 `seed.py`）：
+数据或 schema 变更后，按固定顺序重建（注意：`biography` 必须在 `relations` 之前，因为 relations 会新增人物）：
 
 ```bash
 cd db
 rm -f greatminds.db
 sqlite3 greatminds.db < schema.sql
+python3 seed_ranking.py      # 20 世纪排名 108 人（people + rankings + 奖项）
+python3 seed_fields.py       # 研究领域（Wikidata field_of_work + 标签提取）
+python3 seed_biography.py    # 立传标志（扫描 presentations/）
+python3 seed_relations.py    # 社会关系 + 补充人物（祖冲之/祖暅之）
 ```
 
 ## 八、当前表结构一览
 
 | 表 | 类型 | 行数 | 说明 |
 |---|---|---|---|
-| `people` | 实体 | 0 | 人物主表（数学家/物理学家/文学家…） |
+| `people` | 实体 | 110 | 人物主表（数学家/物理学家/文学家…） |
 | `occupations` | 字典 | 13 | 职业 |
-| `person_occupation` | 多对多 | 0 | 人 ↔ 职业 |
-| `fields` | 字典 | 0 | 研究领域 |
-| `person_field` | 多对多 | 0 | 人 ↔ 领域 |
+| `person_occupation` | 多对多 | 110 | 人 ↔ 职业 |
+| `fields` | 字典 | 114 | 研究领域 |
+| `person_field` | 多对多 | 383 | 人 ↔ 领域 |
 | `awards` | 字典 | 42 | 奖项（数学四大/图灵/诺贝尔家族/统计…） |
-| `award_laureate` | 多对多 | 0 | 人 ↔ 奖项（交叉荣誉核心） |
+| `award_laureate` | 多对多 | 47 | 人 ↔ 奖项（交叉荣誉核心） |
+| `rankings` | 字典 | 108 | 排行榜（20 世纪数学巨匠） |
 | `institutions` | 字典 | 0 | 机构 |
 | `person_institution` | 多对多 | 0 | 人 ↔ 机构 |
 | `relation_types` | 字典 | 8 | 社会关系类型（父子/师生/仇敌/争议…） |
-| `person_relation` | 多对多 | 0 | 人物关系 |
+| `person_relation` | 多对多 | 3 | 人物关系 |
 | `episodes` | 展示层 | 10 | 图灵奖视频分集 |
 | `badge_defs` | 展示层 | 19 | 徽标定义 |
+| `v_person_relations` | 视图 | 3 | 关系单向视图 |
+| `v_person_relations_bi` | 视图 | 6 | 关系双向视图（查某人全部关系） |
