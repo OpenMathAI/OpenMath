@@ -374,13 +374,14 @@ def build():
             cur = []
     if cur:
         groups.append(cur)
+    # 双料与大满贯总结页紧随封面（I/II）
+    frames.append(summary_slide(people))
     for gi, grp in enumerate(groups):
         y1 = grp[0][2]
         y2 = grp[-1][2]
         title = "%d–%d" % (y1, y2)
         subj = "·".join(gt.esc(p[6].split("，")[0][:14]) for p in grp)
         frames.append(table_slide(title, subj, grp))
-    frames.append(summary_slide(people))
 
     # 徽标命令文本
     badge_cmds_tex = "\n".join(
