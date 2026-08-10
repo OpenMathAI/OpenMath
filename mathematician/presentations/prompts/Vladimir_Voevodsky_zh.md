@@ -47,6 +47,39 @@
 | 2016 | 哥德堡大学荣誉博士 |
 | 2017.09.30 | 在 Princeton 家中因动脉瘤 (aneurysm) 骤逝, 享年 51 岁 |
 
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_voevodsky_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q369662` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `弗拉基米尔·沃耶沃茨基` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["动机同伦理论的创立者","A1 同伦论","单值化公理之父"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1966-06-04` / `2017-09-30` | ⚠️ 仅年份 |
+| 6 | `people` | description | `Russian mathematician (1966–2017)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`topologist(1)`、`logician(2)`、`university teacher(3)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `algebraic geometry`、`topology`、`Galois theory`、`foundations of mathematics`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Fields 2002`（已有） | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: MSU、Harvard`；`employment: IAS` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Soviet Union`、`United States` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见二六（6 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | David Kazhdan → Voevodsky | 有向 | ✅ 在库（id=439） |
+| 学生 | Voevodsky → Alexander Vishik | 有向 | ⚠️ 占位 |
+| 学生 | Voevodsky → Simone Borghesi | 有向 | ⚠️ 占位 |
+| 合作者 | Andrei Suslin | 无向 | ⚠️ 占位（母题上同调与代数 K-理论） |
+| 同事 | Alexander Beilinson | 无向 | ✅ 在库（id=194，动机理论） |
+| 同事 | John Tate | 无向 | ✅ 在库（id=183，代数 K-理论） |
+
+- 缺失人物（3 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_voevodsky_relations.py`
+
 ## 三、核心贡献表
 
 | 领域 | 贡献 | 关键年份 |
