@@ -162,6 +162,29 @@
 
 ---
 
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。参考脚本：`MySQL/seed_noether_relations.py`（已执行，12 条关系入库，缺失 9 人占位）。
+
+**入库范围（提示词「人物关系」节 + 诺特学派，14 条）**：
+| 关系类型 | 人物 | 状态 |
+|---|---|---|
+| 父亲（parent-child） | Max Noether → Noether | ✅ 已入库 |
+| 导师（advisor-student） | Gordan、Fischer → Noether | ✅ 已入库 |
+| 学生（advisor-student） | van der Waerden、Deuring、Hermann、Witt、Fitting、Levitzki | ✅ 已入库 |
+| 同事（colleague） | Hilbert、Klein、Einstein | ✅ 已入库 |
+| 合作者（collaborator） | Alexandrov | ✅ 已入库 |
+
+**校验**：
+```sql
+SELECT a.name_en AS 甲, rt.name_zh AS 关系, b.name_en AS 乙, pr.note
+FROM person_relation pr JOIN people a ON a.id=pr.from_id
+JOIN people b ON b.id=pr.to_id JOIN relation_types rt ON rt.relation_key=pr.relation_type
+WHERE a.name_en='Emmy Noether' OR b.name_en='Emmy Noether';
+```
+
+---
+
 ## 第 5 步：设计配色方案
 
 - 诺特的气质关键词：**坚韧、温暖、开创性、女性力量、代数的纯粹之美**
