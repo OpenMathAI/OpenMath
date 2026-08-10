@@ -126,6 +126,51 @@
 
 ---
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_artin_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q57283` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `埃米尔·阿廷` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["互反律之王","抽象代数的建筑师","阿廷互反律"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1898-03-03` / `1962-12-20` | ⚠️ NULL |
+| 6 | `people` | description | `Austrian-Armenian mathematician (1898–1962)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `algebra`、`algebraic number theory`、`class field theory`、`abstract algebra` 等 | ✅ 6 项 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Ackermann–Teubner 1932`、`AAAS Fellow`、`Clermont-Ferrand 荣誉博士` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: Vienna、Leipzig、Göttingen`；`employment: Hamburg(1923–1937)、Notre Dame、Indiana、Princeton(1946–1958)、Hamburg(1958–1962)` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Austria–Hungary`、`Austria`、`Germany`、`United States` | ✅ 4 项 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（12 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。Artin 当前 `person_relation` **全空**，新建 `MySQL/seed_artin_relations.py`。
+
+**入库范围（12 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Gustav Herglotz → Artin | 有向 | ⚠️ 占位 |
+| 导师 | Otto Hölder → Artin | 有向 | ⚠️ 占位 |
+| 学生 | Artin → John Tate | 有向 | ✅ 在库（id=183） |
+| 学生 | Artin → Serge Lang | 有向 | ⚠️ 占位 |
+| 学生 | Artin → Max Zorn | 有向 | ⚠️ 占位 |
+| 学生 | Artin → Hans Zassenhaus | 有向 | ⚠️ 占位 |
+| 学生 | Artin → Bernard Dwork | 有向 | ⚠️ 占位 |
+| 同事 | Emmy Noether | 无向 | ✅ 在库（id=4） |
+| 同事 | Hermann Weyl | 无向 | ✅ 在库（id=6） |
+| 同事 | Helmut Hasse | 无向 | ⚠️ 占位 |
+| 合作者 | Otto Schreier | 无向 | ⚠️ 占位 |
+| 同事 | Richard Brauer | 无向 | ⚠️ 占位 |
+
+- 缺失人物（9 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 第 5 步：设计配色方案
 
 - **建议配色：维也纳深蓝 + 数论古铜 + 象牙白** —— 奥地利的优雅血统 + 互反律的永恒深度 + 传奇教师的温暖
