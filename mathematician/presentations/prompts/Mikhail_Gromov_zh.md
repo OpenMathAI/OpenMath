@@ -44,6 +44,40 @@
 | 2005 | Bolyai 奖 |
 | 2009 | Abel 奖 — "为几何的革命性贡献" |
 
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> ⚠️ metadata.json 是消歧义页，字段取自已知资料。缺失项按 §21.5 写 `MySQL/seed_gromov_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q128398` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `米哈伊尔·格罗莫夫` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["几何学的分形天才","Gromov 双曲空间","伪全纯曲线"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1943-12-23` / `NULL`（在世） | ⚠️ 仅年份 |
+| 6 | `people` | description | `Russian-French mathematician (1943–)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `geometry`、`topology`、`partial differential equation`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Veblen 1981`、`Wolf 1993`（已有）、`Steele 1997`、`Kyoto 2002`、`Nemmers 2004`、`Abel 2009`（已有） | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: Leningrad (Rokhlin)`；`employment: NYU、IHÉS、Stony Brook` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Soviet Union`、`Russia`、`France` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见二六（7 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Vladimir Rokhlin → Gromov | 有向 | ✅ 在库（id=102） |
+| 学生 | Gromov → Marc Burger | 有向 | ⚠️ 占位 |
+| 学生 | Gromov → Pierre Pansu | 有向 | ⚠️ 占位 |
+| 同事 | William Thurston | 无向 | ✅ 在库（id=20，双曲几何） |
+| 同事 | Dennis Sullivan | 无向 | ✅ 在库（id=186） |
+| 同事 | Alain Connes | 无向 | ✅ 在库（id=122） |
+| 合作者 | Yasha Eliashberg | 无向 | ⚠️ 占位（辛几何，Gromov–Eliashberg） |
+
+- 缺失人物（3 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_gromov_relations.py`
+
 ## 三、核心贡献表
 
 | 领域 | 贡献 | 关键年份 |
