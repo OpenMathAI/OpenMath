@@ -324,7 +324,7 @@ def summary_slide(people):
         return rs, y
 
     left_rows, y_after_left = block_rows(left, -5.7, -1.95, 0.0)
-    right_rows, y_after_right = block_rows(right, 0.5, 4.25, 0.0)
+    right_rows, y_after_right = block_rows(right, 0.8, 4.55, 0.0)
 
     # 底部统计条
     y_stat = min(y_after_left, y_after_right) - 0.40
