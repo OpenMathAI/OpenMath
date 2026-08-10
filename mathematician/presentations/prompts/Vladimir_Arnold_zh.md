@@ -55,6 +55,46 @@
 ### 人格画像
 Arnold 是苏联数学最锋利的一把剑。他以攻击性和幽默感并存著称——他特别喜欢指出法国数学家在俄国人之前早已知道的东西。他是反 Bourbaki 的旗手——他厌恶公理化的抽象，坚信数学来自物理直觉。他那句"数学是物理中实验便宜的部分"是他数学哲学的凝练。他曾公开嘲笑 Bourbaki "杀死了数学教学"——他在俄罗斯数学教育界的影响力与此成正比。他与导师 Kolmogorov 的关系复杂：Kolmogorov 的天才毋庸置疑，但 Arnold 从不隐瞒他对 Kolmogorov 某些数学选择的批评。他指导了 46 位博士——这个数目在数学史上是罕见的。他的《经典力学的数学方法》和《常微分方程》被翻译成多国语言，影响了全世界几代数学家和物理学家。
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_arnold_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q157642` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `弗拉基米尔·阿诺尔德` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["KAM 定理的 A","奇点理论大师","Hilbert 第13问题的解决者"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1937-06-12` / `2010-06-03` | ⚠️ 仅年份 |
+| 6 | `people` | description | `Russian mathematician (1937–2010)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`topologist(1)`、`university teacher(2)`、`physicist(3)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `dynamical systems`、`topology`、`mathematical analysis`、`differential calculus`、`chaos theory`、`mechanics`、`algebraic geometry`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Lenin 1965`、`Crafoord 1982`、`Lobachevsky 1992`、`Harvey 1994`、`Wolf 2001`（已有）、`Heineman 2001`、`State Prize 2007`、`Shaw 2008`、`ForMemRS` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: MSU`；`employment: MSU、Steklov、Paris Dauphine、Utrecht、Independent University of Moscow` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Soviet Union`、`Russia` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（7 条） | ⚠️ 仅 1 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_arnold_relations.py` 补足。
+
+**入库范围（7 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Andrey Kolmogorov → Arnold | 有向 | ✅ 在库（id=5，KAM 定理的 K） |
+| 学生 | Arnold → Alexander Givental | 有向 | ⚠️ 占位 |
+| 学生 | Arnold → Alexander Varchenko | 有向 | ⚠️ 占位 |
+| 学生 | Arnold → Sabir Gusein-Zade | 有向 | ⚠️ 占位 |
+| 同事 | Israel Gelfand | 无向 | ✅ 在库（id=436，莫斯科学派） |
+| 同事 | René Thom | 无向 | ✅ 在库（id=55，奇点理论） |
+| 同事 | Sergei Novikov | 无向 | ✅ 在库（id=116） |
+
+- 缺失人物（3 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心贡献
 
 | 领域 | 具体贡献 | 年代 |
