@@ -307,3 +307,37 @@ CREATE VIEW v_person_relations_bi AS
 SELECT from_name AS person, relation, to_name AS other, note, source FROM v_person_relations
 UNION ALL
 SELECT to_name  AS person, relation, from_name AS other, note, source FROM v_person_relations;
+
+-- ============================================================================
+-- 视图：交叉奖项（多奖得主 + 奖项组合矩阵，用于潜藏信息挖掘）
+-- ============================================================================
+
+-- 1) 多奖得主：每人 + 获奖数 + 奖项明细（含年份）
+CREATE VIEW v_multi_award AS
+SELECT p.id AS person_id, p.name_en, p.name_zh,
+       COUNT(*) AS award_count,
+       group_concat(a.name_zh || ' ' || al.year, '；') AS awards_detail
+FROM award_laureate al
+JOIN people p ON p.id = al.person_id
+JOIN awards a  ON a.id = al.award_id
+GROUP BY p.id
+HAVING COUNT(*) > 1;
+
+-- 2) 奖项组合矩阵：任意两奖同时获得的人数（自连接，award_id 小的在前防重复）
+CREATE VIEW v_award_matrix AS
+SELECT a1.name_zh AS award_a, a2.name_zh AS award_b,
+       COUNT(DISTINCT al1.person_id) AS n_persons
+FROM award_laureate al1
+JOIN award_laureate al2 ON al1.person_id = al2.person_id AND al1.award_id < al2.award_id
+JOIN awards a1 ON a1.id = al1.award_id
+JOIN awards a2 ON a2.id = al2.award_id
+GROUP BY al1.award_id, al2.award_id;
+
+-- 3) 多奖得主明细视图（含奖项名称，供导出/展示）
+CREATE VIEW v_award_full AS
+SELECT p.id AS person_id, p.name_en, p.name_zh,
+       a.name_zh AS award_zh, a.name_en AS award_en,
+       al.year, al.edition, al.share_type, al.note
+FROM award_laureate al
+JOIN people p ON p.id = al.person_id
+JOIN awards a  ON a.id = al.award_id;

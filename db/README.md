@@ -96,6 +96,21 @@ sqlite3 -header -column db/greatminds.db \
 
 # 关系类型字典
 sqlite3 -header -column db/greatminds.db "SELECT relation_key, name_zh FROM relation_types;"
+
+# ---- 交叉奖项挖掘（视图封装，一行即查） ----
+
+# 多奖得主（获奖数 + 明细，潜藏信息自动浮现）
+sqlite3 -header -column db/greatminds.db "SELECT name_en, award_count, awards_detail FROM v_multi_award ORDER BY award_count DESC;"
+
+# 奖项组合矩阵（哪些奖项组合真实存在 + 人数）
+sqlite3 -header -column db/greatminds.db "SELECT award_a, award_b, n_persons FROM v_award_matrix ORDER BY n_persons DESC;"
+
+# 某人全部奖项明细（含年份/届次/共享）
+sqlite3 -header -column db/greatminds.db "SELECT award_zh, year FROM v_award_full WHERE name_en='J.-P. Serre';"
+
+# 指定组合：同时获 图灵+阿贝尔（交叉采集）
+sqlite3 -header -column db/greatminds.db \
+  "SELECT p.name_en FROM people p WHERE (SELECT COUNT(*) FROM award_laureate al JOIN awards a ON a.id=al.award_id WHERE al.person_id=p.id AND a.name_en IN ('ACM A.M. Turing Award','Abel Prize')) = 2;"
 ```
 
 ## 五、图形界面（可选）
@@ -153,3 +168,6 @@ python3 seed_copss.py          # COPSS 会长奖 46 位得主
 | `badge_defs` | 展示层 | 19 | 徽标定义 |
 | `v_person_relations` | 视图 | 3 | 关系单向视图 |
 | `v_person_relations_bi` | 视图 | 6 | 关系双向视图（查某人全部关系） |
+| `v_multi_award` | 视图 | 35 | 多奖得主（获奖数 + 明细） |
+| `v_award_matrix` | 视图 | 7 | 奖项组合矩阵（两两交叉人数） |
+| `v_award_full` | 视图 | 298 | 人物-奖项全明细（含年份/届次/共享） |
