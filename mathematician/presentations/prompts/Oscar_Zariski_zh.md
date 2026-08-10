@@ -47,6 +47,46 @@
 ### 人格画像
 安静、谦逊但极有主见。Zariski 不是一个张扬的革命者——他更像一个工匠：用代数工具一块一块地替换意大利学派基于直觉的论证。他曾说："我不相信几何直觉——我要求代数证明。"他对学生极其慷慨，培养出了 Hironaka、Mumford、Artin 等一代大师。晚年回顾时他说："我一生做的事就是让代数几何变得严格。"
 
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_zariski_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q381307` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `奥斯卡·扎里斯基` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["代数几何的公理化者","意大利学派的美国传人","Zariski 拓扑"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1899-04-24` / `1986-07-04` | ⚠️ 仅年份 |
+| 6 | `people` | description | `American mathematician (1899–1986)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `algebraic geometry`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Cole 1944`、`NMS 1965`、`Wolf 1981`（已有）、`Steele 1981`、`Guggenheim` | ⚠️ 部分 |
+| 10 | `person_institution` | 教育/任职 | `education: Sapienza Rome、Kyiv`；`employment: Johns Hopkins、Illinois、Harvard、São Paulo` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Russian Empire`、`United States` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见第 4.5 步（7 条） | ⚠️ 全空 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。新建 `MySQL/seed_zariski_relations.py`。
+
+**入库范围（7 条）**：
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Guido Castelnuovo → Zariski | 有向 | ⚠️ 占位（意大利学派） |
+| 学生 | Zariski → David Mumford | 有向 | ✅ 在库（id=36） |
+| 学生 | Zariski → Michael Artin | 有向 | ✅ 在库（id=190） |
+| 学生 | Zariski → Robin Hartshorne | 有向 | ⚠️ 占位 |
+| 学生 | Zariski → Heisuke Hironaka | 有向 | ⚠️ 占位 |
+| 同事 | André Weil | 无向 | ✅ 在库（id=8） |
+| 同事 | Solomon Lefschetz | 无向 | ✅ 在库（id=54） |
+
+- 缺失人物（3 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`
+
+---
+
 ## 核心贡献
 
 | 领域 | 具体贡献 | 年代 |
