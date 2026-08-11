@@ -92,8 +92,8 @@
 | 51 | 8 | **I.M. Gelfand** (盖尔范德) | Wolf 1978 | 泛函分析、表示论、积分几何的超级大师，Gelfand 学派的灵魂人物 | ✅ | ✅✅ |
 | 52 | 46 | **高木贞治** (Takagi Teiji) | — | 类域论的创立者，Takagi 存在定理——20 世纪数论的最高成就之一 | ✅ | ✅✅ |
 | 53 | 36 | ***小平邦彦* (Kodaira Kunihiko) | Fields 1954 · Wolf 1984 | 复流形与代数几何的日本巨匠，Kodaira 消灭定理，Fields 奖 | ✅ | ✅✅ |
-| 54 | 47 | **Solomon Lefschetz** (莱夫谢茨) | Wolf 1978 | 拓扑学方法引入代数几何，普林斯顿数学王朝的缔造者 | 🔲 | 🔲 |
-| 55 | 25 | **René Thom** (托姆) | Fields 1958 | 配边理论与突变论的创立者，Fields 奖 | 🔲 | 🔲 |
+| 54 | 47 | **Solomon Lefschetz** (莱夫谢茨) | Bôcher 1924 · Medal of Science 1964 | 拓扑学方法引入代数几何，普林斯顿数学王朝的缔造者 | ✅ | ✅✅ |
+| 55 | 25 | **René Thom** (托姆) | Fields 1958 | 配边理论与突变论的创立者，Fields 奖 | ✅ | ✅✅ |
 | 56 | 9 | **Norbert Wiener** (维纳) | — | 控制论之父，Wiener 过程——数学向工程与生物扩散的枢纽 | ✅ | ✅ |
 | 57 | 73 | **Srinivasa Ramanujan** (拉马努金) | — | 印度天才，mock theta 函数，直觉穿越时代的数学家 | ✅ | ✅ |
 | 58 | 30 | **Erich Hecke** (赫克) | — | Hecke 算子，模形式理论的奠基人，Langlands 纲领的数学源头 | 🔲 | 🔲 |
