@@ -1,0 +1,404 @@
+% =============================================================
+%  《数学原理》合著者：阿尔弗雷德·诺思·怀特海 (Alfred North Whitehead)
+%  与 Russell 著《数学原理》 · 过程哲学之父 · 普遍代数
+%  资料来源：Wikipedia (Alfred North Whitehead)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：剑桥蓝 + 过程青 + 逻辑金 + 米白 =====
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{1E4E79}
+\definecolor{coveraccent}{HTML}{1E6E6E}
+\definecolor{coverdark}{HTML}{1F2A28}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeAlg}{HTML}{1E4E79}
+\definecolor{badgeCom}{HTML}{B8860B}
+\definecolor{badgeHist}{HTML}{1E6E6E}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{badgeMart}{HTML}{8A1020}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{90,85,80}
+\definecolor{algpanel}{RGB}{234,242,248}
+\definecolor{companel}{RGB}{253,247,231}
+\definecolor{histpanel}{RGB}{234,242,242}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{martpanel}{RGB}{250,236,238}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace United Kingdom\enspace·\enspace《数学原理》合著者\enspace·\enspace 过程哲学之父};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {阿尔弗雷德·诺思·怀特海};
+  % 代数装饰圆（无照片时的几何装饰）
+  \node[anchor=center, inner sep=0pt] at ([xshift=-6.6cm, yshift=0.55cm]current page.center) {%
+    \begin{tikzpicture}
+      \fill[coverprimary!14] (0,0) circle (1.5cm);
+      \fill[badgeCom!18] (0,0) circle (0.95cm);
+      \fill[badgeHist!22] (0,0) circle (0.50cm);
+      \node[font=\fontsize{16}{18}\selectfont\bfseries, text=coverprimary] at (0,0) {W};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Alfred North Whitehead\quad·\quad 1861 -- 1947\quad·\quad 86岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {《数学原理》 · 普遍代数 · 过程哲学 · 哈佛晚年的转向};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {\textbf{《数学原理》}\\[2pt]1910-13 三卷本\\[2pt]与 Russell\\[2pt]逻辑主义巅峰};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {\textbf{普遍代数}\\[2pt]1898 经典\\[2pt]四元数扩展\\[2pt]拓扑学先驱};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {\textbf{过程哲学}\\[2pt]《过程与实在》1929\\[2pt]21 世纪生态复兴\\[2pt]现代形而上学};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {\textbf{学术网络}\\[2pt]Russell/Moore/Keynes\\[2pt]Quine 派系\\[2pt]布卢姆斯伯里};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {据 Wikipedia：英国数学家与哲学家，被视为 20 世纪最有影响力的思想家之一。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Ramsgate 1861\enspace·\enspace Trinity Cambridge 1884 BA\enspace·\enspace 讲师 25 年\enspace·\enspace 帝国理工 1914\enspace·\enspace 哈佛 1924--1937\enspace·\enspace Cambridge MA 1947};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 总览 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数学与哲学的双料大师：86 年的完整人生}{《数学原理》 · 普遍代数 · 过程哲学 · 哈佛转向}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {《数学原理》\\[2pt]1910-13 三卷本\\[2pt]与 Russell 合著\\[2pt]逻辑主义巅峰};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {普遍代数 1898\\[2pt]四元数扩展\\[2pt]拓扑学先驱\\[2pt]剑桥权威};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {过程哲学 1929\\[2pt]现实由过程构成\\[2pt]21 世纪生态复兴\\[2pt]现代形而上学};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {学术网络\\[2pt]Russell/Moore/Keynes\\[2pt]Quine/Eddington\\[2pt]布卢姆斯伯里};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 86 年——从普遍代数到过程哲学，从剑桥到哈佛，从根到叶。}\\{\fontsize{7.0}{9.0}\selectfont Ramsgate (1861) → Trinity (1884) → 讲师 25 年 (1884-1910) → 《数学原理》 (1910-13) → 帝国理工 (1914) → 哈佛 (1924-37) → 1947。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} FRS · Sylvester Medal · Order of Merit · Russell 导师 · 9 位以上博士生}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 《数学原理》与 Russell ---
+\newcommand{\principiaslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《数学原理》：与 Russell 的天才合著 (1910--13)}{1910-13 三卷本\enspace·\enspace 逻辑主义巅峰\enspace·\enspace 1+1=2 漫长征程}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{《Principia Mathematica》（1910-13）。}Whitehead 与他的学生 \textbf{Bertrand Russell}合著了三卷巨著《数学原理》——把\textbf{整个数学还原为逻辑}（逻辑主义）的长久企图。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{三百页的 1+1=2。}书中从逻辑公理出发，经过数百页推导，最终证明 1+1=2——\textbf{逻辑主义}最壮丽的纪念碑。第 86 页的著名定理。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{20 世纪逻辑学的两座基石。}Gödel 1931 证明《数学原理》无法完备——但这反而标志着现代数理逻辑的里程碑。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 师生合著的逻辑大厦——数学的柏拉图式纪念碑。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 《普遍代数论》(1898) ---
+\newcommand{\universalalgebra}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《普遍代数论》(1898)：布尔代数的推广}{数学三大著作之一\enspace·\enspace Hamilton 四元数\enspace·\enspace 向量代数}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{1898 · 经典。}Whitehead 出版了《A Treatise on Universal Algebra》（《普遍代数论》）——把 \textbf{布尔代数}推广到 \textbf{Hamilton 四元数}、向量代数等更一般结构。是 19 世纪末代数发展的三本明星著作之一。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{拓扑学先驱。}书中包含了\textbf{拓扑学}思想的早期表述——为后期《数学原理》的类型论和集合论框架奠定基础。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{剑桥学派。}Whitehead 是 19 世纪末剑桥代数传统的继承人——他的统一代数思想预示了 20 世纪抽象代数的崛起。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 代数统一的早期蓝图——从布尔到四元数。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 数理逻辑与现代逻辑主义 ---
+\newcommand{\logicslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数理逻辑：现代逻辑主义框架}{Russell 悖论后的重建\enspace·\enspace 类型论\enspace·\enspace 逻辑主义}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{类型论（1903）。}Whitehead 独立于 Russell 早期发展了 \textbf{类型论}——把对象按层次分级，禁止自我指涉。1903 年发表于《关于基数与序型的代数理论》。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{Russell 悖论后的重建。}Russell 1901 年发现罗素悖论后，两位作者合作发展替代系统——最终在《数学原理》中重建逻辑主义。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{现代逻辑主义。}Whitehead 转向后期（哈佛）的"现代逻辑主义"——区别于《数学原理》的纯粹逻辑主义——承认数学对象的某些抽象性。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 从罗素悖论到类型论——逻辑主义的两座基石。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 科学哲学 ---
+\newcommand{\scienceslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{科学哲学：《科学概念》(1920)与《科学与现代世界》(1925)}{反对笛卡尔二元论\enspace·\enspace 经验主义\enspace·\enscipe 过程哲学奠基}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{《科学概念》(1920)。}Whitehead 在 1916 年 Lowell 讲座基础上出版《科学概念》（\textit{The Concept of Nature}）——以经验主义替代笛卡尔二元论，将自然视为过程的流而非静态实体。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{《科学与现代世界》(1925)。}他以 1919-24 年 Gifford 讲座为基础出版这部书——批评 18 世纪以来的科学思维（"误置具体性谬误"），提出过程的事件-对象二分。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{后期哲学演讲。}他的 Gifford 讲座(1924-37) 系统化了"突创进化"(emergent evolution) 等概念——形而上学与科学哲学的会合。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 反对笛卡尔二元论的形而上学——过程哲学的实验。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 过程哲学 ---
+\newcommand{\processphilosophy}{%
+\begin{frame}
+\plainbar
+\sectiontitle{过程哲学：《过程与实在》(1929)}{现实由过程构成\enspace·\enspace Gifford 讲座\enspace·\enspace 21 世纪生态复兴}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,2.65)
+    {\textbf{过程哲学的诞生。}Whitehead 在 1927-28 年 Gifford 讲座基础上出版《过程与实在》（\textit{Process and Reality}）——提出"现实由过程而非物质对象构成"——创立哲学的新分支。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{被比作《纯粹理性批判》。}这部著作被誉为 20 世纪最重要的形而上学著作之一——把过程、摄受、永恒客体等概念系统化。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{21 世纪复兴。}这一哲学在 21 世纪因生态文明与环境伦理的需求而被复兴——John B. Cobb 等是\textbf{现代应用者}（不是共同创始人）。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 过程而非物质——现代形而上学的转向。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 物理学贡献：怀特海引力理论 ---
+\newcommand{\gravityalslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{物理学贡献：怀特海引力理论 (1922)}{广义相对论替代理论\enspace·\enspace Dirac 接受\enspace·\enspace 中微子子结构}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{1922 年怀特海引力理论。}1922 年 Whitehead 提出 \textbf{引力与电的统一场论}——基于广义相对论但希望避免爱因斯坦场方程的复杂结构。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{Dirac 的接受。}1970 年代，诺贝尔奖得主 \textbf{Paul Dirac} 注意到，怀特海理论可以自然地说明\textbf{中微子}作为激发子类——引起复兴兴趣。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{当代研究。}2010 年代以来，研究者把怀特海引力论与 \textbf{Schmidt 望远镜}、量子引力讨论联系起来——但尚未成为主流。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 引力的另一种思路——百年间的物理遗产。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 点无几何 (meretopology) ---
+\newcommand{\gunkslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{点无几何：meretopology 与 gunk}{无点的点集论\enspace·\enspace 拓扑学先驱\enspace·\enspace 21 世纪复兴}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{点无几何（meretopology）。}Whitehead 早期《普遍代数论》中就包含了 \textbf{无点几何（point-free geometry）} 的想法——把空间视为"展示区"而非点的集合。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{gunk 概念。}他后期还讨论了 \textbf{gunk}——不含"原子"或点的连续区域——为现代点无空间理论铺路。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{21 世纪复兴。}2010 年代，点无拓扑（point-free topology）成为数学研究的新领域——Whitehead 的远见再次被认可。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 没有点的空间——一个 Whitehead 式的悖论。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 学术网络 ---
+\newcommand{\networkslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{学术网络：Russell/Moore/Keynes/Quine/Eddington}{Russell 学生\enspace·\enspace 哲学圈\enspace·\enspace 布卢姆斯伯里}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,2.65)
+    {\textbf{学生网络。}Whitehead 的学生包括 \textbf{Bertrand Russell}（74, 我们的数学家）、\textbf{John Maynard Keynes}（凯恩斯）、\textbf{W. V. O. Quine}（20 世纪最重要哲学家）、\textbf{Arthur Eddington}（天体物理学家）、\textbf{Donald Davidson}（语言哲学家）。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{同事圈。}G. E. Moore 是他 1910 年代的剑桥好友——他在《数学原理》序言致谢。Russell 与 Moore 共同领导英国哲学界的"反唯心主义起义"。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{布卢姆斯伯里。}Whitehead 通过妻侄——女作家 Virginia Woolf — 进入布卢姆斯伯里文学圈——Russell 则是这一圈子的核心。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 数学与哲学的英伦网络——维多利亚-爱德华时代的知识图谱。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 哈佛晚年 ---
+\newcommand{\harvardslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{哈佛晚年：63 岁的转向 (1924--1937)}{爱德华哈佛哲学教授\enspace·\enspace 荣退\enspace·\enspace Eric 一战阵亡}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{1924 · 哈佛。罗素的学生莫里斯·科恩利·弗莱克斯纳（M. Cohen and S. Flexner）邀请 Whitehead 到哈佛——他 63 岁，从帝国理工应用数学教授转向 \textbf{爱德华·哈佛哲学教授}}。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{哲学转向。}人生的下半场，他从数学转向哲学——写作了 9 部哲学著作，包括《过程与实在》《概念之冒险》《符号的意义》。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{1847 Eric 阵亡。}Whitehead 的儿子 \textbf{埃里克} 是皇家飞行队轰炸员，一战期间 1917 年 4 月阵亡，仅 19 岁——这是 Whitehead 一生最深的悲痛。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 63 岁的转向——从数学家到哲学家的最后旅程。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {从普遍代数到过程哲学};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {《数学原理》 · 普遍代数 · 过程哲学 · 哈佛晚年的转向};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Alfred North Whitehead\quad·\quad 1861 -- 1947\quad·\quad 86岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Ramsgate (1861) → Trinity (1884) → 讲师 25 年 (1884-1910) → 《数学原理》 (1910-13)};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.65cm]current page.center) {帝国理工 (1914) → 哈佛 (1924) → Cambridge MA (1947)};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {He was described as one of the most influential thinkers of the 20th century. -- Wikipedia};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace 数学原理 \enspace·\enspace 普遍代数 \enspace·\enspace 过程哲学 \enspace·\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\principiaslide
+\universalalgebra
+\logicslide
+\scienceslide
+\processphilosophy
+\gravityalslide
+\gunkslide
+\networkslide
+\harvardslide
+\closingslide
+\end{document}
