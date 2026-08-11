@@ -33,6 +33,7 @@ $(MAIN).pdf: $(MAIN).tex
 	$(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode $(MAIN).tex || \
 	  (rm -f $(MAIN).fdb_latexmk && $(LATEXMK) -xelatex -synctex=0 -interaction=nonstopmode -f $(MAIN).tex)
 	$(LATEXMK) -c $(MAIN).tex
+	rm -f $(MAIN).aux $(MAIN).log $(MAIN).toc $(MAIN).out $(MAIN).nav $(MAIN).snm $(MAIN).fls $(MAIN).fdb_latexmk $(MAIN).xdv
 
 images: $(IMAGES_DIR)/.done
 
