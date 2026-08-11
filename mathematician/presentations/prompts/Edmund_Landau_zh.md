@@ -1,57 +1,99 @@
-# 兰道 (Edmund Landau) 立传提示词
+# Edmund Landau（埃德蒙·兰道）立传提示词
 
-> 严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-
----
-
-## 背景信息
-
-- **目标数学家**: Edmund Landau (1877–1938)
-- **关键词**: **解析数论的巨匠、素数定理的优雅证明、哥廷根的数论大师**
-- **Wikipedia**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Edmund_Landau/`
+> 榜单：#71 · qid=Q58750 · 1877-02-14 – 1938-02-19 · 德国犹太数学家
+> 数据库主记录：id=71
 
 ---
 
-## 第 0 步：下载并校验
+## 1. 背景信息（用于 Slide 1-3）
 
-- **生卒日期**：1877-02-14 ~ 1938-02-19，享年 61 岁
-- **国籍**：德国
-- **出生地**：柏林，富裕犹太家庭
-- **博士导师**：Frobenius
-- **博士论文**：1899（年仅 22 岁）
-- **主要任职**：柏林大学、哥廷根大学 (1909–1934)
-- **学生**：Carl Ludwig Siegel
+- **全名**：Edmund Georg Hermann Landau
+- **生卒**：1877-02-14 柏林（犹太家庭，父 Leopold Landau 妇科医生）→ 1938-02-19 柏林，享年 61
+- **国籍**：德国（German Reich）
+- **身份**：数学家（number theorist / complex analyst）
+- **机构轨迹**：
+  - 教育：Französisches Gymnasium Berlin → 柏林大学（1899 博士，论文仅 14 页；1901 特许任教资格）
+  - 任职：柏林大学（1899-1909）→ 哥廷根大学讲席（1909-1933）→ 希伯来大学（1927-1928 短暂，后返哥廷根）→ 1933 纳粹逼退后只在外讲学 → 1934 移居柏林
+- **研究领域**：解析数论、素数分布、复分析
 
-### 核心贡献：
-- **素理想定理的初等证明** — 1903 年，用较简单的方法重新证明了素数定理
-- **代数数域上的素理想分布** — 将素数定理推广到代数数域
-- **Landau 符号 (大 O 与小 o)** — O(x) 和 o(x) 的广泛推广。虽然 Bachmann 首先引入，但 Landau 使其成为标准记号
-- **Goldbach 猜想的早期工作**
-- **解析数论的教材** — Landau 的《数论讲义》(Vorlesungen über Zahlentheorie, 1927) 是经典
+## 2. 核心叙事亮点（用于 Slide 4-9）
 
-### ★ 叙事亮点：
-1. **素数定理的优雅证明** — Hadamard 和 de la Vallée-Poussin 的原始证明极其复杂。Landau 在 1903 年给出更简洁的证明
-2. **纳粹迫害** — 1933 年纳粹上台后被解雇。他的课被 Nazi 学生抵制。1934 年被迫离开哥廷根
-3. **Landau 难题** — 关于素数的著名未解决难题（是否存在无穷多个形如 n²+1 的素数？）
-4. **完美主义者** — Landau 以极度挑剔著称。传说他拒绝了一件衬衫，因为上面的一个纽扣不是他喜欢的位置
+1. **解析数论奠基人**：1903 年给出素数定理的简洁新证明；1909 年《Handbuch》（素数分布手册）成为解析数论的**第一部系统性专著**，Landau 符号（大 O 记号）由此普及。
+2. **Landau 问题（1912）**：ICM 提出的四个关于素数的未解难题（哥德巴赫猜想、孪生素数、勒让德猜想、n² 与 (n+1)² 间素数）——至今未解。
+3. **Landau 素数理想定理**：Dirichlet 类数定理向代数数域的推广，解析数论的里程碑。
+4. **图论先驱（1895）**：象棋锦标赛排名论文是**特征向量中心性（eigenvector centrality）的最早使用**——现代网络科学的意外源头。
+5. **大 O 记号与 Landau 符号**：o/O/Θ 渐近记号，现代分析的标准语言。
+6. **希伯来大学创建者**：20 年代参与筹建耶路撒冷希伯来大学数学研究所，自学希伯来语授课，1927 举家移居巴勒斯坦，但因大学领导权之争（Magnes vs Weizmann/Einstein）失望返欧。
+7. **纳粹迫害**：1933 年被 Oswald Teichmüller 组织的抵制活动逼退哥廷根，此后只在德国外讲学。
+8. **Hardy 与 Heilbronn 的评价**："没有人比 Landau 更狂热地献身于数学"。
 
-### 人物关系：
-- **Siegel** — 学生
-- **Hilbert** — 哥廷根同事
-- **Hardy–Littlewood** — 英国的解析数论同行
-- **Frobenius** — 博士导师
+## 3. 配色方案
 
-### 配色：数论深棕 + 哥廷根金
+| 用途 | 色值 | 说明 |
+|---|---|---|
+| 主色（柏林蓝） | #1E4E79 | 柏林大学传统 |
+| 辅助（素数金） | #B8860B | 解析数论的黄金 |
+| 强调（大O青） | #1E6E6E | Landau 符号 |
+| 背景 | #FAF6EF | 米白纸色 |
 
-### 幻灯片（10 页）：
-```
-01  封面 — 《兰道：解析数论的优雅大师》
-02  素数定理的优雅证明
-03  Landau 符号 — O 和 o 的统治
-04  代数数域上的素理想分布
-05  纳粹驱逐 — 哥廷根的悲剧
-06  Landau 难题
-07  思想回响 + 结束页
-```
+## 4. 12 页 Slide 规划
 
-> **开始执行。**
+1. 封面：大标题 + 副标题「解析数论的奠基人 · 大 O 记号之父」
+2. 生平总览：时间轴（1877 → 1899 博士 → 1903 素数定理 → 1909 哥廷根 → 1927 希伯来大学 → 1933 纳粹逼退 → 1938 去世）
+3. 素数定理的新证明（1903）与《Handbuch》（1909）
+4. Landau 问题（1912）：四个未解难题
+5. Landau 素数理想定理：代数数域推广
+6. 大 O 记号与 Landau 符号：渐近分析语言
+7. 图论先驱（1895）：特征向量中心性
+8. 希伯来大学的创建者：自学希伯来语、领导权之争
+9. 纳粹迫害：Teichmüller 抵制、被迫离开哥廷根
+10. 学术王朝：Siegel/Bohr/Heilbronn/Ostrowski/Bernays 等豪华学生阵容
+11. 数学世家：岳父 Paul Ehrlich（诺奖生物学家）
+12. 终章：61 岁、Hardy 评价、历史地位
+
+## 5. 史实陷阱与敏感点（终审必须检查）
+
+- **纳粹叙事**：1933 被 Teichmüller 组织的**抵制**逼退，是"被迫离开"而非"主动辞职"；Teichmüller 本人后来也死于二战前线——表述要客观、不渲染个人恩怨。
+- **希伯来大学细节**：1927 移居巴勒斯坦仅短暂任教，因 Magnes vs Weizmann/Einstein 的大学控制权之争而失望返欧——时间线精确。
+- **大 O 记号归属**：由 Bachmann 引入（1894），Landau **普及并系统化**——不要写成 Landau 发明。
+- **特征向量中心性**：1895 论文是"最早使用"之一，非现代定义——注意表述。
+- **生卒核对**：1877-02-14 / 1938-02-19，metadata 与正文一致。
+- **Landau 问题**：四个问题至今未解（截至 2024）。
+- **学生阵容**：Siegel、Bohr、Heilbronn、Ostrowski、Bernays、Jackson 等，星光熠熠。
+
+## 6. 数据库字段核对表（§21.5）
+
+| 字段 | 值 | 状态 |
+|---|---|---|
+| qid | Q58750 | 需更新（当前 NULL） |
+| name_zh | 埃德蒙·兰道 | 需更新（当前 兰道） |
+| birth_date | 1877-02-14 | 需更新 |
+| death_date | 1938-02-19 | 需更新 |
+| has_biography | 0 | 保持 |
+| has_social_data | 1 | 本次置 1 |
+
+## 7. 社会关系入库清单（§20，已由 seed 脚本完成）
+
+- 导师：Ferdinand Georg Frobenius（670）、Lazarus Fuchs（634）
+- 学生：Carl Ludwig Siegel（41）、Paul Bernays（511）、Harald Bohr（新建）、Alexander Ostrowski（新建）、Hans Heilbronn（新建）、Grete Hermann（364）、Jacob Levitzki（366）、Dunham Jackson（新建）、Erich Kamke（新建）、Vojtěch Jarník（新建）、Arnold Walfisz（新建）、Aubrey J. Kempner（新建）、Gustav Doetsch（新建）、Binyamin Amirà（新建）
+- 荣誉共同体：G. H. Hardy（595，评价者）
+- 家族：妻 Marianne Ehrlich（新建）、岳父 Paul Ehrlich（新建，诺奖生物学家）
+- 争议/对立：Oswald Teichmüller（77，1933 抵制事件）
+
+## 8. 奖项清单
+
+- 1916 年圣彼得堡科学院荣誉院士（若字典有）
+- 其余以"无重大奖项"处理（metadata 无 award_received）
+
+## 9. 机构清单
+
+- 教育：Humboldt University of Berlin（123）
+- 任职：Frederick William University Berlin（15，1899-1909）、University of Göttingen（5，1909-1933）、Hebrew University of Jerusalem（新建，1927-1928）
+
+## 10. 终审清单
+
+- [ ] 纳粹逼退表述客观（抵制非主动辞职）
+- [ ] 大 O 记号"普及"非"发明"
+- [ ] 希伯来大学时间线精确
+- [ ] 特征向量中心性"最早使用"表述
+- [ ] has_biography 保持 0
