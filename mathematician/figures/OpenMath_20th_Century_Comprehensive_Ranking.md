@@ -113,7 +113,7 @@
 | 72 | 53 | **志村五郎** (Shimura Goro) | — | 志村簇、谷山–志村猜想——攻克 Fermat 大定理的关键桥梁 | ✅ | ✅✅ |
 | 73 | 61 | **Erik Ivar Fredholm** (弗雷德霍姆) | — | Fredholm 算子与积分方程理论——泛函分析的起点之一 | ✅ | ✅✅ |
 | 74 | 94 | **Bertrand Russell** (罗素) | 诺贝尔文学奖 1950 | 数理逻辑，《数学原理》——20 世纪数学基础工程的里程碑 | ✅ | 🔲 |
-| 75 | 77 | **Thoralf Skolem** (斯科伦) | — | Löwenheim–Skolem 定理——数理逻辑与模型论的奠基人 | 🔲 | 🔲 |
+| 75 | 77 | **Thoralf Skolem** (斯科伦) | — | Löwenheim–Skolem 定理——数理逻辑与模型论的奠基人 | ✅ | ✅✅ |
 | 76 | 81 | **Wolfgang Krull** (克鲁尔) | — | Krull 维数、Krull 拓扑——交换代数的核心概念创造者 | 🔲 | 🔲 |
 | 77 | 97 | **Oswald Teichmüller** (泰希缪勒) | — | Teichmüller 空间——复分析与代数几何之间的桥梁 | 🔲 | 🔲 |
 | 78 | 39 | **Émile Picard** (皮卡) | — | Picard 定理——复分析值分布理论的开创者 | 🔲 | 🔲 |
