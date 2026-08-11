@@ -1,0 +1,402 @@
+% =============================================================
+%  Teichmüller 空间：奥斯瓦尔德·泰希缪勒 (Oswald Teichmüller)
+%  拟共形映射 · Teichmüller 空间 · 一年天才 · 纳粹党员
+%  资料来源：Wikipedia (Oswald Teichmüller)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：哥廷根蓝 + 拟共形青 + Teichmüller 金 + 米白 =====
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{1E4E79}
+\definecolor{coveraccent}{HTML}{1E6E6E}
+\definecolor{coverdark}{HTML}{1F2A28}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeAlg}{HTML}{1E4E79}
+\definecolor{badgeCom}{HTML}{B8860B}
+\definecolor{badgeHist}{HTML}{1E6E6E}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{badgeMart}{HTML}{8A1020}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{90,85,80}
+\definecolor{algpanel}{RGB}{234,242,248}
+\definecolor{companel}{RGB}{253,247,231}
+\definecolor{histpanel}{RGB}{234,242,242}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{martpanel}{RGB}{250,236,238}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace German Reich\enspace·\enspace 拟共形映射天才\enspace·\enspace 30 岁英年早逝};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {奥斯瓦尔德·泰希缪勒};
+  % 代数装饰圆（无照片时的几何装饰）
+  \node[anchor=center, inner sep=0pt] at ([xshift=-6.6cm, yshift=0.55cm]current page.center) {%
+    \begin{tikzpicture}
+      \fill[coverprimary!14] (0,0) circle (1.5cm);
+      \fill[badgeCom!18] (0,0) circle (0.95cm);
+      \fill[badgeHist!22] (0,0) circle (0.50cm);
+      \node[font=\fontsize{16}{18}\selectfont\bfseries, text=coverprimary] at (0,0) {T};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Oswald Teichmüller\quad·\quad 1913 -- 1943\quad·\quad 30岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Teichmüller 空间 · 拟共形映射 · 34 篇论文 6 年天才爆发};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {\textbf{Teichmüller 空间}\\[2pt]黎曼曲面模空间\\[2pt]20 世纪复分析\\[2pt]奠基之作};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {\textbf{拟共形映射}\\[2pt]极值存在唯一性\\[2pt]Grötzsch/Ahlfors 起步\\[2pt]黎曼面变分};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {\textbf{34 篇论文}\\[2pt]6 年天才爆发\\[2pt]1939 专著 197 页\\[2pt]Teichmüller--Tukey};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {\textbf{现代传承}\\[2pt]Grothendieck 群\\[2pt]p-adic 理论\\[2pt]IUT（望月新一）};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {据 Wikipedia：德国数学家（1913–1943），对复分析做出重要贡献。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Nordhausen 1913\enspace·\enspace 哥廷根 1931--1935 博士（Hasse）\enspace·\enspace 柏林 1937--1939（Bieberbach）\enspace·\enspace 二战 1939--1943\enspace·\enspace Poltava 失踪 1943};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 总览 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{天才与争议：30 年的一生}{Teichmüller 空间 · 拟共形映射 · 纳粹党员 · 30 岁}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {Teichmüller 空间\\[2pt]黎曼曲面模空间\\[2pt]20 世纪复分析\\[2pt]奠基之作};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {拟共形映射\\[2pt]极值存在唯一性\\[2pt]Grötzsch/Ahlfors 起步\\[2pt]黎曼面变分};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {34 篇论文 6 年\\[2pt]天才爆发\\[2pt]1939 专著 197 页\\[2pt]Teichmüller--Tukey};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {纳粹党员 1931\\[2pt]抵制 Landau 1933\\[2pt]二战入伍 1939\\[2pt]失踪 1943};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 天才与坚定纳粹——刺眼对照下的 30 年生命。}\\{\fontsize{7.0}{9.0}\selectfont Nordhausen (1913) → 哥廷根 (1931) → 纳粹 SA (1931) → 博士 (1935) → 柏林 (1937) → 入伍 (1939) → 失踪 (1943)。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} Segal："天才 + 坚定纳粹" · 现存 IUT 仍在续写 · 30 岁坠落}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. Teichmüller 空间 ---
+\newcommand{\teichmullerspace}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Teichmüller 空间：黎曼曲面的模空间}{Teichmüller space\enspace·\enspace 20 世纪复分析\enspace·\enspace Grothendieck 群}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Teichmüller 空间。}Teichmüller 系统研究拟共形映射（quasiconformal mappings），将其用于黎曼曲面模空间的变分理论，建立了 \textbf{Teichmüller 空间}——刻画给定拓扑型所有共形结构的模空间。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{20 世纪复分析的核心。}Teichmüller 空间与 Teichmüller 定理成为 20 世纪复分析、几何与拓扑学的核心议题之一。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{后世发展。}Werner Fenchel 与 Jakob Nielsen 与 Teichmüller 同一时期研究同一主题。"奠基"（而非"完成"）是 Teichmüller 的恰当贡献描述——现代理论（Grothendieck 群、IUT）是后人发展。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 黎曼曲面的模空间——20 世纪几何最深刻的舞台之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 拟共形映射 ---
+\newcommand{\qcmappingslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{拟共形映射：极值存在性}{quasiconformal\enspace·\enspace Grötzsch/Ahlfors 起步\enspace·\enspace 极值存在唯一性}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{拟共形映射。}Teichmüller 把 \textbf{Grötzsch}、\textbf{Lars Ahlfors} 关于\textbf{拟共形映射（quasiconformal mapping）}的思想引入黎曼曲面变分理论——把局部保角偏差的可测函数作为模空间坐标。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{极值存在唯一性。}他证明了对指定的初始与终止拟共形映射，存在唯一的"极值"拟共形映射——这是 Teichmüller 定理的核心。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{全景分类。}用 Beltrami 微分作为参数，Teichmüller 给出了黎曼曲面模空间的全景分类——这是几何函数论的高峰。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 极值映射——把"距离"放进黎曼面之间的变化。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Teichmüller 定理与主猜想 ---
+\newcommand{\theoremconjecture}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Teichmüller 定理与主猜想：双连续对应}{极值映射实现\enspace·\enspace 主猜想\enspace·\enspace 与 Ahlfors 完整证明}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Teichmüller 定理。}一个共形结构的变分可由极值拟共形映射唯一实现——这就是 \textbf{Teichmüller 定理}。它将共形理论与拟共形映射完美结合。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{主猜想。}他提出\textbf{主猜想（Hauptvermutung）}：对曲线而言，能实现指定映射的极值拟共形映射的方向场唯一确定共形结构。该猜想由 \textbf{Ahlfors} 与 Teichmüller 合作完全证明。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{复分析的里程碑。}Teichmüller 定理与主猜想的证明，标志着复分析从拓扑时代跨入几何时代。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 拟共形到共形的桥梁——Teichmüller 定理的双连续对应。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. Teichmüller 特征与代数工作 ---
+\newcommand{\algebraicslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Teichmüller 特征与代数工具}{Teichmüller character\enspace·\enspace p-代数\enspace·\enspace Galois 上同调}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Teichmüller 特征。}他在《代数工作报告》（Reichsbericht 1936）中引入了 \textbf{Teichmüller characteristic}——研究赋值环的局部结构的强大工具。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{p-代数与赋值论。}他研究了 \textbf{p-代数}（Wyman 一个时期称之为 Teichmüller 群），把代数与赋值论推向全球域上的 Galois 理论。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{Teichmüller cocycle。}他引入的 \textbf{Teichmüller cocycle} 至今是研究 Galois 上同调与性质 T 群的重要工具。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 三个代数工具——影响直至今日的代数数论。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Teichmüller–Tukey 引理 ---
+\newcommand{\tukeylemma}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Teichmüller--Tukey 引理：选择公理}{选择公理等价\enspace·\enspace 组合引理\enspace·\enspace 拓扑学常用}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Teichmüller--Tukey 引理。}这是选择公理的一个等价形式：任意一簇非空有限集合的乘积具体性质在某些条件下可推出整体选择函数的存在。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{拓扑学的基础。}它与 \textbf{Tychonoff 紧性定理} 等价——拓扑学中最常用到的工具之一。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{同名首次。}Teichmüller 是首先陈述这一引理之人（1937）；后由 \textbf{J.W. Tukey} 在 1940 年独立证明。其形式 \textbf{Teichmüller--Tukey 引理} 至今是教科书词汇。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 选择公理的小盒子——拓扑学的组合基础。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 34 篇论文与专著 ---
+\newcommand{\worksslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{34 篇论文与 1939 专著：天才爆发}{6 年\enspace·\enspace 197 页专著\enspace·\enspace 数学家早逝}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{34 篇论文。}Teichmüller 在 1930s 的短短 6 年内发表了 \textbf{34 篇论文}——平均每年 5-6 篇惊人的产出率。每一篇都具有深远影响。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{1939 专著。}1939 年，Teichmüller 的巨著《极值拟共形映射与二次微分》（\textit{Extremale quasikonforme Abbildungen und quadratische Differentiale}）出版——197 页，奠定了黎曼曲面 Teichmüller 空间理论的基础。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{天才爆发。}当时 Wieser、Ahlfors 等同行都认为这是世纪罕见的产出密集度。他在二战开始前的 6 年里改变了复分析的面貌。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 34 篇论文 6 年——一位数学家的全部生涯该有的密度。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 现代传承 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{现代传承：Grothendieck-T 群、IUT 望月新一}{Grothendieck--Teichmüller 群\enspace·\enspace p-adic 理论\enspace·\enspace IUT}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Grothendieck-T 群。}他的代数工作衍生出 \textbf{Grothendieck--Teichmüller 群}——是 Galois 群与映射类群之间深刻的桥梁。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{p-adic Teichmüller。}现代 \textbf{p-adic Teichmüller 理论} 进一步发展其方法——把 Teichmüller 空间推广到 p-adic 世界。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{IUT（望月新一）。}深谷中的最新发展是 \textbf{望月新一（Shinichi Mochizuki）} 的 \textbf{Inter-universal Teichmüller 理论（IUT）}——试图证明 \textbf{abc 猜想}，引发数学界巨大争议。他的理论正建立在 Teichmüller 空间的深邃之上。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Teichmüller 空间——从拟共形到 abc 猜想，八十年仍在书写。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 纳粹党员与 Landau 抵制 ---
+\newcommand{\nazislide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{纳粹党员与 Landau 抵制：如实记录}{1931 入党（NSDAP+SA）\enspace·\enspace 1933-11-02 抵制\enspace·\enspace Segal 第三方平衡}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=martpanel,draw=badgeMart!55] at (0,2.65)
+    {\textbf{1931 · 纳粹党成员。}Teichmüller 1931 年加入 \textbf{NSDAP}（纳粹党）和 \textbf{SA}（冲锋队）——他只有 18 岁。这是史实记录。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{1933·11·02 · 抵制 Landau。}1933 年 11 月 2 日，Teichmüller 组织了对犹太教授 \textbf{Edmund Landau}（71 位 我们的数学家）的课堂抵制——Landau 因此于次年离开哥廷根前往柏林。这是纳粹迫害的具体事件。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{Segal 的第三方陈述。}\textbf{I. M. Segal}（MIT）评价："gifted, brilliant, seminal mathematician; also a dedicated Nazi"。这是一个数学家同行的客观陈述——既不回避纳粹身份，也不渲染悲痛。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} "天才 + 坚定纳粹"——刺眼对照下的客观史实。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 战争与失踪 ---
+\newcommand{\warslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{战争与失踪：1943 的波尔塔瓦}{1939 入伍\enspace·\enspace 1940--1942 密码部门\enspace·\enspace 1943 库尔斯克后失踪}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=martpanel,draw=badgeMart!55] at (0,2.65)
+    {\textbf{1939 · 入伍。}1939 年 9 月底 Teichmüller 随德国军队入伍——他先后在挪威、巴尔干与东线作战。1940 至 1942 年间，他在密码部门工作。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{1942--1943 · 柏林教学。}1942 至 1943 年间，他短期回到柏林教学，似乎要在数学上重新开始。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{1943·09·11 · 失踪。}1943 年 9 月 11 日，Teichmüller 在 \textbf{波尔塔瓦（乌克兰）}附近（库尔斯克战役后）失踪——"unknown circumstances"，年仅 30 岁。数学界的巨大损失。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 30 岁的波尔塔瓦——一个天才的坠落，一个时代的悲剧。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {天才与坚定纳粹——一个 30 年的撕裂};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {Teichmüller 空间 · 拟共形映射 · 34 篇论文 6 年 · 纳粹 · 失踪};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Oswald Teichmüller\quad·\quad 1913 -- 1943\quad·\quad 30岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Nordhausen (1913) → 哥廷根 (1931) → Landau 抵制 (1933) → 博士 (1935) → 柏林 (1937) → 入伍 (1939) → 失踪 (1943)};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {Gifted, brilliant, seminal mathematician; also a dedicated Nazi. -- I. M. Segal};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace Teichmüller 空间 \enspace·\enspace 拟共形映射 \enspace·\enspace 6 年天才 \enspace·\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\teichmullerspace
+\qcmappingslide
+\theoremconjecture
+\algebraicslide
+\tukeylemma
+\worksslide
+\legacyslide
+\nazislide
+\warslide
+\closingslide
+\end{document}
