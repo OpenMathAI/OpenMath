@@ -52,6 +52,8 @@
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
+- **头像**：Wikipedia 提供 1921 年 Autochrome 肖像（by Auguste Léon），已下载至 `images/fredholm_portrait.jpg`（竖版 1165×1553）。封面位置：右上角 `[xshift=-1.6cm, yshift=-1.3cm]current page.north east`（与 Cartan 风格统一）。
+- **国籍**：封面顶部徽章明确 `Sweden`（与 Cartan、Borel 立传格式一致）。
 - **Fredholm 方程 vs Fredholm 算子**：方程（积分方程类）vs 算子（Banach 空间有界算子）——同一理论家族的不同层次，注意区分。
 - **Hilbert 空间"预示"**：Fredholm 的工作"预示"（foreshadow）而非"建立"Hilbert 空间理论——不要写过头。
 - **Mittag-Leffler 关系**：博士导师 + 岳父秘书（妻 Agnes 是他的秘书）——双重关系。
