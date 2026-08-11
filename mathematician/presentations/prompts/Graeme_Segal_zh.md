@@ -1,208 +1,102 @@
-# 格雷姆·西格尔 (Graeme Segal) 立传提示词
+# Graeme Segal（格雷姆·西格尔）立传提示词
 
-> 严格遵循 [Mathematician_Biography_Guide.md](../Mathematician_Biography_Guide.md)。
-> 模板版本: v2.0 (2026-08-10)，参考: Harish-Chandra_zh.md, Michael_Atiyah_zh.md。
-
----
-
-## 一、结构化元数据
-
-| 字段 | 值 | 来源 |
-|------|-----|------|
-| 全名 | Graeme Bryce Segal FRS | Wikipedia: Graeme Segal |
-| 生卒 | 1941-12-21 ~ (在世，84岁) | Wikidata Q1398998 |
-| 国籍 | 🇦🇺 澳大利亚 (Australian) | Wikidata: nationality |
-| 出生地 | Sydney, Australia | Wikipedia |
-| 教育 | BSc, University of Sydney (1961); D.Phil., St Catherine's College, Oxford (1967) | Wikipedia |
-| 博士导师 | **Michael Atiyah** (Fields 奖 1966, Abel 奖 2004) | Wikidata |
-| 博士论文 | *Equivariant K-theory* (1967) | Wikipedia |
-| 任职 | Oxford University (1964–1990) → Lowndean Professor of Astronomy and Geometry, Cambridge (1990–1999) → Senior Research Fellow, All Souls College, Oxford (1999–2009) → LMS President (2011) | Wikipedia |
-| 博士生 | Constantin Teleman, John O'Connor, Andrew Pressley 等 13 人 | Wikidata |
-| 荣誉与奖项 | **FRS** (1982), **Pólya Prize** (1990), **Sylvester Medal** (2010), **Chern Medal** (2026 ICM Philadelphia) | Wikipedia |
-| ICM 邀请报告 | 1970 (Nice), 1990 (Kyoto) | Wikipedia |
-| 知名贡献 | Atiyah–Segal 完备化定理, Segal 猜想 (同伦论), 无限 loop 空间, 椭圆上同调 (elliptic cohomology), 拓扑量子场论 (TQFT), Loop Groups (与 Pressley 合著) | Wikipedia |
-| Chern Medal 授奖词 | "for his visionary mathematical insights that have had an enduring influence in a wide range of fields, including topology, mathematical physics, representation theory and category theory." | Wikipedia |
-| 著作 | *Loop Groups* (with Andrew Pressley, Oxford 2003); *Lectures on Lie Groups and Lie Algebras* (with Ian G. Macdonald & Roger Carter, Cambridge 2006) | Wikipedia |
-| 配偶 | Marina Warner (英国著名作家、文化史学家) | Wikipedia |
-| 历史地位 | 同伦论与拓扑量子场论的先驱——架起拓扑学、数学物理、表示论与范畴论四座桥梁的数学家。Atiyah 最杰出的学生之一。2026 年 ICM Chern Medal 获奖者。 | — |
+> 榜单：#108 · qid=Q1398998 · 1941-12-21 – · 澳大利亚数学家
+> 数据库主记录：id=108（`Graeme Segal`，Atiyah–Segal 完备化定理、Segal 猜想、Chern Medal 2026；已立传 has_biography=1，本次补社会关系/研究领域 has_social_data=1）
 
 ---
 
-## 二、精确时间线
+## 1. 背景信息（用于 Slide 1-3）
 
-| 年份 | 事件 |
-|------|------|
-| 1941.12.21 | 生于澳大利亚悉尼 |
-| 1961 | 悉尼大学获学士学位 (BSc) |
-| 1964 | 开始在牛津大学任教 |
-| 1967 | 牛津大学博士毕业——论文 *Equivariant K-theory*, 导师 Michael Atiyah |
-| 1969 | 与 Atiyah 合作证明 **Atiyah–Segal 完备化定理**——等价 K-理论的核心定理 |
-| 1970 | ICM 邀请报告 (Nice) |
-| 1978 | 提出 **Segal 猜想**——同伦论的重大猜想，1984 年由 Gunnar Carlsson 证明 |
-| 1982 | 当选英国皇家学会院士 (FRS) |
-| 1990 | Pólya Prize (LMS); ICM 邀请报告 (Kyoto); 任剑桥大学 Lowndean Professor of Astronomy and Geometry |
-| 1999 | 任 All Souls College, Oxford 高级研究员 |
-| 2010 | 获皇家学会 Sylvester Medal |
-| 2011 | 当选伦敦数学会 (LMS) 主席 |
-| 2026 | 费城 ICM 获 **Chern Medal**——国际数学界最高终身成就奖之一 |
+- **全名**：Graeme Bryce Segal FRS
+- **生卒**：1941-12-21 悉尼（澳大利亚）— 在世
+- **国籍**：澳大利亚（工作于英国）
+- **身份**：数学家、拓扑学家、大学教师（也列 astronomer——Lowndean 天文学与几何讲席）
+- **机构轨迹**：
+  - 教育：悉尼大学（1961 BSc）→ 牛津圣凯瑟琳学院（1967 DPhil，导师 Atiyah，论文《Equivariant K-theory》）
+  - 任职：牛津大学（1964-1990）→ **剑桥大学 Lowndean 天文学与几何讲席（1990-1999）**→ 牛津 All Souls 学院高级研究员（1999-2009）→ 伦敦数学会会长（2011）
+- **研究领域**：代数拓扑、同伦论、K 理论、椭圆上同调、拓扑量子场论
 
----
+## 2. 核心叙事亮点（用于 Slide 4-9）
 
-## 三、核心贡献表
+1. **Atiyah–Segal 完备化定理**：等变 K 理论的完备化定理——K 理论经典。
+2. **Segal 猜想（等变稳定同伦）**：Atiyah–Segal 完备化定理启发的著名猜想（后被 Carlsson 等证明）。
+3. **无限循环空间（infinite loop spaces）**：同伦论的结构理论。
+4. **椭圆上同调先驱**：与 TQFT 相关，现代稳定同伦/弦论桥梁。
+5. **拓扑量子场论（TQFT）**：把物理的 TQFT 数学化（Atiyah 的 TQFT 公理也有 Segal 参与）。
+6. **Chern Medal 2026**：2026 费城 ICM 颁发——"对拓扑学、数学物理、表示论、范畴论的深远影响"。
+7. **Sylvester Medal 2010**：皇家学会授予。
+8. **ICM 受邀演讲者（1970 尼斯、1990 京都）**。
+9. **伦敦数学会会长（2011）**。
 
-| 领域 | 贡献 | 关键年份 |
-|------|------|:--:|
-| K-理论 | Atiyah–Segal 完备化定理——等价 K-理论的基本结构定理 | 1969 |
-| 同伦论 | Segal 猜想——稳定上同调与 Burnside 环的关系 (1984 由 Carlsson 证明) | 1978 |
-| 同伦论 | 无限 loop 空间理论——用 Γ-空间方法重构无限 loop 空间 | 1970s |
-| 数学物理 | 椭圆上同调 (elliptic cohomology)——连接同伦论与模形式的先驱 | 1980s |
-| 数学物理 | 拓扑量子场论 (TQFT)——用范畴论语言定义共形场论的数学框架 | 1980s–1990s |
-| 表示论 | Loop Groups——无限维李群的表示论 (与 Pressley 合著) | 1980s |
-| 教科书 | *Lectures on Lie Groups and Lie Algebras* (与 Macdonald, Carter 合著) | 1995 |
+## 3. 配色方案
 
----
+| 用途 | 色值 | 说明 |
+|---|---|---|
+| 主色（牛津蓝） | #1E4E79 | 牛津传统 |
+| 辅助（拓扑青） | #1E6E6E | 代数拓扑 |
+| 强调（Chern 金） | #B8860B | Chern Medal 2026 |
+| 背景 | #FAF6EF | 米白纸色 |
 
-## 四、三幕叙事结构
+## 4. 12 页 Slide 规划
 
-### 第一幕: 从悉尼到牛津 — Atiyah 的学生 (1941–1967)
-- 悉尼少年 — 澳大利亚数学天才
-- 1961 年悉尼大学 BSc
-- 赴牛津 — St Catherine's College
-- Michael Atiyah 的博士生 — 等价 K-理论
-- 1967 年 D.Phil. — *Equivariant K-theory*
+1. 封面：大标题 + 副标题「Atiyah–Segal 完备化 · Segal 猜想 · Chern Medal 2026」
+2. 生平总览：时间轴（1941 悉尼 → 1967 博士 → 1990 剑桥 Lowndean → 2010 Sylvester → 2026 Chern）
+3. Atiyah–Segal 完备化定理：等变 K 理论
+4. Segal 猜想：稳定同伦
+5. 无限循环空间：同伦论
+6. 椭圆上同调：先驱
+7. TQFT：物理的数学化
+8. Chern Medal 2026：费城 ICM
+9. 荣誉墙：Sylvester 2010、FRS 1982
+10. 学术生涯：牛津-剑桥-牛津
+11. 学生与影响：Teleman 等
+12. 终章：在世数学家、历史地位
 
-**关键意象**: 袋鼠之地走出的年轻人 → 进入牛津的古老学院 → Atiyah 的火炬传递
+## 5. 史实陷阱与敏感点（终审必须检查）
 
-### 第二幕: K-理论与同伦论的征服 (1967–1990)
-- Atiyah–Segal 完备化定理 — K-理论的基石
-- Segal 猜想 — 同伦论的重大猜想 (1978)
-- 无限 loop 空间的 Γ-空间方法 — 重构了整个理论
-- 1970, 1990 两次 ICM 邀请报告
-- FRS 1982, Pólya Prize 1990
+- **Segal 猜想状态**：Segal 提出（1971 左右），后被 **Carlsson 等证明**——**不写"未解"**。
+- **Atiyah–Segal 归属**：与 Atiyah(19) 共同（1968-69 论文）——共同命名。
+- **椭圆上同调归属**：Segal 是**先驱**，但现代椭圆上同调由 Landweber、Ochanine 等发展——表述谨慎。
+- **TQFT 归属**：Atiyah 的公理化（1989）基于 Segal 早期想法——**Segal 是思想源头之一**，不写独占。
+- **在世**：1941 出生，在世（2026 年 84 岁）——**不写死亡日期**。
+- **occupation 含 astronomer**：因 Lowndean 天文学与几何讲席——职业列数学家+天文学家。
+- **Chern Medal**：2026 年费城 ICM 授予（国际数学联盟 IMU）——与陈省身奖章（Chern Medal Award）区分？注意：维基百科正文这里写的是 Chern Medal（IMU 的），也就是我们榜单的 Chern Medal Award。奖项字典已有 Chern Medal(4)。
+- **学生**：Teleman、Pressley、Wilson 等。
 
-**关键意象**: 等价于不变量 → 猜想等待证明 → 重构无限结构
+## 6. 数据库字段核对表（§21.5）
 
-### 第三幕: 架设数学物理的桥梁 (1990–至今)
-- 椭圆上同调 — 连接同伦论与模形式
-- 拓扑量子场论 — 用范畴论定义量子场论
-- Loop Groups — 无限维李群表示论的经典
-- Sylvester Medal 2010, LMS 主席 2011
-- **2026 年 Chern Medal** — 终身成就的最高认可
+| 字段 | 值 | 状态 |
+|---|---|---|
+| qid | Q1398998 | 需更新（当前 NULL） |
+| name_zh | 格雷姆·西格尔 | 保持 |
+| birth_date | 1941-12-21 | 需更新 |
+| death_date | NULL（在世） | 保持 |
+| has_biography | 1 | 保持 |
+| has_social_data | 1 | 本次置 1 |
 
-**关键意象**: 四座桥梁 (拓扑学、数学物理、表示论、范畴论) → Chern Medal 的加冕
+## 7. 社会关系入库清单（§20，已由 seed 脚本完成）
 
----
+- 导师：Michael Atiyah（19）
+- 学生：Constantin Teleman（新建）、Andrew Pressley（新建）、George Wilson（新建）、Martin Guest（新建）
+- 家族：Marina Warner（新建，妻，作家/神话学者）
 
-## 五、奖项详解
+## 8. 奖项清单（全部收录）
 
-| 奖项 | 年份 | 颁发机构 | 意义 |
-|------|:--:|------|------|
-| FRS (皇家学会院士) | 1982 | Royal Society | 英国最高科学荣誉 |
-| Pólya Prize | 1990 | London Mathematical Society | 英国数学界最高奖之一 |
-| Sylvester Medal | 2010 | Royal Society | 数学研究的最高皇家奖章 (每三年颁发) |
-| **Chern Medal** | 2026 | IMU (ICM Philadelphia) | 国际数学界最高终身成就奖 (每四年) |
+- Fellow of the Royal Society 1982（39）
+- Pólya Prize (LMS) 1990（新建）
+- Sylvester Medal 2010（47）
+- Chern Medal 2026（4）
 
-> **Chern Medal 特别说明**：Chern Medal 是 IMU 授予的最高终身成就奖 (与 Fields 奖并列 ICM 最高奖项，但 Chern Medal 面向整个职业生涯而非仅限 40 岁以下)。2026 年费城 ICM 的 Chern Medal 授奖词特别强调 Segal 的工作跨越了"拓扑学、数学物理、表示论和范畴论"四个领域——这正是他作为数学桥梁建设者的最佳总结。
+## 9. 机构清单
 
----
+- 教育：University of Sydney（新建）、St Catherine's College（新建）、University of Oxford（61）
+- 任职：University of Oxford（61，1964-1990）、University of Cambridge（38，1990-1999 Lowndean）、All Souls College（新建，1999-2009）
 
-## 六、博士谱系
+## 10. 终审清单
 
-```
-Michael Atiyah (Fields 1966, Abel 2004)
-  └── Graeme Segal (Chern 2026)
-        ├── Constantin Teleman
-        ├── Andrew Pressley
-        ├── George Wilson
-        └── ... 13 位博士生
-```
-
-Segal 是 Atiyah–Segal 完备化定理的合著者——这是 Atiyah 获得 Abel 奖和 Fields 奖的核心工作之一。
-
----
-
-## 七、史实陷阱清单
-
-| 陷阱 | 真相 |
-|------|------|
-| Chern Medal | ✅ 2026 年 ICM (费城) 获得。注意这不是伦敦数学会的"Chern Medal"——IMU 的 Chern Medal 是国际最高奖 |
-| Sylvester Medal | ✅ 2010 年皇家学会颁发。每三年一次，历史可追溯到 1901 年 |
-| Segal 猜想 | ✅ 1978 年提出，1984 年由 Gunnar Carlsson 证明。Segal 本人没有证明自己的猜想 |
-| 椭圆上同调 | ✅ Segal 是椭圆上同调的先驱，后续由 Hopkins, Lurie 等人发展 |
-| Atiyah–Segal 完备化定理 | ✅ 等价 K-理论的核心定理，与 Atiyah 合作 (1969) |
-| 国籍 | ✅ 澳大利亚人 (不是英国人)。出生在悉尼 |
-| Lowndean Professor | ✅ 剑桥大学古老的天文学与几何学讲座教授席位 (创立于 1749 年) |
-| LMS Chern Medal | ⚠️ Wikipedia page.md 中红链标注的 "Chern Medal (LMS)" 是错误的是——应为 IMU Chern Medal |
-| 在世 | ✅ 2026 年仍健在 (84岁) |
-
----
-
-## 八、配色方案
-
-**气质**: 澳大利亚桉树绿 + 牛津深蓝 + 几何金
-
-| 变量 | 色值 | 用途 |
-|------|------|------|
-| `coverprimary` | `#0D3B2E` | 澳大利亚桉树墨绿 — 封面主色 |
-| `coveraccent` | `#1A3A5C` | 牛津蓝 — 强调/分隔线 |
-| `coverdark` | `#1A1A2E` | 深黑蓝 — 正文文本 |
-| `bgmain` | `#F7F5F0` | 暖灰纸色 — 背景 |
-| `badgeKTheory` | `#0D3B2E` | K-理论绿 |
-| `badgeHomotopy` | `#2E5F3E` | 同伦论桉绿 |
-| `badgePhysics` | `#4A6FA5` | 数学物理蓝 |
-| `badgeLegacy` | `#C9A84C` | 几何金 |
-
----
-
-## 九、幻灯片设计 (9 页)
-
-| 页 | 标题 | 核心内容 |
-|:--:|------|------|
-| 00 | OpenMath 首页 | 统一品牌 |
-| 01 | 封面 | 🇦🇺 姓名、Atiyah学生、Chern Medal 2026、ICM两次邀请、四大领域标签 |
-| 02 | 总览 | K-理论 + 同伦论 + 数学物理 + 奖项 |
-| 03 | 早年 | Sydney → Oxford → Atiyah → *Equivariant K-theory* (1967) |
-| 04 | K-理论与同伦论 | Atiyah–Segal 完备化定理, Segal 猜想, 无限 loop 空间 |
-| 05 | 数学物理的桥梁 | 椭圆上同调, 拓扑量子场论 (TQFT), Loop Groups |
-| 06 | Chern Medal 2026 | ICM Philadelphia 2026, 授奖词, 四领域桥梁 |
-| 07 | Atiyah 的火炬 | 博士谱系, Atiyah–Segal 定理的意义, 传承 |
-| 08 | 结束页 | "拓扑学、数学物理、表示论、范畴论——四座桥梁，一位建造者。" |
-
----
-
-## 十、国籍标识
-
-封面: `\faIcon{globe}\enspace 🇦🇺 Australia\enspace|\enspace Atiyah 的学生\enspace|\enspace Chern Medal 2026`
-
-## 十一、背景音乐选择 ✅
-
-- **选定曲目**: **Timeless** — Alex-Productions (132k views, 最高受众)
-- **风格**: 沉稳 / 纪录片 / 长期纲领
-- **匹配理由**:
-  - "沉稳" 匹配 Segal 作为优雅架桥者的气质 —— 他不是 Grothendieck 式的革命者也不是 Thurston 式的探险家，而是一个安静地连接四大领域的思想家
-  - "纪录片" 匹配传记体 9 页叙事 —— 从 Sydney 少年到 Oxford 博士，从 Atiyah-Segal 定理到 Chern Medal 2026
-  - "Timeless" = 永恒 —— Atiyah–Segal 完备化定理定义了等价 K-理论的标准语言；Segal 猜想等待六年最终由 Carlsson 证明；椭圆上同调在 Hopkins-Lurie 手中继续生长。他的工作不是瞬间的爆发，而是持久的结构
-  - "长期纲领" —— Chern Medal 2026 授予的是整个职业生涯的桥梁建设，不是单一突破
-  - 不像 Expedition 过于"史诗"（Segal 不是征服者），不像 Awaken 过于"明亮"（Segal 84 岁的加冕更偏深沉）
-- **备选** (未采用):
-  - ★★ Expedition — "探索/史诗/几何拓扑" 匹配 Sydney→Oxford 旅程和拓扑学探索，但"史诗"标签偏重
-  - ★ Eternals — "宏大/深远/基础理论" 匹配 Chern Medal 终身影响，但受众偏低 (49k views)
-- **本地路径**: `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` → `presentations/Graeme_Segal/Timeless.wav`
-- **时长**: 128 秒 (≈2:08) > 9 页 × 7 秒 = 63 秒 → ffmpeg `-shortest` 自动对齐
-- **Makefile**: `BGM = $(wildcard *.wav)` — 自动检测并混入
-
-## 十二、编译验证清单
-
-- [ ] 生: 1941-12-21 (Sydney, Australia) ✅
-- [ ] 博导: Michael Atiyah ✅
-- [ ] Atiyah–Segal 完备化定理 1969 ✅
-- [ ] Segal 猜想 1978 ✅
-- [ ] FRS 1982 ✅
-- [ ] Pólya Prize 1990 ✅
-- [ ] Sylvester Medal 2010 ✅
-- [ ] LMS President 2011 ✅
-- [ ] Chern Medal 2026 ICM Philadelphia ✅
-- [ ] Chern Medal 授奖词：topology, mathematical physics, representation theory, category theory ✅
-- [ ] 著作: *Loop Groups*, *Lectures on Lie Groups and Lie Algebras* ✅
-
-> **开始执行。**
+- [ ] Segal 猜想已被证（Carlsson）
+- [ ] 椭圆上同调"先驱"表述
+- [ ] TQFT 思想源头
+- [ ] 在世（不写死亡日期）
+- [ ] Chern Medal 2026 与 IMU 关联
+- [ ] has_biography 保持 1
