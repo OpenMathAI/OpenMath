@@ -21,10 +21,12 @@ CREATE TABLE IF NOT EXISTS people (
     description        TEXT,
     primary_occupation VARCHAR(128),
     has_biography      TINYINT DEFAULT 0,
+    has_social_data    TINYINT DEFAULT 0 COMMENT '社会关系+研究领域已入库标志（1=已入库）',
     created_at         DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at         DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     KEY idx_name_en  (name_en),
-    KEY idx_has_bio  (has_biography)
+    KEY idx_has_bio  (has_biography),
+    KEY idx_has_social (has_social_data)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------------------------------------------------------
