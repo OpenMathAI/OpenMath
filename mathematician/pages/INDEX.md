@@ -1,6 +1,6 @@
 # 数学家完整页面索引
 
-> 生成时间：2026-08-11 11:19:43
+> 生成时间：2026-08-11 14:15:37
 > 共 **118** 人
 
 - [Alan Turing](Alan_Turing/page.md) （1912–1954） — English computer scientist (1912–1954)
@@ -102,12 +102,12 @@
 - [Srinivasa Ramanujan](Srinivasa_Ramanujan/page.md) （1887–1920） — Indian mathematician (1887–1920)
 - [Stefan Banach](Stefan_Banach/page.md) （1892–1945） — Polish mathematician (1892–1945)
 - [Stephen Smale](Stephen_Smale/page.md) （1930–） — American mathematician
-- [Tadashi Nakayama](Tadashi_Nakayama/page.md)  — Wikimedia disambiguation page
+- [Tadashi Nakayama (mathematician)](Tadashi_Nakayama/page.md) （1912–1964） — Japanese mathematician (1912-1964)
 - [Teiji Takagi](Teiji_Takagi/page.md) （1875–1960） — Japanese mathematician (1875–1960)
 - [Thoralf Skolem](Thoralf_Skolem/page.md) （1887–1963） — Norwegian mathematician (1887-1963)
 - [Torsten Carleman](Torsten_Carleman/page.md) （1892–1949） — Swedish mathematician, known for research in classical mathematical analysis (1892-1949)
+- [Vladimir Abramovich Rokhlin](Vladimir_Rokhlin/page.md) （1919–1984） — Russian mathematician (1919–1984)
 - [Vladimir Arnold](Vladimir_Arnold/page.md) （1937–2010） — Russian mathematician who studied integrable systems and differential equations (1937–2010)
-- [Vladimir Rokhlin](Vladimir_Rokhlin/page.md)  — Wikimedia disambiguation page
 - [Vladimir Voevodsky](Vladimir_Voevodsky/page.md) （1966–2017） — Russian mathematician (1966–2017)
 - [Wang Xiaotong](Wang_Xiaotong/page.md) （0580–0640） — Chinese mathematician
 - [William Thurston](William_Thurston/page.md) （1946–2012） — American mathematician (1946–2012)
