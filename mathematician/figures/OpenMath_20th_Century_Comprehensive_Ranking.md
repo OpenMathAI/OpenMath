@@ -117,7 +117,7 @@
 | 76 | 81 | **Wolfgang Krull** (克鲁尔) | — | Krull 维数、Krull 拓扑——交换代数的核心概念创造者 | ✅ | ✅✅ |
 | 77 | 97 | **Oswald Teichmüller** (泰希缪勒) | — | Teichmüller 空间——复分析与代数几何之间的桥梁 | ✅ | ✅✅ |
 | 78 | 39 | **Émile Picard** (皮卡) | — | Picard 定理——复分析值分布理论的开创者 | ✅ | ✅✅ |
-| 79 | 87 | **Salomon Bochner** (博赫纳) | — | Bochner 技巧——微分几何与分析的深度连接 | 🔲 | 🔲 |
+| 79 | 87 | **Salomon Bochner** (博赫纳) | — | Bochner 技巧——微分几何与分析的深度连接 | ✅ | ✅✅ |
 | 80 | 41 | **Constantin Carathéodory** (卡拉泰奥多里) | — | Carathéodory 条件——测度论的一条优雅进路 | 🔲 | 🔲 |
 | 81 | 40 | **A.N. Whitehead** (怀特海) | — | 与 Russell 合著《数学原理》，过程哲学的创始人 | 🔲 | 🔲 |
 | 82 | 37 | **Georg Cantor** (康托尔) | — | 集合论创始人——19 世纪的思想，20 世纪数学的语言基石 | 🔲 | 🔲 |
