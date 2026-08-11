@@ -247,7 +247,21 @@ Deligne 是 Grothendieck 最杰出的学生，但他与老师的风格截然相�
 - 小字：皮埃尔·德利涅 · Pierre Deligne · 1944 —
 - 底部：Weil 猜想的征服者 · Fields 1978 · Wolf 2008 · Abel 2013 · 比利时子爵 · IAS Princeton
 
-## 音乐: Timeless + Expedition
+## 背景音乐选择 ✅
+
+- **选定曲目**: **Timeless** — Alex-Productions (132k views, 最高受众)
+- **风格**: 沉稳 / 纪录片 / 长期纲领
+- **匹配理由**:
+  - "长期纲领" 完美匹配 Deligne 的贡献本质 —— Weil I (1974) 仅 35 页就改变了数学史；Weil II (1980) 六年后再建立一般框架。权的瑜伽 (yoga of weights) 统一了 Hodge 理论与 Galois 表示。Tannakian 范畴 (1990) 为 motives 终极理论提供了语言 —— Deligne 的每一件工作都不是瞬间的突破，而是持久的结构性建设
+  - "沉稳" 匹配 Deligne 的极简人格 —— "从来不说话，但一开口就是对的。" 他的论文以极短著称，没有一句多余。Grothendieck 宏大壮阔、滔滔不绝；Deligne 极简深邃、惜字如金。Timeless 的克制深度与这种数学风格天然吻合
+  - "纪录片" 匹配跨越 35 年的加冕弧 —— Fields 奖 (1978, 33 岁) → Wolf 奖 (2008) → Abel 奖 (2013)。同样的贡献（Weil 猜想），先后三次获得最高荣誉，是对"Timeless"最完美的证明。加上 Crafoord 和 Balzan —— 五项大奖无人能及
+  - "La mathématique est plus grande que nous." —— 这是 Deligne 的结束页引语。当 Grothendieck 号召抵制学术界时，Deligne 公开拒绝："数学比我们所有人都大。" 这种超越个人的谦逊和冷静，正是 Timeless 的沉稳内核 —— 不是欢庆，不是征服，而是"数学本身就是永恒的"
+  - Grothendieck 的火炬手 —— 师傅建造了étale上同调的宏大框架，徒弟用 35 页完成了师傅未能完成的工作。火炬传递本身就是 "Timeless" 的意象
+- **备选** (未采用):
+  - ★★ Expedition — "探索/史诗" 完全不匹配。Deligne 不是远征者，他是在已有的框架（Grothendieck 的概形论和 étale 上同调）中完成最后的精确一击。他是外科手术式精准的问题解决者，而非开拓新大陆的探索者。Expedition 属于 Morse（登山家+一战勋章）和 Whitney（骨灰撒阿尔卑斯山顶）
+  - ★ Awaken — "鼓舞/明亮" 匹配 Fields 奖的年轻加冕 (33 岁)，但无法承载 Deligne 的整体气质。他是沉默的思考者，不是明亮的鼓舞者
+- **本地路径**: `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` → `presentations/Pierre_Deligne-FWA/Timeless.wav`
+- **时长**: 128 秒 > 17 页 × 7 秒 = 119 秒 → ffmpeg `-shortest` 自动对齐
 
 ## Round 2 高危: 博士导师 Grothendieck (Paris-Sud 1972, 非 Thom/1968)、Weil 猜想第四个归属、Weil I 1974 发表、爵位 2006、在世不用过去时。
 
