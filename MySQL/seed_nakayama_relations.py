@@ -3,7 +3,7 @@
 """梳理 Tadashi Nakayama（中山正）的社会关系与研究领域，入库 greatminds 数据库。
 
 注意：
-- 本地页面为消歧页（Q7674366），正确页面为 Tadashi Nakayama (mathematician)（1912-1964）
+- 本地页面为消歧页，已核实正确数学家页面 Tadashi Nakayama (mathematician)（1912-1964）qid=Q324943
 - 数据库重复人物：id=90 (Nakayama Tadashi, rank 关联) 与 id=503 (Tadasi Nakayama, 已有生卒数据) 为同一人
 - 处理：保留 90 为主记录（rank 关联），迁移 503 的关系与生卒数据，删除 503
 """
@@ -14,7 +14,7 @@ from db_mysql import get_conn
 
 NAME = "Nakayama Tadashi"
 DUP_NAME = "Tadasi Nakayama"
-QID = "Q7674366"  # 占位（消歧页 qid），正确数学家 qid 待核
+QID = "Q324943"  # 正确数学家 Tadashi Nakayama (mathematician)
 
 RELATIONS = [
     # 导师（有向：导师 → Nakayama）

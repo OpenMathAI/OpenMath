@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """梳理 Vladimir Rokhlin 的社会关系与研究领域，入库 greatminds 数据库。
 
-注意：本地页面为消歧页（Q7938603），正确页面为 Vladimir Abramovich Rokhlin（1919-1984）。
+注意：本地页面为消歧页，已核实正确数学家页面 Vladimir Abramovich Rokhlin（1919-1984）qid=Q383045。
 """
 import re
 import unicodedata
@@ -10,7 +10,7 @@ import unicodedata
 from db_mysql import get_conn
 
 NAME = "Vladimir Rokhlin"
-QID = "Q7938603"  # 占位（消歧页 qid），正确数学家 qid 待核
+QID = "Q383045"  # 正确数学家 Vladimir Abramovich Rokhlin
 
 RELATIONS = [
     # 导师（有向：导师 → Rokhlin）
