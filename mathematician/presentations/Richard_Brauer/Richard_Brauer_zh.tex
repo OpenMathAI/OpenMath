@@ -1,0 +1,375 @@
+% =============================================================
+%  群论与模表示论的双重大师：理查德·布饶尔 (Richard Brauer)
+%  Brauer 群 · 模表示论 · 有限单群分类
+%  资料来源：Wikipedia (Richard Brauer)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：柏林蓝 + 模表示紫 + 群论金 + 手稿米 =====
+\definecolor{bgmain}{RGB}{248,245,238}
+\definecolor{coverprimary}{HTML}{1F3A5C}
+\definecolor{coveraccent}{HTML}{8A3A8A}
+\definecolor{coverdark}{HTML}{1F2A28}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeMod}{HTML}{8A3A8A}
+\definecolor{badgeGroup}{HTML}{C9A227}
+\definecolor{badgeBrauer}{HTML}{1F7A8C}
+\definecolor{badgeHarvard}{HTML}{7A1020}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{90,85,80}
+\definecolor{modpanel}{RGB}{247,238,248}
+\definecolor{grouppanel}{RGB}{253,248,231}
+\definecolor{brauerpanel}{RGB}{231,244,247}
+\definecolor{harvpanel}{RGB}{250,236,238}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeGroup!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeMod!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeBrauer!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeHarvard!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace Germany $\rightarrow$ United States\enspace|\enspace Cole Prize 1949\enspace|\enspace National Medal of Science 1970};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {理查德·布饶尔};
+  % 代数装饰环（无照片时的几何装饰）
+  \node[anchor=center, inner sep=0pt] at ([xshift=-6.6cm, yshift=0.6cm]current page.center) {%
+    \begin{tikzpicture}
+      \fill[coveraccent!14] (0,0) circle (1.15cm);
+      \fill[badgeGroup!18] (0,0) circle (0.78cm);
+      \fill[badgeBrauer!22] (0,0) circle (0.40cm);
+      \node[font=\fontsize{14}{16}\selectfont\bfseries, text=coverprimary] at (0,0) {Br};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Richard Brauer\enspace·\enspace 1901 -- 1977\enspace·\enspace 76岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Brauer 群 · 模表示论 · 有限单群分类 · 流亡学者的代数帝国};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeGroup, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {Brauer 群\\[2pt]1929\\中心除环\\Hasse--Noether};
+      \node[rounded corners=8pt, fill=badgeMod, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {模表示论\\[2pt]1937 奠基\\特征 $p$\\单群分类};
+      \node[rounded corners=8pt, fill=badgeBrauer, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {诱导定理\\[2pt]1946\\Brauer 特征\\群论--数论};
+      \node[rounded corners=8pt, fill=badgeHarvard, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {哈佛岁月\\[2pt]1952--1971\\Steinberg 等\\三院院士};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {"他用模表示论把群论锻造成现代数学的利剑；从柏林到哈佛，一个流亡学者的代数帝国。"};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Berlin $\rightarrow$ Königsberg $\rightarrow$ Kentucky $\rightarrow$ Toronto $\rightarrow$ Michigan $\rightarrow$ Harvard\enspace|\enspace Schur 学生\enspace|\enspace Cole Prize 1949};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 总览 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{群论与代数数论的双重大师：模表示论的奠基者}{Brauer 群 · 模表示论 · Brauer 诱导定理 · 有限单群分类的工具}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=grouppanel,draw=badgeGroup!55,text=badgeGroup!85!black]
+    (a) at (-5.5,1.1) {Brauer 群\\[2pt]1929\\中心除环分类\\代数数论桥梁};
+  \node[nodebox,fill=modpanel,draw=badgeMod!55,text=badgeMod!85!black]
+    (b) at (-1.85,1.1) {模表示论\\[2pt]1937 与 Nesbitt\\特征 $p$ 表示\\单群分类核心};
+  \node[nodebox,fill=brauerpanel,draw=badgeBrauer!55,text=badgeBrauer!85!black]
+    (c) at (1.85,1.1) {诱导定理\\[2pt]1946\\Brauer 特征\\群论--数论双桥};
+  \node[nodebox,fill=harvpanel,draw=badgeHarvard!55,text=badgeHarvard!85!black]
+    (d) at (5.5,1.1) {传承\\[2pt]Steinberg 等\\哈佛王朝\\有限单群分类};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} Richard Brauer 用特征 $p$ 表示论改造了有限群论——使"有限单群分类"成为可实现的纲领。}\\{\fontsize{7.0}{9.0}\selectfont Schur 门下 → Berlin 博士 (1926) → Königsberg (Brauer 群 1929) → 纳粹流亡 (1933) → Toronto (模表示论 1937) → Harvard (1952–1971)。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} 三院院士（AAAS/NAS/APS）· Cole 代数奖 (1949) · 国家科学奖章 (1970)}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年与教育 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{柏林·Schur 门下：犹太家庭的数学天才 (1901--1926)}{German Empire\enspace|\enspace Berlin $\rightarrow$ Königsberg\enspace|\enspace Schur 博士\enspace|\enspace 与兄 Alfred 的合作}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=grouppanel,draw=badgeGroup!55] at (0,2.65)
+    {\textbf{1901 · 柏林夏洛滕堡。}Richard Dagobert Brauer 生于柏林夏洛滕堡的犹太家庭，兄长 Alfred 大 7 岁（后来也是数学家）。1919 年入柏林夏洛滕堡工业大学，旋即转柏林大学——正值 Schur 的表示论黄金时代。};
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,1.05)
+    {\textbf{Schur 门下。}在柏林大学师从 **Issai Schur**（1901–1935 在柏林任教，表示论大师）与 Erhard Schmidt。1921 年，他与兄长 Alfred 合作解决了 Schur 提出的一个问题（Heinz Hopf 同时独立解决）——年轻的 Brauer 兄弟初露锋芒。};
+  \node[item,fill=brauerpanel,draw=badgeBrauer!55] at (0,-0.35)
+    {\textbf{1926 · 博士毕业。}1926 年 3 月 16 日在柏林大学获博士学位，Schur 指导——论文研究旋转群的不可约表示，发展了基于特征标的代数方法。这一方法后来成为他终生工作的基石：从"特征标"走向"模特征标"。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Schur 的学生 → 1921 与兄合作解决 Schur 问题 → 1926 博士论文已含终生工作的种子：特征标方法。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. Brauer 群 ---
+\newcommand{\brauergroupslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Brauer 群：中心除环的同构类 (1929)}{Königsberg\enspace|\enspace 中心除环分类\enspace|\enspace Hasse--Noether--Albert\enspace|\enspace 代数数论}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=grouppanel,draw=badgeGroup!55] at (0,2.65)
+    {\textbf{1927–1933 · 柯尼斯堡。}博士毕业后，Brauer 赴柯尼斯堡大学任 Konrad Knopp 的助手。正是在这里，他引入了**Brauer 群**——一个域上中心除环（体）的同构类在张量积下构成的群。这是代数结构分类的深刻工具。};
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,1.05)
+    {\textbf{Brauer 群的结构。}Brauer 群把"一个域上可能有多少种除环"的问题编码成一个阿贝尔群。它是域扩张理论（交叉积）、类域论与现代代数几何（Azumaya 代数）之间的桥梁。Brauer 群至今仍是算术几何的核心不变量之一。};
+  \node[item,fill=brauerpanel,draw=badgeBrauer!55] at (0,-0.35)
+    {\textbf{配套定理的群星。}Brauer 群的理论与 **Hasse--Noether--Albert** 的中心化定理密不可分：Hasse 与 Noether 在丢番图问题上用 Brauer 群取得突破，Albert 在代数结构上深化。这个网络是 20 世纪 30 年代代数学的国际合作的缩影。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Brauer 群 = "一个域上除环的分类群" —— 从柯尼斯堡助手办公室走出的代数不变量。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 模表示论 ---
+\newcommand{\modularslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{模表示论：特征 p 的表示论 (1937)}{Toronto\enspace|\enspace 与 Nesbitt 奠基\enspace|\enspace 特征 $p$ 表示\enspace|\enspace 有限单群分类的核心工具}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,2.65)
+    {\textbf{1937 · 多伦多。}1935 年起 Brauer 在多伦多大学任教。1937 年，他与学生 **Cecil J. Nesbitt** 一起发展**模表示论**——有限群在特征 $p$ 域（$p$ 整除群阶）上的表示理论。此前人们只研究特征零域上的表示；模表示论补上了缺失的板块。};
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,0.75)
+    {\textbf{Brauer 三大定理。}Brauer 建立了模表示论的核心结果：关于模特征标正交关系的**第一主定理**、刻画块结构的**第二主定理**、以及联系块与正规子群的**第三主定理**。这些定理使"模表示"从零散例子变成一门系统学科。};
+  \node[item,fill=brauerpanel,draw=badgeBrauer!55] at (0,-0.85)
+    {\textbf{为什么重要。}有限单群分类需要分析群在素数特征上的表示——模表示论提供了一把钥匙。今天，模表示论是有限群论、几何表示论与数论共同的前沿。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.2) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 模表示论 = 特征 $p$ 上的群表示 → 有限单群分类的"另一只眼睛"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 诱导定理 ---
+\newcommand{\inductionslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Brauer 诱导定理：数论与群论的双重桥梁 (1946)}{Brauer 特征\enspace|\enspace 群特征理论核心\enspace|\enspace 数论联系}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=brauerpanel,draw=badgeBrauer!55] at (0,2.65)
+    {\textbf{1946 · 诱导定理。}Brauer 在 1946 年证明了**Brauer 诱导定理**：群的任意广义特征标都可以由"基本群"（elementary subgroups）的诱导特征标线性表示。这一定理把任意有限群的分析化归为对其子群的分析——是现代群特征理论的核心。};
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,1.05)
+    {\textbf{Brauer 特征。}Brauer 发展了一整套"模特征标"（Brauer characters）——把特征 $p$ 域的表示对应到复特征标，使模表示可以像复表示一样计算。Brauer 特征表（Brauer tables）成为有限群计算的标准工具。};
+  \node[item,fill=grouppanel,draw=badgeGroup!55] at (0,-0.35)
+    {\textbf{数论的联系。}Brauer 特征与代数数论、类域论中的 L-函数传统相互滋养——他在柏林时代从 Schur 与代数数论获得的双重训练，在这里合流：群论需要数论的技巧，数论得到群论的结构。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 诱导定理："任意特征标 = 基本群的诱导之和" —— 从整体到局部，从群到子群。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Brauer--Fowler 定理 ---
+\newcommand{\fowlerslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Brauer--Fowler 定理：有限单群分类的引擎 (1956)}{固定中心化子结构\enspace|\enspace 单群有限\enspace|\enspace 分类纲领}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=harvpanel,draw=badgeHarvard!55] at (0,2.65)
+    {\textbf{1956 · Brauer--Fowler。}Brauer 与 Kenneth Fowler 合作证明：固定中心化子结构的有限单群只有有限多个。这一定理看似抽象，却开启了**有限单群分类**的现代纲领——"从局部结构控制整体"。};
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,1.05)
+    {\textbf{分类的引擎。}Brauer--Fowler 定理告诉分类学者：只要弄清单群中一个元素中心化子的结构，就能限制单群的形状。它催生了"局部分析"（local analysis）方法——分类定理两大支柱之一（另一支柱是模表示论本身）。};
+  \node[item,fill=brauerpanel,draw=badgeBrauer!55] at (0,-0.35)
+    {\textbf{从 1956 到 2004。}有限单群分类从 20 世纪 60 年代起步，至 2004 年宣告完成——这是数学史上最浩大的集体工程之一，其思想源头可追溯至 Brauer--Fowler。Brauer 本人是分类纲领的精神领袖之一。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Brauer--Fowler："固定中心化子 ⇒ 有限多个单群" —— 局部结构控制整体的宣言。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 纳粹流亡 ---
+\newcommand{\exileslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{纳粹流亡的学者：从柏林到哈佛 (1933--1935)}{Kentucky → IAS → Toronto\enspace|\enspace Weyl/Noether 人情网络\enspace|\enspace 敏感的家族史}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=grouppanel,draw=badgeGroup!55] at (0,2.65)
+    {\textbf{1933 · 纳粹上台。}希特勒上台后，犹太学者被逐出德国学术机构。Brauer 在紧急委员会（Emergency Committee in Aid of Displaced Scholars）的援助下，获得美国肯塔基大学的助理教授职位——1933 年赴美。};
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,1.05)
+    {\textbf{1934 · 普林斯顿高等研究院。}**Hermann Weyl** 邀请 Brauer 至普林斯顿 IAS。在那里，他与 Nathan Jacobson 共同编辑 Weyl 的讲义——流亡学者的学术互助网络正在成形。};
+  \node[item,fill=brauerpanel,draw=badgeBrauer!55] at (0,-0.35)
+    {\textbf{1935 · 多伦多与 Noether 的影响。}在 **Emmy Noether** 的推荐和影响下，Brauer 获得多伦多大学的职位。1939 年兄长 Alfred 逃出德国；而妹妹 Alice 死于大屠杀——这段家族史是流亡叙事中最沉重的一页，必须敏感地呈现。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 1933 肯塔基 → 1934 IAS → 1935 多伦多 —— 一个流亡学者在 Weyl 与 Noether 的援手中重生。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 哈佛岁月 ---
+\newcommand{\harvardslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{哈佛岁月：模表示论的黄金时代 (1952--1971)}{Harvard\enspace|\enspace Steinberg · Passman · Isaacs\enspace|\enspace 三院院士}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=harvpanel,draw=badgeHarvard!55] at (0,2.65)
+    {\textbf{1952 · 哈佛。}Brauer 于 1948 年先至密歇根大学，1952 年转任哈佛大学教授，直至 1971 年退休。哈佛时期是 Brauer 学术影响力的巅峰——模表示论在这里走向成熟。};
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,1.05)
+    {\textbf{学生的星群。}Brauer 的博士学生星光熠熠：**Robert Steinberg**（表示论、Steinberg 表示）、**Donald S. Passman**（群环）、**I. Martin Isaacs**（群特征论）、**Cecil Nesbitt**、**J. Carson Mark**、**Richard Bruck**（有限几何）、**Ralph Stanton** 等——哈佛成为美国群论的圣殿。};
+  \node[item,fill=brauerpanel,draw=badgeBrauer!55] at (0,-0.35)
+    {\textbf{三院院士。}1954 年当选美国科学促进会（AAAS）会士，1955 年当选美国国家科学院（NAS）院士，1974 年当选美国哲学学会（APS）院士。1949 年获 Cole 代数奖，1970 年获国家科学奖章——美国数学界的最高认可。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Steinberg · Passman · Isaacs —— Brauer 的哈佛王朝定义了美国群论的未来。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 世纪遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Brauer 的世纪遗产：从模表示论到有限单群分类}{模表示论 · Brauer 群 · Brauer--Fowler · 分类定理的骨架}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,2.65)
+    {\textbf{模表示论 → 有限单群分类。}Brauer 的三大定理、Brauer 特征与 Brauer--Fowler 定理共同构成有限单群分类的支柱。2004 年分类定理完成时，人们公认 Brauer 是这一纲领最重要的奠基人之一。};
+  \node[item,fill=grouppanel,draw=badgeGroup!55] at (0,0.65)
+    {\textbf{Brauer 群 → 现代算术几何。}Brauer 群在代数几何与算术几何中延续生命——Brauer--Manin 障碍是丢番图方程有理点研究的标准工具，Azumaya 代数是平坦拓扑的基石。一个 1929 年的不变量至今活跃。};
+  \node[item,fill=brauerpanel,draw=badgeBrauer!55] at (0,-0.85)
+    {\textbf{流亡学者的代数帝国。}从柏林到柯尼斯堡、从肯塔基到哈佛——Brauer 的学术生涯横跨两个大陆与一场浩劫。他既是最纯粹的群论学家，也是代数数论与表示论的桥梁建造者。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} "他用模表示论把群论锻造成现代数学的利剑；从柏林到哈佛，一个流亡学者的代数帝国。"}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {他把群论锻造成现代数学的利剑};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {Brauer 群 · 模表示论 · Brauer 诱导定理 · Brauer--Fowler · 有限单群分类};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Richard Brauer\enspace·\enspace 1901 -- 1977\enspace·\enspace 76岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Schur 门下 → Brauer 群 (1929) → 模表示论 (1937) → 诱导定理 (1946) → Brauer--Fowler (1956) → 单群分类 (2004)};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHarvard!70]
+    at ([yshift=-2.1cm]current page.center) {"Finite simple group classification owes more to Brauer than to any other mathematician."};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace Brauer 群 \enspace|\enspace 模表示论 \enspace|\enspace 有限单群分类 \enspace|\enspace 流亡学者 \enspace|\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\brauergroupslide
+\modularslide
+\inductionslide
+\fowlerslide
+\exileslide
+\harvardslide
+\legacyslide
+\closingslide
+\end{document}
