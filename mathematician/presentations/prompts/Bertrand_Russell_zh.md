@@ -54,6 +54,8 @@
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
+- **头像**：Russell 有多张照片，立传使用 1924 年剑桥青年学者肖像（`https://upload.wikimedia.org/wikipedia/commons/b/b8/Bertrand_Russell_in_1924.jpg`，300×423 竖版）。已下载至 `images/russell_portrait.jpg`。封面位置：右上角 `[xshift=-1.6cm, yshift=-1.3cm]current page.north east`（与 Cartan/Fredholm 立传风格统一）。
+- **国籍**：封面顶部徽章 `United Kingdom`（与 Cartan/Borel/Fredholm 立传格式一致）。
 - **数学家 vs 哲学家身份**：本榜单是"数学家"，但罗素主要成就是哲学与数理逻辑——提示词定位为"以数学基础/数理逻辑入榜的逻辑学家-哲学家"，不要强行写成纯数学家。
 - **《数学原理》vs《数学原理》(牛顿)**：Russell–Whitehead 的 Principia Mathematica 与牛顿的 Principia 同名但完全不同——中文语境要加限定。
 - **Frege 关系**：罗素悖论是在 Frege 的《概念文字》(Grundgesetze) 中发现的，Frege 收到信后痛苦承认——这是罗素对弗雷格的重大影响，非合作。
