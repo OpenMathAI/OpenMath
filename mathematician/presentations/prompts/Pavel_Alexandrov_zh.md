@@ -1,54 +1,108 @@
-# 亚历山德罗夫 (Pavel Alexandroff) 立传提示词
+# Pavel Alexandrov（帕维尔·亚历山德罗夫）立传提示词
 
-> 严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-
----
-
-## 背景信息
-
-- **目标数学家**: Pavel Alexandroff (1896–1982)
-- **气质关键词**: **拓扑学家、苏联数学的组织者、Alexandroff 紧化**
-- **Wikipedia 页面**: ⚠️ **尚未下载。**
-  - 页面路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Pavel_Alexandroff/`
+> 榜单：#88 · qid=Q325696 · 1896-05-07 – 1982-11-16 · 苏联数学家
+> 数据库主记录：id=88（`Pavel Alexandroff`，rank 关联；id=362 `Pavel Alexandrov` 重复已合并）
 
 ---
 
-## 第 0 步：下载并校验
+## 1. 背景信息（用于 Slide 1-3）
 
-- **生卒日期**：1896-05-07 ~ 1982-11-16，享年 86 岁
-- **国籍**：俄国 → 苏联
-- **博士导师**：Dmitri Egorov (叶戈罗夫) 和 Nikolai Luzin (卢津) — 莫斯科数学学派的核心人物
-- **主要任职**：莫斯科大学教授
-- **核心贡献**：
-  - **点集拓扑**：Alexandroff 紧化（局部紧 Hausdorff 空间的最小紧化）
-  - **同调论**：Alexandroff–Čech 上同调
-  - **组合拓扑**：推动了苏联拓扑学派的建立
-- **合作者**：Pavel Urysohn (乌雷松) — 生前挚友和合作者。Urysohn 1924 年游泳溺亡，年仅 26 岁，Alexandroff 终身铭记这段友情
-- **学生**：Lev Pontryagin (庞特里亚金), Andrey Tikhonov (吉洪诺夫)
+- **全名**：Pavel Sergeyevich Alexandrov（Павел Сергеевич Александров；亦作 Paul Alexandroff）
+- **生卒**：1896-05-07（儒略历 04-25）博戈罗茨克（今诺金斯克，莫斯科省）→ 1982-11-16 莫斯科，享年 86
+- **国籍**：Russian Empire → Soviet Union
+- **身份**：数学家、大学教师（点集拓扑学创始人之一）
+- **机构轨迹**：
+  - 教育：斯摩棱斯克 gymnasium → 莫斯科大学（师从 Egorov 与 Luzin）
+  - 任职：莫斯科大学（1927 博士后留任）→ Steklov 数学研究所 → 哥廷根访问（1923-24，与 Urysohn）
+- **研究领域**：点集拓扑、集合论、同调论、几何
 
-### ★ 叙事亮点：
+## 2. 核心叙事亮点（用于 Slide 4-9）
 
-1. **Urysohn 之死** — 1924 年在法国布列塔尼海滨，他的挚友 Urysohn 游泳时溺亡。Alexandroff 极度悲痛，此后终身致力于完成他们共同开创的拓扑学事业。这是数学史上最动人的友谊故事之一
-2. **Alexandroff 紧化** — 每一个点集拓扑学生都学过的概念
-3. **莫斯科拓扑学派** — 他是苏联拓扑学的开创者和组织者，培养了一大批优秀学生
-4. **与 Noether 的合作** — 1920s 末访问哥廷根，与 Noether 有密切交流，将代数方法引入拓扑学
+1. **Alexandroff 单点紧化（Alexandroff extension）**：拓扑空间加一点成紧——点集拓扑基本构造。
+2. **Alexandrov 拓扑**：预序对应的拓扑。
+3. **Čech 上同调（1928 共同奠基）**：与 Čech 独立发展的上同调理论，以两者命名。
+4. **Alexandroff 平板（plank）**：拓扑学反例。
+5. **与 Urysohn 的哥廷根之旅（1923-24）**：两人共同访问，Urysohn 意外溺亡后 Alexandrov 继续其工作并编其文集。
+6. **"长直线"（long line）**：与 Urysohn 合作引入。
+7. **莫斯科学派领袖**：学生阵容豪华（Pontryagin、Tikhonov、Kurosh、Urysohn 等），苏联拓扑学派创始人。
+8. **1917 连续统猜想危机**：Luzin 挑战证明 CH，创造性危机导致人生转向（戏剧工作）——CH 1964 被证独立于 ZFC（Cohen）。
+9. **1955 签署"三百人信"**：批评 Lysenkoism（李森科主义）——苏联科学史上的重要异见行动。
+10. **Luzin 事件关联**：1936 年参与攻击 Luzin——**敏感点**，Alexandrov 在其中扮演了不光彩角色。
 
-### 配色建议：拓扑灰 + 学院普鲁士蓝
+## 3. 配色方案
 
-### 幻灯片建议（12 页）：
-```
-01  封面
-02  莫斯科大学的拓扑学教父
-03  Alexandroff 紧化
-04  Urysohn 的悲剧 — 一个天才的早逝与终身友谊
-05  同调论的发展 — Alexandroff–Čech 上同调
-06  与 Noether 的哥廷根对话
-07  苏联拓扑学派 — Pontryagin, Tikhonov 等
-08  思想回响 + 结束页
-```
+| 用途 | 色值 | 说明 |
+|---|---|---|
+| 主色（莫斯科蓝） | #1E4E79 | 莫斯科学派 |
+| 辅助（拓扑青） | #1E6E6E | 点集拓扑 |
+| 强调（紧化金） | #B8860B | Alexandroff 紧化 |
+| 背景 | #FAF6EF | 米白纸色 |
 
-### 史实陷阱：
-- **Alexandroff vs Alexandrov** — 他的名字有多种拼写变体：Alexandroff, Aleksandrov, Alexandrov。用户描述中写 "Alexandroff"，保持一致
-- **与 Noether 的关系** — 两人是亲密的学术合作者和朋友。1928–1929 年 Noether 访问莫斯科，他后来也多次去哥廷根。不要过度渲染私人关系
+## 4. 12 页 Slide 规划
 
-> **开始执行。**
+1. 封面：大标题 + 副标题「点集拓扑学创始人 · Alexandroff 紧化」
+2. 生平总览：时间轴（1896 → 1917 连续统危机 → 1923-24 哥廷根 → 1927 博士 → 1936 Luzin 事件 → 1953 院士 → 1982 去世）
+3. Alexandroff 单点紧化：拓扑学基本构造
+4. Alexandrov 拓扑与长直线：与 Urysohn
+5. Čech 上同调：与 Čech 共同奠基
+6. Alexandroff 平板：反例
+7. 哥廷根之旅与 Urysohn：1923-24、意外溺亡
+8. 莫斯科学派：Pontryagin/Tikhonov/Kurosh 等学生
+9. 1917 连续统危机：Luzin 挑战、戏剧转向
+10. 1955 三百人信：批评李森科主义
+11. Luzin 事件（1936）：参与攻击（敏感）
+12. 终章：86 岁、300 篇论文、历史地位
+
+## 5. 史实陷阱与敏感点（终审必须检查）
+
+- **Luzin 事件角色（敏感）**：1936 年 Alexandrov 参与了攻击导师 Luzin 的运动——**客观记录**，不渲染；这是苏联体制压力下的行为，数学史上留争议。
+- **合并记录**：id=88（rank 关联）与 id=362（重复占位）已合并——关系（Noether/Hopf/Kolmogorov/Luzin/Pontryagin/Tikhonov）迁移到 88。
+- **生卒日期**：儒略历 04-25 = 公历 05-07（metadata 两值）——用公历 05-07。
+- **Čech 上同调归属**：Alexandrov 与 Čech **独立**发展——不写 Alexandrov 独占。
+- **CH 危机**：1964 Cohen 证明 CH 独立于 ZFC（不是"证明 CH 为真/假"）——表述精确。
+- **三百人信**：1955 年，批评李森科主义——客观记录。
+- **Urysohn**：好友兼合作者，1924 年溺亡（布雷顿，法国布列塔尼）——英年早逝。
+- **学生**：Pontryagin(61)、Tikhonov(86)、Kurosh 等。
+
+## 6. 数据库字段核对表（§21.5）
+
+| 字段 | 值 | 状态 |
+|---|---|---|
+| qid | Q325696 | 需更新（当前 NULL） |
+| name_zh | 帕维尔·亚历山德罗夫 | 需更新（当前 亚历山德罗夫） |
+| birth_date | 1896-05-07 | 需更新 |
+| death_date | 1982-11-16 | 需更新 |
+| has_biography | 0 | 保持 |
+| has_social_data | 1 | 本次置 1 |
+
+## 7. 社会关系入库清单（§20，已由 seed 脚本完成）
+
+- 导师：Dmitri Egorov（新建）、Nikolai Luzin（87）
+- 学生：Lev Pontryagin（61）、Andrey Tikhonov（86）、Aleksandr Kurosh（新建）、Pavel Urysohn（新建，实为同辈挚友）、Yuri Smirnov（新建）
+- 合作者：Pavel Urysohn（新建）、Eduard Čech（新建）
+- 同事/朋友：Heinz Hopf（28）、Andrey Kolmogorov（5）、Emmy Noether（4）
+
+## 8. 奖项清单（全部收录）
+
+- Stalin Prize 1943（79）
+- Order of Lenin（80）
+- Hero of Socialist Labour（81）
+- Order of the October Revolution（82）
+- Order of the Badge of Honour（新建）
+- Order of the Red Banner of Labour（86）
+- Cothenius Medal（已有 68）
+- Lobachevsky Prize（已有）
+
+## 9. 机构清单
+
+- 教育：Lomonosov Moscow State University（22）
+- 任职：Lomonosov Moscow State University（22）、Steklov Institute of Mathematics（97）、Institute for Advanced Study（18）、University of Göttingen（5，访问 1923-24）
+
+## 10. 终审清单
+
+- [ ] Luzin 事件角色客观记录
+- [ ] 合并 362→88 无残留
+- [ ] 生卒公历 05-07
+- [ ] Čech 独立归属
+- [ ] CH 独立（Cohen 1964）
+- [ ] has_biography 保持 0
