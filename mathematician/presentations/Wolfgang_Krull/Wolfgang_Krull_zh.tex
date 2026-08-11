@@ -1,0 +1,401 @@
+% =============================================================
+%  交换代数的核心奠基人：沃尔夫冈·克鲁尔 (Wolfgang Krull)
+%  Krull 维数 · 主理想定理 · 交定理 · Krull--Schmidt · 拓扑
+%  资料来源：Wikipedia (Wolfgang Krull)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：弗赖堡红 + 环论青 + 理想金 + 米白 =====
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{8B1A1A}
+\definecolor{coveraccent}{HTML}{1E6E6E}
+\definecolor{coverdark}{HTML}{1F2A28}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeAlg}{HTML}{8B1A1A}
+\definecolor{badgeCom}{HTML}{B8860B}
+\definecolor{badgeHist}{HTML}{1E6E6E}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{badgeMart}{HTML}{8A1020}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{90,85,80}
+\definecolor{algpanel}{RGB}{250,236,236}
+\definecolor{companel}{RGB}{253,247,231}
+\definecolor{histpanel}{RGB}{234,242,242}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{martpanel}{RGB}{250,236,238}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace Germany\enspace·\enspace 交换代数奠基人\enspace·\enspace 35 位博士};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {沃尔夫冈·克鲁尔};
+  % 肖像照片（1920 Göttingen）—— 右上角
+  \node[anchor=center, inner sep=0pt] at ([xshift=-1.6cm, yshift=-1.3cm]current page.north east) {%
+    \begin{tikzpicture}
+      \fill[coverprimary!14] (0,0) circle (1.5cm);
+      \node[inner sep=0pt, draw=coveraccent!30, line width=1pt] at (0,0) {\includegraphics[width=2.5cm,height=2.5cm]{krull_portrait.jpg}};
+      \draw[coveraccent!55, line width=1.5pt] (0,0) circle (1.32cm);
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Wolfgang Krull\quad·\quad 1899 -- 1971\quad·\quad 71岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Krull 维数 · 主理想定理 · 交定理 · Krull--Schmidt · 拓扑};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {\textbf{Krull 维数}\\[2pt]交换环的维数\\[2pt]Krull 环\\[2pt]代数几何地基};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {\textbf{主理想定理}\\[2pt]Hauptidealsatz\\[2pt]Noether 环结构\\[2pt]基础定理};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {\textbf{Krull--Schmidt}\\[2pt]直和分解唯一\\[2pt]共同命名\\[2pt]模表示论};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {\textbf{《理想理论》}\\[2pt]1935 经典\\[2pt]Ergebnisse\\[2pt]教科书};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {据 Wikipedia：他是德国数学家，对交换代数做出了基础性的贡献，引入的概念至今仍是该学科的核心。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Baden-Baden 1899\enspace·\enspace 弗赖堡/罗斯托克/哥廷根（1921 博士）\enspace·\enspace 弗赖堡/埃尔朗根\enspace·\enspace Bonn 1939--1971\enspace·\enspace 导师 Alfred Loewy};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 总览 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{交换代数的核心奠基人：维数与理想}{Krull 维数 · 主理想定理 · 交定理 · Krull 拓扑 · 35 位博士}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {Krull 维数\\[2pt]交换环的维数\\[2pt]Krull 环\\[2pt]局部环};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {主理想定理\\[2pt]Hauptidealsatz\\[2pt]Noether 环\\[2pt]结构定理};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {Krull--Schmidt\\[2pt]直和分解唯一\\[2pt]与 Schmidt 命名\\[2pt]模表示论};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {Krull 拓扑\\[2pt]无穷伽罗瓦\\[2pt]代数数论\\[2pt]代数几何地基};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 引入的概念至今仍是交换代数的核心——一位德国代数家的永久遗产。}\\{\fontsize{7.0}{9.0}\selectfont Baden-Baden (1899) → 哥廷根 (1921 博士) → 弗赖堡/埃尔朗根 → 波恩 (1939) → 1971。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} Krull 维数 · Krull 环 · Krull 拓扑 · Hauptidealsatz · Krull--Schmidt · 35 位博士}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年与教育 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{早年与教育：Baden-Baden 到哥廷根 (1899--1921)}{Baden-Baden\enspace·\enspace 弗赖堡/罗斯托克\enspace·\enspace 哥廷根 1919--1921\enspace·\enspace 导师 Alfred Loewy}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,2.65)
+    {\textbf{1899 · Baden-Baden。}Krull 生于德国巴登-巴登（Baden-Baden），并在此地完成中学教育。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{三所大学。}他先后就读于 \textbf{弗赖堡大学}、\textbf{罗斯托克大学}，最终来到 \textbf{哥廷根大学}（1919--1921）。哥廷根在彼时是世界数学的中心之一，Noether 学派正在崛起。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{1921 博士。}1921 年在哥廷根获博士学位，导师是 \textbf{Alfred Loewy}（弗赖堡代数学家）。Loewy 师承 Weierstrass 与 Frobenius，这一谱系深刻影响了 Krull 的代数基础训练。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 从温泉小镇到数学圣殿——一位代数家的养成之路。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. Krull 维数 ---
+\newcommand{\dimensionslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Krull 维数：交换环的维数理论}{Krull dimension\enspace·\enspace Krull 环\enspace·\enspace 局部环\enspace·\enspace 素理想链}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Krull 维数。}Krull 引入的\textbf{维数}概念是现代交换代数最核心的几何直觉——交换环的 \textbf{Krull 维数}是其中素理想链的最大长度。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{Krull 环与局部环。}他把 \textbf{Krull 环（Krull ring）}定义为具有封闭化算子的 Noether 整闭整环；\textbf{局部环（local ring）}理论也在他的工作中得到系统化。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{代数几何的地基。}Krull 维数与 \textbf{Zariski 拓扑} 一起，成为 Grothendieck 时代\textbf{概形（Scheme）}理论的基石——交换代数与代数几何的桥梁。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 维数——把"深度"变成数学对象的第一步。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Krull 主理想定理 ---
+\newcommand{\hauptidealsatzslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Krull 主理想定理：Noether 环的结构定理}{Hauptidealsatz\enspace·\enspace 高度 1 素理想\enspace·\enspace 交换环基础}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{主理想定理。}\textbf{Krull 主理想定理（Krull's principal ideal theorem）}是交换环理论的基本定理：在 Noether 环中，由单个元素生成的理想的\textbf{极小素理想}都有高度 1——简洁而深邃。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{意义。}它统一处理 Dedekind 整环、主理想整环等多类算术环的结构——从局部环理论到算术几何，处处可见它的痕迹。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{基础定理。}主理想定理是"高维 Krull 维数理论"的起点——也是后续 Cohen 定理、ZMT 序列等的基础。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一个元素的理想，为何能告诉你整个环的深度？}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. Krull 交定理与局部环 ---
+\newcommand{\intersectionslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Krull 交定理：局部环的理想无穷交}{intersection theorem\enspace·\enspace 局部环\enspace·\enspace 维数理论核心}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Krull 交定理。}\textbf{Krull 交定理（Krull's intersection theorem）}是局部环理论的基础：在 Noether 局部环中，理想与其所有幂的交为零——这是"收敛"在代数几何中的对等概念。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{应用。}这一定理在局部环理论、赋值环、Krull 维数理论中无处不在——是后续 Cohen 定理、Néron 模型的工具。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{无穷小图像。}交定理等价于说 Noether 局部环的极大理想幂零性——局部代数几何的"无穷小图像"。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一个关于"无穷交"的定理——局部代数几何的收敛机器。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Krull--Schmidt 定理 ---
+\newcommand{\schmidtslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Krull--Schmidt 定理：直和分解唯一性}{与 Schmidt 共同命名\enspace·\enspace 模的直和分解\enspace·\enspace 群/模表示论}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{Krull--Schmidt 定理。}在某些条件下，模的直和分解（在不可分解子模意义下）唯一——这就是 \textbf{Krull--Schmidt 定理}。它是群与模表示论的基本工具。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{共同命名。}注意：这是\textbf{与 Schmidt 共同命名}，不是 Krull 独占——归属必须清晰。它涵盖了抽象代数对"唯一分解"问题的重要回答。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{推广。}如今 Krull--Schmidt 范畴、Krull--Schmidt 类广泛出现在代数几何、有限群论、模范畴等不同领域。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 直和分解的唯一性——抽象代数的"算术基本定理"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. Krull 拓扑 ---
+\newcommand{\topologyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Krull 拓扑：无穷伽罗瓦理论的核心}{Galois 群逆极限拓扑\enspace·\enspace 代数数论\enspace·\enspace 无穷伽罗瓦}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Krull 拓扑。}在\textbf{无穷伽罗瓦理论}中，Krull 引入了 \textbf{Galois 群上的逆极限拓扑}——即 \textbf{Krull 拓扑}。这一拓扑是现代类域论与代数数论的核心工具。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{Hilbert 第九问题。}它部分回答了 \textbf{Hilbert 第九问题}（一般伽罗瓦逆问题的最一般形式）——Krull 拓扑是通向现代数论中 Milnor 群论与 Bloch--Kato 猜想的桥梁。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{代数几何地基。}Krull 拓扑与 \textbf{Krull 维数}一起，构成 Grothendieck 时代概形理论的代数基础。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 无穷群上的拓扑——代数数论的"测度"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 《理想理论》 ---
+\newcommand{\idealtheorieslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《理想理论》：1935 年的经典专著}{Idealtheorie\enspace·\enspace Ergebnisse 系列\enspace·\enspace 教科书}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{1935 · 《理想理论》。}Krull 出版了 \textbf{Idealtheorie}（理想理论）——Springer 的 Ergebnisse der Mathematik 系列之一——交换代数经典专著。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{命名体系。}书中系统化了他之前的\textbf{维数、局部环、闭包、主理想}等概念——这些名词至今仍是交换代数的标准词汇。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{教科书与论文集。}1999 年 \textbf{Paulo Ribenboim} 编辑了 Krull 的论文集《Gesammelte Abhandlungen/Collected papers》（Walter de Gruyter），以两卷本形式系统收录了他的代数贡献。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一本 1935 年的教科书——把交换代数据为已有。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 学术王朝 ---
+\newcommand{\dynastyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{学术王朝：35 位博士}{Neukirch\enspace·\enspace Ribenboim\enspace·\enspace Wilfried Brauer\enspace·\enspace 35 位学术后代}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,2.65)
+    {\textbf{35 位博士。}Krull 一生指导了 35 位博士研究生——其中包括代数数论与交换代数领域的杰出后人。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{代表性学生。}他的学生包括 \textbf{Jürgen Neukirch}（代数数论经典教材《代数数论》作者）、\textbf{Paulo Ribenboim}（多部经典著作、Fermat 大定理研究）、\textbf{Karl-Otto Stöhr}、\textbf{Wilfried Brauer}（计算机科学家——注意与代数表示论专家 \textbf{Richard Brauer}（榜单 #63）勿混淆）。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{稳定的培养期。}1939 年起的波恩讲席让他有了 30 多年稳定的研究生培养期——继承与延续的稳定。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 35 位博士——代数血脉的延续。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 纳粹时期 ---
+\newcommand{\nazislide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{纳粹党员身份：客观记录}{Wikipedia 明确记载\enspace·\enspace 与数学成就分开处理\enspace·\enspace 弗赖堡/波恩生涯}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=martpanel,draw=badgeMart!55] at (0,2.65)
+    {\textbf{纳粹党成员。}Wikipedia 明确记载：\textbf{Wolfgang Krull 是一名纳粹党成员}（a member of the Nazi Party）。这是史实记录——本文将其与他的数学成就分开处理，不做评价。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{机构轨迹。}他先后在弗赖堡大学（讲师/教授）、埃尔朗根大学（约 10 年）、波恩大学（1939 起讲席，终身）任教。1939 年赴波恩的时间恰在纳粹年代期间。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{敏感的历史平衡。}这一页只做客观陈述——政治身份是史实的一部分，但评价与判断属于读者。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 史实记录与评价分离——这是史家之道。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {把概念变成几何，把维数变成语言};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {Krull 维数 · 主理想定理 · 交定理 · Krull--Schmidt · Krull 拓扑 · 35 位博士};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Wolfgang Krull\quad·\quad 1899 -- 1971\quad·\quad 71岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Baden-Baden (1899) → 哥廷根 (1921 博士) → 弗赖堡/埃尔朗根 → 波恩 (1939) → 1971};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {He made fundamental contributions to commutative algebra, introducing concepts now central to the subject. -- Wikipedia};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace Krull 维数 \enspace·\enspace 主理想 \enspace·\enspace Krull 拓扑 \enspace·\enspace 35 位博士 \enspace·\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\dimensionslide
+\hauptidealsatzslide
+\intersectionslide
+\schmidtslide
+\topologyslide
+\idealtheorieslide
+\dynastyslide
+\nazislide
+\closingslide
+\end{document}
