@@ -217,12 +217,33 @@ WHERE a.name_en='Lev Pontryagin' OR b.name_en='Lev Pontryagin';
 
 ---
 
-> **开始执行。每完成一步向我汇报。**
->
-> **特别提醒：**
-> 1. 14 岁全盲 + 母亲诵读是核心叙事——数学史上最动人的母子故事
-> 2. 三大贡献（对偶/类/最大值原理）分领域讲清楚
-> 3. 配边理论要写 Thom 的共同贡献
-> 4. 反犹争议是敏感历史——客观记录"指控"，不渲染不洗白
-> 5. 学生是莫斯科学派传承——Anosov/Postnikov/Rokhlin
-> 6. 结尾应回归"盲者的数学之眼"
+## 十三、立传完成后操作（★ 勿遗漏）
+
+- [x] **Wikipedia 下载**: `pages/Lev_Pontryagin/page.md` + `metadata.json` ✅
+- [x] **头像**: `Lev_Pontryagin.jpg` 嵌入 (1.92cm, 右上角, 下移30px) ✅
+- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第61行 Pontryagin: `🔲 → ✅` ✅
+- [x] **数据库联动**: `people.has_biography` 设为 `1` ✅ (id=61, 社会关系已在库中 9条, `has_social_data=1`)
+- [x] **编译验证**: `make distclean && make` → 11页 197KB, 0错误 ✅
+
+### 第1轮 Review 记录 (2026-08-11)
+
+> 对照 Wikipedia (`pages/Lev_Pontryagin/page.md`) 逐页核查。
+
+**修复清单：零。** 11/11页全部与 Wikipedia 一致。
+
+| 页 | 核查内容 | 结果 |
+|:--:|------|:--:|
+| 封面 | 姓名·生卒(1908-1988,79)·Soviet Union·Stalin/Lenin Prize·IMU副主席1970·头像1.92cm | ✅ |
+| 总览 | 时间线·母亲读Hopf/Whitehead/Whitney·"tails up" | ✅ |
+| 早年 | primus stove→eye surgery→14岁全盲·1925 MSU·Alexandrov | ✅ |
+| 对偶 | $\widehat{\widehat{G}} \cong G$·Hilbert第五问题(交换群)·1935紧Lie群同调 | ✅ |
+| 类与配边 | Thom co-founder·framed cobordism≈stable homotopy·Pontryagin类1940·平方1942 | ✅ |
+| 最大值原理 | 1952·maximum principle·bang-bang·1962教材 | ✅ |
+| 莫斯科学派 | Anosov/Postnikov/Rokhlin·IMU副主席1970 | ✅ |
+| 争议 | Egorov 1930·Jacobson·Margulis Fields 1978·Science 1979—客观记录 ✅ | ✅ |
+| 世纪遗产 | 对偶·类·最大值原理三支柱 | ✅ |
+| 结束页 | 引语·生卒·时间线·底部标签 | ✅ |
+
+**结论：第1轮 Review 通过。零问题。** Wikipedia与TeX完全一致。
+
+> **第1轮 Review 完成。**

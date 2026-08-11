@@ -247,7 +247,20 @@ Whitney 是一个文艺复兴式的全才：物理学家、音乐家（小提琴
 - 小字：哈斯勒·惠特尼 · Hassler Whitney · 1907 — 1989
 - 底部：微分拓扑奠基人 · 奇点理论先驱 · 数学教育的革命者 · 骨灰撒在 Dent Blanche 之巅
 
-## 音乐: Expedition + Timeless
+## 背景音乐选择 ✅
+
+- **选定曲目**: **Expedition** — Alex-Productions (66k views, 探索/史诗/远征)
+- **风格**: 探索 / 史诗 / 远征式叙事
+- **匹配理由**:
+  - "远征式叙事" 是 Whitney 的生命底色——他本身就是登山家：1929 年与堂弟首攀 Cannon Mountain 的 Whitney–Gilman 山脊（美东最著名攀岩路线），瑞士阿尔卑斯俱乐部成员，攀登了瑞士大多数山峰，骨灰撒在 Dent Blanche 山顶（4357m）。没有哪位数学家的音乐选择比 Whitney 更适合 Expedition——他的骨灰就在阿尔卑斯山巅
+  - "探索" 匹配他的学术远征：图论(1932) → 嵌入定理(1936) → Stiefel–Whitney 类(1935) → 奇点分类 fold/cusp(1955) → 几何积分理论(1957) → 数学教育改革(1967-1989)——从离散到连续，从拓扑到教育，跨度无人能及。Yale 物理+音乐双学士，小提琴手，文艺复兴式的全才
+  - "史诗" 匹配嵌入定理的革命性：任何 n 维流形都是 R^{2n} 的子集——微分拓扑的第一定理、第一基石。Whitney trick 成为 Smale 证明高维 Poincaré 猜想、Milnor 构造异种球面的核心工具
+  - 结尾页直接是"山巅的骨灰——Dent Blanche"——这不是隐喻，而是 Whitney 真实的人生终点。Expedition 的史诗感与之天然呼应
+- **备选** (未采用):
+  - ★★ Timeless — "沉稳/纪录片/长期纲领" 匹配嵌入定理和 Stiefel–Whitney 类的持久影响，但 Whitney 的气质远非"沉稳"——他是登山家、音乐家、全才，Timeless 太安静
+  - ★ Awaken — "鼓舞/明亮" 匹配他的教育改革热情，但受众偏低 (79k) 且过于明亮，无法承载骨灰撒山巅的深沉
+- **本地路径**: `music_audio/alex-productions/33--_CEmB_dHpA-Expedition.wav` → `presentations/Hassler_Whitney-W/Expedition.wav`
+- **时长**: 128 秒 > 17 页 × 7 秒 = 119 秒 → ffmpeg `-shortest` 自动对齐
 
 ## Round 2 高危: 嵌入维数 R^{2n} 非 R^{n+1}、John Nash 非其博士生、Stiefel 独立发现、博士论文图着色、Yale 音乐学位、骨灰 Dent Blanche。
 

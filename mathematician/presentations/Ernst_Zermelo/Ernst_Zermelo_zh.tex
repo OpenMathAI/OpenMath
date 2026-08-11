@@ -1,0 +1,341 @@
+% =============================================================
+%  数学地基的锻造者：恩斯特·策梅罗 (Ernst Zermelo)
+%  良序定理 · 选择公理 · ZFC 公理体系 · 排名模型
+%  资料来源：Wikipedia (Ernst Zermelo)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：集合论深蓝 + 公理金 + 悖论红 =====
+\definecolor{bgmain}{RGB}{247,245,240}
+\definecolor{coverprimary}{HTML}{1B2A4A}
+\definecolor{coveraccent}{HTML}{B08D2F}
+\definecolor{coverdark}{HTML}{20282A}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeWell}{HTML}{B08D2F}
+\definecolor{badgeZFC}{HTML}{2E4A7A}
+\definecolor{badgeChoice}{HTML}{A23A3A}
+\definecolor{badgeRank}{HTML}{2A7F8A}
+\definecolor{titlecolor}{RGB}{20,28,30}
+\definecolor{muteddark}{RGB}{100,95,85}
+\definecolor{wellpanel}{RGB}{255,248,230}
+\definecolor{zfcpanel}{RGB}{232,238,250}
+\definecolor{choicepanel}{RGB}{252,235,235}
+\definecolor{rankpanel}{RGB}{230,247,249}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeWell!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeZFC!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeChoice!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeRank!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace German Empire $\rightarrow$ Germany\enspace|\enspace Ackermann--Teubner 1916\enspace|\enspace ZFC 公理体系};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {恩斯特·策梅罗};
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.3cm, yshift=-1.1cm]current page.north east) {\includegraphics[width=1.92cm]{Ernst_Zermelo.jpeg}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Ernst Zermelo\enspace·\enspace 1871 -- 1953\enspace·\enspace 81岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {良序定理 · 选择公理 · Zermelo 集合论 · 象棋排名模型 · Zermelo 导航问题};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeWell, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {良序定理\\[2pt]选择公理\\每个集合\\皆可良序};
+      \node[rounded corners=8pt, fill=badgeZFC, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {ZFC 公理体系\\[2pt]Zermelo 集合论\\Fraenkel/Skolem\\现代数学地基};
+      \node[rounded corners=8pt, fill=badgeChoice, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {选择公理之辩\\[2pt]非构造性\\存在 vs 构造\\Russell 悖论};
+      \node[rounded corners=8pt, fill=badgeRank, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {超越集合论\\[2pt]排名模型 1929\\Elo 前身\\导航问题 1931};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {"他用一组公理，把数学大厦钉在了最深处的地基上。百年后，每一行证明都踩在它的肩膀上。"};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Berlin $\rightarrow$ Göttingen $\rightarrow$ Zurich $\rightarrow$ Freiburg\enspace|\enspace Fuchs \& Schwarz 学生\enspace|\enspace 1935 反纳粹辞职};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 总览 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数学地基的锻造者：一组公理如何撑起整个数学大厦}{良序定理 · 选择公理 · Zermelo 集合论 · ZFC · 超越集合论的遗产}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=wellpanel,draw=badgeWell!55,text=badgeWell!85!black]
+    (a) at (-5.5,1.1) {良序定理 (1904)\\[2pt]每个集合可良序\\选择公理引入\\非构造性证明};
+  \node[nodebox,fill=zfcpanel,draw=badgeZFC!55,text=badgeZFC!85!black]
+    (b) at (-1.85,1.1) {Zermelo 公理系统 (1908)\\[2pt]集合论公理化\\Fraenkel/Skolem\\ZF→ZFC};
+  \node[nodebox,fill=choicepanel,draw=badgeChoice!55,text=badgeChoice!85!black]
+    (c) at (1.85,1.1) {选择公理之辩\\[2pt]非构造性范式\\存在 vs 构造\\Russell 悖论};
+  \node[nodebox,fill=rankpanel,draw=badgeRank!55,text=badgeRank!85!black]
+    (d) at (5.5,1.1) {超越集合论\\[2pt]排名模型 1929\\Elo 前身\\导航问题 1931};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} Ernst Zermelo 锻造了现代数学最深的地基——ZFC 公理体系。}\\{\fontsize{7.0}{9.0}\selectfont Berlin 博士(1894) → Planck 助手 → Göttingen(1897) → 良序定理(1904) → Zurich 教席(1910) →\\[1pt]Freiburg荣誉教席(1926) → 1935 因反对 Hitler 辞职 → 1945 复职。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} 从集合论地基到象棋排名模型——公理建造者的视野远超一座大厦。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年与教育 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{从柏林到哥廷根：变分法·Planck 助手·数学基础之路 (1871--1904)}{Berlin $\rightarrow$ Göttingen\enspace|\enspace Fuchs \& Schwarz\enspace|\enspace Hilbert 激励}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=wellpanel,draw=badgeWell!55] at (0,2.45)
+    {\textbf{1871 · 柏林。}Ernst Friedrich Ferdinand Zermelo 生于柏林。1889 年 Luisenstädtisches Gymnasium 毕业。此后在柏林大学、哈勒大学、弗莱堡大学学习数学、物理和哲学。};
+  \node[item,fill=zfcpanel,draw=badgeZFC!55] at (0,0.65)
+    {\textbf{1894 · 博士与 Planck 助手。}在 Lazarus Fuchs 和 Hermann Schwarz 指导下获博士学位——论文研究变分法。1894--1897 年留任柏林大学，任 **Max Planck** 的助手，研究水动力学。};
+  \node[item,fill=choicepanel,draw=badgeChoice!55] at (0,-0.85)
+    {\textbf{1897 · Göttingen。}转入哥廷根大学——当时世界数学研究的中心。1899 年完成资格论文 (Habilitation)。1900 年，Hilbert 在巴黎 ICM 提出 23 问题——第一问连续统假设提到了"良序定理"的需要。Zermelo 受到激励，开始研究集合论。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.9) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 变分法博士 → Planck 助手 → Hilbert 的 23 问题——1900 年巴黎 ICM 上的第一问，点燃了 Zermelo 的集合论使命。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 良序定理 ---
+\newcommand{\wellslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{良序定理 (1904)：每个集合皆可良序——引入选择公理}{良序定理证明 · 选择公理 · 非构造性论战 · 哥廷根教授 1905}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=wellpanel,draw=badgeWell!55] at (0,2.45)
+    {\textbf{Hilbert 第一问的回应。}1904 年，Zermelo 证明"每个集合都可以良序化"——即每个集合上存在一个序使得每个非空子集都有最小元。这是对 Hilbert 1900 年巴黎 ICM 第一问（连续统假设）的关键第一步。};
+  \node[item,fill=choicepanel,draw=badgeChoice!55] at (0,0.65)
+    {\textbf{引入选择公理。}证明中 Zermelo 使用了著名的"选择公理"：对任何由非空集合构成的族，存在一个函数从每个集合中挑选一个元素。这是 20 世纪数学中最富争议的公理——因为它的使用方式是非构造性的：它断言"存在"一个选择函数，但不提供构造方法。};
+  \node[item,fill=zfcpanel,draw=badgeZFC!55] at (0,-0.85)
+    {\textbf{1908 年改进证明。}Zermelo 用 Dedekind 的 "chain" 概念重新给出了证明，避免了 1904 年证明中的某些争议。同年他发表了集合论的第一个公理化系统。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} "存在但不构造"——选择公理的非构造性引发了 20 世纪数学最深刻的哲学论战。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Zermelo 公理系统 ---
+\newcommand{\zfcslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Zermelo 公理系统 (1908)：集合论的第一次公理化}{Zermelo 集合论 · Z → ZF (1922) · Fraenkel \& Skolem · ZFC}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=zfcpanel,draw=badgeZFC!55] at (0,2.45)
+    {\textbf{1908 · 首次公理化。}Zermelo 发表了集合论的第一个公理化系统（Z），包含外延公理、空集公理、配对公理、并集公理、幂集公理、无穷公理、分离公理模式——共七条。这套系统成功排除了已知悖论（如 Russell 悖论），但 Zermelo 未能在当时证明其一致性。};
+  \node[item,fill=wellpanel,draw=badgeWell!55] at (0,0.65)
+    {\textbf{1922 · Z → ZF。}Abraham Fraenkel 和 Thoralf Skolem 各自独立地扩展了 Zermelo 的系统——添加了**替换公理**和**正则公理**。新系统被称为 Zermelo--Fraenkel 集合论（ZF），成为数学的主流公理系统。};
+  \node[item,fill=choicepanel,draw=badgeChoice!55] at (0,-0.85)
+    {\textbf{ZFC = ZF + 选择公理。}加上选择公理 (Axiom of Choice) 的系统称为 ZFC——这是当今绝大多数数学的基础。从数论到代数几何，从分析到拓扑——所有证明的公理根基都可以追溯到 Zermelo 1908 年那篇论文。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Zermelo 的公理化 + Fraenkel/Skolem 的补全 = 现代数学的公理地基——一个多世纪后依然稳固。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 选择公理之辩 ---
+\newcommand{\choiceslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{选择公理之辩：存在于构造之间的哲学裂痕}{非构造性范式 · Russell 悖论 · Dedekind chain · 1908 第二次证明}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=choicepanel,draw=badgeChoice!55] at (0,2.45)
+    {\textbf{非构造性证明的范型。}选择公理断言：给定任意多个非空集合，存在一个选择函数。但它不告诉你"哪个元素"被选中。对于有限个集合，你可以枚举；对于无限个集合——尤其是不可数的——你无法构造这个函数，只能相信它"存在"。};
+  \node[item,fill=wellpanel,draw=badgeWell!55] at (0,0.65)
+    {\textbf{1904 论战。}Zermelo 的 1904 年证明立即引发激烈争议。Poincaré、Borel、Lebesgue 等法国数学家反对这种"非构造性"证明。Zermelo 1899 年已在哥廷根与 Hilbert 讨论过选择公理——Hilbert 支持他。};
+  \node[item,fill=zfcpanel,draw=badgeZFC!55] at (0,-0.85)
+    {\textbf{Russell 悖论的独立发现。}Zermelo 在 1902 年前后独立发现了 Russell 悖论——Husserl 的遗稿佐证了这一点。他知道朴素集合论有矛盾，这就是为什么 1908 年的公理化如此必要。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} "存在不等于可构造"——这五个字定义了 20 世纪数学哲学的半壁江山。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 1929 排名模型 + 1931 导航问题 ---
+\newcommand{\appliedslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{超越集合论：象棋排名模型 (1929) 与导航问题 (1931)}{Pairwise comparison · Elo 前身 · 最优控制 · 数学的两种应用面孔}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=rankpanel,draw=badgeRank!55] at (0,2.45)
+    {\textbf{1929 · 象棋排名模型。}Zermelo 发表了"Die Berechnung der Turnier-Ergebnisse als ein Maximumproblem der Wahrscheinlichkeitsrechnung"——用最大似然法对棋手强弱进行配对比较 (pairwise comparison) 排序。这是 **Elo 评级系统**的理论前身——今天象棋、围棋、电竞的排名算法都起源于此。};
+  \node[item,fill=rankpanel,draw=badgeRank!55] at (0,0.65)
+    {\textbf{Pairwise comparison 的深远影响。}Wikipedia 原文: "his 1929 work on ranking chess players ... continues to have a profound impact on various applied fields." Zermelo 的排名模型不仅在体育中广泛应用，在机器学习、推荐系统、心理测量学中也持续产生影响。};
+  \node[item,fill=zfcpanel,draw=badgeZFC!55] at (0,-0.85)
+    {\textbf{1931 · Zermelo 导航问题。}经典最优控制问题：船只从 O 点驶向 D 点，有最大速度限制，在有水流和风的环境下，如何控制航向使得到达时间最短？这是最优控制理论的标准案例——近百年来被反复研究和推广。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 从公理地基到象棋排名——Zermelo 的数学才华远超集合论。Elo 排名和最优控制的源头都在他手里。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 纳粹时代的骨气 ---
+\newcommand{\nazislide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{纳粹时代的骨气：1935 因反对希特勒而辞职}{与 Hecke 的对照 · 主动辞职 · 1945 复职 · 弗莱堡}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=choicepanel,draw=badgeChoice!55] at (0,2.45)
+    {\textbf{1926--1935 · 弗莱堡荣誉教席。}1926 年 Zermelo 被授予弗莱堡大学荣誉教席。他健康不佳（1916 因健康辞去苏黎世教席），但仍在弗莱堡继续研究和教学。};
+  \node[item,fill=zfcpanel,draw=badgeZFC!55] at (0,0.65)
+    {\textbf{1935 · 因反对希特勒政权辞职。}Zermelo 因为不赞成 Adolf Hitler 的政权，于 1935 年主动辞去弗莱堡的荣誉教席。Wikipedia 原文: "which he resigned in 1935 because he disapproved of Adolf Hitler's regime."};
+  \node[item,fill=wellpanel,draw=badgeWell!55] at (0,-0.85)
+    {\textbf{1945 · 二战结束后复职。}战争结束后，应 Zermelo 本人请求，弗莱堡大学恢复了他的荣誉教席。Wikipedia: "At the end of World War II and at his request, Zermelo was reinstated to his honorary position in Freiburg."};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Hecke 1933 签署了效忠宣誓（内心反对）· Zermelo 1935 直接辞职（公开反对）——两种选择，一种时代。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. ZFC 世纪遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{ZFC 的世纪遗产：一纸公理，托起百年数学}{现代数学的公理地基 · 连续统假设 · 哥德尔不完备定理 · 至今稳固}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=zfcpanel,draw=badgeZFC!55] at (0,2.45)
+    {\textbf{ZFC——数学的"宪法"。}今天几乎所有的数学都可以在 ZFC 公理体系中被形式化。从 Peano 算术到代数几何，从实分析到模型论——ZFC 是数学家默认接受的"宪法"。Zermelo 1908 年的公理化是这部宪法的初稿。};
+  \node[item,fill=choicepanel,draw=badgeChoice!55] at (0,0.65)
+    {\textbf{哥德尔——Zermelo 遗产的继承者。}1931 年哥德尔的不完备定理在形式主义框架中宣告了完备性的不可能。1940 年哥德尔用可构造集合 (L) 证明了 ZF 与选择公理的一致性。Zermelo 的公理化是这一切数学基础工作的起点。};
+  \node[item,fill=wellpanel,draw=badgeWell!55] at (0,-0.85)
+    {\textbf{连续统假设——未完成的使命。}Hilbert 第一问至今悬而未决：连续统假设在 ZFC 中不可判定（Gödel 1940 + Cohen 1963）。Zermelo 启动了证明，但问题本身超越了 ZFC 的边界——这正是数学之美的所在。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Zermelo 的公理是数学的底层协议——我们每天都在用它，但几乎从不提起它。这就是地基的最佳证明。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {一纸公理，托起百年数学};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {良序定理 · 选择公理 · Zermelo 集合论 · ZFC · 象棋排名};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Ernst Zermelo\enspace·\enspace 1871 -- 1953\enspace·\enspace 81岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {变分法 $\rightarrow$ 良序定理 (1904) $\rightarrow$ Zermelo 公理 (1908) $\rightarrow$ ZF (1922) $\rightarrow$ ZFC};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace ZFC 公理体系 \enspace|\enspace 选择公理 \enspace|\enspace 良序定理 \enspace|\enspace 排名模型 \enspace|\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\wellslide
+\zfcslide
+\choiceslide
+\appliedslide
+\nazislide
+\legacyslide
+\closingslide
+\end{document}

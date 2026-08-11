@@ -243,7 +243,21 @@ Morse 以好斗和固执著称。他与导师 Birkhoff 长期竞争——两人�
 - 小字：马斯顿·莫尔斯 · Marston Morse · 1892 — 1977
 - 底部：Morse 理论创立者 · 微分拓扑的建筑师 · 临界点的诗人
 
-## 音乐: Expedition + Timeless
+## 背景音乐选择 ✅
+
+- **选定曲目**: **Expedition** — Alex-Productions (66k views, 探索/史诗)
+- **风格**: 探索 / 史诗 / 远征式叙事
+- **匹配理由**:
+  - "远征式叙事" 完美匹配 Morse 的一生旅程：Colby College → Harvard → Cornell → Brown → Harvard → IAS（与 Einstein、von Neumann、Gödel 为邻）；从缅因小镇到普林斯顿黄金时代
+  - "探索" 匹配 Morse 的智识远征：从负曲率曲面上的测地线这一具体问题出发 → 推广为普遍的 Morse 理论 → Bott 周期定理 → Smale 广义 Poincaré 猜想 → Witten 超对称量子力学 → Flöer 同调 —— 一场跨越 60 年的数学远征
+  - "史诗" 匹配 Morse 不等式的革命性：$m_k \geq b_k$ —— 将分析（临界点）与拓扑（Betti 数）定量连接，微分拓扑的诞生宣言
+  - Morse 本人的好斗与固执性格，一战 Croix de guerre 十字勋章——"远征"气质深入骨髓
+  - Thue–Morse 序列（1921）—— 一个无意中的闪念，50 年后在晶体学中大放异彩——正是远征者才会留下的意外足迹
+- **备选** (未采用):
+  - ★★ Timeless — "沉稳/纪录片/长期纲领" 匹配 Morse 理论 60 年持久影响和 1934 年经典著作的等待，但 Morse 的气质更偏向探索而非沉稳；他是一生专注一个主题的远征者，而非安静的架桥人
+  - ★ The Flow of Time — "时间感/纪录片" 匹配 Morse 理论跨越 60 年的演化史，但受众偏低 (56k views)
+- **本地路径**: `music_audio/alex-productions/33--_CEmB_dHpA-Expedition.wav` → `presentations/Marston_Morse/Expedition.wav`
+- **时长**: 128 秒 > 17 页 × 7 秒 = 119 秒 → ffmpeg `-shortest` 自动对齐
 
 ## Round 2 高危: Morse 理论奠基论文年份 (1928 非 1925)、Thue–Morse 序列是否提及、Colby College 教育背景、博士论文题目准确表述、与 Birkhoff 关系客观化。
 

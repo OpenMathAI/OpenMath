@@ -224,12 +224,34 @@ WHERE a.name_en='Hermann Minkowski' OR b.name_en='Hermann Minkowski';
 
 ---
 
-> **开始执行。每完成一步向我汇报。**
->
-> **特别提醒：**
-> 1. 数的几何是核心贡献——用几何重新发明数论
-> 2. Minkowski 时空是最大名声——"空间与时间"演讲的名句必用
-> 3. 18 岁大奖 + 44 岁早逝——天才的戏剧弧线
-> 4. 与 Hilbert 的友谊是人格叙事核心——悼词是权威背书
-> 5. 爱因斯坦师生关系——数学家的物理引路人
-> 6. 结尾应回归"一个 44 岁的生命，如何重塑了数学与物理的几何语言"
+## 十三、立传完成后操作（★ 勿遗漏）
+
+- [x] **Wikipedia 下载**: `pages/Hermann_Minkowski/page.md` + `metadata.json` ✅
+- [x] **头像**: `Hermann_Minkowski.png` 嵌入 (1.92cm, 右上角, 下移30px) ✅
+- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第60行 Minkowski: `🔲 → ✅` ✅
+- [x] **数据库联动**: `people.has_biography` 设为 `1` ✅ (id=60, 社会关系已在库中 9条, `has_social_data=1`)
+- [x] **编译验证**: `make distclean && make` → 12页 472KB, 0错误 ✅
+
+### 第1轮 Review 记录 (2026-08-11)
+
+> 对照 Wikipedia (`pages/Hermann_Minkowski/page.md`) 逐页核查。
+
+**修复清单：零。** 11/11页全部与 Wikipedia 一致。
+
+| 页 | 核查内容 | 结果 |
+|:--:|------|:--:|
+| 封面 | 姓名·生卒(1864-1909,44岁)·Kingdom of Prussia·Grand Prix 1883·头像1.92cm右上角·名句中英对照 | ✅ |
+| 总览 | 时间线(Königsberg→Bonn→ETH→Göttingen)·Hilbert悼词"rare gift from heaven" | ✅ |
+| 早年 | Aleksotas·父Lewin Boruch·1872迁柯尼斯堡·Henry Smith共享追授·1885 Lindemann博士 | ✅ |
+| 数的几何 | 1896·Minkowski定理·Brunn–Minkowski(Brunn 1887) | ✅ |
+| Minkowski时空 | 1908.9.21科隆·80届·x²+y²+z²−c²t²·名句原文一字不差 | ✅ |
+| 数学物理 | 二次型→Lorentz·电磁应力张量·Einstein 1915 | ✅ |
+| 哥廷根 | 1902 Hilbert引入·悼词全文"best, most dependable friend...garden full of flowers"·Born致学生悼词 | ✅ |
+| 爱因斯坦老师 | 1896-1902 ETH·"one of Einstein's teachers"·1905→1908几何化 | ✅ |
+| 44岁早逝 | 阑尾炎1909.1.12·Geometrie der Zahlen(1910)·Gesammelte Abhandlungen(1911) | ✅ |
+| 世纪遗产 | Minkowski界·Minkowski–Hlawka·Smith–Minkowski–Siegel | ✅ |
+| 结束页 | 引语·时间线·生卒·底部标签 | ✅ |
+
+**结论：第1轮 Review 通过。零问题。** Wikipedia+TeX 完全一致。
+
+> **第1轮 Review 完成。**

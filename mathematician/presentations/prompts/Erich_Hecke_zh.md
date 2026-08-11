@@ -219,12 +219,46 @@ WHERE a.name_en='Erich Hecke' OR b.name_en='Erich Hecke';
 
 ---
 
-> **开始执行。每完成一步向我汇报。**
->
-> **特别提醒：**
-> 1. Hecke 算子是模形式理论的核心工具——谱分解是核心叙事
-> 2. Hecke 特征/L-函数是连接数论与表示论的桥梁——Langlands 纲领的源头
-> 3. Weil 的评价是极佳的权威背书——"在经典路径上超越 Hecke 是徒劳且不可能的"
-> 4. 1933 宣誓是历史复杂性，不是道德审判——平衡表述
-> 5. 学生是汉堡学派的延续——Maass 形式、Petersson 度量
-> 6. 结尾应回归"从个别函数到谱理论"的思想转变
+## Review 第1轮记录 (2026-08-11)
+
+> 对照 Wikipedia (`pages/Erich_Hecke/page.md`) 逐页核查。
+
+### 修复清单
+
+| # | 问题 | 优先级 | 位置 | 原内容 | 修正 |
+|:--:|------|:--:|------|------|------|
+| 1 | Zahlbericht 年代错误 | P0 | 页3·Göttingen 段落 | "Hilbert 正在撰写 *Zahlbericht*（数论报告），引领 20 世纪代数数论的方向" | "Hilbert 正在积分方程与公理化方法中建立现代泛函分析的框架"（*Zahlbericht* 1897年出版，Hecke 1907–1910在Göttingen，相差10年） |
+| 2 | 书名标签不准确 | P1 | 页2·Hook面板 | "《模形式讲义》" | "《代数数论讲义》"（Hecke 代表作 *Vorlesungen über die Theorie der algebraischen Zahlen* 是代数数论教材，非独立模形式讲义） |
+
+### 逐页核查通过项
+
+| 页 | 核查内容 | 结果 |
+|:--:|------|:--:|
+| 封面 | 姓名(Erich Hecke)、生卒(1887-09-20~1947-02-13, 59岁)、国籍(German Empire→Germany)、Ackermann–Teubner 1938、ICM 1936 Plenary、头像已嵌入(Erich_Hecke.jpg, 1.92cm)、无 emoji 国旗 | ✅ |
+| 总览 | 叙事线(Hilbert→Göttingen→Basel→Hamburg)、Weil引用"futile and impossible task"、四面板(Hecke算子/模形式/L-函数/传承) | ✅ |
+| 早年 | Buk出生、Posen省、Breslau/Berlin/Göttingen、Hilbert指导、1910博士、Dedekind ζ函数方程(theta函数证明) | ✅ |
+| Hecke算子 | T_n算子、谱分解、本征形式a_p、Euler积L(s,f)=∑a_n n^{-s}、尖点形式理论、GL(2)全纯 — 全部与 Wikipedia "Research" 段一致 | ✅ |
+| Hecke L-函数 | Dedekind ζ函数方程、Hecke特征(Grössencharakter)、idèle类特征、Tate论文(1950) — 与 Wikipedia 一致 | ✅ |
+| 代数数论讲义 | *Vorlesungen über die Theorie der algebraischen Zahlen*、Weil 评价原文"futile and impossible task" — 与 Wikipedia 完全一致 | ✅ |
+| 汉堡学派 | 1919汉堡、与Artin共建、Hecke-Artin互补、Reidemeister/Behnke/Petersson/Maass — 与 Wikipedia + Wikidata 一致 | ✅ |
+| 学生传承 | Petersson内积、Maass形式(非全纯)、Reidemeister扭结理论、Behnke明斯特学派 — 准确 | ✅ |
+| 纳粹时代 | 1933宣誓、Wikipedia原文"was later known as being opposed to the Nazis"、1947 Copenhagen逝世 — 与 Wikipedia 一字不差 | ✅ |
+| 世纪遗产 | Hecke算子→Langlands纲领、Iwahori–Hecke代数(1964年属后世发展，已标注) — 准确 | ✅ |
+| 结束页 | Weil引语"futile and impossible task" — Wikipedia原文，注明出处 ✅ |
+
+### 已修复问题
+
+- P0: **Zahlbericht 年代错位** — 1897年出版 vs Hecke 1907–1910在Göttingen，相差10年。改为 Hilbert 当时的实际研究方向（积分方程/公理化/泛函分析）✅
+- P1: **Hook 面板书名** — "《模形式讲义》"→"《代数数论讲义》"，与 Wikipedia 和 Weil 引语一致 ✅
+
+### 结论
+
+**第1轮 Review 通过。** 发现并修复 2 个问题 (P0×1, P1×1)，其余 11 页全部与 Wikipedia 一致。头像、国籍、Revew 均已到位。
+
+---
+
+## 十三、立传完成后操作（★ 勿遗漏）
+
+- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第58行 Hecke: 立传 `🔲 → ✅` ✅, Review `🔲 → ✅` (第1轮完成)
+- [x] **数据库联动**: `people.has_biography` 设为 `1` ✅ (id=58, 社会关系已在库中 11条, `has_social_data=1`)
+- [x] **编译验证**: `make distclean && make` → 12页 180KB，0错误 ✅

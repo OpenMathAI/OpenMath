@@ -1,0 +1,368 @@
+% =============================================================
+%  模形式的谱之大师：埃里希·赫克 (Erich Hecke)
+%  Hecke 算子 · Hecke L-函数 · Langlands 纲领源头
+%  资料来源：Wikipedia (Erich Hecke)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：模形式蓝 + 算子金 + 汉堡港口红 =====
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{1B3A5C}
+\definecolor{coveraccent}{HTML}{C9A227}
+\definecolor{coverdark}{HTML}{1F2A28}
+\definecolor{covermuted}{HTML}{6B7A85}
+\definecolor{badgeOp}{HTML}{C9A227}
+\definecolor{badgeMod}{HTML}{2E5F8A}
+\definecolor{badgeLfunc}{HTML}{2A7F8A}
+\definecolor{badgeHam}{HTML}{B04A4A}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{90,85,80}
+\definecolor{oppanel}{RGB}{255,248,230}
+\definecolor{modpanel}{RGB}{232,241,250}
+\definecolor{lpanel}{RGB}{230,247,249}
+\definecolor{hampanel}{RGB}{252,235,235}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeOp!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeMod!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeLfunc!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeHam!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace German Empire $\rightarrow$ Germany\enspace|\enspace Ackermann--Teubner 1938\enspace|\enspace ICM 1936 Plenary};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {埃里希·赫克};
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.3cm, yshift=-1.1cm]current page.north east) {\includegraphics[width=1.92cm]{Erich_Hecke.jpg}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Erich Hecke\enspace·\enspace 1887 -- 1947\enspace·\enspace 59岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Hecke 算子 · Hecke 特征 · Hecke L-函数 · 模形式谱理论};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeOp, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {Hecke 算子\\[2pt]谱分解\\本征形式\\尖点形式};
+      \node[rounded corners=8pt, fill=badgeMod, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {模形式理论\\[2pt]奠基性系统化\\GL(2) 全纯\\模曲线};
+      \node[rounded corners=8pt, fill=badgeLfunc, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {Hecke L-函数\\[2pt]Hecke 特征\\idèle 类特征\\Dedekind $\zeta$};
+      \node[rounded corners=8pt, fill=badgeHam, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {传承\\[2pt]Hilbert 学生\\汉堡学派\\Langlands 源头};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {"他用一组算子，把模形式变成了谱。百年后，整个 Langlands 纲领仍在它的坐标里。"};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Göttingen $\rightarrow$ Basel $\rightarrow$ Hamburg\enspace|\enspace Hilbert 学生\enspace|\enspace ICM 1936 Plenary};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 总览 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{模形式的谱之大师：一组算子如何改变了数论}{Hecke 算子 · Hecke 特征 · L-函数 · Langlands 纲领的数学源头}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=oppanel,draw=badgeOp!55,text=badgeOp!85!black]
+    (a) at (-5.5,1.1) {Hecke 算子\\[2pt]模形式谱分解\\本征形式\\从函数到谱};
+  \node[nodebox,fill=modpanel,draw=badgeMod!55,text=badgeMod!85!black]
+    (b) at (-1.85,1.1) {模形式理论\\[2pt]尖点形式\\GL(2) 全纯\\《代数数论讲义》};
+  \node[nodebox,fill=lpanel,draw=badgeLfunc!55,text=badgeLfunc!85!black]
+    (c) at (1.85,1.1) {Hecke L-函数\\[2pt]Hecke 特征\\Dedekind $\zeta$\\Tate 论文};
+  \node[nodebox,fill=hampanel,draw=badgeHam!55,text=badgeHam!85!black]
+    (d) at (5.5,1.1) {传承\\[2pt]Hilbert 学派\\汉堡重镇\\Langlands 源头};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} Erich Hecke 用一组算子将模形式从"个别函数的性质"升级为"谱理论"。}\\{\fontsize{7.0}{9.0}\selectfont Hilbert 门下 → Göttingen 博士 (1910) → Basel (1915) → 汉堡学派缔造者 (1919–1947) →\\[1pt]Hecke 算子 → 谱分解 → Hecke 特征/L-函数 → Langlands 纲领的源头。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} Weil: "在代数数论经典路径上超越 Hecke，是徒劳且不可能的。" — Basic Number Theory}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年与教育 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{从 Posen 省到 Göttingen：Hilbert 门下的数论天才 (1887--1910)}{German Empire\enspace|\enspace Buk $\rightarrow$ Breslau $\rightarrow$ Berlin $\rightarrow$ Göttingen $\rightarrow$ Hilbert 博士}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=oppanel,draw=badgeOp!55] at (0,2.65)
+    {\textbf{1887 · Posen 省 Buk。}Erich Hecke 生于德意志帝国 Posen 省 Buk（今波兰 Poznań 附近）。Friedrich-Wilhelms-Gymnasium 中学毕业后，先后在 Breslau、柏林大学和哥廷根大学学习数学。};
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,1.05)
+    {\textbf{Göttingen 黄金时代。}在哥廷根，Hecke 受教于 **David Hilbert**、Felix Klein、Hermann Minkowski。此时正是哥廷根学派的鼎盛期——Hilbert 正在积分方程与公理化方法中建立现代泛函分析的框架，引领 20 世纪数学的方向。};
+  \node[item,fill=lpanel,draw=badgeLfunc!55] at (0,-0.35)
+    {\textbf{1910 · 博士毕业。}在 Hilbert 指导下获博士学位。博士期间即开始研究 Dedekind $\zeta$ 函数的函数方程——用 theta 函数给出了一个优雅的证明。这一方法后来推广到 Hecke 特征的 L-函数，成为现代解析数论的标准技巧。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Hilbert 的学生 → 博士论文已含终生工作的种子：Dedekind $\zeta$ 函数 $\rightarrow$ Hecke 特征 $\rightarrow$ Hecke L-函数。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. Hecke 算子 ---
+\newcommand{\opslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Hecke 算子：把模形式变成谱 (1920s)}{谱分解 · 本征形式 · 算子环 · T\_p 作用 · GL(2) 全纯模形式}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=oppanel,draw=badgeOp!55] at (0,2.65)
+    {\textbf{从函数到谱——思想革命。}Hecke 定义了一组线性算子 $T_n$，作用在模形式空间上。这些算子互相交换（$T_m \circ T_n = T_{mn}$），可以对角化——将模形式空间分解为一维本征子空间。这是模形式理论从"个别函数"到"谱理论"的飞跃。};
+  \node[item,fill=oppanel,draw=badgeOp!55] at (0,0.75)
+    {\textbf{本征形式与 L-函数。}Hecke 本征形式 $f$ 满足 $T_p f = a_p f$。Hecke 证明：$f$ 的 Mellin 变换恰好是一个 Euler 积 L-函数 $L(s,f)=\sum a_n n^{-s}=\prod_p (1-a_p p^{-s}+p^{k-1-2s})^{-1}$。模形式与 L-函数的桥梁由此建立——这是 Langlands 纲领的源头。};
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,-0.85)
+    {\textbf{尖点形式理论。}Hecke 建立了全纯尖点形式（cusp forms）的一般理论——包括维数公式、Petersson 内积、以及空间 $S_k(\Gamma)$ 的完备基底。他为 GL(2) 的模形式理论提供了几乎完整的经典框架。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.2) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Hecke 算子 $\rightarrow$ 谱分解 $\rightarrow$ 本征形式 $\rightarrow$ Euler 积 L-函数 —— 这一链条是 Langlands 纲领的经典原型。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Hecke L-函数 ---
+\newcommand{\lslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Hecke 特征与 Hecke L-函数：从 Dirichlet 到 idèle}{Hecke 特征 · idèle 类特征 · Hecke L-函数 · 函数方程 · Tate 论文}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=lpanel,draw=badgeLfunc!55] at (0,2.45)
+    {\textbf{Dedekind $\zeta$ 函数的函数方程。}Hecke 早期用 theta 函数证明了 Dedekind $\zeta$ 函数的函数方程——这是代数数域上最基础的 L-函数。方法优雅而通用。};
+  \node[item,fill=lpanel,draw=badgeLfunc!55] at (0,0.65)
+    {\textbf{Hecke 特征 (Grössencharakter)。}Hecke 将 Dirichlet 特征推广到任意代数数域上的 idèle 类特征——后人称为 Hecke 特征。每个 Hecke 特征对应一个 Hecke L-函数，满足函数方程。这是现代类域论与 L-函数理论的基本对象。};
+  \node[item,fill=oppanel,draw=badgeOp!55] at (0,-0.85)
+    {\textbf{Tate 论文 (1950) — 从 Hecke 到 adèle。}John Tate 在其著名博士论文中（导师 Emil Artin）用 adèle 与 idèle 的语言重写了 Hecke 的 L-函数理论。Tate 论文被视为现代数论的里程碑——而其核心数学结构，Hecke 早已奠定。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Hecke 特征 $\rightarrow$ Hecke L-函数 $\rightarrow$ Tate 论文 $\rightarrow$ Langlands 纲领 —— 一条从 1920 到今天的数学主线。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 代数数论的分析武器 ---
+\newcommand{\bookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《代数数论讲义》：经典路径的顶峰}{Weil 的至高评价 · 分析工具 · 模形式系统性 · 影响后世}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=oppanel,draw=badgeOp!55] at (0,2.45)
+    {\textbf{《代数数论讲义》(Vorlesungen über die Theorie der algebraischen Zahlen)。}Hecke 的经典教材——将 Dedekind 的理想论、Dirichlet 的单位定理、Galois 理论的数论应用、以及他自己的 L-函数理论融为一炉。数代数学家都从中学习了代数数论。};
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,0.65)
+    {\textbf{Weil 的至高评价。}André Weil 在 *Basic Number Theory* 前言中写道："在代数数论经典路径上超越 Hecke，是徒劳且不可能的。" (To improve upon Hecke, in a treatment along classical lines of the theory of algebraic numbers, would be a futile and impossible task.)};
+  \node[item,fill=lpanel,draw=badgeLfunc!55] at (0,-0.85)
+    {\textbf{分析武器的系统化。}Hecke 将傅里叶分析、theta 函数、模形式等分析工具系统化地引入代数数论。在此之前，解析方法与代数方法是分离的——Hecke 将它们焊接成一个整体。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Weil 的评价不是客套——它是数学史对 Hecke 的最高肯定：经典路径的完成者。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 汉堡学派 ---
+\newcommand{\hamslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{汉堡学派的缔造者：与 Artin 共建数论重镇 (1919--1947)}{Hamburg\enspace|\enspace Artin\enspace|\enspace Reidemeister\enspace|\enspace Petersson\enspace|\enspace Maass}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=hampanel,draw=badgeHam!55] at (0,2.45)
+    {\textbf{1919 · 汉堡大学的新起点。}一战结束后，Hecke 从 Göttingen 转至新建的汉堡大学。他与 **Emil Artin**（1920 年代在汉堡任教）共同将汉堡打造成 1920--1930 年代世界数论研究的中心之一。};
+  \node[item,fill=hampanel,draw=badgeHam!55] at (0,0.65)
+    {\textbf{Hecke--Artin 双星。}Artin 提供代数工具（Artin L-函数、Artin 互反律），Hecke 提供分析工具（Hecke L-函数、谱分解）。两人互补，汉堡学派同时覆盖了代数数论和解折数论的前沿。};
+  \node[item,fill=oppanel,draw=badgeOp!55] at (0,-0.85)
+    {\textbf{学生的谱系。}Kurt Reidemeister（拓扑学）、Heinrich Behnke（复分析，明斯特学派）、Hans Petersson（模形式，Petersson 内积）、Hans Maass（Maass 形式——非全纯模形式的开创者）。Hecke 的汉堡学派延续了 Hilbert 的数论传统。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Hecke + Artin = 1920 年代世界数论的汉堡坐标。学生的谱系证明：汉堡不是一站，是一个学派的起点。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 学生与传承 ---
+\newcommand{\studentslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{学生的谱系：从 Maass 形式到 Petersson 内积}{Reidemeister · Behnke · Petersson · Schoeneberg · Maass · 汉堡的延续}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,2.45)
+    {\textbf{Hans Petersson (1902--1984)。}Hecke 最著名的学生之一。Petersson 内积——模形式空间上的 Hermite 内积——成为模形式理论的标准工具。他将 Hecke 算子的谱理论推向更完备的形式。};
+  \node[item,fill=lpanel,draw=badgeLfunc!55] at (0,0.65)
+    {\textbf{Hans Maass (1911--1992)。}Hecke 的另一位学生，创立了 **Maass 形式**——非全纯模形式（拉普拉斯算子的本征函数）。这是 Hecke 算子谱理论从全纯到非全纯的推广。Maass 形式是现代自守形式理论的核心对象。};
+  \node[item,fill=hampanel,draw=badgeHam!55] at (0,-0.85)
+    {\textbf{更广的谱系。}Kurt Reidemeister（扭结理论先驱）、Heinrich Behnke（明斯特复分析学派创立者）、Bruno Schoeneberg（模曲线）、Wilhelm Maak、Erna Witt。Hecke 的学生分布在数论、拓扑、复分析、代数的各个前沿。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Petersson $\rightarrow$ 内积 · Maass $\rightarrow$ 非全纯形式 · Reidemeister $\rightarrow$ 扭结理论 —— Hecke 的汉堡学派定义了德国数学半个世纪的方向。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 纳粹时代 ---
+\newcommand{\nazislide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{纳粹时代的学者：1933 效忠宣誓与内心反对}{宣誓 · 复杂的历史 · 内心反对 · Copenhagen 逝世}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=hampanel,draw=badgeHam!55] at (0,2.45)
+    {\textbf{1933 年效忠宣誓。}1933 年，Hecke 签署了《德国大学教授对阿道夫·希特勒与国家社会主义的效忠宣誓》。这是纳粹统治下德国学术界的黑暗一页——近千名教授签署了这一宣誓。};
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,0.65)
+    {\textbf{复杂的历史评判。}史料普遍认为 Hecke 内心反对纳粹。Wikipedia 原文: "Hecke signed the Loyalty Oath... but was later known as being opposed to the Nazis." 在纳粹德国的极权体制下，不签署意味着失去职务和学术生涯——但历史评价为"内心反对"。};
+  \node[item,fill=lpanel,draw=badgeLfunc!55] at (0,-0.85)
+    {\textbf{战后的终结。}1945 年二战结束，汉堡大学遭到严重破坏。1947 年 2 月 13 日，Hecke 在哥本哈根逝世，享年 59 岁。他未能看到自己的理论在 1950 年代被 Tate 和 Langlands 推向新的高度。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 签署宣誓是历史的负担，内心反对是人性的底线——不渲染、不洗白、不简单化。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. Hecke 的世纪遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Hecke 的世纪遗产：从模形式到 Langlands 纲领}{Hecke 算子 $\rightarrow$ Langlands 纲领 · 现代数论的骨架 · 未竟的回响}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=oppanel,draw=badgeOp!55] at (0,2.45)
+    {\textbf{Hecke 算子 → Langlands 纲领。}Hecke 的本征形式 $f$ 对应的 L-函数 $L(s,f)=\sum a_n n^{-s}$ 是一个 Euler 积——这正是 Langlands 纲领中自守 L-函数的经典原型。Hecke 在 GL(2) 上所做的一切，Langlands 在 1967 年推广到了任意约化群。};
+  \node[item,fill=lpanel,draw=badgeLfunc!55] at (0,0.65)
+    {\textbf{Hecke 特征 → 类域论 → Tate 论文。}Hecke 的 Grössencharakter 是 idèle 类特征的先驱。Tate 1950 年用 adèle/idèle 语言重写了整个理论——这一工具后来成为 Langlands 纲领的基础语言。从 Hecke 到 Tate 到 Langlands，一条数学主线。};
+  \node[item,fill=modpanel,draw=badgeMod!55] at (0,-0.85)
+    {\textbf{Hecke 代数 (Iwahori--Hecke)。}虽然 Iwahori--Hecke 代数（1964）和双仿射 Hecke 代数是 Hecke 去世后的发展，但其名称本身说明：Hecke 算子的思想框架是如此根本，以至于后世的所有推广都用他的名字命名。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} "他用一组算子，把模形式变成了谱。百年后，整个 Langlands 纲领仍在它的坐标里。"}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {他用一组算子，把模形式变成了谱};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {Hecke 算子 · Hecke 特征 · Hecke L-函数 · 汉堡学派};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Erich Hecke\enspace·\enspace 1887 -- 1947\enspace·\enspace 59岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Dedekind $\zeta$ $\rightarrow$ Hecke 算子 $\rightarrow$ 谱分解 $\rightarrow$ Hecke L-函数 $\rightarrow$ Langlands 纲领};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHam!70]
+    at ([yshift=-2.1cm]current page.center) {"To improve upon Hecke... would be a futile and impossible task." — André Weil, Basic Number Theory};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace Hecke 算子 \enspace|\enspace 模形式 \enspace|\enspace Hecke L-函数 \enspace|\enspace 汉堡学派 \enspace|\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\opslide
+\lslide
+\bookslide
+\hamslide
+\studentslide
+\nazislide
+\legacyslide
+\closingslide
+\end{document}

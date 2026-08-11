@@ -255,7 +255,20 @@ Hopf 是 20 世纪代数拓扑最伟大的建筑者之一。他以安静、谦�
 - 小字：海因茨·霍普夫 · Heinz Hopf · 1894 — 1971
 - 底部：Hopf 纤维化的发现者 · ETH 拓扑学派之父 · IMU 主席 · 德国/瑞士数学家
 
-## 音乐: Expedition + Timeless
+## 背景音乐选择 ✅
+
+- **选定曲目**: **Timeless** — Alex-Productions (132k views, 最高受众)
+- **风格**: 沉稳 / 纪录片 / 长期纲领
+- **匹配理由**:
+  - "长期纲领" 完美匹配 Hopf 的贡献本质 —— Hopf 纤维化 S³→S² 是三维球面到二维球面的第一个非平凡映射，其优雅和永恒性超越了任何单一时代。Hopf 不变量开启了同伦论、Hopf 代数成为量子群的数学基础、Poincaré–Hopf 定理至今仍是微分拓扑的基石 —— 这些不是流星般的突破，而是永恒的结构
+  - "沉稳" 匹配 Hopf 安静谦逊的建筑师人格 —— 他不像 Morse 是远征者，不像 Whitney 是登山家。他是 ETH 拓扑学派的缔造者，培养了 Freudenthal, Hirzebruch, Kervaire, Stiefel, Eckmann 等一代宗师，用三十四年（1931-1965）将苏黎世变成代数拓扑的圣地。这种安静的建造需要沉稳，而非史诗
+  - "纪录片" 匹配传记叙事带宽 —— 一战铁十字勋章（1918）→ Göttingen 遇见 Alexandrov 和 Noether（1925）→ Princeton 发现 Hopf 不变量（1927-28）→ 纳粹没收财产（1942）→ 被迫入籍瑞士 → IMU 主席重建国际数学交流（1955-58）。这不是一场远征，而是一段被历史推动的命运
+  - Hopf 纤维化的美学：S³ 被分解为无穷多个互相缠绕的圆（Hopf 链环），每一对纤维都是永恒的链接 —— 这种结构本身就是 "Timeless" 的隐喻
+- **备选** (未采用):
+  - ★★ PAST — "历史感/深沉" 精准匹配 Hopf 经历的战前-战争-迫害-重建的全景式历史弧线，以及他与 Alexandrov 合著《Topologie》(1935) 的经典时代感。但受众偏低 (86k views) 且历史标签可能过度强调苦难而弱化了 Hopf 作为建筑师的建设性面向
+  - ★ Expedition — 完全不匹配。Hopf 不是远征者：他两次拒绝 Princeton（1929, 1940），选择留在欧洲；他的 ETH 学派是深耕而非远征；他的性格安静谦逊而非好斗固执。Expedition 属于 Morse 和 Whitney 式的登山家
+- **本地路径**: `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` → `presentations/Heinz_Hopf/Timeless.wav`
+- **时长**: 128 秒 > 17 页 × 7 秒 = 119 秒 → ffmpeg `-shortest` 自动对齐
 
 ## Round 2 高危: 纤维化维数 S^3→S^2 (非 S^2→S^1)、Hopf 不变量发现 1927-28 (非 1931)、Poincaré–Hopf 定理归属、纳粹 1942 财产没收、IMU 主席、ETH Hopf 奖。
 

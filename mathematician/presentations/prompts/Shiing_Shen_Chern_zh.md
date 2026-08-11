@@ -208,22 +208,22 @@
 
 ---
 
-### 音乐选择
+## 背景音乐选择 ✅
 
-> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
-
-陈省身的气质：**宏阔、优雅、中国根基 + 世界格局、宗师风范** — 可以带有中国元素的现代古典乐。
-
-**推荐曲目（精选自 music_audio/curated_tracks.md）：**
-
-| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
-|:--:|------|------|------|------|
-| ★★★ | Awaken | alex-productions | `music_audio/alex-productions/36-aqLUvpAdLNQ-Awaken.wav` | 鼓舞明亮，微分几何的开创者 |
-| ★★★ | Timeless | alex-productions | `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` | 沉稳纪录片，Chern 类的永恒影响 |
-| ★★ | Nostalgia | alex-productions | `music_audio/alex-productions/86-5ETNuoDcBg4-Nostalgia.wav` | 怀旧温和，叶落归根南开研究所 |
-| ★ | Expedition | alex-productions | `music_audio/alex-productions/33--_CEmB_dHpA-Expedition.wav` | 探索史诗，从嘉兴到伯克利到南开 |
-
-**操作**：复制选定的 `.wav` 到 `Shiing_Shen_Chern/` 目录，`make video` 自动混入。
+- **选定曲目**: **Timeless** — Alex-Productions (132k views, 最高受众)
+- **风格**: 沉稳 / 纪录片 / 长期纲领
+- **匹配理由**:
+  - "长期纲领" 完美匹配 Chern 的贡献本质 —— Chern 类不是单一的突破，而是整个复几何、代数几何、规范场论的基石。Chern–Gauss–Bonnet (1944) 是整体微分几何的创世之作，至今 80 余年仍是标准语言。Chern–Simons (1974) 被 Chern 本人视为"技术性工具"，15 年后 Witten 发现它是三维拓扑量子场论的核心 —— "Timeless" = 永恒的、超越时代的结构
+  - "沉稳" 匹配 "陈老先生的文章简约明了" —— Chern 的数学写作以清晰优雅著称，不是炫技的革命者，而是用最简明的语言揭示最深的结构。他的风格是内蕴的（intrinsic）、克制的，而非张扬的 —— 这正是 Timeless 的沉稳气质
+  - "纪录片" 匹配跨越三大洲的人生叙事 —— 嘉兴→南开→汉堡→巴黎→西南联大→普林斯顿→芝加哥→伯克利→南开。从抗日战争期间在西南联大教书，到 IAS 1943-45 做出 Chern–Gauss–Bonnet，到晚年回国创办南开数学研究所（1984-2004）—— 这不是一场远征，而是一场命运的环形回归。最终"叶落归根"，在南开逝世
+  - "三代宗师"传承链 —— Blaschke → Chern → Yau（丘成桐）。Chern 类 → Chern–Simons → Jim Simons 量化投资。这种跨代的永恒传承，正是 "Timeless"
+  - 中西合璧的独特气质 —— 中国根基 + 世界格局：他打破了华人在纯数学领域的能力偏见。Wolf 奖 (1983) 首位华人得主，Shaw 奖 (2004) 首届得主。Timeless 的克制深度恰好匹配这种不张扬的民族自豪感
+- **备选** (未采用):
+  - ★★★ Awaken — "鼓舞/明亮/突破" 匹配中国数学的突破和华人之光的自豪感。但 Awaken 更适合"年轻的开拓者"或"单一突破"—— Chern 的工作是系统性、结构性的奠基（非瞬间突破），且 Chern–Gauss–Bonnet 时他已 33 岁，不是少年天才叙事。Awaken 的明亮感过于"跳跃"，无法承载 Chern 的沉稳宗师气质
+  - ★★ Nostalgia — "怀旧/温和" 精准匹配南开研究所的"叶落归根"主题。但这个标签只覆盖人生的最后 20 年（1984-2004），而 Chern 的数学生涯跨度超过 60 年，Nostalgia 过于窄化
+  - ★ Expedition — 完全不匹配。Chern 不是远征者，他是在不同文化之间架桥的宗师。Expedition 属于 Morse 和 Whitney 这样的登山家
+- **本地路径**: `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` → `presentations/Shiing_Shen_Chern-W/Timeless.wav`
+- **时长**: 128 秒 > 18 页 × 7 秒 = 126 秒 → ffmpeg `-shortest` 自动对齐
 
 ---
 

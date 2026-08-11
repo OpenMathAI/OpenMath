@@ -236,12 +236,15 @@ WHERE a.name_en LIKE '%Birkhoff%' OR b.name_en LIKE '%Birkhoff%';
 
 ---
 
-> **开始执行。每完成一步向我汇报。**
->
-> **特别提醒：**
-> 1. 遍历定理是核心成就——"时间平均=空间平均"
-> 2. 1913 Poincaré 定理让美国数学赢得世界声誉
-> 3. 哈佛数学王朝是传承叙事——Morse/Stone/Whitney
-> 4. 反犹争议客观记录，不渲染不洗白
-> 5. 两个 Birkhoff 定理要区分（动力系统 vs 广义相对论）
-> 6. 结尾应回归"美国数学的崛起"
+## 十三、立传完成后操作（★ 勿遗漏）
+
+- [x] **Wikipedia 下载**: `pages/George_David_Birkhoff/page.md` + `metadata.json` ✅
+- [x] **头像**: `George_David_Birkhoff.jpg` 嵌入 (1.92cm, 右上角, 下移30px) ✅
+- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第62行 Birkhoff: `🔲 → ✅` ✅
+- [x] **数据库联动**: `people.has_biography` 设为 `1` ✅ (id=62, 社会关系已在库中 14条, `has_social_data=1`)
+- [x] **编译验证**: `make distclean && make` → 12页 199KB, 0错误 ✅
+
+### 第1轮 Review (待执行)
+- 待与本地 Wikipedia 逐页比对后进行 ⬜
+
+> **立传完成，待 Review。**

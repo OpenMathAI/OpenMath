@@ -234,12 +234,48 @@ WHERE a.name_en='Ernst Zermelo' OR b.name_en='Ernst Zermelo';
 
 ---
 
-> **开始执行。每完成一步向我汇报。**
->
-> **特别提醒：**
-> 1. ZFC 公理体系是核心叙事——现代数学大厦最深层的地基
-> 2. 1904 良序定理 + 选择公理的非构造性争议是戏剧核心
-> 3. 1922 Fraenkel/Skolem 扩展为 ZF——合作者的贡献要写明
-> 4. 1935 辞职是"骨气"叙事（与 Hecke 1933 宣誓形成对照）
-> 5. 1929 排名模型、1931 导航问题是数学应用于现实的两大亮点
-> 6. 结尾应回归"一纸公理，托起百年数学"
+## Review 第1轮记录 (2026-08-11)
+
+> 对照 Wikipedia (`pages/Ernst_Zermelo/page.md`) 逐页核查。
+
+### 修复清单
+
+| # | 问题 | 优先级 | 位置 | 原内容 | 修正 |
+|:--:|------|:--:|------|------|------|
+| 1 | 城市名拼写错误 | P1 | 页2·Hook时间线 | "Freiberg荣誉教席(1926)" | "Freiburg荣誉教席(1926)"（Freiberg 是萨克森矿山城市，Zermelo 任教的是 Freiburg im Breisgau/巴登-符腾堡） |
+
+### 逐页核查通过项
+
+| 页 | 核查内容 | 结果 |
+|:--:|------|:--:|
+| 封面 | 姓名(Ernst Zermelo)、生卒(1871-07-27~1953-05-21, 81岁)、国籍(German Empire→Germany, 文本无emoji)、Ackermann–Teubner 1916、头像(Ernst_Zermelo.jpeg, 1.92cm, 右上角)、Fuchs & Schwarz学生、1935反纳粹辞职 | ✅ |
+| 总览 | 四面板(良序定理/公理系统/选择公理之辩/超越集合论)、时间线 Berlin→Göttingen→Zurich→Freiburg→1935辞职→1945复职 | ✅（已修复Freiberg拼写） |
+| 早年 | 1871柏林出生、Luisenstädtisches Gymnasium 1889、Berlin/Halle/Freiburg三校、Fuchs/Schwarz 1894博士(变分法)、Planck助手(1894-1897, 水动力学)、Göttingen 1897、Habilitation 1899、Hilbert 1900巴黎ICM第一问 | ✅ |
+| 良序定理(1904) | 选择公理引入、非构造性证明、Poincaré/Borel/Lebesgue反对、1908 Dedekind chain改进证明 — Wikipedia: "based on the powerset axiom and the axiom of choice" | ✅ |
+| Zermelo公理(1908)→ZF | 7条公理(外延/空集/配对/并集/幂集/无穷/分离)、未证明一致性、Fraenkel/Skolem 1922补充替换+正则 → ZF、ZFC=ZF+AC — Wikipedia一致 | ✅ |
+| 选择公理之辩 | 非构造性范式、1904论战、Russell悖论独立发现(Husserl遗稿佐证)、Hilbert支持 — Wikipedia: "evidenced by Husserl's Nachlass" | ✅ |
+| 排名模型+导航 | 1929象棋排名(pairwise comparison, Elo前身)、Wikipedia原文"continues to have a profound impact"、1931 Zermelo导航问题(最优控制) — Wikipedia一致 | ✅ |
+| 纳粹时代 | 1926弗莱堡荣誉教席、1935因反对Hitler辞职 — Wikipedia: "because he disapproved of Adolf Hitler's regime"、1945复职 — Wikipedia: "at his request, Zermelo was reinstated"、Hecke 1933对照 | ✅ |
+| ZFC世纪遗产 | 数学"宪法"、Gödel 1931不完备→1940 L(AC一致性)、CH不可判定(Gödel 1940+Cohen 1963) — 准确 | ✅ |
+| 结束页 | 引语"一纸公理，托起百年数学"、生卒(1871-1953, 81岁)、时间线(变分法→良序→公理→ZF→ZFC) | ✅ |
+
+### 未发现问题
+
+- 生卒日期、博士导师(Fuchs, Schwarz)、良序定理1904、公理化1908、ZF扩展1922、1935辞职—全部与 Wikipedia 一致 ✅
+- 头像嵌入(`Ernst_Zermelo.jpeg`, 1.92cm, 右上角) ✅
+- 国籍文本 `German Empire → Germany` (无 emoji) ✅
+- 封面底部标签: Berlin → Göttingen → Zurich → Freiburg, Fuchs & Schwarz 学生 ✅
+
+### 结论
+
+**第1轮 Review 通过。** 发现并修复 1 个问题 (P1拼写错误)，其余 10 页全部与 Wikipedia 一致。头像、国籍、Review 均已到位。
+
+---
+
+## 十三、立传完成后操作（★ 勿遗漏）
+
+- [x] **Wikipedia 下载**: `pages/Ernst_Zermelo/page.md` + `metadata.json` ✅
+- [x] **头像**: `Ernst_Zermelo.jpeg` 嵌入 (1.92cm, 右上角, 下移30px) ✅
+- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第59行 Zermelo: 立传 `🔲 → ✅` ✅, Review `🔲 → ✅` (第1轮完成)
+- [x] **数据库联动**: `people.has_biography` 设为 `1` ✅ (id=59, 社会关系已在库中 14条, `has_social_data=1`)
+- [x] **编译验证**: `make distclean && make` → 11页 237KB, 0错误 ✅

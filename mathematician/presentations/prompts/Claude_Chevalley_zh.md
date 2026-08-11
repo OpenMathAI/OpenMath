@@ -250,7 +250,20 @@ Chevalley 是一个典型的"Bourbaki 人格"：追求极致的抽象与严格�
 - 小字：克劳德·谢瓦莱 · Claude Chevalley · 1909 — 1984
 - 底部：Bourbaki 创始成员 · Chevalley 群的构造者 · 代数群的先驱 · 法国/美国数学家
 
-## 音乐: Expedition + Timeless
+## 背景音乐选择 ✅
+
+- **选定曲目**: **Timeless** — Alex-Productions (132k views, 最高受众)
+- **风格**: 沉稳 / 纪录片 / 长期纲领
+- **匹配理由**:
+  - "长期纲领" 完美匹配 Chevalley 的贡献本质 —— Chevalley 群 (1955) 不是单一的突破，而是一个结构性的纲领：每个 Dynkin 图对应一族有限单群，一次性构造 9/18 族。Chevalley basis 让李代数可以在任意域上定义 —— 这不是征服，是奠基
+  - "沉稳" 匹配 Bourbaki 的抽象气质 —— 公理化、严格化、系统化重写全部数学。Chevalley 是其中最安静的成员之一（不如 Weil 张扬，不如 Dieudonné 高产），但他负责的群论和代数部分是 Bourbaki 大厦的承重墙
+  - "纪录片" 匹配传记叙事 —— 南非出生 → 巴黎 ENS → 德国 Artin/Hasse 门下 → 二战滞留美国入籍 → Weil "Science Française?" 檄文 → 1957 重返法国。不是探险，是命运推动的流亡与回归
+  - Chevalley 的核心悲剧感也契合 Timeless 的深沉：Séminaire Cartan–Chevalley 是概形论的起源 —— 但种子是他种的，森林却是 Grothendieck 的。他种下结构，别人收获名声。晚年甚至批评 Bourbaki "扼杀了法国数学的直觉" —— 一个建造了抽象大厦的人，对自己参与的事业产生了反思
+- **备选** (未采用):
+  - ★★ Expedition — "探索/史诗" 匹配南非→法国→德国→美国→法国的跨洲旅程和 Weil 檄文事件的戏剧性，但 Chevalley 的本质不是远征者——他的旅程是被迫的流亡，不是主动的探索。Expedition 属于 Morse（登山家+一战勋章）和 Whitney（骨灰撒阿尔卑斯山顶），不属于 Bourbaki 的书斋建筑师
+  - ★ PAST — "历史感/深沉" 匹配 Bourbaki 的时代背景和 Séminaire 的历史意义，但受众偏低 (86k)
+- **本地路径**: `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` → `presentations/Claude_Chevalley/Timeless.wav`
+- **时长**: 128 秒 > 17 页 × 7 秒 = 119 秒 → ffmpeg `-shortest` 自动对齐
 
 ## Round 2 高危: 博士导师 Garnier 非 Picard、双重国籍、Chevalley–Tarski 应为 Chevalley 定理(可构造集)、Séminaire Cartan–Chevalley、Weil 檄文、Chevalley 群 = 9/18 族。
 
