@@ -83,7 +83,7 @@ endif
 
 clean:
 	$(LATEXMK) -c $(MAIN).tex 2>/dev/null || true
-	rm -f $(MAIN).{aux,log,toc,out,nav,snm,fls,fdb_latexmk,xdv} c.log
+	rm -f $(MAIN).aux $(MAIN).log $(MAIN).toc $(MAIN).out $(MAIN).nav $(MAIN).snm $(MAIN).fls $(MAIN).fdb_latexmk $(MAIN).xdv c.log
 	rm -f $(SLIDES_TXT) $(IMAGES_DIR)/.done
 
 distclean: clean
