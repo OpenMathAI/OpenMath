@@ -1,0 +1,359 @@
+% =============================================================
+%  遍历理论大师：雅科夫·西奈 (Yakov Sinai)
+%  Kolmogorov--Sinai 熵 · Sinai 台球 · 遍历假说 · 50+ 博士
+%  资料来源：Wikipedia (Yakov Sinai)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{1E4E79}
+\definecolor{coveraccent}{HTML}{1E6E6E}
+\definecolor{coverdark}{HTML}{1F2A28}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeAlg}{HTML}{1E4E79}
+\definecolor{badgeCom}{HTML}{B8860B}
+\definecolor{badgeHist}{HTML}{1E6E6E}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{badgeMart}{HTML}{8A1020}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{90,85,80}
+\definecolor{algpanel}{RGB}{234,242,248}
+\definecolor{companel}{RGB}{253,247,231}
+\definecolor{histpanel}{RGB}{234,242,242}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{martpanel}{RGB}{250,236,238}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\deckbackground}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {\draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);}
+  \foreach \y in {-0.2,0.7,...,9.3} {\draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\sectiontitle}[2]{\vspace{-0.52cm}\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}\vspace{0.06cm}}
+
+\input{../cover/openmath_page.tex}
+
+\newcommand{\titleslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\quad Russia · USA\enspace·\enspace K--S 熵 1959\enspace·\enspace Sinai 台球\enspace·\enspace 2014 Abel 奖};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {雅科夫·西奈};
+  \node[anchor=center, inner sep=0pt] at ([xshift=-6.6cm, yshift=0.55cm]current page.center) {%
+    \begin{tikzpicture}
+      \fill[coverprimary!14] (0,0) circle (1.5cm);
+      \fill[badgeCom!18] (0,0) circle (0.95cm);
+      \fill[badgeHist!22] (0,0) circle (0.50cm);
+      \node[font=\fontsize{16}{18}\selectfont\bfseries, text=coverprimary] at (0,0) {S};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Yakov Sinai\quad·\quad 1935--\quad·\quad 90岁（在世）};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {K--S 熵 · Sinai 台球 · 遍历假说 · SRB 测度 · 50+ 博士};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {\textbf{K--S 熵}\\[2pt]1959\\ \vspace{0.05cm}\\[2pt]不可预测性量化};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {\textbf{Sinai 台球}\\[2pt]1963\\ \vspace{0.05cm}\\[2pt]首次证明遍历性};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {\textbf{SRB 测度}\\[2pt]Sinai--Ruelle--Bowen\\ \vspace{0.05cm}\\[2pt]混沌耗散系统};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {\textbf{50+ 博士}\\[2pt]Margulis/Ratner\\ \vspace{0.05cm}\\[2pt]Katok/Bunimovich};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {据 Wikipedia：俄裔美籍数学家，遍历理论与动力系统领域最重要的数学家之一。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Moscow 1935\enspace·\enspace Moscow Univ 1960 PhD（Kolmogorov）\enspace·\enspace Landau Inst 1971\enspace·\enspace Princeton 1993\enspace·\enspace 导师 Kolmogorov};
+\end{tikzpicture}
+\end{frame}}
+
+\newcommand{\hookslide}{\begin{frame}
+\plainbar
+\sectiontitle{Kolmogorov 的学生：遍历理论与动力系统大师}{K--S 熵 · Sinai 台球 · SRB 测度 · 50+ 博士}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {K--S 熵\\ \vspace{0.05cm}\\[2pt]1959 测度熵\\ \vspace{0.05cm}\\[2pt]不可预测性量化};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {Sinai 台球\\ \vspace{0.05cm}\\[2pt]1963 首次证明\\ \vspace{0.05cm}\\[2pt]遍历性里程碑};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {SRB 测度\\ \vspace{0.05cm}\\[2pt]Sinai--Ruelle--Bowen\\ \vspace{0.05cm}\\[2pt]混沌耗散系统};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {50+ 博士\\ \vspace{0.05cm}\\[2pt]Margulis/Ratner/Katok\\ \vspace{0.05cm}\\[2pt]Bunimovich/Chernov};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 苏联数学的少数派——动力系统与数学物理的活桥梁。}\\{\fontsize{7.0}{9.0}\selectfont Moscow (1935) → Moscow Univ (1960 PhD) → Landau Inst (1971) → Moscow Prof (1981) → Princeton (1993) → Abel 2014。}\\{2pt}
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} Boltzmann 1986 · Abel 2014 · Wolf 1996 · 2014 在世 80 岁}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\entropyslide}{\begin{frame}
+\plainbar
+\sectiontitle{Kolmogorov--Sinai 熵 (1959)：不可预测性的量化}{与 Kolmogorov 共同定义\enspace·\enspace 测度熵\enspace·\enscape 零熵=完全可预测}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Kolmogorov--Sinai 熵。}1959 年，与导师 \textbf{Kolmogorov} 共同定义\textbf{测度熵}——用信息论方法量化动力系统的不可预测性。Kolmogorov 1958 年提概念，Sinai 1959 年完善并形式化。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{零熵=可预测。}熵为零意味着系统"完全可预测"（周期或准周期行为）——这一革命性观点把熵从热力学带入动力系统。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{应用。}如今 K--S 熵成为混沌理论、遍历理论、信息几何的核心工具——连接概率论与动力学的桥梁。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    \fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 不可预测性的量化——Sinai 的测度熵。
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\billiardsslide}{\begin{frame}
+\plainbar
+\sectiontitle{Sinai 台球 (1963)：首次证明遍历性}{动力学台球\enspace·\enscape 一硬球\enspace·\enscape 遍历性的真正证明}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{1963 Sinai 台球。}Sinai 1963 年发表关于\textbf{动力学台球}的著名工作——一硬球在方桌内运动并发生弹性碰撞，首次证明其测度理论是遍历的。这是动力系统领域的里程碑。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{遍历性证明。}证明建立了一种"在物理直观的桌球中遍历性成立"的范例——这比抽象动力系统更具物理意义。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{后续影响。}Sinai 台球的研究开启了 1970s 后的双曲动力系统研究——Bunimovich/Chernov 在 Sinai 基础上发展了 Markov 划分、渗流模型等。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    \fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 桌球也遍历——Sinai 1963 的物理动力系统证明。
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\ergodicityslide}{\begin{frame}
+\plainbar
+\sectiontitle{遍历假说的教训 (1963)：宣布过早，1987 自认至今未解}{1963 宣布遍历性\enspace·\enscape 从未完整发表\enspace·\enscape 1987 坦诚撤回}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{1963 · 宣布。}1963 年，Sinai 在国际数学家大会上宣布证明：\textbf{硬球气体}（n 硬球在容器内运动）的遍历性。这是统计力学严格基础的关键一步。};
+  \node[item,fill=martpanel,draw=badgeMart!55] at (0,1.05)
+    {\textbf{从未发表。}但这一证明\textbf{从未完整发表}——仅 1970 年的综述有部分叙述。1987 年，Sinai 公开承认"宣布是过早的"——证明存在不可弥补的漏洞。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{至今未解。}至今——\textbf{硬球气体遍历性}——仍是数学物理公开未解的问题。这是科学诚实性的典范：不掩盖不完整的结果。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    \fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 宣布过早——Sinai 1987 自认，至今未解。
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\srbslide}{\begin{frame}
+\plainbar
+\sectiontitle{SRB 测度：混沌耗散系统的不变测度}{Sinai--Ruelle--Bowen\enspace·\enscape 1972/1975/1976 共同命名\enspace·\enscape 混沌耗散系统的不变测度}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{三个人的贡献。}\textbf{SRB 测度}（Sinai 1972, Ruelle 1976, Bowen 1975）——三个数学家独立贡献共同命名——是混沌耗散系统上对应于平衡态的特殊不变测度。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{物理意义。}SRB 测度描述了"混沌吸引子上的自然统计分布"——连接遍历理论与统计力学的桥梁。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{现代发展。}SRB 测度至今在双曲动力系统、部分双曲系统、奇异吸引子研究中扮演关键角色。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    \fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 混沌吸引子——Sinai/Ruelle/Bowen 三人共同命名。
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\statmechslide}{\begin{frame}
+\plainbar
+\sectiontitle{统计力学严格化：Gibbs 测度与 Pirogov--Sinai 相变}{Pirogov--Sinai 理论\enspace·\enscape Gibbs 测度严格化\enspace·\enscape 统计力学的数学基础}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Gibbs 测度。}Sinai 与合作者严格化 \textbf{Gibbs 测度}——统计力学的基本概率分布从形式表述走向严格证明。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{Pirogov--Sinai 理论。}\textbf{Pirogov--Sinai 理论}——低温度下相变存在的严格证明——是统计力学相变理论的里程碑。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{现代发展。}Sinai、Bleher 与合作者还发展了重整化群的严格基础（Wilson 1982 诺贝尔奖工作的数学基础）。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    \fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 相变、临界现象——统计力学的严格数学。
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\markovpartitionslide}{\begin{frame}
+\plainbar
+\sectiontitle{Markov 划分与双曲系统}{与 Bunimovich/Chernov 合作\enspace·\enscape 双曲台球\enspace·\enscape 遍历性的现代理论}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Markov 划分。}Sinai 与 \textbf{Leonid Bunimovich}、\textbf{Nikolai Chernov} 发展了\textbf{Markov 划分}——双曲动力系统的几何基础。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{双曲台球。}他们证明了许多类台球（如 Bunimovich 台球、M Markus 蘑菇）的遍历性——Sinai 台球的现代延续。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{符号动力学。}Markov 划分把双曲动力系统转化为符号序列空间——把动力系统问题转化为组合问题。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    \fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 几何→符号——双曲动力系统的语言翻译。
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\renormalizationslide}{\begin{frame}
+\plainbar
+\sectiontitle{重整化群的严格基础：Wilson 诺贝尔奖的数学地基}{1970s 合作\enspace·\enscape Wilson 1982 物理诺贝尔奖\enspace·\enscape 严格化 KAM 理论}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{严格化。}Sinai 与 \textbf{Pavel Bleher} 等合作，\textbf{为重整化群理论提供严格数学基础}——把 Kenneth Wilson 的物理直觉转化为严格定理。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{Wilson 1982。}Wilson 因重整化群获 1982 年物理学诺贝尔奖——Sinai 与同事的严格化为其提供数学合法化。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{KAM 理论。}Sinai 与同事对 \textbf{KAM 理论}（Kolmogorov-Arnold-Moser）也有重要贡献——准周期系统的稳定性严格化。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    \fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 物理直觉 → 严格数学——Sinai 跨学科贡献。
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\randomwalknsslide}{\begin{frame}
+\plainbar
+\sectiontitle{Sinai 随机游走与 Navier--Stokes 方程}{一维随机环境游走\enspace·\enscape 随机 NS 方程\enspace·\enscape 21 世纪活跃问题}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Sinai 随机游走。}\textbf{一维随机环境中随机游走}（Sinai 随机游走）——Sinai 证明其慢化（抛物线）——是概率论与动力系统的重大结果。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{随机 Navier--Stokes。}Sinai 与 Khanin、Mattingly、Li 合作研究\textbf{随机 Navier--Stokes 方程}——试图将确定性 NS 方程转化为概率版本以处理湍流。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{21 世纪活跃。}随机 NS 方程是 21 世纪数学物理的活跃问题——Sinai 2014 获 Abel 奖部分表彰此项贡献。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    \fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 随机环境中的游走与湍流——Sinai 的现代活跃方向。
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\ussrrslide}{\begin{frame}
+\plainbar
+\sectiontitle{苏联岁月与异见立场：客观记录}{1968 支持 Esenin-Volpin\enspace·\enscape 1981 才升教授\enspace·\enscape 1993 普林斯顿}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{1960--71 莫斯科大学。}Sinai 1960 年博士后在莫斯科大学概率统计方法实验室工作 11 年——其间与导师 Kolmogorov 紧密合作。};
+  \node[item,fill=martpanel,draw=badgeMart!55] at (0,1.05)
+    {\textbf{1968 · 异见立场。}1968 年，Sinai 公开支持数学家诗人 \textbf{Alexander Esenin-Volpin}（异见者运动领袖）——这导致他在苏联体制内学术晋升受阻，\textbf{1981 年才成为莫斯科大学教授}（同期 Kolmogorov 早是院士）。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{1993 · 普林斯顿。}1993 年起任普林斯顿大学 Thomas Jones 教授——数学家从苏联到美国的迁徙，是 20 世纪末学术史的篇章。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    \fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 支持异见、晋升受阻——苏联体制下学术与政治。
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\abelfinalslide}{\begin{frame}
+\plainbar
+\sectiontitle{殊荣：Abel 2014 与 50+ 学术后代}{Abel 奖 2014\enspace·\enscape Wolf 1996\enspace·\enscape Boltzmann 1986\enspace·\enscape 50+ 博士}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{Abel 奖 2014。}2014 年，Sinai 获 \textbf{Abel 奖}（挪威科学与文学院）——表彰其对遍历理论、动力系统与数学物理的开创性贡献。这是动力系统领域的最高荣誉之一。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{Wolf 1996、Boltzmann 1986 等。}还获 \textbf{Wolf 数学奖 1996}、\textbf{Boltzmann 奖 1986}、AMS 会员、欧洲科学院院士等多重荣誉。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{50+ 博士。}他的博士学生包括 \textbf{Grigory Margulis}（1978 Fields）、\textbf{Marina Ratner}、\textbf{Anatole Katok}、\textbf{Leonid Bunimovich}、\textbf{Nikolai Chernov}、\textbf{Svetlana Jitomirskaya} 等 50+ 位。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    \fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 90 岁（2026）仍在世——遍历理论的活传奇。
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\closingslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {不可预测性的量化者};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {K--S 熵 · Sinai 台球 · 遍历假说 · SRB 测度 · 50+ 博士 · Abel 2014};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Yakov Sinai\quad·\quad 1935--\quad·\quad 90岁（在世）};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Moscow (1935) → Moscow Univ (1960) → Landau (1971) → 教授 (1981) → Princeton (1993)};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.65cm]current page.center) {Abel 2014 · 在世 90 岁};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {He is one of the most influential mathematicians in dynamical systems. -- Wikipedia};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace K--S 熵 \enspace·\enspace Sinai 台球 \enspace·\enspace 遍历假说 \enspace·\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\entropyslide
+\billiardsslide
+\ergodicityslide
+\srbslide
+\statmechslide
+\markovpartitionslide
+\renormalizationslide
+\randomwalknsslide
+\ussrrslide
+\abelfinalslide
+\closingslide
+\end{document}
