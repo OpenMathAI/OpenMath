@@ -96,11 +96,11 @@
 | 55 | 25 | **René Thom** (托姆) | Fields 1958 | 配边理论与突变论的创立者，Fields 奖 | ✅ | ✅✅ |
 | 56 | 9 | **Norbert Wiener** (维纳) | — | 控制论之父，Wiener 过程——数学向工程与生物扩散的枢纽 | ✅ | ✅ |
 | 57 | 73 | **Srinivasa Ramanujan** (拉马努金) | — | 印度天才，mock theta 函数，直觉穿越时代的数学家 | ✅ | ✅ |
-| 58 | 30 | **Erich Hecke** (赫克) | — | Hecke 算子，模形式理论的奠基人，Langlands 纲领的数学源头 | 🔲 | 🔲 |
-| 59 | 32 | **Ernst Zermelo** (策梅罗) | — | ZFC 公理体系——现代数学大厦最深层的地基之一 | 🔲 | 🔲 |
-| 60 | 69 | **Hermann Minkowski** (闵可夫斯基) | — | 数的几何，Minkowski 时空——理论物理的关键数学语言 | 🔲 | 🔲 |
-| 61 | 33 | **Lev Pontryagin** (庞特里亚金) | — | Pontryagin 示性类、Pontryagin 对偶——拓扑学的核心工具 | 🔲 | 🔲 |
-| 62 | 95 | **G.D. Birkhoff** (伯克霍夫) | — | 美国第一位真正有国际声誉的数学家，遍历理论开创者 | 🔲 | 🔲 |
+| 58 | 30 | **Erich Hecke** (赫克) | — | Hecke 算子，模形式理论的奠基人，Langlands 纲领的数学源头 | ✅ | ✅ |
+| 59 | 32 | **Ernst Zermelo** (策梅罗) | — | ZFC 公理体系——现代数学大厦最深层的地基之一 | ✅ | ✅ |
+| 60 | 69 | **Hermann Minkowski** (闵可夫斯基) | — | 数的几何，Minkowski 时空——理论物理的关键数学语言 | ✅ | ✅ |
+| 61 | 33 | **Lev Pontryagin** (庞特里亚金) | — | Pontryagin 示性类、Pontryagin 对偶——拓扑学的核心工具 | ✅ | ✅ |
+| 62 | 95 | **G.D. Birkhoff** (伯克霍夫) | — | 美国第一位真正有国际声誉的数学家，遍历理论开创者 | ✅ | ✅✅ |
 | 63 | 98 | **Richard Brauer** (布饶尔) | — | Brauer 群、模表示论——有限群与代数数论的双重大师 | 🔲 | 🔲 |
 | 64 | 59 | **Issai Schur** (舒尔) | — | Schur 引理、Schur 函数——表示论与组合学的基础语言 | 🔲 | 🔲 |
 | 65 | 15 | **Andrey Markov** (马尔可夫) | — | Markov 过程——概率论中最广泛应用的核心概念之一 | ✅ | ✅✅ |

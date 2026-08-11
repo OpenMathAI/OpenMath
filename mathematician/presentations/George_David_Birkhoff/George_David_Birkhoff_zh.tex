@@ -1,0 +1,389 @@
+% =============================================================
+%  美国数学的奠基者：乔治·戴维·伯克霍夫 (G.D. Birkhoff)
+%  遍历定理 · Poincaré 最后几何定理 · 哈佛数学王朝
+%  资料来源：Wikipedia (George David Birkhoff)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：哈佛深红 + 遍历青 + 动力金 + 手稿米 =====
+\definecolor{bgmain}{RGB}{248,245,238}
+\definecolor{coverprimary}{HTML}{7A1020}
+\definecolor{coveraccent}{HTML}{C9A227}
+\definecolor{coverdark}{HTML}{1F2A28}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeErg}{HTML}{1F7A8C}
+\definecolor{badgeDyn}{HTML}{C9A227}
+\definecolor{badgeRel}{HTML}{2E4A7A}
+\definecolor{badgeHarv}{HTML}{7A1020}
+\definecolor{titlecolor}{RGB}{20,28,30}
+\definecolor{muteddark}{RGB}{100,95,85}
+\definecolor{ergpanel}{RGB}{225,245,248}
+\definecolor{dynpanel}{RGB}{255,248,230}
+\definecolor{relpanel}{RGB}{232,238,250}
+\definecolor{harvpanel}{RGB}{252,232,232}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeErg!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeDyn!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeRel!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeHarv!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center)
+    {\faIcon{globe}\enspace United States\enspace|\enspace Bôcher 首届 1923\enspace|\enspace AMS 主席 · AAAS 主席};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {乔治·戴维·伯克霍夫};
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.3cm, yshift=-1.1cm]current page.north east)
+    {\includegraphics[width=1.92cm]{George_David_Birkhoff.jpg}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {George David Birkhoff\enspace·\enspace 1884 -- 1944\enspace·\enspace 60岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {遍历定理 · Poincaré 最后几何定理 · 哈佛王朝 · Birkhoff 定理（相对论）};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeErg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0)
+            {遍历定理 1931\\[2pt]时间平均=空间平均\\统计力学\\最持久成就};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0)
+            {Poincaré 定理 1913\\[2pt]三体问题·最后几何定理\\美国数学\\首次世界声誉};
+      \node[rounded corners=8pt, fill=badgeRel, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0)
+            {Birkhoff 定理 1923\\[2pt]Schwarzschild 唯一性\\黑洞的数学\\广义相对论};
+      \node[rounded corners=8pt, fill=badgeHarv, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0)
+            {哈佛王朝\\[2pt]Morse·Stone·Whitney\\20 世纪\\美国数学栋梁};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {"他证明了 Poincaré 的猜想，奠基了遍历理论，建造了哈佛数学王朝——美国数学第一次站在了世界的讲台上。"};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Michigan $\rightarrow$ Harvard\enspace|\enspace E.H. Moore 学生\enspace|\enspace 荷兰移民后代\enspace|\enspace AMS 主席 1925--26};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 总览 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{美国数学的奠基者：从遍历定理到哈佛王朝}{遍历定理 · Poincaré 最后几何定理 · Birkhoff 定理 · 哈佛学派}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=ergpanel,draw=badgeErg!55,text=badgeErg!85!black] at (-5.5,1.1)
+    {遍历定理 (1931)\\[2pt]时间平均=空间平均\\测度论+统计力学\\最持久成就};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black] at (-1.85,1.1)
+    {Poincaré 定理 (1913)\\[2pt]最后几何定理\\三体问题\\美国数学世界声誉};
+  \node[nodebox,fill=relpanel,draw=badgeRel!55,text=badgeRel!85!black] at (1.85,1.1)
+    {Birkhoff 定理 (1923)\\[2pt]广义相对论\\Schwarzschild 唯一性\\黑洞的数学基础};
+  \node[nodebox,fill=harvpanel,draw=badgeHarv!55,text=badgeHarv!85!black] at (5.5,1.1)
+    {哈佛王朝\\[2pt]Morse·Stone·Whitney\\AMS·AAAS 主席\\美国数学共同体};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88}
+      G.D. Birkhoff 是美国第一位真正具有国际声誉的数学家。}\\{\fontsize{7.0}{9.0}\selectfont
+      Overisel MI (1884, 荷兰移民) → Chicago/Harvard → E.H. Moore 博士(1907, summa cum laude) →\\[1pt]
+      Wisconsin(1907) → Princeton(1909) → Harvard(1912--1944) → 遍历定理(1931) → AMS 主席(1925) → AAAS 主席(1937)。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted}
+      首届 Bôcher 奖(1923)·Newcomb Cleveland 奖(1926)·NAS/APS/AAAS/巴黎科学院/宗座科学院 六院院士。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{从密歇根到芝加哥：23 岁 summa cum laude 博士 (1884--1907)}{荷兰移民后代 · Lewis Institute · Harvard · Chicago · E.H. Moore 门下}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=harvpanel,draw=badgeHarv!55] at (0,2.55)
+    {\textbf{1884 · Overisel Township, Michigan。}George David Birkhoff 生于密歇根州 Overisel 镇，父亲 David Birkhoff 是 1870 年移民美国的荷兰人，医生；母亲 Jane Gertrude Droppers。他是第一代完全在美国本土接受教育的美国数学家之一——没有去欧洲留学。};
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,0.85)
+    {\textbf{1896--1907 · 求学之路。}1896--1902 年就读 Lewis Institute（芝加哥）。在芝加哥大学一年后转入 Harvard，获 A.B. 和 A.M.。1905 年回到芝加哥大学，在 **Eliakim Hastings Moore** 指导下，1907 年以 summa cum laude 获博士学位——年仅 23 岁。论文研究微分方程。他深受 **Henri Poincaré** 著作的影响。};
+  \node[item,fill=ergpanel,draw=badgeErg!55] at (0,-0.55)
+    {\textbf{第一代本土美国数学家。}Wikipedia: "Birkhoff was part of a generation of American mathematicians who were the first to study entirely within the United States and not participate in academics within Europe." 1907--1909 Wisconsin → 1909--1912 Princeton → 1912 起终生执教 Harvard。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.85) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88}
+      荷兰移民之子 → 完全在美国本土完成教育 → 23 岁博士 → 1912 终身哈佛——美国数学自主成长的象征。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. Poincaré 最后几何定理 ---
+\newcommand{\poincareslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{1913 证明 Poincaré 最后几何定理：美国数学赢得世界声誉}{三体问题 · Poincaré–Birkhoff 定理 · 美国数学的成人礼}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,2.55)
+    {\textbf{Poincaré 的"最后定理"。}Henri Poincaré 在逝世前（1912）提出了一个关于三体问题的几何定理，但未能完全证明。这个定理涉及环面上保面积映射的不动点——动力学系统理论的核心问题。Poincaré 称之为他的"最后几何定理"。};
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,0.65)
+    {\textbf{1913 年 Birkhoff 完成证明。}年仅 29 岁的 Birkhoff 完成了 Poincaré 未竟的证明。Wikipedia: "he proved Poincaré's 'Last Geometric Theorem,' a special case of the three-body problem, a result that made him world-famous and improved the international recognition of American mathematics."};
+  \node[item,fill=ergpanel,draw=badgeErg!55] at (0,-0.85)
+    {\textbf{美国数学的成人礼。}在此之前的世纪里，美国数学界普遍被视为欧洲的影子。Birkhoff 的这一证明被公认为美国数学赢得国际尊重的标志性时刻。"他让美国数学第一次站在了世界的讲台上。"};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88}
+      Poincaré 提出问题，Birkhoff 给出答案——1913 年，美国数学的成人礼。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 遍历定理 ---
+\newcommand{\ergodicslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{遍历定理 (1931)：时间平均 = 空间平均——最持久的成就}{统计力学 · 测度论 · 遍历假说 · 动力系统 · 概率论}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=ergpanel,draw=badgeErg!55] at (0,2.55)
+    {\textbf{Birkhoff 遍历定理。}1931 年，Birkhoff 证明了他的遍历定理：在保测度变换下，沿轨道的时间平均几乎处处收敛于空间平均。用数学语言表述：$\lim_{n\to\infty}\frac{1}{n}\sum_{k=0}^{n-1} f(T^k x) = \int f d\mu$（几乎处处）。这是统计力学遍历假说的严格数学证明。};
+  \node[item,fill=ergpanel,draw=badgeErg!55] at (0,0.65)
+    {\textbf{物理学与数学的桥梁。}Wikipedia: "Combining insights from physics on the ergodic hypothesis with measure theory, this theorem solved, at least in principle, a fundamental problem of statistical mechanics." 它将 Boltzmann 的遍历假说变成了数学定理。};
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,-0.85)
+    {\textbf{深远影响。}Wikipedia: "The ergodic theorem has also had repercussions for dynamics, probability theory, group theory, and functional analysis." 这是 Birkhoff 本人也认为的"最持久的成就"（his most durable result）——远超同时代的任何其他工作。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88}
+      一个粒子的轨迹时间平均 = 整个系统状态空间的空间平均——物理直觉，数学证明，P1 影响。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. Birkhoff 定理 (广义相对论) ---
+\newcommand{\relativityslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Birkhoff 定理 (1923)：Schwarzschild 解的唯一性与黑洞的数学}{广义相对论 · 球对称真空 · 黑洞 · Oppenheimer–Snyder 模型}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=relpanel,draw=badgeRel!55] at (0,2.55)
+    {\textbf{广义相对论的数学贡献。}Birkhoff 是广义相对论发展的贡献者之一。1923 年他与 R.E. Langer 合著《Relativity and Modern Physics》，系统讨论了相对论和量子力学的基础问题。};
+  \node[item,fill=relpanel,draw=badgeRel!55] at (0,0.65)
+    {\textbf{Birkhoff 定理 (1923)。}Birkhoff 证明了：球对称真空解的 Einstein 场方程唯一解是 **Schwarzschild 解**。推论：黑洞不是纯粹的数学奇想——任何质量足够大的球状恒星坍缩后必然产生黑洞。Wikipedia: "black holes are not merely a mathematical curiosity, but could result from any spherical star having sufficient mass."};
+  \node[item,fill=ergpanel,draw=badgeErg!55] at (0,-0.85)
+    {\textbf{Oppenheimer–Snyder 模型。}Birkhoff 定理后来被用于发展 Oppenheimer–Snyder 模型——1939 年首次从理论上预言了黑洞的形成。Birkhoff 的工作是 20 世纪天体物理学中最重要的数学贡献之一。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88}
+      Schwarzschild 解是唯一的——这个定理把黑洞从数学奇想变成了物理现实。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 动力系统 ---
+\newcommand{\dynsysslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《Dynamical Systems》(1927)：动力系统理论的里程碑}{色多项式 1912 · 四色问题 · 动力系统专著 · Birkhoff 公理化几何}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,2.55)
+    {\textbf{1912 · 色多项式。}试图解决四色问题时，Birkhoff 引入了色多项式。虽然未能证明四色猜想，但色多项式本身成为代数图论中的核心研究对象。Wikipedia: "Even though this line of attack did not prove fruitful, the polynomial itself became an important object of study in algebraic graph theory."};
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,0.65)
+    {\textbf{1927 ·《Dynamical Systems》。}Birkhoff 的经典专著《Dynamical Systems》由美国数学会出版，奠定了现代动力系统理论的框架。这本书影响了整整一代数学家，包括他的学生 Marston Morse。};
+  \node[item,fill=harvpanel,draw=badgeHarv!55] at (0,-0.85)
+    {\textbf{1941 · Birkhoff 公理。}Birkhoff 提出了不同于 Hilbert 的欧几里得几何公理化系统——Birkhoff 公理（Birkhoff's axioms），以实数的完备性为基础。这是 20 世纪几何基础研究的重要成果，收录于《Basic Geometry》(1941)。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88}
+      色多项式·动力系统·几何公理化——Birkhoff 的数学版图横跨图论、动力系统和几何基础三大领域。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 哈佛王朝 ---
+\newcommand{\harvardslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{哈佛数学王朝：Morse · Stone · Whitney —— 20 世纪美国数学的栋梁}{Harvard 1912--1944 · 14 位博士学生 · 美国数学共同体的塑造者}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=harvpanel,draw=badgeHarv!55] at (0,2.55)
+    {\textbf{哈佛的 32 年。}1912 年起至 1944 年逝世，Birkhoff 终生执教哈佛大学。他培养了 14 位博士学生（Adams·Brink·Carmichael·Koopman·Langer·Morrey·Morse·Price·Sheffer·Stone·Walsh·Whitney·Widder·Williams），构成了 20 世纪美国数学的核心力量——是为"哈佛数学王朝"。};
+  \node[item,fill=harvpanel,draw=badgeHarv!55] at (0,0.65)
+    {\textbf{学生谱系。}**Marston Morse**（Morse 理论）、**Marshall Harvey Stone**（Stone 定理、泛函分析）、**Hassler Whitney**（微分拓扑、Whitney 嵌入定理）、**Bernard Koopman**（遍历理论、控制论）、**Joseph Leonard Walsh**（复分析）——每一位都是各自领域的开创性人物。};
+  \node[item,fill=ergpanel,draw=badgeErg!55] at (0,-0.85)
+    {\textbf{美国数学共同体的塑造者。}Birkhoff 不仅是教师——1919 AMS 副主席、1920--24 *Transactions* 主编、1925--26 AMS 主席、1937 AAAS 主席。他是美国数学从欧洲附庸走向世界中心的制度奠基人。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88}
+      Birkhoff → Morse/Stone/Whitney ——一条从哈佛到 20 世纪美国数学巅峰的传承链。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 反犹争议 ---
+\newcommand{\controversyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{反犹争议与辩护：历史阴影中的复杂人格}{Einstein · Wiener · Mac Lane · Ulam · Veblen}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=harvpanel,draw=badgeHarv!55] at (0,2.55)
+    {\textbf{指控。}Albert Einstein 和 Norbert Wiener 等人指控 Birkhoff 在 1930 年代推行反犹遴选政策——在欧洲犹太数学家大量逃亡美国期间，Birkhoff 据称影响了美国学术机构排除犹太人的聘用过程。};
+  \node[item,fill=relpanel,draw=badgeRel!55] at (0,0.65)
+    {\textbf{Mac Lane 的辩护。}哈佛晚辈 **Saunders Mac Lane** 称 Einstein 的指控"毫无价值"——Einstein 不熟悉美国学术程序且二人有相对论学术竞争；Mac Lane 也回应了 Wiener 的指控："Birkhoff 清楚地聆听了 Norbert 的想法。不任命他可能有多种原因。"Mac Lane 认为 Birkhoff 的动机更多是"为本土美国数学家找工作"而非种族仇恨。};
+  \node[item,fill=ergpanel,draw=badgeErg!55] at (0,-0.85)
+    {\textbf{与 Ulam 的亲近。}Birkhoff 与犹太数学家 **Stanislaw Ulam** 关系密切。Gian-Carlo Rota 记载："像其他据传是反犹主义者的人一样，Birkhoff 偶尔会对某个年轻貌美的犹太数学天才倾注保护本能。" Oswald Veblen 总结："他保有着我们大多数人在成长中失去的能力——简单而天真地看待人和事。"};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88}
+      Einstein 指控·Mac Lane 辩护·与 Ulam 亲近——Birkhoff 是复杂的人，不是简单的标签。本片记录各方，不审判。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 世纪遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Birkhoff 的世纪遗产：美国数学的崛起}{遍历定理 · Birkhoff 定理 · 哈佛王朝 · 制度奠基 · "美国数学的黎明"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=ergpanel,draw=badgeErg!55] at (0,2.55)
+    {\textbf{遍历定理 → 现代数学。}Birkhoff 的遍历定理成为动力系统、概率论、泛函分析、群论等领域的核心工具。每一个研究混沌、统计力学、随机过程的数学家，都直接或间接地站在 Birkhoff 1931 年的肩膀上。};
+  \node[item,fill=relpanel,draw=badgeRel!55] at (0,0.65)
+    {\textbf{Birkhoff 定理 → 天体物理。}Schwarzschild 解唯一性 → Oppenheimer–Snyder 模型 → 黑洞物理学。Birkhoff 1923 年的纯数学定理，成为 20 世纪天体物理学最重要的数学基础之一。};
+  \node[item,fill=harvpanel,draw=badgeHarv!55] at (0,-0.85)
+    {\textbf{制度遗产。}AMS 主席、AAAS 主席、*Transactions* 主编、Bôcher 奖首届得主。Birkhoff 不仅是一位数学家，更是美国数学制度的建造者。他开创的哈佛王朝（Morse, Stone, Whitney…）持续影响至今。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88}
+      "他让美国数学第一次站在了世界的讲台上；遍历定理与哈佛王朝，是他留下的双重遗产。"}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{20}{26}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center)
+    {美国数学的第一次世界之声};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center)
+    {遍历定理 · Poincaré 最后几何定理 · Birkhoff 定理 · 哈佛王朝};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center)
+    {George David Birkhoff\enspace·\enspace 1884 -- 1944\enspace·\enspace 60岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center)
+    {Poincaré 最后定理(1913) $\rightarrow$ Birkhoff 定理(1923) $\rightarrow$ 遍历定理(1931) $\rightarrow$ 哈佛王朝(1912--1944)};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south)
+    {\faIcon{circle}\enspace 遍历定理 \enspace|\enspace Birkhoff 定理 \enspace|\enspace 动力系统 \enspace|\enspace 哈佛王朝 \enspace|\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\poincareslide
+\ergodicslide
+\relativityslide
+\dynsysslide
+\harvardslide
+\controversyslide
+\legacyslide
+\closingslide
+\end{document}
