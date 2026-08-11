@@ -1,0 +1,519 @@
+% =============================================================
+%  指标定理的征服者：迈克尔·阿蒂亚 (Michael Atiyah)
+%  Beamer 演示 —— 参照 Milnor / Hausdorff 版式
+%  资料来源：mathematician/pages/Michael_Atiyah + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：英伦深夜蓝 + 黎巴嫩雪松绿 + 黄金K-理论 + 物理紫 =====
+\definecolor{bgmain}{RGB}{248,246,244}
+\definecolor{coverprimary}{HTML}{1A1A2E}
+\definecolor{coveraccent}{HTML}{1B2A4A}        % 英伦深夜蓝
+\definecolor{badgeIndex}{HTML}{1B2A4A}           % 指标定理
+\definecolor{badgeKTheory}{HTML}{2E5F3E}          % K-理论/雪松绿
+\definecolor{badgeGauge}{HTML}{6C3082}            % 规范场/物理紫
+\definecolor{badgeLegacy}{HTML}{C9A84C}           % 温莎金
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{20,18,40}
+\definecolor{muteddark}{RGB}{90,80,90}
+\definecolor{indexpanel}{RGB}{228,234,244}
+\definecolor{ktheorypanel}{RGB}{228,242,232}
+\definecolor{gaugepanel}{RGB}{241,232,248}
+\definecolor{legacypanel}{RGB}{250,246,235}
+\definecolor{graypanel}{RGB}{242,244,248}
+\definecolor{indigopanel}{RGB}{235,238,248}
+\definecolor{princetonpanel}{RGB}{255,244,230}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeIndex!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeKTheory!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeGauge!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{equals}\enspace 指标定理的征服者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {迈克尔·阿蒂亚};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Sir Michael Atiyah\enspace·\enspace 1929 — 2019};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {指标定理 · K-理论 · 皇家学会主席 · 世界公民};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeIndex, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {指标定理\\Index Theorem};
+      \node[rounded corners=8pt, fill=badgeKTheory, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {K-理论\\K-Theory};
+      \node[rounded corners=8pt, fill=badgeGauge, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {规范场论\\Gauge Theory};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {皇家学会\\Royal Society};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"代数：魔鬼给数学家的诱惑。" —— Michael Atiyah};
+  % 肖像（右上）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.0cm,height=2.7cm,keepaspectratio]{Michael_Atiyah.jpg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.4cm]current page.center)
+    {Sir Michael Atiyah};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{university}\enspace Cambridge · Oxford · IAS · Edinburgh\enspace|\enspace Fields + Abel + Copley + Knight};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么阿蒂亚是"桥梁建造者"}{指标定理 · K-理论 · 皇家学会主席 · 世界公民}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=indexpanel, draw=badgeIndex!50, text=coverprimary!85!black]
+    (a) at (-5.7,1.05) {指标定理 (1963)\\分析 = 拓扑\\20 世纪最深定理};
+  \node[nodebox, fill=ktheorypanel, draw=badgeKTheory!50, text=badgeKTheory!85!black]
+    (b) at (-1.9,1.05) {K-理论 (1959)\\与 Hirzebruch 共创\\描述空间的扭转};
+  \node[nodebox, fill=gaugepanel, draw=badgeGauge!50, text=badgeGauge!85!black]
+    (c) at (1.9,1.05) {物理数学化 (1980s)\\瞬时子·磁单极子\\到弦论的桥梁};
+  \node[nodebox, fill=legacypanel, draw=badgeLegacy!50, text=badgeLegacy!85!black]
+    (d) at (5.7,1.05) {科学领袖\\皇家学会主席\\三一学院院长};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他的指标定理：分析的答案 = 拓扑的数。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 从苏丹到剑桥，从代数几何到弦论。他的一生，是把数学重新连接起来的一生。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{世界公民的童年 (1929–1955)}{喀土穆 · 开罗 · 剑桥 · 从货币兑换到 Smith's Prize}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=indexpanel, draw=badgeIndex!50] at (0,2.55)
+    {\textbf{1929 · 生于伦敦 Hampstead。}父亲 Edward Atiyah 是黎巴嫩裔作家，母亲 Jean Levens 是苏格兰人。他在苏丹喀土穆上小学 (1934–1941)，在埃及开罗/亚历山大的维多利亚学院上中学 (1941–1945) —— 同学中有未来的阿拉伯国家领导人。};
+  \node[item, fill=ktheorypanel, draw=badgeKTheory!35] at (0,1.05)
+    {\textbf{货币兑换的故事。}孩童时期的 Atiyah 在各国旅行时兑换货币赚取差价。他的父亲由此看出：这个孩子将成为数学家。1945 年返回英国曼彻斯特文法学校，1947–1949 在皇家电气机械工程兵团服役。};
+  \node[item, fill=graypanel, draw=badgeLegacy!20] at (0,-0.25)
+    {\textbf{1954 · Smith's Prize。}在剑桥三一学院以层论(sheaf theory)方法处理直纹面获 Smith's Prize——这坚定了他继续从事数学的决心。1955 年获博士学位，导师 W. V. D. Hodge。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 喀土穆→开罗→剑桥。三个大陆塑造了一个数学家。他天生就是"桥梁建造者"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. IAS 1955 ---
+\newcommand{\iasslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{IAS 1955：命运的相遇}{Bott · Hirzebruch · Singer —— 此后改变了数学的三个人}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=indexpanel, draw=badgeIndex!55] at (0,2.55)
+    {\textbf{普林斯顿高等研究院 (1955–1956)。}博士毕业后，Atiyah 来到 IAS 做博士后。在那里他遇见了改变他一生的人：Raoul Bott、Friedrich Hirzebruch 和 Isadore Singer。这是数学史上最富有成果的社交网络之一。};
+  \node[item, fill=ktheorypanel, draw=badgeKTheory!35] at (0,0.85)
+    {\textbf{三个方向。}Bott 在研究周期定理（Bott periodicity），Hirzebruch 刚完成 Riemann–Roch 定理的推广，Singer 对微分算子与拓扑的关系感兴趣。Atiyah 在这三股思想的交汇处找到了自己的位置。};
+  \node[item, fill=gaugepanel, draw=badgeGauge!20] at (0,-0.45)
+    {\textbf{合作模式。}Atiyah 说："如果你直接攻击一个数学问题，常常会走进死胡同……有另一个人在你旁边，他通常能帮你绕过墙角。" 这是他与 Singer 合作五十年的哲学。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1955 年的 IAS 走廊：没有这三次相遇，就没有指标定理，没有拓扑 K-理论。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. K-理论 ---
+\newcommand{\ktheoryslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{K-理论的诞生 (1959)}{与 Hirzebruch 在普林斯顿创立一种全新的语言}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=ktheorypanel, draw=badgeKTheory!55] at (0,2.55)
+    {\textbf{什么是 K-理论？}最简单的非平凡向量丛是 Möbius 带——一条纸带，扭一下再粘起来，就是圆上的一个秩 1 向量丛。K-理论是描述高维"扭转"的工具：空间中所有的向量丛构成一个群。};
+  \node[item, fill=indexpanel, draw=badgeIndex!35] at (0,0.85)
+    {\textbf{来自 Grothendieck 的灵感。}Grothendieck 用代数 K-理论证明了 Grothendieck–Riemann–Roch 定理。Atiyah 和 Hirzebruch 将此思想移植到拓扑空间——拓扑 K-理论诞生。这是第一个非平凡的广义上同调论。};
+  \node[item, fill=graypanel, draw=badgeGauge!20] at (0,-0.45)
+    {\textbf{比上同调更强。}Atiyah 用 K-理论给出了 Hopf 不变量 1 问题的极短证明——此前 J. F. Adams 的原始解答又长又复杂。Bott 周期定理在 K-理论中有最自然的表达。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} K-理论 = 拓扑空间上的"线性代数"。它后来成为指标定理的核心工具。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 指标定理 ---
+\newcommand{\indextheoremslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Atiyah–Singer 指标定理 (1963)}{分析 = 拓扑 —— 20 世纪最深奥的定理之一}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=indexpanel, draw=badgeIndex!55] at (0,2.55)
+    {\textbf{问题。}椭圆微分算子有多少个独立解？Gel'fand 在 1959 年提出：解的个数（指标）应该是拓扑不变量。Atiyah 和 Singer 花了四年给出了精确答案。};
+  \node[item, fill=ktheorypanel, draw=badgeKTheory!35] at (0,0.85)
+    {\textbf{答案。}$$\mathrm{Index}(D) = \int_M \mathrm{Ch}(\sigma(D)) \wedge \mathrm{Td}(TM)$$ 解析指标 = 拓扑指标。左边是微分方程（分析），右边是示性类（拓扑）。Hirzebruch–Riemann–Roch 定理是其特例。};
+  \node[item, fill=gaugepanel, draw=badgeGauge!20] at (0,-0.45)
+    {\textbf{Dirac 算子。}Atiyah 和 Singer 重新发现了 Dirac 算子——一个联系自旋几何与分析的椭圆算子。这正是指标定理最有物理意义的例子。Â 属的整性 = Dirac 算子的指标。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 指标定理不只解决一个问题——它统一了微分方程、拓扑和代数几何。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 指标定理五部曲 ---
+\newcommand{\pentalogyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{指标定理五部曲 (1968–1971)}{K-理论版 · 等变版 · 上同调版 · 族 · 实算子}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=indexpanel, draw=badgeIndex!55] at (0,2.35)
+    {\textbf{五篇论文，一个定理。}I: 用 K-理论证明 (1968)。II: 等变 K-理论版——带群作用的情形，将指标推广为 Lefschetz 型不动点公式 (Segal 合作)。III: 转为上同调公式 (1968)。IV: 椭圆算子族——指标现在是 K-群中的元素 (1971)。V: 实算子与 KR-理论 (1971)。};
+  \node[item, fill=graypanel, draw=badgeKTheory!35] at (0,0.85)
+    {\textbf{从整数到 K-群。}当椭圆算子随参数变化时，指标不再是单个整数，而是参数空间 K-群中的一个元素。这为 Donaldson 的 4 维流形理论奠定了工具基础。};
+  \node[item, fill=gaugepanel, draw=badgeGauge!20] at (0,-0.45)
+    {\textbf{1973 · 热核新证。}Atiyah–Bott–Patodi 用热方程方法给出了指标定理的全新证明——将椭圆算子的谱与流形的几何短时间行为精确联系起来。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个定理需要五年写成五篇论文。深度，不是速度。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 不动点公式 ---
+\newcommand{\atbottSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Atiyah–Bott 不动点公式 (1966–1968)}{椭圆算子的 Lefschetz 公式 —— 从特征标到自守形式}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=indexpanel, draw=badgeIndex!55] at (0,2.35)
+    {\textbf{Lefschetz 不动点公式的椭圆升级。}经典的 Lefschetz 公式：映射不动点的信息和等于诱导上同调映射的交替迹。Atiyah 和 Bott 将其推广到椭圆复形——不动点处的局部数据决定整体指标。};
+  \node[item, fill=ktheorypanel, draw=badgeKTheory!35] at (0,0.85)
+    {\textbf{惊人的应用。}特例包含了 Weyl 特征标公式、椭圆曲线的复数乘法新结果。一些结论最初连专家都不相信——直到 Atiyah 的公式证明它们。};
+  \node[item, fill=gaugepanel, draw=badgeGauge!20] at (0,-0.45)
+    {\textbf{Atiyah–Segal 合并。}将此不动点定理与指标定理结合——当紧群 G 作用在流形上时，用等变 K-理论替换普通 K-理论，得到不动点子流形上的求和公式。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 不动点公式 + 指标定理 = 近代数学中最优雅的"局部-全局"对应。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 规范场论 ---
+\newcommand{\gaugeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{规范场论的数学化 (1977–1985)}{瞬时子 · 磁单极子 · ADHM 构造 —— 物理学的几何之根}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=gaugepanel, draw=badgeGauge!55] at (0,2.55)
+    {\textbf{瞬时子 (Instantons)。}杨–米尔斯方程的经典解，物理学家在量子场论中发现。Atiyah 将它变成了模空间上的代数几何问题——分类了 4 维球面上的所有 SU(2) 瞬时子。};
+  \node[item, fill=indexpanel, draw=badgeIndex!35] at (0,1.05)
+    {\textbf{ADHM 构造。}Atiyah–Drinfeld–Hitchin–Manin 给出了 4 维球面上瞬时子的完整代数分类。使用 Penrose 变换将非线性 PDE 转化为线性代数问题。模空间维度 = 8k−3。};
+  \node[item, fill=ktheorypanel, draw=badgeKTheory!20] at (0,-0.25)
+    {\textbf{Donaldson 的继承。}Atiyah 的瞬时子模空间成为学生 Simon Donaldson 的核心工具。Donaldson 用其定义了 4 维流形的不变量，并发现 4 维欧氏空间存在无穷多种不同的光滑结构——震惊数学界。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "数学中那些已由物理学解决的问题、以及从物理学中产生的技术，一直是数学的血液。"}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 魔鬼名言 ---
+\newcommand{\devilslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{"魔鬼的诱惑"}{代数 vs 几何 —— 阿蒂亚的数学哲学}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=indexpanel, draw=badgeIndex!55] at (0,2.35)
+    {\textbf{"代数：魔鬼给数学家的诱惑。"}Atiyah 的名言揭示了他的几何本性。当你可以用代数机器得到任何答案时——你失去了几何直觉。"魔鬼说：我给你这个强大的机器。你只需给我你的灵魂：放弃几何。"};
+  \node[item, fill=ktheorypanel, draw=badgeKTheory!35] at (0,0.85)
+    {\textbf{K-理论：天使还是魔鬼？}K-理论是一种代数工具——但它描述的是"扭转"这种几何直觉。Möbius 带是它的原型。Atiyah 的 K-理论证明：代数可以成为几何的新语言，而不是替代品。};
+  \node[item, fill=gaugepanel, draw=badgeGauge!20] at (0,-0.45)
+    {\textbf{他最崇拜的数学家。}Hermann Weyl——将李群的代数结构与物理学的几何直觉融合的人。最爱的前 20 世纪数学家：Riemann 和 Hamilton。几何的传承线。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Atiyah 没有把灵魂卖给魔鬼。他把代数变成了几何的新维度。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 领袖 ---
+\newcommand{\leadershipslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{科学领袖：皇家学会 · 三一学院 · Newton 研究所}{1990–1997 三大巅峰 · 另有 IAS教授 · LMS主席 · 大学校长 · 爱丁堡皇家学会主席}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=indexpanel, draw=badgeIndex!55] at (0,2.55)
+    {\textbf{皇家学会主席 (1990–1995)。}英国科学的最高象征——Isaac Newton, Christopher Wren, Humphry Davy 曾担任的职位。Atiyah 是战后最具影响力的皇家学会主席之一。};
+  \node[item, fill=ktheorypanel, draw=badgeKTheory!35] at (0,1.05)
+    {\textbf{三一学院院长 (1990–1997)。}剑桥最尊贵的学院——牛顿的学院。Atiyah 在任期间积极推动数学与科学的跨学科发展。};
+  \node[item, fill=gaugepanel, draw=badgeGauge!20] at (0,-0.25)
+    {\textbf{Isaac Newton 研究所 (1990–1996)。}Atiyah 是 Newton 研究所的创始人和首任所长。今天它是全球数学研究的顶级中心——从数论到弦论的跨领域对话在此发生。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=5pt, text width=12.4cm, align=center] at (0,-1.25) {
+    {\fontsize{7.2}{9.0}\selectfont\bfseries\color{coverdark!88} 他不仅证明了指标定理——他还为下一代数学家建造了"思想的空间"。}\\[1pt]
+    {\fontsize{6.0}{7.5}\selectfont\itshape\color{covermuted} IAS 教授 (1969–1972) · 伦敦数学学会主席 (1974–1976)}\\[0.5pt]
+    {\fontsize{6.0}{7.5}\selectfont\itshape\color{covermuted} 莱斯特大学校长 (1995–2005) · 爱丁堡皇家学会主席 (2005–2008) · Pugwash 会议主席 (1997–2002)}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 导师 ---
+\newcommand{\mentorshipslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{导师的导师}{Donaldson · Hitchin · Segal · Lusztig · Witten —— 20 世纪最灿烂的传承}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=ktheorypanel, draw=badgeKTheory!55] at (0,2.35)
+    {\textbf{学生比导师更出名——这正是伟大的标志。}Simon Donaldson (Fields 奖 1986)、Nigel Hitchin、Graeme Segal (等变 K-理论)、George Lusztig (表示论巨人)、Frances Kirwan (几何不变量理论)。};
+  \node[item, fill=indexpanel, draw=badgeIndex!35] at (0,0.85)
+    {\textbf{Edward Witten：一个特殊的学生。}物理学家 Witten 不是 Atiyah 的正式博士生，但他们的交流深刻影响了彼此。Atiyah 的 TQFT 定义启发了 Witten 的 Chern–Simons 理论和 Jones 多项式诠释。};
+  \node[item, fill=gaugepanel, draw=badgeGauge!20] at (0,-0.45)
+    {\textbf{传承的数学。}Hodge → Atiyah → Donaldson/Hitchin/Segal/Lusztig/Kirwan → 整个几何学派。这不是一棵树，而是一片森林。Atiyah 是这片森林中最肥沃的一棵。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个人的伟大，不在于他证明了什么——而在于他让多少人成为伟大的数学家。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 荣誉 ---
+\newcommand{\awardsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Fields + Abel + Copley + Knight}{数学家的最高殿堂}
+\vspace{-0.3cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[rounded corners=5pt, fill=indexpanel, draw=badgeIndex!50, line width=0.6pt,
+        inner sep=6pt, text width=3.0cm, font=\fontsize{4.8}{6}\selectfont, align=center]
+    at (-5.7,1.05) {\small\faIcon{trophy}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeIndex}Fields 奖 (1966, 37岁)}\\[2pt]K-理论和指标定理};
+  \node[rounded corners=5pt, fill=ktheorypanel, draw=badgeKTheory!50, line width=0.6pt,
+        inner sep=6pt, text width=3.0cm, font=\fontsize{4.8}{6}\selectfont, align=center]
+    at (-1.9,1.05) {\small\faIcon{crown}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeKTheory}Abel 奖 (2004, 75岁)}\\[2pt]与 Isadore Singer 共享\\指标定理};
+  \node[rounded corners=5pt, fill=gaugepanel, draw=badgeGauge!50, line width=0.6pt,
+        inner sep=6pt, text width=3.0cm, font=\fontsize{4.8}{6}\selectfont, align=center]
+    at (1.9,1.05) {\small\faIcon{medal}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeGauge}Copley Medal (1988)}\\[2pt]皇家学会最高荣誉\\科学终身成就};
+  \node[rounded corners=5pt, fill=legacypanel, draw=badgeLegacy!50, line width=0.6pt,
+        inner sep=6pt, text width=3.0cm, font=\fontsize{4.8}{6}\selectfont, align=center]
+    at (5.7,1.05) {\small\faIcon{chess-king}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeLegacy}Knight + OM (1983/1992)}\\[2pt]爵士 · 功绩勋章\\Sir Michael Atiyah};
+  \node[rounded corners=6pt, fill=graypanel, draw=coveraccent!55, line width=0.8pt,
+        inner sep=9pt, text width=13cm, font=\fontsize{7}{9}\selectfont, align=center]
+    at (0,-1.35) {
+    {\fontsize{8}{10.5}\selectfont\bfseries\color{coverprimary!90!black} 更多荣誉}\\[2pt]
+    {\color{coverdark!80} {\fontsize{6.5}{8.5}\selectfont Royal Medal (1968) · De Morgan Medal (1980) · Grande Médaille (2010)}\\[2pt]
+    {\fontsize{6.5}{8.5}\selectfont Benjamin Franklin Medal (1993) · 30+ 荣誉博士学位}}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{阿蒂亚的遗产}{指标定理 · K-理论 · 规范场 · TQFT —— 名字无处不在}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=indexpanel, draw=badgeIndex!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeIndex} 指标定理}\\[3pt]Atiyah–Singer\\Atiyah–Bott\\Atiyah–Patodi–Singer};
+  \node[leg, fill=ktheorypanel, draw=badgeKTheory!50, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeKTheory} K-理论}\\[3pt]拓扑 K-理论\\Atiyah–Hirzebruch\\等变 K-理论};
+  \node[leg, fill=gaugepanel, draw=badgeGauge!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeGauge} 规范场论}\\[3pt]ADHM 构造\\磁单极子\\TQFT};
+  \node[leg, fill=legacypanel, draw=badgeLegacy!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy} 领袖与导师}\\[3pt]皇家学会主席\\三一学院院长\\Newton 研究所};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他用指标定理证明了：分析 = 拓扑。}\\[4pt]
+{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      他的定理今天被用于数论、理论物理、微分几何、非交换几何。\\
+      他的学生获得了 Fields 奖。他建造的研究所孕育了新世纪的数学。\\
+      他的名字——Atiyah——是"连接"的同义词。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 无畏晚年 ---
+\newcommand{\laterslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{无畏的晚年 (2016–2019)}{6 维球面 · 黎曼假设 · 甚至失败也是勇气的证明}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=indexpanel, draw=badgeIndex!55] at (0,2.55)
+    {\textbf{大问题的诱惑。}80 多岁时，Atiyah 仍试图解决数学中最困难的问题。2016 年他声称证明了 6 维球面上不存在复结构；2018 年他声称证明了黎曼假设。这些证明最终未被数学界接受。};
+  \node[item, fill=ktheorypanel, draw=badgeKTheory!35] at (0,1.05)
+    {\textbf{勇气 vs 正确。}批评者说这些尝试不够严谨——但赞赏者看到了一种不畏失败的精神。Atiyah 用行动宣告：真正的数学家不害怕犯错，害怕的是不敢尝试。};
+  \node[item, fill=gaugepanel, draw=badgeGauge!20] at (0,-0.25)
+    {\textbf{2019 · 告别。}1 月 11 日，Atiyah 在爱丁堡去世，享年 89 岁。他的妻子 Lily 在前一年离世。他留下了 7 卷文集、数十位杰出的学生、和一道穿越分析、拓扑、几何、物理的光。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 伟大，不在于每次都正确。而在于每一次都敢于尝试。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 16. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {他用指标定理告诉我们：};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {分析，归根结底，是拓扑。而拓扑，是几何。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.5cm]current page.center)
+    {他的一生，是把数学重新连接起来的一生。};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!60!black]
+    at ([yshift=-2.4cm]current page.center)
+    {迈克尔·阿蒂亚\quad Sir Michael Atiyah\quad 1929 — 2019};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{equals}\enspace 指标定理·K-理论·几何与分析统一的建筑师\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\iasslide
+\ktheoryslide
+\indextheoremslide
+\pentalogyslide
+\atbottSlide
+\gaugeslide
+\devilslide
+\leadershipslide
+\mentorshipslide
+\awardsslide
+\legacyslide
+\laterslide
+\closingslide
+\end{document}

@@ -1,0 +1,292 @@
+% =============================================================
+%  四座桥梁的建造者：格雷姆·西格尔 (Graeme Segal)
+%  Atiyah 的学生 · Chern Medal 2026 · K-理论 · 同伦论 · TQFT
+%  资料来源：Wikipedia (Graeme Segal)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：澳大利亚桉树绿 + 牛津深蓝 + 几何金 =====
+\definecolor{bgmain}{RGB}{247,245,240}
+\definecolor{coverprimary}{HTML}{0D3B2E}
+\definecolor{coveraccent}{HTML}{1A3A5C}
+\definecolor{badgeKTheory}{HTML}{0D3B2E}
+\definecolor{badgeHomotopy}{HTML}{2E5F3E}
+\definecolor{badgePhysics}{HTML}{4A6FA5}
+\definecolor{badgeLegacy}{HTML}{C9A84C}
+\definecolor{coverdark}{HTML}{1A1A2E}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,18,25}
+\definecolor{muteddark}{RGB}{85,75,70}
+\definecolor{kpanel}{RGB}{228,240,232}
+\definecolor{hpanel}{RGB}{232,244,232}
+\definecolor{ppanel}{RGB}{228,236,248}
+\definecolor{lpanel}{RGB}{250,246,232}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeKTheory!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHomotopy!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgePhysics!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace 🇦🇺 Australia\enspace|\enspace Atiyah 的学生\enspace|\enspace Chern Medal 2026};
+  \node[anchor=center, font=\fontsize{24}{30}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {格雷姆·西格尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Graeme Segal\enspace·\enspace 1941 —};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Atiyah–Segal 完备化定理 · Segal 猜想 · 椭圆上同调 · 拓扑量子场论 · Loop Groups};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeKTheory, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {K-理论\\[2pt]Atiyah–Segal\\完备化定理\\等价K-理论基石};
+      \node[rounded corners=8pt, fill=badgeHomotopy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {同伦论\\[2pt]Segal 猜想\\无限loop空间\\$\Gamma$-空间};
+      \node[rounded corners=8pt, fill=badgePhysics, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {数学物理\\[2pt]椭圆上同调\\TQFT\\Loop Groups};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white!92] at (5.5,0) {荣誉\\[2pt]FRS 1982\\Sylvester Medal\\Chern Medal 2026};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {"visionary mathematical insights ... in topology, mathematical physics, representation theory and category theory." —— Chern Medal 授奖词, 2026 ICM};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Sydney · Oxford · Cambridge\enspace|\enspace FRS · Pólya Prize · Sylvester Medal\enspace|\enspace LMS President 2011};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 总览 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{四座桥梁的建造者：从 K-理论到量子场论}{Atiyah 的火炬手 · 同伦论与数学物理之间的超级连接者}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=kpanel,draw=badgeKTheory!55,text=badgeKTheory!85!black]
+    (a) at (-5.5,1.1) {K-理论\\[2pt]等价K-理论\\Atiyah–Segal\\完备化定理 1969};
+  \node[nodebox,fill=hpanel,draw=badgeHomotopy!55,text=badgeHomotopy!85!black]
+    (b) at (-1.85,1.1) {同伦论\\[2pt]Segal 猜想 1978\\无限loop空间\\$\Gamma$-空间方法};
+  \node[nodebox,fill=ppanel,draw=badgePhysics!55,text=badgePhysics!85!black]
+    (c) at (1.85,1.1) {数学物理\\[2pt]椭圆上同调先驱\\TQFT 范畴框架\\Loop Groups};
+  \node[nodebox,fill=lpanel,draw=badgeLegacy!55,text=badgeLegacy!85!black]
+    (d) at (5.5,1.1) {奖项与传承\\[2pt]FRS 1982\\Pólya 1990\\Chern Medal 2026};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} Graeme Segal 是 Michael Atiyah 最杰出的学生之一——\\[1pt]他继承了 Atiyah 的 K-理论火炬，并将其燃烧到了同伦论、数学物理和表示论的新边疆。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} 2026 年 ICM 费城，Chern Medal 授奖词：topology, mathematical physics, representation theory, category theory — 四座桥梁，一位建造者。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年：从悉尼到牛津 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{从悉尼到牛津：Atiyah 的学生 (1941–1967)}{🇦🇺 Sydney → Oxford → *Equivariant K-theory* — Atiyah 火炬的继承者}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=kpanel,draw=badgeKTheory!55] at (0,2.55)
+    {\textbf{1941 · 悉尼少年。}Graeme Bryce Segal 出生于澳大利亚悉尼。在南半球的阳光下长大，1961 年在悉尼大学获得学士学位——这是他从袋鼠之地走向世界数学舞台的起点。};
+  \node[item,fill=hpanel,draw=badgeHomotopy!55] at (0,0.85)
+    {\textbf{牛津 · St Catherine's College。}Segal 远赴英国，进入牛津大学 St Catherine's College。在那里，他遇到了改变他一生的人——**Michael Atiyah**。Atiyah 当时正在构建 K-理论的宏大体系，而 Segal 成为他最关键的合作者之一。};
+  \node[item,fill=ppanel,draw=badgePhysics!55] at (0,-0.65)
+    {\textbf{1967 · 博士论文《等价 K-理论》。}Segal 的博士论文 *Equivariant K-theory* 开创了等价 K-理论这一全新领域。仅仅两年后 (1969)，他与 Atiyah 合作证明了 **Atiyah–Segal 完备化定理**——等价 K-理论中最基本的结构定理，也是 Atiyah 获得 Fields 奖和 Abel 奖的核心工作之一。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 在 28 岁之前，Segal 已经将自己的名字刻在了 K-理论的基石上——与 Atiyah 并列。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. K-理论与同伦论 ---
+\newcommand{\ktoposlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{K-理论与同伦论的征服 (1967–1990)}{Atiyah–Segal 完备化定理 · Segal 猜想 · 无限 loop 空间}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=kpanel,draw=badgeKTheory!55] at (0,2.65)
+    {\textbf{Atiyah–Segal 完备化定理 (1969)。}这是等价 K-理论的基本结构定理：对一个紧李群 $G$ 作用的紧空间 $X$，等价 K-环 $K_G(X)$ 的完备化同构于 Borel 构造的 K-理论。这一定理将等价拓扑与表示论深度连接，是 Atiyah 获 Abel 奖 (2004) 的核心贡献之一。Segal 的名字与 Atiyah 永久地刻在了一起。};
+  \node[item,fill=hpanel,draw=badgeHomotopy!55] at (0,0.65)
+    {\textbf{Segal 猜想 (1978)。}Segal 提出了同伦论中一个深远猜想：有限群 $G$ 的稳定上同调等价于 Burnside 环的完备化。这一猜想深刻连接了同伦论与群论——1984 年由 Gunnar Carlsson 证明，成为同伦论的重大里程碑。Segal 本人没有证明自己的猜想——但提出正确的问题，有时比给出答案更有价值。};
+  \node[item,fill=graypanel,draw=badgeLegacy!30] at (0,-0.75)
+    {\textbf{无限 loop 空间与 $\Gamma$-空间。}Segal 用 $\Gamma$-空间方法重新构建了无限 loop 空间理论——这一方法简洁而威力强大，成为后来同伦论和代数 K-理论的标准语言。1970 年 (Nice) 和 1990 年 (Kyoto) 两次 ICM 邀请报告，奠定了他在拓扑学界的地位。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.2) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 提出 Segal 猜想，建立 $\Gamma$-空间——他是那种不需要证明自己猜想的数学家，因为他的框架本身就是证明。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 数学物理的桥梁 ---
+\newcommand{\physlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数学物理的桥梁：椭圆上同调与 TQFT}{椭圆上同调先驱 · 拓扑量子场论 · Loop Groups}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=ppanel,draw=badgePhysics!55] at (0,2.65)
+    {\textbf{椭圆上同调 (Elliptic Cohomology)。}在 1980 年代，Segal 成为椭圆上同调的先驱——他将同伦论与模形式这两个看似毫不相干的领域连接起来。椭圆上同调后来由 Hopkins、Lurie 等人发展，成为导出代数几何与稳定同伦论的核心语言。};
+  \node[item,fill=kpanel,draw=badgeKTheory!55] at (0,0.65)
+    {\textbf{拓扑量子场论 (TQFT)。}Segal 在 1980–90 年代提出了用范畴论语言定义共形场论的数学框架——这就是后来被称为"Segal 公理"的 TQFT 定义。他认为量子场论本质上是某种从配边范畴到向量空间范畴的函子——这一视角深刻影响了 Atiyah、Witten、Kontsevich 等人的工作。};
+  \node[item,fill=hpanel,draw=badgeHomotopy!55] at (0,-0.80)
+    {\textbf{Loop Groups。}Segal 与 Andrew Pressley 合著的 *Loop Groups* (Oxford, 2003) 是无限维李群表示论的经典教科书。这本书将 loop 群——弦论中最基本的数学对象——的表示论系统化，成为数学物理学家的必读文献。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.2) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 椭圆上同调连接同伦论与数论，TQFT 连接拓扑与量子物理，Loop Groups 连接表示论与弦论——三座桥，一位建筑师。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. Chern Medal 2026 ---
+\newcommand{\chernslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Chern Medal 2026：终身成就的加冕}{ICM Philadelphia 2026 · 授奖词 · 四领域桥梁}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=lpanel,draw=badgeLegacy!70] at (0,2.35)
+    {\textbf{什么是 Chern Medal？}Chern Medal 是国际数学联盟 (IMU) 授予的最高终身成就奖，与 Fields 奖并列 ICM 最高奖项。与 Fields 奖不同，Chern Medal 没有年龄限制——它表彰的是数学家\textbf{整个职业生涯}的贡献。每四年颁发一次，以华人数学家陈省身命名。};
+  \node[item,fill=ppanel,draw=badgePhysics!55] at (0,0.55)
+    {\textbf{2026 年费城 ICM。}在 2026 年费城国际数学家大会上，IMU 将 Chern Medal 授予 Graeme Segal。授奖词原文：\textit{"for his \textbf{visionary mathematical insights} that have had an enduring influence in a wide range of fields, including \textbf{topology, mathematical physics, representation theory and category theory}."}};
+  \node[item,fill=kpanel,draw=badgeKTheory!55] at (0,-0.90)
+    {\textbf{"visionary"（远见卓识）。}授奖词中使用 "visionary" 一词——这是对 Segal 最精准的评价。他不是那种解决已有猜想的问题解决者，而是那种\textbf{定义新领域、搭建新框架}的远见者：从等价 K-理论到椭圆上同调，从 Segal 猜想到 TQFT 公理——他总是在别人尚未看清的地方搭建桥梁。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 2026 年，84 岁的 Graeme Segal 在费城接过 Chern Medal——这是一个数学家能获得的最高敬意。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Atiyah 的火炬 ---
+\newcommand{\atiyahslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Atiyah 的火炬：传承与影响}{博士谱系 · 从 Atiyah 到 Segal 再到 Teleman · Atiyah–Segal 定理的遗产}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=kpanel,draw=badgeKTheory!55] at (0,2.55)
+    {\textbf{Atiyah–Segal：数学史上的双星。}Atiyah–Segal 完备化定理不仅仅是 K-理论的一个技术性结果——它代表了一种新的数学思维：用等价不变量的语言统一几何与分析。这一定理后来被推广到等变椭圆上同调、等变导出范畴等众多方向，成为数学物理中指标理论的标准工具。};
+  \node[item,fill=hpanel,draw=badgeHomotopy!55] at (0,0.65)
+    {\textbf{博士谱系。}Segal 培养了 13 位博士生，其中最著名的是 **Constantin Teleman**——他进一步将 Segal 的 loop 群表示论与拓扑量子场论发展为一个完整的数学框架。其他学生如 Andrew Pressley (Loop Groups 合著者), George Wilson, John O'Connor 等，形成了一个围绕牛津-剑桥的强大研究网络。};
+  \node[item,fill=lpanel,draw=badgeLegacy!55] at (0,-0.65)
+    {\textbf{四座桥梁的遗产。}Segal 的数学生涯可以用四个领域概括——拓扑学、数学物理、表示论、范畴论——而他最独特的贡献，不是在任何一个领域独占鳌头，而是\textbf{在它们之间架设了能够通行的桥梁}。今天，任何研究椭圆上同调、TQFT 或 loop 群表示论的数学家，都在走着 Segal 修建的道路。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Michael Atiyah (Fields 1966) → Graeme Segal (Chern 2026) → Constantin Teleman — 三代人，一场 K-理论的接力。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {四座桥梁，一位建造者};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {拓扑学 · 数学物理 · 表示论 · 范畴论};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Graeme Segal \enspace FRS\enspace·\enspace 1941 —};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Atiyah–Segal 定理 → Segal 猜想 → 椭圆上同调 → TQFT};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeLegacy!70]
+    at ([yshift=-2.1cm]current page.center) {"visionary mathematical insights..." —— Chern Medal Citation, ICM Philadelphia 2026};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace K-理论 \enspace|\enspace 同伦论 \enspace|\enspace 数学物理 \enspace|\enspace 表示论 \enspace|\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\ktoposlide
+\physlide
+\chernslide
+\atiyahslide
+\closingslide
+\end{document}
