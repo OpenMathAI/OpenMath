@@ -103,3 +103,23 @@
 - [ ] 学生阵容正确
 - [ ] Darboux 积分等价黎曼
 - [ ] has_biography 保持 0
+## 11. Review 流程规范（两轮 Review，§16 Wikipedia 终审 + 项目标准）
+
+> 立传完成后按此规范执行两轮 Review（参照 #73 Fredholm Review-1 执行标准）。
+
+### 第 1 轮（Review-1）：事实终审
+- [ ] **结合本地 Wikipedia**：读取 `pages/<Name>/page.md` 建立事实基准，逐页对照 Beamer tex 的全部事实（生卒/机构/年份/奖项/荣誉/家族/引语）
+- [ ] **头像**：优先使用 Wikipedia infobox 照片（`images.txt` 或 infobox `image` 字段），下载原图到 `images/<name>_portrait.jpg`；无照片时用装饰圆替代
+- [ ] **国籍**：封面顶部徽章明确国籍（`\faIcon{globe}\enspace <Country>`），与 Cartan/Borel/Fredholm 立传格式一致
+- [ ] **引语核对**：tex 引语必须能在 Wikipedia 原文找到（§14.6 伪引语红线）；找不到则改为忠实转述
+- [ ] **编译验证**：`make distclean && make`（latexmk 自动多遍编译；remember picture 需要多遍）
+- [ ] **更新提示词**：Review 修正（头像来源/国籍/新细节）写回 `prompts/<Name>_zh.md`
+- [ ] **更新排行榜**：`✅/🔲` → `✅/✅✅`
+
+### 第 2 轮（Review-2）：结构优化
+- [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
+- [ ] 结束页时间线 ≥7 段拆两行（避免溢出）
+- [ ] 中文标点/断行/间距统一
+- [ ] 与同榜数学家格式对齐（封面/配色/结构）
+- [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
