@@ -1,45 +1,100 @@
-# 若尔当 (Camille Jordan) 立传提示词
+# Camille Jordan（卡米尔·若尔当）立传提示词
 
-> 严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
-
----
-
-## 背景信息
-
-- **目标数学家**: Camille Jordan (1838–1922)
-- **关键词**: **Jordan 曲线定理、Jordan 标准型、群论的早期推动者**
-- **Wikipedia**: ⚠️ **尚未下载。** 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Camille_Jordan/`
+> 榜单：#95 · qid=Q310755 · 1838-01-05 – 1922-01-22 · 法国数学家
+> 数据库主记录：id=95（群论奠基人之一）
 
 ---
 
-## 第 0 步：下载并校验
+## 1. 背景信息（用于 Slide 1-3）
 
-- **生卒日期**：1838-01-05 ~ 1922-01-22，享年 84 岁
+- **全名**：Marie Ennemond Camille Jordan
+- **生卒**：1838-01-05 里昂 → 1922-01-22 巴黎，享年 84
 - **国籍**：法国
-- **主要任职**：巴黎综合理工学院、法兰西公学院
-- **博士论文**：1860
+- **身份**：数学家、工程师（土木工程 Corps des Ponts）、教授
+- **机构轨迹**：
+  - 教育：École polytechnique（综合理工）→ 巴黎理学院 → Mines ParisTech
+  - 任职：综合理工教师 → 法兰西公学院（Collège de France）教授
+- **研究领域**：群论、线性代数、测度论、拓扑学
 
-### 核心贡献：
-- **Jordan 曲线定理** — 平面上的简单闭曲线将平面分为内外两部分。看似"显然"，但严格证明极其困难。Jordan 的第一个"证明"其实有漏洞，第一个完全严格的证明是 Veblen 在 1905 年给出的。这是一个数学史上的有趣注脚。
-- **Jordan 标准型** — 线性代数中任何复矩阵都相似于其 Jordan 标准型。这是现代线性代数的基石之一
-- **群论** — 《置换与代数方程教程》(Traité des substitutions et des équations algébriques, 1870) 是群论早期最重要的著作。对 Galois 理论的传播功不可没
-- **Jordan–Hölder 定理** — 群的合成列的"唯一性"
+## 2. 核心叙事亮点（用于 Slide 4-9）
 
-### ★ 叙事亮点：
-1. **Jordan 曲线定理的"伪证"** — 他的 1887 年证明不完全，严格证明到 1905 年才由 Oswald Veblen 完成。这是一个很好的"看似显然实则极难"的教学案例
-2. **Jordan 标准型** — 每个数学系学生都要认识的矩阵分解
-3. **群论的传播者** — 他的 1870 年著作是 Galois 去世后，群论第一次被系统整理和推广
+1. **Jordan 曲线定理**：简单闭曲线把平面分为内外两部分——拓扑学最直观又最深刻的定理（Schoenflies 推广）。
+2. **Jordan 标准形**：线性代数核心——复矩阵的准对角分解，现代数值线性代数的基础。
+3. **Jordan–Hölder 定理**：群合成列的唯一性——群论基本定理。
+4. **Jordan 测度（Jordan content）**：Lebesgue 测度之前的面积概念——测度论先驱。
+5. **Jordan 定理（有限线性群）**：有限线性群的正规子群理论。
+6. **Galois 理论的主流化**：1870《Traité des substitutions》使置换群/Galois 理论进入主流，获 Poncelet 奖。
+7. **Mathieu 群研究**：最早研究的散在单群（sporadic groups）。
+8. **《Cours d'analyse》**：综合理工分析教材，影响深远（奇特的记号选择著称）。
+9. **有界变差与 Fourier 级数**：Jordan 检验（有界变差函数的 Fourier 级数收敛条件）。
 
-### 配色：法国古典蓝 + 数学金
+## 3. 配色方案
 
-### 幻灯片（11 页）：
-```
-01  封面 — 《若尔当：群论与标准型的先驱》
-02  Jordan 标准型
-03  Jordan 曲线定理 — "显然"背后的深渊
-04  群论的系统化 — Traité des substitutions (1870)
-05  Jordan–Hölder 定理
-06  思想回响 + 结束页
-```
+| 用途 | 色值 | 说明 |
+|---|---|---|
+| 主色（巴黎红） | #8B1A1A | 综合理工/法兰西传统 |
+| 辅助（群论青） | #1E6E6E | 群论 |
+| 强调（标准形金） | #B8860B | Jordan 标准形 |
+| 背景 | #FAF6EF | 米白纸色 |
 
-> **开始执行。**
+## 4. 12 页 Slide 规划
+
+1. 封面：大标题 + 副标题「Jordan 曲线定理 · Jordan 标准形 · 群论奠基人」
+2. 生平总览：时间轴（1838 → 1860 论文 → 1870 Traité → 1882 Cours d'analyse → 1922 去世）
+3. Jordan 曲线定理：拓扑学的直觉
+4. Jordan 标准形：线性代数核心
+5. Jordan–Hölder 定理：合成列
+6. Jordan 测度：Lebesgue 之前
+7. Galois 理论主流化：1870 Traité
+8. Mathieu 群与散在群
+9. 《Cours d'analyse》：综合理工教材
+10. 有界变差与 Fourier 级数
+11. 工程与数学的双重人生
+12. 终章：84 岁、小行星 25593、历史地位
+
+## 5. 史实陷阱与敏感点（终审必须检查）
+
+- **三个"Jordan"**：Camille Jordan（本文，数学家）、Wilhelm Jordan（大地测量学家，Gauss–Jordan 消元）、Pascual Jordan（物理学家，Jordan 代数）——**正文明确提示勿混淆**，脚本/提示词中注明。
+- **Jordan 标准形 vs Jordan 曲线定理 vs Jordan 测度 vs Jordan–Hölder**：不同领域多个命名——slide 中区分。
+- **Jordan 曲线定理归属**：定理直观但证明艰深，Jordan 1887 给出（早期证明有争议，后人完善）——表述谨慎。
+- **Galois 理论**：Jordan 1870 使其主流化——不写 Jordan 发明 Galois 理论。
+- **Mathieu 群**：Mathieu 1860s 发现，Jordan 深入研究——归属清晰。
+- **生卒核对**：1838-01-05 / 1922-01-22，metadata 与正文一致。
+- **工程师身份**：正规教育是工程师，数学是"业余"转正——双重人生叙事。
+
+## 6. 数据库字段核对表（§21.5）
+
+| 字段 | 值 | 状态 |
+|---|---|---|
+| qid | Q310755 | 需更新（当前 NULL） |
+| name_zh | 卡米尔·若尔当 | 需更新（当前 若尔当） |
+| birth_date | 1838-01-05 | 需更新 |
+| death_date | 1922-01-22 | 需更新 |
+| has_biography | 0 | 保持 |
+| has_social_data | 1 | 本次置 1 |
+
+## 7. 社会关系入库清单（§20，已由 seed 脚本完成）
+
+- 导师：Victor Puiseux（新建）、Joseph Alfred Serret（新建）
+- 学生：Marie Georges Humbert（新建）
+- 学术影响：Émile Picard（78，后继）、Édouard Goursat（746，学生辈）
+
+## 8. 奖项清单（全部收录）
+
+- Poncelet Prize 1870（67）
+- Officer of the Legion of Honour（114）
+- Foreign Member of the Royal Society（45）
+
+## 9. 机构清单
+
+- 教育：École Polytechnique（6）、Mines ParisTech（7）
+- 任职：École Polytechnique（6）、Collège de France（47）、Corps des Ponts et Chaussées（桥梁道路工程兵团，新建）
+
+## 10. 终审清单
+
+- [ ] 三个 Jordan 不混淆
+- [ ] 多个 Jordan 命名区分
+- [ ] Galois 理论"主流化"非发明
+- [ ] Mathieu 群归属
+- [ ] 工程师双重人生
+- [ ] has_biography 保持 0
