@@ -174,10 +174,22 @@ Segal 是 Atiyah–Segal 完备化定理的合著者——这是 Atiyah 获得 A
 
 封面: `\faIcon{globe}\enspace 🇦🇺 Australia\enspace|\enspace Atiyah 的学生\enspace|\enspace Chern Medal 2026`
 
-## 十一、音乐建议
+## 十一、背景音乐选择 ✅
 
-- **主轨道**: 澳大利亚土著管乐 + 牛津古典 — 从南半球到英伦的旅程
-- **情绪弧**: 悉尼少年 (明亮开阔) → 牛津研究 (深沉专注) → Chern Medal (庄严辉煌)
+- **选定曲目**: **Timeless** — Alex-Productions (132k views, 最高受众)
+- **风格**: 沉稳 / 纪录片 / 长期纲领
+- **匹配理由**:
+  - "沉稳" 匹配 Segal 作为优雅架桥者的气质 —— 他不是 Grothendieck 式的革命者也不是 Thurston 式的探险家，而是一个安静地连接四大领域的思想家
+  - "纪录片" 匹配传记体 9 页叙事 —— 从 Sydney 少年到 Oxford 博士，从 Atiyah-Segal 定理到 Chern Medal 2026
+  - "Timeless" = 永恒 —— Atiyah–Segal 完备化定理定义了等价 K-理论的标准语言；Segal 猜想等待六年最终由 Carlsson 证明；椭圆上同调在 Hopkins-Lurie 手中继续生长。他的工作不是瞬间的爆发，而是持久的结构
+  - "长期纲领" —— Chern Medal 2026 授予的是整个职业生涯的桥梁建设，不是单一突破
+  - 不像 Expedition 过于"史诗"（Segal 不是征服者），不像 Awaken 过于"明亮"（Segal 84 岁的加冕更偏深沉）
+- **备选** (未采用):
+  - ★★ Expedition — "探索/史诗/几何拓扑" 匹配 Sydney→Oxford 旅程和拓扑学探索，但"史诗"标签偏重
+  - ★ Eternals — "宏大/深远/基础理论" 匹配 Chern Medal 终身影响，但受众偏低 (49k views)
+- **本地路径**: `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` → `presentations/Graeme_Segal/Timeless.wav`
+- **时长**: 128 秒 (≈2:08) > 9 页 × 7 秒 = 63 秒 → ffmpeg `-shortest` 自动对齐
+- **Makefile**: `BGM = $(wildcard *.wav)` — 自动检测并混入
 
 ## 十二、编译验证清单
 

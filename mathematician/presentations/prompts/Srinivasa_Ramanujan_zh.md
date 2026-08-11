@@ -345,6 +345,117 @@ MAIN = Srinivasa_Ramanujan_zh
 
 ---
 
+## 十二、数据库入库（★ 第 4.5 步，对照 Bioguide §二十 + §二十一）
+
+### 12.1 人物主表 (`people`)
+
+| 字段 | 值 | 状态 |
+|------|-----|:--:|
+| `qid` | Q83163 | ✅ 已入库 |
+| `name_en` | Srinivasa Ramanujan | ✅ 已入库 (id=57) |
+| `name_zh` | 斯里尼瓦瑟·拉马努金 | ✅ 已入库 |
+| `gender` | male | ✅ 已入库 |
+| `birth_date` | 1887-12-22 | ✅ 已入库 |
+| `death_date` | 1920-04-26 | ✅ 已入库 |
+| `description` | Indian mathematician, number theory genius, FRS (1887–1920) | ✅ 已入库 |
+| `primary_occupation` | mathematician | ✅ 已入库 |
+| `has_biography` | 1 | ✅ 已入库 |
+
+### 12.2 缺失人物占位（`has_biography=0`）
+
+**导师与伯乐 (2人，已在库)：**
+
+| 姓名 | ID | 关系 |
+|------|:--:|------|
+| G. H. Hardy | 21 | 导师、伯乐、合作者（已在库） |
+| J. E. Littlewood | 22 | 共同导师（已在库） |
+
+**支持者与接引者 (3人)：**
+
+| 姓名 | ID | 关系 |
+|------|:--:|------|
+| S. Narayana Iyer | 622 | 港务局上司，印度数学会成员，最早发现者 |
+| Francis Spring | 623 | 港务局主席，资助赴英 |
+| E. H. Neville | 621 | 1914 年亲赴印度接 Ramanujan 至剑桥 |
+
+**启蒙者 (1人)：**
+
+| 姓名 | ID | 关系 |
+|------|:--:|------|
+| G. S. Carr | 625 | *Synopsis* 作者，Ramanujan 的数学启蒙书 |
+
+**后继者/整理者 (3人)：**
+
+| 姓名 | ID | 关系 |
+|------|:--:|------|
+| G. N. Watson | 618 | 整理笔记数十年，Birmingham 学派 |
+| Bruce Berndt | 619 | 出版 *Ramanujan's Notebooks* 五卷 (1985–1998) |
+| George Andrews | 624 | 1976 年重新发现 Lost Notebook |
+
+**定理证明者 (2人，Deligne 已在库)：**
+
+| 姓名 | ID | 关系 |
+|------|:--:|------|
+| Pierre Deligne | 30 | 1974 证明 Weil 猜想→Ramanujan 猜想得证（已在库） |
+| Sander Zwegers | 620 | 2002 年揭示 mock theta 函数深层结构 |
+
+> 共新建 **8 人**（Narayana Iyer, Spring, Neville, Carr, Watson, Berndt, Andrews, Zwegers）。Hardy, Littlewood, Deligne 已在库。
+
+### 12.3 社会关系 (`person_relation`)
+
+| from | 类型 | to | note |
+|------|------|------|------|
+| Hardy (21) | `advisor-student` | Ramanujan (57) | 导师与伯乐，1914年邀请至剑桥 |
+| Littlewood (22) | `advisor-student` | Ramanujan (57) | 与Hardy共同指导，高度认可 |
+| Ramanujan (57) | `collaborator` | Hardy (21) | 分拆渐近公式，圆法，Hardy-Ramanujan定理 |
+| Ramanujan (57) | `collaborator` | Littlewood (22) | Hardy-Littlewood-Ramanujan 三角 |
+| Narayana Iyer (622) | `colleague` | Ramanujan (57) | 港务局上司，最早发现Ramanujan天赋 |
+| Spring (623) | `colleague` | Ramanujan (57) | 港务局主席，资助Ramanujan赴英 |
+| Neville (621) | `colleague` | Ramanujan (57) | 1914年亲赴印度接Ramanujan至剑桥 |
+| Carr (625) | `colleague` | Ramanujan (57) | *Synopsis*(1886)，Ramanujan的数学启蒙书 |
+| Watson (618) | `collaborator` | Ramanujan (57) | 整理笔记数十年，Birmingham学派 |
+| Berndt (619) | `collaborator` | Ramanujan (57) | 出版*Notebooks*五卷(1985-1998) |
+| Andrews (624) | `collaborator` | Ramanujan (57) | 1976年重新发现Lost Notebook |
+| Deligne (30) | `collaborator` | Ramanujan (57) | 1974证明Weil猜想→Ramanujan猜想, 1978 Fields奖 |
+| Zwegers (620) | `collaborator` | Ramanujan (57) | 2002年揭示mock theta函数深层结构 |
+
+> 共 **13 条关系**（2 入 + 11 出/入）。`source` 统一为 `立传-Srinivasa_Ramanujan`。
+
+### 12.4 研究领域 (`field` 表)
+
+| field | 说明 |
+|------|------|
+| number theory | 数论 — 分拆、Ramanujan 质数、高度合成数、1729 |
+| combinatorics | 组合 — Rogers–Ramanujan 恒等式 |
+| q-series | q-级数 — Ramanujan theta 函数、连分数 |
+| modular forms | 模形式 — τ 函数、Ramanujan 猜想 |
+| analysis | 分析 — mock theta 函数、Ramanujan 级数、π 公式 |
+| special functions | 特殊函数 — Ramanujan theta、Ramanujan 连分数 |
+
+### 12.5 其他表（对照 Bioguide §二十一）
+
+| 表 | 入库内容 |
+|------|------|
+| `occupation` | mathematician |
+| `award` | FRS (1918), Trinity College Fellow (1918) |
+| `institution` | Trinity College Cambridge, Chennai Port, Government Arts College Kumbakonam |
+| `nationality` | British Raj (英属印度) |
+| `rankings` | #57 → `status` 已同步 |
+
+---
+
+## 十三、立传完成后操作（★ 勿遗漏）
+
+- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第57行 Ramanujan: 立传 `✅` ✅, Review `✅` ✅ (两轮完成)
+- [x] **数据库联动**:
+  - `people` 主表: qid/name_zh/gender/birth/death/description 已更新 ✅
+  - 缺失人物占位: **8 人**（Narayana Iyer, Spring, Neville, Carr, Watson, Berndt, Andrews, Zwegers） ✅
+  - `person_relation`: **13 条关系**（2 导师 + 3 支持者 + 1 启蒙 + 5 后继/证明者 + 2 合作） ✅
+  - `rankings` 表 `status` + `people.has_biography` 已联动 ✅
+- [x] **提示词自查**: 确认本提示词含有"数据库入库"和"立传完成操作"段落 ✅
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 >
 > **特别提醒：**

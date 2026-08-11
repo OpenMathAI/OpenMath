@@ -316,6 +316,123 @@ MAIN = Norbert_Wiener_zh
 
 ---
 
+## 十二、数据库入库（★ 第 4.5 步，对照 Bioguide §二十 + §二十一）
+
+### 12.1 人物主表 (`people`)
+
+| 字段 | 值 | 状态 |
+|------|-----|:--:|
+| `qid` | Q178577 | ✅ 已入库 |
+| `name_en` | Norbert Wiener | ✅ 已入库 (id=56) |
+| `name_zh` | 诺伯特·维纳 | ✅ 已入库 |
+| `gender` | male | ✅ 已入库 |
+| `birth_date` | 1894-11-26 | ✅ 已入库 |
+| `death_date` | 1964-03-18 | ✅ 已入库 |
+| `description` | American mathematician, founder of cybernetics, Wiener process (1894–1964) | ✅ 已入库 |
+| `primary_occupation` | mathematician | ✅ 已入库 |
+| `has_biography` | 1 | ✅ 已入库 |
+
+### 12.2 缺失人物占位（`has_biography=0`）
+
+**博士导师 (2人)：**
+| 姓名 | ID | 关系 |
+|------|:--:|------|
+| Josiah Royce | 577 | 博士论文哲学指导 |
+| Karl Schmidt | 578 | 博士论文名义导师 |
+
+**博士后导师 (5人，部分已在库中)：**
+| 姓名 | ID | 关系 |
+|------|:--:|------|
+| Bertrand Russell | 74 | Cambridge 博士后导师（已在库） |
+| G. H. Hardy | 595 | Cambridge 博士后导师 |
+| David Hilbert | 1 | Göttingen 博士后导师（已在库） |
+| Edmund Landau | 71 | Göttingen 博士后导师（已在库） |
+| Edmund Husserl | 596 | Göttingen 现象学课程 |
+
+**博士生 (10人，Wikipedia infobox + Wikidata)：**
+| 姓名 | ID | 身份 |
+|------|:--:|------|
+| Amar Bose | 579 | Bose 音响创始人 |
+| Colin Cherry | 580 | 认知科学/人机交互 |
+| Shikao Ikehara | 581 | Ikehara 定理 |
+| Norman Levinson | 582 | Levinson 定理 |
+| Dorothy Walcott Weeks | 583 | MIT 首位女性数学博士之一 |
+| George Zames | 584 | 鲁棒控制理论 |
+| Yuk-Wing Lee | 585 | MIT 电气工程 |
+| Abe Gelbart | 586 | 应用数学 |
+| Brockway McMillan | 587 | 信息论/贝尔实验室 |
+| Bernard Friedman | 588 | 应用数学 |
+
+> 共新建 **19 人**（2 博导 + 3 新博士后导师 + 10 博士生 + 4 合作者/同事）。
+
+### 12.3 社会关系 (`person_relation`)
+
+| from | 关系类型 | to | note |
+|------|------|------|------|
+| Royce (577) | `advisor-student` | Wiener (56) | 博士论文哲学指导，Harvard |
+| Schmidt (578) | `advisor-student` | Wiener (56) | 博士论文名义导师，Harvard |
+| Russell (74) | `advisor-student` | Wiener (56) | Cambridge 博士后导师 |
+| Hardy (595) | `advisor-student` | Wiener (56) | Cambridge 博士后导师 |
+| Hilbert (1) | `advisor-student` | Wiener (56) | Göttingen 博士后导师 |
+| Landau (71) | `advisor-student` | Wiener (56) | Göttingen 博士后导师 |
+| Husserl (596) | `advisor-student` | Wiener (56) | Göttingen 现象学课程 |
+| Wiener (56) | `advisor-student` | Bose (579) | Bose 音响创始人 |
+| Wiener (56) | `advisor-student` | Cherry (580) | 认知科学/人机交互 |
+| Wiener (56) | `advisor-student` | Ikehara (581) | Ikehara 定理 |
+| Wiener (56) | `advisor-student` | Levinson (582) | Levinson 定理 |
+| Wiener (56) | `advisor-student` | Weeks (583) | MIT 首位女性数学博士之一 |
+| Wiener (56) | `advisor-student` | Zames (584) | 鲁棒控制理论 |
+| Wiener (56) | `advisor-student` | Lee (585) | MIT 电气工程 |
+| Wiener (56) | `advisor-student` | Gelbart (586) | 应用数学 |
+| Wiener (56) | `advisor-student` | McMillan (587) | 信息论/贝尔实验室 |
+| Wiener (56) | `advisor-student` | Friedman (588) | 应用数学 |
+| Wiener (56) | `collaborator` | Rosenblueth (589) | 共同孕育控制论，1943 |
+| Wiener (56) | `collaborator` | Bigelow (590) | 共同发表 Behavior Purpose Teleology (1943) |
+| Wiener (56) | `colleague` | von Neumann (3) | 控制论与计算机思想的对话者 |
+| Wiener (56) | `colleague` | Bush (486) | NDRC 负责人，战时防空研究 |
+| Wiener (56) | `colleague` | McCulloch (591) | Macy 会议；后因 Wiener 妻子决裂 |
+| Wiener (56) | `colleague` | Pitts (592) | Macy 会议；后因 Wiener 妻子决裂 |
+| Wiener (56) | `colleague` | Mead (593) | Macy 会议，控制论的人类学影响 |
+| Wiener (56) | `colleague` | Bateson (594) | Macy 会议，系统论与控制论对话 |
+| Shannon (33) | `colleague` | Wiener (56) | 控制论与信息论的平行奠基人，MIT 同事 |
+
+> 共 **26 条关系**（7 入 + 10 出 + 2 合作者 + 7 同事）。`source` 统一为 `立传-Norbert_Wiener`。
+
+### 12.4 研究领域 (`field` 表)
+
+| field | 说明 |
+|------|------|
+| cybernetics | 控制论 — Wiener 创立的核心学科 |
+| probability theory | 概率论 — Wiener 过程的数学基础 |
+| stochastic processes | 随机过程 — Brownian 运动/Wiener 过程 |
+| harmonic analysis | 调和分析 — Wiener–Khinchin, Paley–Wiener, Tauberian 定理 |
+| applied mathematics | 应用数学 — Wiener 滤波、防空火炮 |
+| information theory | 信息论 — 独立于 Shannon 的平行工作 |
+| philosophy | 哲学 — 控制论的认识论/伦理意涵 |
+| computer science | 计算机科学 — AI 和认知科学的前驱 |
+
+### 12.5 其他表（对照 Bioguide §二十一）
+
+| 表 | 入库内容 |
+|------|------|
+| `occupation` | mathematician, computer scientist, philosopher, autobiographer, university teacher |
+| `award` | National Medal of Science (1963), Bôcher Memorial Prize (1933), National Book Award (1965), Guggenheim Fellowship (1926), Gibbs Lectureship |
+| `institution` | MIT (1919–1960), Aberdeen Proving Ground (1918), Tsinghua University (1935–1936 访问), Tata Institute (1953–1954) |
+| `nationality` | United States |
+| `rankings` | #56 → `status` 已同步 |
+
+---
+
+## 十三、立传完成后操作（★ 勿遗漏）
+
+- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第56行 Wiener: 立传 `✅` ✅, Review `✅✅` (两轮完成)
+- [x] **数据库联动**:
+  - `people` 主表: qid/name_zh/gender/birth/death/description 已更新 ✅
+  - 缺失人物占位: **19 人**（不含已在库中的 Russell/Hilbert/Landau/von Neumann/Bush/Shannon） ✅
+  - `person_relation`: **26 条关系**（7 入 + 10 出 + 9 同事/合作者） ✅
+  - `rankings` 表 `status` + `people.has_biography` 已联动 ✅
+- [x] **提示词自查**: 确认本提示词含有"数据库入库"和"立传完成操作"段落 ✅
+
 > **开始执行。每完成一步向我汇报。**
 >
 > **特别提醒：**
