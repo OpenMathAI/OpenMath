@@ -239,7 +239,20 @@
 - 小字：奥斯卡·扎里斯基 · Oscar Zariski · 1899 — 1986
 - 底部：代数几何的严格化者 · 意大利学派的终结者 · Zariski 拓扑的创立者
 
-## 音乐: Timeless + Expedition
+## 背景音乐选择 ✅
+
+- **选定曲目**: **Timeless** — Alex-Productions (132k views, 最高受众)
+- **风格**: 沉稳 / 纪录片 / 长期纲领
+- **匹配理由**:
+  - "沉稳" 匹配 Zariski 安静谦逊的工匠气质 —— 他不用革命的语言，而是用代数工具一块一块替换几何直觉
+  - "纪录片" 匹配传记 17 页叙事 —— 从 Kobryn 到罗马，从 Hopkins 到哈佛，三代 Fields 奖传承链
+  - "长期纲领" = Timeless —— Zariski 拓扑 (1940) 在 Grothendieck (1960s) 手中开花；Zariski-Samuel 至今仍是标准教材；他严格化代数几何的工作跨越了四十余年
+  - 不像 Expedition 过于"史诗"（Zariski 不是征服者，是重建地基的人），不像 Awaken 过于"明亮"（Zariski 的克制品格需要更深沉的声音）
+- **备选** (未采用):
+  - ★★ Expedition — "探索/史诗/几何拓扑" 匹配三次移民的漂泊旅程和拓扑创新，但史诗标签偏重
+  - ★ PAST — "历史感/深沉" 匹配意大利学派的时代背景，但受众偏低 (86k views)
+- **本地路径**: `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` → `presentations/Oscar_Zariski-W/Timeless.wav`
+- **时长**: 128 秒 > 17 页 × 7 秒 = 119 秒 → ffmpeg `-shortest` 自动对齐
 
 ## Round 2 高危: 
 1. **《代数曲面》年份** — Wikipedia 明确写 "published in 1935" 非 1937。1971 增补版 = 1935 + 36 年。
