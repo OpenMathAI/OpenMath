@@ -265,8 +265,18 @@ WHERE a.name_en='Erich Hecke' OR b.name_en='Erich Hecke';
 - **国籍** ✅：封面 `\faIcon{globe}\enspace German Empire $\rightarrow$ Germany`（出生德意志帝国 Posen 省→德国，比单一 `Germany` 更准确，保留）
 - **事实复核**：生卒（1887-09-20~1947-02-13，59岁）/Hilbert 博士/Basel 1915-Göttingen 1918-Hamburg 1919/Dedekind ζ 方程/Hecke 算子与 L-函数/尖点形式 GL(2)/Weil 评价"futile and impossible task"/1933 宣誓/ICM 1936/Ackermann–Teubner 1938 —— 全部与 Wikipedia 一致，无新问题
 - **学生**：Reidemeister/Behnke/Petersson（Wikipedia notable）+ Schoeneberg/Maak/Maass/Witt（metadata 16 位博士生中选取）—— 准确
-- **编译**：`make distclean && make` → **0 错误 0 警告 12 页**（比 Rokhlin 系更干净）
+- **编译**：`make distclean && make` → **0 错误 12 页**；Overfull hbox 5.33pt（Rokhlin/Carleman 系模板固有）+ vbox 2.36pt（均 <10pt 可接受）
 - **排行榜**：#58 保持 `✅/✅`
+
+---
+
+### Review-2 结构优化记录 (2026-08-12)
+
+- **Markdown 残留修复**：`**David Hilbert**`/`**Emil Artin**`/`**Maass 形式**`（3 处）→ `\textbf{...}`
+- **Unicode 箭头统一**：文本中 `→`（11 处）→ `$\rightarrow$`（与其他项目数学模式一致）
+- **中文引号统一**：中文引述的半角 `"..."`（9 处）→ 全角 `"..."`；line 296 英文 Wikipedia 原文引述（"Hecke signed the Loyalty Oath..."）**保留英文引号**（引述英文原文）
+- **编译**：0 错误 12 页；Overfull hbox 5.33pt（模板固有）+ vbox 2.36pt（<10pt 可接受）
+- **排行榜**：#58 更新为 `✅/✅✅`
 
 ---
 
