@@ -35,13 +35,14 @@
 | 强调（精算金） | #B8860B | 保险精算应用 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「积分方程理论之父 · 算子理论的先声」
 2. 生平总览：时间轴（1866 → 1898 博士 → 1900 Fredholm 方程 → 1903 系统理论 → 1906 教授 → 1914 院士 → 1927 去世）
-3. Fredholm 方程（1900）：Dirichlet 问题的新解法
-4. Fredholm 理论（1903）：行列式、替代定理
-5. 算子理论的先声：预示 Hilbert 空间
+3. **出身与早年**：斯德哥尔摩 1866、KTH 皇家理工、Uppsala 1898 博士（Mittag-Leffler 门下）、Stockholm Uni docent→professor
+4. Fredholm 方程（1900）：Dirichlet 问题的新解法
+5. Fredholm 理论（1903）：行列式、替代定理
+6. 算子理论的先声：预示 Hilbert 空间
 6. 精算师人生：Skandia 23 年、退保价格计算
 7. 荣誉：Poncelet 奖（1908）、科学院院士
 8. 学生与影响：Rossby（气象学家）、Zeilon
@@ -113,3 +114,15 @@
   5. **封面底部间距**：`\quad` → `\enspace`（与 Cartan 一致）
 - **编译**：`make distclean && make` → 0 错误 13 页；仅1处 Overfull hbox 5.3pt（可接受）
 - **排行榜**：#73 保持 `✅/✅✅`
+
+---
+
+## Review-2 记录 (2026-08-12)
+
+> 用户指出"这位数学家的国籍等身份信息没有介绍页"——缺出身/身份介绍页。
+
+- **修正**：
+  1. **封面国籍行间距**：`\quad` → `\enspace`（Review-1 漏改的封面顶部国籍行）
+  2. **新增出身页**（成为 Slide 3：`\earlyslide`）：斯德哥尔摩 1866 出生、KTH 皇家理工、Uppsala 1898 博士（Mittag-Leffler 门下）、Stockholm Uni docent→professor——全部基于 Wikipedia Biography 段落。共 13→14 页
+  3. **Slide 编号**：3→4, 4→5, ..., 12→13，注释与 build 顺序全部更新
+- **编译**：`make distclean && make` → ✅ 14页，0错误，0警告
