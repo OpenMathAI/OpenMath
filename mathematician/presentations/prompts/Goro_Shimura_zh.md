@@ -36,20 +36,21 @@
 | 强调（猜想金） | #B8860B | 谷山–志村猜想的金色 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「谷山–志村猜想 · 费马大定理的钥匙」
 2. 生平总览：时间轴（1930 滨松 → 1952 东大学士 → 1955 谷山–志村猜想 → 1964 普林斯顿 → 1977 Cole 奖 → 1999 退休 → 2019 去世）
-3. 谷山–志村猜想：1955 提出、模性定理、与 Taniyama 的友谊
-4. 志村簇：高维算术几何、Langlands 纲领
-5. Eichler–Shimura 同余关系：Hecke 算子与 L 函数
-6. Eichler–Shimura 同构：Deligne 的 Weil 猜想证明
-7. 志村互反律：Kronecker 青春之梦
-8. 志村对应：半整权模形式
-9. 费马大定理：Ribet 定理（1990）→ 怀尔斯（1995）→ "我早说过了"
-10. 现象学与浪漫数学：两办公桌工作法
-11. 殊荣墙：Cole 1977、Asahi 1991、Steele 1996
-12. 终章：89 岁、伊万里瓷器、历史地位
+3. **出身与早年**：滨松、东京大学、巴黎/IAS、大阪大学、Weil 引荐 Princeton
+4. 谷山–志村猜想：1955 提出、模性定理、与 Taniyama 的友谊
+5. 志村簇：高维算术几何、Langlands 纲领
+6. Eichler–Shimura 同余关系：Hecke 算子与 L 函数
+7. Eichler–Shimura 同构：Deligne 的 Weil 猜想证明
+8. 志村互反律：Kronecker 青春之梦
+9. 志村对应：半整权模形式
+10. 费马大定理：Ribet 定理（1990）→ 怀尔斯（1995）→ "我早说过了"
+11. 现象学与浪漫数学：两办公桌工作法
+12. 殊荣墙：Cole 1977、Asahi 1991、Steele 1996
+13. 终章：89 岁、伊万里瓷器、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -97,6 +98,23 @@
 
 - 教育：University of Tokyo（新建）
 - 任职：University of Tokyo（新建，讲师）、Osaka University（新建）、Institute for Advanced Study（18，7 个月）、Princeton University（17，1964-1999）
+
+---
+
+## Review-2 记录 (2026-08-12)
+
+> 用户指出缺少身份信息介绍页。
+
+- **修正**：
+  1. **新增出身页**（成为 Slide 3：`\earlyslide`）：滨松 1930 出生、东京大学 1952 学士/1958 博士、巴黎/ IAS 访学、大阪大学、Weil 引荐加入 Princeton (1964)——全部基于 Wikipedia Biography。共 13→14 页
+  2. **section title 字号**：`17/20.5` → `20/24`（与 Cartan 一致）
+  3. **封面国籍行字号**：`12/16` → `14/18`
+  4. **封面国籍行间距**：`\quad` → `\enspace`
+  5. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：谷山--志村猜想...` → `谷山--志村猜想...`
+  6. **封面底部间距**：`\quad` → `\enspace`
+  7. **Slide 编号**：3→4, ..., 12→13，注释与 build 顺序全部更新
+- **编译**：`make distclean && make` → ✅ 14页，0错误，0警告
+- **排行榜**：#72 `✅/✅✅`
 
 ## 10. 终审清单
 
