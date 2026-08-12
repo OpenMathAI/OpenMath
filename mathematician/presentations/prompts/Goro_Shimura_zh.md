@@ -53,14 +53,19 @@
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
+- **头像**：Wikipedia 1964 年 Princeton 黑白肖像（249×401 竖版）已下载至 `images/Goro_Shimura.jpg`（63.5 KB，源自 `mathematician/figure_my/Goro Shimura.jpg`）。封面采用 **Fredholm 同款圆框头像 + 圆形 clip**：`[xshift=-2.0cm, yshift=-1.3cm]current page.north east`，宽度 2.7cm，淡红底圈 + 1.28cm 强调环。Review-1 原批量 3.2cm 裸贴角版本与顶部长徽章右端重叠，故升级为圆框并偏移。
 - **谷山–志村猜想命名**：Shimura 多次澄清猜想主要归功于 Taniyama（1955 年会议提出），"Taniyama–Shimura conjecture"是约定俗成——**不要写成 Shimura 单独提出**。
 - **库名顺序**：数据库中 name_en=`Shimura Goro`（日式姓名顺序），脚本主记录用此名；维基名 `Goro Shimura` 作为 name_variants。
-- **国籍**：日本出生、后入美国籍，双国籍。
+- **国籍**：封面顶部徽章 `\faIcon{globe}\quad Japan · United States · 谷山–志村猜想`（三项精简版，与 Wikidata `nationality: ["Japan", "United States"]` 一致）。Review-1 原四项徽章末部 "Cole 1977" 被圆框遮住，故精简。"Cole 1977" 在下方四徽章与 Slide 11 充分体现。
 - **Cole 奖**：1977 年 Cole Prize **数论奖**（不是代数奖，metadata 写 Cole Prize in Algebra 是 QID 变体，正文明确为 number theory）。
 - **Deligne 关联**：Eichler–Shimura 同构被 Deligne 用于 Weil 猜想证明，但那是 Deligne 的成就，Shimura 只是提供了工具。
 - **怀尔斯反应**：Shimura 的"我早说过了"是轻松调侃，非争功。
 - **出生地**：滨松（Hamamatsu），metadata 与正文一致。
 - **学生数**：普林斯顿期间指导 28+ 博士（metadata 列出 29 位，正文仅列 5 位代表性）。
+- **Review-1 修正记录（2026-08-12）**：
+  1. **头像补齐 + 圆框化**：`images/Goro_Shimura.jpg`（Wikipedia 1964 黑白肖像 249×401），用 Fredholm 风格圆框 + clip 防止竖版拉伸。
+  2. **国籍确认**：双国籍 `Japan · United States`，与 Wikidata 一致。
+  3. **顶部徽章精简**：原四项末部 "Cole 1977" 被圆框遮住，精简为三项；"Cole 1977" 在 Slide 11 与下方徽章体现。
 
 ## 6. 数据库字段核对表（§21.5）
 
@@ -95,9 +100,12 @@
 
 ## 10. 终审清单
 
+- [x] 头像已放置 `images/Goro_Shimura.jpg`（Fredholm 同款圆框 + clip，Review-1 补）
+- [x] 国籍 `Japan · United States` 已标注（双国籍，Review-1 确认）
+- [x] 顶部徽章精简为三项，避免与圆框重叠（Review-1 修）
+- [x] Princeton 不断词（hookslide \mbox，Review-2 修）
 - [ ] 谷山–志村猜想归功表述（Taniyama 为主）
 - [ ] Cole 奖是数论奖非代数奖
 - [ ] 库名 `Shimura Goro` + 变体 `Goro Shimura`
-- [ ] 双国籍（Japan + United States）
 - [ ] Deligne 成就归属不混淆
 - [ ] has_biography 保持 0
