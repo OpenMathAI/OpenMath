@@ -134,7 +134,7 @@
 | 93 | 70 | **Oskar Perron** (佩龙) | — | Perron–Frobenius 定理——正矩阵与非负矩阵理论的基石 | ✅ | ✅✅ |
 | 94 | 99 | **Lars Gårding** (戈丁) | — | Gårding 不等式——偏微分方程理论的基础工具 | ✅ | ✅✅ |
 | 95 | 18 | **Camille Jordan** (若尔当) | — | Jordan 闭曲线定理、Jordan 标准形——19 世纪拓扑学与代数的先驱 | ✅ | ✅✅ |
-| 96 | 71 | **Jean Gaston Darboux** (达布) | — | Darboux 定理——19 世纪数学分析的基础贡献 | 🔲 | 🔲 |
+| 96 | 71 | **Jean Gaston Darboux** (达布) | — | Darboux 定理——19 世纪数学分析的基础贡献 | ✅ | ✅✅ |
 | 97 | 64 | **Felix Bernstein** (伯恩斯坦) | — | Bernstein 定理——集合论中两个无穷集合等势判定的基本工具 | 🔲 | 🔲 |
 | 98 | 45 | **Albert W. Tucker** (塔克) | — | Tucker 均衡、囚徒困境——博弈论的数学基础推动者 | 🔲 | 🔲 |
 | 99 | 54 | **Ivan Vinogradov** (维诺格拉多夫) | — | 三素数定理——解析数论中 Goldbach 猜想方向的经典突破 | 🔲 | 🔲 |
