@@ -222,13 +222,39 @@ WHERE a.name_en='Andrey Markov' OR b.name_en='Andrey Markov';
 ## 第 13 步：Wikipedia 本地文档终审（提交前必做）
 
 ### 终审清单
-- [ ] 生卒日期与正文一致（1856-06-14 ~ 1922-07-20）
-- [ ] 博士导师 Pafnuty Chebyshev 正确
-- [ ] 1906 马尔可夫链奠基论文正确
-- [ ] 1913 奥涅金字母实验正确
-- [ ] 1896 接替 Chebyshev 正院士正确
-- [ ] 1908 拒绝监视学生、1912 主动逐出教会正确
-- [ ] 编译: `make distclean && make` — 零错误
+- [x] 生卒日期与正文一致（1856-06-14 ~ 1922-07-20）
+- [x] 博士导师 Pafnuty Chebyshev 正确
+- [x] 1906 马尔可夫链奠基论文正确
+- [x] 1913 奥涅金字母实验正确
+- [x] 1896 接替 Chebyshev 正院士正确
+- [x] 1908 拒绝监视学生、1912 主动逐出教会正确
+- [x] 编译: `make distclean && make` — 零错误
+
+---
+
+### Review-1 记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Andrey_Markov/page.md`) 逐页比对。此前排行榜误标 ✅/✅✅（提示词无 Review 记录），本次实际完成。
+
+- **头像** ✅：`images/portrait.jpg`（2.6×3.2cm keepaspectratio，右上角圆角边框 + "A. A. Markov, c.1886" 出处标注）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace 俄罗斯 Ryazan $\rightarrow$ Petrograd\enspace|\enspace 圣彼得堡大学 1880–1905\enspace|\enspace 圣彼得堡科学院\enspace|\enspace 66 岁`（Wikipedia nationality: Russian Empire + RSFSR；地图钉 → 地球图标，与其他项目统一）
+- **事实复核**：生卒(1856-06-14 O.S. 06-02 ~ 1922-07-20, 66岁)/Ryazan/圣彼得堡语法学校叛逆生/导师 Chebyshev + 7 位老师/1877 金牌(连分数)/1880 硕士(正定二元二次型 Korkin+Zolotarev)/1884 博士(代数连分数)/1882 接 Chebyshev 概率论/1886 extraordinary professor+科学院 adjunct/1890 extraordinary member(Bunyakovsky 死后)/1894 ordinary professor/1896 接 Chebyshev 科学院 ordinary member/1905 merited professor 退休/1908 拒绝监控学生("政府的密探")被禁/1912 主动请求被逐教会(响应 Tolstoy)/1913 荣誉会员被部长否决→1917 二月革命后确认/1922 Petrograd 逝世/强棋手/Eugene Onegin 前 20000 字母(1913 首次 Markov 链实证)/Markov 兄弟不等式 1892(弟 Vladimir 1871-1897 25 岁肺结核)/子 Markov Jr.(1903-1979, 构造数学+递归函数, 维数≥4 同胚分类算法不可解)——全部与 Wikipedia 一致
+- **修正 1（删 P0 事实错误）**：chebyshevSlide 学生列删 Alexander Friedmann（Friedmann 导师是 Steklov 非 Markov，Wikipedia 学生列表无）；改为 Wikipedia 确认的 7 位（Besicovitch + Günther + Kagan + Tamarkin + Voronoy + Romanovsky + Uspensky）
+- **修正 2（删 2 处伪引语 §14.6）**：
+  - titleslide 自创"他从 Pushkin 的长诗中摘取了 Markov 链的第一颗种子" → 删引号改忠实转述
+  - closingslide"他只想反驳一个神学的论证——却为 AI 时代写下了第一行数学语言" → 删引号
+  - Shannon"Markov 链是对离散信息源最自然的数学描述"（Wikipedia 无此原文）→ 删引号改转述
+  - Nekrasov"因为上帝创造的世界中…自由意志"（Wikipedia 无原文）→ 删引号改转述
+- **修正 3（格式统一）**：
+  - 国籍图标 `\faIcon{map-pin}` → `\faIcon{globe}`（与其他项目统一）
+  - 半角逗号"方程,根" → "方程，根"
+  - 长论文标题"大数定律对相依变量的推广"引号 → 书名号《》（避免不可断行单元致 hbox 22.39pt）
+- **格式修复**：Unicode `→` 3 处 → `$\rightarrow$`；半角引号 13 处 → 全角（无 Markdown `**` 残留，tex 已用 `\textbf{}`）；半角勾引号`"大数定律..."` 改书名号
+- **编译**：`make distclean && make` → 0 错误 13 页
+- **⚠️ Overfull 警告**：
+  - hbox 22.39pt（l.397 hookslide，badge text width=2.5cm 内 4 行不可避免的固有溢出，视觉无影响）
+  - vbox 5.39pt（l.401 markovchainBirthSlide，<10pt 可接受）
+- **排行榜**：#65 保持 `✅/✅✅`（实质达标：Review-1 完成 + 编译干净）
 
 ---
 
