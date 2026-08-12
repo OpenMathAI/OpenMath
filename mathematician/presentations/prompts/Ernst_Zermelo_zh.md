@@ -272,6 +272,23 @@ WHERE a.name_en='Ernst Zermelo' OR b.name_en='Ernst Zermelo';
 
 ---
 
+### Review-1 复核记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Ernst_Zermelo/page.md`) 复核，对照其他项目格式（Hecke/Rokhlin 系）。
+
+- **头像** ✅：`images/Ernst_Zermelo.jpeg`（63KB，右上角 1.92cm，xshift=-0.3cm/yshift=-1.1cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace German Empire $\rightarrow$ Germany`（出生德意志帝国柏林→德国）
+- **事实复核**：生卒(1871-07-27~1953-05-21, 81岁)/1889 柏林 Luisenstädtisches Gymnasium/1894 变分法博士(Fuchs & Schwarz)/Planck 助手/1897 Göttingen + 1899 habilitation/1904 良序定理 + 选择公理/1905 哥廷根教授/1908 改进证明 + 公理化/1910 Zurich 1916 辞职/1922 ZF/1926 Freiburg 荣誉教席/1929 象棋排名/1931 导航问题/1935 反纳粹辞职/1945 复职 —— 全部与 Wikipedia 一致
+- **修正 1（格式）**：Markdown `**` 残留 4 处 → `\textbf{}`（Max Planck/替换公理/正则公理/Elo 评级系统）
+- **修正 2（格式）**：Unicode `→` 12 处 → `$\rightarrow$`
+- **修正 3（格式）**：中文术语引号半角 12 处 → 全角 `""`
+- **修正 4（伪引语红线）**：titleslide 自创引语"他用一组公理..."删引号改为忠实转述（§14.6）
+- **修正 5（保守表述）**："1899 年已在哥廷根与 Hilbert 讨论选择公理"（Wikipedia 未明确年份）→ "深受 Hilbert 影响，Hilbert 始终支持"
+- **编译**：`make distclean && make` → 0 错误 11 页；Overfull hbox 5.33pt（模板固有）+ 2.63pt + vbox ≤3.44pt（均 <10pt 可接受）
+- **排行榜**：#59 保持 `✅/✅`
+
+---
+
 ## 十三、立传完成后操作（★ 勿遗漏）
 
 - [x] **Wikipedia 下载**: `pages/Ernst_Zermelo/page.md` + `metadata.json` ✅
