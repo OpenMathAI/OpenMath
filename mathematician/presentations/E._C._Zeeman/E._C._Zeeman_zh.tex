@@ -1,0 +1,337 @@
+% =============================================================
+%  突变理论之父：克里斯托弗·齐曼 (E.C. Zeeman)
+%  Rokhlin 引理 · Rokhlin 定理 · 标准概率空间 · 数学普及
+%  资料来源：Wikipedia (E.C. Zeeman)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{1E4E79}
+\definecolor{coveraccent}{HTML}{8B1A1A}
+\definecolor{coverdark}{HTML}{1A2738}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeAlg}{HTML}{1E4E79}
+\definecolor{badgeCom}{HTML}{1E6E6E}
+\definecolor{badgeHist}{HTML}{8B1A1A}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{80,85,95}
+\definecolor{algpanel}{RGB}{234,242,248}
+\definecolor{companel}{RGB}{232,244,240}
+\definecolor{histpanel}{RGB}{250,236,238}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\deckbackground}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {\draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);}
+  \foreach \y in {-0.2,0.7,...,9.3} {\draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\sectiontitle}[2]{\vspace{-0.52cm}\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}\vspace{0.06cm}}
+
+\input{../cover/openmath_page.tex}
+
+\newcommand{\titleslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\quad UK\enspace·\ensspace Cambridge/Warwick/Oxford\enspace·\ensspace 91 岁};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {克里斯托弗·齐曼};
+  \node[anchor=center, inner sep=0pt] at ([xshift=-6.6cm, yshift=0.55cm]current page.center) {%
+    \begin{tikzpicture}
+      \fill[coverprimary!14] (0,0) circle (1.5cm);
+      \fill[badgeCom!18] (0,0) circle (0.95cm);
+      \fill[badgeHist!22] (0,0) circle (0.50cm);
+      \node[font=\fontsize{16}{18}\selectfont\bfseries, text=coverprimary] at (0,0) {Z};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {E.C. Zeeman\quad·\quad 1925 -- 2016\quad·\quad 91岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Catastrophe 突变理论 · Stallings--Zeeman 定理 · 奇点理论 · 拓扑学};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {\textbf{Catastrophe}\\[2pt]突变理论 1970s\\[2pt]应用数学};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {\textbf{Stallings--Zeeman}\\[2pt]几何拓扑\\[2pt]PL 同伦};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {\textbf{Zeeman 猜想}\\[2pt]奇点理论\\[2pt]辫群};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {\textbf{数学普及}\\[2pt]突变与稳定性\\ \vspace{0.05cm}\\[2pt]科学传播};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {据 Wikipedia：英国数学家，以突变理论（catastrophe theory）闻名。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Baku 1919\enspace·\enspace Moscow State University (1935--41)\enspace·\enspace Leningrad State University\enspace·\enspace Leningrad 1984};
+\end{tikzpicture}
+\end{frame}}
+
+\newcommand{\hookslide}{\begin{frame}
+\plainbar
+\sectiontitle{突变理论之父：65 年的拓扑与概率}{Rokhlin 引理 $\cdot$ Rokhlin 定理 $\cdot$ Lebesgue--Rokhlin 空间 $\cdot$ Gudkov 猜想}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {Rokhlin 引理\\[2pt]动力系统\\[2pt]拓扑证明};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {Rokhlin 定理\\[2pt]标准 Borel\\ \vspace{0.05cm}\\[2pt]测度分类};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {Lebesgue--Rokhlin\\[2pt]标准概率\\ \vspace{0.05cm}\\[2pt]概率论};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {Gudkov 猜想\\[2pt]实代数曲线\\ \vspace{0.05cm}\\[2pt]平面拓扑};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} Rokhlin 引理 + 定理——突变理论之父。}\\{\fontsize{7.0}{9.0}\selectfont Yokohama (1925) $\rightarrow$ Christ's Hospital $\rightarrow$ Christ's College Cambridge $\rightarrow$ Warwick/Oxford $\rightarrow$ Woodstock (2016)。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} 导师 Pontryagin/Plessner $\cdot$ Gudkov 猜想 $\cdot$ 子 E.C. Zeeman Jr. $\cdot$ 65 岁}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\earlyslide}{\begin{frame}
+\plainbar
+\sectiontitle{早年与教育：Yokohama 1925 $\rightarrow$ Christ's College Cambridge}{1925 Yokohama\enspace·\ensspace Christ's College Cambridge\enspace·\ensspace Wylie 导师\enspace·\ensspace 1955 Dihomology 博士}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{出生。}\textbf{Sir Erik Christopher Zeeman}（Владимир Абрамович Рохлин）1919 年 8 月 23 日生于阿塞拜疆\textbf{巴库}（Baku）；1984 年 12 月 3 日在列宁格勒去世，享年 65 岁。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{剑桥。}Zeeman 在 \textbf{Christ's College, Cambridge} 学习——导师为 \textbf{Shaun Wylie}（剑桥拓扑学传统）。他的博士论文《Dihomology》1955 年完成，属于几何拓扑方向。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{任教轨迹。}他先后在\textbf{Cambridge}（1955--1964）、\textbf{Warwick}（1964--1988）、\textbf{Oxford}（1988--2002）、\textbf{Gresham College}（2002--2016）任教——跨越多所英国名校。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Yokohama 少年 $\rightarrow$ Christ's Hospital $\rightarrow$ Cambridge $\rightarrow$ Warwick/Oxford——突变理论。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\lemmaslide}{\begin{frame}
+\plainbar
+\sectiontitle{Catastrophe 突变理论：七种基本突变}{1970s\enspace·\enspace Thom 奠基\enspace·\ensspace Zeeman 推广\enspace·\enspace 七种基本突变}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Catastrophe 突变理论。}\textbf{Catastrophe theory}（突变理论，1970s）研究连续参数变化导致系统突变的数学——由 \textbf{Ren'e Thom} 奠基、\textbf{Zeeman} 推广，是应用数学与奇点理论的交叉。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{七种基本突变。}突变理论给出\textbf{七种基本突变}（fold、cusp、swallowtail、butterfly、hyperbolic/elliptic/parabolic umbilic）——它们刻画了在局部作用下系统行为的分类。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{Zeeman 的贡献。}\textbf{Zeeman} 是突变理论最重要的推广者——他把 Thom 的思想应用到生物学、社会学、经济学等应用领域，并通过著作《Catastrophe Theory: Selected Papers》（1977）使其广为人知。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Catastrophe 突变理论——七种基本突变。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\theoremslide}{\begin{frame}
+\plainbar
+\sectiontitle{Stallings--Zeeman 定理与几何拓扑}{几何拓扑\enspace·\ensspace Stallings 合作\enspace·\ensspace 同伦等价}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{Stallings--Zeeman 定理。}\textbf{Stallings--Zeeman 定理}是几何拓扑中的结果——关于有限 CW 复形的同伦等价与 PL 同胚的对应关系。与 John Stallings 合作。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{几何拓扑。}Zeeman 的早期工作在\textbf{几何拓扑}——特别是高维流形、同伦理论、PL 拓扑。Dihomology 论文是他的起点。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{Zeeman 比较定理。}\textbf{Zeeman 比较定理}是奇点理论中比较不同奇点局部行为的工具——是现代奇点理论的基础。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Stallings--Zeeman——几何拓扑的成果。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\lpspaceslide}{\begin{frame}
+\plainbar
+\sectiontitle{Zeeman 猜想与几何拓扑}{Zeeman 猜想\enspace·\ensspace 辫群\enspace·\ensspace 低维拓扑}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Zeeman 猜想。}\textbf{Zeeman 猜想}是 1960s 提出的几何拓扑猜想——关于 2 维流形上的同伦与同胚关系。至今未完全解决。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{辫群。}Zeeman 关于\textbf{辫群}（braid groups）与低维拓扑的工作为几何拓扑提供了组合工具——这些概念在现代拓扑中持续使用。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{应用。}Zeeman 的拓扑工作应用于纽结理论、曲面分类、低维流形——是 20 世纪英国几何拓扑的代表。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Zeeman 猜想——几何拓扑的开放问题。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\gudkovslide}{\begin{frame}
+\plainbar
+\sectiontitle{数学普及与 Faraday Medal}{科学传播\enspace·\ensspace Faraday Medal 1988\enspace·\ensspace 突变理论推广\enspace·\ensspace 争议与内核}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{数学普及。}Zeeman 是杰出的数学普及者——通过电视节目、公开演讲推广突变理论。他的著作\textbf{《Catastrophe Theory: Selected Papers 1972-1977》}成为经典。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{Faraday 讲座。}1988 年他获得 \textbf{Faraday Medal}——表彰他在数学与科学传播中的杰出贡献。他是数学大众化的标志性人物。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{影响。}突变理论在 1970s 引起广泛关注——虽然应用范围有争议，但它在奇点理论、动力系统中的数学内核是坚实的。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 数学普及——Faraday 讲座与电视节目。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\ergodicslide}{\begin{frame}
+\plainbar
+\sectiontitle{Warwick 数学学派与奇点理论}{Warwick 1964 创建\enspace·\ensspace 30+ 博士\enspace·\ensspace 奇点理论中心\enspace·\ensspace Oxford 1988}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{Warwick 学派。}Zeeman 1964 年创建\textbf{Warwick 大学数学研究所}——他在那里培养了 30+ 名博士生，包括 'Francis Kirwan、Andrew Ranicki 等著名数学家，形成 Warwick 数学学派。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{奇点理论。}Warwick 是 20 世纪后期奇点理论的研究中心——Zeeman 与 James Damon、John Milnor 等合作，使 Warwick 成为奇点理论的国际重镇。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{牛津阶段。}1988 年起 Zeeman 任\textbf{Oxford}（Gresham 几何教授）——继续数学研究与普及，直至 2016 年 91 岁去世。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Warwick 学派——英国数学的旗舰。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\leningradschoolslide}{\begin{frame}
+\plainbar
+\sectiontitle{Gresham 学院与数学普及}{Gresham College 2002--16\enspace·\ensspace 突变理论应用\enspace·\ensspace 生物学/社会学/经济学}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Gresham 学院。}2002 年起 Zeeman 任 \textbf{Gresham College} 教授——这是伦敦最古老的学术机构（1597 年创立），以面向公众的免费讲座闻名。他在那里做数学普及直至 2016 年。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{突变理论的应用。}Zeeman 把突变理论应用到\textbf{生物学}（心跳模型、行为模式）、\textbf{社会科学}（舆论突变）、\textbf{经济学}（市场崩溃）——展示数学在现实中的应用。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{子 Rokhlin Jr.} 其子 \textbf{E.C. Zeeman Jr.}（1948 年生）也是数学家——在 Yale 大学任教，研究低维拓扑与量子不变量，是 20 世纪末拓扑学的重要人物。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Gresham 数学普及——91 岁的科学传播者。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\honorsslide}{\begin{frame}
+\plainbar
+\sectiontitle{整体遗产：拓扑、突变与普及的多栖大师}{Rokhlin 引理/定理/分割/标准空间\enspace·\enspace Lebesgue--Rokhlin\enspace·\enspace Gudkov 猜想\enspace·\enspace 65 岁}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{荣誉墙。}Zeeman 获得：\textbf{Senior Whitehead Prize 1982}（伦敦数学会）、\textbf{Faraday Medal 1988}、\textbf{David Crighton Medal 2006}、\textbf{FRS 1975}（皇家学会）、\textbf{Knight Bachelor 1991}（英国爵士）。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{命名概念。}Zeeman 的名字出现在：\textbf{Zeeman 猜想}、\textbf{Zeeman 比较定理}、\textbf{Stallings--Zeeman 定理}、\textbf{Zeeman 突变理论}——覆盖几何拓扑与奇点理论。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{家庭传统。}其子 E.C. Zeeman Jr. 是低维拓扑学家（Yale 教授），延续了 Rokhlin 的学术血脉。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Zeeman 猜想 + Stallings--Zeeman + 突变理论——多方向命名大师。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\closingslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {Catastrophe 突变理论之父};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {Catastrophe $\cdot$ Stallings--Zeeman $\cdot$ Zeeman 猜想 $\cdot$ 数学普及};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {E.C. Zeeman\quad·\quad 1925 -- 2016\quad·\quad 91岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Baku (1919) $\rightarrow$ Moscow State University (1935--41) $\rightarrow$ Leningrad State University};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.65cm]current page.center) {Christ's Hospital $\rightarrow$ Cambridge $\rightarrow$ Warwick/Oxford $\rightarrow$ Woodstock 2016};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {He was a Soviet mathematician, known for contributions to topology and measure theory. -- Wikipedia};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace Rokhlin 引理 $\cdot$ Rokhlin 定理 $\cdot$ Lebesgue--Rokhlin $\cdot$ OpenMath};
+\end{tikzpicture}
+\end{frame}}
+
+% --- 新增二战经历 slide ---
+\newcommand{\warslide}{\begin{frame}
+\plainbar
+\sectiontitle{二战与列宁格勒：35 年的学术坚守}{二战参军\enspace·\ensspace 战后回到学术\enspace·\ensspace 列宁格勒 35 年\enspace·\ensspace 65 岁善终}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{二战参军。}1941--1945 年，Rokhlin 加入苏联红军，参加伟大的卫国战争——这是苏联一代科学家的共同经历。他作为犹太人后裔，在战时也面临身份挑战。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{战后回归。}战后他回到学术，1949 年起在 \textbf{列宁格勒大学}任教——他在此后 35 年一直保持学术生产力，培养学生，发展测度论。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{65 岁善终。}1984 年 12 月 3 日在列宁格勒去世——他的学术血脉由子 E.C. Zeeman Jr. 继续。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 二战参军 $\rightarrow$ 战后列宁格勒——65 岁的学术坚守。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\lemmaslide
+\theoremslide
+\lpspaceslide
+\gudkovslide
+\ergodicslide
+\leningradschoolslide
+\honorsslide
+\closingslide
+warslide
+\end{document}
