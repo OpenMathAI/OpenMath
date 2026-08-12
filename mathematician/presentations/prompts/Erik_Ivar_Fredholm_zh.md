@@ -95,3 +95,21 @@
 - [ ] "预示"Hilbert 空间表述
 - [ ] Mittag-Leffler 双重关系（导师+岳父秘书）
 - [ ] has_biography 保持 0
+
+---
+
+## Review-1 记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Erik_Ivar_Fredholm/page.md`) 逐页比对。
+
+- **头像** ✅：`images/fredholm_portrait.jpg`（1921 Autochrome by Auguste Léon，右上角 1.92cm Cartan 同款圆角矩框）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Sweden\enspace·\enspace Poncelet Prize 1908\enspace·\enspace 积分方程理论之父`
+- **事实复核**：生卒(1866-04-07~1927-08-17, 61岁)/Stockholm 出生/KTH→Uppsala 博士(1898)/Mittag-Leffler 导师/Stockholm Uni docent(1898-1906)+prof(1906-1927)/1902 社会保险局+Skandia 1904-1927/1911 结婚 Agnes Liljeblad(Mittag-Leffler 前秘书)/Poncelet 1908/Björkén 1910/1914 瑞典皇家科学院/1922 芬兰科学学会/Accademia dei Lincei/Fredholm 方程 1900+1903/Fredholm 行列式+替代定理/预示 Hilbert 空间/学生 Rossby+Zeilon/月球陨石坑+小行星 21659——全部与 Wikipedia 一致
+- **修正**：
+  1. **头像格式**：圆形嵌套 `\begin{tikzpicture}` → Cartan 同款圆角矩框 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm，去嵌套避免 xelatex 2026 兼容性风险）
+  2. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`（与 Cartan/Littlewood 一致）
+  3. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`（与 Cartan 一致）
+  4. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：他在积分方程...` → `他在积分方程...`
+  5. **封面底部间距**：`\quad` → `\enspace`（与 Cartan 一致）
+- **编译**：`make distclean && make` → 0 错误 13 页；仅1处 Overfull hbox 5.3pt（可接受）
+- **排行榜**：#73 保持 `✅/✅✅`
