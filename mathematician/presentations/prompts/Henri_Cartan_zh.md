@@ -99,9 +99,28 @@
 
 ## 10. 终审清单
 
-- [ ] 无 Élie/Henri 父子成就混淆
-- [ ] Serre 别名映射避免重复建人
-- [ ] Bourbaki 集体署名表述正确
-- [ ] 人权叙事不涉政治站队
-- [ ] Wolf 1980 共享（非独享）
-- [ ] has_biography 保持 0
+- [x] 无 Élie/Henri 父子成就混淆
+- [x] Serre 别名映射避免重复建人
+- [x] Bourbaki 集体署名表述正确
+- [x] 人权叙事不涉政治站队
+- [x] Wolf 1980 共享（非独享）
+- [x] has_biography 已置 1（立传完成）
+
+---
+
+## Review-1 记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Henri_Cartan/page.md`) 逐页比对。此前排行榜误标 ✅/✅✅（提示词无 Review 记录），本次实际完成。
+
+- **头像** ✅：`images/cartan_portrait.jpg`（269×401，右上角 2.5cm；**已重编码去 Exif TIFF 元数据**——原图 Exif 元数据触发 xelatex 2026 `Dimension too large` bug，make 失败；用 PIL 重编码为标准 JFIF 后 make 0 错误 13 页）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace France\enspace·\enspace Wolf Prize 1980\enspace·\enspace Bourbaki 核心成员`
+- **事实复核**：生卒(1904-07-08~2008-08-13, 104岁)/Nancy 出生/Élie Cartan 之子+Anna 姑母+Jean 作曲家+Louis 物理+Hélène 数学+Pierre Weiss 岳父/1909 迁巴黎/Lycée Hoche/1923 ENS/1926 agrégation/1928 博士(Montel)/Caen-Lille-Strasbourg-Paris 教职/Clermont Ferrand 迁校+推荐 Schwartz/1969-75 Paris-Sud/1934 Bourbaki 创始/Cartan 定理 A 与 B/Steenrod 代数/1956 Homological Algebra(与 Eilenberg)/killing homotopy with Serre/filter+ultrafilter+Cartan 引理+Cartan 模型/1945 Séminaire Cartan/学生 Guidy Wandja(非洲首位女性数学博士)+Douady+Godement+Karoubi+Koszul+Serre+Thom/人权 Plyushch+Massera+Assidon/Pagels 1989/Behnke+Thullen 法德/欧洲联邦主义 1974-85 主席/1984 欧洲选举 0.4%/1992 欧洲数学大会/Picard 1959+CNRS Gold 1976+Wolf 1980(与 Kolmogorov+Levi 共享)/IMU 1967-70/20+ 外籍院士(AAAS 1950+LMS 1959+Royal Soc 1971+NAS 1972+Japan 1979+Russia 1999)/9 荣誉博士——全部与 Wikipedia 一致
+- **修正 1（伪引语红线 §14.6）**：closingslide 英文自创"From Élie's Lie groups to Henri's homological algebra -- a family's century in mathematics."（Wikipedia 无）→ 改中文忠实转述"从 Élie 的李群到 Henri 的同调代数——一个数学世家的百年。"
+- **修正 2（结构修复）**：
+  - 头像：`xshift=-0.4cm, yshift=-0.4cm` 负偏移在 `current page.north east` 触发 xelatex 2026 `Dimension too large` bug → 改 `xshift=0cm, yshift=0cm`（贴右上角，与 Faltings 一致）
+  - 头像：从嵌套 `\begin{tikzpicture}...\end{tikzpicture}`（圆形装饰）改为直接 `\includegraphics`（Faltings 方式，消除嵌套触发）
+  - badge：从嵌套 `\node + \begin{tikzpicture}` 改为平铺 4 个独立 `\node`（消除嵌套计算）
+  - 头像图片：重编码去 Exif TIFF 元数据（**xelatex 2026 读取 Exif 的 jpg 时偶发 `Dimension too large`**，PIL 重编码为标准 JFIF 后正常）
+- **格式修复**：Unicode `→` 12 处 → `$\rightarrow$`；半角引号 3 处 → 全角；"104岁" → "104 岁"（2 处）
+- **编译**：`make distclean && make` → 0 错误 13 页；0 警告（无 Dimension/Overfull）
+- **排行榜**：#69 保持 `✅/✅✅`（实质达标：Review-1 完成 + 编译干净）
