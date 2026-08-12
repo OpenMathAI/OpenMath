@@ -100,10 +100,26 @@
 
 ## 10. 终审清单
 
-- [ ] 合并后的 id=67 无残留重复记录
-- [ ] qid/生卒/国籍正确
-- [ ] Noether 关系方向正确（Noether→Waerden）
-- [ ] 无纳粹美化或定罪表述
-- [ ] 4 个"范德瓦尔登"概念不混淆
-- [ ] 《现代代数》不误写为合著
-- [ ] has_biography 保持 0
+- [x] 合并后的 id=67 无残留重复记录
+- [x] qid/生卒/国籍正确
+- [x] Noether 关系方向正确（Noether→Waerden）
+- [x] 无纳粹美化或定罪表述
+- [x] 4 个"范德瓦尔登"概念不混淆
+- [x] 《现代代数》不误写为合著
+- [x] has_biography 已置 1（立传完成）
+
+---
+
+## Review-1 记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Bartel_Leendert_van_der_Waerden/page.md`) 逐页比对。此前排行榜误标 ✅/✅✅（提示词无 Review 记录），本次实际完成。
+
+- **头像** ✅：`images/Bartel_van_der_Waerden.jpg`（500×709，Wikipedia ETH-BIB 肖像下载，封面右上角 3.2cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Netherlands\enspace·\enspace Pour le Mérite 1973\enspace·\enspace 数学史家`（Wikipedia nationality: Kingdom of the Netherlands）
+- **事实复核**：生卒(1903-02-02~1996-01-12, 92岁)/阿姆斯特丹+哥廷根 1919-1926/Noether 影响/de Vries 博士(代数几何)/1928 habilitation+25 岁格罗宁根教授/27 岁(1930-31)《现代代数》两卷本/1929-07 娶 Camilla Rellich(Franz 之妹)+三子女/1931 莱比锡/纳粹期留守莱比锡+拒绝 Princeton/Utrecht+批判纳粹+保留荷兰国籍/战后遣返+Johns Hopkins+1950 阿姆斯特丹+1951 苏黎世/40+ 博士/学生 Chow-van Dantzig-Seifert-van Deemter-Frei-Mazzola/1000+ 后代(van Dantzig 1931·Seifert 1932·Richter 1936 与 Koebe 共同指导)/1949 KNAW(1951 外籍)+1973 Pour le Mérite/Cothenius 奖章/Fellow of IMS/历史著作 Science Awakening(1954)·量子力学史料(1967)·Geometry and Algebra(1983)·A History of Algebra(1985)——全部与 Wikipedia 一致
+- **注**：conjectureslide（范德瓦尔登猜想/永久式）内容基于 Wikipedia 独立条目 "Van der Waerden's conjecture"（本页 page.md 未含），事实正确有来源
+- **修正 1（伪引语红线 §14.6）**：closingslide 英文自创"From Noether's Göttingen to a new age of algebra..."（Wikipedia 无）→ 改中文忠实转述
+- **修正 2（无来源断言）**："Noether 修订过手稿"（Wikipedia 未明确）→ 改为"系统化了 Noether 学派的研究"
+- **格式修复**：Unicode `→` 9 处 → `$\rightarrow$`；半角引号 1 处 → 全角；"92岁" → "92 岁"（2 处）
+- **编译**：`make distclean && make` → 0 错误 12 页；仅 1 个模板固有 Overfull hbox 5.33pt（无 vbox 溢出）
+- **排行榜**：#67 保持 `✅/✅✅`（实质达标：Review-1 完成 + 编译干净）
