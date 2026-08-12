@@ -246,4 +246,20 @@ WHERE a.name_en='Lev Pontryagin' OR b.name_en='Lev Pontryagin';
 
 **结论：第1轮 Review 通过。零问题。** Wikipedia与TeX完全一致。
 
-> **第1轮 Review 完成。**
+---
+
+### Review-1 复核记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Lev_Pontryagin/page.md`) 复核，对照其他项目格式（Hecke/Zermelo/Rokhlin 系）。
+
+- **头像** ✅：`images/Lev_Pontryagin.jpg`（右上角 1.92cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Soviet Union\enspace|\enspace Stalin Prize · Lenin Prize\enspace|\enspace IMU 副主席 1970`（Wikipedia nationality: Soviet Union + Russian Empire）
+- **事实复核**：生卒(1908-09-03~1988-05-03, 79岁)/14岁 primus stove 爆炸+手术失败全盲/母亲 Tatyana 读 Hopf-Whitehead-Whitney 论文+"tails up"符号语/1925 MSU+1929 毕业/Alexandrov 导师/1934 Steklov 研究所/1934 对偶+Hilbert 第五问题(交换群)/1935 紧 Lie 群同调("一生最大成就")/1940 Pontryagin 类+配边共奠基(Thom)/1942 Pontryagin 平方/1952 最大值原理+bang-bang/1962 教材/1970 IMU 副主席/学生 Anosov-Boltyansky-Gamkrelidze-Postnikov-Rokhlin-Zelikin/争议 Egorov 1930+Jacobson+Margulis 1978+Science 1979 —— 全部与 Wikipedia 一致
+- **修正 1（删捏造）**：earlyslide 删"父亲是会计，母亲是裁缝"（Wikipedia 仅提母亲 Tatyana 不懂符号，未提职业）
+- **修正 2（伪引语红线 §14.6）**：titleslide 自创引语"他 14 岁失去眼睛..."删引号改忠实转述
+- **格式修复**：Markdown `**` 16 处 → `\textbf{}`；Unicode `→` 13 处 → `$\rightarrow$`；半角引号 9 处 → 全角（英文原文引述如 "lost his eyesight..." / "tails up" 保留英文引号）
+- **编译**：`make distclean && make` → 0 错误 10 页
+- **⚠️ Overfull vbox 警告**（已知限制）：earlyslide 16.44pt / dualslide 17.09pt / moscowslide 13.84pt（>10pt 阈值但 <20pt）；hbox 7.67pt + vbox 6.80/8.91pt（<10pt 可接受）；hbox 5.33pt 模板固有——视觉内容完整在页内
+- **排行榜**：#61 保持 `✅/✅`（Review-1 完成，Review-2 部分完成/部分限制）
+
+> **Review-1 复核完成。**
