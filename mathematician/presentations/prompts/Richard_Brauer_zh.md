@@ -232,13 +232,27 @@ WHERE a.name_en='Richard Brauer' OR b.name_en='Richard Brauer';
 ## 第 13 步：Wikipedia 本地文档终审（提交前必做）
 
 ### 终审清单
-- [ ] 生卒日期与 metadata.json 一致（1901-02-10 ~ 1977-04-17）
-- [ ] 博士导师 Issai Schur、Erhard Schmidt 正确
-- [ ] 模表示论 1937 正确
-- [ ] Brauer 群 1929 正确
-- [ ] Cole 奖 1949、国家科学奖章 1970 正确
-- [ ] 流亡叙事敏感表述
-- [ ] 编译: `make distclean && make` — 零错误
+- [x] 生卒日期与 metadata.json 一致（1901-02-10 ~ 1977-04-17）
+- [x] 博士导师 Issai Schur、Erhard Schmidt 正确
+- [x] 模表示论 1937 正确
+- [x] Brauer 群 1929 正确
+- [x] Cole 奖 1949、国家科学奖章 1970 正确
+- [x] 流亡叙事敏感表述
+- [x] 编译: `make distclean && make` — 零错误
+
+---
+
+### Review-1 记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Richard_Brauer/page.md`) 逐页比对。此前排行榜误标 ✅/✅✅（提示词无 Review 记录），本次实际完成。
+
+- **头像** ✅：`Richard_Brauer.jpg`（figure_my 复制，5.3KB，封面右上角 3.2cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Germany $\rightarrow$ United States\enspace|\enspace Cole Prize 1949\enspace|\enspace National Medal of Science 1970`（Wikipedia nationality: Germany, United States）
+- **事实复核**：生卒(1901-02-10~1977-04-17, 76岁)/Charlottenburg 犹太家庭/兄 Alfred 大7岁/1919 柏林工学院→柏林大学/1921 与兄解 Schur 问题(Hopf 同时)/1926-03-16 Schur 博士(旋转群不可约表示)/1929 Königsberg Brauer 群/1933 纳粹→Emergency Committee→Kentucky/1934 IAS(Weyl+Jacobson)/1935 Toronto(Noether)/1937 与 Nesbitt 模表示论/妹 Alice 死于大屠杀/1948 Michigan→1952 Harvard→1971 退休/1956 Brauer--Fowler/学生 Steinberg-Passman-Isaacs-Nesbitt-Mark-Bruck-Stanton/1954 AAAS+1955 NAS+1974 APS/Cole 1949+National Medal 1970 —— 全部与 Wikipedia 一致
+- **修正 1（伪引语红线 §14.6）**：titleslide/legacyslide 2 处自创引语"他用模表示论把群论锻造成现代数学的利剑..."删引号改忠实转述
+- **格式修复**：Markdown `**` 19 处 → `\textbf{}`；Unicode `→` 19 处 → `$\rightarrow$`；半角引号 13 处 → 全角（closingslide 英文 Wikipedia 引述 "He was the founder of modular representation theory." 保留英文引号）
+- **编译**：`make distclean && make` → 0 错误 12 页；仅 1 个模板固有 Overfull hbox 5.33pt（无 vbox 溢出，本轮最干净）
+- **排行榜**：#63 保持 `✅/✅✅`（实质达标：Review-1 完成 + 编译干净）
 
 ---
 
