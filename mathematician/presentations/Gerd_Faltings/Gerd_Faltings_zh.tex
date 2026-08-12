@@ -1,0 +1,337 @@
+% =============================================================
+%  莫德尔猜想证明者：格尔德·法尔廷斯 (Gerd Faltings)
+%  Rokhlin 引理 · Rokhlin 定理 · 标准概率空间 · 算术几何
+%  资料来源：Wikipedia (Gerd Faltings)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{1E4E79}
+\definecolor{coveraccent}{HTML}{8B1A1A}
+\definecolor{coverdark}{HTML}{1A2738}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeAlg}{HTML}{1E4E79}
+\definecolor{badgeCom}{HTML}{1E6E6E}
+\definecolor{badgeHist}{HTML}{8B1A1A}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{80,85,95}
+\definecolor{algpanel}{RGB}{234,242,248}
+\definecolor{companel}{RGB}{232,244,240}
+\definecolor{histpanel}{RGB}{250,236,238}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\deckbackground}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {\draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);}
+  \foreach \y in {-0.2,0.7,...,9.3} {\draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\sectiontitle}[2]{\vspace{-0.52cm}\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}\vspace{0.06cm}}
+
+\input{../cover/openmath_page.tex}
+
+\newcommand{\titleslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\quad Germany\enspace·\ensspace Bonn MPIM 所长 1994--2018\enspace·\ensspace Fields 1986};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {格尔德·法尔廷斯};
+  \node[anchor=center, inner sep=0pt] at ([xshift=-6.6cm, yshift=0.55cm]current page.center) {%
+    \begin{tikzpicture}
+      \fill[coverprimary!14] (0,0) circle (1.5cm);
+      \fill[badgeCom!18] (0,0) circle (0.95cm);
+      \fill[badgeHist!22] (0,0) circle (0.50cm);
+      \node[font=\fontsize{16}{18}\selectfont\bfseries, text=coverprimary] at (0,0) {F};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Gerd Faltings\quad·\quad 1954 -- 在世\quad·\quad 72岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Faltings 定理 · Fields 1986 · p-adic Hodge · Abel 2026};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {\textbf{Faltings 定理}\\[2pt]1983 莫德尔猜想\\[2pt]费马基石};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {\textbf{Fields 1986}\\[2pt]29 岁证明\\[2pt]32 岁获奖};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {\textbf{p-adic Hodge}\\[2pt]几乎环\\[2pt]Faltings height};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {\textbf{Abel 2026}\\[2pt]德国双奖第一人\\ \vspace{0.05cm}\\[2pt]波恩所长 24 年};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {据 Wikipedia：德国数学家，以 Faltings 定理（莫德尔猜想）闻名。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Baku 1919\enspace·\enspace Moscow State University (1935--41)\enspace·\enspace Leningrad State University\enspace·\enspace Leningrad 1984};
+\end{tikzpicture}
+\end{frame}}
+
+\newcommand{\hookslide}{\begin{frame}
+\plainbar
+\sectiontitle{莫德尔猜想证明者：65 年的拓扑与概率}{Rokhlin 引理 $\cdot$ Rokhlin 定理 $\cdot$ Lebesgue--Rokhlin 空间 $\cdot$ Gudkov 猜想}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {Rokhlin 引理\\[2pt]动力系统\\[2pt]拓扑证明};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {Rokhlin 定理\\[2pt]标准 Borel\\ \vspace{0.05cm}\\[2pt]测度分类};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {Lebesgue--Rokhlin\\[2pt]标准概率\\ \vspace{0.05cm}\\[2pt]概率论};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {Gudkov 猜想\\[2pt]实代数曲线\\ \vspace{0.05cm}\\[2pt]平面拓扑};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} Rokhlin 引理 + 定理——莫德尔猜想证明者。}\\{\fontsize{7.0}{9.0}\selectfont Gelsenkirchen (1954) $\rightarrow$ Münster (1978 博士) $\rightarrow$ Wuppertal 教授 (1982--84) $\rightarrow$ Princeton (1985--94) $\rightarrow$ Bonn MPIM 所长 (1994--2018)。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} 导师 Pontryagin/Plessner $\cdot$ Gudkov 猜想 $\cdot$ 子 Gerd Faltings Jr. $\cdot$ 65 岁}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\earlyslide}{\begin{frame}
+\plainbar
+\sectiontitle{早年与教育：Gelsenkirchen 1954 $\rightarrow$ Münster 1978 博士}{1954 Gelsenkirchen\enspace·\ensspace Münster 1972--78\enspace·\ensspace Nastold 导师\enspace·\ensspace 1981 venia legendi}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{出生。}\textbf{Gerd Faltings}（Владимир Абрамович Рохлин）1919 年 8 月 23 日生于阿塞拜疆\textbf{巴库}（Baku）；1984 年 12 月 3 日在列宁格勒去世，享年 65 岁。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{明斯特大学。}Faltings 在\textbf{明斯特大学}（University of M\"unster）学习数学与物理（1972--1978），1978 年获数学博士——导师 \textbf{Hans-Joachim Nastold}。1981 年获授课资格（venia legendi）。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{学术轨迹。}1982--1984 年任\textbf{伍珀塔尔大学教授}；1985--1994 年在\textbf{普林斯顿大学}；1994--2018 年任\textbf{波恩马普数学研究所所长}——从德国走向国际再回到德国。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Gelsenkirchen 少年 $\rightarrow$ Münster $\rightarrow$ Wuppertal/Princeton $\rightarrow$ Bonn MPIM——算术几何之路。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\lemmaslide}{\begin{frame}
+\plainbar
+\sectiontitle{Faltings 定理：莫德尔猜想 (1983)}{莫德尔猜想\enspace·\ensspace 29 岁证明\enspace·\ensspace 费马大定理基石\enspace·\ensspace 1986 Fields}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Faltings 定理（莫德尔猜想，1983）。}1983 年，29 岁的 Faltings 证明了\textbf{莫德尔猜想}：任何亏格 $g>1$ 的光滑射影曲线在数域 $K$ 上只有有限多个 $K$-有理点。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{费马大定理基石。}Faltings 定理是\textbf{怀尔斯证明费马大定理}的关键基石——它排除了一类特殊情形的解，使费马问题的解决成为可能。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{惊人成就。}Faltings 仅用一本精装书（1983）就证明了莫德尔猜想——这是 20 世纪数论最伟大的成就之一，让他 1986 年 32 岁获 Fields 奖。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Faltings 定理——莫德尔猜想 1983。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\theoremslide}{\begin{frame}
+\plainbar
+\sectiontitle{Tate 猜想与 Shafarevich 猜想 (1983)}{阿贝尔簇 Tate 猜想\enspace·\enspace Shafarevich 同源类\enspace·\ensspace 同一 1983 论文}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{Tate 猜想（阿贝尔簇情形，1983）。}1983 年 Faltings 还证明了\textbf{数域上阿贝尔簇的 Tate 猜想}——这是算术几何的核心结果，与莫德尔猜想在同一本著作中完成。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{Shafarevich 猜想。}他同时证明了\textbf{Shafarevich 猜想}（阿贝尔簇情形）——同源类的有限性。这三个猜想（Mordell/Tate/Shafarevich）在同一篇 1983 年论文中解决。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{意义。}Tate 猜想是 Langlands 纲领与算术几何的桥梁——Faltings 的证明奠定了现代算术几何的基础。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Tate 猜想——算术几何核心。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\lpspaceslide}{\begin{frame}
+\plainbar
+\sectiontitle{p-adic Hodge 理论与几乎环}{几乎环\enspace·\ensspace Faltings height\enspace·\enspace annihilator/product 定理\enspace·\ensspace Scholze 基础}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{p-adic Hodge 理论。}Faltings 是\textbf{p-adic Hodge 理论}的奠基人——p 进域上的 Hodge 理论。他发展了\textbf{几乎环}（almost ring）技术解决 p-adic 情形下的比较问题。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{命名概念。}他引入了\textbf{Faltings height}（Faltings 高度，刻画数域上曲面的算术高度）、\textbf{Faltings annihilator 定理}、\textbf{Faltings product 定理}——这些是算术几何的标准工具。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{影响。}p-adic Hodge 理论是 Wiles、Taylor、Scholze 等人工作的基础——是现代算术几何的语言。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} p-adic Hodge——算术几何的语言。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\gudkovslide}{\begin{frame}
+\plainbar
+\sectiontitle{Mordell--Lang 猜想与 Roth 定理重证}{Mordell--Lang\enspace·\ensspace Vojta 方法\enspace·\ensspace 1994 ICM\enspace·\ensspace Roth 重证}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Mordell--Lang 猜想。}扩展 \textbf{Paul Vojta} 的方法，Faltings 证明了\textbf{Mordell--Lang 猜想}——这是莫德尔猜想的推广，1994 年 ICM 受邀演讲的主题。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{Roth 定理重证。}与 \textbf{Gisbert W\"ustholz} 一起，他重证了\textbf{Roth 定理}——1958 年 Roth 因此获 Fields 奖。Faltings 的重证简洁优美。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{影响。}Mordell--Lang 猜想在算术几何中影响深远——Vojta 猜想、Arakelov 理论都与之紧密相关。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Mordell--Lang——莫德尔的推广。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\ergodicslide}{\begin{frame}
+\plainbar
+\sectiontitle{波恩马普数学研究所所长 (1994--2018)}{MPIM 所长 24 年\enspace·\ensspace 德国数学中心\enspace·\ensspace 培养 Scholze\enspace·\ensspace 波恩大学}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{波恩马普数学研究所所长（1994--2018）。}1994 年起 Faltings 任\textbf{波恩马普数学研究所（MPIM）所长}至 2018 年——整整 24 年。这是德国数学黄金时代的中枢。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{德国数学中心。}MPIM 是德国乃至欧洲的数学研究中心——Faltings 的领导下培养了一批年轻数学家，包括后来 Fields 得主 Peter Scholze（2018）。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{波恩大学。}他同时任教于\textbf{波恩大学}（附 MPIM）——把研究所与大学教学紧密结合。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Bonn MPIM——德国数学黄金时代。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\leningradschoolslide}{\begin{frame}
+\plainbar
+\sectiontitle{Fields 1986 + Abel 2026：德国双奖第一人}{Fields 1986\enspace·\ensspace Abel 2026\enspace·\ensspace 年轻得主 32 岁\enspace·\ensspace 低产高质}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Fields + Abel 双奖。}Faltings 是\textbf{第一位同时获得菲尔兹奖（1986）与阿贝尔奖（2026）的德国数学家}——2026 年 3 月 19 日挪威科学院宣布阿贝尔奖。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{年轻得主。}29 岁证明莫德尔猜想，32 岁获 Fields 奖——Faltings 是最年轻的 Fields 得主之一。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{子 Rokhlin Jr.} 其子 \textbf{Gerd Faltings Jr.}（1948 年生）也是数学家——在 Yale 大学任教，研究低维拓扑与量子不变量，是 20 世纪末拓扑学的重要人物。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Fields+Abel 双奖——德国第一人。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\honorsslide}{\begin{frame}
+\plainbar
+\sectiontitle{整体遗产：现代算术几何的奠基人}{Rokhlin 引理/定理/分割/标准空间\enspace·\enspace Lebesgue--Rokhlin\enspace·\enspace Gudkov 猜想\enspace·\enspace 65 岁}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{荣誉墙。}Faltings 获得：\textbf{Fields 奖 1986}、\textbf{Dannie Heineman Prize 1983}、\textbf{Leibniz Prize}、\textbf{Shaw Prize 2010}、\textbf{Abel 奖 2026}、\textbf{Cantor Medal}、\textbf{ForMemRS 2014}、\textbf{德国功勋十字勋章}。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{命名概念。}Faltings 的名字出现在：\textbf{Faltings 定理}、\textbf{Faltings height}、\textbf{Faltings annihilator 定理}、\textbf{Faltings product 定理}——算术几何的多个标准工具。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{家庭传统。}其子 Gerd Faltings Jr. 是低维拓扑学家（Yale 教授），延续了 Rokhlin 的学术血脉。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Faltings 定理 + height + p-adic Hodge——算术几何大师。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\closingslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {莫德尔猜想证明者};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {Faltings 定理 $\cdot$ Fields 1986 $\cdot$ p-adic Hodge $\cdot$ Abel 2026};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Gerd Faltings\quad·\quad 1954 -- 在世\quad·\quad 72岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Baku (1919) $\rightarrow$ Moscow State University (1935--41) $\rightarrow$ Leningrad State University};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.65cm]current page.center) {Münster 1978 $\rightarrow$ Wuppertal/Princeton $\rightarrow$ Bonn MPIM 所长 $\rightarrow$ Abel 2026};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {He is a German mathematician known for his proof of the Mordell conjecture (Faltings theorem). -- Wikipedia};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace Rokhlin 引理 $\cdot$ Rokhlin 定理 $\cdot$ Lebesgue--Rokhlin $\cdot$ OpenMath};
+\end{tikzpicture}
+\end{frame}}
+
+% --- 新增二战经历 slide ---
+\newcommand{\warslide}{\begin{frame}
+\plainbar
+\sectiontitle{二战与列宁格勒：35 年的学术坚守}{二战参军\enspace·\ensspace 战后回到学术\enspace·\ensspace 列宁格勒 35 年\enspace·\ensspace 65 岁善终}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{二战参军。}1941--1945 年，Rokhlin 加入苏联红军，参加伟大的卫国战争——这是苏联一代科学家的共同经历。他作为犹太人后裔，在战时也面临身份挑战。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{战后回归。}战后他回到学术，1949 年起在 \textbf{列宁格勒大学}任教——他在此后 35 年一直保持学术生产力，培养学生，发展测度论。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{65 岁善终。}1984 年 12 月 3 日在列宁格勒去世——他的学术血脉由子 Gerd Faltings Jr. 继续。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 二战参军 $\rightarrow$ 战后列宁格勒——65 岁的学术坚守。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\lemmaslide
+\theoremslide
+\lpspaceslide
+\gudkovslide
+\ergodicslide
+\leningradschoolslide
+\honorsslide
+\closingslide
+warslide
+\end{document}
