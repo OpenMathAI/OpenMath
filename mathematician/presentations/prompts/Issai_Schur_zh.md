@@ -228,13 +228,27 @@ WHERE a.name_en='Issai Schur' OR b.name_en='Issai Schur';
 ## 第 13 步：Wikipedia 本地文档终审（提交前必做）
 
 ### 终审清单
-- [ ] 生卒日期 1875-01-10 / 1941-01-10 正确（66 岁生日当天）
-- [ ] 博士导师 Frobenius、Fuchs 正确
-- [ ] Schur 引理 1905 正确
-- [ ] Schur 函数（博士论文）正确
-- [ ] 1926 Schur 定理（Ramsey 先驱）正确
-- [ ] 1933-1939 纳粹迫害叙事客观
-- [ ] 编译: `make distclean && make` — 零错误
+- [x] 生卒日期 1875-01-10 / 1941-01-10 正确（66 岁生日当天）
+- [x] 博士导师 Frobenius、Fuchs 正确
+- [x] Schur 引理 1905 正确
+- [x] Schur 函数（博士论文）正确
+- [x] 1916 Schur 定理（Ramsey 先驱）正确（原清单误写 1926，Schur 的 Ramsey 先驱工作出自 1916 论文）
+- [x] 1933-1939 纳粹迫害叙事客观
+- [x] 编译: `make distclean && make` — 零错误
+
+---
+
+### Review-1 记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Issai_Schur/page.md`) 逐页比对。此前排行榜误标 ✅/✅✅（提示词无 Review 记录），本次实际完成。
+
+- **头像** ✅：`Issai_Schur.jpg`（figure_my 复制，12.9KB，封面右上角 3.2cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Russian Empire $\rightarrow$ Germany\enspace|\enspace Prussian Academy 1922\enspace|\enspace Schur 引理`（Wikipedia：born Russian Empire, worked in Germany）
+- **事实复核**：生卒(1875-01-10~1941-01-10, 66 岁生日当天 Tel Aviv 心脏病)/Mogilev 犹太家庭/原名 Schaia(Isaiah)/1888 13 岁赴 Liepāja/1894 金质奖章/1901 summa cum laude 博士(Frobenius+Fuchs, GL(n) 多项式表示)/1903 讲师→1913 波恩→1916 回柏林→1919 教授→1921 Schottky 讲席→1922 科学院院士/1933 停职+Schmidt 复职/1935-09-30 Bieberbach 解职(最后失业犹太教授)/1936 苏黎世讲座/1938 盖世太保+妻子代赴约/1939 初离德→伯尔尼→巴勒斯坦/26 位博士(Brauer 兄弟·Neumann·Prüfer·Rado·Schoenberg·Wielandt·Specht)/20+ 命名概念/Weyl 评 Noether 相当/全部引语(Alfred Brauer 悼词·Frobenius 信·Green 赞誉·Schur 致 Pólya)均有 Wikipedia 来源
+- **⚠️ 出生日期矛盾**：Wikipedia 正文 1875-01-10 vs Wikidata metadata 1875-12-29 —— tex 只用年份"1875"+"66 岁生日当天去世"（与正文 1875-01-10 一致），避免矛盾；metadata 的 12-29 疑为 Wikidata 旧数据
+- **格式修复**：单星号 `*Schaia*`/`*Isaiah*` 2 处 → `\textit{}`；Unicode `→` 22 处 → `$\rightarrow$`；半角引号 12 处 → 全角（有来源的引语如 Alfred Brauer 悼词/Frobenius 信/Schur 致 Pólya 均改全角；closingslide 英文 Weyl 引述保留英文）
+- **编译**：`make distclean && make` → 0 错误 12 页；仅 1 个模板固有 Overfull hbox 5.33pt（无 vbox 溢出，与 Brauer 同样干净）
+- **排行榜**：#64 保持 `✅/✅✅`（实质达标：Review-1 完成 + 编译干净）
 
 ---
 
