@@ -97,7 +97,7 @@
 | 56 | 9 | **Norbert Wiener** (维纳) | — | 控制论之父，Wiener 过程——数学向工程与生物扩散的枢纽 | ✅ | ✅ |
 | 57 | 73 | **Srinivasa Ramanujan** (拉马努金) | — | 印度天才，mock theta 函数，直觉穿越时代的数学家 | ✅ | ✅ |
 | 58 | 30 | **Erich Hecke** (赫克) | — | Hecke 算子，模形式理论的奠基人，Langlands 纲领的数学源头 | ✅ | ✅✅ |
-| 59 | 32 | **Ernst Zermelo** (策梅罗) | — | ZFC 公理体系——现代数学大厦最深层的地基之一 | ✅ | ✅ |
+| 59 | 32 | **Ernst Zermelo** (策梅罗) | — | ZFC 公理体系——现代数学大厦最深层的地基之一 | ✅ | ✅✅ |
 | 60 | 69 | **Hermann Minkowski** (闵可夫斯基) | — | 数的几何，Minkowski 时空——理论物理的关键数学语言 | ✅ | ✅ |
 | 61 | 33 | **Lev Pontryagin** (庞特里亚金) | — | Pontryagin 示性类、Pontryagin 对偶——拓扑学的核心工具 | ✅ | ✅ |
 | 62 | 95 | **G.D. Birkhoff** (伯克霍夫) | — | 美国第一位真正有国际声誉的数学家，遍历理论开创者 | ✅ | ✅✅ |

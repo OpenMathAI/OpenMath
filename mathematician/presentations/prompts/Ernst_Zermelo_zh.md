@@ -289,6 +289,16 @@ WHERE a.name_en='Ernst Zermelo' OR b.name_en='Ernst Zermelo';
 
 ---
 
+### Review-2 结构优化记录 (2026-08-12)
+
+- **中文标点**：无半角逗号/句号残留；引号/箭头已在 Review-1 修复
+- **时间线**：hookslide 路径 8 段已拆两行（`\\[1pt]`）✓；closingslide 结束页 5 段单行（<7 段不需拆）✓
+- **半角括号**：`Berlin 博士(1894)`/`Göttingen(1897)` 等为"Latin词(数字)"混排惯例，与其他项目一致，保留
+- **编译**：0 错误 11 页；Overfull hbox 5.33pt（模板固有）+ 2.63pt + vbox ≤3.44pt（均 <10pt 可接受）
+- **排行榜**：#59 更新为 `✅/✅✅`
+
+---
+
 ## 十三、立传完成后操作（★ 勿遗漏）
 
 - [x] **Wikipedia 下载**: `pages/Ernst_Zermelo/page.md` + `metadata.json` ✅
