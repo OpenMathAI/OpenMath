@@ -257,6 +257,19 @@ WHERE a.name_en='Erich Hecke' OR b.name_en='Erich Hecke';
 
 ---
 
+### Review-1 复核记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Erich_Hecke/page.md`) 复核，对照其他项目格式（Rokhlin/Carleman 系）。
+
+- **头像** ✅：`images/Erich_Hecke.jpg`（9.5KB，右上角 1.92cm，`xshift=-0.35cm` 内缩，与项目格式一致）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace German Empire $\rightarrow$ Germany`（出生德意志帝国 Posen 省→德国，比单一 `Germany` 更准确，保留）
+- **事实复核**：生卒（1887-09-20~1947-02-13，59岁）/Hilbert 博士/Basel 1915-Göttingen 1918-Hamburg 1919/Dedekind ζ 方程/Hecke 算子与 L-函数/尖点形式 GL(2)/Weil 评价"futile and impossible task"/1933 宣誓/ICM 1936/Ackermann–Teubner 1938 —— 全部与 Wikipedia 一致，无新问题
+- **学生**：Reidemeister/Behnke/Petersson（Wikipedia notable）+ Schoeneberg/Maak/Maass/Witt（metadata 16 位博士生中选取）—— 准确
+- **编译**：`make distclean && make` → **0 错误 0 警告 12 页**（比 Rokhlin 系更干净）
+- **排行榜**：#58 保持 `✅/✅`
+
+---
+
 ## 十三、立传完成后操作（★ 勿遗漏）
 
 - [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第58行 Hecke: 立传 `🔲 → ✅` ✅, Review `🔲 → ✅` (第1轮完成)
