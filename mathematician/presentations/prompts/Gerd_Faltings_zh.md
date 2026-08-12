@@ -117,13 +117,25 @@
 > 立传完成后按此规范执行两轮 Review（参照 #73 Fredholm Review-1 执行标准）。
 
 ### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `pages/<Name>/page.md` 建立事实基准，逐页对照 Beamer tex 的全部事实（生卒/机构/年份/奖项/荣誉/家族/引语）
-- [ ] **头像**：优先使用 Wikipedia infobox 照片（`images.txt` 或 infobox `image` 字段），下载原图到 `images/<name>_portrait.jpg`；无照片时用装饰圆替代
-- [ ] **国籍**：封面顶部徽章明确国籍（`\faIcon{globe}\enspace <Country>`），与 Cartan/Borel/Fredholm 立传格式一致
-- [ ] **引语核对**：tex 引语必须能在 Wikipedia 原文找到（§14.6 伪引语红线）；找不到则改为忠实转述
-- [ ] **编译验证**：`make distclean && make`（latexmk 自动多遍编译；remember picture 需要多遍）
-- [ ] **更新提示词**：Review 修正（头像来源/国籍/新细节）写回 `prompts/<Name>_zh.md`
-- [ ] **更新排行榜**：`✅/🔲` → `✅/✅✅`
+- [x] **结合本地 Wikipedia**：读取 `pages/<Name>/page.md` 建立事实基准，逐页对照 Beamer tex 的全部事实（生卒/机构/年份/奖项/荣誉/家族/引语）
+- [x] **头像**：优先使用 Wikipedia infobox 照片（`images.txt` 或 infobox `image` 字段），下载原图到 `images/<name>_portrait.jpg`；无照片时用装饰圆替代
+- [x] **国籍**：封面顶部徽章明确国籍（`\faIcon{globe}\enspace <Country>`），与 Cartan/Borel/Fredholm 立传格式一致
+- [x] **引语核对**：tex 引语必须能在 Wikipedia 原文找到（§14.6 伪引语红线）；找不到则改为忠实转述
+- [x] **编译验证**：`make distclean && make`（latexmk 自动多遍编译；remember picture 需要多遍）
+- [x] **更新提示词**：Review 修正（头像来源/国籍/新细节）写回 `prompts/<Name>_zh.md`
+- [x] **更新排行榜**：`✅/🔲` → `✅/✅✅`
+
+### Review-1 修正记录（2026-08-12）
+- **头像**：`Gerd_Faltings.jpg`（3.2cm 右上角，来源 `Fields_Medal/pages/1986/Gerd Faltings/images/Gerd_Faltings_MFO_cropped_3_.jpg`，MFO 照片）
+- **国籍**：封面顶部 `\faIcon{globe}\quad Germany`（德国）
+- **修正 1（删捏造）**：earlyslide 删除"父亲是工程师，家庭重视教育"（Wikipedia 无此信息）；出生地补全"盖尔森基兴-布埃（Gelsenkirchen-Buer，北莱茵-威斯特法伦，西德）"
+- **修正 2（费马表述）**：改为"对每个固定指数 n，费马方程只有有限多个本原解，为怀尔斯 1995 年证明提供理论背景与支撑"（原文"排除一类特殊情形"不严谨）
+- **修正 3（ICM 事实）**：Mordell-Lang 非 1994 ICM 演讲主题（ICM 演讲为 Mumford stability）；删除错误关联
+- **修正 4（奖项年份）**：Shaw Prize 2010→**2015**；ForMemRS 2014→**2016**；荣誉墙精简并保留主要奖项
+- **修正 5（引语）**：closingslide 引语改为 Wikipedia 原文 "He is a German mathematician known for his work in arithmetic geometry."
+- **修正 6（Scholze）**：Scholze 非 Faltings 直接学生；改为"MPIM 同一波恩学派走出 Peter Scholze（2018 Fields）"
+- **修正 7（年轻得主）**：删除"最年轻的 Fields 得主之一"（Serre 27 岁更年轻）；改为"如此年轻即攻克世纪难题，震动数论界"
+- **编译**：`make distclean && make` 0 错误 12 页；Overfull hbox 5.33pt（Rokhlin/Carleman 系模板固有）+ vbox 5.31pt（均 <10pt 可接受）
 
 ### 第 2 轮（Review-2）：结构优化
 - [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
