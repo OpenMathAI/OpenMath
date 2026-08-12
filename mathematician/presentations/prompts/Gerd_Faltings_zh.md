@@ -135,6 +135,7 @@
 - **修正 5（引语）**：closingslide 引语改为 Wikipedia 原文 "He is a German mathematician known for his work in arithmetic geometry."
 - **修正 6（Scholze）**：Scholze 非 Faltings 直接学生；改为"MPIM 同一波恩学派走出 Peter Scholze（2018 Fields）"
 - **修正 7（年轻得主）**：删除"最年轻的 Fields 得主之一"（Serre 27 岁更年轻）；改为"如此年轻即攻克世纪难题，震动数论界"
+- **修正 8（整体 review 补充学生）**：honorsslide 补充"指导 15+ 位博士生（望月新一 Mochizuki/Nizioł/Durov 等）"——Wikipedia 明确提及 over a dozen PhD students
 - **编译**：`make distclean && make` 0 错误 12 页；Overfull hbox 5.33pt（Rokhlin/Carleman 系模板固有）+ vbox 5.31pt（均 <10pt 可接受）
 
 ### 第 2 轮（Review-2）：结构优化
