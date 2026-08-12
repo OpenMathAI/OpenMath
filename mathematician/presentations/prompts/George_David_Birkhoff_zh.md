@@ -244,7 +244,17 @@ WHERE a.name_en LIKE '%Birkhoff%' OR b.name_en LIKE '%Birkhoff%';
 - [x] **数据库联动**: `people.has_biography` 设为 `1` ✅ (id=62, 社会关系已在库中 14条, `has_social_data=1`)
 - [x] **编译验证**: `make distclean && make` → 12页 199KB, 0错误 ✅
 
-### 第1轮 Review (待执行)
-- 待与本地 Wikipedia 逐页比对后进行 ⬜
+### Review-1 (2026-08-12 完成)
 
-> **立传完成，待 Review。**
+> 结合本地 Wikipedia (`pages/George_David_Birkhoff/page.md`) 逐页比对。
+
+- **头像** ✅：`images/George_David_Birkhoff.jpg`（右上角 1.92cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace United States\enspace|\enspace Bôcher 首届 1923\enspace|\enspace AMS 主席 · AAAS 主席`
+- **事实复核**：生卒(1884-03-21~1944-11-12, 60岁)/荷兰移民之子(David Birkhoff 1870 抵美, 医生)/Lewis Institute 1896-1902/Chicago-Harvard-1907 PhD(E.H. Moore, 23岁 summa cum laude)/Wisconsin 1907-Princeton 1909-Harvard 1912-1944/1912 色多项式/1913 Poincaré 最后几何定理/1923 Birkhoff 定理(Schwarzschild 唯一)+Relativity and Modern Physics(Langer)/1927 Dynamical Systems/1931 遍历定理/Birkhoff 公理+Basic Geometry 1941/AMS 1919 副-1920-24 Transactions 主编-1925-26 主席/AAAS 1937 主席/Bôcher 首届 1923+Newcomb Cleveland 1926/六院院士(NAS·APS·AAAS·巴黎·宗座·伦敦爱丁堡)/反犹争议(Einstein-Wiener 指控·Mac Lane 辩护·Ulam 亲近·Veblen 评价)/14 位博士学生(含 Morse·Stone·Whitney·Koopman·Carmichael·Morrey·Walsh·Widder) —— 全部与 Wikipedia 一致
+- **修正 1（伪引语红线 §14.6）**：titleslide/poincareslide/legacyslide 3 处自创引语"他让美国数学第一次站在了世界的讲台上"删引号改忠实转述
+- **修正 2（残留）**：ergodicslide panel"P1 影响"（markdown 优先级标注残留）→"影响深远"
+- **格式修复**：Markdown `**` 10 处 → `\textbf{}`；Unicode `→` 18 处 → `$\rightarrow$`；半角引号 10 处 → 全角（英文 Wikipedia 原文引述保留英文引号）
+- **编译**：`make distclean && make` → 0 错误 11 页；**全部 Overfull <10pt**（hbox 6.13pt + vbox ≤8.92pt，可接受；hbox 5.33pt 模板固有）
+- **排行榜**：#62 保持 `✅/✅✅`（注：原榜单误标，本次实际完成 Review-1；因编译干净 vbox 全 <10pt，Review-2 结构标准实质达标）
+
+> **Review-1 完成。**
