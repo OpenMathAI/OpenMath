@@ -46,14 +46,7 @@ $(IMAGES_DIR)/.done: $(MAIN).pdf
 	@touch $@
 
 $(SLIDES_TXT): $(IMAGES_DIR)/.done
-	@$(PYTHON) -c "\
-	import os; \
-	imgs = sorted([f for f in os.listdir('$(IMAGES_DIR)') if f.endswith('.png')]); \
-	lines = []; \
-	[lines.extend([\"file 'images/' + f + '\"', 'duration $(DURATION)']) for f in imgs]; \
-	lines.append(\"file 'images/' + imgs[-1] + '\"'); \
-	open('$(SLIDES_TXT)', 'w').write('\n'.join(lines) + '\n'); \
-	print(f'  slides.txt: {len(imgs)} slides x $(DURATION)s = {len(imgs)*$(DURATION)}s')"
+	@$(PYTHON) -c "import os; imgs=sorted([f for f in os.listdir('$(IMAGES_DIR)') if f.endswith('.png')]); lines=[]; [lines.extend([\"file 'images/\"+f+\"'\",'duration $(DURATION)']) for f in imgs]; lines.append(\"file 'images/\"+imgs[-1]+\"'\"); open('$(SLIDES_TXT)','w').write('\n'.join(lines)+'\n'); print(f'  slides.txt: {len(imgs)} slides x $(DURATION)s')"
 
 video: $(OUTPUT_DIR)/$(VIDEO_NAME).mp4
 
