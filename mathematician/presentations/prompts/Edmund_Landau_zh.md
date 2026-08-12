@@ -36,23 +36,26 @@
 | 强调（大O青） | #1E6E6E | Landau 符号 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
-1. 封面：大标题 + 副标题「解析数论的奠基人 · 大 O 记号之父」
+1. 封面：大标题 + 副标题「解析数论的奠基人 · 大 O 记号普及者」
 2. 生平总览：时间轴（1877 → 1899 博士 → 1903 素数定理 → 1909 哥廷根 → 1927 希伯来大学 → 1933 纳粹逼退 → 1938 去世）
-3. 素数定理的新证明（1903）与《Handbuch》（1909）
-4. Landau 问题（1912）：四个未解难题
-5. Landau 素数理想定理：代数数域推广
-6. 大 O 记号与 Landau 符号：渐近分析语言
-7. 图论先驱（1895）：特征向量中心性
-8. 希伯来大学的创建者：自学希伯来语、领导权之争
-9. 纳粹迫害：Teichmüller 抵制、被迫离开哥廷根
-10. 学术王朝：Siegel/Bohr/Heilbronn/Ostrowski/Bernays 等豪华学生阵容
-11. 数学世家：岳父 Paul Ehrlich（诺奖生物学家）
-12. 终章：61 岁、Hardy 评价、历史地位
+3. **出身与早年**：柏林犹太世家、父 Leopold Landau（妇科名医）、母 Johanna Jacoby（银行世家）、Französisches Gymnasium、柏林大学 1899 博士（Frobenius 门下, 14 页论文）、1901 Habilitation
+4. 素数定理的新证明（1903）与《Handbuch》（1909）
+5. Landau 问题（1912）：四个未解难题
+6. Landau 素数理想定理：代数数域推广
+7. 大 O 记号与 Landau 符号：渐近分析语言
+8. 图论先驱（1895）：特征向量中心性
+9. 希伯来大学的创建者：自学希伯来语、领导权之争
+10. 纳粹迫害：Teichmüller 抵制、被迫离开哥廷根
+11. 学术王朝：Siegel/Bohr/Heilbronn/Ostrowski/Bernays 等豪华学生阵容
+12. 数学世家：岳父 Paul Ehrlich（诺奖生物学家）
+13. 终章：61 岁、Hardy 评价、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
+- **头像**：Wikipedia 肖像（标准黑白照，写字/阅读姿势）已下载至 `images/Edmund_Landau.jpg`（339×424，约 5:6 竖版，52.95 KB，源自 `mathematician/figure_my/Edmund Landau.jpg`）。封面采用 **Fredholm 同款圆框头像**：`[xshift=-2.0cm, yshift=-1.3cm]current page.north east`，宽度 2.5cm，淡蓝底圈 + 1.32cm 强调环。Review-1 原批量 3.2cm 裸贴角版本与顶部长徽章（"German Reich · 解析数论奠基人 · 大 O 记号普及者"）右端重叠，故升级为圆框并偏移至右上内侧。
+- **国籍**：封面顶部徽章 `\faIcon{globe}\enspace Germany\enspace·\enspace 解析数论奠基人`（Wikidata `nationality: ["German Reich"]`，但为与 Cartan "France"/Littlewood "英国" 等统一风格，使用现代国名 "Germany"）。
 - **纳粹叙事**：1933 被 Teichmüller 组织的**抵制**逼退，是"被迫离开"而非"主动辞职"；Teichmüller 本人后来也死于二战前线——表述要客观、不渲染个人恩怨。
 - **希伯来大学细节**：1927 移居巴勒斯坦仅短暂任教，因 Magnes vs Weizmann/Einstein 的大学控制权之争而失望返欧——时间线精确。
 - **大 O 记号归属**：由 Bachmann 引入（1894），Landau **普及并系统化**——不要写成 Landau 发明。
@@ -60,6 +63,25 @@
 - **生卒核对**：1877-02-14 / 1938-02-19，metadata 与正文一致。
 - **Landau 问题**：四个问题至今未解（截至 2024）。
 - **学生阵容**：Siegel、Bohr、Heilbronn、Ostrowski、Bernays、Jackson 等，星光熠熠。
+- **Review-1 修正记录（2026-08-12）**：
+  1. **头像补齐**：`images/Edmund_Landau.jpg`（Wikipedia 标准肖像 339×424，原存于 `mathematician/figure_my/`）。
+  2. **国籍确认**：封面徽章 `\faIcon{globe}\quad German Reich`，与 Wikidata `nationality: ["German Reich"]` 一致。
+  3. **Slide 2 标题**：`大 O 记号之父` → `大 O 记号普及者`（Landau 未发明 Bachmann 1894 引入的大 O，仅普及并系统化）。
+  4. **Slide 4 副标题**：原 `勒让德猜想 · n² 与 (n+1)² 间素数`（与勒让德猜想同义重复，且漏第四个问题）→ `勒让德猜想 · n²+1 素数`。
+  5. **Slide 5 正文 + 副标题**：正文原 `以 Dirichlet 类数公式与理想类群为背景`（类数公式是关于 h(K)，与素数理想无关）→ `以 Dedekind zeta 函数为工具，把 Dirichlet 素数定理（算术级数中的素数）推广到代数数域素数理想`。副标题原 `Dirichlet 类数定理` → `Dirichlet 素数定理推广`（同一原因修正）。
+- **Review-2 修正记录（2026-08-12）**：
+  1. **hookslide 时间线**：用 `\mbox{Göttingen}` 防止在 "Götin-/gen" 处断词（消除 Overfull hbox 5.3pt）。
+  2. **hookslide 荣誉项**：`圣彼得堡科学院荣誉院士 (1916)`（本地 Wikipedia 未证实）→ `多家科学院院士`（保守表述）。
+  3. **Slide 3 正文**：`素数个数 p(x) 渐近于 x/ln x`（p(x) 非标准，标准为 π(x)）→ `素数个数渐近于 x/ln x`。
+  4. **封面布局**：头像升级为 Fredholm 同款圆框（2.5cm + 1.32cm 强调环，偏移 2cm 左/1.3cm 下），并精简顶部徽章为两项 "German Reich · 解析数论奠基人" 避免与圆框重叠；"大 O 记号普及者"在下方四徽章与 Slide 2/6 体现。
+- **Review-3 修正记录（2026-08-12）**：
+  1. **封面国籍**：顶部徽章 `German Reich` → `Germany`（与 Cartan "France"/Littlewood "英国" 统一使用现代国名）。
+  2. **新增出身页**（成为 Slide 3：`\earlyslide`）：柏林犹太家庭、父 Leopold Landau（妇科名医）、母 Johanna Jacoby（银行世家）、Französisches Gymnasium、柏林大学 1899 博士（Frobenius 门下, 14 页论文）、1901 Habilitation。共 13→14 页。
+  3. **section title 字号统一**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`（与 Cartan/Littlewood 一致）。
+  4. **封面国籍行字号统一**：`\fontsize{12}{16}` → `\fontsize{14}{18}`（与 Cartan 一致）。
+  5. **Slide 7（大O）去批注语气**：移除 "不要写成 Landau 发明"（reviewer 批注误入 slide）。
+  6. **Slide 8（图论）语气修正**："表述谨慎。准确地说..." → "历史定位。虽然...但思想内核..."（去自反性语气）。
+  7. **封面底部间距统一**：`\quad` → `\enspace`（与 Cartan 一致）。
 
 ## 6. 数据库字段核对表（§21.5）
 
@@ -92,6 +114,15 @@
 
 ## 10. 终审清单
 
+- [x] 头像已放置 `images/Edmund_Landau.jpg`（Review-1 补）
+- [x] 国籍 `German Reich` 已标注（Review-1 确认）
+- [x] 大 O 记号"普及者"（Slide 2 标题已改为"普及者"，非"之父"）
+- [x] Landau 四问题副标题去重 + 补第四（Slide 4 已改）
+- [x] 素数理想定理正文（Slide 5 已改为 Dedekind ζ / Dirichlet 素数定理，非类数公式）
+- [x] Göttingen 不断词（hookslide \mbox，Review-2 修）
+- [x] 科学院荣誉表述保守化（去"圣彼得堡 1916"，Review-2 修）
+- [x] 素数个数 p(x) → π(x) 风格（删 p(x)，Review-2 修）
+- [x] 封面布局无重叠（头像圆框 + 徽章两项精简，Review-2 修）
 - [ ] 纳粹逼退表述客观（抵制非主动辞职）
 - [ ] 大 O 记号"普及"非"发明"
 - [ ] 希伯来大学时间线精确
