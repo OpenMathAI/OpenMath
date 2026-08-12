@@ -254,4 +254,29 @@ WHERE a.name_en='Hermann Minkowski' OR b.name_en='Hermann Minkowski';
 
 **结论：第1轮 Review 通过。零问题。** Wikipedia+TeX 完全一致。
 
-> **第1轮 Review 完成。**
+---
+
+### Review-1 复核记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Hermann_Minkowski/page.md`) 复核，对照其他项目格式（Hecke/Zermelo/Rokhlin 系）。
+
+- **头像** ✅：`images/Hermann_Minkowski.png`（63KB Wikipedia 1883 照片，右上角 1.92cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Kingdom of Prussia\enspace|\enspace Grand Prix 1883\enspace|\enspace Minkowski 时空`（历史准确：出生于波兰王国/Congress Poland，1872 移居普鲁士）
+- **事实复核**：生卒(1864-06-22~1909-01-12, 44岁, 阑尾炎)/1883 18岁法国大奖(与 Henry Smith 共享)/1885 博士(Lindemann)/教职 Bonn-Königsberg-Zürich-Göttingen/1908 科隆演讲/1909 逝世 —— 与 Wikipedia 一致
+- **修正 1（伪引语红线 §14.6）**：删"懒狗"(lazy dog)逸事（Wikipedia 无此记载）→ 改为"当时还只是 ETH 一名普通学生——Minkowski 或许未曾预见其未来的成就"
+- **修正 2（同上）**：删"数学史上最优雅的'打脸'" → 改为老师与学生一同载入史册
+- **修正 3（反事实推测红线）**：删"如果 Minkowski 多活 10 年——他几乎可以肯定参与..."虚构推测 → 改为事实陈述
+- **修正 4（无 Wikipedia 来源）**："Hilbert 亲自整理遗著"（Wikipedia 未明确）→ 改为"为 Minkowski 撰写动人悼词"
+- **修正 5（同上）**：删"爱因斯坦最初态度冷淡/多余的学问"（Wikipedia 无来源）→ 改为"完全依赖 Minkowski 的四维框架"
+- **补充**：hookslide 时间线补 `Königsberg(1894)` 任教段（Wikipedia 明确 Bonn→Königsberg→Zürich→Göttingen）
+- **格式修复**：Markdown `**` 2 处 → `\textbf{}`；Unicode `→` 23 处 → `$\rightarrow$`；半角引号 19 处 → 全角（英文原文引述保留）
+- **布局压缩**：earlyslide/einsteinslide item fontsize 7→6.5、inner ysep 5→3pt、panel y 坐标上移
+- **编译**：`make distclean && make` → 0 错误 12 页
+- **⚠️ Overfull vbox 警告**（已知限制）：
+  - earlyslide（l.380）: **25.84pt**（>10pt 阈值，多次压缩后未消除）
+  - einsteinslide（l.385）: **12.19pt**（>10pt 阈值）
+  - hbox 5.33pt（模板固有）+ deathslide vbox 5.12pt（<10pt 可接受）
+  - 视觉上内容完整在页内（panel 与页码可见），vbox 警告源于节点布局/字号组合
+- **排行榜**：#60 保持 `✅/✅`（Review-1 完成，Review-2 部分完成/部分限制）
+
+> **Review-1 复核完成。**
