@@ -104,8 +104,22 @@
 
 ## 10. 终审清单
 
-- [ ] 无 Armand Borel 混淆（Borel 子群/猜想不属 Émile）
-- [ ] von Neumann 争议客观记录
-- [ ] 无穷猴子定理表述为"经典化/普及"而非首创
-- [ ] 时间线（海军部长 1925、众议员 1924-36）精确
-- [ ] has_biography 保持 0
+- [x] 无 Armand Borel 混淆（Borel 子群/猜想不属 Émile）
+- [x] von Neumann 争议客观记录
+- [x] 无穷猴子定理表述为"经典化/普及"而非首创
+- [x] 时间线（海军部长 1925、众议员 1924-36）精确
+- [x] has_biography 已置 1（立传完成）
+
+---
+
+## Review-1 记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Émile_Borel/page.md`) 逐页比对。此前排行榜误标 ✅/✅✅（提示词无 Review 记录），本次实际完成。
+
+- **头像** ✅：`images/borel_portrait.jpg`（圆形带圈装饰，1918 Autochrome 肖像，封面 2.6×2.6cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace France\enspace·\enspace Resistance Medal 1950\enspace·\enspace 数学家与政治家`（Wikipedia nationality: France）
+- **事实复核**：生卒(1871-01-07~1956-02-03, 85岁)/Saint-Affrique 新教牧师之子/Collège Sainte-Barbe + Lycée Louis-le-Grand/1889 ENS 与 Polytechnique 双第一(选 ENS)+concours général/1892 agrégation 第一/1893 博士《函数理论的若干要点》/里尔 4 年 22 篇/1897 ENS 函数论讲席至 1941(44 年)/测度论三巨头(Baire+Lebesgue)/Borel 集命名/无穷猴子定理(经典化/普及而非首创)/1909 正规数/1921-27 策略博弈首次定义+von Neumann 1953 Econometrica 异议(拒绝极小极大)/争议平衡记录/Borel–Cantelli+Heine–Borel+Borel 求和/1913-14 双曲几何与相对论/1915 国防发明局/1924-36 众议员(12 年)/1925 海军部长(4-17~11-28, Painlevé 内阁)/二战法国抵抗/Resistance Medal 1950/1922 巴黎统计学院/1928 IHP/1901 娶 Marguerite(Paul Appell 之女 17 岁, Camille Marbo 30+ 小说)/学生 Lebesgue-Montel-Valiron-Esclangon-Milloux/岳父 Paul Appell/命名概念群+月球 Borel 环形山+Centre Émile Borel——全部与 Wikipedia 一致
+- **修正 1（伪引语红线 §14.6）**：closingslide 英文自创"From measure theory to games of strategy..."（Wikipedia 无）→ 改中文忠实转述
+- **格式修复**：Unicode `→` 10 处 → `$\rightarrow$`；半角引号 3 处 → 全角；"85岁" → "85 岁"（2 处）
+- **编译**：`make distclean && make` → 0 错误 13 页；仅 1 个模板固有 Overfull hbox 5.33pt（无 vbox 溢出）
+- **排行榜**：#68 保持 `✅/✅✅`（实质达标：Review-1 完成 + 编译干净）
