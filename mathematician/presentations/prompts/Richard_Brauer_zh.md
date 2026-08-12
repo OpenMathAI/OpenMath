@@ -256,6 +256,16 @@ WHERE a.name_en='Richard Brauer' OR b.name_en='Richard Brauer';
 
 ---
 
+### Review-2 结构优化记录 (2026-08-12)
+
+- **中文标点**：无半角逗号/句号残留；拉丁词+全角冒号（如 `Brauer--Fowler：“固定中...`）为中文排版惯例，保留
+- **时间线**：closingslide 结束页 5 段单行（Schur 门下→Brauer 群 1929→模表示论 1937→Harvard 1952–71→有限单群分类），<7 段不需拆
+- **Overfull**：仅模板固有 hbox 5.33pt（无 vbox 溢出）
+- **编译**：0 错误 12 页
+- **排行榜**：#63 `✅/✅✅`（Review-1 + Review-2 实质完成）
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 >
 > **特别提醒：**
