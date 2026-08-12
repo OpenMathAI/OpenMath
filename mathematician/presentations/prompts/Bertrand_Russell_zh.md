@@ -139,6 +139,34 @@
 
 - **头像** ✅：`images/russell_portrait.jpg`（1924 年照片，右上角 1.92cm Cartan 同款圆角矩框）
 - **国籍** ✅：封面 `\faIcon{globe}\enspace United Kingdom\enspace·\enspace Nobel 文学奖 1950\enspace·\enspace 数理逻辑巨人`
+- **身份信息页** ✅：Slide 3 ("罗素家族的孤子：1872--1893") 涵盖 Trellech 出生、罗素家族（祖父两次任首相）、4 岁孤儿+Pembroke Lodge+祖父母抚养、Mill 教父、1890 剑桥三一学院、Moore+Whitehead 结识及反唯心主义起义
+- **修正**：
+  1. **头像格式**：圆形嵌套 `\begin{tikzpicture}` → Cartan 同款圆角矩框 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm，去嵌套避免 xelatex 2026 兼容性风险）
+  2. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`（与 Cartan/Littlewood 一致）
+  3. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`（与 Cartan 一致）
+  4. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：英格兰哲学家...` → `英格兰哲学家...`
+- **编译**：`make distclean && make` → 0 错误 13 页；仅1处 Overfull hbox 5.3pt（可接受）
+- **排行榜**：#74 `✅/🔲` → `✅/✅`
+
+---
+
+## Review-2 记录 (2026-08-12)
+
+> 结构复核 + 编译验证。
+
+- **事实核对**：全文 13 页与 Wikipedia 逐项核对——生卒(1872-05-18~1970-02-02, 97岁)/Trellech/Russell family/祖父二人首相/4岁孤儿+Pembroke Lodge/Mill 教父/1890 Cambridge/Frank 兄弟+祖母抚养/1893 BA 第七 Wrangler/Moore+Whitehead 结识/反唯心主义/FRS 1908/罗素悖论 1901/Frege 崩溃/类型论/PM 1910-13 与 Whitehead/On Denoting 1905/分析哲学 Frege+Moore+Wittgenstein/逻辑原子论/一战 1916 解职+1918 入狱+数学哲学导论/1919 复职→1920 辞职→1944 Fellowship/1931 继承爵位/四段婚姻/3个孩子/Wittgenstein+Pitts+Copi+Demos 学生/诺贝尔文学奖 1950/De Morgan 1932+Sylvester 1934+Kalinga 1957+Jerusalem 1963/Order of Merit 1949/罗素-爱因斯坦 1955/CND 1958-63/Russell Tribunal 反越战/Russell's teapot/绥靖→1943 转变——全部一致
+- **身份信息页** ✅：Slide 3 已覆盖出身、家庭背景与教育路径
+- **编译**：`make distclean && make` → ✅ 13页，0错误；仅1处 Overfull hbox 5.3pt（可接受）
+- **排行榜**：#74 `✅/✅` → `✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Bertrand_Russell/page.md`) 逐页比对。
+
+- **头像** ✅：`images/russell_portrait.jpg`（1924 年照片，右上角 1.92cm Cartan 同款圆角矩框）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace United Kingdom\enspace·\enspace Nobel 文学奖 1950\enspace·\enspace 数理逻辑巨人`
 - **事实复核**：生卒(1872-05-18~1970-02-02, 97岁)/Trellech 出生/罗素家族/祖父两次任首相/4岁孤儿+Pembroke Lodge+祖父母抚养/Mill 教父/1890 剑桥三一学院/1893 BA/Moore+Whitehead 结识/反唯心主义起义/FRS 1908/罗素悖论 1901/Frege 体系崩塌/类型论/数学原理 1910-13(与 Whitehead)/On Denoting 1905(paradigm of philosophy)/分析哲学创始人(Frege+Moore+Wittgenstein)/描述理论+逻辑原子论/一战反战 1916 解职+1918 入狱/数学哲学导论/1931 继承爵位/四段婚姻(Alys 1894+Dora 1921+Patricia 1936+Edith 1952)/3个孩子/Wittgenstein+Pitts+Copi+Demos 学生/诺贝尔文学奖 1950/De Morgan 1932+Sylvester 1934+Kalinga 1957+Jerusalem 1963/Order of Merit 1949/罗素-爱因斯坦宣言 1955/CND 主席 1958-63/反越战+Russell Tribunal/罗素茶壶/绥靖→1943 转变——全部与 Wikipedia 一致
 - **修正**：
   1. **头像格式**：圆形嵌套 `\begin{tikzpicture}` → Cartan 同款圆角矩框 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm，去嵌套避免 xelatex 2026 兼容性风险）
