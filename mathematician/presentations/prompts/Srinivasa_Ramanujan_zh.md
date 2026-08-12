@@ -468,3 +468,21 @@ MAIN = Srinivasa_Ramanujan_zh
 > 7. **结尾应提炼的核心思想**：他不是在"计算"数学——他是在"接收"数学。他的故事不是关于一个人如何学习数学，而是关于数学如何在一个人身上显现。
 > 8. **与 Hardy 的关系** —— Hardy 认为发现 Ramanujan 是他一生最大的贡献。Ramanujan 的传记不可能不与 Hardy 交织。但演示的主视角应始终是 Ramanujan 本人。
 > 9. **回避"东方神秘主义"的陈词滥调** —— 不要用"东方的直觉 vs 西方的理性"这种简单的二元对立。Ramanujan 的独特之处是个体性的，不是文化符号式的。
+
+---
+
+## Review-1 记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Srinivasa_Ramanujan/page.md`) 逐页比对。
+
+- **头像** ✅：`images/portrait.jpeg`（1913 年照片，右上角 1.92cm Cartan 同款圆角矩框）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace India\enspace·\enspace 以直觉穿越时代的天才`（从 `\faIcon{star}` → `\faIcon{globe}`，并添加 `India` 国籍标识）
+- **身份信息页** ✅：Slide 3 ("神童在石板上 1887–1903") 涵盖 Erode 出生、泰米尔婆罗门家庭、父亲纱丽店职员、天花幸存、神童经历（11 岁超越大学生、13 岁掌握三角学、16 岁读 Carr's Synopsis）
+- **section title 字号** ✅：`\fontsize{20}{24}`（已符合标准）
+- **无"据 Wikipedia："前缀** ✅：全文无此伪引语前缀
+- **事实复核**：生卒(1887-12-22~1920-04-26, 32岁)/Erode 英属印度/Tamil Brahmin Iyengar/Carr's Synopsis/大学退学+偏科/Hardy 1913 信件/FRS 1918(最年轻之一)/Trinity Fellow/mock theta 函数/1729 出租车/nearly 3900 results/Lost Notebook 1976 重发现——全部与 Wikipedia 一致
+- **修正**：
+  1. **国籍标识**：封面 `\faIcon{star}` → `\faIcon{globe}\enspace India`（与 Cartan/Borel/Fredholm 一致）
+  2. **头像格式**：clip+嵌套 `\begin{tikzpicture}` + label → Cartan 同款圆角矩框 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm）
+- **编译**：`make distclean && make` → ✅ 17页，0错误
+- **排行榜**：#57 `✅/✅` → `✅/✅✅`（format review 达标）

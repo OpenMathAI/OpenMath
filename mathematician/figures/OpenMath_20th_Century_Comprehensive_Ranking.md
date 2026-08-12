@@ -77,7 +77,7 @@
 | 49 | 无 | **Jacques-Louis Lions** | — | 变分法与偏微分方程的大师、分布控制理论的创立者、法国应用数学的奠基人 | ✅ | ✅ |
 | 50 | 无 | **Vladimir Voevodsky** | Fields 2002 | A1同伦论的创立者、代数簇motivic上同调的构造者、Fields奖得主 | ✅ | ✅ |
 
-> **进度摘要**：立传 50/50 ✅ · Review 2轮 10/50 · Review 1轮 40/50 · Review 未开始 0/50
+> **进度摘要**：立传 50/50 ✅ · Review 2轮 11/50 · Review 1轮 39/50 · Review 未开始 0/50
 
 ---
 
@@ -95,7 +95,7 @@
 | 54 | 47 | **Solomon Lefschetz** (莱夫谢茨) | Bôcher 1924 · Medal of Science 1964 | 拓扑学方法引入代数几何，普林斯顿数学王朝的缔造者 | ✅ | ✅✅ |
 | 55 | 25 | **René Thom** (托姆) | Fields 1958 | 配边理论与突变论的创立者，Fields 奖 | ✅ | ✅✅ |
 | 56 | 9 | **Norbert Wiener** (维纳) | — | 控制论之父，Wiener 过程——数学向工程与生物扩散的枢纽 | ✅ | ✅✅ |
-| 57 | 73 | **Srinivasa Ramanujan** (拉马努金) | — | 印度天才，mock theta 函数，直觉穿越时代的数学家 | ✅ | ✅ |
+| 57 | 73 | **Srinivasa Ramanujan** (拉马努金) | — | 印度天才，mock theta 函数，直觉穿越时代的数学家 | ✅ | ✅✅ |
 | 58 | 30 | **Erich Hecke** (赫克) | — | Hecke 算子，模形式理论的奠基人，Langlands 纲领的数学源头 | ✅ | ✅✅ |
 | 59 | 32 | **Ernst Zermelo** (策梅罗) | — | ZFC 公理体系——现代数学大厦最深层的地基之一 | ✅ | ✅✅ |
 | 60 | 69 | **Hermann Minkowski** (闵可夫斯基) | — | 数的几何，Minkowski 时空——理论物理的关键数学语言 | ✅ | ✅ |
