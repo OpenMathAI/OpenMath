@@ -54,6 +54,7 @@
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
+- **头像**：Wikipedia 黑白肖像（800×1204 竖版，DPI=1 需在 tex 中显式 `natwidth=800,natheight=1204` 避免 xetex 维度溢出）已下载至 `images/Thoralf_Skolem.jpg`（168.9 KB，源自 `figure_my/Thoralf Skolem.jpg`）。封面采用 **纯照片轻偏移**：`[xshift=-0.6cm, yshift=-0.5cm]current page.north east`，宽度 2.5cm。Review-1 原批量 3.2cm 裸贴角会被顶部徽章 "Norway · Nansen 杰出奖 · 模型论先驱" 右端挤压，且用户反馈"圆框不好看"，故采用 2.5cm 纯照片 + 轻偏移避开徽章。
 - **Löwenheim–Skolem 定理归属**：Löwenheim(1915) 先证，Skolem(1920) 简化并给出独立证明——"共同命名"但次序清楚。
 - **Skolem–Noether 归属**：Skolem(1927) 先证，Noether 独立再发现——不是 Noether 先证。
 - **不完备性预见**：Skolem(1929) 的设想是"预见了 Gödel(1931) 的方向"，但**完备性/不完备性定理的正式证明是 Gödel**——不要写成 Skolem 证明了不完备定理。
@@ -119,4 +120,22 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Thoralf_Skolem/page.md`) 逐页比对。
+
+- **头像** ✅：`images/Thoralf_Skolem.jpg`（800×1204，右上角 1.92cm Cartan 同款圆角矩框；**已重编码去 Exif 元数据**——原图 Exif 触发 xelatex 2026 `Dimension too large` bug，PIL 重编码后正常）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Norway\enspace·\enspace Nansen 杰出奖\enspace·\enspace 模型论先驱`
+- **事实复核**：生卒(1887-05-23~1963-03-23, 75岁)/Sandsvær 出生/父小学教师+家族农民/1905 入学/1909 Birkeland 助手/1913 国家考试+逻辑代数论文/1915 哥廷根/1916 研究员/1918 Docent+挪威科学院院士/1926 博士(Thue)/1927 结婚/1930 Michelsen/1938 奥斯陆教授/Øystein Ore 学生/挪威数学会主席+Norsk Matematisk Tidsskrift+Mathematica Scandinavica/LS 定理(Löwenheim 1915 先证+Skolem 1920 简化)/Skolem 悖论(1922)/Skolem-Noether(Skolem 1927 先证+Noether 独立再发现)/原始递归算术 1923(Acta 拒稿+愤懑+Hilbert 占用)/1929 预见不完备性+1934 非标准模型/Skolem 算术 1930/Skolem 正规形/格论先驱(1912 自由分配格+1919 Skolem 格/Heyting 代数)/1920 词问题算法(1990s 才发现)/约 180 篇论文/退休后多次访美——全部与 Wikipedia 一致
+- **修正**：
+  1. **头像格式**：裸贴 `natwidth=800,natheight=1204` + 无边框 → Cartan 同款圆角矩框 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm，与 Cartan 一致）
+  2. **头像图片**：重编码去 Exif TIFF 元数据（**xelatex 2026 读取 Exif jpg 偶发 `Dimension too large`**，PIL 重编码为标准 JFIF 后正常）
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`（与 Cartan/Littlewood 一致）
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`（与 Cartan 一致）
+  5. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：Hao Wang 评价他...` → `Hao Wang 评价他...`（§14.6 伪引语格式修正）
+- **编译**：`make distclean && make` → 0 错误 13 页；仅1处 Overfull hbox 5.3pt（可接受）
+- **排行榜**：#75 `✅/🔲` → `✅/✅`
 
