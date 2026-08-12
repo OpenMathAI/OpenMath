@@ -131,7 +131,7 @@
 | 90 | 88 | **中山正** (Nakayama Tadashi) | — | 中山引理——交换代数与表示论中最常用的基本工具之一 | ✅ | ✅✅ |
 | 91 | 93 | **佐藤幹夫** (Sato Mikio) | Wolf 2003 | 代数分析（D-模理论）、Sato 超函数——日本数学的独特贡献 | ✅ | ✅✅ |
 | 92 | 96 | **Ernst Lindelöf** (林德洛夫) | — | Lindelöf 空间、Lindelöf 原理——拓扑学的基本概念 | ✅ | ✅✅ |
-| 93 | 70 | **Oskar Perron** (佩龙) | — | Perron–Frobenius 定理——正矩阵与非负矩阵理论的基石 | 🔲 | 🔲 |
+| 93 | 70 | **Oskar Perron** (佩龙) | — | Perron–Frobenius 定理——正矩阵与非负矩阵理论的基石 | ✅ | ✅✅ |
 | 94 | 99 | **Lars Gårding** (戈丁) | — | Gårding 不等式——偏微分方程理论的基础工具 | 🔲 | 🔲 |
 | 95 | 18 | **Camille Jordan** (若尔当) | — | Jordan 闭曲线定理、Jordan 标准形——19 世纪拓扑学与代数的先驱 | 🔲 | 🔲 |
 | 96 | 71 | **Jean Gaston Darboux** (达布) | — | Darboux 定理——19 世纪数学分析的基础贡献 | 🔲 | 🔲 |

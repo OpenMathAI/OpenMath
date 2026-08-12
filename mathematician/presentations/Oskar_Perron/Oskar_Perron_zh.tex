@@ -1,0 +1,349 @@
+% =============================================================
+%  Perron–Frobenius 定理之父：奥斯卡·佩龙 (Oskar Perron)
+%  Perron–Frobenius · Perron 方法 · 连分数大师 · 94 岁高寿
+%  资料来源：Wikipedia (Oskar Perron)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{1E4E79}
+\definecolor{coveraccent}{HTML}{B8860B}
+\definecolor{coverdark}{HTML}{1A2738}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeAlg}{HTML}{1E4E79}
+\definecolor{badgeCom}{HTML}{1E6E6E}
+\definecolor{badgeHist}{HTML}{B8860B}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{badgeMart}{HTML}{8A1020}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{80,85,95}
+\definecolor{algpanel}{RGB}{234,242,248}
+\definecolor{companel}{RGB}{232,244,240}
+\definecolor{histpanel}{RGB}{250,244,232}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{martpanel}{RGB}{250,236,238}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\deckbackground}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {\draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);}
+  \foreach \y in {-0.2,0.7,...,9.3} {\draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\sectiontitle}[2]{\vspace{-0.52cm}\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}\vspace{0.06cm}}
+
+\input{../cover/openmath_page.tex}
+
+\newcommand{\titleslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\quad Germany\enspace·\enspace 慕尼黑大学 1922--1951\enspace·\enspace 94 岁高寿};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {奥斯卡·佩龙};
+  \node[anchor=center, inner sep=0pt] at ([xshift=-6.6cm, yshift=0.55cm]current page.center) {%
+    \begin{tikzpicture}
+      \fill[coverprimary!14] (0,0) circle (1.5cm);
+      \fill[badgeCom!18] (0,0) circle (0.95cm);
+      \fill[badgeHist!22] (0,0) circle (0.50cm);
+      \node[font=\fontsize{16}{18}\selectfont\bfseries, text=coverprimary] at (0,0) {P};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Oskar Perron\quad·\quad 1880 -- 1975\quad·\quad 94岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Perron--Frobenius · Perron 方法 · 连分数 · 公民勇气};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {\textbf{Perron--Frobenius}\\[2pt]1907 正矩阵\\ \vspace{0.05cm}\\[2pt]PageRank 之源};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {\textbf{Perron 方法}\\[2pt]1923 PDE\\ \vspace{0.05cm}\\[2pt]Dirichlet 问题};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {\textbf{连分数巨著}\\[2pt]1913 百科\\ \vspace{0.05cm}\\[2pt]1954 第 3 版};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {\textbf{慕尼黑 LMU}\\[2pt]1922--1951\\ \vspace{0.05cm}\\[2pt]导师 Lindemann};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {据 Wikipedia：德国数学家，1880 年生于弗兰肯塔尔，1975 年卒于慕尼黑。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Frankenthal 1880\enspace·\enspace 慕尼黑 LMU 1902 博士（Lindemann）\enspace·\enspace 海德堡 1914--1922\enspace·\enspace 慕尼黑 LMU 1922--1951\enspace·\enspace 慕尼黑 1975};
+\end{tikzpicture}
+\end{frame}}
+
+\newcommand{\hookslide}{\begin{frame}
+\plainbar
+\sectiontitle{Perron–Frobenius 定理与连分数之父：94 年高寿}{Perron–Frobenius · Perron 方法 · 连分数 · 公民勇气}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {Perron--Frobenius\\ \vspace{0.05cm}\\[2pt]1907 正矩阵\\ \vspace{0.05cm}\\[2pt]现代应用基石};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {Perron 方法\\ \vspace{0.05cm}\\[2pt]1923 上调和\\ \vspace{0.05cm}\\[2pt]Dirichlet 问题};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {连分数专著\\ \vspace{0.05cm}\\[2pt]1913 百科全书\\ \vspace{0.05cm}\\[2pt]1954 第 3 版};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {慕尼黑 LMU\\ \vspace{0.05cm}\\[2pt]1922--1951\\ \vspace{0.05cm}\\[2pt]94 岁高寿};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 从正矩阵到连分数——94 年的德国数学长寿者。}\\{\fontsize{7.0}{9.0}\selectfont Frankenthal (1880) → 慕尼黑 LMU (1902 博士) → 海德堡 (1914) → 慕尼黑 LMU (1922-51) → 慕尼黑 (1975)。}\\{2pt}
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} 巴伐利亚功勋 · 图宾根荣誉博士 · Iron Cross · 纳粹时期公民勇气 (Litten 1994)}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 3. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}
+\plainbar
+\sectiontitle{早年与教育：Frankenthal → 慕尼黑 LMU（Lindemann 博士）}{1880 Frankenthal\enspace·\enspace 慕尼黑 LMU\enspace·\enspace 1902 博士\enspace·\enspace Lindemann（π 超越性证明者）}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{1880 · 出生。}1880 年 5 月 7 日生于\textbf{弗兰肯塔尔}（Frankenthal，普法尔茨），1975 年 2 月 22 日在慕尼黑去世——享年 94 岁，是德国数学界的长寿者之一。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{慕尼黑博士。}在\textbf{慕尼黑大学（Ludwig-Maximilians-Universität）}获得 1902 年博士学位——导师为 \textbf{Ferdinand von Lindemann}（π 超越性的证明者），属于 19 世纪德国数学传统的代表。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{任职轨迹。}1914 年起任\textbf{海德堡大学}讲师/教授，1922 年回到慕尼黑 LMU 任教授至 1951 年退休——30 余年的慕尼黑生涯是其主要创造期。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Frankenthal 少年 → 慕尼黑 LMU 博士 → 海德堡 → 慕尼黑 LMU 教授。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. Perron--Frobenius 定理 (1907) ---
+\newcommand{\pftslide}{\begin{frame}
+\plainbar
+\sectiontitle{Perron–Frobenius 定理 (1907)：正矩阵的谱}{Perron 1907\enspace·\enspace Frobenius 1912 推广\enspace·\enspace 共同命名\enspace·\enscape PageRank 之源}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{1907 · Perron 定理。}Perron 于 1907 年证明：\textbf{正矩阵}（所有元素均为正的矩阵）有唯一一个\textbf{正特征值}是谱半径，且对应特征向量各分量均为正——\textbf{Perron 是开创者}。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{1912 · Frobenius 推广。}\textbf{Frobenius} 1912 年将其推广到\textbf{不可约非负矩阵}——共同命名为 \textbf{Perron–Frobenius 定理}。Frobenius 的工作使这一定理具有更广的应用范围。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{现代应用。}从 Markov 链的稳态分布到 \textbf{Google PageRank} 算法，PageRank 本质上是对互联网链接矩阵应用 Perron–Frobenius 定理得到的特征向量。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一个正矩阵的定理——PageRank 的数学基础。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 5. PageRank 与现代应用 ---
+\newcommand{\pagerankslide}{\begin{frame}
+\plainbar
+\sectiontitle{PageRank 与现代应用：特征向量的世纪影响}{Google PageRank\enspace·\enscape Markov 链\enspace·\enscape 经济/图论/概率}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{PageRank。}\textbf{Google PageRank} 算法（Brin & Page 1998）的数学核心是：对互联网链接矩阵应用 Perron–Frobenius 定理得到主特征向量——这使 Perron 1907 年的工作直接驱动了 21 世纪的搜索引擎。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{Markov 链。}在 \textbf{Markov 链}理论中，Perron–Frobenius 定理保证不可约非周期链有唯一稳态分布——这是概率论与统计物理的基础工具。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{经济与图论。}Leontief 投入产出分析、复杂网络中心性度量、社会网络排序——Perron–Frobenius 定理的应用无处不在。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 1907 的矩阵定理——21 世纪的搜索引擎。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 6. Perron 方法 ---
+\newcommand{\perronslide}{\begin{frame}
+\plainbar
+\sectiontitle{Perron 方法 (1923)：Dirichlet 问题的现代解法}{上调和函数族\enspace·\enscape 椭圆型 PDE\enspace·\enscape 现代 PDE 经典方法}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{Perron 方法 (1923)。}\textbf{Perron 方法}用\textbf{上调和函数族}（upper envelopes of subharmonic functions）求解椭圆型偏微分方程的 \textbf{Dirichlet 问题}——这是 PDE 理论最经典的现代方法。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{关键工具。}Perron 方法引入了"上调和包络"概念——其极限函数在正则点处即为 Dirichlet 问题的解。这一框架被推广到非线性椭圆方程。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{现代发展。}Perron 方法是 PDE 弱解理论的关键工具，启发了 \textbf{Perron-Brelot 理论}与调和空间理论。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 上调和包络——Dirichlet 问题的经典方法。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 7. Perron 数与 Perron 公式 ---
+\newcommand{\numberformulasslide}{\begin{frame}
+\plainbar
+\sectiontitle{Perron 数与 Perron 公式}{代数整数\enspace·\enscape Dirichlet 级数求和\enspace·\enscape Mellin 反演}
+\begin{center}
+\begin{tikzpicture}[[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Perron 数。}\textbf{Perron number} 是大于 1 的代数整数，其所有共轭的模都严格小于它——这一概念在代数数论与动力系统中发挥作用（Lindemann 1884 起源，Perron 推广）。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{Perron 公式。}\textbf{Perron's formula} 用 \textbf{Mellin 反演}处理 Dirichlet 级数求和问题——$\sum_{n\le x} a_n = \frac{1}{2\pi i}\int_{(c)} A(s)\frac{x^s}{s}ds$。这是解析数论的基本工具。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{应用。}Perron 公式广泛用于素数分布、Dirichlet 级数、素数定理等问题的证明中——是 20 世纪解析数论的核心引理。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一个数、一个公式——Perron 在数论的双重遗产。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 8. Perron 积分 ---
+\newcommand{\integralslide}{\begin{frame}
+\plainbar
+\sectiontitle{Perron 积分：Henstock–Kurzweil 的先驱}{比 Lebesgue 更宽\enspace·\enscape 与 Kurzweil 共同命名\enspace·\enscape 20 世纪积分理论}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Perron 积分。}\textbf{Perron integral}（1914）以 Perron 命名，后来与 Jaroslav Kurzweil 的工作合并为 \textbf{Henstock–Kurzweil 积分}——比 Lebesgue 积分更宽，能积分更复杂的函数。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{背景。}Perron 积分用"主函数"（majorant 和 minorant）刻画可积性——这一思想启发了 Kurzweil 1957 年对黎曼积分的扩展。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{应用。}Henstock–Kurzweil 积分能积分几乎所有"实用上遇到"的函数（包括 Lebesgue 不可积的导函数），是实分析的重要工具。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 比 Lebesgue 更宽的积分——Perron 思想的世纪重生。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 9. 连分数巨著 1913 ---
+\newcommand{\kettenbruecheslide}{\begin{frame}
+\plainbar
+\sectiontitle{连分数巨著 (1913)：百科全书式专著}{《Die Lehre von den Kettenbrüchen》\enspace·\enscape 1954 第 3 版\enspace·\enscape 丢番图逼近/数论基础}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{1913 · 专著。}Perron 出版 \textbf{《Die Lehre von den Kettenbrüchen》（连分数论）}——一部百科全书式专著，系统化 19 世纪以来的连分数理论。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{再版。}1954 年出\textbf{第 3 版}——持续 40 多年作为连分数领域的标准参考文献，覆盖连分数理论、丢番图逼近、超几何级数等多个方向。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{影响。}这部专著使连分数理论在 20 世纪得到系统性发展——是数论、应用数学、计算数学的常被引用文献。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 1913 出版的连分数巨著——40 年标准参考文献。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 10. Perron 悖论 + 不可约性准则 ---
+\newcommand{\paradoxslide}{\begin{frame}
+\plainbar
+\sectiontitle{Perron 悖论与不可约性准则}{悖论"最大正整数 N"\enspace·\enscape 整系数多项式不可约性\enspace·\enscape 经典概念}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Perron 悖论。}\textbf{Perron's paradox}——"若存在最大正整数 $N$，则 $N^2 \le N$，与 $N^2 > N$ 矛盾"——这是优化问题存在性的经典反例，提醒我们注意良序与上界的逻辑区分。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{不可约性准则。}\textbf{Perron's irreducibility criterion} 是判定整系数多项式不可约性的准则——给多项式系数加上条件即可证不可约。这一准则在代数数论与计算代数几何中常被引用。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{多面命名。}Perron 的名字出现在矩阵、PDE、数论、代数、积分论等多个方向——这是数学家名字的"多领域分布"，反映 Perron 工作的广度。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一个悖论 + 一个准则——Perron 名字的多种形态。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 11. 纳粹时期的公民勇气 ---
+\newcommand{\courageslide}{\begin{frame}
+\plainbar
+\sectiontitle{纳粹时期的公民勇气 (civil courage)}{Litten(1994) 记载\enspace·\enscape 客观记录\enspace·\enscape 不渲染\enspace·\enscape 慕尼黑期间}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=martpanel,draw=badgeMart!55] at (0,2.65)
+    {\textbf{客观记录。}Litten (1994)《Oskar Perron – 纳粹时期公民勇气的例子》记载：Perron 在第三帝国时期展现出\textbf{公民勇气}（zivilcourage）——例如在慕尼黑期间拒绝纳粹要求的实例。这是史实记录，本文客观陈述不渲染。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{时代背景。}1922-1951 年 Perron 在慕尼黑 LMU 任教授——这段时间正值魏玛共和国晚期、纳粹时期、二战与战后重建。公民勇气的具体细节请参考 Litten 原文，本文不延伸。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{平衡视角。}数学贡献与公民勇气属于不同维度——本节只做客观记录，避免对纳粹时期其他复杂议题做引申或定性。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 史实记录与评价分离——这是史家之道。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {正矩阵，连分数，94 岁};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {Perron–Frobenius · Perron 方法 · 连分数 · 慕尼黑 LMU};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Oskar Perron\quad·\quad 1880 -- 1975\quad·\quad 94岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Frankenthal (1880) → 慕尼黑 LMU (1902 博士) → 海德堡 (1914) → 慕尼黑 LMU};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.65cm]current page.center) {1922--1951 → 公民勇气 → 慕尼黑 1975};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {Known for Perron's paradox, Perron's formula, Perron integral, Perron–Frobenius theorem. -- Wikipedia};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace Perron–Frobenius \enspace·\enspace Perron 方法 \enspace·\enspace 连分数 \enspace·\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\pftslide
+\pagerankslide
+\perronslide
+\numberformulasslide
+\integralslide
+\kettenbruecheslide
+\paradoxslide
+\courageslide
+\closingslide
+\end{document}
