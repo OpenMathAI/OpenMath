@@ -226,12 +226,26 @@ WHERE a.name_en='Paul Lévy' OR b.name_en='Paul Lévy';
 ## 第 13 步：Wikipedia 本地文档终审（提交前必做）
 
 ### 终审清单
-- [ ] 生卒日期与正文一致（1886-09-15 ~ 1971-12-15）
-- [ ] 博士导师 Hadamard、Volterra 正确
-- [ ] 19 岁 Lévy–Steinitz 定理正确
-- [ ] 鞅 1930s 独立引入正确
-- [ ] 1948 布朗运动专著正确
-- [ ] 纳粹时间线精确（1940-1944）
+- [x] 生卒日期与正文一致（1886-09-15 ~ 1971-12-15）
+- [x] 博士导师 Hadamard、Volterra 正确
+- [x] 19 岁 Lévy–Steinitz 定理正确
+- [x] 鞅 1930s 独立引入正确
+- [x] 1948 布朗运动专著正确
+- [x] 纳粹时间线精确（1940-1944）
+
+---
+
+### Review-1 记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Paul_Lévy/page.md`) 逐页比对。此前排行榜误标 ✅/✅✅（提示词无 Review 记录），本次实际完成。
+
+- **头像** ✅：`Paul_Levy.jpg`（290×370，Wikipedia `Paul_Pierre_Levy_1886-1971.jpg` 下载，封面右上角 3.2cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace France\enspace·\enspace Picard Medal 1953\enspace·\enspace 鞅的独立引入者`（Wikipedia nationality: France）
+- **事实复核**：生卒(1886-09-15~1971-12-15, 85岁)/巴黎犹太家庭(父亲 Lucien 综合理工考官)/1905 19 岁首篇论文(Lévy–Steinitz 定理)/Hadamard+Volterra 导师/服役一年+École des Mines 三年+1913 教授/1913 娶 Suzanne/三子女(Marie-Hélène 1913·Denise 1916·Jean Claude 1918)/一战炮兵/1920 Polytechnique 分析教授至 1959/学生 Mandelbrot+Matheron/稳定分布+特征函数+1937 一般 CLT 书《随机变量加法理论》/与 Khinchin 独立无穷可分+Lévy–Khintchine/1930s 鞅+条件期望+Doob 发展/1948 布朗运动专著(Lévy area+arcsine law+local time)/纳粹:1940-12-19 解雇→1941-03-14 复职→1942-11-11 前一周藏匿 Montbonnot/法国科学院+伦敦数学会荣誉会员+Picard Medal 1953/数学世家(Marie-Hélène Schwartz+女婿 Laurent Schwartz 1950 Fields)——全部与 Wikipedia 一致
+- **修正 1（伪引语红线 §14.6）**：closingslide 英文自创引语"In the darkest days of WWII, he kept building the mathematics of the future."（Wikipedia 无此原文）→ 改中文忠实转述"在二战最黑暗的日子里，他依然在构建数学的未来。"
+- **格式修复**：Unicode `→` 20 处 → `$\rightarrow$`；半角引号 4 处 → 全角；"85岁" → "85 岁"（格式统一）
+- **编译**：`make distclean && make` → 0 错误 11 页；仅 1 个模板固有 Overfull hbox 5.33pt（无 vbox 溢出，与 Brauer/Schur 同样干净）
+- **排行榜**：#66 保持 `✅/✅✅`（实质达标：Review-1 完成 + 编译干净）
 - [ ] 编译: `make distclean && make` — 零错误
 
 ---
