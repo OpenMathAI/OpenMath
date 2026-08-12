@@ -1,4 +1,4 @@
-# Makefile for OpenMath Birkhoff beamer deck.
+# Makefile for Abel Prize video Episode 00 beamer deck.
 #
 # Usage:
 #   make            build the PDF

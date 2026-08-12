@@ -1,11 +1,21 @@
-# Makefile for Felix Klein beamer deck.
-MAIN = Felix_Klein_zh
+# Makefile for Abel Prize video Episode 00 beamer deck.
+#
+# Usage:
+#   make            build the PDF
+#   make pdf        same as above
+#   make images     generate slide PNGs from the PDF
+#   make video      synthesize an MP4 from slide images (+ optional BGM)
+#   make clean      remove intermediate files
+#   make distclean  remove generated PDF/images/video
+
+MAIN        = Felix_Klein_zh
 VIDEO_NAME  = Felix_Klein_zh
 OUTPUT_DIR  = output
 IMAGES_DIR  = $(OUTPUT_DIR)/images
 SLIDES_TXT  = $(OUTPUT_DIR)/slides.txt
 
 DURATION    = 7
+# Optional background music: drop a .wav here and set BGM to its name.
 BGM         = $(wildcard *.wav)
 
 LATEXMK     = latexmk
@@ -40,8 +50,8 @@ $(SLIDES_TXT): $(IMAGES_DIR)/.done
 	import os; \
 	imgs = sorted([f for f in os.listdir('$(IMAGES_DIR)') if f.endswith('.png')]); \
 	lines = []; \
-	[lines.extend([\"file 'images/'\" + f + \"'\", 'duration $(DURATION)']) for f in imgs]; \
-	lines.append(\"file 'images/'\" + imgs[-1] + \"'\"); \
+	[lines.extend([\"file 'images/\" + f + \"'\", 'duration $(DURATION)']) for f in imgs]; \
+	lines.append(\"file 'images/\" + imgs[-1] + \"'\"); \
 	open('$(SLIDES_TXT)', 'w').write('\\n'.join(lines) + '\\n'); \
 	print(f'  slides.txt: {len(imgs)} slides x $(DURATION)s = {len(imgs)*$(DURATION)}s')"
 
