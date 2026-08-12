@@ -1,0 +1,349 @@
+% =============================================================
+%  苏联数论大师：尤里·林尼克 (Yuri Linnik)
+%  Linnik 定理 · 大筛法 · 无穷可分分布 · 圣彼得堡学派
+%  资料来源：Wikipedia (Yuri Linnik)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{1E4E79}
+\definecolor{coveraccent}{HTML}{B8860B}
+\definecolor{coverdark}{HTML}{1A2738}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeAlg}{HTML}{1E4E79}
+\definecolor{badgeCom}{HTML}{1E6E6E}
+\definecolor{badgeHist}{HTML}{B8860B}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{badgeMart}{HTML}{8A1020}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{80,85,95}
+\definecolor{algpanel}{RGB}{234,242,248}
+\definecolor{companel}{RGB}{232,244,240}
+\definecolor{histpanel}{RGB}{250,244,232}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{martpanel}{RGB}{250,236,238}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\deckbackground}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {\draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);}
+  \foreach \y in {-0.2,0.7,...,9.3} {\draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\sectiontitle}[2]{\vspace{-0.52cm}\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}\vspace{0.06cm}}
+
+\input{../cover/openmath_page.tex}
+
+\newcommand{\titleslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\quad USSR\enspace·\enspace 圣彼得堡学派\enspace·\enspace 57 岁};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {尤里·林尼克};
+  \node[anchor=center, inner sep=0pt] at ([xshift=-6.6cm, yshift=0.55cm]current page.center) {%
+    \begin{tikzpicture}
+      \fill[coverprimary!14] (0,0) circle (1.5cm);
+      \fill[badgeCom!18] (0,0) circle (0.95cm);
+      \fill[badgeHist!22] (0,0) circle (0.50cm);
+      \node[font=\fontsize{16}{18}\selectfont\bfseries, text=coverprimary] at (0,0) {L};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Yuri Linnik\quad·\quad 1915 -- 1972\quad·\quad 57岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Linnik 定理 · 大筛法 · 无穷可分分布 · 圣彼得堡学派};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {\textbf{Linnik 定理}\\[2pt]等差级数最小素数\\ \vspace{0.05cm}\\[2pt]解析数论经典};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {\textbf{大筛法}\\[2pt]1941 引入\\ \vspace{0.05cm}\\[2pt]Bombieri 发展};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {\textbf{无穷可分分布}\\[2pt]Cramér 推广\\ \vspace{0.05cm}\\[2pt]概率统计};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {\textbf{圣彼得堡学派}\\[2pt]Chebyshev 传统\\ \vspace{0.05cm}\\[2pt]Steklov 研究所};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {据 Wikipedia：苏联数学家，活跃于数论、概率论与数理统计。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Bila Tserkva 1915（今日乌克兰）\enspace·\enspace 圣彼得堡大学（Tartakovsky）\enspace·\enspace Steklov 研究所\enspace·\enspace Leningrad 1972};
+\end{tikzpicture}
+\end{frame}}
+
+\newcommand{\hookslide}{\begin{frame}
+\plainbar
+\sectiontitle{苏联数论大师：57 年的圣彼得堡传奇}{Linnik 定理 · 大筛法 · 无穷可分分布 · 圣彼得堡学派}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {Linnik 定理\\ \vspace{0.05cm}\\[2pt]等差级数最小素数\\ \vspace{0.05cm}\\[2pt]L 函数零点};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {大筛法\\ \vspace{0.05cm}\\[2pt]1941 引入\\ \vspace{0.05cm}\\[2pt]Bombieri 发展};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {无穷可分分布\\ \vspace{0.05cm}\\[2pt]Cramér 推广\\ \vspace{0.05cm}\\[2pt]概率统计};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {圣彼得堡学派\\ \vspace{0.05cm}\\[2pt]Chebyshev 传统\\ \vspace{0.05cm}\\[2pt]Steklov 研究所};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 等差级数素数 + 大筛法——苏联数论学派的大师。}\\{\fontsize{7.0}{9.0}\selectfont Bila Tserkva (1915) $\rightarrow$ 圣彼得堡大学 (Tartakovsky) $\rightarrow$ Steklov 研究所 $\rightarrow$ Leningrad (1972)。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} Stalin 奖 $\cdot$ Lenin 奖 $\cdot$ 社会主义劳动英雄 $\cdot$ ForMemIMS $\cdot$ 父 Vladimir Linnik（光学院士）}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 3. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}
+\plainbar
+\sectiontitle{早年与教育：Bila Tserkva 1915 $\rightarrow$ 圣彼得堡（Tartakovsky）}{1915 Bila Tserkva\enspace·\enspace 圣彼得堡大学\enspace·\enspace Tartakovsky 导师\enspace·\enscape Steklov 研究所}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{出生。}\textbf{Yuri Vladimirovich Linnik}（Юрий Владимирович Линник）1915 年 1 月 8 日生于\textbf{比拉采尔克瓦}（Bila Tserkva，今乌克兰境内，当时属俄罗斯帝国）；1972 年 6 月 30 日在列宁格勒去世，享年 57 岁。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{圣彼得堡大学。}他前往\textbf{圣彼得堡大学}（Saint Petersburg University）学习——导师为 \textbf{Vladimir Tartakovsky}（数论方向）。后来在 \textbf{Steklov 数学研究所}工作。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{数学世家。}父 \textbf{Vladimir Pavlovich Linnik} 是\textbf{苏联科学院院士}、著名\textbf{光学物理学家}（非数学家）——家庭学术氛围浓厚。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 乌克兰出生的苏联数学家——圣彼得堡学派的继承者。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. Linnik 定理 ---
+\newcommand{\limnniktheoremslide}{\begin{frame}
+\plainbar
+\sectiontitle{Linnik 定理：等差级数最小素数}{算术级数最小素数\enspace·\enscape L 函数零点\enspace·\enscape 解析数论经典}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Linnik 定理。}\textbf{Linnik 定理} 是关于\textbf{等差级数中最小的素数}的界——在 Dirichlet 定理保证存在性的基础上，给出最小素数的明确上界：存在常数 $L$ 使最小素数小于 $q^L$。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{核心方法。}定理依赖 \textbf{L 函数零点} 的分布估计——把算术级数中素数分布与 Dirichlet L 函数的零点位置联系起来。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{命名。}这里的 \textbf{Linnik 常数}（$L$）是 $L$ 的最佳上界——这个界至今未被改进太多，是数论中的经典开问题。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 等差级数最小素数 $< q^L$——Linnik 常数。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 5. 弥散方法 ---
+\newcommand{\dispersionslide}{\begin{frame}
+\plainbar
+\sectiontitle{弥散方法：Titchmarsh 问题}{dispersion method\enspace·\enscape Titchmarsh 问题\enspace·\enscape 二次型分布}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{弥散方法。}\textbf{弥散方法（dispersion method）}是 Linnik 发展的数论技巧——用于处理\textbf{Titchmarsh 问题}（$d(p-1)$ 的平均值估计等）。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{应用。}弥散方法在处理二次型表示、除数函数平均值等分布问题时非常有效——是解析数论的重要工具。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{影响。}弥散方法启发了后来的\u201c筛法\u201d与\u201c弥散法\u201d综合技术——在 20 世纪中后期解析数论中有广泛影响。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 弥散方法——Titchmarsh 问题的解法。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 6. 大筛法 ---
+\newcommand{\largesieveslide}{\begin{frame}
+\plainbar
+\sectiontitle{大筛法 (1941)：影响力巨大的工具}{large sieve\enspace·\enscape Bombieri 发展\enspace·\enscape Bombieri--Vinogradov 相关}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{大筛法。}\textbf{大筛法（large sieve）}由 Linnik 1941 年引入——用于估计整数集合在模分布中的\textbf{不均匀性}，是解析数论极有影响力的工具。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{发展。}大筛法后来由 \textbf{Bombieri}（Fields 1970）、Gallagher、Montgomery 等发展——\textbf{Bombieri--Vinogradov 定理}是算术级数素数分布的核心结果。\textbf{不写 Linnik 独占现代形式}。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{应用。}大筛法应用于孪生素数、素数在短区间分布、丢番图逼近等——是现代解析数论的标准工具。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 1941 引入的大筛法——Bombieri--Vinogradov 之源。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 7. Waring 初等证明 ---
+\newcommand{\waringslide}{\begin{frame}
+\plainbar
+\sectiontitle{Waring 初等证明与 Hilbert--Waring}{Schnirelmann 密度方法\enspace·\enscape Hilbert--Waring 定理\enspace·\enscape 初等证明}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Waring 初等证明。}Linnik 的工作与 \textbf{Schnirelmann 密度方法} 相关——为 Waring 问题提供了\textbf{初等证明}的路径（不需要复杂的解析工具）。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{Hilbert--Waring 定理。}\textbf{Hilbert 1909 年证明}每个正整数可表示为有限个 $k$ 次幂的和——Linnik 与 Schnirelmann 的密度方法为其提供了初等证明途径。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{谨慎表述。}注意：Waring 问题的存在性由 Hilbert 1909 年证明——Linnik 的工作是\textbf{初等证明路径}，不写 Linnik 发明 Waring 问题。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Hilbert--Waring + Schnirelmann 密度——初等证明路径。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 8. Linnik 遍历方法 ---
+\newcommand{\ergodicslide}{\begin{frame}
+\plainbar
+\sectiontitle{Linnik 遍历方法 (1968)：二次型表示分布}{Ergodic properties of algebraic fields\enspace·\enscape 三元二次型\enspace·\enscape 现代等分布}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{Linnik 遍历方法 (1968)。}\textbf{Linnik 遍历方法}（1968 专著《Ergodic properties of algebraic fields》）用于研究\textbf{整数由三元二次型表示}时的分布——把数论问题与动力系统/遍历理论联系起来。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{现代等分布。}这一方法在 21 世纪由 Michel--Venkatesh（ICM 2006）等推进——Linnik 的遍历方法启发了模形式与 L 函数在等分布问题中的应用。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{影响。}Linnik 遍历方法是连接数论与遍历理论的先驱工作——是 21 世纪\u201c等分布与 L 函数\u201d研究的源头之一。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 1968 遍历方法——数论与动力系统的桥梁。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 9. 无穷可分分布 ---
+\newcommand{\infdivslideslide}{\begin{frame}
+\plainbar
+\sectiontitle{无穷可分分布：Cramér 定理的推广}{无限可分分布\enspace·\enscape Cramér 推广\enspace·\enscape Linnik--Ostrovskii 专著}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{无穷可分分布。}Linnik 在概率论中研究了\textbf{无穷可分分布}（infinitely divisible distributions）——特别是\textbf{Cramér 定理的推广}（Gaussian+Poisson 卷积的因子分解）。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{Linnik 分布。}\textbf{Linnik 分布}（Linnik distribution）是他研究的一类分布——具有特征函数 $(1+|t|^{\alpha})^{-\beta}$ 形式，介于正态与柯西之间。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{1977 专著。}Linnik 与 \textbf{I.V. Ostrovskii} 合著 \textbf{《随机变量与向量的分解》}（1977，AMS）——无穷可分分布算术的经典。注意：Cramér 定理的归属——Linnik 是\textbf{推广}而非发明者。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 无穷可分分布——Cramér 定理的推广。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 10. 数学世家 ---
+\newcommand{\familyslide}{\begin{frame}
+\plainbar
+\sectiontitle{数学世家：父 Vladimir Pavlovich Linnik（光学院士）}{苏联科学院院士\enspace·\enscape 光学物理学家\enspace·\enscape 学术世家}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{父·光学物理学家。}Linnik 的父亲 \textbf{Vladimir Pavlovich Linnik} 是\textbf{苏联科学院院士}、著名\textbf{光学物理学家}——专注光学干涉仪与天文观测（非数学家）。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{学术世家。}父子的学术成就横跨物理学与数学两个领域——这是苏联学术世家的典型代表。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{家庭背景。}这种学术家庭环境培养了他的数学才能——但注意：他父亲是物理学家，Linnik 本人走的是数论/概率路线。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 父光学院士 + 子数论大师——苏联学术世家。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 11. 圣彼得堡学派与荣誉 ---
+\newcommand{\schoolhonorsslide}{\begin{frame}
+\plainbar
+\sectiontitle{圣彼得堡学派与荣誉墙}{Chebyshev 传统\enspace·\enscape Stalin/Lenin 奖\enspace·\enscape 社会主义劳动英雄\enspace·\enscape ForMemIMS}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,2.65)
+    {\textbf{圣彼得堡学派。}Linnik 是\textbf{圣彼得堡数学学派}（从 Chebyshev、Markov、Lyapunov 到 Vinogradov）的继承者——这个学派在数论、概率论领域有百年传统。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{荣誉墙。}他获得 \textbf{斯大林奖}、\textbf{列宁奖}、\textbf{社会主义劳动英雄}、\textbf{列宁勋章}、\textbf{红旗劳动勋章}、\textbf{荣誉勋章}——苏联科学家最高荣誉全覆盖。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{国际认可。}他是 \textbf{数理统计研究所会士}（Fellow of IMS）——国际统计界的认可。57 岁早逝是苏联数学的重大损失。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Chebyshev 传统 + 苏联最高荣誉——圣彼得堡学派大师。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {等差级数素数，大筛法};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {Linnik 定理 · 大筛法 · 无穷可分分布 · 圣彼得堡学派};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Yuri Linnik\quad·\quad 1915 -- 1972\quad·\quad 57岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Bila Tserkva (1915) $\rightarrow$ 圣彼得堡大学 (Tartakovsky) $\rightarrow$ Steklov 研究所};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.65cm]current page.center) {大筛法 1941 $\rightarrow$ Stalin/Lenin 奖 $\rightarrow$ Leningrad 1972};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {He was a Soviet mathematician active in number theory, probability theory, and mathematical statistics. -- Wikipedia};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace Linnik 定理 \enspace·\enspace 大筛法 \enspace·\enspace 无穷可分分布 \enspace·\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\limnniktheoremslide
+\dispersionslide
+\largesieveslide
+\waringslide
+\ergodicslide
+\infdivslideslide
+\familyslide
+\schoolhonorsslide
+\closingslide
+\end{document}
