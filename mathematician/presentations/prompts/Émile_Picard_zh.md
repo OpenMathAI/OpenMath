@@ -36,20 +36,21 @@
 | 强调（代数几何金） | #B8860B | Picard 群/簇 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「Picard 定理 · Picard–Vessiot · 复分析大师」
 2. 生平总览：时间轴（1856 → 1874 ENS → 1877 博士 → 1886 Poncelet → 1924 法兰西学院 → 1941 去世）
-3. Picard 小定理与大定理：整函数值分布
-4. Picard–Lindelöf 定理：ODE 存在唯一性、Picard 迭代
-5. Picard–Vessiot 理论：微分方程 Galois 理论
-6. Picard 群与 Picard 簇：代数曲面
-7. Picard–Lefschetz 与代数拓扑：函数论的拓扑方法
-8. Picard–Fuchs 方程：周期积分
-9. 教科书与普及：《Traité d'Analyse》、相对论教材
-10. 学术王朝：Hadamard/Weil/Julia/Baire 等学生
-11. 法兰西学院与学术领导：1924 院士、永久秘书
-12. 终章：85 岁、皮卡奖章（以他命名）、历史地位
+3. **早年与教育**：Paris 出生、Lycée Henri-IV、ENS 1874、博士 1877（Darboux）、1881 娶 Hermite 之女 Marie
+4. Picard 小定理与大定理：整函数值分布
+5. Picard–Lindelöf 定理：ODE 存在唯一性、Picard 迭代
+6. Picard–Vessiot 理论：微分方程 Galois 理论
+7. Picard 群与 Picard 簇：代数曲面
+8. Picard–Lefschetz 与代数拓扑：函数论的拓扑方法
+9. Picard–Fuchs 方程：周期积分
+10. 教科书与普及：《Traité d'Analyse》、相对论教材
+11. 学术王朝：Hadamard/Weil/Julia/Baire 等学生
+12. 法兰西学院与学术领导：1924 院士、永久秘书
+13. 终章：85 岁、皮卡奖章（以他命名）、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -120,4 +121,27 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Émile_Picard/page.md`) 逐页比对。
+
+- **头像** ✅：从 `figure_my/Émile Picard.jpeg` 复制至 `images/Emile_Picard.jpg`（10.6KB，原 images 目录为空、tex 引用的 `Emile_Picard.jpg` 缺失）；右上角 1.92cm Cartan 同款圆角矩框（原为 3.2cm 裸贴角）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace France\enspace·\enspace Poncelet 1886\enspace·\enspace 法兰西学院 1924`（与 Wikidata `nationality: ["France"]` 一致）
+- **身份信息页** ✅：新增 Slide 3（"早年与教育：Paris 到 ENS 1856--1877"），涵盖 Paris 出生、Lycée Henri-IV、Lycée Michelet、ENS 1874、博士 1877（Gaston Darboux）、1881 娶 Hermite 之女 Marie（岳父非导师）
+- **事实复核**：生卒(1856-07-24~1941-12-11, 85岁)/Paris 出生/Darboux 导师/Hermite 岳父(1881 娶 Marie)/法兰西学院 1924(seat 1)/永久秘书 1917-1941/Picard 小定理 1879·大定理 1886/Picard 群·簇·functor/Picard–Vessiot(1883)/Picard–Lindelöf/Picard–Lefschetz/Picard–Fuchs/Traité d'Analyse(1891-96)/相对论教材/4 卷文集/ForMemRS 1909·Poncelet 1886——全部与 Wikipedia 一致
+- **修正**：
+  1. **头像补齐 + 圆角矩框**：`figure_my/Émile Picard.jpeg` → `images/Emile_Picard.jpg`；裸贴角 `width=3.2cm` → Cartan 同款 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm）
+  2. **新增身份信息页**：早年与教育（Paris 出生、教育轨迹、Hermite 岳父）——12→13 页
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  5. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：法国数学家...` → `法国数学家...`
+  6. **修复拼写错误**：`Peincaré` → `Poincaré`（Slide 11 学术王朝）
+  7. **修复表述混乱**：Slide 4 小定理 `非整函数 $f$（整理论） 若为非常数整函数` → `非常数整函数 $f$ 除至多一个例外值外...`
+  8. **修复伪引语**：结束页 `He was a French mathematician known for his Picard theorem on complex analysis`（Wikipedia 无此句）→ 忠实引用 `was a French mathematician, elected to the Académie française (seat 1) in 1924`
+- **编译**：`make distclean && make` → ✅ 14页，0错误
+- **遗留**：封面 badge `Hadamard/Weil/Julia` 太宽（Overfull 25.49pt）+ 总览页 10.86pt → Review-2 处理
+- **排行榜**：#78 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
