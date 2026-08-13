@@ -140,3 +140,16 @@
 - **遗留**：学术王朝页 badge `Calabi/Cheeger/Furstenberg` 太宽（Overfull 56.83pt）+ 下一行 15.97pt → Review-2 处理
 - **排行榜**：#79 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+> 结构优化 + Overfull 修复 + 编译验证。
+
+- **Overfull 修复**：
+  1. 封面 badge `Calabi/Cheeger/Furstenberg\\[2pt]洛杉矶星光` → `Calabi/Cheeger\\[2pt]Furstenberg 等`（消除 56.83pt Overfull）
+  2. 总览 badge `Calabi/Cheeger/Furstenberg\\[2pt]Steele 1979` → `Calabi/Cheeger\\[2pt]Furstenberg 等`（消除 15.97pt Overfull）
+  3. 学术王朝 section title 副标题 `Calabi/Cheeger/Furstenberg/Karlin/Helgason/Knapp/Askey 等` → `Calabi/Cheeger/Furstenberg/Karlin 等`（缩短，消除潜在溢出）
+- **编译**：`make distclean && make` → ✅ 14页，0错误；仅剩 1 处 Overfull 5.33pt（<10pt 可接受，为共用 OpenMath 封面模板固定内容）
+- **排行榜**：#79 `✅/✅✅`（两轮完成）
+
