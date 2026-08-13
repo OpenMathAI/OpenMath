@@ -141,3 +141,15 @@
 - **编译**：`make distclean && make` → ✅ 14页，0错误
 - **排行榜**：#77 保持 `✅/✅✅`
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+> 结构优化 + 命名一致性 + 编译验证。
+
+- **结束页时间线拆两行**：7 段 `Nordhausen (1913) → ... → 失踪 (1943)` 原挤一行（易溢出），拆为两行（`yshift=-1.25cm` 与 `-1.60cm`），与 Cartan/Russell 格式对齐
+- **命名一致性**：Slide 10 标题 `现代传承：Grothendieck-T 群、IUT 望月新一` → `现代传承：Grothendieck--Teichmüller 群与 IUT`；正文 `Grothendieck-T 群` → `Grothendieck--Teichmüller 群`（与全文统一）
+- **Landau 编号规范化**：正文 `Edmund Landau（71 位 我们的数学家）` → `Edmund Landau（榜单第 71 位）`
+- **编译**：`make distclean && make` → ✅ 14页，0错误；仅 2 处 Overfull hbox（3.58pt、5.33pt，均 <10pt 可接受）
+- **排行榜**：#77 `✅/✅✅`（两轮完成）
+
