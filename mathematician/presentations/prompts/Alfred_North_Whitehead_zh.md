@@ -152,3 +152,16 @@
 - **遗留**：封面 badge 过宽（Overfull 30.32pt + 6.69pt）→ Review-2 处理
 - **排行榜**：#81 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+> 结构优化 + Overfull 修复 + 编译验证。
+
+- **Overfull 修复**：
+  1. 封面 badge `Russell/Moore/Keynes\\[2pt]Quine 派系` → `Russell/Moore\\[2pt]Keynes/Quine`（消除 30.32pt Overfull）
+  2. 总览 badge `Russell/Moore/Keynes\\[2pt]Quine/Eddington` → `Russell/Moore\\[2pt]Keynes/Quine`（消除 6.69pt Overfull）
+  3. 学术网络 section title 副标题 `Russell/Moore/Keynes/Quine/Eddington` → `Russell/Moore/Keynes/Quine`（缩短）
+- **编译**：`make distclean && make` → ✅ 14页，0错误；仅剩 1 处 Overfull 5.33pt（<10pt 可接受，为共用 OpenMath 封面模板固定内容）
+- **排行榜**：#81 `✅/✅✅`（两轮完成）
+
