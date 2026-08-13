@@ -38,20 +38,21 @@
 | 强调（几何金） | #8B1A1A | Bochner 公式/技巧 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「Bochner 定理 · Bochner 技巧 · 分析几何的桥梁」
 2. 生平总览：时间轴（1899 出生 → 1921 博士 → 1924 慕尼黑 → 1933 赴美 → 1968 莱斯 → 1982 去世）
-3. Bochner 定理（1932）：正定函数与 Fourier
-4. Bochner 积分（1933）：向量值 Lebesgue 积分
-5. 几乎周期函数（1925）：简化 Bohr
-6. Bochner 公式与技巧：微分几何曲率
-7. Curvature and Betti Numbers（1953）：与 Yano
-8. Bochner–Martinelli 公式与多复变：与 Martin
-9. Bochner–Riesz 平均：多重 Fourier 级数
-10. 纳粹流亡与普林斯顿岁月：1933 转折
-11. 学术王朝：Calabi/Cheeger/Furstenberg 等 21+ 博士
-12. 终章：莱斯大学晚年、科学史、82 岁、历史地位
+3. **早年与教育**：Podgórze 出生、1914 迁居德国、柏林博士（Schmidt）、慕尼黑 1924
+4. Bochner 定理（1932）：正定函数与 Fourier
+5. Bochner 积分（1933）：向量值 Lebesgue 积分
+6. 几乎周期函数（1925）：简化 Bohr
+7. Bochner 公式与技巧：微分几何曲率
+8. Curvature and Betti Numbers（1953）：与 Yano
+9. Bochner–Martinelli 公式与多复变：与 Martin
+10. Bochner–Riesz 平均：多重 Fourier 级数
+11. 纳粹流亡与普林斯顿岁月：1933 转折
+12. 学术王朝：Calabi/Cheeger/Furstenberg 等 21+ 博士
+13. 终章：莱斯大学晚年、科学史、82 岁、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -117,4 +118,25 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Salomon_Bochner/page.md`) 逐页比对。
+
+- **头像** ✅：从 `figure_my/Salomon Bochner.jpeg` 复制至 `images/Salomon_Bochner.jpg`（21.4KB，原 images 目录为空）；右上角 1.92cm Cartan 同款圆角矩框（原为 3.2cm 裸贴角）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace United States\enspace·\enspace Steele Prize 1979\enspace·\enspace 21+ 博士`（Wikipedia description 为 "American mathematician"；Wikidata nationality 含 United States）
+- **身份信息页** ✅：新增 Slide 3（"早年与教育：Podgórze 到柏林 1899--1921"），涵盖 Podgórze 出生（奥匈帝国、今波兰）、正统犹太家庭、1914 迁居德国、柏林 gymnasium、弗里德里希·威廉大学博士（Erhard Schmidt）、论文含 Bergman 核、慕尼黑 1924
+- **事实复核**：生卒(1899-08-20~1982-05-02, 82岁)/Podgórze 出生/Schmidt 导师/Bergman 核/慕尼黑 1924-1933/纳粹 1933 后赴普林斯顿/IAS 1945-48/Fine 教授 1959/退休 1968/Rice 大学 Lovett 教授 1968-1982/系主任 1969-1976/正统犹太/Steele Prize 1979/Bochner 定理 1932/Bochner 积分 1933/几乎周期函数 1925/Bochner 公式 1946/与 Yano《Curvature and Betti Numbers》1953/Bochner-Martinelli 1948/Bochner-Riesz 平均/21+ 博士(Calabi/Cheeger/Furstenberg/Karlin/Helgason/Knapp/Askey)——全部与 Wikipedia 一致
+- **修正**：
+  1. **头像补齐 + 圆角矩框**：`figure_my/Salomon Bochner.jpeg` → `images/Salomon_Bochner.jpg`；裸贴角 `width=3.2cm` → Cartan 同款 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm）
+  2. **新增身份信息页**：早年与教育（Podgórze 出生、犹太家庭、1914 迁德、Schmidt 博士、慕尼黑）——12→13 页
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  5. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：美国数学家...` → `美国数学家...`
+  6. **修复伪引语**：结束页 `An American mathematician known for his work in...`（Wikipedia 无此句）→ 忠实引用 `was a Galizien-born mathematician, known for work in mathematical analysis, probability theory and differential geometry`
+- **编译**：`make distclean && make` → ✅ 14页，0错误
+- **遗留**：学术王朝页 badge `Calabi/Cheeger/Furstenberg` 太宽（Overfull 56.83pt）+ 下一行 15.97pt → Review-2 处理
+- **排行榜**：#79 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
