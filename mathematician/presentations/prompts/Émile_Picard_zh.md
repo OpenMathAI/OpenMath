@@ -145,3 +145,15 @@
 - **遗留**：封面 badge `Hadamard/Weil/Julia` 太宽（Overfull 25.49pt）+ 总览页 10.86pt → Review-2 处理
 - **排行榜**：#78 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+> 结构优化 + Overfull 修复 + 编译验证。
+
+- **Overfull 修复**：
+  1. 封面 badge `Hadamard/Weil/Julia\\[2pt]Painlevé/Baire 等` → `Hadamard/Weil\\[2pt]Julia/Baire 等`（消除 25.49pt Overfull）
+  2. 总览 badge `Hadamard/Weil/Painlevé` → `Hadamard/Weil`（消除 10.86pt Overfull）
+- **编译**：`make distclean && make` → ✅ 14页，0错误；仅剩 1 处 Overfull 5.33pt（<10pt 可接受，为共用 OpenMath 封面模板固定内容）
+- **排行榜**：#78 `✅/✅✅`（两轮完成）
+
