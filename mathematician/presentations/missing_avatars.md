@@ -69,7 +69,7 @@ presentations/
 ├── Goro_Shimura/images/Goro_Shimura.jpg
 ├── Thoralf_Skolem/images/Thoralf_Skolem.jpg
 ├── Oswald_Teichmüller/images/Oswald_Teichmuller.jpg
-├── Émile_Picard/images/Emile_Picard.jpg
+├── Emile_Picard/images/Emile_Picard.jpg
 ├── Salomon_Bochner/images/Salomon_Bochner.jpg
 ├── Alfred_North_Whitehead/images/Alfred_North_Whitehead.jpg
 ├── Andrey_Tikhonov/images/Andrey_Tikhonov.jpg

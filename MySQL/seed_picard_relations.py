@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """梳理 Émile Picard 的社会关系与研究领域，入库 greatminds 数据库。
 
-数据源：mathematician/pages/Émile_Picard/（Wikipedia 存档）
+数据源：mathematician/pages/Emile_Picard/（Wikipedia 存档）
 同时合并重复人物：id=744 (Charles Émile Picard) → id=78 (Émile Picard)。
 """
 import re

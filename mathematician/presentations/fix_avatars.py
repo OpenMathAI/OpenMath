@@ -12,7 +12,7 @@ tasks = {
     'Goro_Shimura': 'Goro_Shimura.jpg',
     'Thoralf_Skolem': 'Thoralf_Skolem.jpg',
     'Oswald_Teichmüller': 'Oswald_Teichmuller.jpg',
-    'Émile_Picard': 'Emile_Picard.jpg',
+    'Emile_Picard': 'Emile_Picard.jpg',
     'Salomon_Bochner': 'Salomon_Bochner.jpg',
     'Alfred_North_Whitehead': 'Alfred_North_Whitehead.jpg',
     'Andrey_Tikhonov': 'Andrey_Tikhonov.jpg',

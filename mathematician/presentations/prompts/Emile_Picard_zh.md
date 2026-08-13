@@ -126,14 +126,14 @@
 
 ## Review-1 记录 (2026-08-13)
 
-> 结合本地 Wikipedia (`pages/Émile_Picard/page.md`) 逐页比对。
+> 结合本地 Wikipedia (`pages/Emile_Picard/page.md`) 逐页比对。
 
-- **头像** ✅：从 `figure_my/Émile Picard.jpeg` 复制至 `images/Emile_Picard.jpg`（10.6KB，原 images 目录为空、tex 引用的 `Emile_Picard.jpg` 缺失）；右上角 1.92cm Cartan 同款圆角矩框（原为 3.2cm 裸贴角）
+- **头像** ✅：从 `figure_my/Emile Picard.jpeg` 复制至 `images/Emile_Picard.jpg`（10.6KB，原 images 目录为空、tex 引用的 `Emile_Picard.jpg` 缺失）；右上角 1.92cm Cartan 同款圆角矩框（原为 3.2cm 裸贴角）
 - **国籍** ✅：封面 `\faIcon{globe}\enspace France\enspace·\enspace Poncelet 1886\enspace·\enspace 法兰西学院 1924`（与 Wikidata `nationality: ["France"]` 一致）
 - **身份信息页** ✅：新增 Slide 3（"早年与教育：Paris 到 ENS 1856--1877"），涵盖 Paris 出生、Lycée Henri-IV、Lycée Michelet、ENS 1874、博士 1877（Gaston Darboux）、1881 娶 Hermite 之女 Marie（岳父非导师）
 - **事实复核**：生卒(1856-07-24~1941-12-11, 85岁)/Paris 出生/Darboux 导师/Hermite 岳父(1881 娶 Marie)/法兰西学院 1924(seat 1)/永久秘书 1917-1941/Picard 小定理 1879·大定理 1886/Picard 群·簇·functor/Picard–Vessiot(1883)/Picard–Lindelöf/Picard–Lefschetz/Picard–Fuchs/Traité d'Analyse(1891-96)/相对论教材/4 卷文集/ForMemRS 1909·Poncelet 1886——全部与 Wikipedia 一致
 - **修正**：
-  1. **头像补齐 + 圆角矩框**：`figure_my/Émile Picard.jpeg` → `images/Emile_Picard.jpg`；裸贴角 `width=3.2cm` → Cartan 同款 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm）
+  1. **头像补齐 + 圆角矩框**：`figure_my/Emile Picard.jpeg` → `images/Emile_Picard.jpg`；裸贴角 `width=3.2cm` → Cartan 同款 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm）
   2. **新增身份信息页**：早年与教育（Paris 出生、教育轨迹、Hermite 岳父）——12→13 页
   3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
   4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`

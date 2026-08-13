@@ -8,8 +8,8 @@
 #   make clean      remove intermediate files
 #   make distclean  remove generated PDF/images/video
 
-MAIN        = Émile_Picard_zh
-VIDEO_NAME  = Émile_Picard_zh
+MAIN        = Emile_Picard_zh
+VIDEO_NAME  = Emile_Picard_zh
 OUTPUT_DIR  = output
 IMAGES_DIR  = $(OUTPUT_DIR)/images
 SLIDES_TXT  = $(OUTPUT_DIR)/slides.txt
