@@ -38,20 +38,21 @@
 | 强调（紧化金） | #B8860B | Alexandroff 紧化 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「点集拓扑学创始人 · Alexandroff 紧化」
 2. 生平总览：时间轴（1896 → 1917 连续统危机 → 1923-24 哥廷根 → 1927 博士 → 1936 Luzin 事件 → 1953 院士 → 1982 去世）
-3. Alexandroff 单点紧化：拓扑学基本构造
-4. Alexandrov 拓扑与长直线：与 Urysohn
-5. Čech 上同调：与 Čech 共同奠基
-6. Alexandroff 平板：反例
-7. 哥廷根之旅与 Urysohn：1923-24、意外溺亡
-8. 莫斯科学派：Pontryagin/Tikhonov/Kurosh 等学生
-9. 1917 连续统危机：Luzin 挑战、戏剧转向
-10. 1955 三百人信：批评李森科主义
-11. Luzin 事件（1936）：参与攻击（敏感）
-12. 终章：86 岁、300 篇论文、历史地位
+3. **早年与教育**：博戈罗茨克出生、斯摩棱斯克 gymnasium、莫斯科大学（Egorov/Luzin）、1927 博士、1953 院士
+4. Alexandroff 单点紧化：拓扑学基本构造
+5. Alexandrov 拓扑与长直线：与 Urysohn
+6. Čech 上同调：与 Čech 共同奠基
+7. Alexandroff 平板：反例
+8. 哥廷根之旅与 Urysohn：1923-24、意外溺亡
+9. 莫斯科学派：Pontryagin/Tikhonov/Kurosh 等学生
+10. 1917 连续统危机：Luzin 挑战、戏剧转向
+11. 1955 三百人信：批评李森科主义
+12. Luzin 事件（1936）：参与攻击（敏感）
+13. 终章：86 岁、300 篇论文、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -125,4 +126,31 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Pavel_Alexandrov/page.md`) 逐页比对。
+
+- **头像** ✅：Wikipedia infobox 无照片（images.txt 仅 Wikimedia Commons logo），但项目自备头像库 `figure_my/Pavel Alexandrov.jpg` 存在，已复制为 `images/Pavel_Alexandrov.jpg` 并采用 Cartan/Sinai 标准格式（圆角矩框 + `\includegraphics[width=1.92cm]` + `yshift=-1.51cm`）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace USSR\enspace·\enspace 点集拓扑创始人\enspace·\enspace Čech 上同调`（原 `\faIcon{globe}\quad Russian Empire → USSR...` → 统一 `\enspace USSR`；Wikidata nationality: ["Soviet Union", "Russian Empire"]，以主要学术生涯 USSR 为准）
+- **身份信息页** ✅：新增 Slide 3（"早年与教育：从博戈罗茨克到莫斯科大学 1896--1927"），涵盖博戈罗茨克出生（今诺金斯克）、斯摩棱斯克 gymnasium、莫斯科大学（Egorov/Luzin 双导师）、1927 博士、1953 院士
+- **事实复核**：
+  - 生卒 1896-05-07 ~ 1982-11-16（享年 86）✅（Wikipedia infobox 公历 7 May 1896；metadata 两值 1896-04-25 儒略历/1896-05-07 公历，取公历）
+  - 出生地 Bogorodsk, Moscow Governorate（今诺金斯克）✅
+  - 导师 Dmitri Egorov + Nikolai Luzin（双导师）✅
+  - 1923-24 与 Urysohn 访问哥廷根 ✅；1927 博士 ✅；1953 院士 ✅
+  - Alexandroff 单点紧化/Alexandrov 拓扑/Čech 上同调（与 Čech 独立）/长直线（与 Urysohn）/1917 CH 危机（1964 Cohen 证独立于 ZFC）/1955 三百人信（批评 Lysenkoism）/1936 Luzin 事件（active participant）✅
+- **修正**：
+  1. **修复 Markdown 语法误用**：`chcrisisslide` 中 `**对数学创造性危机的反应是转向艺术**`（Markdown 加粗语法误入 LaTeX）→ `\textbf{...}`
+  2. **修正地名大小写**：`batz-sur-mer` → `Batz-sur-Mer`
+  3. **新增身份信息页**：早年与教育（博戈罗茨克、斯摩棱斯克、莫斯科大学、1927 博士、1953 院士）——12→13 页
+  4. **封面 badge 统一**：4 个 badge 3 行 → 2 行（与 Sinai/Tikhonov/Luzin 格式一致）
+  5. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  6. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  7. **去"据 Wikipedia："**：封面引语去前缀
+  8. **英文名行**：`1896 -- 1982` → `1896--1982`（去空格）
+- **编译**：`make distclean && make` → ✅ 14页，0错误；残留 hbox 5.33pt（closingslide 英文引语，共性）<10pt 可接受 → Review-2 处理
+- **排行榜**：#88 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
