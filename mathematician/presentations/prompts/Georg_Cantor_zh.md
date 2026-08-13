@@ -154,3 +154,18 @@
 - **遗留**：hbox 5.33pt + vbox 3.12pt（均 <10pt 可接受）→ Review-2 复核
 - **排行榜**：#82 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+> 结构优化 + 事实一致性复查 + 编译验证。
+
+- **事实一致性修复**：抑郁症页 section title 副标题残留 `1904 次子 Rudolph 自杀` → `1904 幼子 Rudolph 去世`（与 Review-1 已改正文 "突然去世" 保持一致；Wikipedia 原文只写 "died suddenly"，未明确自杀）
+- **全文件复查**：`grep 自杀` → 无残留；"次子/幼子" 表述统一
+- **Overfull 复核**：
+  1. Hilbert 乐园页 section title 副标题长引号 `"无人能把我们从康托尔创造的乐园中驱逐出去"` → hbox 5.33pt（<10pt 可接受；引号为 Hilbert 名言忠实翻译，保留不动）
+  2. 抑郁症页 → vbox 3.12pt（<10pt 可接受）
+- **结束页时间线**：已拆两行（St. Petersburg→CH / 抑郁→1918），符合 ≥7 段拆两行规范
+- **编译**：`make distclean && make` → ✅ 14页，0错误；Missing character 已消除
+- **排行榜**：#82 `✅/✅✅`（两轮完成）
+
