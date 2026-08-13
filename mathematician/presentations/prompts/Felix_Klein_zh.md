@@ -148,3 +148,19 @@
 - **遗留**：封面 badge 过宽（Overfull 26.84pt）+ vbox 0.85pt → Review-2 处理
 - **排行榜**：#84 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+> 结构优化 + Overfull 修复 + 编译验证。
+
+- **Overfull 修复**（hbox 26.84pt → 7.33pt）：根因是总览页（hookslide）4 个 nodebox 的 `font=\fontsize{8}{10}` 过大 + `inner xsep=11pt` + 位置过于靠边（±5.7/±1.9）+ 内容含 ASCII 引号行 `\\"几何=群+不变量"`（异常引号）。修复：
+  1. nodebox 字号 `8/10` → `7.0/9.0`（对齐 Carathéodory 标准）
+  2. `inner xsep=11pt` → `10pt`
+  3. 位置收拢：`±5.7/±1.9` → `±5.5/±1.85`
+  4. 精简 nodebox 内容：nodebox a 去 ASCII 引号行 `\\"几何=群+不变量"`（改为 `用群论统一几何`）；nodebox b 去 `3D Möbius 带`；nodebox c 去 `编纂数学百科全书`；nodebox d 去 `初等数学从高观点看`（均已在正文 slide 展开，无需在 badge 重复）
+- **封面 badge 字号统一**：`\small\bfseries` → `\footnotesize\bfseries`，`text width=2.5cm` → `2.6cm`，坐标 `±5.4/±1.8` → `±5.5/±1.85`（对齐其他项目）
+- **earlylifeslide 长德文**：`Georg-August-Universität Göttingen`（无法断行）→ `哥廷根大学`
+- **编译**：`make distclean && make` → ✅ 13页，0错误；仅剩 hbox 7.33pt + vbox 0.85pt（均 <10pt 可接受）
+- **排行榜**：#84 `✅/✅✅`（两轮完成）
+
