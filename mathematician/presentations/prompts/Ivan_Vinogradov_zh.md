@@ -121,3 +121,34 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Ivan_Vinogradov/page.md`) 逐页比对。
+
+- **头像** ✅：`Ivan_Vinogradov.jpg` 原在根目录（`\graphicspath` 只搜 images/ 会找不到），已复制到 `images/Ivan_Vinogradov.jpg` 并采用 Cartan/Sinai 标准格式（圆角矩框 + `\includegraphics[width=1.92cm]` + `yshift=-1.51cm`）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace USSR\enspace·\enspace Steklov 所长 1934--1983\enspace·\enspace 91 岁`（原 `\faIcon{globe}\quad USSR...` → 统一 `\enspace USSR`，字号 12/16 → 14/18；Wikidata nationality: ["Russian Empire", "Soviet Union", "Russia"]——封面沿用 Wikipedia 首句 "Soviet mathematician" 主称谓 USSR）
+- **身份信息页** ✅：已有 `\earlyslide`（Slide 3 "早年与教育"），涵盖 Milolyub 出生、圣彼得堡大学（导师 Uspensky）、Perm/Tomsk 1918-20、1920 教授——无需新增
+- **⚠️ 修复字体缺失**：`\earlyslide` 原含俄文西里尔字母 `（Иван Матвеевич Виноградов）`——主字体 Helvetica Neue 不含西里尔，导致编译 `Missing character` 告警（И/в/а/н/М/т 等 18+ 字符缺失）→ 删除俄文括号注释（英文全名 `Ivan Matveevich Vinogradov` 已足够）
+- **事实复核**（tex 内容与 Wikipedia 一致）：
+  - 生卒 1891-09-14 ~ 1983-03-20（享年 91）✅（Wikipedia infobox 09-14；metadata 另有儒略历 09-02）
+  - 博士导师 James Victor Uspensky ✅
+  - Vinogradov 方法（三角和/指数和估计）✅
+  - 弱哥德巴赫/三素数定理 1937（非强哥德巴赫）✅
+  - 均值定理与 Waring 问题（华罗庚改进，不写"发明"）✅
+  - Steklov 所长 1934-1983（除 1941-46 Sobolev 代理），49 年 ✅
+  - 二战时期 Sobolev 代理所长 1941-46 ✅
+  - 荣誉：Stalin 奖 1941、社会主义劳动英雄两次、6 次列宁勋章、Lomonosov 金质、ForMemRS ✅
+- **修正**：
+  1. **头像位置**：根目录 → images/
+  2. **⚠️ 删除俄文西里尔字母**：修复 Missing character 字体告警
+  3. **⚠️ 修正伪引语**：结束页原写 "He was a Soviet mathematician who made fundamental contributions to analytic number theory. -- Wikipedia"（非原文）→ 改为忠实转述 "He was a Soviet mathematician, one of the creators of modern analytic number theory. -- Wikipedia"（Wikipedia 原文 "one of the creators of modern analytic number theory"）
+  4. **封面引语**：`据 Wikipedia：苏联数学家，对解析数论做出核心贡献。` → 去前缀 + 改为"苏联数学家，现代解析数论的创立者之一"（更忠实 Wikipedia）
+  5. **封面 badge 统一**：4 个 badge 3 行 → 2 行
+  6. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  7. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  8. **英文名行**：`1891 -- 1983` → `1891--1983`（去空格）
+- **编译**：`make distclean && make` → ✅ 13页，0错误；西里尔字母告警已消除；hbox 5.33pt + vbox 9.45/7.46/9.73pt 均 <10pt 可接受 → Review-2 处理
+- **排行榜**：#99 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
