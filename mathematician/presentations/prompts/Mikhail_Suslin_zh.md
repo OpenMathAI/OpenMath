@@ -114,3 +114,29 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> ⚠️⚠️ **串台错误修复**：结合本地 Wikipedia (`pages/Mikhail_Suslin/page.md`) 发现，本 tex 文件原内容**混入大量 Vladimir Rokhlin 残留**（与 Carleman 相同的串台问题）——标题/badge 部分改成了 Suslin，但封面引语、封面底部、早期出生信息、hook badge、honors 标题、结束页时间线、warslide 二战内容等仍是 Rokhlin 的。
+> **已整体重写整个 tex 文件**，替换为正确的 Mikhail Suslin 内容。
+
+- **头像** ✅：`Mikhail_Suslin.jpg` 原在根目录，已复制到 `images/` 并采用标准圆角框（1.92cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Russian Empire\enspace·\enspace Moscow State University (Luzin)\enspace·\enspace 24 岁`（Wikidata nationality: Russian Empire）
+- **重写核心事实**（全部基于 Wikipedia）：
+  - 生卒 1894-11-15 ~ 1919-10-21（享年 24）✅；全名 Mikhail Yakovlevich Suslin（也拼 Souslin）✅
+  - 出生 Krasavka（萨拉托夫省，贫苦农民独子）✅；小学教师 Teplogorskaya-Smirnova 发掘天赋 ✅
+  - 教育 Balashov 文法学校（1905-13）→ 帝国莫斯科大学（1913-17，导师 Nikolai Luzin）✅
+  - 任职 Ivanovo-Voznesensk 理工学院（1917 起）✅
+  - 死因 1919 莫斯科斑疹伤寒大流行（俄罗斯内战期间）✅
+  - 发现 Lebesgue 错误（1917，投影不保 Borel 集）✅
+  - 解析集理论（Suslin 集，与 Luzin 共同发展）+ Suslin 定理（解析+余解析=Borel）✅
+  - Suslin 问题独立于 ZFC（Solovay--Tennenbaum 1971）✅
+  - Souslin 线 / Suslin 假设（SH）/ Suslin 树（高度 ω1）✅
+  - Suslin 运算 / Suslin 表示 / Suslin 代数 / Suslin 基数等命名对象群 ✅
+  - 仅发表 1 篇 4 页笔记（1917 C. R. Acad. Sci. Paris）✅
+- **格式统一**：section title 字号 20/24 + 副标题 7.5/9.5；封面国籍行 `\enspace` + 14pt；英文名行 `1894--1919`；封面 badge 2 行；配色 coveraccent/badgeHist 由苏联红 → 悲剧金 `#B8860B`
+- **清除残留**：删除 `\warslide`（Rokhlin 二战内容，Suslin 1919 已去世无二战）、删除封面底部 Baku 残留、删除 hook honors 标题 Rokhlin 残留、删除早期出生 Rokhlin 俄文
+- **编译**：`make distclean && make` → ✅ 12页，0错误；无 Missing character / Undefined；hbox 5.33pt + vbox 6.66/9.03pt 均 <10pt
+- **排行榜**：#104 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
