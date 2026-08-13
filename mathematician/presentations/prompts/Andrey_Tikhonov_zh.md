@@ -136,7 +136,7 @@
 
 > 结合本地 Wikipedia (`pages/Andrey_Nikolayevich_Tikhonov/page.md`) 逐页比对。
 
-- **头像** ⚠️→✅：Wikipedia 英文页**无正式肖像**（仅 Organizer work 部分的纪念牌 `Tikhonov_board.jpg`，非人物照片）；原 tex 引用 `Andrey_Tikhonov.jpg` 但 `images/` 目录为空导致编译报错（`File not found`）。按规范"无照片时用装饰圆替代"：Cartan 同款圆角矩框 + 内部装饰圆（字母 T + 1906--1993）
+- **头像** ✅（Review-2 修正）：头像实际存在（`figure_my/Andrey Tikhonov.jpg`，245×300 竖版），已复制到 `images/Andrey_Tikhonov.jpg` 并恢复 `\includegraphics` 引用。**Review-1 曾误判为"Wikipedia 无正式肖像"**（仅见纪念牌），系未检查 `figure_my/` 目录所致——Wikipedia 页面确实无人物照片，但项目自备头像库 `figure_my/` 中有该数学家肖像。
 - **国籍** ✅：封面 `\faIcon{globe}\enspace USSR\enspace·\enspace Tychonoff 定理\enspace·\enspace Tikhonov 正则化`（原 `\faIcon{globe}\quad Russian Empire → USSR ... 86岁` → 统一 `\enspace USSR`，去掉冗余"86岁"；Wikidata nationality: ["Russian Empire", "Soviet Union", "Russia"]，以主要学术生涯 USSR 为准）
 - **身份信息页** ✅：新增 Slide 3（"早年与教育：从格扎茨克到莫斯科大学 1906--1927"），涵盖格扎茨克出生（今加加林市）、莫斯科大学求学、1926 度量化定理、1927 博士（Pavel Alexandrov）、1933 教授
 - **事实复核**：生卒(1906-10-17~1993, 86岁)/格扎茨克出生/莫斯科大学/1927 博士(Alexandrov)/1926 度量化定理/1930 Tychonoff 定理(等价选择公理, Kelley 1950)/Tychonoff 空间(完全正则)/Tychonoff 立方体/Tikhonov 正则化 1963(与 Phillips 1962 独立)/热方程唯一性/Volterra 积分方程/小参数渐近分析/大地电磁法(与 Cagniard 独立)/VMK 创建 1970 首任系主任 20 年(1970-1990)/1933 教授/1939 通讯院士/1966 院士/列宁奖 1966/社会主义劳动英雄 1954&1986——全部与 Wikipedia 一致
@@ -149,4 +149,19 @@
 - **编译**：`make distclean && make` → ✅ 14页，0错误（头像报错已解决）
 - **遗留**：hbox 5.33pt（<10pt 可接受）+ vbox 12.05pt（>10pt）→ Review-2 处理
 - **排行榜**：#86 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
+---
+
+## Review-2 记录 (2026-08-13)
+
+> 结构优化 + Overfull/Underfull 治理。
+
+- **vbox 12.05pt 定位与修复** ✅：经二分法定位，vbox 溢出源在 **`\hookslide`（生平总览页，build 区 `\hookslide` 调用行）**，而非封面。根因是底部 graypanel 第 2 行时间线含 **6 个节点**（`Gzhatsk (1906) → Moscow Univ (1927 PhD) → 教授 (1933) → 通讯院士 (1939) → VMK 创始 (1970) → 1993。`）在 `text width=13.4cm` 内换行，使 graypanel 增高。精简为 **5 个节点**（去掉"通讯院士 1939"）：`Gzhatsk (1906) → Moscow Univ (1927 PhD) → 教授 (1933) → VMK 创始 (1970) → 1993。` → vbox 由 **12.05pt → 3.55pt**（<10pt 可接受）
+- **头像修正** ✅：Review-1 误判"无肖像"→ 实为 `figure_my/Andrey Tikhonov.jpg` 存在，复制到 `images/Andrey_Tikhonov.jpg`，恢复 `\includegraphics[width=1.92cm]`（Cartan/Sinai 同款圆角矩框 + `yshift=-1.51cm`）
+- **封面 badge 统一** ✅：4 个 badge 由 3 行精简为 2 行（与 Sinai/Klein 格式一致），标题短词不换行（`Tychonoff`/`Tikhonov`/`度量化`/`大地电磁法` + 副行信息）
+- **section title 字号核对** ✅：确认与 Sinai 一致（`\fontsize{20}{24}` 主标题 + `7.5/9.5` 副标题），Review-1 的统一改动正确
+- **编译验证** ✅：`make distclean && make` → **14 页，0 错误**；残留 hbox 5.33pt（hookslide 结构共性，Sinai 同样存在）+ vbox 3.55pt，均 <10pt 可接受
+- **结束页时间线** ✅：closingslide 时间线已拆两行（无 ≥7 段单行溢出）
+- **格式对齐** ✅：封面（国籍/头像/引语）、section title、badge、graypanel 均与 Cartan/Sinai 同榜格式一致
+- **排行榜**：#86 `✅/✅✅` → `✅✅/✅✅`
 
