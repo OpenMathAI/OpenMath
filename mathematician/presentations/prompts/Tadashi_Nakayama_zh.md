@@ -9,12 +9,12 @@
 ## 1. 背景信息（用于 Slide 1-3）
 
 - **姓名**：中山 正（Tadashi Nakayama / Tadasi Nakayama，中山正）
-- **生卒**：1912-07-26 → 1964-05-21，享年 51
+- **生卒**：1912-07-26 → 1964-06-05，享年 51
 - **国籍**：日本
 - **身份**：数学家（代数学）
 - **机构轨迹**：
-  - 教育：京都大学（师从高木贞治 Teiji Takagi）
-  - 任职：京都大学、名古屋大学
+  - 教育：东京大学 + 大阪大学（师从高木贞治 Teiji Takagi 与正田建次郎 Kenjirō Shōda 双导师）
+  - 任职：大阪大学、名古屋大学
 - **研究领域**：群论、环论、表示论、抽象代数
 
 ## 2. 核心叙事亮点（用于 Slide 4-9）
@@ -63,10 +63,10 @@
 
 | 字段 | 值 | 状态 |
 |---|---|---|
-| qid | Q7674366（占位，待核） | 需更新 |
+| qid | Q324943（正确数学家页面） | 需更新 |
 | name_zh | 中山正 | 保持 |
 | birth_date | 1912-07-26 | 已迁移 |
-| death_date | 1964-05-21 | 已迁移 |
+| death_date | 1964-06-05 | 已迁移 |
 | has_biography | 0 | 保持 |
 | has_social_data | 1 | 本次置 1 |
 
@@ -110,4 +110,30 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Tadashi_Nakayama/page.md`) 逐页比对。
+
+- **头像** ✅：`Tadashi_Nakayama.jpg` 原在根目录（`\graphicspath` 只搜 images/ 会找不到），已复制到 `images/Tadashi_Nakayama.jpg` 并采用 Cartan/Sinai 标准格式（圆角矩框 + `\includegraphics[width=1.92cm]` + `yshift=-1.51cm`）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Japan\enspace·\enspace 表示论\enspace·\enspace 中山引理`（原 `\faIcon{globe}\quad Japan...` → 统一 `\enspace Japan`，字号 12/16 → 14/18；Wikidata nationality: ["Japan", "Empire of Japan"]）
+- **身份信息页** ✅：已有 `\earlyslide`（Slide 3 "早年与教育"），涵盖东京府出生、双导师、大阪/名古屋任职——无需新增
+- **⚠️ 提示词事实错误修正**（tex 内容本身正确，提示词有误）：
+  1. **死亡日期**：提示词写 `1964-05-21`（错误）→ Wikipedia 明确 `June 5, 1964`（`1964-06-05`），tex 写"1964 年 6 月 5 日"正确；已修正提示词 death_date
+  2. **机构**：提示词写"京都大学"（错误，基于消歧页猜测）→ Wikipedia 明确 `educated_at: University of Tokyo + University of Osaka`，tex 写"东京大学与大阪大学"正确；已修正提示词
+  3. **导师**：提示词只写"高木贞治"（不完整）→ Wikipedia 明确 `doctoral_advisor: ["Teiji Takagi", "Kenjirō Shōda"]` 双导师，tex 写"高木贞治与正田建次郎"正确；已补充提示词
+  4. **qid**：提示词写 `Q7674366（占位消歧页）` → 正确数学家页面 `Q324943`；已修正
+- **修正**：
+  1. **头像位置**：根目录 → images/（否则 `\graphicspath` 找不到）
+  2. **修正 hookslide badge d 机构错误**：`日本代数学\\Takagi/Shōda\\京都传统` → `日本代数学\\东京/大阪`（中山正机构是东京/大阪，非京都；"京都"系提示词错误渗透）
+  3. **封面 badge 统一**：4 个 badge 3 行 → 2 行
+  4. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  5. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  6. **去"据 Wikipedia："**：封面引语去前缀
+  7. **英文名行**：`1912 -- 1964` → `1912--1964`（去空格）
+- **事实复核**（tex 内容与 Wikipedia 一致）：生卒 1912-07-26 ~ 1964-06-05（51 岁）/东京府出生/东京大学+大阪大学学位/双导师 Takagi+Shōda/大阪+名古屋任职/访问 Princeton+Illinois+Hamburg/中山引理/Nakayama 代数/Nakayama 猜想/Murnaghan–Nakayama 规则/拟 Frobenius 代数（1939/1941 Annals 两篇）/日本学士院奖 ✅
+- **编译**：`make distclean && make` → ✅ 13页，0错误；hbox 5.33pt + vbox 6.58pt 均 <10pt 可接受 → Review-2 处理
+- **排行榜**：#90 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
