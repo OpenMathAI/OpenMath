@@ -122,3 +122,35 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Mikio_Sato/page.md`) 逐页比对。
+
+- **头像** ✅：`Mikio_Sato.jpg` 原在根目录（`\graphicspath` 只搜 images/ 会找不到），已复制到 `images/Mikio_Sato.jpg` 并采用 Cartan/Sinai 标准格式（圆角矩框 + `\includegraphics[width=1.92cm]` + `yshift=-1.51cm`）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Japan\enspace·\enspace 代数分析之父\enspace·\enspace Wolf Prize 2003`（原 `\faIcon{globe}\quad Japan...` → 统一 `\enspace Japan`，字号 12/16 → 14/18；Wikidata nationality: ["Japan", "Empire of Japan"]）
+- **身份信息页** ✅：已有 `\earlyslide`（Slide 3 "早年与教育"），涵盖东京出生、东大 BSc 1952/PhD 1963、双导师 Iyanaga/Yosida、大阪/东京/京都三机构——无需新增
+- **事实复核**（tex 内容与 Wikipedia 一致）：
+  - 生卒 1928-04-18 ~ 2023-01-09（享年 94）✅
+  - 博士导师 Shokichi Iyanaga（Wikipedia infobox doctoral_advisor 仅 Iyanaga；metadata 双导师 + Kōsaku Yosida，tex 已正确标注两者）✅
+  - 1952 BSc / 1963 PhD《Theory of hyperfunctions》✅
+  - 大阪大学→东京大学→京都 RIMS（1970 起）、1987-91 所长 ✅
+  - 超函数（分布延伸，与 Grothendieck 局部上同调"独立实现"）✅
+  - 代数分析（Schapira 评价"incredible temerity"）✅
+  - Bernstein–Sato 多项式（与 Bernstein 独立）✅
+  - Sato–Tate 猜想（与 John Tate 独立，约 1960）✅
+  - 前齐性向量空间（Sato–Shintani）✅
+  - holonomic quantum field（与 Jimbo/Miwa，Wolf 奖引文"二维 Ising 模型的深远推广 + tau 函数"）✅
+  - Sato 学派（Kashiwara/Kawai/Miwa/Jimbo）✅
+  - 5 项荣誉：Asahi 1969/Japan Academy 1976/文化功劳者 1984/Schock 1997/Wolf 2003 ✅
+- **修正**：
+  1. **头像位置**：根目录 → images/（否则 `\graphicspath` 找不到）
+  2. **封面 badge 统一**：4 个 badge 3 行 → 2 行（与 Sinai/Tikhonov/Luzin 格式一致）
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  5. **去"据 Wikipedia："**：封面引语去前缀
+  6. **英文名行**：`1928 -- 2023` → `1928--2023`（去空格）
+- **编译**：`make distclean && make` → ✅ 13页，0错误；hbox 5.33pt + vbox 4.96/7.92pt 均 <10pt 可接受 → Review-2 处理
+- **排行榜**：#91 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
