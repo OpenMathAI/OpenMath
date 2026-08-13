@@ -115,3 +115,34 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Albert_W._Tucker/page.md`) 逐页比对。
+
+- **头像** ✅：`Albert_W._Tucker.jpg` 原在根目录（`\graphicspath` 只搜 images/ 会找不到），已复制到 `images/Albert_W._Tucker.jpg` 并采用 Cartan/Sinai 标准格式（圆角矩框 + `\includegraphics[width=1.92cm]` + `yshift=-1.51cm`）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Canada\enspace·\enspace Princeton 1933--1974\enspace·\enspace 89 岁`（原 `\faIcon{globe}\quad Canada...` → 统一 `\enspace Canada`，字号 12/16 → 14/18；Wikidata nationality: ["Canada", "United States"]——封面沿用 Wikipedia 首句 "Canadian mathematician" 的主称谓 Canada）
+- **身份信息页** ✅：已有 `\earlyslide`（Slide 3 "早年与教育"），涵盖 Oshawa 出生、Toronto BA 1928/MA 1929、Princeton 1932 博士（Lefschetz）、1933 加入 Princeton——无需新增
+- **事实复核**（tex 内容与 Wikipedia 一致）：
+  - 生卒 1905-11-28 ~ 1995-01-25（享年 89）✅
+  - 博士导师 Solomon Lefschetz；论文《An Abstract Approach to Manifolds》(1932) ✅
+  - 1933 加入 Princeton 至 1974（41 年），约 20 年系主任 ✅
+  - 囚徒困境命名（1950，Flood–Dresher 模型；Tucker 命名与推广，不写"发明"）✅
+  - KKT 条件（Karush 1939 先有，Kuhn–Tucker 1951 独立；三人共同命名）✅
+  - Tucker 引理、有向拟阵 ✅
+  - 学生：Nash（Nobel 1994）、Shapley（Nobel 2012）、Minsky（Turing 1969）、Gale、Isbell、Parsons 等 ✅
+  - AP 微积分委员会 1960-63、MAA 主席 1961-62、George Thomas 教科书贡献 ✅
+  - 1980s 口述史项目（Sloan 基金）✅
+  - John von Neumann Theory Prize 1980 ✅
+- **修正**：
+  1. **头像位置**：根目录 → images/
+  2. **⚠️ 修正伪事实**：`\educationslide` 原写"后者成为 Dartmouth 校长并共同发明 BASIC 语言"——Wikipedia 仅说 Kemeny "became Chair of the Mathematics Department and later College President"，未提"共同发明 BASIC"→ 改为"成为 Dartmouth 数学系主任、继而担任校长"（忠实转述）
+  3. **封面引语**：`据 Wikipedia：加拿大数学家，1905 年生于奥沙瓦。` → 去前缀 + 扩充为"加拿大数学家，对拓扑、博弈论与非线性规划做出重要贡献"（更忠实 Wikipedia 首句）
+  4. **封面 badge 统一**：4 个 badge 3 行 → 2 行
+  5. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  6. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  7. **英文名行**：`1905 -- 1995` → `1905--1995`（去空格）
+- **编译**：`make distclean && make` → ✅ 13页，0错误；hbox 5.33pt + vbox 6.48/8.01/7.73pt 均 <10pt 可接受 → Review-2 处理
+- **排行榜**：#98 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
