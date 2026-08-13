@@ -37,20 +37,21 @@
 | 强调（逻辑金） | #B8860B | 数学原理/逻辑主义 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「《数学原理》合著者 · 过程哲学之父」
 2. 生平总览：时间轴（1861 → 1884 BA → 1898 普遍代数 → 1910-13 《数学原理》 → 1914 帝国理工 → 1924 哈佛 → 1947 去世）
-3. 《数学原理》与 Russell：逻辑主义、三卷巨著、师生+合作
-4. 《普遍代数论》(1898)：统一代数先驱
-5. 数理逻辑与现代逻辑主义：Russell 悖论后的框架
-6. 科学哲学：《科学概念》(1920)、《科学与现代世界》(1925)
-7. 过程哲学：《过程与实在》(1929)
-8. 物理学贡献：怀特海引力理论
-9. 点无几何：meretopology、gunk
-10. 学术网络：Russell/Moore/Keynes/Eddington/Quine
-11. 哈佛晚年与教育思想：63 岁转向哲学、Harvard Lectures
-12. 终章：86 岁、怀特海研究项目、历史地位
+3. **早年与教育**：Ramsgate 出生、Sherborne 公学、Trinity 1880、第四 Wrangler
+4. 《数学原理》与 Russell：逻辑主义、三卷巨著、师生+合作
+5. 《普遍代数论》(1898)：统一代数先驱
+6. 数理逻辑与现代逻辑主义：Russell 悖论后的框架
+7. 科学哲学：《科学概念》(1920)、《科学与现代世界》(1925)
+8. 过程哲学：《过程与实在》(1929)
+9. 物理学贡献：怀特海引力理论
+10. 点无几何：meretopology、gunk
+11. 学术网络：Russell/Moore/Keynes/Eddington/Quine
+12. 哈佛晚年与教育思想：63 岁转向哲学、Harvard Lectures
+13. 终章：86 岁、怀特海研究项目、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -125,4 +126,29 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Alfred_North_Whitehead/page.md`) 逐页比对。
+
+- **头像** ✅：从 `figure_my/Alfred North Whitehead.jpeg` 复制至 `images/Alfred_North_Whitehead.jpg`（20KB，原 images 目录为空）；右上角 1.92cm Cartan 同款圆角矩框（原为 3.2cm 裸贴角）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace United Kingdom\enspace·\enspace《数学原理》合著者\enspace·\enspace 过程哲学之父`（Wikidata nationality: ["United Kingdom"]）
+- **身份信息页** ✅：新增 Slide 3（"早年与教育：Ramsgate 到 Trinity 1861--1884"），涵盖 Ramsgate 出生（肯特郡）、父 Alfred 任 Chatham House Academy 校长、Sherborne 公学、1880 入 Trinity、导师 Edward Routh、1884 BA 第四 Wrangler
+- **事实复核**：生卒(1861-02-15~1947-12-30, 86岁)/Ramsgate 出生/父校长后转牧师/Sherborne 公学/Trinity 1880-1884/导师 Edward Routh/第四 Wrangler/1884 fellow 至 1910 讲师 25 年/1898《普遍代数论》/1910-13《数学原理》(与 Russell 合著)/1911 UCL/1914 帝国理工教授/1918-22 伦敦大学理学院院长/1920《科学概念》/1924 Henry Osborn Taylor 邀赴哈佛/1925《科学与现代世界》/1929《过程与实在》(Gifford 讲座 1927-28)/怀特海引力理论(已过时, Yutaka Tanaka 批评, 引力波发现)/mereotopology·gunk/点无几何/学生 Russell·Quine·Keynes/儿子 Eric 1917 一战阵亡(19岁)/哈佛 1924-1937 退休——全部与 Wikipedia 一致
+- **修正**：
+  1. **头像补齐 + 圆角矩框**：`figure_my/Alfred North Whitehead.jpeg` → `images/Alfred_North_Whitehead.jpg`；裸贴角 `width=3.2cm` → Cartan 同款 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm）
+  2. **新增身份信息页**：早年与教育（Ramsgate 出生、Sherborne、Trinity、第四 Wrangler）——12→13 页
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  5. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：英国数学家与哲学家，被视为 20 世纪最有影响力的思想家之一` → 忠实转述 `英国数学家与哲学家，过程哲学学派的创立者`
+  6. **修复结束页伪引语**：`He was described as one of the most influential thinkers of the 20th century`（Wikipedia 无此句）→ `was an English mathematician and philosopher, who created the philosophical school known as process philosophy`
+  7. **修复引力理论伪事实**：Slide 9 `Paul Dirac 接受怀特海理论（中微子激发子类）`（Wikipedia 无 Dirac 相关表述）→ `Yutaka Tanaka 批评引力常数不符、引力波发现使理论过时`；并删除错误关联的 `Schmidt 望远镜`
+  8. **修复哈佛邀请者错误**：`罗素的学生莫里斯·科恩利·弗莱克斯纳（M. Cohen and S. Flexner）` → `Henry Osborn Taylor`（Wikipedia 明示）
+  9. **修复 Eric 阵亡年份**：`1847 Eric 阵亡` → `1917 Eric 阵亡`（Wikipedia: Eric died in action, World War I）
+  10. **修复 Russell 编号格式**：`Bertrand Russell（74, 我们的数学家）` → `Bertrand Russell（榜单第 74 位）`
+- **编译**：`make distclean && make` → ✅ 14页，0错误
+- **遗留**：封面 badge 过宽（Overfull 30.32pt + 6.69pt）→ Review-2 处理
+- **排行榜**：#81 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
