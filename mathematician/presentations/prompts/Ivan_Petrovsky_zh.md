@@ -151,3 +151,15 @@
 - **编译**：`make distclean && make` → ✅ 13页，0错误；西里尔告警已消除；hbox 5.33pt + vbox 8.07/7.38pt 均 <10pt 可接受
 - **排行榜**：#101 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+- **⚠️ 修复 slide 顺序 bug**：原 `\begin{document}` 中 `\closingslide`（结束页）排在 `\warslide`（学生与传承）之前，导致结束页不在最后 → 已交换顺序，`\warslide` 移至 `\closingslide` 之前
+- **⚠️ 修复注释错误**：`\warslide` 注释 `% --- 新增二战经历 slide ---` 与内容不符 → 改为 `% --- 学生与传承 ---`
+- **⚠️ 修复编译错误（自引入）**：交换顺序时误将调用 `\honorsslide`（两个 s，与定义一致）写成 `\honorslide`（一个 s），触发 `Undefined control sequence` → 已恢复为 `\honorsslide`
+- **Overfull/Underfull** ✅：hbox 5.33pt + vbox 8.07/7.38pt，均 <10pt 阈值
+- **结束页时间线** ✅：两行 3+3 段，无溢出
+- **编译**：`make distclean && make` → ✅ 13页，0错误；slide 顺序正确（结束页最后）
+- **排行榜**：#101 Review 列保持 `✅✅`（第2轮完成）
+
