@@ -130,3 +130,21 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Felix_Klein/page.md`) 逐页比对。
+
+- **头像** ✅：`images/portrait.jpg`（283KB，Liebermann 1912 竖版画像，已存在）；右上角圆角裁剪 `clip[rounded corners=6pt]` 2.6×3.2cm + 画家标注 "Max Liebermann, 1912"（Klein 的 Wikipedia 画像为竖版人像，保留竖版设计，与方形照片项目区分）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Germany\enspace·\enspace 几何统一的宣言者\enspace·\enspace 哥廷根的建筑师`（原 `\faIcon{university}\enspace 几何统一的宣言者 · 哥廷根的建筑师` 无国籍 → 添加 `\faIcon{globe}\enspace Germany`；Wikidata nationality: ["Kingdom of Prussia", "German Empire", "Weimar Republic"]，用 Germany 作为现代对应）
+- **身份信息页** ✅：已存在 Slide 3（"早年与教育 1849–1872"，`\earlylifeslide`），涵盖 Düsseldorf 出生、父 Caspar 政府官员秘书、母 Sophie Elise（娘家姓 Kayser）、波恩大学、Plücker 助手、1868 博士（Plücker）、Clebsch 结识、普法战争医护兵、1871 哥廷根 Privatdozent——无需新增，仅补充母亲信息
+- **事实复核**：生卒(1849-04-25~1925-06-22, 76岁)/Düsseldorf 出生/父 Caspar 政府官员秘书(1809-1889)/母 Sophie Elise(1819-1890, 娘家 Kayser)/1865-66 波恩大学/1868 博士(Plücker)/1866 Plücker 助手/1868 Plücker 去世/Clebsch 赏识/1870 巴黎普法战争医护兵/1871 哥廷根 Privatdozent/1872 Erlangen 教授(23岁, Clebsch 力荐)/1875 慕尼黑(Brill 合教)/1875 娶 Anne Hegel(黑格尔孙女)/1880-86 莱比锡(1882 健康崩溃抑郁两年)/1886 哥廷根/1893 收女性(Grace Chisholm Young 第一位女性博士)/1895 招 Hilbert/1915 邀 Noether/1905 Meran 方案/1908 ICMI 首任主席/1885 皇家学会外籍会员/1893 德摩根奖章/1912 科普利奖章/1914 Ackermann–Teubner/一战《93人宣言》签名——全部与 Wikipedia 一致
+- **修正**：
+  1. **国籍缺失**：封面顶部 `\faIcon{university}\enspace 几何统一的宣言者 · 哥廷根的建筑师` → `\faIcon{globe}\enspace Germany\enspace·\enspace 几何统一的宣言者\enspace·\enspace 哥廷根的建筑师`
+  2. **头像路径冗余**：`\includegraphics[...]{images/portrait.jpg}` → `{portrait.jpg}`（`\graphicspath{{images/}}` 已含 images/，原路径多写一层）
+  3. **身份信息页补充**：早年 item 补母亲 `Sophie Elise Klein（娘家姓 Kayser）`
+- **编译**：`make distclean && make` → ✅ 13页，0错误
+- **遗留**：封面 badge 过宽（Overfull 26.84pt）+ vbox 0.85pt → Review-2 处理
+- **排行榜**：#84 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
