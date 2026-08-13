@@ -118,3 +118,33 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Felix_Bernstein/page.md`) 逐页比对。
+
+- **头像** ✅：`Felix_Bernstein.jpg` 原在根目录（`\graphicspath` 只搜 images/ 会找不到），已复制到 `images/Felix_Bernstein.jpg` 并采用 Cartan/Sinai 标准格式（圆角矩框 + `\includegraphics[width=1.92cm]` + `yshift=-1.51cm`）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Germany\enspace·\enspace G\"ottingen (Hilbert)\enspace·\enspace 78 岁`（原 `\faIcon{globe}\quad Germany...` → 统一 `\enspace Germany`，字号 12/16 → 14/18；Wikidata nationality: ["Germany"]）
+- **身份信息页** ✅：已有 `\earlyslide`（Slide 3 "早年与教育"），涵盖 Halle 出生（犹太学术家庭）、父 Julius Bernstein（生理学讲席/研究所所长）、Göttingen 1901 博士（Hilbert）、1903 类域论 habilit——无需新增
+- **事实复核**（tex 内容与 Wikipedia 一致）：
+  - 生卒 1878-02-24 ~ 1956-12-03（享年 78）✅（Wikipedia infobox 为 02-24，metadata 多值但以 infobox 为准）
+  - 博士导师 David Hilbert ✅；论文 1901《Untersuchungen aus der Mengenlehre》+ 1903 habilit《Über den Klassenkörper...》✅
+  - Schröder–Bernstein 定理（1896 证明，18 岁；Wikipedia 正文 1896，脚注有 1897/1934 争议）✅
+  - 血型遗传 1924（ABO 多等位基因统计证明）✅
+  - Property B、类域论、ICM 1908 受邀 ✅
+  - 哥廷根圈子：听 Cantor（父之友）研讨班 ✅
+  - 1933 纳粹解职（职业公务员法 §6）、Columbia 1933-36 访问教授、NYU 1936-43 生物统计教授 ✅
+  - 1948 退休返欧（罗马/弗赖堡/哥廷根 emeritus）、1956 苏黎世去世 ✅
+  - 三个 Bernstein 区分（Felix/Joseph/Sergei）✅
+- **修正**：
+  1. **头像位置**：根目录 → images/
+  2. **⚠️ 修正伪事实**：`\nyuslide` 原写"其女 Marianne Bernstein-Wiener 是哈佛大学数学博士"——Wikipedia 仅列"Children: Marianne Bernstein-Wiener"，未提"哈佛博士"→ 改为"亦为数学家"（忠实转述）
+  3. **封面引语**：`据 Wikipedia：德国犹太数学家。` → 去前缀 + 扩充为"德国犹太数学家，以集合论与血型遗传统计闻名"（更忠实 Wikipedia 正文）
+  4. **封面 badge 统一**：4 个 badge 3 行 → 2 行（`Schr\"oder--B` 截断 → `Schr\"oder--Bernstein` 完整）
+  5. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  6. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  7. **英文名行**：`1878 -- 1956` → `1878--1956`（去空格）
+- **编译**：`make distclean && make` → ✅ 13页，0错误；hbox 5.33pt + vbox 10.14/10.40/7.74pt（两处略超 10pt）→ Review-2 处理
+- **排行榜**：#97 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
