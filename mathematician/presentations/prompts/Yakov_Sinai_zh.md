@@ -155,3 +155,19 @@
 - **遗留**：新增身份信息页 hbox 12.60pt + vbox 13.46pt（>10pt）→ Review-2 处理
 - **排行榜**：#85 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+> 结构优化 + Overfull 修复 + 事实修正 + 编译验证。
+
+- **Overfull 修复**（hbox 12.60pt→5.33pt、vbox 13.46pt→4.51pt，均 <10pt）：
+  1. **封面 badge 精简为 2 行**（对齐 Klein 格式）：`K--S 熵\\1959\\不可预测性量化` → `K--S 熵\\1959 量化`；`Sinai 台球\\1963\\首次证明遍历性` → `Sinai 台球\\1963 遍历性`；`SRB 测度\\Sinai--Ruelle--Bowen\\混沌耗散系统` → `SRB 测度\\混沌耗散`；`50+ 博士\\Margulis/Ratner\\Katok/Bunimovich` → `50+ 博士\\Margulis 等`（3 行→2 行，消除 vbox 高度溢出）
+  2. **hookslide nodebox 精简超长英文**：nodebox c `Sinai--Ruelle--Bowen` → `混沌耗散`；nodebox d `Margulis/Ratner/Katok\\Bunimovich/Chernov` → `Margulis 等\\Katok 等`
+  3. **hookslide graypanel 时间轴精简**：`Moscow (1935) → Moscow Univ (1960 PhD) → Landau Inst (1971) → Moscow Prof (1981) → Princeton (1993) → Abel 2014` → `Moscow (1935) → Moscow Univ (1960) → Landau (1971) → 教授 (1981) → Princeton (1993)`（去除 PhD/Inst/Prof 冗余 + 去终点 Abel 2014，与奖项行去重）
+- **事实修正**：
+  1. `Wolf 1996` → `Wolf 1997`（Wikipedia infobox 明确 Wolf Prize 1997；含 section title 与正文共 3 处）
+  2. `2014 在世 80 岁` → `在世 90 岁`（1935-09-21 出生，2026 年 90 岁）
+- **编译**：`make distclean && make` → ✅ 15页，0错误；仅剩 hbox 5.33pt + vbox 4.51pt（均 <10pt 可接受）
+- **排行榜**：#85 `✅/✅✅`（两轮完成）
+
