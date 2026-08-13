@@ -124,3 +124,30 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Yuri_Linnik/page.md`) 逐页比对。
+
+- **头像** ✅：`images/Yuri_Linnik.jpg` 已存在（Wikipedia infobox 无照片，项目自备头像库），原 tex 用裸 `\includegraphics[width=3.2cm]` 顶格，已统一为 Cartan/Sinai 标准圆角框格式（`\includegraphics[width=1.92cm]` + `yshift=-1.51cm`）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace USSR\enspace·\enspace 圣彼得堡学派\enspace·\enspace 57 岁`（原 `\faIcon{globe}\quad USSR...` → 统一 `\enspace USSR`，字号 12/16 → 14/18；Wikidata nationality: 多值含 Soviet Union，封面沿用 Wikipedia 首句 "Soviet mathematician" 主称谓 USSR）
+- **身份信息页** ✅：已有 `\earlyslide`（Slide 3 "早年与教育"），涵盖 Bila Tserkva 出生（今乌克兰）、圣彼得堡大学（导师 Tartakovsky）、Steklov 研究所、父 Vladimir Pavlovich Linnik（科学院院士、光学物理学家）——无需新增
+- **⚠️ 修复字体缺失**：`\earlyslide` 原含俄文西里尔字母 `（Юрий Владимирович Линник）`——主字体 Helvetica Neue 不含西里尔，导致编译 `Missing character` 告警（Ю/р/и/й/В/л/а 等 20+ 字符缺失）→ 删除俄文括号注释（英文全名 `Yuri Vladimirovich Linnik` 已足够）
+- **事实复核**（tex 内容与 Wikipedia 一致）：
+  - 生卒 1915-01-08 ~ 1972-06-30（享年 57）✅（Wikipedia infobox 01-08；metadata 另有儒略历 01-21）
+  - 导师 Vladimir Tartakovsky ✅
+  - 父 Vladimir Pavlovich Linnik（科学院院士，光学物理学家）✅
+  - Linnik 定理（等差级数最小素数 < q^L）、弥散方法（Titchmarsh 问题）、大筛法（1941 引入，Bombieri 等发展）、Hilbert–Waring 初等证明（Schnirelmann 密度）、Linnik 遍历方法（1968）、无穷可分分布（Cramér 定理推广）、Linnik–Ostrovskii 专著（1977）✅
+  - 荣誉：Stalin 奖、Lenin 奖、社会主义劳动英雄、列宁勋章、IMS 会士 ✅
+- **修正**：
+  1. **⚠️ 删除俄文西里尔字母**：修复 Missing character 字体告警
+  2. **头像格式**：裸 `\includegraphics[width=3.2cm]` → 标准圆角框（1.92cm）
+  3. **封面 badge 统一**：4 个 badge 3 行 → 2 行
+  4. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  5. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  6. **去"据 Wikipedia："**：封面引语去前缀
+  7. **英文名行**：`1915 -- 1972` → `1915--1972`（去空格）
+- **编译**：`make distclean && make` → ✅ 13页，0错误；西里尔告警已消除；hbox 5.33pt + vbox 7.63/7.41pt 均 <10pt 可接受 → Review-2 处理
+- **排行榜**：#100 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
