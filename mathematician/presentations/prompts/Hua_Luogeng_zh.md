@@ -127,3 +127,29 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Hua_Luogeng/page.md`) 逐页比对。
+
+- **头像** ✅：`images/portrait.jpg` 已存在（Wikipedia infobox 1956 年照片），采用 Cartan 圆角框格式（`\clip[rounded corners=6pt]` + `\includegraphics[width=2.6cm,height=3.2cm]`），无需修改
+- **国籍** ✅（本次修正）：封面顶部原 `\faIcon{infinity}\enspace 自学成才的天才 · 数论大师 · 人民数学家 · 中国现代数学的旗帜` → 改为 `\faIcon{globe}\enspace China\enspace·\enspace 自学成才的天才\enspace·\enspace 数论大师\enspace·\enspace 人民数学家`，明确国籍 China（Wikidata nationality: ["People's Republic of China", "Republic of China"]）
+- **身份信息页** ✅：已有 `\earlylifeslide`（Slide 3 "早年与自学 1910–1931"），涵盖金坛出生、杂货铺自学、1929 伤寒残疾、熊庆来伯乐——无需新增
+- **section title 字号** ✅：已是 `\fontsize{20}{24}` + `7.5/9.5`（无需修改）
+- **事实复核**（全部与 Wikipedia 一致）：
+  - 生卒 1910-11-12 ~ 1985-06-12（东京，74 岁）✅
+  - 学历：小学 6 年 + 初中 3 年（仅 9 年正式教育，无大学学位）✅
+  - 1929 伤寒左腿终身残疾 ✅；1929 第一篇论文《Sturm 定理之研究》✅；1930 指出苏家驹五次方程论文错误 ✅
+  - 1931 熊庆来破格邀入清华（图书馆员→助教→讲师）✅；1935-36 Hadamard/Wiener 访华 ✅
+  - 1936-38 剑桥（Hardy–Littlewood 圆法，Waring 问题）✅；1938 西南联大正教授（无学位）✅
+  - Vinogradov 均值定理的华氏改进（昆明八年）✅；《堆垒素数论》1940 完稿、1947 Steklov 出版 ✅
+  - 1946-48 IAS、1948 伊利诺伊正教授、1950 回国 ✅
+  - 1952 科学院数学所首任所长、1958 中科大数学系首任主任/副校长 ✅
+  - 华-王方法（与王元，数论用于数值积分）✅；优选法/统筹法 ✅
+  - 陈景润 1966 陈氏定理（1+2）✅；熊庆来→华罗庚→陈景润传承 ✅
+  - 1982 NAS 外籍院士 ✅；1985 东京讲学心脏病去世（最后一句话 "Thank you."）✅
+- **引语核对**：`"梁园虽好，非久居之地"` 是华罗庚真实中文名言（1950 年回国名句），英文 Wikipedia 无对应原文（属中文史料记载），但非伪引语，保留并记录
+- **编译**：`make distclean && make` → ✅ 14页，0错误；hbox 16.24pt（line 421，closingslide 英文引语共性 >10pt）+ vbox 溢出（1.14/0.85/0.86/3.99pt 均 <10pt）→ Review-2 处理
+- **排行榜**：#89 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
