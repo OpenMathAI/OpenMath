@@ -119,3 +119,35 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Ivan_Petrovsky/page.md`) 逐页比对。
+
+- **头像** ✅：`Ivan_Petrovsky.jpg` 原在根目录（`\graphicspath` 只搜 images/ 会找不到），已复制到 `images/Ivan_Petrovsky.jpg` 并采用 Cartan/Sinai 标准格式（圆角矩框 + `\includegraphics[width=1.92cm]` + `yshift=-1.51cm`）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace USSR\enspace·\enspace Moscow State University 校长 1951--1973\enspace·\enspace 71 岁`（原 `\faIcon{globe}\quad USSR...` → 统一 `\enspace USSR`，字号 12/16 → 14/18；Wikidata nationality: ["Russian Empire", "Soviet Union"]——封面沿用 Wikipedia 首句 "Soviet mathematician" 主称谓 USSR）
+- **身份信息页** ✅：已有 `\earlyslide`（Slide 3 "早年与教育"），涵盖 Sevsk 出生、莫斯科大学（导师 Dmitri Egorov）、Steklov 研究所、1946 院士——无需新增
+- **⚠️ 修复字体缺失**：`\earlyslide` 原含俄文西里尔字母 `（Иван Георгиевич Петровский）`——主字体 Helvetica Neue 不含西里尔，导致编译 `Missing character` 告警（И/в/а/н/Г/е 等 20+ 字符缺失）→ 删除俄文括号注释（英文全名 `Ivan Georgiyevich Petrovsky` 已足够）
+- **事实复核**（tex 内容与 Wikipedia 一致）：
+  - 生卒 1901-01-18 ~ 1973-01-15（享年 71）✅（Wikipedia infobox 01-18；metadata 另有儒略历 01-05）
+  - 导师 Dmitri Egorov ✅
+  - Petrovsky lacuna（1945，双曲方程波传播缺口）✅
+  - Hilbert 19/16 问题"greatly contributed"（非解决）✅
+  - KPP 方程（1937，Kolmogorov–Petrovsky–Piskunov 三人）✅
+  - 双曲型 PDE / Cauchy 问题适定性 ✅
+  - 莫斯科大学校长 1951-1973（22年）、1966 ICM 主席、1946 院士、1969 社会主义劳动英雄 ✅
+  - 学生 Ladyzhenskaya/Oleinik/Godunov/Landis/Filippov ✅
+- **修正**：
+  1. **⚠️ 删除俄文西里尔字母**：修复 Missing character 字体告警
+  2. **头像位置**：根目录 → images/ + 圆角框 1.92cm
+  3. **⚠️ 修正伪引语**：结束页原写 "He made contributions to partial differential equations, algebraic geometry, and probability theory. -- Wikipedia"（非原文）→ 改为忠实转述 "He was a Soviet mathematician working mainly in the field of partial differential equations. -- Wikipedia"（Wikipedia 原文首句）
+  4. **封面引语**：`据 Wikipedia：苏联数学家，对偏微分方程、代数几何与概率论做出贡献。` → 去前缀 + 改为"苏联数学家，主要工作在偏微分方程领域"（更忠实 Wikipedia 首句）
+  5. **封面 badge 统一**：4 个 badge 3 行 → 2 行
+  6. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  7. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  8. **英文名行**：`1901 -- 1973` → `1901--1973`（去空格）
+- **⚠️ 遗留（Review-2 处理）**：`\begin{document}` 中 `\closingslide` 排在 `\warslide` 之前（结束页不在最后）；`\warslide` 注释 `% --- 新增二战经历 slide ---` 与内容（"学生与传承：苏联 PDE 学派"）不符
+- **编译**：`make distclean && make` → ✅ 13页，0错误；西里尔告警已消除；hbox 5.33pt + vbox 8.07/7.38pt 均 <10pt 可接受
+- **排行榜**：#101 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
