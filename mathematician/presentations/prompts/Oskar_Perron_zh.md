@@ -116,3 +116,32 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Oskar_Perron/page.md`) 逐页比对。
+
+- **头像** ✅：`Oskar_Perron.jpg` 原在根目录（`\graphicspath` 只搜 images/ 会找不到），已复制到 `images/Oskar_Perron.jpg` 并采用 Cartan/Sinai 标准格式（圆角矩框 + `\includegraphics[width=1.92cm]` + `yshift=-1.51cm`）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Germany\enspace·\enspace 慕尼黑大学 1922--1951\enspace·\enspace 94 岁高寿`（原 `\faIcon{globe}\quad Germany...` → 统一 `\enspace Germany`，字号 12/16 → 14/18；Wikidata nationality: ["Germany"]）
+- **身份信息页** ✅：已有 `\earlyslide`（Slide 3 "早年与教育"），涵盖 Frankenthal 出生、慕尼黑 LMU 1902 博士（导师 Lindemann）、海德堡/慕尼黑任职——无需新增
+- **事实复核**（tex 内容与 Wikipedia 一致）：
+  - 生卒 1880-05-07 ~ 1975-02-22（享年 94）✅
+  - 博士导师 Ferdinand von Lindemann（π 超越性证明者）✅
+  - 海德堡 1914-1922 → 慕尼黑 LMU 1922-1951 ✅
+  - Perron–Frobenius 定理（Perron 1907 开创、Frobenius 1912 推广）✅
+  - Perron 方法（1923 Dirichlet 问题）、Perron 数、Perron 公式（Mellin 反演）、Perron 积分（Henstock–Kurzweil 先驱）✅
+  - 连分数巨著《Die Lehre von den Kettenbrüchen》（1913 首版、1954 第 3 版）✅
+  - Perron 悖论、Perron 不可约性准则 ✅
+  - 纳粹时期公民勇气（Litten 1994）客观记录 ✅
+- **修正**：
+  1. **头像位置**：根目录 → images/
+  2. **修复 Missing character π**：2 处直写 `π`（U+03C0，sectiontitle 副标题 + 正文 Lindemann）→ `$\pi$`（数学模式），消除字体缺失告警
+  3. **封面 badge 统一**：4 个 badge 3 行 → 2 行
+  4. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  5. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  6. **去"据 Wikipedia："**：封面引语去前缀
+  7. **英文名行**：`1880 -- 1975` → `1880--1975`（去空格）
+- **编译**：`make distclean && make` → ✅ 13页，0错误；π 字符已修复；hbox 5.33pt + vbox 6.73/7.52/10.11pt（10.11pt 略超）→ Review-2 处理
+- **排行榜**：#93 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
