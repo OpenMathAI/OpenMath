@@ -113,3 +113,31 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> ⚠️⚠️ **灾难性错误修复**：结合本地 Wikipedia (`pages/Torsten_Carleman/page.md`) 发现，本 tex 文件原内容**几乎完整复制自 Vladimir Rokhlin**——标题改成了 Torsten Carleman，但正文残留大量 Rokhlin 内容（Rokhlin 引理/定理、Lebesgue--Rokhlin、Gudkov 猜想、二战战俘、Baku 出生、列宁格勒学派、俄文 `Владимир Абрамович Рохлин`、错误学生名单"Alexandrov/Vershik"等）。
+> **已整体重写整个 tex 文件**，替换为正确的 Torsten Carleman 内容。
+
+- **头像** ✅：`Torsten_Carleman.jpg` 原在根目录，已复制到 `images/` 并采用标准圆角框（1.92cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Sweden\enspace·\enspace Mittag-Leffler Institute\enspace·\enspace 56 岁`（Wikidata nationality: Sweden）
+- **身份信息页** ✅：重写 `\earlyslide`（Visseltofta 出生、Uppsala 大学导师 Erik Albert Holmgren、奇异积分方程、Lund/Stockholm/Mittag-Leffler 任职轨迹）
+- **重写核心事实**（全部基于 Wikipedia）：
+  - 生卒 1892-07-08 ~ 1949-01-11（享年 56）✅；全名 Tage Gillis Torsten Carleman ✅
+  - 导师 Erik Albert Holmgren（Uppsala）✅
+  - Carleman 不等式（Hardy 加强，$\sum (a_1\cdots a_n)^{1/n} \le e\sum a_n$，1926）✅
+  - Carleman 核与积分算子谱论（博士论文+1920s 早期，奇异积分方程）✅
+  - Denjoy--Carleman 定理（拟解析函数充要条件）+ Carleman 条件（矩问题）✅
+  - Carleman 线性化（Carleman embedding，1932，Poincaré/Fredholm/Koopman 后续）✅
+  - 平均遍历定理（1930s，独立于 von Neumann）+ 广义 Fourier 变换（1935，预示 Sato/Schwartz）✅
+  - Carleman 估计 + Boltzmann 方程全局存在性首次证明（空间齐次，posthumous 1957）+ Denjoy--Carleman--Ahlfors 定理（1933）✅
+  - Mittag-Leffler 所长 20+ 年（1927 起）+ Acta Mathematica 编辑 ✅
+  - 荣誉：Björkén 奖 1941、Peccot 讲座 1922、瑞典皇家科学院院士 1926、芬兰科学与文学学会 1934 ✅
+  - 学生：Åke Pleijel、Hans Rådström、Ulf Hellsten、Karl Persson ✅
+  - 争议：反犹指控 + William Feller 事件 + 晚年酗酒/神经痛/黄疸（客观记录）✅
+- **格式统一**：section title 字号 20/24 + 副标题 7.5/9.5；封面国籍行 `\enspace` + 14pt；英文名行 `1892--1949`（去空格）；封面 badge 2 行；配色调整 coveraccent/badgeHist 由苏联红 → 瑞典金 `#B8860B`
+- **修复**：`warslide` 缺反斜杠 → `\warslide`；slide 顺序（`\warslide` 移 `\closingslide` 之前，结束页置末）
+- **编译**：`make distclean && make` → ✅ 13页，0错误；无 Missing character / Undefined；hbox 5.33pt + vbox 8.19/7.12/9.48pt 均 <10pt
+- **排行榜**：#103 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
