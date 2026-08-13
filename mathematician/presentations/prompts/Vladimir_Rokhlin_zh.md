@@ -139,3 +139,15 @@
 - **编译**：`make distclean && make` → ✅ 13页，0错误；西里尔告警消除；hbox 5.33pt + vbox 4.81/7.50pt 均 <10pt
 - **排行榜**：#102 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+- **Overfull/Underfull** ✅：hbox 5.33pt + vbox 4.81/7.50pt，均 <10pt 阈值
+- **结束页时间线** ✅：两行 3+3 段（`Baku → Moscow State University → Leningrad State University` / `导师 Pontryagin/Plessner → 1959 列宁格勒 → Leningrad 1984`），无溢出
+- **中文标点统一** ✅：无 `\u201c`/`\u201d` 转义残留（grep 计数 0）
+- **slide 顺序** ✅：已在 Review-1 修复（`\warslide` 移至 `\closingslide` 之前，结束页置末）；`\warslide` 缺少反斜杠的编译 bug 已修复
+- **格式对齐** ✅：封面（圆角头像框 + 国籍 `\enspace USSR` + 2 行 badge）、配色、结构（13 页）均与同榜数学家一致
+- **编译**：`make distclean && make` → ✅ 13页，0错误
+- **排行榜**：#102 Review 列保持 `✅✅`（第2轮完成）
+
