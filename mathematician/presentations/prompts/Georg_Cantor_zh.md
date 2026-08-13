@@ -38,20 +38,21 @@
 | 强调（超穷金） | #B8860B | 超穷数与 ℵ |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「集合论创始人 · 康托尔乐园」
 2. 生平总览：时间轴（1845 圣彼得堡 → 1867 博士 → 1869 哈雷 → 1874 集合论起点 → 1884 抑郁症 → 1904 Sylvester 奖 → 1918 去世）
-3. 实数不可数与无穷的无穷：1874 革命
-4. 对角线论证与 Cantor 定理：幂集、CH
-5. 超穷数与 ℵ/ω：基数序数算术
-6. Cantor 集与分形先驱：无处稠密但等势
-7. 三角级数唯一性（1869）：从分析到集合论的入口
-8. Kronecker 的敌意：科学骗子？柏林教职阻挠
-9. Hilbert 的乐园：捍卫与认可
-10. 抑郁症与晚年：1884 起、次子之死、König 打击、一战贫困
-11. 宗教与数学：路德宗、上帝传达、泛神论争议
-12. 终章：德国数学会/ICM 奠基、月球 Cantor 陨石坑、历史地位
+3. **早年与教育**：圣彼得堡出生、丹麦父奥匈母、1862 苏黎世、柏林大学、1867 博士（数论）
+4. 实数不可数与无穷的无穷：1874 革命
+5. 对角线论证与 Cantor 定理：幂集、CH
+6. 超穷数与 ℵ/ω：基数序数算术
+7. Cantor 集与分形先驱：无处稠密但等势
+8. 三角级数唯一性（1869）：从分析到集合论的入口
+9. Kronecker 的敌意：科学骗子？柏林教职阻挠
+10. Hilbert 的乐园：捍卫与认可
+11. 抑郁症与晚年：1884 起、幼子之死、König 打击、一战贫困
+12. 宗教与数学：路德宗、上帝传达、泛神论争议
+13. 终章：德国数学会/ICM 奠基、月球 Cantor 陨石坑、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -125,4 +126,31 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Georg_Cantor/page.md`) 逐页比对。
+
+- **头像** ✅：`images/cantor_portrait.jpg`（26.6KB，已存在）；右上角 1.92cm Cartan 同款圆角矩框（原为圆形嵌套 `\begin{tikzpicture}` 2.5cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Germany\enspace·\enspace 集合论创始人...`（原 `\quad German Reich` → 统一为 `\enspace Germany`；Wikidata nationality: ["German Reich", "German Empire"]）
+- **身份信息页** ✅：新增 Slide 3（"早年与教育：圣彼得堡到柏林博士 1845--1867"），涵盖圣彼得堡出生、丹麦父 Georg Waldemar/奥匈母 Maria Anna Böhm、1856 迁居德国、1862 TU Darmstadt 毕业、苏黎世联邦理工、柏林大学（Kronecker/Weierstrass/Kummer）、1867 博士（数论）
+- **事实复核**：生卒(1845-03-03~1918-01-06, 72岁)/圣彼得堡出生/父丹麦经纪人母奥匈/路德宗家庭/1867 柏林博士(数论, 导师 Kummer+Weierstrass)/1869 哈雷/1872 副教授/1879 正教授/1874 不可数性/1891 对角线论证+Cantor 定理/CH 由 Cantor 引入、Hilbert 1900 列第一问题/Cantor 集 Smith 1875 发现/三角级数唯一性 1869/Kronecker 学术分歧(非私人恩怨)/Hilbert "无人能驱逐"/1884 抑郁症/1904 幼子 Rudolph 突然去世/1904 König 错误证明(Sylvester 1904 奖)/1918 哈雷疗养院心脏病去世/虔诚路德宗/泛神论争议/Franzelin 认可——全部与 Wikipedia 一致
+- **修正**：
+  1. **头像格式**：圆形嵌套 `\begin{tikzpicture}` → Cartan 同款圆角矩框 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm）
+  2. **新增身份信息页**：早年与教育（圣彼得堡出生、工程、柏林博士）——12→13 页
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`；`\quad German Reich` → `\enspace Germany`
+  5. **去"据 Wikipedia："** + 删除残留 `% 4 标签已注释测试` 注释：封面引语 `据 Wikipedia：德国数学家，集合论创始人，被视为 19 世纪最有影响的数学家之一` → 忠实转述 `德国数学家，集合论的创立者`
+  6. **修复 Slide 3 副标题年份错误**：`1894/1895/1897 · 集合论的第一声惊雷` → `1874 · 集合论的第一声惊雷`（不可数性论文是 1874 年，非 1894/95/97）
+  7. **修复 Slide 2 总览 badge 异常**：`超穷数\\[2pt]ℵ 记号\\ \vspace{0.1cm}\\[2pt]基数/序数算术` → 清理 `\vspace{0.1cm}` 异常，改为规范 3 行
+  8. **修复 Kronecker 页乱码**：`Cantor 1884 年起笔汞涂到柏林大学的 教师资格申请屡遭阻挠` → `Cantor 多次申请柏林教职屡遭 Kronecker 阻挠，最终未能离开哈雷`
+  9. **修复 Kronecker 页语法**：`1891 年 Kronecker 在 Hagen 后，健康恶化` → `1891 年 Kronecker 去世后，Cantor 再未达到早期论文的高度`
+  10. **修复 Rudolph 表述**：`次子 Rudolph 自杀` → `幼子 Rudolph 突然去世`（Wikipedia 只说 "died suddenly"，未明确自杀）
+  11. **修复 ℵ/ω 字符缺失**：文字模式下直接使用 `ℵ`(U+2135)、`ω`(U+03C9) → 数学模式 `$\aleph$`、`$\omega$`（封面副标题、总览 badge、section title 3 处）
+  12. **修复结束页伪引语**：`He is considered one of the most influential mathematicians of the 19th century`（Wikipedia 无此句）→ `was a mathematician who played a pivotal role in the creation of set theory`
+- **编译**：`make distclean && make` → ✅ 14页，0错误
+- **遗留**：hbox 5.33pt + vbox 3.12pt（均 <10pt 可接受）→ Review-2 复核
+- **排行榜**：#82 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
