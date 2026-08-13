@@ -37,20 +37,21 @@
 | 强调（Teichmüller 金） | #B8860B | Teichmüller 空间 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「Teichmüller 空间 · 拟共形映射的天才与争议」
 2. 生平总览：时间轴（1913 → 1931 入党/入学 → 1935 博士 → 1937 柏林 → 1939 入伍 → 1943 失踪）
-3. Teichmüller 空间：黎曼曲面模空间的奠基
-4. 拟共形映射：极值映射的存在唯一性
-5. Teichmüller 定理与主猜想：模空间的双连续对应
-6. Teichmüller 特征与代数工作：赋值论、p-代数、Galois 上同调
-7. Teichmüller–Tukey 引理：选择公理
-8. 34 篇论文与专著：《极值拟共形映射与二次微分》(1939)
-9. 现代传承：Grothendieck–Teichmüller 群、p-adic 理论、IUT
-10. **纳粹党员与 Landau 抵制**：如实记录（敏感）
-11. 战争与失踪：1940 挪威战役、密码部门、库尔斯克后失踪
-12. 终章：30 岁英年早逝、Segal 评价"天才+坚定纳粹"、历史地位
+3. **早年与教育**：Nordhausen 出生、神童、丧父、1931 入哥廷根
+4. Teichmüller 空间：黎曼曲面模空间的奠基
+5. 拟共形映射：极值映射的存在唯一性
+6. Teichmüller 定理与主猜想：模空间的双连续对应
+7. Teichmüller 特征与代数工作：赋值论、p-代数、Galois 上同调
+8. Teichmüller–Tukey 引理：选择公理
+9. 34 篇论文与专著：《极值拟共形映射与二次微分》(1939)
+10. 现代传承：Grothendieck–Teichmüller 群、p-adic 理论、IUT
+11. **纳粹党员与 Landau 抵制**：如实记录（敏感）
+12. 战争与失踪：1940 挪威战役、密码部门、库尔斯克后失踪
+13. 终章：30 岁英年早逝、Segal 评价"天才+坚定纳粹"、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -120,4 +121,23 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Oswald_Teichmüller/page.md`) 逐页比对。
+
+- **头像** ✅：从 `figure_my/Oswald Teichmüller.jpg` 复制至 `images/Oswald_Teichmuller.jpg`（30KB），右上角 1.92cm Cartan 同款圆角矩框（原为 3.2cm 裸贴角且文件缺失）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace German Reich\enspace·\enspace 拟共形映射天才\enspace·\enspace 30 岁英年早逝`（与 Wikidata `nationality: ["German Reich"]` 一致）
+- **身份信息页** ✅：新增 Slide 3 ("早年与教育：Nordhausen 到哥廷根 1913--1935")，涵盖 Nordhausen 出生、Sankt Andreasberg 成长、父母（Gertrude née Dinse + Adolf 织工）、3 岁自学读写、父亲一战受伤 12 岁去世、姨妈家 Gymnasium、1931 Abitur 入哥廷根、教授 Courant/Herglotz/Landau/Neugebauer/Weyl
+- **事实复核**：生卒(1913-06-18~1943-09-11, 30岁)/Nordhausen 出生/Hasse 导师(1935 博士)/Nevanlinna 讲座转向复分析/1937 柏林(Bieberbach)/NSDAP+SA 1931/Landau 抵制 1933-11-02/Segal 评价"gifted, brilliant... dedicated Nazi"/Bauer"fanatic Nazi"/1939-07-18 入伍/1940 挪威战役/密码部门(与 Ernst Witt)/1942-1943 柏林教学/Stalingrad 后 1943 志愿东线/库尔斯克战役/1943-09-11 Poltava 失踪(unknown circumstances)/34 篇论文 6 年/1939 专著 197 页/Grothendieck-Teichmüller 群/p-adic Teichmüller/IUT(望月新一)——全部与 Wikipedia 一致
+- **修正**：
+  1. **头像补齐 + 圆角矩框**：`figure_my/Oswald Teichmüller.jpg` → `images/Oswald_Teichmuller.jpg`；裸贴角 `width=3.2cm` → Cartan 同款 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm）
+  2. **新增身份信息页**：早年与教育（Nordhausen 出生、神童、丧父、1931 入哥廷根）——13→14 页
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  5. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：德国数学家...` → `德国数学家...`
+- **编译**：`make distclean && make` → ✅ 14页，0错误
+- **排行榜**：#77 保持 `✅/✅✅`
 
