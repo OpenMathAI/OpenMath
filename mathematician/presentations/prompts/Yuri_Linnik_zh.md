@@ -151,3 +151,14 @@
 - **编译**：`make distclean && make` → ✅ 13页，0错误；西里尔告警已消除；hbox 5.33pt + vbox 7.63/7.41pt 均 <10pt 可接受 → Review-2 处理
 - **排行榜**：#100 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+- **Overfull/Underfull** ✅：hbox 5.33pt（脚注行，可接受）+ vbox 7.63/7.41pt（封面/hookslide），均 <10pt 阈值
+- **结束页时间线** ✅：两行拆分为 3+3 段（`Bila Tserkva → 圣彼得堡大学 → Steklov 研究所` / `大筛法 1941 → Stalin/Lenin 奖 → Leningrad 1972`），无溢出
+- **中文标点统一** ✅：修复 2 处 `\u201c`/`\u201d` 字面转义（`\dispersionslide` L175、`\ergodicslide` L238）→ 实际中文引号 `“ ”`，与其他数学家格式统一
+- **格式对齐** ✅：封面（圆角头像框 + 国籍 `\enspace USSR` + 2 行 badge）、配色（圣彼得堡蓝 #1E4E79）、结构（13 页）均与同榜数学家一致
+- **编译**：`make distclean && make` → ✅ 13页，0错误；`\u201c` 已清除（grep 计数 0）
+- **排行榜**：#100 Review 列保持 `✅✅`（第2轮完成）
+
