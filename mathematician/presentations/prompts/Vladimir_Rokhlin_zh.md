@@ -111,3 +111,31 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Vladimir_Rokhlin/page.md`，实际为 `Vladimir Abramovich Rokhlin` 正确页面) 逐页比对。
+> ⚠️ 本 tex 存在**多处严重事实错误**，已逐项修正（超出常规格式统一范畴）。
+
+- **头像** ✅：`Vladimir_Rokhlin.jpg` 原在根目录，已复制到 `images/` 并采用标准圆角框（1.92cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace USSR\enspace·\enspace Leningrad State University\enspace·\enspace 65 岁`（Wikidata nationality: Soviet Union）
+- **身份信息页** ✅：已有 `\earlyslide`（Baku 出生、Moscow State University 1935-41、导师、二战与列宁格勒）
+- **⚠️ 修正严重事实错误**：
+  1. **Rokhlin 定理表述错误**：`\theoremslide` 原写"标准 Borel 空间的测度同构定理"——**完全错误**。Wikipedia 明确 Rokhlin's theorem 是 **1952 年 4-流形符号差定理**（紧可定向光滑/PL 4 流形，第二上同调为偶时符号差被 16 整除）→ 已重写整个 slide
+  2. **二战经历严重错误**：`\warslide` 原写"1941-1945 加入苏联红军，参加伟大的卫国战争"——**错误且美化**。Wikipedia 明确：1941 志愿参军后**沦为德军战俘达 4 年**，1945 被苏军解放后经"审查营"，1946 年靠 Kolmogorov/Pontryagin 求情获释 → 已重写
+  3. **列宁格勒时间错误**：原写"1949 年起任教，35 年"——Wikipedia 明确 **1959 年**才加入列宁格勒大学（1959-1984 共 25 年；之前 1952-55 Arkhangelsk、1955 Ivanovo、1957 Kolomna）→ 已修正 `\earlyslide`/`\leningradschoolslide`/`\warslide`/`\closingslide` 四处
+  4. **学生名单错误**：`\leningradschoolslide` 原写"与 Alexandrov、Vershik 合作"——Wikipedia 明确学生为 **Gromov、Eliashberg、Kharlamov、Viro、Vershik、Ivanov** → 已修正
+- **修正**：
+  - 删除俄文西里尔字母 `（Владимир Абрамович Рохлин）`（字体缺失）
+  - 修正伪引语：结束页 "known for contributions to topology and measure theory" → 忠实转述 Wikipedia 首句 "made contributions in algebraic topology, geometry, measure theory, probability theory, ergodic theory and entropy theory"
+  - 封面 badge：Rokhlin 定理 badge 由"标准 Borel 空间/测度分类"改为"4 流形符号差"
+  - 封面引语去"据 Wikipedia："前缀
+  - **修复编译 bug**：`\begin{document}` 末尾 `warslide` 缺少反斜杠 `\`（会被当作普通文本输出）→ 补为 `\warslide`
+  - **修复 slide 顺序**：`\closingslide`（结束页）原排在 `\warslide` 前 → 交换，结束页置末
+  - section title 字号 17/20.5 → 20/24；副标题 6.5/8.5 → 7.5/9.5
+  - 封面国籍行 `\quad USSR` → `\enspace USSR` + 14pt
+  - 英文名行 `1919 -- 1984` → `1919--1984`
+- **编译**：`make distclean && make` → ✅ 13页，0错误；西里尔告警消除；hbox 5.33pt + vbox 4.81/7.50pt 均 <10pt
+- **排行榜**：#102 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
