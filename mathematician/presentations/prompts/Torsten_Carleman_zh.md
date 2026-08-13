@@ -141,3 +141,15 @@
 - **编译**：`make distclean && make` → ✅ 13页，0错误；无 Missing character / Undefined；hbox 5.33pt + vbox 8.19/7.12/9.48pt 均 <10pt
 - **排行榜**：#103 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+- **Overfull/Underfull** ✅：hbox 5.33pt + vbox 8.19/7.12/9.48pt，均 <10pt 阈值
+- **结束页时间线** ✅：两行 3+3 段（`Visseltofta → Uppsala → Lund/Stockholm` / `Mittag-Leffler 所长 1927 → Björkén 1941 → Stockholm 1949`），无溢出
+- **中文标点统一** ✅：无 `\u201c`/`\u201d` 转义残留（grep 计数 0）
+- **残留清理** ✅：已确认无 Rokhlin/俄文/Gudkov/Baku/Plessner/Lebesgue--Rokhlin 等错误内容残留（整体重写后彻底清除）
+- **格式对齐** ✅：封面（圆角头像框 + 国籍 `\enspace Sweden` + 2 行 badge）、配色（瑞典蓝 + 金 `#B8860B`）、结构（13 页）均与同榜数学家一致
+- **编译**：`make distclean && make` → ✅ 13页，0错误
+- **排行榜**：#103 Review 列保持 `✅✅`（第2轮完成）
+
