@@ -39,20 +39,20 @@
 | 强调（卢津金） | #B8860B | Lusin 定理/卢津群 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「描述集合论奠基人 · 莫斯科数学学派之父」
 2. 生平总览：时间轴（1883 伊尔库茨克 → 1905 毕业 → 1910 哥廷根 → 1915 博士 → 1920s 卢津群 → 1936 事件 → 1950 去世）
-3. Lusin 定理：可测函数的连续逼近
-4. 描述集合论与解析集：与 Suslin 合作
-5. Luzin 猜想：Carleson 1966 解决
-6. 处处发散三角级数（1912）：推翻 Fatou 猜想
-7. 卢津群（Luzitania）：莫斯科学派的摇篮
-8. 实分析与点集拓扑：Luzin N 性质、Luzin 空间
+3. **早年与教育**：伊尔库茨克出生、托木斯克 gymnasium、莫斯科大学 1901-05（Egorov）、1915 博士
+4. Lusin 定理：可测函数的连续逼近
+5. 描述集合论与解析集：与 Suslin 合作
+6. Luzin 猜想：Carleson 1966 解决
+7. 处处发散三角级数（1912）：推翻 Fatou 猜想
+8. 卢津群（Luzitania）：莫斯科学派的摇篮
 9. 哥廷根岁月：Landau 影响、Egorov 导师
 10. 宗教与精神危机：1905-06、Florensky 影响
 11. 卢津事件（1936）：大清洗时期的攻击与自我批评（敏感）
-12. 终章：66 岁、斯大林奖（1946）、历史地位
+12. 终章：66 岁、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -121,4 +121,32 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Nikolai_Luzin/page.md`) 逐页比对。
+
+- **头像** ✅：Wikipedia infobox 无照片（images.txt 空），但项目自备头像库 `figure_my/Nikolai Luzin.jpeg` 存在（245×300 竖版），已复制为 `images/Nikolai_Luzin.jpg` 并采用 Cartan/Sinai 标准格式（圆角矩框 + `\includegraphics[width=1.92cm]` + `yshift=-1.51cm`）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace USSR\enspace·\enspace 描述集合论奠基人\enspace·\enspace 莫斯科学派之父`（原 `\faIcon{globe}\quad Russian Empire → USSR...` → 统一 `\enspace USSR`；Wikidata nationality: ["Russian Empire", "Soviet Union", "Russian SFSR"]，以主要学术生涯 USSR 为准）
+- **身份信息页** ✅：新增 Slide 3（"早年与教育：从伊尔库茨克到莫斯科大学 1883--1915"），涵盖伊尔库茨克出生、托木斯克 gymnasium、莫斯科大学 1901-05（Egorov）、1915 博士（《积分与三角级数》）
+- **事实复核**：
+  - 生卒 1883-12-09 ~ 1950-02-28（享年 66）✅（Wikipedia infobox "28 February 1950"）
+  - 导师 Dmitri Egorov（莫斯科）✅；Edmund Landau（哥廷根影响）✅
+  - 1915 博士论文《The Integral and Trigonometric Series》✅
+  - Lusin 定理/解析集（与 Suslin 合作）/Luzin 猜想 1915（Carleson 1966 解决）/1912 处处发散三角级数（推翻 Fatou）/Luzitania 卢津群 ✅
+- **修正**：
+  1. **删除错误奖项**：hookslide 底部 "Stalin 1946 奖" 系错误——Wikipedia 正文 Honors 仅提"1976 火星陨石坑 Luzin 命名"，metadata 奖项仅 "Order of the Red Banner of Labour"，**无 Stalin Prize 1946** → 改为"苏联劳动红旗勋章 · 火星陨石坑 Luzin 1976 命名"
+  2. **修正卢津事件指控**：原"在苏联数学体制外建立派系"不准确 → 按 Wikipedia 忠实还原为"发表伪科学论文""把学生成果据为己有"亲近"黑百人团"、东正教与君主制、"把主要成果发表于国外期刊"（后归于 Kolman 的匿名文章）
+  3. **修复符号缺失**：`≈`/`≠` 在 bold 字体（lmsans10-bold）缺失 → 改为数学模式 `$\approx$`/`$\neq$`（badge 与 graypanel 共 4 处）
+  4. **新增身份信息页**：早年与教育（伊尔库茨克、托木斯克、莫斯科大学、1915 博士）——12→13 页
+  5. **封面 badge 统一**：4 个 badge 3 行 → 2 行（与 Sinai/Tikhonov 格式一致）
+  6. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  7. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  8. **去"据 Wikipedia："**：封面引语去前缀
+  9. **英文名行**：`1883 -- 1950` → `1883--1950`（去空格）
+- **编译**：`make distclean && make` → ✅ 13页，0错误（≈/≠ 缺失已解决）
+- **遗留**：hbox 5.33pt（closingslide 英文引语，共性）+ vbox 3.43pt，均 <10pt 可接受 → Review-2 处理
+- **排行榜**：#87 `🔲/🔲` → 立传 `✅✅`（有 mp4 视频）+ Review `✅`（第1轮完成）
 
