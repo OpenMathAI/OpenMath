@@ -153,3 +153,21 @@
 - **编译**：`make distclean && make` → ✅ 13页，0错误
 - **排行榜**：#103 Review 列保持 `✅✅`（第2轮完成）
 
+---
+
+## Review-3 记录 (2026-08-13)
+
+> 用户要求"再来 review 一次"——针对上一轮整体重写后遗留的代码卫生问题与头像真实性做复检。
+
+- **头像真实性** ✅：`file` 命令确认 `Torsten_Carleman.jpg` 为有效 JPEG（124×180，AppleMark），与 `figure_my/Torsten Carleman.jpg` 尺寸一致——是真实肖像照片而非占位图（Wikipedia infobox 无照片，项目自备头像库提供）
+- **⚠️ 命令名残留清理（上一轮遗漏）**：整体重写时保留了 4 个 Rokhlin 模板的命令名，语义与内容完全不符，已重命名：
+  | 旧命令名 | 新命令名 | 对应内容 |
+  |---|---|---|
+  | `\gudkovslide` | `\linearizationslide` | Carleman 线性化（Gudkov 是 Rokhlin 内容） |
+  | `\lpspaceslide` | `\quasianalyticslide` | Denjoy--Carleman 定理（Lp 空间完全无关） |
+  | `\leningradschoolslide` | `\mathphysicsslide` | 数学物理（列宁格勒学派是 Rokhlin 内容） |
+  | `\warslide` | `\controversyslide` | 争议与晚年（war 不准确） |
+- **残留复查** ✅：grep 确认无 `gudkovslide/lpspaceslide/leningradschoolslide/warslide` 及 `Rokhlin/Рохлин/Gudkov/Baku/Plessner/Lebesgue--Rokhlin` 任何残留
+- **编译**：`make distclean && make` → ✅ 13页，0错误；重命名未引入 Undefined；hbox 5.33pt + vbox 8.19/7.12/9.48pt 均 <10pt
+- **事实复核**：13 页全部事实（生卒/全名/导师/机构/荣誉/贡献/争议）与 Wikipedia 一致，无新增事实错误
+
