@@ -150,3 +150,18 @@
 - **遗留**：earlyslide 身份信息页 vbox 溢出 16.88pt（过高）+ 封面 hbox 8.40pt → Review-2 处理
 - **排行榜**：#80 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+> 结构优化 + Overfull/vbox 修复 + 字符修复 + 编译验证。
+
+- **vbox 溢出修复**（16.88pt → 消除）：总览页（hookslide）section title 主标题 `自古典时代以来最杰出的希腊数学家：变分法与凸几何`（22 字符，20pt 下超宽换行挤压内容）→ 缩短为 `希腊数学大师：变分法与凸几何`（该称号已在封面引语/结束页出现，无需在总览标题重复）
+- **σ 字符修复**（Missing character → 消除）：延拓定理页 2 处文字模式下直接使用 `σ`（U+03C3，Latin Modern Sans 不支持）→ 改为数学模式 `$\sigma$`（line 196 section title 副标题、line 209 gray panel 结尾）
+- **封面优化**：
+  1. 底部时间线 `Berlin 1873 · 布鲁塞尔工程（1891--95）· 埃及工程（1897--1900）· Göttingen 博士 1904 · Munich 1924--1938 · 导师 Minkowski`（65+ 字符超长）→ 精简为 `Berlin 1873 · 博士 1904（Minkowski）· Göttingen 1913 · Smyrna 1920 · Munich 1924--1938`
+  2. 国籍行 `Greece · 自古典时代以来最杰出的希腊数学家 · 1936 颁发首届 Fields 奖` → `Greece · 变分法大师 · 1936 颁发首届 Fields 奖`（长定语已在引语出现）
+  3. earlyslide 第一个 item 文本精简（去"驻比利时/圣彼得堡/柏林大使"长英文序列、"母亲 Despina 出身希俄斯岛"细节）
+- **编译**：`make distclean && make` → ✅ 14页，0错误；仅剩 1 处 hbox 8.40pt（<10pt 可接受，overlay 空 hbox，benign）
+- **排行榜**：#80 `✅/✅✅`（两轮完成）
+
