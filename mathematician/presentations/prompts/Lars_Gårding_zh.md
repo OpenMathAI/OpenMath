@@ -115,3 +115,30 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Lars_Gårding/page.md`) 逐页比对。
+
+- **头像** ✅：`images/Lars_Garding.jpg` 已存在（Wikipedia infobox 无照片，项目自备头像库），采用圆角框格式 + 名字标签 `Lars Gårding`（`\r{a}` 转义），位置在封面右侧（`xshift=7.2cm`）——已有完善设计，保持不动
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Sweden\enspace·\enspace Lund University 1952--1984\enspace·\enspace 95 岁高寿`（原 `\faIcon{globe}\quad Sweden...` → 统一 `\enspace Sweden`，字号 12/16 → 14/18；Wikidata nationality: ["Sweden"]）
+- **身份信息页** ✅：已有 `\earlyslide`（Slide 3 "早年与教育"），涵盖 Hedemora 出生/Motala 长大/Lund 1937 精算师梦想/导师 Riesz/群表示博士转 PDE——无需新增
+- **事实复核**（tex 内容与 Wikipedia 一致）：
+  - 生卒 1919-03-07 ~ 2014-07-07（享年 95）✅
+  - 博士导师 Marcel Riesz（论文 1944《On a Class of Linear Transformations Connected with Group Representations》，群表示方向）✅
+  - Lund 1937 入学（精算师初衷）、1952-1984 教授（32 年）✅
+  - Gårding 不等式（椭圆算子强制性）、Gårding 域、Gårding–Wightman 公理（与 Wightman 共同）、Petrovsky lacuna（Atiyah–Bott–Gårding 1970/73 Acta）✅
+  - Hörmander 共同导师（Riesz + Gårding）✅
+  - 兴趣：小提琴/钢琴、1987 鸟鸣书、观鸟 ✅
+  - 《Encounter with Mathematics》(1977，Springer 2012 再版) ✅
+  - 1953 瑞典皇家科学院院士、1985 芬兰科学与文学学会 ✅
+- **修正**：
+  1. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`，`\quad` → `\enspace`
+  2. **封面 badge 统一**：4 个 badge 3 行 → 2 行
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  4. **去"据 Wikipedia："**：封面引语去前缀
+  5. **英文名行**：`1919 -- 2014` → `1919--2014`（去空格）
+- **编译**：`make distclean && make` → ✅ 13页，0错误；hbox 5.33pt + vbox 3.24/10.33/5.88pt（10.33pt 略超）→ Review-2 处理
+- **排行榜**：#94 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
