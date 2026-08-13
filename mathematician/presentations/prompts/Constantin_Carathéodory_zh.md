@@ -41,20 +41,21 @@
 | 强调（慕尼黑金） | #B8860B | 巴伐利亚/数学荣耀 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「变分法大师 · 公理化热力学 · 希腊数学的骄傲」
 2. 生平总览：时间轴（1873 柏林 → 1897 埃及工程 → 1904 Göttingen 博士 → 1913 Klein 讲席 → 1920 Smyrna → 1924 慕尼黑 → 1950 去世）
-3. Carathéodory 定理与猜想：凸几何百年传奇（2024 年猜想被证）
-4. Carathéodory 延拓定理：测度论地基
-5. 变分法"皇家大道"：Hamilton–Jacobi 方法
-6. 公理化热力学（1909）：第三表述、绝热可达性
-7. 实分析：存在定理、链式法则
-8. 复分析：共形映射、prime ends、Schwarz 引理
-9. 光学：像差定理、Schmidt 望远镜
-10. Smyrna 大学传奇：创建与脱险
-11. 学术王朝：Rademacher/Finsler/Peschl 等约 20 位博士 + 同事爱因斯坦求教
-12. 终章：76 岁、慕尼黑 Carathéodory 讲堂、历史地位
+3. **早年与教育**：Berlin 出生、希腊裔家庭、比利时工程、埃及大坝、1904 Göttingen 博士（Minkowski）
+4. Carathéodory 定理与猜想：凸几何百年传奇（2024 年猜想被证）
+5. Carathéodory 延拓定理：测度论地基
+6. 变分法"皇家大道"：Hamilton–Jacobi 方法
+7. 公理化热力学（1909）：第三表述、绝热可达性
+8. 实分析：存在定理、链式法则
+9. 复分析：共形映射、prime ends、Schwarz 引理
+10. 1936 颁发首届 Fields 奖：奥斯陆 ICM
+11. Smyrna 大学传奇：创建与脱险
+12. 学术王朝：Rademacher/Finsler/Peschl 等约 20 位博士 + 同事爱因斯坦求教
+13. 终章：76 岁、慕尼黑 Carathéodory 讲堂、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -126,4 +127,26 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Constantin_Carathéodory/page.md`) 逐页比对。
+
+- **头像** ✅：`images/caratheodory_portrait.jpg`（53.6KB，已存在）；右上角 1.92cm Cartan 同款圆角矩框（原为圆形嵌套 `\begin{tikzpicture}` 2.5cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Greece\enspace·\enspace 自古典时代以来最杰出的希腊数学家\enspace·\enspace 1936 颁发首届 Fields 奖`（Wikidata nationality 含 Greece；Citizenship: Greek）
+- **身份信息页** ✅：新增 Slide 3（"早年与教育：柏林出生到 Göttingen 博士 1873--1904"），涵盖 Berlin 出生、希腊裔父母（父 Stephanos 奥斯曼大使）、布鲁塞尔成长、比利时皇家军事学院工程、埃及 Assiut 大坝、1904 Göttingen 博士（Minkowski）
+- **事实复核**：生卒(1873-09-13~1950-02-02, 76岁)/Berlin 出生/父 Stephanos 奥斯曼大使/布鲁塞尔长大/比利时工程 1891-95/埃及 Assiut 大坝 1897-1900/1904 博士(Minkowski)/Klein 讲席 1913/Smyrna 爱奥尼亚大学院长 1920/慕尼黑 LMU 1924-1938/公理化热力学 1909(第三表述)/Carathéodory 定理(d+1 凸组合)/Carathéodory 猜想 2024 由 Guilfoyle & Klingenberg 证明/延拓定理/皇家大道(Hamilton-Jacobi)/1935 专著/prime ends 1920/Schwarz 引理初等证明/1936 奥斯陆 ICM 颁首届 Fields 奖(Ahlfors+Douglas, 颁发者非得主)/约 20 位博士(Rademacher/Finsler/Peschl/Terzioğlu/Xu Ruiyun)/Einstein 1917 求教("beautiful")——全部与 Wikipedia 一致
+- **修正**：
+  1. **头像格式**：圆形嵌套 `\begin{tikzpicture}` → Cartan 同款圆角矩框 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm）
+  2. **新增身份信息页**：早年与教育（Berlin 出生、工程出身、Minkowski 博士）——12→13 页
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  5. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：他是最杰出的希腊数学家之一...` → `他是最杰出的希腊数学家之一...`
+  6. **修复 Ahlfors 编号错误**：`\textbf{\textbf{Lars Ahlfors}}（76 我们的数学家）` → `\textbf{Lars Ahlfors}（榜单第 42 位）`（Ahlfors 实际榜单 #42，非 76；并消除双重 `\textbf` 嵌套）
+  7. **修复 Einstein 编号表述**：`\textbf{Einstein}（349 与他的关系）` → `\textbf{Albert Einstein}`（去除内部数据库标记泄漏）
+- **编译**：`make distclean && make` → ✅ 14页，0错误
+- **遗留**：earlyslide 身份信息页 vbox 溢出 16.88pt（过高）+ 封面 hbox 8.40pt → Review-2 处理
+- **排行榜**：#80 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
