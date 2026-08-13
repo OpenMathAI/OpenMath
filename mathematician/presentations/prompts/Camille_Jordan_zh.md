@@ -118,3 +118,30 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Camille_Jordan/page.md`) 逐页比对。
+
+- **头像** ✅：`Camille_Jordan.jpg`（1MB 高分辨率）原在根目录（`\graphicspath` 只搜 images/ 会找不到），已复制到 `images/Camille_Jordan.jpg` 并采用 Cartan/Sinai 标准格式（圆角矩框 + `\includegraphics[width=1.92cm]` + `yshift=-1.51cm`）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace France\enspace·\enspace \'{E}cole polytechnique\enspace·\enspace 84 岁高寿`（原 `\faIcon{globe}\quad France...` → 统一 `\enspace France`，字号 12/16 → 14/18；Wikidata nationality: ["France"]）
+- **身份信息页** ✅：已有 `\earlyslide`（Slide 3 "早年与教育"），涵盖 Lyon 出生、综合理工/巴黎理学院/Mines ParisTech、双导师 Puiseux+Serret、工程师转数学家——无需新增
+- **事实复核**（tex 内容与 Wikipedia 一致）：
+  - 生卒 1838-01-05 ~ 1922-01-22（享年 84）✅
+  - 全名 Marie Ennemond Camille Jordan ✅
+  - 教育：École polytechnique + 巴黎理学院 + Mines ParisTech ✅；导师 Victor Puiseux + Joseph Alfred Serret ✅
+  - 工程师出身（Corps des Ponts）→ 综合理工教师 → 法兰西公学院教授 ✅
+  - Jordan 曲线定理（1887）、Jordan 标准形、Jordan–Hölder、Jordan 测度、Galois 主流化 1870 Traité、Mathieu 群、Cours d'analyse ✅
+  - 三个 Jordan 不混淆（Camille/Wilhelm/Pascual）✅；Galois "主流化"非发明 ✅；Mathieu 群归属 ✅
+  - Poncelet 1870、Legion d'Honneur Officer、Foreign Member Royal Society ✅；小行星 25593 ✅
+- **修正**：
+  1. **头像位置**：根目录 → images/
+  2. **封面 badge 统一**：4 个 badge 3 行 → 2 行
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  5. **去"据 Wikipedia："**：封面引语去前缀
+  6. **英文名行**：`1838 -- 1922` → `1838--1922`（去空格）
+- **编译**：`make distclean && make` → ✅ 13页，0错误；hbox 5.33pt + vbox 9.31/7.79pt 均 <10pt 可接受 → Review-2 处理
+- **排行榜**：#95 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
