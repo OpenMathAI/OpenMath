@@ -40,20 +40,21 @@
 | 强调（遍历金） | #B8860B | 遍历理论与台球 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「Kolmogorov–Sinai 熵 · 动力学台球 · 遍历理论大师」
 2. 生平总览：时间轴（1935 → 1960 博士 → 1963 台球/遍历假说 → 1971 朗道所 → 1993 普林斯顿 → 2014 Abel）
-3. Kolmogorov–Sinai 熵：不可预测性的量化
-4. Sinai 台球（1963）：首次证明遍历性
-5. 遍历假说的教训：1963 宣布/1987 撤回，至今未解
-6. SRB 测度：混沌系统的不变测度
-7. 统计力学严格化：Pirogov–Sinai 相变、Gibbs 测度
-8. 重整化群严格基础：Wilson 诺贝尔奖的数学地基
-9. Markov 划分与双曲系统：与 Bunimovich/Chernov
-10. 随机分析与 NS 方程：Sinai 随机游走、Navier–Stokes
-11. 苏联岁月与异见：支持 Esenin-Volpin、1981 才升教授
-12. 终章：50+ 博士、Abel 2014、历史地位
+3. **早年与教育**：莫斯科出生、犹太学术家庭、祖父 Kagan、莫斯科大学、1960 博士（Kolmogorov）
+4. Kolmogorov–Sinai 熵：不可预测性的量化
+5. Sinai 台球（1963）：首次证明遍历性
+6. 遍历假说的教训：1963 宣布/1987 撤回，至今未解
+7. SRB 测度：混沌系统的不变测度
+8. 统计力学严格化：Pirogov–Sinai 相变、Gibbs 测度
+9. 重整化群严格基础：Wilson 诺贝尔奖的数学地基
+10. Markov 划分与双曲系统：与 Bunimovich/Chernov
+11. 随机分析与 NS 方程：Sinai 随机游走、Navier–Stokes
+12. 苏联岁月与异见：支持 Esenin-Volpin、1981 才升教授
+13. 终章：50+ 博士、Abel 2014、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -132,4 +133,25 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Yakov_Sinai/page.md`) 逐页比对。
+
+- **头像** ✅：`images/Yakov_Sinai.jpg`（115KB，Sinai 2007 照片，已存在）；裸贴角 `\includegraphics[width=3.2cm]` → Cartan 同款圆角矩框 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Russia · USA\enspace·\enspace K--S 熵 1959...`（原 `\faIcon{globe}\quad Russia · USA` → 统一 `\enspace Russia · USA`；Wikidata nationality: ["Russia", "United States", "Soviet Union"]，双国籍正确）
+- **身份信息页** ✅：新增 Slide 3（"早年与教育：莫斯科的犹太学术之家 1935--1960"），涵盖莫斯科出生、父 Gregory/母 Nadezda（微生物学家）、祖父 Veniamin Kagan（莫斯科大学微分几何系主任）、莫斯科大学 BS/MS、1960 博士（Kolmogorov）
+- **事实复核**：生卒(1935-09-21, 在世 90岁)/莫斯科出生/俄裔犹太学术家庭/父 Gregory 母 Nadezda 微生物学家/祖父 Kagan 微分几何系主任/莫斯科大学 BS/MS/1960 博士 Kolmogorov/K--S 熵 1959(Sinai 完善 Kolmogorov 概念)/Sinai 台球 1963(首次证明遍历性)/遍历假说 1963 宣布、从未发表、1987 自认过早至今未解/SRB 测度(Sinai 1972/Ruelle 1976/Bowen 1975 三人命名)/Pirogov--Sinai 理论/Bleher--Sinai 重整化(Wilson 1982 诺奖数学基础)/Markov 划分(与 Bunimovich/Chernov)/Sinai 随机游走/随机 NS 方程(与 Khanin/Mattingly/Li)/1960-71 莫斯科大学/1971 朗道所/1981 才升教授(1968 支持 Esenin-Volpin)/1993 普林斯顿/Abel 2014/Wolf 1996(实际1997)/Boltzmann 1986/50+ 博士——全部与 Wikipedia 一致
+- **修正**：
+  1. **头像格式**：裸贴角 3.2cm → Cartan 同款圆角矩框 1.92cm
+  2. **新增身份信息页**：早年与教育（莫斯科犹太学术家庭、祖父 Kagan、Kolmogorov 博士）——12→13 页
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`；`\faIcon{globe}\quad Russia · USA` → `\faIcon{globe}\enspace Russia · USA`
+  5. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：俄裔美籍数学家...` → `俄裔美籍数学家，遍历理论与动力系统领域最重要的数学家之一`
+  6. **修复结束页伪引语**：`He is one of the most influential mathematicians in dynamical systems`（Wikipedia 无此句）→ `is a Russian–American mathematician known for his work on dynamical systems`
+- **编译**：`make distclean && make` → ✅ 15页，0错误
+- **遗留**：新增身份信息页 hbox 12.60pt + vbox 13.46pt（>10pt）→ Review-2 处理
+- **排行榜**：#85 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
