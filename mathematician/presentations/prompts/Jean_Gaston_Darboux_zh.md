@@ -123,3 +123,32 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Jean_Gaston_Darboux/page.md`) 逐页比对。
+
+- **头像** ✅：`images/darboux_portrait.png` 已存在（Wikipedia infobox 有"学生时代照片"，项目已备 `darboux_portrait.png`），采用圆形装饰设计（`fill[coverprimary!14] circle` + 圆形裁剪 + 圆环），位于封面左侧——合理的历史照片样式，保持不动
+- **国籍** ✅：封面 `\faIcon{globe}\enspace France\enspace·\enspace ENS 1861 第一名\enspace·\enspace 74 岁`（原 `\faIcon{globe}\quad France...` → 统一 `\enspace France`，字号 12/16 → 14/18；Wikidata nationality: ["France"]）
+- **身份信息页** ✅：已有 `\earlyslide`（Slide 3 "早年与教育"），涵盖 Nîmes 出生（含生日两说 08-14/08-13）、ENS 1861 第一名、1866 博士（导师 Chasles，正交曲面）——无需新增
+- **事实复核**（tex 内容与 Wikipedia 一致）：
+  - 生卒 1842-08-14 ~ 1917-02-23（享年 74）；生日两说：出生证明 08-14，本人常报 08-13（午夜出生）✅
+  - 全名 Jean-Gaston Darboux ✅
+  - ENS 1861 第一名、1866 博士（Michel Chasles，Sur les surfaces orthogonales）✅
+  - 两个 Darboux 定理区分（辛几何局部规范形 vs 分析中值性质）✅
+  - Darboux 积分 = Riemann 积分的等价表述（不写"发明"）✅
+  - Darboux 标架/向量/变换、Christoffel–Darboux 公式、Euler–Poisson–Darboux 方程 ✅
+  - 《Leçons sur la théorie générale des surfaces》(1887 起四卷) ✅
+  - Bulletin 1870 共同创办（"Darboux's Journal"）、ENS 女子分校 1880 ✅
+  - 学生：Borel/Cartan/Goursat/Picard/Stieltjes/Țițeica/Zaremba ✅
+  - 荣誉：Poncelet 1875、Sylvester 1916、ForMemRS 1902、Grand Officer Legion d'Honneur ✅
+- **修正**：
+  1. **封面 badge 统一**：4 个 badge 3 行 → 2 行（`Leçons sur les surfaces` 截断为 `Leçons surfaces`）
+  2. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  3. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  4. **去"据 Wikipedia："**：封面引语去前缀
+  5. **英文名行**：`1842 -- 1917` → `1842--1917`（去空格）
+- **编译**：`make distclean && make` → ✅ 13页，0错误；hbox 5.33pt + vbox 7.44/9.59pt 均 <10pt 可接受 → Review-2 处理
+- **排行榜**：#96 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
