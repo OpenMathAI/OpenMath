@@ -37,20 +37,21 @@
 | 强调（分割金） | #B8860B | Dedekind 分割 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「Dedekind 分割 · 理想理论 · 算术公理化」
 2. 生平总览：时间轴（1831 → 1852 博士 → 1858 ETH → 1862 不伦瑞克 → 1872 分割/遇 Cantor → 1888 数论 → 1916 去世）
-3. Dedekind 分割：实数构造
-4. 无限集定义与自然数公理化：1888《数是什么》
-5. 理想理论：Kummer 理想数的推广
-6. 代数数论：《数论讲义》补篇
-7. Dedekind 域与 Dedekind–Kummer：现代对象
-8. Dedekind–Weber：黎曼曲面的代数化（Riemann–Roch）
-9. 模格与格论：约 1900 开创
-10. 与 Cantor 的友谊与争议：剽窃指控（敏感）
-11. 荣誉与独身生活：科学院院士、与妹同住
-12. 终章：84 岁、Dedekind 纪念碑、历史地位
+3. **早年与教育**：不伦瑞克出生、Collegium Carolinum、哥廷根 1850、1852 博士（Gauss）
+4. Dedekind 分割：实数构造
+5. 无限集定义与自然数公理化：1888《数是什么》
+6. 理想理论：Kummer 理想数的推广
+7. 代数数论：《数论讲义》补篇
+8. Dedekind 域与 Dedekind–Kummer：现代对象
+9. Dedekind–Weber：黎曼曲面的代数化（Riemann–Roch）
+10. 模格与格论：约 1900 开创
+11. 与 Cantor 的友谊与争议：剽窃指控（敏感）
+12. 荣誉与独身生活：科学院院士、与妹同住
+13. 终章：84 岁、Dedekind 纪念碑、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -123,4 +124,27 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Richard_Dedekind/page.md`) 逐页比对。
+
+- **头像** ✅：`images/dedekind_portrait.jpg`（25.8KB，已存在）；右上角 1.92cm Cartan 同款圆角矩框（原为「裸方形 + 装饰圈」双层 node 怪异写法）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Germany\enspace·\enspace Dedekind 分割\enspace·\enspace 理想理论`（原 `\quad German Empire ... 84岁` → 统一 Germany；Wikidata nationality: ["Duchy of Brunswick"]，用 Germany 作为现代对应）
+- **身份信息页** ✅：新增 Slide 3（"早年与教育：不伦瑞克到哥廷根博士 1831--1852"），涵盖不伦瑞克出生、父 Julius Levin Ulrich 行政官/母 Caroline（教授之女）、1848 Collegium Carolinum、1850 哥廷根（师从 Moritz Stern）、1852 博士（Gauss，论文《论欧拉积分理论》，"最后一位学生"）
+- **事实复核**：生卒(1831-10-06~1916-02-12, 84岁)/不伦瑞克出生/父行政官母教授之女/1848 Collegium Carolinum/1850 哥廷根师从 Stern/1852 博士 Gauss("last student")/1854 habilitation(Riemann 同期)/1858 ETH 苏黎世/1862 返不伦瑞克(退休 1894)/终身未婚与妹 Julia 同住/1872 Dedekind 分割/1872 遇 Cantor/1888 无限集+自然数公理化(Peano 1889 引用改进)/1863 编辑 Dirichlet 讲义(实际 Dedekind 撰写)/1879/1894 补篇引入理想/Kummer 理想数推广/1882 Dedekind–Weber(代数证明 Riemann–Roch)/约 1900 模格/柏林院士 1880+法国科学院外籍 1900/Cantor 剽窃争议("Recent findings... indicate Cantor plagiarized")——全部与 Wikipedia 一致
+- **修正**：
+  1. **头像格式**：双层 node 怪异写法（裸方形 + `\rule{0pt}{2.5cm}\hspace{2.5cm}` 装饰圈）→ Cartan 同款圆角矩框 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm）
+  2. **新增身份信息页**：早年与教育（不伦瑞克出生、Collegium Carolinum、Gauss 博士）——12→13 页
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`；`\quad German Empire ... 84岁` → `\enspace Germany ... 理想理论`（去掉冗余"84岁"，标题下方已显示生卒）
+  5. **补全封面 badge**：删除 `% 4 标签已注释测试`，补上 4 个 badge（Dedekind 分割/理想理论/无限集 1888/数论讲义）
+  6. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：德国数学家，代数数论奠基者...` → 忠实转述 `德国数学家，对抽象代数、数论与算术公理化作出奠基性贡献`
+  7. **清理总览 badge 异常**：4 个 badge 的 `\\ \vspace{0.1cm}\\[2pt]` 异常 → 规范 3 行
+  8. **修复结束页伪引语**：`His 1888 work defined the natural numbers in terms of sets, anticipating Peano axioms`（Wikipedia 无此句）→ `was a German mathematician who made important contributions to number theory and abstract algebra`
+- **编译**：`make distclean && make` → ✅ 14页，0错误
+- **遗留**：hbox 5.33pt（<10pt 可接受）→ Review-2 复核
+- **排行榜**：#83 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
