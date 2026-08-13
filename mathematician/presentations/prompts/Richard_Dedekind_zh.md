@@ -148,3 +148,16 @@
 - **遗留**：hbox 5.33pt（<10pt 可接受）→ Review-2 复核
 - **排行榜**：#83 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-13)
+
+> 结构优化 + 一致性复查 + 编译验证。
+
+- **全文件复查**：`grep vspace{0.1cm}`、`grep 已注释测试`、`grep 据 Wikipedia` → 均无残留（Review-1 已全部清理）
+- **Overfull 复核**：仅剩 1 处 hbox 5.33pt（<10pt 可接受），来自共用 `openmath_page.tex` 封面模板固定 overlay 内容，非本文件引入，无需处理
+- **结束页时间线**：已拆两行（Braunschweig→哥廷根→ETH→布伦瑞克 / 数论讲义→划分→1916），符合 ≥7 段拆两行规范
+- **格式对齐**：封面（国籍行→标题→头像圆角矩框→生卒→副标题→4 badge→引语→时间线）与 Cartan/Carathéodory/Whitehead/Cantor 完全一致；section title 字号 20/24 统一
+- **编译**：`make distclean && make` → ✅ 14页，0错误；Missing character 无
+- **排行榜**：#83 `✅/✅✅`（两轮完成）
+
