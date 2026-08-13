@@ -37,20 +37,21 @@
 | 强调（拓扑金） | #B8860B | Lindelöf 空间 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「Lindelöf 空间 · Picard–Lindelöf · 芬兰函数论学派」
 2. 生平总览：时间轴（1870 → 1893 博士 → 1903 教授 → 1905 留数专著 → 1938 退休 → 1946 去世）
-3. Lindelöf 空间：点集拓扑
-4. Picard–Lindelöf 定理：ODE 存在唯一性
-5. Phragmén–Lindelöf 原理：最大模原理推广
-6. Lindelöf 假设：zeta 函数猜想
-7. 《Le calcul des résidus》(1905)：留数演算里程碑
-8. 芬兰函数论学派：Ahlfors/Nevanlinna
-9. 数学王朝：三代传讲席
-10. 巴黎岁月与 Borel：首位外国作者
-11. 荣誉与学会：1938 百年纪念
-12. 终章：76 岁、历史地位
+3. **早年与教育**：赫尔辛基出生、1893 博士（导师 Mellin）、1895 docent、1903 教授
+4. Lindelöf 空间：点集拓扑
+5. Picard–Lindelöf 定理：ODE 存在唯一性
+6. Phragmén–Lindelöf 原理：最大模原理推广
+7. Lindelöf 假设：zeta 函数猜想
+8. 《Le calcul des résidus》(1905)：留数演算里程碑
+9. 芬兰函数论学派：Ahlfors/Nevanlinna
+10. 数学王朝：三代传讲席
+11. 巴黎岁月与 Borel：首位外国作者
+12. 荣誉与学会：1938 百年纪念
+13. 终章：76 岁、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -118,4 +119,36 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Ernst_Lindelöf/page.md`) 逐页比对。
+
+- **头像** ✅：`Ernst_Lindelof.jpg`（不带 ö）原在根目录（`\graphicspath` 只搜 images/ 会找不到），已复制到 `images/Ernst_Lindelof.jpg` 并采用 Cartan/Sinai 标准格式（圆角矩框 + `\includegraphics[width=1.92cm]` + `yshift=-1.51cm`）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Finland\enspace·\enspace 芬兰函数论学派创始人\enspace·\enspace 三代数学王朝`（原 `\faIcon{globe}\quad Finland...` → 统一 `\enspace Finland`，字号 12/16 → 14/18；Wikidata nationality: ["Grand Duchy of Finland", "Finland"]）
+- **身份信息页** ✅（本次新增）：原缺"早年与教育"页（第 3 页为"三代数学王朝"讲家族，未含教育经历）。新增 `\earlyslide`（Slide 3），涵盖赫尔辛基出生、1893 博士（导师 Hjalmar Mellin）、1895 docent、1903 教授——12→13 页
+- **⚠️ 补充缺失事实**：博士导师 **Hjalmar Mellin** 原 tex 完全未提及 → 新增 earlyslide 中补充（Wikipedia `doctoral_advisor: Hjalmar Mellin`，Mellin 变换命名者）
+- **事实复核**（tex 内容与 Wikipedia 一致）：
+  - 生卒 1870-03-07 ~ 1946-06-04（享年 76）✅
+  - 数学世家：父 Lorenz Leonard Lindelöf、堂兄 Edvard Neovius、弟 Uno Lindelöf（英语语言学家）✅
+  - 1893 博士（导师 Mellin）、1895 docent、1903 教授（33 岁接任堂兄）✅
+  - 巴黎访学 1893（一年）+ 1898-99（决定性，转向整函数）✅
+  - 首位非法国数学家贡献整函数理论 ✅
+  - Borel 邀请成为系列首位外国作者 →《Le calcul des résidus》(1905) ✅
+  - Lindelöf 空间（1904 论文）、Picard–Lindelöf 定理、Phragmén–Lindelöf 原理、Lindelöf 假设（比 RH 弱、未解）✅
+  - 芬兰函数论学派：学生 Ahlfors（1936 首届 Fields）、Nevanlinna、Myrberg ✅
+  - 芬兰科学与文学学会常任秘书（1934-45，1938 百年纪念）✅
+  - 3 项勋章：白玫瑰大十字/圣安娜三等/北极星骑士 ✅
+- **修正**：
+  1. **头像位置**：根目录 → images/
+  2. **新增身份信息页**：早年与教育（含博士导师 Mellin）——12→13 页
+  3. **封面 badge 统一**：4 个 badge 3 行 → 2 行（`Phragmén--L` 截断 → `Phragmén--Lindelöf` 完整）
+  4. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  5. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`
+  6. **去"据 Wikipedia："**：封面引语去前缀
+  7. **英文名行**：`1870 -- 1946` → `1870--1946`（去空格）
+- **编译**：`make distclean && make` → ✅ 14页，0错误；hbox 14.01pt + vbox 10.18pt（>10pt）+ 若干 <10pt vbox → Review-2 处理
+- **排行榜**：#92 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
