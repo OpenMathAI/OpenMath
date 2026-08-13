@@ -111,3 +111,22 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Wolfgang_Krull/page.md`) 逐页比对。
+
+- **头像** ✅：`images/krull_portrait.jpg`（1920 Göttingen 照片，右上角 1.92cm Cartan 同款圆角矩框）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Germany\enspace·\enspace 交换代数奠基人\enspace·\enspace 35 位博士`
+- **身份信息页** ✅：Slide 3 ("早年与教育：Baden-Baden 到哥廷根 1899--1921") 涵盖 Baden-Baden 出生、弗赖堡/罗斯托克/哥廷根三校、1921 博士（导师 Alfred Loewy）
+- **事实复核**：生卒(1899-08-26~1971-04-12, 71岁)/Baden-Baden 出生+上学/弗赖堡+罗斯托克+哥廷根(1919-1921)/Alfred Loewy 导师/Freiburg 讲师+教授/Erlangen 十年(约1928-1939)/Bonn 讲席 1939 起终身/纳粹党员(member of Nazi Party,客观记录)/35 位博士生(Wilfried Brauer, Karl-Otto Stöhr, Jürgen Neukirch)/Krull 维数/Krull 环/局部环/Krull 主理想定理/Krull 交定理/Krull--Schmidt 定理/Krull 拓扑/Idealtheorie 1935/Collected papers 1999 (Ribenboim 编)——全部与 Wikipedia 一致
+- **修正**：
+  1. **头像格式**：圆形嵌套 `\begin{tikzpicture}` → Cartan 同款圆角矩框 `draw=coveraccent!50, rounded corners=4pt, fill=white, inner sep=2pt`（1.92cm，去嵌套避免 xelatex 2026 兼容性风险）
+  2. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`（与 Cartan/Littlewood 一致）
+  3. **section title 副标题字号**：`\fontsize{6.5}{8.5}` → `\fontsize{7.5}{9.5}`
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`（与 Cartan 一致）
+  5. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：他是德国数学家...` → `他是德国数学家...`
+- **编译**：`make distclean && make` → ✅ 13页，0错误（仅1处 JPEG Exif/JFIF 分辨率无害警告）
+- **排行榜**：#76 保持 `✅/✅✅`
+
