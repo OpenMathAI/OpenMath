@@ -38,20 +38,21 @@
 | 强调（正则化金） | #B8860B | Tikhonov 正则化 |
 | 背景 | #FAF6EF | 米白纸色 |
 
-## 4. 12 页 Slide 规划
+## 4. 13 页 Slide 规划
 
 1. 封面：大标题 + 副标题「Tychonoff 定理 · Tikhonov 正则化 · 不适定问题大师」
 2. 生平总览：时间轴（1906 → 1926 度量化 → 1927 博士 → 1930 Tychonoff 定理 → 1933 教授 → 1963 正则化 → 1970 VMK → 1993 去世）
-3. Tychonoff 定理（1930）：紧空间乘积、选择公理
-4. Tychonoff 空间与立方体：完全正则空间
-5. 度量化定理（1926）：拓扑空间度量化
-6. 泛函分析与热方程唯一性
-7. Tikhonov 正则化（1963）：不适定反问题
-8. 正则化的现代应用：机器学习 ridge/L2
-9. 渐近分析：小参数微分方程
-10. 大地电磁法：地球物理勘探
-11. VMK 创建：计算数学与控制论系、首任系主任 20 年
-12. 终章：86 岁、苏联荣誉体系、历史地位
+3. **早年与教育**：格扎茨克出生、莫斯科大学、1926 度量化、1927 博士（Alexandrov）
+4. Tychonoff 定理（1930）：紧空间乘积、选择公理
+5. Tychonoff 空间与立方体：完全正则空间
+6. 度量化定理（1926）：拓扑空间度量化
+7. 泛函分析与热方程唯一性
+8. Tikhonov 正则化（1963）：不适定反问题
+9. 正则化的现代应用：机器学习 ridge/L2
+10. 渐近分析：小参数微分方程
+11. 大地电磁法：地球物理勘探
+12. VMK 创建：计算数学与控制论系、首任系主任 20 年
+13. 终章：86 岁、苏联荣誉体系、历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -128,4 +129,24 @@
 - [ ] 中文标点/断行/间距统一
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-1 记录 (2026-08-13)
+
+> 结合本地 Wikipedia (`pages/Andrey_Nikolayevich_Tikhonov/page.md`) 逐页比对。
+
+- **头像** ⚠️→✅：Wikipedia 英文页**无正式肖像**（仅 Organizer work 部分的纪念牌 `Tikhonov_board.jpg`，非人物照片）；原 tex 引用 `Andrey_Tikhonov.jpg` 但 `images/` 目录为空导致编译报错（`File not found`）。按规范"无照片时用装饰圆替代"：Cartan 同款圆角矩框 + 内部装饰圆（字母 T + 1906--1993）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace USSR\enspace·\enspace Tychonoff 定理\enspace·\enspace Tikhonov 正则化`（原 `\faIcon{globe}\quad Russian Empire → USSR ... 86岁` → 统一 `\enspace USSR`，去掉冗余"86岁"；Wikidata nationality: ["Russian Empire", "Soviet Union", "Russia"]，以主要学术生涯 USSR 为准）
+- **身份信息页** ✅：新增 Slide 3（"早年与教育：从格扎茨克到莫斯科大学 1906--1927"），涵盖格扎茨克出生（今加加林市）、莫斯科大学求学、1926 度量化定理、1927 博士（Pavel Alexandrov）、1933 教授
+- **事实复核**：生卒(1906-10-17~1993, 86岁)/格扎茨克出生/莫斯科大学/1927 博士(Alexandrov)/1926 度量化定理/1930 Tychonoff 定理(等价选择公理, Kelley 1950)/Tychonoff 空间(完全正则)/Tychonoff 立方体/Tikhonov 正则化 1963(与 Phillips 1962 独立)/热方程唯一性/Volterra 积分方程/小参数渐近分析/大地电磁法(与 Cagniard 独立)/VMK 创建 1970 首任系主任 20 年(1970-1990)/1933 教授/1939 通讯院士/1966 院士/列宁奖 1966/社会主义劳动英雄 1954&1986——全部与 Wikipedia 一致
+- **修正**：
+  1. **头像缺失**：删除不存在的 `\includegraphics{Andrey_Tikhonov.jpg}`（编译报错）→ 装饰圆替代（Wikipedia 无正式肖像，仅纪念牌）
+  2. **新增身份信息页**：早年与教育（格扎茨克、1926 度量化、1927 博士 Alexandrov）——12→13 页
+  3. **section title 字号**：`\fontsize{17}{20.5}` → `\fontsize{20}{24}`；副标题 `6.5/8.5` → `7.5/9.5`
+  4. **封面国籍行字号**：`\fontsize{12}{16}` → `\fontsize{14}{18}`；`\quad Russian Empire → USSR ... 86岁` → `\enspace USSR ... Tikhonov 正则化`
+  5. **去"据 Wikipedia："**：封面引语 `据 Wikipedia：苏联数学家...` → `苏联数学家与地球物理学家，以拓扑、泛函分析、数学物理与不适定反问题闻名`
+- **编译**：`make distclean && make` → ✅ 14页，0错误（头像报错已解决）
+- **遗留**：hbox 5.33pt（<10pt 可接受）+ vbox 12.05pt（>10pt）→ Review-2 处理
+- **排行榜**：#86 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
