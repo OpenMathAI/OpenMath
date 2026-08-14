@@ -80,7 +80,7 @@ def main():
         "birth_date=%s, death_date=%s, has_social_data=1 WHERE id=%s",
         (
             QID,
-            "托尔斯滕·卡尔曼",
+            "托尔斯滕·卡莱曼",
             '["Tage Gillis Torsten Carleman","Carleman 不等式","Carleman 矩阵","Mittag-Leffler 所长"]',
             "Swedish mathematician (1892–1949)",
             "1892-07-08",

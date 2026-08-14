@@ -3124,14 +3124,14 @@
 
 ---
 
-## 卡尔曼（Torsten Carleman）
+## 卡莱曼（Torsten Carleman）
 
 ### 基本信息
 
 | 字段 | 值 |
 |---|---|
 | 英文名 | Torsten Carleman |
-| 中文名 | 卡尔曼 |
+| 中文名 | 卡莱曼 |
 | 主导职业 | mathematician |
 
 ### 职业（1）

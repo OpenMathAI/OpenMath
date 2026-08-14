@@ -82,7 +82,7 @@
 | 76 | **Harish-Chandra** | — |
 | 77 | **Skolem** (斯科伦) | Skolem标准型，逻辑学。 |
 | 78 | **Leray** (勒雷) | — |
-| 79 | **Carleman** (卡尔曼) | — |
+| 79 | **Carleman** (卡莱曼) | — |
 | 80 | **Mumford** (芒福德) | 代数几何学家，Fields奖得主。 |
 | 81 | **Krull** (克鲁尔) | — |
 | 82 | **Fisher** (费舍尔) | Fisher几何，Riemann几何的推广。 |
