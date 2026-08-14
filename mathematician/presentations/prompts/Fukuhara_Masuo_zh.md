@@ -115,3 +115,31 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-14)
+
+> ⚠️⚠️ **串台错误修复**：本 tex 文件原内容**混入大量 Vladimir Rokhlin 残留**（与 Carleman、Suslin、Zeeman 相同的串台问题）——封面底部、封面引语前缀、hook badge、hook 副标题、earlyslide 出生信息、honors 标题/正文、结束页时间线第一行、warslide 二战内容等仍是 Rokhlin 的（含俄文 `Владимир Абрамович Рохлин`、Baku 出生、列宁格勒学派等）。
+> **已整体重写整个 tex 文件**，替换为正确的福原满洲雄内容。
+> 注：`pages/Fukuhara_Masuo/` 目录为空（无本地 Wikipedia page.md/images.txt），本次以立传提示词（prompts/Fukuhara_Masuo_zh.md）为事实基准。
+
+- **头像** ✅：`Fukuhara_Masuo.jpg` 原在根目录，已复制到 `images/` 并采用标准圆角框（1.92cm）；`file` 确认为有效 JPEG（369×542）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Japan\enspace·\enspace RIMS 首任所长之一\enspace·\enspace 101 岁`
+- **重写核心事实**（全部基于提示词）：
+  - 生卒 1905-12-24（东京）~ 2007-02-07，享年 101 岁 ✅
+  - 教育 东京府立第四中学 → 第一高等学校 → 东京帝国大学理学部数学科（1929 毕业）✅
+  - 三级跳教授 九州帝国大学（1939）→ 东京大学（1948）→ 京都大学（1963）✅
+  - RIMS 首任所长之一（1963--1969）✅
+  - 东京农工大学学长（1973--1979）✅
+  - 日本数学会理事长 4 次 ✅
+  - Fukuhara 不动点定理（1929）✅
+  - 常微分方程/复微分方程大师 + Poincaré 译著 ✅
+  - 教材《常微分方程》（岩波全书）《射影几何》《变分学入门》✅
+  - 家族 父福原鐐二郎 ✅
+  - 荣誉 日本学士院奖（Japan Academy Prize 1963）✅
+  - 社会关系 吉田耕作、山中健、正田建次郎（合作/合著/译著解説）✅
+- **清除残留**：删除 `\warslide`（Rokhlin 二战内容）、删除封面底部 Baku 残留、删除 hook honors 标题 Rokhlin 残留、删除 earlyslide 出生 Rokhlin 俄文、删除 honors 正文"其子 Fukuhara Masuo Jr.（Yale 教授）"（错误，福原的家族是父福原鐐二郎而非子）
+- **格式统一**：section title 字号 20/24 + 副标题 7.5/9.5；封面国籍行 `\enspace` + 14pt；英文名行 `1905--2007`；封面 badge 2 行；配色按提示词调整 coverprimary 主色 → 东大红 `#8B1A1A`，coveraccent/badgeHist → RIMS 金 `#B8860B`
+- **编译**：`make distclean && make` → ✅ 12页，0错误；无 Missing character / Undefined；hbox 5.33pt + vbox 5.86/7.72/6.05/5.85pt 均 <10pt
+- **排行榜**：#106 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
