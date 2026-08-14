@@ -167,7 +167,84 @@
 >
 > 数据来源：IMU（Fields）、Wolf Foundation（Wolf Prize）、挪威科学与文学院（Abel Prize）。Abel 2025 得主 Masaki Kashiwara（柏原正树）在原全录中缺失，本表已据 Wikipedia 补录。
 
-### （一）菲尔兹奖（Fields Medal）—— 未入榜者
+
+### （一）阿贝尔奖（Abel Prize）—— 未入榜者
+
+| 年份 | 获奖者 | 国籍 | 获奖领域 | 立传 | Review |
+|:--:|------|------|------|:--:|:--:|
+| 2004 | Isadore Singer | 美国 | 指标定理，微分几何 | 🔲 | 🔲 |
+| 2005 | Peter Lax | 匈牙利/美国 | 偏微分方程，应用数学 | 🔲 | 🔲 |
+| 2006 | Lennart Carleson | 瑞典 | 调和分析，动力系统 | 🔲 | 🔲 |
+| 2007 | S.R. Srinivasa Varadhan | 印度/美国 | 概率论，大偏差理论 | 🔲 | 🔲 |
+| 2008 | John G. Thompson | 美国 | 有限群论 | 🔲 | 🔲 |
+| 2008 | Jacques Tits | 比利时/法国 | 群论，建筑（buildings） | 🔲 | 🔲 |
+| 2010 | John Tate | 美国 | 数论，算术几何 | 🔲 | 🔲 |
+| 2012 | Endre Szemerédi | 匈牙利 | 组合学，Szemerédi 定理 | 🔲 | 🔲 |
+| 2015 | John Nash | 美国 | 博弈论，偏微分方程 | 🔲 | 🔲 |
+| 2015 | Louis Nirenberg | 加拿大/美国 | 偏微分方程 | 🔲 | 🔲 |
+| 2016 | Andrew Wiles | 英国 | 费马大定理证明 | 🔲 | 🔲 |
+| 2017 | Yves Meyer | 法国 | 小波理论 | 🔲 | 🔲 |
+| 2018 | Robert Langlands | 加拿大/美国 | Langlands 纲领 | 🔲 | 🔲 |
+| 2019 | Karen Uhlenbeck | 美国 | 规范场论，几何分析（首位女性） | 🔲 | 🔲 |
+| 2020 | Hillel Furstenberg | 以色列 | 遍历理论，概率论 | 🔲 | 🔲 |
+| 2020 | Grigory Margulis | 俄罗斯/美国 | 李群格点，遍历理论 | 🔲 | 🔲 |
+| 2021 | László Lovász | 匈牙利 | 组合学，图论，算法 | 🔲 | 🔲 |
+| 2021 | Avi Wigderson | 以色列 | 计算复杂性理论 | 🔲 | 🔲 |
+| 2022 | Dennis Sullivan | 美国 | 拓扑学，动力系统 | 🔲 | 🔲 |
+| 2023 | Luis Caffarelli | 阿根廷/美国 | 非线性偏微分方程 | 🔲 | 🔲 |
+| 2024 | Michel Talagrand | 法国 | 概率论，泛函分析，浓度不等式 | 🔲 | 🔲 |
+| 2025 | 柏原正树 (Masaki Kashiwara) | 日本 | D-模，晶体基，Riemann–Hilbert 体系 | 🔲 | 🔲 |
+
+### （二）沃尔夫数学奖（Wolf Prize）—— 未入榜者
+
+| 年份 | 获奖者 | 国籍 | 获奖领域 | 立传 | Review |
+|:--:|------|------|------|:--:|:--:|
+| 1982 | Mark Krein | 苏联 | 泛函分析，算子理论 | 🔲 | 🔲 |
+| 1983/84 | Paul Erdős | 匈牙利 | 组合学，数论 | 🔲 | 🔲 |
+| 1984/85 | Hans Lewy | 德国/美国 | 偏微分方程 | 🔲 | 🔲 |
+| 1987 | 伊藤清 (Kiyosi Itô) | 日本 | 随机分析，Itô 公式 | 🔲 | 🔲 |
+| 1987 | Peter Lax | 匈牙利/美国 | 偏微分方程，泛函分析 | 🔲 | 🔲 |
+| 1988 | Friedrich Hirzebruch | 德国 | 代数拓扑 | 🔲 | 🔲 |
+| 1989 | Alberto Calderón | 阿根廷/美国 | 奇异积分，调和分析 | 🔲 | 🔲 |
+| 1990 | Ennio De Giorgi | 意大利 | 变分法，极小曲面 | 🔲 | 🔲 |
+| 1990 | Ilya Piatetski-Shapiro | 苏联/以色列 | 自守形式，表示论 | 🔲 | 🔲 |
+| 1992 | Lennart Carleson | 瑞典 | 调和分析，动力系统 | 🔲 | 🔲 |
+| 1992 | John G. Thompson | 美国 | 有限群论 | 🔲 | 🔲 |
+| 1993 | Jacques Tits | 比利时/法国 | 群论，建筑（buildings） | 🔲 | 🔲 |
+| 1994/95 | Jürgen Moser | 德/瑞/美 | 动力系统，KAM 理论 | 🔲 | 🔲 |
+| 1995/96 | Robert Langlands | 加拿大/美国 | Langlands 纲领 | 🔲 | 🔲 |
+| 1995/96 | Andrew Wiles | 英国 | 费马大定理证明 | 🔲 | 🔲 |
+| 1996/97 | Joseph B. Keller | 美国 | 应用数学，几何衍射理论 | 🔲 | 🔲 |
+| 1999 | László Lovász | 匈牙利 | 组合学，图论，算法 | 🔲 | 🔲 |
+| 1999 | Elias M. Stein | 比利时/美国 | 调和分析 | 🔲 | 🔲 |
+| 2000 | Raoul Bott | 匈牙利/美国 | 拓扑学，微分几何 | 🔲 | 🔲 |
+| 2001 | Saharon Shelah | 以色列 | 数理逻辑，模型论 | 🔲 | 🔲 |
+| 2002/03 | John Tate | 美国 | 数论，算术几何 | 🔲 | 🔲 |
+| 2005 | Grigory Margulis | 俄罗斯/美国 | 李群格点，遍历理论 | 🔲 | 🔲 |
+| 2005 | Sergei Novikov | 俄罗斯 | 代数拓扑，数学物理 | 🔲 | 🔲 |
+| 2006/07 | Hillel Furstenberg | 以色列 | 遍历理论，组合数论 | 🔲 | 🔲 |
+| 2008 | Phillip Griffiths | 美国 | 代数几何，Hodge 理论 | 🔲 | 🔲 |
+| 2010 | 丘成桐 (Shing-Tung Yau) | 中国/美国 | 几何分析 | 🔲 | 🔲 |
+| 2010 | Dennis Sullivan | 美国 | 拓扑学，动力系统 | 🔲 | 🔲 |
+| 2012 | Michael Aschbacher | 美国 | 有限单群分类 | 🔲 | 🔲 |
+| 2012 | Luis Caffarelli | 阿根廷/美国 | 非线性偏微分方程 | 🔲 | 🔲 |
+| 2013 | George Mostow | 美国 | 李群，几何 | 🔲 | 🔲 |
+| 2013 | Michael Artin | 美国 | 代数几何，非交换代数 | 🔲 | 🔲 |
+| 2014 | Peter Sarnak | 美国 | 解析数论，动力系统 | 🔲 | 🔲 |
+| 2015 | James Arthur | 加拿大 | 自守形式，迹公式 | 🔲 | 🔲 |
+| 2017 | Richard Schoen | 美国 | 微分几何，广义相对论 | 🔲 | 🔲 |
+| 2017 | Charles Fefferman | 美国 | 调和分析，多复变 | 🔲 | 🔲 |
+| 2018 | Alexander Beilinson | 俄罗斯/美国 | 表示论，代数几何 | 🔲 | 🔲 |
+| 2018 | Vladimir Drinfeld | 俄罗斯/美国 | 量子群，几何 Langlands | 🔲 | 🔲 |
+| 2019 | Jean-François Le Gall | 法国 | 随机过程，Brown 运动 | 🔲 | 🔲 |
+| 2019 | Gregory Lawler | 美国 | 随机过程，SLE | 🔲 | 🔲 |
+| 2020 | Simon Donaldson | 英国 | 四维流形，规范场论 | 🔲 | 🔲 |
+| 2020 | Yakov Eliashberg | 俄罗斯/美国 | 辛拓扑，接触拓扑 | 🔲 | 🔲 |
+| 2022 | George Lusztig | 罗马尼亚/美国 | 表示论，代数群 | 🔲 | 🔲 |
+| 2023 | Ingrid Daubechies | 比利时/美国 | 小波理论，信号处理 | 🔲 | 🔲 |
+| 2024 | Adi Shamir | 以色列 | RSA 密码学（S 中的 S） | 🔲 | 🔲 |
+
+### （三）菲尔兹奖（Fields Medal）—— 未入榜者
 
 | 年份 | 获奖者 | 国籍 | 获奖领域 | 立传 | Review |
 |:--:|------|------|------|:--:|:--:|
@@ -224,81 +301,6 @@
 | 2026 | Jacob Tsimerman | 加拿大 | 算术代数几何，o-minimality | 🔲 | 🔲 |
 | 2026 | Hong Wang (王虹) | 中国 | 调和分析，几何测度论（第三位女性） | 🔲 | 🔲 |
 
-### （二）沃尔夫数学奖（Wolf Prize）—— 未入榜者
-
-| 年份 | 获奖者 | 国籍 | 获奖领域 | 立传 | Review |
-|:--:|------|------|------|:--:|:--:|
-| 1982 | Mark Krein | 苏联 | 泛函分析，算子理论 | 🔲 | 🔲 |
-| 1983/84 | Paul Erdős | 匈牙利 | 组合学，数论 | 🔲 | 🔲 |
-| 1984/85 | Hans Lewy | 德国/美国 | 偏微分方程 | 🔲 | 🔲 |
-| 1987 | 伊藤清 (Kiyosi Itô) | 日本 | 随机分析，Itô 公式 | 🔲 | 🔲 |
-| 1987 | Peter Lax | 匈牙利/美国 | 偏微分方程，泛函分析 | 🔲 | 🔲 |
-| 1988 | Friedrich Hirzebruch | 德国 | 代数拓扑 | 🔲 | 🔲 |
-| 1989 | Alberto Calderón | 阿根廷/美国 | 奇异积分，调和分析 | 🔲 | 🔲 |
-| 1990 | Ennio De Giorgi | 意大利 | 变分法，极小曲面 | 🔲 | 🔲 |
-| 1990 | Ilya Piatetski-Shapiro | 苏联/以色列 | 自守形式，表示论 | 🔲 | 🔲 |
-| 1992 | Lennart Carleson | 瑞典 | 调和分析，动力系统 | 🔲 | 🔲 |
-| 1992 | John G. Thompson | 美国 | 有限群论 | 🔲 | 🔲 |
-| 1993 | Jacques Tits | 比利时/法国 | 群论，建筑（buildings） | 🔲 | 🔲 |
-| 1994/95 | Jürgen Moser | 德/瑞/美 | 动力系统，KAM 理论 | 🔲 | 🔲 |
-| 1995/96 | Robert Langlands | 加拿大/美国 | Langlands 纲领 | 🔲 | 🔲 |
-| 1995/96 | Andrew Wiles | 英国 | 费马大定理证明 | 🔲 | 🔲 |
-| 1996/97 | Joseph B. Keller | 美国 | 应用数学，几何衍射理论 | 🔲 | 🔲 |
-| 1999 | László Lovász | 匈牙利 | 组合学，图论，算法 | 🔲 | 🔲 |
-| 1999 | Elias M. Stein | 比利时/美国 | 调和分析 | 🔲 | 🔲 |
-| 2000 | Raoul Bott | 匈牙利/美国 | 拓扑学，微分几何 | 🔲 | 🔲 |
-| 2001 | Saharon Shelah | 以色列 | 数理逻辑，模型论 | 🔲 | 🔲 |
-| 2002/03 | John Tate | 美国 | 数论，算术几何 | 🔲 | 🔲 |
-| 2005 | Grigory Margulis | 俄罗斯/美国 | 李群格点，遍历理论 | 🔲 | 🔲 |
-| 2005 | Sergei Novikov | 俄罗斯 | 代数拓扑，数学物理 | 🔲 | 🔲 |
-| 2006/07 | Hillel Furstenberg | 以色列 | 遍历理论，组合数论 | 🔲 | 🔲 |
-| 2008 | Phillip Griffiths | 美国 | 代数几何，Hodge 理论 | 🔲 | 🔲 |
-| 2010 | 丘成桐 (Shing-Tung Yau) | 中国/美国 | 几何分析 | 🔲 | 🔲 |
-| 2010 | Dennis Sullivan | 美国 | 拓扑学，动力系统 | 🔲 | 🔲 |
-| 2012 | Michael Aschbacher | 美国 | 有限单群分类 | 🔲 | 🔲 |
-| 2012 | Luis Caffarelli | 阿根廷/美国 | 非线性偏微分方程 | 🔲 | 🔲 |
-| 2013 | George Mostow | 美国 | 李群，几何 | 🔲 | 🔲 |
-| 2013 | Michael Artin | 美国 | 代数几何，非交换代数 | 🔲 | 🔲 |
-| 2014 | Peter Sarnak | 美国 | 解析数论，动力系统 | 🔲 | 🔲 |
-| 2015 | James Arthur | 加拿大 | 自守形式，迹公式 | 🔲 | 🔲 |
-| 2017 | Richard Schoen | 美国 | 微分几何，广义相对论 | 🔲 | 🔲 |
-| 2017 | Charles Fefferman | 美国 | 调和分析，多复变 | 🔲 | 🔲 |
-| 2018 | Alexander Beilinson | 俄罗斯/美国 | 表示论，代数几何 | 🔲 | 🔲 |
-| 2018 | Vladimir Drinfeld | 俄罗斯/美国 | 量子群，几何 Langlands | 🔲 | 🔲 |
-| 2019 | Jean-François Le Gall | 法国 | 随机过程，Brown 运动 | 🔲 | 🔲 |
-| 2019 | Gregory Lawler | 美国 | 随机过程，SLE | 🔲 | 🔲 |
-| 2020 | Simon Donaldson | 英国 | 四维流形，规范场论 | 🔲 | 🔲 |
-| 2020 | Yakov Eliashberg | 俄罗斯/美国 | 辛拓扑，接触拓扑 | 🔲 | 🔲 |
-| 2022 | George Lusztig | 罗马尼亚/美国 | 表示论，代数群 | 🔲 | 🔲 |
-| 2023 | Ingrid Daubechies | 比利时/美国 | 小波理论，信号处理 | 🔲 | 🔲 |
-| 2024 | Adi Shamir | 以色列 | RSA 密码学（S 中的 S） | 🔲 | 🔲 |
-
-### （三）阿贝尔奖（Abel Prize）—— 未入榜者
-
-| 年份 | 获奖者 | 国籍 | 获奖领域 | 立传 | Review |
-|:--:|------|------|------|:--:|:--:|
-| 2004 | Isadore Singer | 美国 | 指标定理，微分几何 | 🔲 | 🔲 |
-| 2005 | Peter Lax | 匈牙利/美国 | 偏微分方程，应用数学 | 🔲 | 🔲 |
-| 2006 | Lennart Carleson | 瑞典 | 调和分析，动力系统 | 🔲 | 🔲 |
-| 2007 | S.R. Srinivasa Varadhan | 印度/美国 | 概率论，大偏差理论 | 🔲 | 🔲 |
-| 2008 | John G. Thompson | 美国 | 有限群论 | 🔲 | 🔲 |
-| 2008 | Jacques Tits | 比利时/法国 | 群论，建筑（buildings） | 🔲 | 🔲 |
-| 2010 | John Tate | 美国 | 数论，算术几何 | 🔲 | 🔲 |
-| 2012 | Endre Szemerédi | 匈牙利 | 组合学，Szemerédi 定理 | 🔲 | 🔲 |
-| 2015 | John Nash | 美国 | 博弈论，偏微分方程 | 🔲 | 🔲 |
-| 2015 | Louis Nirenberg | 加拿大/美国 | 偏微分方程 | 🔲 | 🔲 |
-| 2016 | Andrew Wiles | 英国 | 费马大定理证明 | 🔲 | 🔲 |
-| 2017 | Yves Meyer | 法国 | 小波理论 | 🔲 | 🔲 |
-| 2018 | Robert Langlands | 加拿大/美国 | Langlands 纲领 | 🔲 | 🔲 |
-| 2019 | Karen Uhlenbeck | 美国 | 规范场论，几何分析（首位女性） | 🔲 | 🔲 |
-| 2020 | Hillel Furstenberg | 以色列 | 遍历理论，概率论 | 🔲 | 🔲 |
-| 2020 | Grigory Margulis | 俄罗斯/美国 | 李群格点，遍历理论 | 🔲 | 🔲 |
-| 2021 | László Lovász | 匈牙利 | 组合学，图论，算法 | 🔲 | 🔲 |
-| 2021 | Avi Wigderson | 以色列 | 计算复杂性理论 | 🔲 | 🔲 |
-| 2022 | Dennis Sullivan | 美国 | 拓扑学，动力系统 | 🔲 | 🔲 |
-| 2023 | Luis Caffarelli | 阿根廷/美国 | 非线性偏微分方程 | 🔲 | 🔲 |
-| 2024 | Michel Talagrand | 法国 | 概率论，泛函分析，浓度不等式 | 🔲 | 🔲 |
-| 2025 | 柏原正树 (Masaki Kashiwara) | 日本 | D-模，晶体基，Riemann–Hilbert 体系 | 🔲 | 🔲 |
 
 ---
 
