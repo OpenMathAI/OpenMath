@@ -120,3 +120,39 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-14)
+
+> ✅ **无 Rokhlin 串台问题**：Segal 的 tex 为独立设计（牛津绿+深蓝+几何金配色），内容正确，无 Rokhlin 残留。本轮聚焦事实核对与若干格式缺陷修复。
+
+- **事实核对**（对照 `pages/Graeme_Segal/page.md`）✅ 全部正确：
+  - 全名 Graeme Bryce Segal FRS ✅；出生 1941-12-21 悉尼（在世，不写死亡日期）✅
+  - 悉尼大学 BSc 1961 → 牛津 St Catherine's College DPhil 1967（导师 Michael Atiyah，论文 *Equivariant K-theory*）✅
+  - Atiyah–Segal 完备化定理（1969，等价 K-理论）✅
+  - Segal 猜想（Carlsson 1984 证明，tex 表述"提出而非自证"正确）✅
+  - 无限 loop 空间、Γ-空间方法 ✅
+  - 椭圆上同调先驱（表述谨慎）✅
+  - TQFT 范畴框架（Segal 公理，思想源头之一）✅
+  - Loop Groups（与 Andrew Pressley 合著，Oxford 2003）✅
+  - ICM 1970 Nice + 1990 Kyoto ✅
+  - 任职 牛津 1964-90 → 剑桥 Lowndean 讲席 1990-99 → All Souls 1999-2009 ✅
+  - LMS 会长 2011 ✅
+  - 荣誉 FRS 1982、Pólya Prize 1990、Sylvester Medal 2010、Chern Medal 2026 ✅
+  - Chern Medal 授奖词与 Wikipedia 原文逐字一致 ✅（visionary mathematical insights / topology, mathematical physics, representation theory and category theory）
+  - 妻 Marina Warner（提示词记录，tex 未出现，可接受）
+
+- **⚠️ 封面重复头像修复**：原封面右上角有两个头像节点（`Graeme_Segal.jpg` 3.2cm 横版 + `Graeme_Segal.jpeg` 1.92cm 竖版），会重叠渲染。已删除横版 jpg 引用，保留竖版 jpeg 肖像（183×275）并统一为标准圆角框（`draw + rounded corners + fill white + inner sep 2pt`，width 1.92cm，anchor north east，xshift -0.27/yshift -1.51）。
+
+- **⚠️ 国旗 emoji 移除**：封面国籍行与 earlyslide 副标题含 🇦🇺 国旗 emoji（xelatex 下无法渲染为彩色国旗，会缺字/方框），已移除，仅保留文字 `Australia`。
+
+- **⚠️ Markdown 语法残留清理**：
+  - 3 处 `**加粗**` → `\textbf{...}`（Michael Atiyah、Atiyah–Segal 完备化定理、Constantin Teleman）
+  - 4 处 `*斜体*` → `\emph{...}`（Equivariant K-theory ×2、Loop Groups ×2）
+
+- **⚠️ 无法核实数字清理**："培养了 13 位博士生"（Wikipedia 未给出学生数量，提示词仅列 4 人），已改为"培养了 Constantin Teleman、Andrew Pressley 等多位博士生"。
+
+- **编译**：`make distclean && make` → ✅ 9页，0错误；无 Missing character / Undefined / Unable to load；hbox 5.33pt + vbox 3.74pt 均 <10pt
+
+- **排行榜**：#108 保持 `✅/✅`（本轮完成第1轮实际 review）
+
