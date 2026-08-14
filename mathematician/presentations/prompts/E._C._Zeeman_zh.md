@@ -123,3 +123,31 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-14)
+
+> ⚠️⚠️ **串台错误修复**：结合本地 Wikipedia (`pages/E._C._Zeeman/page.md`) 发现，本 tex 文件原内容**混入大量 Vladimir Rokhlin 残留**（与 Carleman、Suslin 相同的串台问题）——封面底部、封面引语前缀、hook badge、hook 副标题、earlyslide 出生信息、honors 标题/正文、结束页时间线、warslide 二战内容等仍是 Rokhlin 的（含俄文 `Владимир Абрамович Рохлин`、Baku 出生、列宁格勒学派等）。
+> **已整体重写整个 tex 文件**，替换为正确的 E.C. Zeeman 内容。
+
+- **头像** ✅：`Christopher_Zeeman.jpg` 原在根目录，已复制到 `images/` 并采用标准圆角框（1.92cm）；`file` 确认为有效 JPEG（420×420）；Wikipedia infobox 有照片（Christopher_Zeeman_2009.jpg）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace United Kingdom\enspace·\enspace Cambridge/Warwick/Oxford\enspace·\enspace 91 岁`（Wikidata nationality: United Kingdom）
+- **重写核心事实**（全部基于 Wikipedia）：
+  - 全名 Sir Erik Christopher Zeeman FRS ✅
+  - 生卒 1925-02-04（横滨，丹麦父+英国母）~ 2016-02-13（Woodstock），享年 91 ✅
+  - 教育 Christ's Hospital → Christ's College Cambridge，导师 Shaun Wylie，1955 博士（Dihomology）✅
+  - 1943--47 英国皇家空军飞行军官 ✅
+  - Catastrophe theory：Thom 创始、Zeeman 推广/普及（非创始）✅；七种基本突变 ✅
+  - Stallings--Zeeman 定理（engulfing，独立于 Stallings，证明 >4 维 PL Poincaré 猜想）✅
+  - Zeeman 猜想（PL Poincaré 坍缩版本，仍未完全解决）✅
+  - Dihomology → Zeeman 谱序列 → 启发交同调（Goresky--MacPherson 发明，Zeeman 是思想先驱）✅
+  - 1963 证明狭义相对论因果性 = Lorentz 变换 ✅
+  - Warwick 数学研究所创建者/首任所长（1964）✅
+  - 学生 Terry Wall、David Epstein、Jenny Harrison、Ray Lickorish、Colin Rourke、Tim Poston、David Trotman、Peter Buneman、Charlotte Watts ✅
+  - 科普：1978 Christmas Lectures + Faraday Medal 1988 ✅
+  - 荣誉：FRS 1975、Senior Whitehead 1982、David Crighton 2006、Forder 1987、LMS 主席 1986--88、Knight Bachelor 1991、Gresham College 几何教授（1988--94）、Hertford College Oxford 院长 ✅
+- **清除残留**：删除 `\warslide`（Rokhlin 二战内容）、删除封面底部 Baku 残留、删除 hook honors 标题 Rokhlin 残留、删除 earlyslide 出生 Rokhlin 俄文、修正 honors 正文"其子 E.C. Zeeman Jr."（错误，应为女儿 Mary Lou Zeeman/Nicolette Zeeman，已删除该错误家族表述）
+- **格式统一**：section title 字号 20/24 + 副标题 7.5/9.5；封面国籍行 `\enspace` + 14pt；英文名行 `1925--2016`；封面 badge 2 行；配色 coveraccent/badgeHist 由苏联红 → 突变金 `#B8860B`
+- **编译**：`make distclean && make` → ✅ 12页，0错误；无 Missing character / Undefined；hbox 5.33pt + vbox 5.29~9.45pt 均 <10pt
+- **排行榜**：#105 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
