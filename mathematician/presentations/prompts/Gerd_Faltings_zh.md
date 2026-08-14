@@ -139,9 +139,21 @@
 - **编译**：`make distclean && make` 0 错误 12 页；Overfull hbox 5.33pt（Rokhlin/Carleman 系模板固有）+ vbox 5.31pt（均 <10pt 可接受）
 
 ### 第 2 轮（Review-2）：结构优化
-- [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
-- [ ] 结束页时间线 ≥7 段拆两行（避免溢出）
-- [ ] 中文标点/断行/间距统一
-- [ ] 与同榜数学家格式对齐（封面/配色/结构）
-- [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+- [x] 检查 Overfull/Underfull 告警（<10pt 可接受）
+- [x] 结束页时间线 ≥7 段拆两行（避免溢出）
+- [x] 中文标点/断行/间距统一
+- [x] 与同榜数学家格式对齐（封面/配色/结构）
+- [x] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
+
+---
+
+## Review-2 记录 (2026-08-14)
+
+- **Overfull/Underfull** ✅：hbox 5.33pt + vbox 5.31pt，均 <10pt 阈值
+- **结束页时间线修复** ✅：原第二行 `Münster 1978 → Wuppertal/Princeton → Bonn MPIM 所长 → Abel 2026` 与第一行 `Gelsenkirchen → Münster → Wuppertal → Princeton` **重复**（Münster/Wuppertal/Princeton 三处重复），已改为 `Bonn MPIM 所长 (1994--2018) → Abel 2026 → 在世`，两行时间线完整衔接无重复
+- **中文标点统一** ✅：无 `\u201c`/`\u201d` 转义残留（grep 计数 0）
+- **Markdown/emoji 残留** ✅：无 `**`/`*斜体*`/国旗 emoji 任何残留
+- **格式对齐** ✅：封面（国籍 `\faIcon{globe}\quad Germany` + 右上角头像 + 4 badge）、配色（波恩蓝+算术青+菲尔兹金）、结构（12页）均与 Rokhlin 系模板一致；封面头像 `\includegraphics[width=2.24cm]` 为该作者模板既定风格，可接受
+- **编译**：`make distclean && make` → ✅ 12页，0错误
+- **排行榜**：#109 Review 列保持 `✅✅`（第2轮完成，榜单已预标记）
 
