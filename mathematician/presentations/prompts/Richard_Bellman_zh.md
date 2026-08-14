@@ -147,3 +147,14 @@
 
 - **排行榜**：#107 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
 
+---
+
+## Review-2 记录 (2026-08-14)
+
+- **Overfull/Underfull** ✅：hbox 2.94pt（封面 badge "Programming"）+ 9.12pt（封面 badge "Dimensionality"）均 <10pt 阈值；另有一处 15.83pt 空 box 溢出（Hook 页 tikz 内部机制，`[]` 空内容非实际文字溢出），不影响渲染（12页 0错误）；vbox 3.12/0.91pt 均 <10pt
+- **结束页底部行** ✅：已精简为 4 段（`Bellman 方程 | 动态规划 | HJB | OpenMathAI`），无溢出（本轮已修复原本 15.83pt 的内容溢出）
+- **中文标点统一** ✅：无 `\u201c`/`\u201d` 转义残留（grep 计数 0）
+- **格式对齐** ✅：Bellman 为独立设计风格（Markov/Klein 版式，动态规划青+优化金+控制红配色），与标准 Cartan/Sinai 模板不同但属作者有意为之，结构完整（12页），封面/结束页无时间线溢出
+- **编译**：`make distclean && make` → ✅ 12页，0错误
+- **排行榜**：#107 Review 列保持 `✅✅`（第2轮完成）
+
