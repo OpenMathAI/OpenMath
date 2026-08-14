@@ -122,3 +122,28 @@
 - [ ] 与同榜数学家格式对齐（封面/配色/结构）
 - [ ] 排行榜标记 `✅✅/🔲` → `✅✅/✅✅`
 
+---
+
+## Review-1 记录 (2026-08-14)
+
+> ✅ **无 Rokhlin 串台问题**：与 #103–#106（Carleman/Suslin/Zeeman/福原）不同，Bellman 的 tex 是独立高质量生成（参照 Markov/Klein 版式），内容正确，无 Rokhlin 残留。本轮聚焦事实核对与两处文件级缺陷修复。
+
+- **事实核对**（对照 `pages/Richard_E._Bellman/page.md`）✅ 全部正确：
+  - 全名 Richard Ernest Bellman ✅；生卒 1920-08-26（纽约 Brooklyn）~ 1984-03-19（洛杉矶），享年 63 ✅
+  - 波兰/俄罗斯犹太移民家庭（父 John James Bellman 经营杂货店）、本人 atheist（表述尊重）✅
+  - 教育 Abraham Lincoln 高中 → Brooklyn College (1941 BS) → Wisconsin (MA) → Princeton (1946 PhD，导师 Lefschetz) ✅
+  - 论文《On the Boundedness of Solutions of Non-Linear Differential and Difference Equations》✅
+  - Los Alamos 理论物理组（二战）、1949 加入 RAND ✅
+  - 动态规划 1953、Bellman 方程、HJB 方程、维数灾难、Bellman–Ford 算法（与 Ford，允许负权，Dijkstra 同期）✅
+  - 619 篇论文、39 本书；Mathematical Biosciences (1967) + JMAA 创办 ✅
+  - 脑瘤 1973；荣誉 von Neumann 1976、IEEE Medal of Honor 1979、Dickson 1970、AAAS 1975、NAE 1977、NAS 1983 ✅
+  - 引语"最优性原理"为 Bellman 原话的忠实转述（Wikipedia 有 Principle of Optimality），非伪引语 ✅
+
+- **⚠️ 头像修复**：`images/portrait.jpg` 原为**下载失败的 HTML 文档**（Engineering and Technology History Wiki 的页面，非图片），已删除。Wikipedia 无 infobox 照片（page.md 图片栏为空），figure_my 中无 Bellman 头像。按 Review-1 规范"无照片时用装饰圆替代"——封面改用带 "DP" 字样的装饰圆（`\node[circle, draw=coveraccent!60, fill=coveraccent!10, minimum size=2.4cm]`）。
+
+- **⚠️ 末尾残留删除**：`\end{document}` 之后残留一行 `/Users/.../presentations/Claude_Shannon` 路径，已删除。
+
+- **编译**：`make distclean && make` → ✅ 12页，0错误；无 Missing character / Undefined / Unable to load
+
+- **排行榜**：#107 保持 `✅/✅✅`（榜单已预标记，本轮完成第1轮实际 review）
+
