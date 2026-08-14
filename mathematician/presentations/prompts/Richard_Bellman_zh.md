@@ -139,7 +139,7 @@
   - 脑瘤 1973；荣誉 von Neumann 1976、IEEE Medal of Honor 1979、Dickson 1970、AAAS 1975、NAE 1977、NAS 1983 ✅
   - 引语"最优性原理"为 Bellman 原话的忠实转述（Wikipedia 有 Principle of Optimality），非伪引语 ✅
 
-- **⚠️ 头像修复**：`images/portrait.jpg` 原为**下载失败的 HTML 文档**（Engineering and Technology History Wiki 的页面，非图片），已删除。Wikipedia 无 infobox 照片（page.md 图片栏为空），figure_my 中无 Bellman 头像。按 Review-1 规范"无照片时用装饰圆替代"——封面改用带 "DP" 字样的装饰圆（`\node[circle, draw=coveraccent!60, fill=coveraccent!10, minimum size=2.4cm]`）。
+- **头像修复**：`images/portrait.jpg` 原为**下载失败的 HTML 文档**（Engineering and Technology History Wiki 的页面，非图片），已删除。后续用户提供真实头像 `figure_my/Richard Bellman.jpeg`（399×501 竖版照片），已复制为 `images/Richard_Bellman.jpg` 并替换封面装饰圆为标准圆角头像框（`\includegraphics[width=1.92cm]{Richard_Bellman.jpg}`）。
 
 - **⚠️ 末尾残留删除**：`\end{document}` 之后残留一行 `/Users/.../presentations/Claude_Shannon` 路径，已删除。
 
