@@ -322,13 +322,16 @@
 
 威滕的气质：**弦论革命领袖、物理-数学跨界、深邃前瞻、智识巅峰** — 现代感强、有宇宙的浩瀚与量子世界的灵动。
 
-**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+**主选曲目（慷慨激昂）：**
 
 | 优先级 | 曲目 | 来源 | 理由 |
 |:--:|------|------|------|
-| ★★★ | 电子/电影风格（如 Mirage、Falling Apart） | inspiring-electronic | 现代感、弦论的高维想象、量子世界的灵动 |
-| ★★★ | 史诗/远征（如 Eternals、Expedition） | alex-productions | M-theory 统一五种弦论的宏大叙事 |
-| ★★ | 深蓝/克制（如 Timeless） | alex-productions | 智识巅峰的沉稳与深邃 |
-| ★ | 古典庄严（Symphony No.7） | beethoven-karajan | 数学的永恒之美 |
+| ★★★ | **Triumphant（凯旋）** | alex-productions | **慷慨激昂** · M-theory 统一五种弦论的凯旋 · 第二次超弦革命的英雄气概 |
+| ★★★ | Heroic（英雄） | alex-productions | 慷慨激昂 · 英雄史诗 · "用物理直觉改写数学版图"的英雄形象 |
+| ★★★ | Winds Of Freedom（自由之风） | inspiring-electronic | 英雄史诗管弦 · 宏大激昂 · 弦论的高维想象 |
+| ★★ | Blockbuster（大片） | alex-productions | 电影感史诗 · 菲尔兹奖历史性时刻 |
+| ★ | Last Hope（最后的希望） | inspiring-electronic | 戏剧性力量 · 革命性突破的高潮 |
 
-**操作**：复制选定的 `.wav` 到 `Edward_Witten/` 目录，`make video` 自动混入。
+**操作**：
+- ✅ 主选曲目 `Triumphant.wav` 已复制到 `Edward_Witten-F/` 目录
+- `make video` 会自动检测 `*.wav` 并混入（Makefile 中 `BGM = $(wildcard *.wav)`）
