@@ -286,7 +286,7 @@
 | 2010 | Cédric Villani | 法国 | Boltzmann 方程，最优传输 | 🔲 | 🔲 |
 | 2014 | Artur Avila | 巴西/法国 | 动力系统，谱理论 | 🔲 | 🔲 |
 | 2014 | Manjul Bhargava | 加拿大/美国 | 丢番图几何，数域计数 | 🔲 | 🔲 |
-| 2014 | Martin Hairer | 奥地利/英国 | 随机 PDE，正则结构 | 🔲 | 🔲 |
+| 2014 | Martin Hairer | 奥地利/英国 | 随机 PDE，正则结构 | ✅ | ✅ |
 | 2014 | Maryam Mirzakhani | 伊朗 | 双曲几何，模空间（首位女性） | 🔲 | 🔲 |
 | 2018 | Caucher Birkar | 伊朗/英国 | 双有理几何，Fano 簇 | 🔲 | 🔲 |
 | 2018 | Alessio Figalli | 意大利 | 最优传输，正则性理论 | 🔲 | 🔲 |
