@@ -1,0 +1,370 @@
+% =============================================================
+%  芬兰函数论学派创始人：恩斯特·林德洛夫 (Ernst Lindelöf)
+%  Lindelöf 空间 · Picard–Lindelöf · Phragmén–Lindelöf · Lindelöf 假设
+%  资料来源：Wikipedia (Ernst Lindelöf)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{1E4E79}
+\definecolor{coveraccent}{HTML}{B8860B}
+\definecolor{coverdark}{HTML}{1A2738}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeAlg}{HTML}{1E4E79}
+\definecolor{badgeCom}{HTML}{1E6E6E}
+\definecolor{badgeHist}{HTML}{B8860B}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{badgeMart}{HTML}{8A1020}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{80,85,95}
+\definecolor{algpanel}{RGB}{234,242,248}
+\definecolor{companel}{RGB}{232,244,240}
+\definecolor{histpanel}{RGB}{250,244,232}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{martpanel}{RGB}{250,236,238}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\deckbackground}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {\draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);}
+  \foreach \y in {-0.2,0.7,...,9.3} {\draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\sectiontitle}[3][line]{\vspace{-0.52cm}\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #2}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #3}\\[3pt]
+  \def\@sectlinedefault{line}\ifx\@sectlinedefault#1\textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}\fi
+\end{center}\vspace{0.06cm}}
+
+\input{../../cover/openmath_page.tex}
+
+\newcommand{\titleslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace Finland\enspace·\enspace 芬兰函数论学派创始人\enspace·\enspace 三代数学王朝};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {恩斯特·林德洛夫};
+  % 肖像照片 —— 右上角，与 Cartan/Sinai 风格统一
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt, anchor=north east]
+    at ([xshift=-0.27cm, yshift=-1.51cm]current page.north east)
+    {\includegraphics[width=1.92cm]{Ernst_Lindelof.jpg}};
+
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Ernst Lindelöf\quad·\quad 1870--1946\quad·\quad 76岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Lindelöf 空间 · Picard–Lindelöf · Phragmén–Lindelöf · Lindelöf 假设};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (-5.5,0) {\textbf{Lindelöf 空间}\\[2pt]点集拓扑};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (-1.85,0) {\textbf{Picard--Lindelöf}\\[2pt]ODE 存在唯一};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (1.85,0) {\textbf{Phragmén--Lindelöf}\\[2pt]最大模推广};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (5.5,0) {\textbf{芬兰函数论学派}\\[2pt]Ahlfors/Nevanlinna};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {芬兰数学家，对实分析、复分析与拓扑做出贡献。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Helsinki 1870\enspace·\enspace 赫尔辛基大学 (1893/1903)\enspace·\enspace 巴黎 1893+1898--99\enspace·\enspace 1938 退休\enspace·\enspace Helsinki 1946};
+\end{tikzpicture}
+\end{frame}}
+
+\newcommand{\hookslide}{\begin{frame}
+\plainbar
+\sectiontitle[skip]{芬兰函数论学派创始人：76 年的三代数学王朝}{Lindelöf 空间 · Picard–Lindelöf · 芬兰学派 · 三代讲席}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {Lindelöf 空间\\[2pt]点集拓扑};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {Picard--Lindelöf\\[2pt]ODE 基础};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {Phragmén--Lindelöf\\[2pt]最大模推广};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {芬兰函数论学派\\[2pt]Ahlfors/Nevanlinna};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.70) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 三代讲席的芬兰数学王朝——76 年的函数论传承。}\\{\fontsize{7.0}{9.0}\selectfont Helsinki (1870) → 赫尔辛基大学 (1893 博士) → 巴黎 (1893+1898-99) → 教授 (1903) → 1938 退休 → Helsinki (1946)。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} 1905《Le calcul des résidus》· Lindelöf 假设未解 · White Rose Grand Cross · 芬兰学会秘书}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 3. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}
+\plainbar
+\sectiontitle{早年与教育：赫尔辛基 1893 博士（导师 Mellin）}{1870 Helsinki\enspace·\enspace 1893 博士\enspace·\enspace 1895 docent\enspace·\enspace 1903 教授}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{1870 · 赫尔辛基。}Ernst Leonard Lindelöf 1870 年 3 月 7 日生于\textbf{赫尔辛基}（Helsingfors）——生于数学世家，父 Lorenz Leonard Lindelöf 是赫尔辛基大学数学教授。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{1893 · 博士。}就读于\textbf{赫尔辛基大学}，1893 年获博士学位，导师 \textbf{Hjalmar Mellin}（梅林，Mellin 变换命名者）。论文《Sur les systèmes complets et le calcul des invariants différentiels des groupes continus finis》。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{1895 docent · 1903 教授。}1895 年任 docent（讲师），1903 年 33 岁接任堂兄 Neovius 的数学讲席——完成三代同讲席的数学王朝。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一位芬兰数学大师的起点——1893 博士、1903 教授。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 三代数学王朝 ---
+\newcommand{\dynastyslide}{\begin{frame}
+\plainbar
+\sectiontitle{三代数学王朝：父 Lorenz · 堂兄 Neovius · 林德洛夫}{三代传讲席\enspace·\enspace 赫尔辛基大学\enspace·\enspace 数学世家}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{数学世家。}Lindelöf 出生于数学世家：父 \textbf{Lorenz Leonard Lindelöf} 是赫尔辛基大学数学教授；十年后讲席传至堂兄 \textbf{Edvard Rudolf Neovius}；1903 年 Lindelöf 33 岁接任堂兄讲席——\textbf{三代传同一讲席}的传奇。};
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,1.05)
+    {\textbf{弟·英语语言学家。}其弟 \textbf{Uno Lindelöf}（一译 Lindelöf）成为英语语言学家——非数学方向，但 Lindelöf 家族的学术血脉清晰可见。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{童年志向。}Lindelöf 少年即展示数学天赋——决定追随父亲之路，从未犹豫。这种家庭熏陶塑造了 Lindelöf 的学术轨迹。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 父 Lorenz → 堂兄 Neovius → Lindelöf——三代同讲席。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. Lindelöf 空间 ---
+\newcommand{\spaceslide}{\begin{frame}
+\plainbar
+\sectiontitle{Lindelöf 空间：点集拓扑的基本概念}{任意开覆盖\enspace·\enspace 可数子覆盖\enspace·\enspace 点集拓扑常青对象}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Lindelöf 性质。}Lindelöf 空间定义为：拓扑空间 $X$ 满足"任意开覆盖有可数子覆盖"——称为 \textbf{Lindelöf 性质}。这是点集拓扑学最基本、用途最广的性质之一。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{第二可数空间。}任何\textbf{第二可数}（满足可数基公理）的拓扑空间都是 Lindelöf 空间——因此欧氏空间 $\mathbb{R}^n$、可分 Hilbert 空间都是 Lindelöf 空间。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{实际意义。}Lindelöf 性质让我们可以"用可数多片覆盖整个空间"——是测度论、积分论、函数分析的常见工具。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 任意开覆盖有可数子覆盖——Lindelöf 性质。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 5. Picard--Lindelöf 定理 ---
+\newcommand{\picardslide}{\begin{frame}
+\plainbar
+\sectiontitle{Picard–Lindelöf 定理：ODE 存在唯一性}{与 Picard 共同命名\enspace·\enspace ODE 初值问题\enspace·\enspace 微分方程理论基石}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{共同命名。}\textbf{Picard–Lindelöf 定理}（与 Émile Picard 共同命名，Picard 先证、Lindelöf 独立完善）是 ODE 初值问题解的存在唯一性定理——\textbf{不写 Lindelöf 独占}。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{条件。}定理陈述：若 $f(t,y)$ 关于 $t$ 连续、关于 $y$ 满足 Lipschitz 条件，则初值问题 $y'=f(t,y),\,y(t_0)=y_0$ 在邻域内有唯一解。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{应用。}这一存在唯一性定理是 ODE 数值方法（Euler、Runge-Kutta）的理论基础——每一个 ODE 求解器的起点。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Picard 先证、Lindelöf 完善——ODE 存在唯一性。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 6. Phragmén--Lindelöf 原理 ---
+\newcommand{\phragmenslide}{\begin{frame}
+\plainbar
+\sectiontitle{Phragmén–Lindelöf 原理：最大模推广}{与 Phragmén 共同命名\enspace·\enspace 复分析\enspace·\enspace 角域最大模}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{共同命名。}\textbf{Phragmén–Lindelöf 原理}（与 Lars Edvard Phragmén 共同命名）是\textbf{最大模原理}的推广——适用于复平面上的角域。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{应用。}该原理可用于研究全纯函数在角域的增长率——Dirichlet 问题、调和分析、整函数论的基础工具之一。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{现代延伸。}Phragmén–Lindelöf 思想被推广到椭圆方程、伪微分算子、Cauchy 问题——是 PDE 理论的基石之一。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 角域上的最大模推广——Phragmén–Lindelöf。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 7. Lindelöf 假设 ---
+\newcommand{\hyposlide}{\begin{frame}
+\plainbar
+\sectiontitle{Lindelöf 假设：zeta 函数猜想（至今未解）}{Riemann zeta\enspace·\enspace 比 Riemann 假设弱\enspace·\enspace 仍未证明}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Lindelöf 假设。}Lindelöf 假设陈述：$\zeta(s)$ 在 $\sigma=1/2$ 临界线上满足增长估计 $\zeta(\tfrac{1}{2}+it)=O(t^\epsilon)$——即"比 Riemann 假设弱但仍极强"的 zeta 函数增长率猜想。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{关系 Riemann 假设。}Lindelöf 假设是 Riemann 假设的推论——若 $\zeta$ 零点在临界线则增长可控。但 Lindelöf 假设\textbf{至今未证}，比 Riemann 假设更弱但仍然艰难。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{应用。}Lindelöf 假设在解析数论中应用广泛——素数分布、Dirichlet 级数、Hardy-Littlewood 圆法都依赖于这一猜想或其推广。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一个未解的猜想——Lindelöf 假设。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 8. 《Le calcul des résidus》1905 ---
+\newcommand{\bookslide}{\begin{frame}
+\plainbar
+\sectiontitle{《Le calcul des résidus》(1905)：留数演算里程碑}{Borel 邀请\enspace·\enspace 首位外国作者\enspace·\enspace 函数论经典}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Borel 邀请。}1898--99 巴黎访学期间，他研究整函数（entire functions），成为\textbf{首位非法国数学家}在此领域做重大贡献者。Émile Borel 写信邀请他："我立刻想到了你"——\textbf{Borel 邀请其成为知名专著系列首位外国作者}。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{主题。Cauchy 留数演算。}Borel 希望"Cauchy 的精妙发明——留数演算——能够复兴"。Lindelöf 深入研究了 Cauchy 700+ 出版物，1905 年出版法文专著 \textbf{《Le calcul des résidus et ses applications à la théorie des fonctions》}。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{经典地位。}该书成为函数论的里程碑——把 Cauchy 留数方法系统化为现代分析工具。Lindelöf 是系列首位外国作者。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 留数演算的复兴——位外国作者的邀请。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 9. 芬兰函数论学派 ---
+\newcommand{\schoolsatlslide}{\begin{frame}
+\plainbar
+\sectiontitle{芬兰函数论学派：Ahlfors/Nevanlinna}{国际声誉\enspace·\enspace Ahlfors (Fields)\enspace·\enspace Nevanlinna/Myrberg\enspace·\enspace 学派建立}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,2.65)
+    {\textbf{学派创立。}Lindelöf 创立了\textbf{芬兰函数论学派}（Finnish school of function theory）——这一学派获得持久国际声誉，是芬兰数学走向世界的旗帜。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{代表性学生。}他的博士生包括：\textbf{Lars Ahlfors（阿尔福斯，\#42）}——Fields 奖首届获奖者、几何函数论；\textbf{Rolf Nevanlinna（奈望林纳，\#43）}——复分析、值分布论；\textbf{Pekka Myrberg}——分析学家。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{芬兰数学影响。}Lindelöf 培养的学生使芬兰在 20 世纪中叶成为函数论研究的国际重镇——其影响延续至今日芬兰数学界。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 芬兰函数论学派——Ahlfors 走向 Fields。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 10. 巴黎岁月与 Borel 合作 ---
+\newcommand{\parisslide}{\begin{frame}
+\plainbar
+\sectiontitle{巴黎岁月 (1893+1898-99)：Borel 邀请与第二位作者}{1893 首次访学\enspace·\enspace 1898--99 决定职业方向\enspace·\enspace Borel 邀请合作}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{1893 首次访学。}Lindelöf 1893 年第一次访巴黎——停留一年。早期接触法国分析学传统。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{1898--99 决定性访学。}1898--99 学年第二次访学\textbf{决定性地塑造了他的职业方向}：他选择研究复平面上的"整函数"——这是 Lindelöf 后半生工作的核心。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{Borel 合作关系。}该领域领军人物 Émile Borel（\#68）写信邀请 Lindelöf——"我立刻想到了你，希望你能成为系列首位外国作者"——这种合作关系贯穿 Lindelöf 的国际生涯。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 巴黎→赫尔辛基——芬兰函数论走向世界的桥梁。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉与退休 ---
+\newcommand{\honorsslide}{\begin{frame}
+\plainbar
+\sectiontitle{荣誉与退休：1938 学会秘书与 White Rose}{芬兰学会秘书\enspace·\enspace White Rose Grand Cross\enspace·\enspace 76 岁善终}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{芬兰学会秘书。}1938 年他担任\textbf{芬兰科学与文学学会}（societas scientiarum Fennica）秘书——正值该学会\textbf{百年纪念}（1938）。Lindelöf 也是在这一年退休。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{3 项勋章。}他获得 3 项芬兰/俄国勋章：\textbf{芬兰白玫瑰大十字勋章}（Grand Cross of the Order of the White Rose of Finland）、\textbf{俄国圣安娜三等勋章}、\textbf{北极星勋章骑士}——覆盖芬兰与俄国两个时代。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{76 岁善终。}1946 年 6 月 4 日在赫尔辛基去世，享年 76 岁——他的芬兰学派由 Ahlfors、Nevanlinna 继续传承。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 芬兰学会百年秘书 + 76 岁善终——三代王朝的延续。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {芬兰函数论之父};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {Lindelöf 空间 · Picard–Lindelöf · Phragmén–Lindelöf · 芬兰学派};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Ernst Lindelöf\quad·\quad 1870 -- 1946\quad·\quad 76岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Helsinki (1870) → 赫尔辛基大学 (1893 博士) → 巴黎 (1893+1898--99)};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.65cm]current page.center) {教授 (1903) → 学会秘书 (1938) → Helsinki 1946};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {He founded the Finnish school of function theory, which achieved lasting international renown. -- Wikipedia};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace Lindelöf 空间 \enspace·\enspace Picard–Lindelöf \enspace·\enspace 芬兰学派 \enspace·\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\dynastyslide
+\spaceslide
+\picardslide
+\phragmenslide
+\hyposlide
+\bookslide
+\schoolsatlslide
+\parisslide
+\honorsslide
+\closingslide
+\end{document}

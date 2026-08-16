@@ -1,0 +1,400 @@
+% =============================================================
+%  数理逻辑的巨人：伯特兰·罗素 (Bertrand Russell)
+%  罗素悖论 · 《数学原理》 · 描述理论 · 分析哲学 · 诺贝尔文学奖
+%  资料来源：Wikipedia (Bertrand Russell)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：剑桥深蓝 + 逻辑金 + 悖论红 + 米白 =====
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{1E4E79}
+\definecolor{coveraccent}{HTML}{B8860B}
+\definecolor{coverdark}{HTML}{1F2A28}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeAlg}{HTML}{1E4E79}
+\definecolor{badgeCom}{HTML}{B8860B}
+\definecolor{badgeHist}{HTML}{1E6E6E}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{badgeMart}{HTML}{8A1020}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{90,85,80}
+\definecolor{algpanel}{RGB}{234,242,248}
+\definecolor{companel}{RGB}{253,247,231}
+\definecolor{histpanel}{RGB}{234,242,242}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{martpanel}{RGB}{250,236,238}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace United Kingdom\enspace·\enspace Nobel 文学奖 1950\enspace·\enspace 数理逻辑巨人};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {伯特兰·罗素};
+  % 肖像照片（1924）—— 右上角，与 Cartan 风格统一
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt, anchor=north east]
+    at ([xshift=-0.27cm, yshift=-1.15cm]current page.north east)
+    {\includegraphics[width=1.92cm]{russell_portrait.jpg}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Bertrand Russell\quad·\quad 1872 -- 1970\quad·\quad 97岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {罗素悖论 · 《数学原理》 · 描述理论 · 分析哲学 · 和平主义者};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {\textbf{罗素悖论}\\[2pt]1901\\[2pt]动摇集合论\\[2pt]Frege 体系};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {\textbf{数学原理}\\[2pt]1910-13\\[2pt]与 Whitehead\\[2pt]逻辑主义};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (1.85,0) {\textbf{描述理论}\\[2pt]1905\\[2pt]哲学范式\\[2pt]类型论};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {\textbf{诺奖与和平}\\[2pt]1950 文学奖\\[2pt]一战入狱\\[2pt]核裁军};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {英格兰哲学家、逻辑学家与社会改革家。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Trellech 1872\enspace·\enspace 剑桥三一学院 1890--1893\enspace·\enspace 第三代罗素伯爵\enspace·\enspace 祖父两次任英国首相};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 总览 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数理逻辑的巨人：一个人的四重奏}{罗素悖论 · 《数学原理》 · 分析哲学 · 和平主义}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {罗素悖论\\[2pt]1901\\[2pt]动摇集合论地基\\[2pt]类型论的起点};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {《数学原理》\\[2pt]1910-13\\[2pt]与 Whitehead\\[2pt]逻辑主义巅峰};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {分析哲学\\[2pt]与 Moore 反唯心\\[2pt]描述理论 1905\\[2pt]语言分析};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {诺奖与和平\\[2pt]1950 文学奖\\[2pt]一战入狱\\[2pt]核裁军先锋};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 从集合论的地基到语言分析的革命，从监狱到诺贝尔奖——一位巨人的完整人生。}\\{\fontsize{7.0}{9.0}\selectfont Trellech (1872) → 剑桥 (1890) → 悖论 (1901) → 数学原理 (1910-13) → 继承爵位 (1931) → 诺奖 (1950) → 1970。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} Nobel Literature 1950 · De Morgan 1932 · Sylvester 1934 · Kalinga 1957 · FRS 1908}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年与罗素家族 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{罗素家族的孤子：1872--1893}{Trellech\enspace·\enspace 4 岁成孤儿\enspace·\enspace 祖父两次任首相\enspace·\enspace 剑桥三一学院}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,2.65)
+    {\textbf{1872 · 罗素家族。}Russell 生于威尔士边境的 Trellech，出身显赫的\textbf{罗素家族}——祖父 \textbf{John Russell}（第一代伯爵）曾\textbf{两次担任英国首相}（1846-1852, 1865-1866）。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{4 岁成孤儿。}1874 年母亲因白喉去世，1876 年父亲因支气管炎去世——年仅 4 岁的他与兄长 Frank 被祖父母收养，在\textbf{Pembroke Lodge}（里士满公园）长大。他的世俗教父是哲学家 \textbf{John Stuart Mill}。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{1890--1893 · 剑桥。}1890 年获三一学院奖学金，1893 年以\textbf{文学学士}毕业。在剑桥，他结识 \textbf{G. E. Moore} 与 \textbf{Alfred North Whitehead}，并与 Moore 一起领导英国哲学界的\textbf{"反唯心主义起义"}。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 首相之孙、4 岁孤子、剑桥学子——一位伯爵的三个起点。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 罗素悖论 ---
+\newcommand{\paradoxslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{罗素悖论：动摇集合论的一封信 (1901)}{1901\enspace·\enspace 理发师悖论\enspace·\enspace Frege 体系崩塌\enspace·\enspace 类型论的起点}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{1901 · 悖论。}Russell 发现了一个动摇\textbf{集合论}地基的悖论：考虑"所有不包含自身的集合"的集合——它是否包含自身？无论回答是或否，都矛盾。这就是\textbf{罗素悖论（Russell's paradox）}。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{Frege 的崩溃。}当他把悖论告知 \textbf{Gottlob Frege} 时，后者正把《算术的基本规律》付印——Frege 承认自己的逻辑主义体系因此崩塌。这是数学史上著名的"一封信事件"（发现悖论，而非合作）。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{类型论的起点。}为消除悖论，Russell 发展出\textbf{类型论（type theory）}——把对象按层次分级，禁止自我指涉。这一思想深刻地影响了计算机科学与数学基础。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一个自我指涉的问题，动摇了 Frege 的体系，开启了类型论的时代。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 《数学原理》 ---
+\newcommand{\principiaslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《数学原理》：逻辑主义的巅峰 (1910--13)}{与 Whitehead 合著\enspace·\enspace 三卷巨著\enspace·\enspace 数学还原为逻辑\enspace·\enspace 经典逻辑里程碑}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{1910--13 · 三卷巨著。}Russell 与他的老师 \textbf{Alfred North Whitehead} 合著《\textbf{Principia Mathematica}》（数学原理）——经典逻辑发展中的里程碑，也是把\textbf{整个数学还原为逻辑}（逻辑主义）的重大尝试。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{卷帙浩繁的证明。}书中从逻辑公理出发，经过数百页的推导，最终证明了 1+1=2——"数学可以化归为逻辑"的终极宣言。第 86 页的著名定理。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{与牛顿《原理》同名。}注意：牛顿的《自然哲学的数学原理》也是 Principia——同名的两部《原理》，一为物理学，一为逻辑学。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 数百页的推导，只为证明 1+1=2——逻辑主义最壮丽的纪念碑。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 描述理论 ---
+\newcommand{\denotingslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{描述理论与类型论：哲学的范式 (1905)}{On Denoting\enspace·\enspace 限定摹状词\enspace·\enspace 语言分析\enspace·\enspace "哲学的范式"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{1905 · On Denoting。}Russell 的论文《\textbf{On Denoting}》（论指称）提出了\textbf{描述理论（theory of descriptions）}——分析"当今法国国王是秃头"这类没有指称对象的句子的逻辑形式。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{哲学的范式。}这篇论文被视为哲学的"\textbf{范式（paradigm of philosophy）}"——以逻辑分析处理语言问题的典范，奠定了分析哲学的方法论。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{类型论。}他还发展出\textbf{类型论/分支类型论}、逻辑原子论（logical atomism）等框架——现代数理逻辑与计算机科学类型系统的思想源头。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} "当今法国国王是秃头"——一个不存在的国王，打开了分析哲学的大门。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 分析哲学创始人 ---
+\newcommand{\analyticslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{分析哲学的创始人：与 Moore 反唯心 (1900s)}{反唯心主义起义\enspace·\enspace 语言分析\enspace·\enspace 与 Frege/Moore/Wittgenstein}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{反唯心主义起义。}20 世纪初，英国哲学界盛行\textbf{唯心主义}（British idealism）。Russell 与 \textbf{G. E. Moore} 共同领导了英国的"\textbf{反唯心主义起义}"（revolt against idealism），主张以逻辑与经验为基础的分析方法。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{分析哲学的谱系。}他是\textbf{分析哲学（analytic philosophy）}的创始人之一——与 \textbf{Frege}（先辈）、\textbf{Moore}（挚友）、\textbf{Wittgenstein}（学生）共同构成分析哲学的第一代谱系。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{20 世纪哲学的主流。}从剑桥到维也纳学派，从语言分析到人工智能——分析哲学塑造了 20 世纪英语世界哲学的基本形态。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Frege、Moore、Russell、Wittgenstein——分析哲学的第一代星座。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 诺贝尔文学奖 ---
+\newcommand{\nobelslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{诺贝尔文学奖：哲学家的文字 (1950)}{1950\enspace·\enspace 人道主义理想\enspace·\enspace 思想自由\enspace·\enspace 殊荣墙}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{1950 · 文学奖。}1950 年，Russell 获\textbf{诺贝尔文学奖}——注意是\textbf{文学奖}，非数学或和平奖。颁奖词："表彰其多样的重要著作，在其中他捍卫了人道主义理想与思想自由。"};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{殊荣墙。}De Morgan 奖章 1932 · Sylvester 奖章 1934 · Kalinga 奖 1957 · Jerusalem 奖 1963 · FRS 1908 · Order of Merit 1949。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{数学家的文学。}从《数学原理》到《西方哲学史》，从《为什么我不是基督徒》到自传——Russell 的文字兼具逻辑的锋利与文学的优雅。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一位数理逻辑学家，捧起了文学的诺贝尔奖。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 和平主义者 ---
+\newcommand{\peacefulslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{和平主义者：从监狱到核裁军 (1916--1960s)}{一战入狱\enspace·\enspace 罗素--爱因斯坦宣言\enspace·\enspace CND 主席\enspace·\enspace 反越战}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=martpanel,draw=badgeMart!55] at (0,2.65)
+    {\textbf{1916/1918 · 一战入狱。}一战期间，Russell 是坚定的\textbf{和平主义者}——因反战立场被剑桥三一学院\textbf{解职}（1916），1918 年在监狱中写下《数理哲学导论》。战争让他从数学家变成社会行动家。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{1955 · 罗素--爱因斯坦宣言。}1955 年他与 \textbf{Albert Einstein} 等 11 位科学家共同签署《\textbf{罗素--爱因斯坦宣言}》，呼吁核裁军。1958 至 1963 年任英国\textbf{核裁军运动（CND）}主席。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{复杂的历史。}二战前他最初支持\textbf{绥靖}希特勒的纳粹德国，1943 年改变立场，称战争是必要的"\textbf{两害相权取其轻}"；晚年强烈谴责美国介入越南战争。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 从一战监狱到反核广场——一位数学家对社会责任的终身承诺。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 社会批评家 ---
+\newcommand{\criticslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{社会批评家：罗素茶壶与独立思想}{Russell's teapot\enspace·\enspace 无神论\enspace·\enspace 反殖民\enspace·\enspace 女权}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{罗素茶壶。}\textbf{罗素茶壶（Russell's teapot）}是他提出的著名类比：若有人说火星与地球之间存在一颗瓷器茶壶，无人能否认，但也不会有人相信——论证\textbf{举证责任}（burden of proof）在断言者一方。它是无神论哲学的标志性论证。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{独立思想的一生。}18 岁读 Mill 自传后放弃"第一因"论证成为\textbf{无神论者}；一生批评宗教、婚姻制度、殖民主义；支持\textbf{女权}、教育自由与性自由（其父母是节育运动的早期倡导者）。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{自由思想的斗士。}从 \textit{Why I Am Not a Christian} 到《西方哲学史》——他以逻辑为剑，挑战一切未经检验的教条。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一颗看不见的茶壶，一份证明的责任——逻辑的力量延伸到信仰的边界。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 学生与家庭 ---
+\newcommand{\familyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{学生与家庭：Wittgenstein 与四段婚姻}{Wittgenstein/Copi/Pitts\enspace·\enspace 四段婚姻\enspace·\enspace 三个孩子\enspace·\enspace 第三代伯爵}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,2.65)
+    {\textbf{传奇学生。}他的学生包括\textbf{Ludwig Wittgenstein}（语言哲学巨擘）、\textbf{Walter Pitts}（神经网络先驱）、\textbf{Irving Copi}（逻辑教科书作者）、\textbf{Raphael Demos}。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{四段婚姻。}1894 娶 \textbf{Alys Pearsall Smith}、1921 娶 \textbf{Dora Black}、1936 娶 \textbf{Patricia Spence}、1952 娶 \textbf{Edith Finch}；育有 3 个孩子（John、Kate、Conrad）。1931 年继承\textbf{第三代罗素伯爵}爵位。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{一个世纪的罗素。}从首相之孙到诺贝尔奖得主，从三一学院到世界舞台——Russell 活了 97 年，横跨维多利亚时代到登月时代。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一个学生成为哲学巨擘，一个家族横跨两个世纪。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {用逻辑照亮一个世纪};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {罗素悖论 · 《数学原理》 · 描述理论 · 分析哲学 · 和平主义 · 诺贝尔文学奖};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Bertrand Russell\quad·\quad 1872 -- 1970\quad·\quad 97岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Trellech (1872) → 剑桥 (1890) → 悖论 (1901) → 数学原理 (1910-13) → 爵位 (1931)};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.65cm]current page.center) {诺奖 (1950) → 罗素--爱因斯坦宣言 (1955) → 1970};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {He was an English philosopher, logician, and social reformer. -- Wikipedia};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace 罗素悖论 \enspace·\enspace 数学原理 \enspace·\enspace 描述理论 \enspace·\enspace 和平主义 \enspace·\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\paradoxslide
+\principiaslide
+\denotingslide
+\analyticslide
+\nobelslide
+\peacefulslide
+\criticslide
+\familyslide
+\closingslide
+\end{document}

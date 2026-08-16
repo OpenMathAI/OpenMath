@@ -1,0 +1,479 @@
+% =============================================================
+%  动力系统与辛拓扑的巨人：弗拉基米尔·阿诺德 (Vladimir Arnold)
+%  Beamer 演示 —— 参照 Milnor / Kolmogorov / Shafarevich 版式
+%  资料来源: mathematician/pages/Vladimir_Arnold + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：阿诺德 — 莫斯科红 + 辛几何金 + KAM蓝 + 黑海蓝 =====
+\definecolor{bgmain}{RGB}{248,246,243}
+\definecolor{coverprimary}{HTML}{111827}
+\definecolor{coveraccent}{HTML}{CC0000}          % 莫斯科红 — 苏联数学的旗帜
+\definecolor{coveramber}{HTML}{DAA520}            % 辛几何金 — 辛拓扑的光辉
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{18,20,30}
+\definecolor{muteddark}{RGB}{75,70,60}
+\definecolor{redpanel}{RGB}{250,225,230}          % 莫斯科红面板
+\definecolor{goldpanel}{RGB}{255,248,215}          % 辛几何金面板
+\definecolor{bluepanel}{RGB}{215,228,242}          % KAM蓝面板
+\definecolor{seapanel}{RGB}{215,228,235}           % 黑海蓝面板
+\definecolor{graypanel}{RGB}{242,244,248}
+\definecolor{greenpanel}{RGB}{220,240,228}
+\definecolor{silverpanel}{RGB}{240,240,242}
+% Arnold 四大支柱
+\definecolor{badgeKAM}{HTML}{1B4D6B}              % KAM — 深蓝
+\definecolor{badgeSymp}{HTML}{DAA520}             % 辛拓扑 — 金
+\definecolor{badgeClass}{HTML}{CC0000}            % 经典力学 — 莫斯科红
+\definecolor{badgeLegacy}{HTML}{1C3A4A}           % 遗产 — 黑海蓝
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!3] (current page.north west) rectangle (current page.south east);
+  \fill[badgeKAM!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeSymp!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeClass!6] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{sun}\enspace 动力系统与辛拓扑的巨人};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {弗拉基米尔·阿诺德};
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.8cm, yshift=-0.8cm]current page.north east) {
+    \includegraphics[width=2.4cm, keepaspectratio]{Vladimir_Arnold.jpg}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Vladimir Arnold\enspace·\enspace 1937 — 2010};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {KAM 理论 · 辛拓扑之父 · Hilbert 13 · ADE 分类 · 经典力学};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont, text=coverprimary!55!black]
+    at ([yshift=0.68cm]current page.center) {\faIcon{globe}\enspace 苏联 $\rightarrow$ 俄罗斯};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.25cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.25cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-1.0cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeKAM, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {动力系统};
+      \node[rounded corners=8pt, fill=badgeSymp, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=coverdark] at (-1.8,0) {辛拓扑};
+      \node[rounded corners=8pt, fill=badgeClass, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {经典力学};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {传承};
+    \end{tikzpicture}
+  };
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{medal}\enspace Lenin 1965 · Crafoord 1982 · Wolf 2001 · Shaw 2008\enspace|\enspace 苏联→俄罗斯\enspace|\enspace MSU · Steklov · Paris Dauphine};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Kolmogorov 最锋利的那把剑}{KAM 理论 · Hilbert 13 · Arnold 猜想 · 经典力学}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=bluepanel, draw=badgeKAM!50, text=badgeKAM!85!black]
+    (a) at (-5.7,1.05) {KAM 理论\\[2pt]太阳系为什么\\[2pt]大多数轨道稳定};
+  \node[nodebox, fill=goldpanel, draw=badgeSymp!60, text=badgeSymp!85!black]
+    (b) at (-1.9,1.05) {Hilbert 13\\19岁解决\\K--A表示定理};
+  \node[nodebox, fill=redpanel, draw=badgeClass!50, text=badgeClass!85!black]
+    (c) at (1.9,1.05) {Arnold 猜想\\[2pt]辛拓扑创立\\[2pt]催生Floer同调};
+  \node[nodebox, fill=seapanel, draw=badgeLegacy!50, text=badgeLegacy!85!black]
+    (d) at (5.7,1.05) {经典力学\\[2pt]反Bourbaki旗手\\46位博士生};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} "数学是物理中实验便宜的那部分。" —— 他的数学哲学概括在一个句子中。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 19岁解决Hilbert问题。创造了KAM理论。开创了辛拓扑。他是Kolmogorov最锋利的那把剑。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{早年：敖德萨到莫斯科 (1937–1957)}{Noether 的徒孙——一个注定不平凡的血统}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgeSymp!40] at (0,2.55)
+    {\textbf{1937 · 生于敖德萨 (乌克兰苏维埃社会主义共和国, 苏联)。}黑海之滨的港口城市。父亲 Igor Arnold 是数学家——**在 1920s 跟 Emmy Noether 学过代数**。母亲是犹太裔艺术史家。Noether 的精神通过父亲传到了 Arnold。};
+  \node[item, fill=bluepanel, draw=badgeKAM!40] at (0,1.05)
+    {\textbf{1948 · 父亲去世 (11 岁)。}开始自学父亲留下的 Euler 和 Hermite 著作。问父亲负数乘负数为什么得正数——父亲给的公理化答案让他**终身反感抽象公理**。这成为他后来反 Bourbaki 的根源。};
+  \node[item, fill=redpanel, draw=badgeClass!25] at (0,-0.25)
+    {\textbf{1954 · 入莫斯科国立大学。}老师包括 Kolmogorov, Gelfand, Pontriagin, Alexandrov。其中 Kolmogorov 注意到了这个年轻人——敖德萨的男孩即将成为苏联数学的旗手。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Noether 的徒孙。Euler 的读者。Kolmogorov 的学生。三条血脉汇聚在一个敖德萨男孩的身上。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. Hilbert 13 ---
+\newcommand{\hilbertslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{19岁解决 Hilbert 第 13 问题 (1957)}{"他已经不需要我了" —— Kolmogorov 这样评价他的 19 岁学生}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgeSymp!60] at (0,2.55)
+    {\textbf{Hilbert 第 13 问题。}任何连续函数能否用有限个更少变量的函数叠加表示？Kolmogorov (1956) 证明了三变量函数可以用有限个三变量函数表示。Arnold (1957) 进一步证明只需二变量函数。};
+  \node[item, fill=bluepanel, draw=badgeKAM!40] at (0,1.05)
+    {\textbf{Kolmogorov–Arnold 表示定理。}这个定理表明：任意多变量连续函数可以写成单变量连续函数的 (有限) 叠加。这是非线性近似理论的数学基石。};
+  \node[item, fill=redpanel, draw=badgeClass!25] at (0,-0.25)
+    {\textbf{2020s 重新发现。}K–A 表示定理最近被深度学习理论家重新发现——它提供了神经网络中"通用逼近定理"的早期数学基础。65 年后，Arnold 的 19 岁作品仍然在推动前沿研究。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 19岁——Kolmogorov 说："他已经不需要我了。" 65年后，深度学习重新发现了他的定理。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. KAM ---
+\newcommand{\kamslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{KAM 理论 — 太阳系为什么稳定？}{Kolmogorov 1954 + Arnold 1963 + Moser 1962 —— 三人各自拼图的结合}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeKAM!60] at (0,2.35)
+    {\textbf{问题。}如果太阳系只有太阳+地球 (二体问题) — 轨道是确定的椭圆。但加入木星、土星……N体问题是混沌的吗？KAM 理论给出了答案：**大多数轨道是拟周期的**——太阳系是长期稳定的。};
+  \node[item, fill=goldpanel, draw=badgeSymp!40] at (0,0.85)
+    {\textbf{三人分工。}Kolmogorov (1954): 提出框架和关键不等式。Moser (1962): 独立完成光滑版本（弱条件）。Arnold (1963): 完成解析版本——**技术上最难的部分**。三个人的贡献缺一不可。};
+  \node[item, fill=redpanel, draw=badgeClass!25] at (0,-0.45)
+    {\textbf{混沌与秩序。}KAM 环面是动力系统空间中的"秩序之岛"。当扰动足够大时，环面破裂——混沌诞生。KAM 理论精确地描述了从秩序到混沌的过渡——这是 20 世纪数学物理最深刻的洞见之一。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 混沌被困在 KAM 环面之间。Arnold 完成了三人中最难的那一块——太阳系的稳定性有了数学证明。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. Arnold 扩散 ---
+\newcommand{\diffusionslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Arnold 扩散与混沌}{Arnold 舌 · Arnold 网 · Arnold 猫 —— 从同步到混沌的一整套工具箱}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeKAM!55] at (0,2.55)
+    {\textbf{Arnold 舌 (1961)。}两个耦合振荡器的同步区域呈三角形——像"舌头"一样插入参数空间。这些舌在生物学（酶浓度周期）、电子学（锁相环）、神经科学中无处不在。};
+  \node[item, fill=goldpanel, draw=badgeSymp!40] at (0,1.05)
+    {\textbf{Arnold 扩散 (1964)。}即使在 N>2 维系统中，能量可以极其缓慢地穿越 KAM 环面——这是"缓慢混沌"。天体力学中的轨道不稳定性的一个基本机制。};
+  \node[item, fill=redpanel, draw=badgeClass!25] at (0,-0.25)
+    {\textbf{Arnold 猫映射 (1960s)。}环面上的一张猫脸——被剪切、拉长、压缩、重组。这是混沌动力学中最经典的教程例子。几代学生通过这张猫脸理解了双曲自同构和 Anosov 系统。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从Arnold舌到Arnold网到Arnold猫——他命名的混沌现象比任何数学家都多。猫脸是混沌的签名。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 辛拓扑 ---
+\newcommand{\symplecticslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{辛拓扑之父 (1970s–)}{Arnold 猜想 → Floer 同调 → Gromov–Witten → 镜对称}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgeSymp!60] at (0,2.35)
+    {\textbf{创立辛拓扑。}1970s，Arnold 将 Poincaré 的"几何定理"（环面上保面积映射的不动点）推广到任意辛流形。这是辛拓扑作为独立学科的开端——之前它是零散的结果，之后它是一整个领域。};
+  \node[item, fill=bluepanel, draw=badgeKAM!40] at (0,0.85)
+    {\textbf{Arnold 猜想 (1974)。}Hamilton 辛同胚的不动点数 ≥ 流形的 Morse 型 Betti 数之和。这个猜想看起来只是一个不等式——但它开启了 20 世纪最深远的数学革命之一。};
+  \node[item, fill=redpanel, draw=badgeClass!25] at (0,-0.45)
+    {\textbf{连锁反应。}猜想 → Floer 同调 (1988) → Gromov–Witten 不变量 → 量子上同调 → 镜对称猜想。从 Arnold 猜想出发的这条线是 20 世纪最壮观的数学连锁反应之一。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个猜想——启动了从 Floer 到镜对称的整个数学时代。这就是 Arnold 的威力。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. ADE ---
+\newcommand{\adeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{ADE 分类 — 简单奇点的 Weyl 群}{Thom 1965 IHÉS 研讨班 —— "深刻改变了我的数学宇宙"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgeSymp!55] at (0,2.55)
+    {\textbf{1965 · Thom 的 IHÉS 研讨班。}Arnold 参加了 René Thom 在 IHÉS 的突变论 (catastrophe theory) 研讨班。"我深深感激 Thom——1965 年的研讨班深刻改变了我的数学宇宙。"这是 Arnold 学术生涯的转折点。};
+  \node[item, fill=bluepanel, draw=badgeKAM!40] at (0,1.05)
+    {\textbf{ADE: Ak, Dk, Ek。}简单奇点的完整分类。A$_k$ = 握紧的拳头 ($x^{k+1}+y^2$), D$_k$ = 两条线相交 ($x^2y+y^{k-1}$), E$_k$ = 最复杂的特例。这是 Weyl 群与奇点几何之间的深刻桥梁。};
+  \node[item, fill=redpanel, draw=badgeClass!25] at (0,-0.25)
+    {\textbf{从奇点到弦论。}ADE 分类不只是在数学中——它在弦论中也有对应（D-膜上的规范群）。Thom 开了门，Arnold 把它变成了系统理论。加上 Lie 代数、McKay 对应——从奇点到群论到物理的一条金色纽带。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Thom 开了门，Arnold 铺了路——从握紧的拳头 (A$_k$) 到 E$_8$ 的谜，ADE 分类是数学之美的极致体现。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 流体力学 ---
+\newcommand{\fluidslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{流体力学：Euler 方程的几何 (1966)}{刚体旋转 ≈ 流体运动 —— 无穷维李群的统一视角}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeClass!55] at (0,2.55)
+    {\textbf{1966 · 发表在 IHÉS。}《无穷维李群的微分几何及其在理想流体力学的应用》——这篇论文是 Arnold 最出人意料的跨界杰作。从 Lie 群到流体——没有人想到这两个领域有联系。};
+  \node[item, fill=bluepanel, draw=badgeKAM!40] at (0,1.05)
+    {\textbf{统一的几何解释。}刚体旋转的 Euler 方程 = 不可压缩流体的 Euler 方程——它们具有**完全相同的几何结构**！旋转群 SO(3) 和体积保持微分同胚群——都是 Lie 群上的测地线方程。};
+  \node[item, fill=goldpanel, draw=badgeSymp!25] at (0,-0.25)
+    {\textbf{Euler–Arnold 方程。}这导致了 Arnold–Beltrami–Childress (ABC) 流——混沌流体运动的最小模型。从理想流体到湍流——Arnold 用几何照亮了流体力学中最困难的区域。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 旋转的陀螺和汹涌的海洋——同一条几何方程式。Arnold 看到了所有人都看不到的联系。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 经典力学 ---
+\newcommand{\mechanicslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{《经典力学的数学方法》(1974)}{反 Bourbaki 教科书的典范 —— 数代数学家和物理学家的必读书}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeClass!55] at (0,2.35)
+    {\textbf{不是公理先行，而是从具体问题出发。}从 Newton 第二定律到 Hamilton 方程到辛几何——每一步都由物理直觉驱动。这是对 Bourbaki (公理→定义→定理) 风格的反叛。};
+  \node[item, fill=goldpanel, draw=badgeSymp!40] at (0,0.85)
+    {\textbf{Liouville–Arnold 定理 (1974)。}完全可积系统的相空间 = 环面的纤维化。当系统有 $n$ 个独立守恒量时，运动被限制在 $n$ 维环面上——这是经典力学的"圣经定理"。};
+  \node[item, fill=bluepanel, draw=badgeKAM!25] at (0,-0.45)
+    {\textbf{影响的全球性。}翻译成多国语言。物理学家用它学数学，数学家用它学物理。它改变了力学教育——从公式背诵到几何理解。Arnold 证明了：好的教科书可以改变一个时代。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 没有抽象的公理——只有具体的例子和几何直觉。这是经典力学的"Kolmogorov–Arnold"效应。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. Kolmogorov 的学生 ---
+\newcommand{\studentslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Kolmogorov 的学生 — 传道者}{46 位博士生 · 独立莫斯科大学 —— 传承的火炬}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeKAM!55] at (0,2.55)
+    {\textbf{46 位博士。}指导了数学史上最多产的学派之一：Givental, Khovanskii, Vassiliev, Gusein-Zade, Ilyashenko, Khesin, Varchenko, Zakalyukin……从奇点论到辛拓扑到微分方程——每个方向都有他的学生。};
+  \node[item, fill=redpanel, draw=badgeClass!40] at (0,1.05)
+    {\textbf{拓扑 Galois 理论。}与 Khovanskii 共同创立——用微分拓扑研究微分方程的 Galois 群。这是 Picard–Vessiot 理论的现代推广——又一个 Arnold 开创的全新数学分支。};
+  \node[item, fill=seapanel, draw=badgeLegacy!25] at (0,-0.25)
+    {\textbf{1991 · 独立莫斯科大学。}苏联解体时，Arnold 联合创立了独立莫斯科大学——不受政府控制的自主学术火种。在没有官方贷款的情况下培养了一代杰出数学家。这是 Arnold 对俄罗斯数学的最大遗产。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 46个学生——从奇点论到辛拓扑。独立莫斯科大学——苏联解体后的数学火种。他既是创造者,也是传承者。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 数学哲学 ---
+\newcommand{\philosophyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数学是物理的一部分 — 反 Bourbaki 旗手}{"Mathematics is the part of physics where experiments are cheap."}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeClass!55] at (0,2.35)
+    {\textbf{数学哲学。}Arnold 最著名的格言："数学是物理中实验便宜的那部分。"数学不是人类自由的约定——它是自然规律的精炼。他的哲学直接源于 Euler, Newton, Poincaré 的传统。};
+  \node[item, fill=goldpanel, draw=badgeSymp!40] at (0,0.85)
+    {\textbf{Arnold 原则。}"发现很少归功于正确的人。"(Stigler 定律的 Arnold 版本) 他以此命名——因为他时刻意识到苏联数学家的工作常被西方忽视和重新命名。};
+  \node[item, fill=bluepanel, draw=badgeKAM!25] at (0,-0.45)
+    {\textbf{Bourbaki 批评者。}他指责 Bourbaki"杀死了数学教学"。他认为数学应该以例子和直觉为先——不能以公理和定义开头。他的教科书《经典力学》《常微分方程》《几何方法》正是为此而写。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "数学是物理的一部分。" "Bourbaki 杀死了数学教学。" —— 他一生都在为 Euler 的传统而战斗。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 荣誉 ---
+\newcommand{\honorsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{荣誉：从 Lenin 到最后的大满贯}{27岁获 Lenin 奖 —— 数学史上获奖最多的苏联数学家之一}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeClass!55] at (0,2.9)
+    {\textbf{Lenin 奖 (1965, 27岁！)。}苏联最高科学奖——授予他在 KAM 理论和 Hilbert 第 13 问题的贡献。27 岁获得列宁奖——在苏联是前所未有的。};
+  \node[item, fill=goldpanel, draw=badgeSymp!45] at (0,1.55)
+    {\textbf{Crafoord 奖(1982) · Lobachevsky 奖(1992) · Harvey 奖(1994)。}首届 Crafoord 奖——与 Louis Nirenberg 分享。Lobachevsky——俄罗斯数学最高荣誉。Harvey——以色列技术研究院。};
+  \node[item, fill=seapanel, draw=badgeLegacy!40] at (0,0.35)
+    {\textbf{Wolf 奖 (2001) · Heineman 数学物理奖 (2001) · Shaw 奖 (2008)。}Wolf + Heineman 同一年。Shaw 奖（"东方诺贝尔"）——与 Ludwig Faddeev 分享。Royal Society 外籍院士。};
+  \node[item, fill=bluepanel, draw=badgeKAM!25] at (0,-0.85)
+    {\textbf{俄罗斯国家奖 (2007)。}"祖国功勋"四级勋章。1990 年当选苏联科学院院士。美国艺术与科学院院士。Madrid Complutense 大学荣誉博士。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.35) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Lenin 1965 → Crafoord 1982 → Wolf 2001 → Shaw 2008 —— 四十三年的荣誉之路，从列宁的苏联到东方的诺贝尔。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{那些以 Arnold 命名的概念}{从 KAM 到 Arnold 猫 —— 13+ 个以他命名的数学概念}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=bluepanel, draw=badgeKAM!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeKAM} 动力系统}\\[3pt]KAM 理论\\Arnold 扩散 · 舌 · 网\\Arnold 猫映射};
+  \node[leg, fill=goldpanel, draw=badgeSymp!60, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSymp} 辛与奇点}\\[3pt]Arnold 猜想\\ADE 分类\\Arnold 不变量};
+  \node[leg, fill=redpanel, draw=badgeClass!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeClass} 力学与几何}\\[3pt]Euler–Arnold 方程\\Liouville–Arnold 定理\\Arnold–Givental 猜想};
+  \node[leg, fill=seapanel, draw=badgeLegacy!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy} 传承}\\[3pt]46位博士 · 独立大學\\《经典力学》\\Gömböc};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} "Discoveries are rarely attributed to the correct person." — Arnold 原则}\\[4pt]
+    {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      KAM $\to$ Arnold 猜想 $\to$ Arnold 舌 $\to$ Arnold 扩散 $\to$ Arnold 猫 $\to$ Arnold 网\\
+      $\to$ Euler–Arnold $\to$ Liouville–Arnold $\to$ Arnold–Givental $\to$ Arnold 谱序列\\
+      13+ 个概念以他命名——从太阳系的稳定到猫脸的混沌，他的名字是动力系统和几何的语言。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {Mathematics is the part of physics};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {where experiments are cheap.};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.2cm]current page.center)
+    {— Vladimir Arnold};
+  \node[anchor=center, font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black]
+    at ([yshift=-2.0cm]current page.center)
+    {弗拉基米尔·阿诺德\quad Vladimir Arnold\quad 1937\,--\,2010\quad Odessa → Moscow → Paris};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{sun}\enspace KAM理论与辛拓扑·动力系统革命者·Hilbert第13问题\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\hilbertslide
+\kamslide
+\diffusionslide
+\symplecticslide
+\adeslide
+\fluidslide
+\mechanicslide
+\studentslide
+\philosophyslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

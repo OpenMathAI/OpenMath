@@ -1,0 +1,514 @@
+% =============================================================
+%  以直觉穿越时代的印度天才：拉马努金 (Srinivasa Ramanujan)
+%  Beamer 演示 —— 参照 Hardy / Weyl 版式
+%  资料来源：mathematician/pages/Srinivasa_Ramanujan + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：檀香暖橙 + 印度赭石红 + 象牙纸白 + 墨夜黑 =====
+\definecolor{bgmain}{RGB}{250,245,235}
+\definecolor{coverprimary}{HTML}{5C1E03}
+\definecolor{coveraccent}{HTML}{D4782F}
+\definecolor{badgeIntuition}{HTML}{D4782F}         % 檀香暖橙
+\definecolor{badgeNumber}{HTML}{8B2500}             % 印度赭石深红
+\definecolor{badgeAnalysis}{HTML}{C9A84C}           % 神庙金
+\definecolor{badgeLegacy}{HTML}{1B3A5C}             % 墨蓝
+\definecolor{coverdark}{HTML}{2C1810}
+\definecolor{covermuted}{HTML}{8B7355}
+\definecolor{titlecolor}{RGB}{60,25,10}
+\definecolor{muteddark}{RGB}{120,95,70}
+\definecolor{intuitionpanel}{RGB}{254,240,228}
+\definecolor{numberpanel}{RGB}{254,235,228}
+\definecolor{analysispanel}{RGB}{252,244,224}
+\definecolor{legacypanel}{RGB}{228,236,248}
+\definecolor{graypanel}{RGB}{248,245,240}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeIntuition!6] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeNumber!6] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAnalysis!6] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!5] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  % 肖像照片 —— 右上角，与 Cartan 风格统一
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt, anchor=north east]
+    at ([xshift=-0.27cm, yshift=-0.8cm]current page.north east)
+    {\includegraphics[width=1.92cm]{images/portrait.jpeg}};
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=badgeIntuition!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{globe}\enspace India\enspace·\enspace 以直觉穿越时代的天才};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {拉马努金};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Srinivasa Ramanujan\enspace·\enspace 1887 — 1920};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {mock theta 函数 · $\tau$ 猜想 · $\pi$ 公式 · 三本笔记 · 燃烧的 32 年};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeIntuition, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {直觉\\Intuition};
+      \node[rounded corners=8pt, fill=badgeNumber, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {数论\\Number Th.};
+      \node[rounded corners=8pt, fill=badgeAnalysis, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=badgeAnalysis!65!black] at (1.8,0) {分析\\Analysis};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {遗产\\Legacy};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"一个方程对我来说没有意义，除非它表达了神的思考。" —— 拉马努金};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace 英属印度 Erode · Madras · Cambridge\enspace|\enspace FRS 1918 · Trinity Fellow\enspace|\enspace 32 岁};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么拉马努金独一无二}{没有正规训练的天才 · 剑桥 FRS · 32 年燃烧 · 百年回响}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=11pt,inner ysep=9pt,font=\fontsize{8}{10}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=intuitionpanel,draw=badgeIntuition!55,text=badgeIntuition!85!black]
+    (a) at (-5.7,1.93) {自学成才的天才\\[2pt]不上大学·石板上演算\\"没人能想象出\\[2pt]这些定理"};
+  \node[nodebox,fill=numberpanel,draw=badgeNumber!55,text=badgeNumber!85!black]
+    (b) at (-1.9,1.93) {1913 给 Hardy 的信\\[2pt]120 个定理无证明\\"它们一定是真的——\\[2pt]没人有想象力发明它们"};
+  \node[nodebox,fill=analysispanel,draw=badgeAnalysis!55,text=badgeAnalysis!85!black]
+    (c) at (1.9,1.93) {近3900条公式\\[2pt]大多没有证明\\[2pt]绝大多数\\[2pt]已被后人验证正确};
+  \node[nodebox,fill=legacypanel,draw=badgeLegacy!55,text=badgeLegacy!85!black]
+    (d) at (5.7,1.93) {百年解谜之旅\\[2pt]mock theta 等了82年\\[2pt]笔记本至今\\[2pt]仍产出新定理};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=12pt,text width=13.4cm,align=center] at (0,-0.65) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} Hardy 的天平：Hardy 25 · Littlewood 30 · Hilbert 80 · Ramanujan 100}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} Hardy 称他为 "a mathematician of the highest quality, a man of altogether exceptional originality and power."}\\[1pt]
+    {\fontsize{7.8}{9.5}\selectfont\color{covermuted} 他不是在计算数学——他是在接收数学。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{神童在石板上 (1887–1903)}{12 岁推导三角学 · Carr 的 Synopsis · 一个公式塑造一个天才}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=intuitionpanel,draw=badgeIntuition!55] at (0,2.55)
+    {\textbf{1887 · 生于英属印度 Erode。}泰米尔婆罗门家庭，父亲是纱丽店职员。2 岁患天花幸存，之后两个弟妹均夭折——他是唯一存活下来的孩子。5 岁入学，11 岁时家中两位寄住的大学生已无法再教他数学。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!35] at (0,1.1)
+    {\textbf{13 岁 · 掌握高等三角学。}从 S. L. Loney 的《三角学》自学。16 岁，别人借他一本 Carr 的《纯粹数学与应用数学基础结果纲要》——两卷、约 5000 条定理、几乎没有证明。这本书塑造了 Ramanujan 的全部风格：跳跃式的、直觉导向的、直接写结果。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.35)
+    {\textbf{16 岁 · 独立研究 Bernoulli 数。}计算 Euler–Mascheroni 常数至 15 位小数。同学说："很少能理解他，对他充满敬畏。" 1904 年高中毕业，获数学最高奖——校长的评价："他配得上比满分更高的分数。"};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Carr 的 Synopsis 改变了一切。一本只有公式的书——恰好配得上一个不用证明的天才。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 失学 ---
+\newcommand{\dropoutslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{失学的数学家 (1904–1912)}{退学 · 贫困 · 石板上孤独演算 · 港务局三等职员}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=numberpanel,draw=badgeNumber!55] at (0,2.55)
+    {\textbf{1904 · 大学退学。}获奖学金入读 Kumbakonam 政府艺术学院——但除数学外所有科目不及格，失去奖学金。转读 Pachaiyappa's 学院，同样因偏科而失败。不善英语、生理学、梵文。"他只会数学，数学，数学。"};
+  \node[item,fill=graypanel,draw=badgeAnalysis!35] at (0,0.85)
+    {\textbf{1906–1912 · 极度贫困中的自学。}没有学位，找不到工作。在马德拉斯街头靠零工糊口。买不起纸——在石板上用粉笔演算，写出结果后用肘擦掉，只把最终结果记在笔记本上。1909 年结婚，妻子只有 10 岁（当时印度的包办婚姻习俗）。};
+  \node[item,fill=intuitionpanel,draw=badgeIntuition!35] at (0,-0.55)
+    {\textbf{1912 · 马德拉斯港务局三等职员。}月薪 30 卢比。上司 Narayana Iyer 是印度数学会成员，发现了他的天赋。另一位上司 Sir Francis Spring 写道："我们发现了一个数学天才……他能在一瞬间完成需要数小时才能完成的工作。"余下时间全用于数学研究。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.2) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个连大学文凭都没有的港口小职员——但他的笔记本里藏着改变数学的宝藏。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 给 Hardy 的信 ---
+\newcommand{\letterslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{1913年1月16日：给 Hardy 的信}{120 个没有证明的定理 · "它们的真实超越了想象力"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=intuitionpanel,draw=badgeIntuition!55] at (0,2.75)
+    {\textbf{"先生，我是马德拉斯港务局的一名职员，年薪 20 英镑……"} Ramanujan 写了 10 页信，附上约 120 个定理——没有证明，只有公式。此前已遭伦敦两位顶尖数学家 Baker 和 Hobson 的拒绝，论文原封退回。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,1.15)
+    {\textbf{Hardy 晨读时以为遇到了疯子或恶作剧。}但到了晚上，与 Littlewood 一起研究后，他意识到这些公式"完全击败了我"。更关键的是 Littlewood 的独立判断："我相信他至少和 Jacobi 一样伟大。"——这句话决定了 Ramanujan 的命运。};
+  \node[item,fill=graypanel,draw=badgeNumber!20] at (0,-0.35)
+    {\textbf{其中一个积分公式让 Hardy 终生难忘：}
+    $\int_0^\infty\!\frac{1+(x/(b+1))^2}{1+(x/a)^2}\!\times\!\frac{1+(x/(b+2))^2}{1+(x/(a+1))^2}\!\times\!\cdots\,dx = \frac{\sqrt{\pi}}{2}\frac{\Gamma(a+\frac12)\Gamma(b+1)\Gamma(b-a+1)}{\Gamma(a)\Gamma(b+\frac12)\Gamma(b-a+\frac12)}$
+    Hardy 说："这个公式完全击败了我。我必须见到这个人。"};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "这是我一生中唯一的浪漫事件。" —— G.H. Hardy}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 到剑桥 ---
+\newcommand{\cambridgeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{从马德拉斯到剑桥 (1914)}{Neville 亲赴印度 · 女神梦中的应允 · 跨越大洋}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=intuitionpanel,draw=badgeIntuition!55] at (0,2.55)
+    {\textbf{种姓禁忌。"我不能去外国。"}作为正统婆罗门，跨越大洋被视为亵渎。Hardy 连续数月写信说服无效。最终派 E. H. Neville 亲赴马德拉斯。Ramanujan 的母亲梦见女神 Namagiri 命令她"不要再阻挡儿子实现他的人生目标"。旅途成行。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!35] at (0,0.85)
+    {\textbf{1914 年 3 月 17 日 · 登船 S.S. Nevasa。}留给 Hardy 一句话："我在你身上找到了一个同情地看待我劳动的朋友。" 在马德拉斯大学已获两年研究奖学金（月薪 75 卢比）。抵达剑桥后，直接开始与 Hardy 和 Littlewood 合作。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.45)
+    {\textbf{Hardy 的评价。}看过更多笔记后，Littlewood 说："我可以相信他至少和 Jacobi 一样伟大。" Hardy 说："我只能把他和 Euler 或 Jacobi 相比。""};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个从未离开过印度的职员——现在走进了 Newton 曾经住过的 Trinity 学院。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 合作 + 1729 ---
+\newcommand{\collabslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Hardy–Ramanujan 合作 (1914–1917)}{分拆渐近公式 · 圆法 · 高度合成数 · 1729 出租车}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=numberpanel,draw=badgeNumber!55] at (0,2.35)
+    {\textbf{分拆函数的渐近公式 (1917)。}整数 $n$ 有 $p(n)$ 种分拆方式。$p(200) \approx 3.97$ 万亿！Hardy 和 Ramanujan 给出了 $p(n) \sim \frac{1}{4n\sqrt{3}} e^{\pi\sqrt{2n/3}}$——这个公式精确到令人生畏。Hans Rademacher 后来给出精确收敛公式。};
+  \node[item,fill=intuitionpanel,draw=badgeIntuition!55] at (0,0.85)
+    {\textbf{1729 —— 最著名的出租车号码。}Hardy 去医院看望病中的 Ramanujan："我坐的出租车号码是 1729，一个相当无趣的数字。" Ramanujan 立刻回答："不，Hardy！这是一个非常有趣的数字——它是可以用两种方式表示为两个立方数之和的最小正整数：$1^3 + 12^3 = 9^3 + 10^3$。"};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!20] at (0,-0.45)
+    {\textbf{两种文化的碰撞。}Hardy 是严格的证明主义者、无神论者；Ramanujan 凭直觉和洞察工作、虔诚的印度教徒。Hardy 试图填补他的教育空白，同时不压制他的灵感——一个两边都不容易的平衡。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Littlewood："每个正整数都是 Ramanujan 的私人朋友。" | 这个方法后来演化为 Hardy–Littlewood 圆法。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. pi 公式 (核心公式页) ---
+\newcommand{\piformulaSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Ramanujan 的 $\pi$ 公式}{\small 极快收敛的无穷级数——现代计算 $\pi$ 的核心工具}
+\vspace{-0.25cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=6pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,2.85)
+    {\textbf{公式一：Ramanujan–Sato $\pi$ 级数 (1914)。}
+    $\displaystyle \frac{1}{\pi} = \frac{2\sqrt{2}}{9801} \sum_{k=0}^{\infty} \frac{(4k)!\,(1103+26390k)}{(k!)^4\;396^{4k}}$
+    \textbf{收敛速度令人震惊}：第一项即给出 $\pi$ 的 6 位小数；两项给出 14 位小数！\\[1pt]
+    {\footnotesize\color{covermuted} 基于判别式 $d=-4\times58=-232$（类数 $h(d)=2$）。$1103+26390k$ 来自 $e^{\pi\sqrt{58}} \approx 396^4 - 104.000000177\ldots$}};
+  \node[item,fill=numberpanel,draw=badgeNumber!55] at (0,0.87)
+    {\textbf{公式二：惊艳 Hardy 的 $\frac{2}{\pi}$ 级数 (1913年第一封信)。}
+    $\displaystyle 1 - 5\!\left(\frac{1}{2}\right)^{\!3} + 9\!\left(\frac{1\cdot 3}{2\cdot 4}\right)^{\!3} - 13\!\left(\frac{1\cdot 3\cdot 5}{2\cdot 4\cdot 6}\right)^{\!3} + \cdots = \frac{2}{\pi}$
+    这个结果来自超几何级数——第一次看到时让 Hardy "完全被击败"。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!35] at (0,-0.35)
+    {\textbf{为何这些公式如此重要？} Ramanujan 的 $\pi$ 级数是 20 世纪最快的 $\pi$ 计算算法的基础。1985 年，Gosper 用其中一条公式首次计算 $\pi$ 至 1700 万位。Chudnovsky 兄弟将 Ramanujan 的级数推广，用于多次世界纪录计算。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.6) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他不需要知道椭圆曲线和模形式的理论——但他给出的公式恰好处在这个理论的深层核心。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 直觉 ---
+\newcommand{\intuitionslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{"直觉压倒一切"}{梦示 · Namagiri 女神 · "方程必须表达神的思考"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=intuitionpanel,draw=badgeIntuition!55] at (0,2.65)
+    {\textbf{Ramanujan 本人的描述：}"睡着时，我经历了一种不寻常的体验。有一道由流动的血液形成的红色屏幕。我在观察它。突然一只手开始在屏幕上书写。那只手写下了一系列椭圆积分。它们深深印入我的脑海。一醒来，我就把它们记了下来。"};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!35] at (0,1.05)
+    {\textbf{"一个方程对我来说没有意义，除非它表达了神的思考。"} Ramanujan 将一切数学灵感归于 Namagiri 女神（Namakkal 的 Mahalakshmi）。这不仅是神秘主义——这是一种完全不同的数学认知方式。};
+  \node[item,fill=graypanel,draw=badgeNumber!20] at (0,-0.35)
+    {\textbf{关于"Carr 的 Synopsis"的争议。}Berndt 指出：Ramanujan 的成果均记录在笔记本中，不是凭空出现的"神启"。但 Ramanujan 本人并不认为直觉来源与理性工作相矛盾——他认为两者是一体的。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Hardy："他的洞察力惊人……他是我唯一能将其与 Euler 或 Jacobi 比较的人。"}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 疾病 ---
+\newcommand{\illnessslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{饥饿 · 疾病 · 自杀未遂 (1917–1919)}{战时英国 · 素食饥饿 · 自杀 · FRS · 回归印度}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=numberpanel,draw=badgeNumber!55] at (0,2.55)
+    {\textbf{严格的婆罗门素食 × 英国战时配给 = 致命组合。}一战期间，英国实行食品配给制。Ramanujan 拒绝一切非素食，自己做饭但做得不好。经常挨饿。营养不良 + 过度工作 = 健康不可逆转地崩溃。};
+  \node[item,fill=intuitionpanel,draw=badgeIntuition!55] at (0,0.95)
+    {\textbf{1917年末 · 自杀未遂。}诊断结核病和严重维生素缺乏后，Ramanujan 在伦敦地铁站跳下轨道。苏格兰场以"企图自杀"（当时属犯罪）逮捕了他。Hardy 出面干预后才获释。他在疗养院度过了数月。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!35] at (0,-0.45)
+    {\textbf{1918 · 病床上的最高荣誉。}即便如此，他仍持续进行数学研究。1918 年 5 月 2 日当选皇家学会院士（FRS）——第二位印度人，史上最年轻的 FRS 之一。10 月，成为 Trinity College 首位印度籍院士。1994 年分析表明：他患的可能是肝阿米巴病——当时可治愈。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.2) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 宗教 · 战争 · 种族 · 阶级 —— 四重困境。而他在病床上仍在产出革命性的数学。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. Mock Theta ---
+\newcommand{\mockthetaSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{最后的光芒：mock theta 函数 (1920)}{临终前给 Hardy 的最后一封信 · 82 年的谜 · Zwegers 2002}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=intuitionpanel,draw=badgeIntuition!55] at (0,2.55)
+    {\textbf{1920 年 1 月，在马德拉斯病床上。}Ramanujan 给 Hardy 写了最后一封信，描述了他称之为"mock theta functions"的一类全新函数。他说它们"进入数学就像真正的 theta 函数一样美观"。这是他一生最后的、最神秘的数学。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,0.95)
+    {\textbf{Hardy 无法理解。}Hardy 写道："我必须坦白……我从未能理解 mock theta 函数。" 整整 82 年里，这些函数一直是一个迷——数学家们知道它们是重要的，但无人能说出它们到底是什么。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.45)
+    {\textbf{2002 年 · Sander Zwegers 的博士论文。}荷兰数学家 Zwegers 揭示了 mock theta 函数的深层结构：它们是调和弱 Maass 形式的全纯部分。82 年的等待终于结束。2020年，Ken Ono 和他的学生们继续推进——发现 mock theta 与黑洞物理的联系。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他临终时发现的函数——21 世纪的数学家才刚开始理解。而他写这些时，年仅 32 岁。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. tau 函数 ---
+\newcommand{\tauSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Ramanujan $\tau$ 函数与猜想 (1916)}{$\tau(n)$ 的神秘性质 · Deligne 1974 · Fields 奖的回响}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=numberpanel,draw=badgeNumber!55] at (0,2.55)
+    {\textbf{1916 · Ramanujan $\tau$ 函数。}定义判别模形式 $\Delta(q) = q\prod_{n=1}^\infty(1-q^n)^{24} = \sum \tau(n)q^n$。$\tau$ 函数满足许多神秘的乘性和同余性质：$\tau(p) \equiv 1 + p^{11} \pmod{691}$。这些同余式启发了 Serre 的 Galois 表示理论。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,0.95)
+    {\textbf{Ramanujan–Petersson 猜想。}$|\tau(p)| \leq 2 p^{11/2}$。这是模形式 Fourier 系数大小的最精确估计。1974 年，Deligne 用 étale cohomology 证明了 Weil 猜想，Ramanujan 猜想作为推论也随之得证。1978 年，Deligne 获 Fields 奖。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!20] at (0,-0.45)
+    {\textbf{与 Fermat 大定理的隐秘联系。}Deligne 的工作是理解 Galois 表示与模形式之对应的关键环节。这个对应正是 Wiles 证明 Fermat 大定理的数学框架。Ramanujan 1916 年笔下的 $\tau(n)$ 在近 80 年后成为攻克数论圣杯的基石。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Serre 说："Ramanujan 的观察改变了对模形式的整个思维方式。" 这不是夸大。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 数论宇宙 ---
+\newcommand{\numbertheorySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Ramanujan 的数论宇宙}{分拆 · 1729 · 高度合成数 · Rogers–Ramanujan 恒等式}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=numberpanel,draw=badgeNumber!55] at (0,2.55)
+    {\textbf{整数分拆。}与 Hardy 合作，给出了 $p(n)$ 的渐近公式：$p(n) \sim \frac{1}{4n\sqrt{3}} e^{\pi\sqrt{2n/3}}$。发现了分拆函数的三条著名同余式：$p(5k+4) \equiv 0 \pmod 5$，$p(7k+5) \equiv 0 \pmod 7$，$p(11k+6) \equiv 0 \pmod{11}$。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,0.95)
+    {\textbf{Rogers–Ramanujan 恒等式。}Ramanujan 独立重新发现了 Rogers 1894 年给出的分拆恒等式。Hardy 说："这只能被描述为一种启示。" 这些恒等式在统计力学（硬六边形模型）和顶点算子代数中有深刻应用。};
+  \node[item,fill=intuitionpanel,draw=badgeIntuition!20] at (0,-0.45)
+    {\textbf{高度合成数 (1915 论文)。}Ramanujan 的 B.A. 论文，超过 50 页，系统研究了约数最多的整数。Hardy 称之为"代数学的背水湾"，但承认 Ramanujan 在其中展现了"对不等式代数的非凡掌控"。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他提出了 Ramanujan 质数、Ramanujan–Nagell 方程、Ramanujan–Soldner 常数……他的名字刻进了数论的 DNA。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 笔记本 ---
+\newcommand{\notebooksslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{三本笔记本与"Lost Notebook"}{Watson 的 40 年 · Berndt 的 20 年 · 五卷评注 · 仍在发现新定理}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,2.55)
+    {\textbf{三本笔记本 · 约 3900 条结果。}Ramanujan 在石板上推演，只把最终结果记入笔记本——没有证明、没有推导。Hardy 是第一个系统整理这些笔记的人，Ramanujan 死后他发表了多篇基于笔记的论文。大多数结果已被验证正确，至今仍偶有令人意外的发现。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,0.85)
+    {\textbf{G. N. Watson (1930s–1965)。}Watson 将数十年余生献给 Ramanujan 笔记的整理。他去世后，工作由 B. M. Wilson 继续。1976 年，George Andrews 在 Trinity 图书馆重新发现了第 4 本笔记——87 页散页——这就是著名的"Lost Notebook"。};
+  \node[item,fill=numberpanel,draw=badgeNumber!35] at (0,-0.65)
+    {\textbf{Bruce Berndt (1985–1998) · 五卷评注版。}Berndt 花了超过 20 年，出版了五卷本的《Ramanujan's Notebooks》——为 Ramanujan 的每条结果提供证明和现代解读。Andrews 和 Berndt 又出版了五卷本的《Ramanujan's Lost Notebook》。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.4) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 直到 2012 年，研究者仍从他笔记中"简单性质"和"类似输出"的评论里发现深刻的数论结果。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{拉马努金的遗产}{用直觉穿越时代——32 年的生命，100 年的回响}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt,inner xsep=7pt,inner ysep=9pt,text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont,align=center}
+]
+  \node[leg,fill=intuitionpanel,draw=badgeIntuition!55,line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeIntuition}mock theta}\\[3pt]82年后被理解\\[2pt]黑洞物理新联系\\Zwegers 2002};
+  \node[leg,fill=numberpanel,draw=badgeNumber!55,line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeNumber}$\tau$ 猜想}\\[3pt]Deligne 1974\\Fields 奖 1978\\Fermat 大定理桥梁};
+  \node[leg,fill=analysispanel,draw=badgeAnalysis!55,line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAnalysis!80!black}$\pi$ 公式}\\[3pt]最快收敛算法\\[2pt]亿位 $\pi$ 计算\\[2pt]模形式起点};
+  \node[leg,fill=legacypanel,draw=badgeLegacy!55,line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy}笔记本}\\[3pt]3900 条结果\\10 卷评注\\[2pt]仍在产出新定理};
+  \node[draw=coveraccent!65,fill=graypanel,rounded corners=6pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他没有学到证明——因为他的数学不需要证明就能到达正确。}\\[4pt]
+    {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      Ramanujan 猜想 $\to$ Deligne $\to$ Fields 奖 $\to$ Fermat 大定理。\\
+      Mock theta $\to$ Zwegers $\to$ 调和 Maass 形式 $\to$ 黑洞物理。\\
+      三本笔记 $\to$ Watson $\to$ Berndt $\to$ 10 卷评注 $\to$ 仍在产出新论文。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 16. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {他不是在"计算"数学——};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {他是在"接收"数学。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-3.5cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=3.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.6cm]current page.center)
+    {"一个方程对我来说没有意义，除非它表达了神的思考。" —— 拉马努金};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-2.4cm]current page.center)
+    {斯里尼瓦瑟 · 拉马努金\quad Srinivasa Ramanujan\quad 1887 — 1920};
+  \node[anchor=center, font=\fontsize{6.5}{8}\selectfont, text=badgeLegacy!60]
+    at ([yshift=-3.1cm]current page.center)
+    {他的故事不是关于一个人如何学习数学——而是关于数学如何在一个人身上显现。};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{infinity}\enspace mock theta \enspace|\enspace Ramanujan 猜想 \enspace|\enspace $\pi$ 公式 \enspace|\enspace 三本笔记 \enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\dropoutslide
+\letterslide
+\cambridgeslide
+\collabslide
+\piformulaSlide
+\intuitionslide
+\illnessslide
+\mockthetaSlide
+\tauSlide
+\numbertheorySlide
+\notebooksslide
+\legacyslide
+\closingslide
+\end{document}

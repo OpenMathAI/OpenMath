@@ -1,0 +1,408 @@
+% =============================================================
+%  法兰西数学的丰碑：雅克·阿达玛 (Jacques Hadamard)
+%  Beamer 演示 —— 参照 Klein / Bellman 版式
+%  资料来源：mathematician/pages/Jacques_Hadamard + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：法兰西蓝 + 波尔多红 + 理性金 + 象牙白 =====
+\definecolor{bgmain}{RGB}{247,246,243}
+\definecolor{coverprimary}{HTML}{1B2D5A}
+\definecolor{coveraccent}{HTML}{8B2545}
+\definecolor{badgeNumb}{HTML}{1B3D7A}          % 法兰西蓝 (数论/PDE)
+\definecolor{badgeProd}{HTML}{8B2545}          % 波尔多红 (Hadamard积/矩阵)
+\definecolor{badgeCreat}{HTML}{B88634}         % 理性金 (创造力/心理学)
+\definecolor{badgeLegacy}{HTML}{4A5568}         % 石版灰
+\definecolor{coverdark}{HTML}{152040}
+\definecolor{covermuted}{HTML}{6B7A8C}
+\definecolor{titlecolor}{RGB}{18,28,50}
+\definecolor{muteddark}{RGB}{78,88,108}
+\definecolor{numbpanel}{RGB}{228,235,248}
+\definecolor{prodpanel}{RGB}{252,232,236}
+\definecolor{creatpanel}{RGB}{252,244,230}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!2] (current page.north west) rectangle (current page.south east);
+  \fill[badgeNumb!6] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeProd!5] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeCreat!5] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!5] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.03, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.03, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+  \node[badgeNumb!5, font=\fontsize{28}{34}\selectfont] at ([xshift=0.3cm, yshift=-1.0cm]current page.north west) {$\pi(x)$};
+  \node[badgeProd!4, font=\fontsize{26}{32}\selectfont] at ([xshift=-0.5cm, yshift=1.2cm]current page.south east) {$\odot$};
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.8cm, yshift=-0.7cm]current page.north east) {
+    \begin{tikzpicture}
+      \clip[rounded corners=6pt] (0,0) rectangle (2.6,3.2);
+      \node[anchor=center] at (1.3,1.6) {\includegraphics[width=2.6cm, height=3.2cm, keepaspectratio]{images/portrait.jpg}};
+    \end{tikzpicture}
+  };
+  \draw[coveraccent!50, line width=1.2pt, rounded corners=6pt] ([xshift=-0.8cm, yshift=-0.7cm]current page.north east) rectangle ++(-2.6cm,-3.2cm);
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=-2.1cm, yshift=-3.98cm]current page.north east) {Jacques Hadamard, c.1950};
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=badgeNumb!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{infinity}\enspace 素数定理的证明者 · 阿达玛积之父 · 数学创造力的洞察者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {雅克·阿达玛};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Jacques Hadamard\enspace·\enspace 1865 — 1963};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {Hadamard 积 · 素数定理 · Hadamard 矩阵 · 适定性 · Cauchy–Hadamard 公式};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeNumb, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {素数定理\\1896\\[2pt]数论·PDE};
+      \node[rounded corners=8pt, fill=badgeProd, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {Hadamard 积\\[2pt]反向传播\\[2pt]矩阵分析};
+      \node[rounded corners=8pt, fill=badgeCreat, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {创造力研究\\[2pt]心理学\\[2pt]无词思维};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {97 岁\\CNRS 金质奖\\[2pt]法兰西公学院};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.83cm]current page.center)
+    {"他在 1896 年证明了素数定理——然后在 100 年后，他的 Hadamard 积驱动了深度学习的反向传播。"};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace 法国 Versailles → Paris\enspace|\enspace ENS·Bordeaux·Sorbonne·Collège de France\enspace|\enspace 97 岁};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么阿达玛独一无二}{素数定理的证明者 · Hadamard 积的命名者 · 从数学到认知科学的先驱}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=11pt,inner ysep=9pt,font=\fontsize{8}{10}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=numbpanel,draw=badgeNumb!55,text=badgeNumb!85!black]
+    (a) at (-5.7,1.05) {素数定理 (1896)\\[2pt]与 de la Vallée-Poussin\\[2pt]独立证明\\[2pt]复分析的辉煌应用};
+  \node[nodebox,fill=prodpanel,draw=badgeProd!55,text=badgeProd!85!black]
+    (b) at (-1.9,1.05) {Hadamard 积\\[2pt]$A \odot B$ 逐元素乘积\\[2pt]深度学习反向传播\\[2pt]矩阵·不等式};
+  \node[nodebox,fill=creatpanel,draw=badgeCreat!55,text=badgeCreat!85!black]
+    (c) at (1.9,1.05) {数学创造力\\[2pt]《发明心理学》\\[2pt]无语言思维\\[2pt]调查 100 位物理学家};
+  \node[nodebox,fill=legacypanel,draw=badgeLegacy!55,text=badgeLegacy!85!black]
+    (d) at (5.7,1.05) {法兰西公学院\\[2pt]接替 Poincaré\\Fréchet·Lévy·Weil\\Dreyfus 事件};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=12pt,text width=13.4cm,align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} Picard 的学生 · Poincaré 的继承者 · Fréchet 与 Weil 的导师\\[1pt]数论·偏微分方程·复分析·泛函分析·微分几何——没有他不涉猎的领域}\\[1pt]
+    {\fontsize{8.0}{10}\selectfont\color{covermuted} 从素数定理到反向传播——Hadamard 的名字跨越两个世纪的数学风景。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年与教育 ---
+\newcommand{\earlylifeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{早年与教育 (1865–1892)}{Versailles 出生 · ENS 榜首入学 · Picard 门下 · 1892 博士与大奖}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=numbpanel,draw=badgeNumb!55] at (0,2.55)
+    {\textbf{早年。}1865 年 12 月 8 日生于法国 Versailles。父亲 Amédée Hadamard 是一名教师，犹太血统。先后就读 Lycée Charlemagne 和 Lycée Louis-le-Grand（其父在此任教）。1884 年以第一名考入 École Normale Supérieure（同时也以第一名考入 École Polytechnique，选择了 ENS）。};
+  \node[item,fill=creatpanel,draw=badgeCreat!35] at (0,0.85)
+    {\textbf{ENS 的星光。}在 ENS 受教于 Jules Tannery、Hermite、Darboux、Appell、Goursat 和 Picard——19 世纪末法国数学的黄金一代。1892 年获博士学位，导师 Charles Émile Picard 和 Jules Tannery，论文《Essai sur l'étude des fonctions données par leur développement de Taylor》。};
+  \node[item,fill=graypanel,draw=badgeProd!20] at (0,-0.55)
+    {\textbf{1892：双料殊荣。}同年以 Riemann zeta 函数的研究获得法国科学院的 Grand Prix des Sciences Mathématiques 。这是他进入世界数学舞台的时刻——27 岁。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1892 年结婚，妻子 Louise-Anna Trénel，也是犹太人。三子二女——他的家庭与数学一起生长。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 素数定理 ---
+\newcommand{\pntSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{素数定理的证明 (Prime Number Theorem, 1896)}{\faIcon{chart-line}\enspace $\pi(x) \sim x/\ln x$ · 复分析的辉煌应用 · 与 de la Vallée-Poussin 的传奇竞赛}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=numbpanel,draw=badgeNumb!55] at (0,2.65)
+    {\textbf{素数定理是什么？}素数定理断言：小于 $x$ 的素数个数 $\pi(x)$ 渐近于 $x/\ln x$。Gauss 和 Legendre 在 18 世纪末就猜到了这个公式，但整整 100 年没有人能证明。Riemann 在 1859 年用 zeta 函数给出了路线图——但它需要证明 $\zeta(1+it) \neq 0$。};
+  \node[item,fill=prodpanel,draw=badgeProd!55] at (0,0.85)
+    {\textbf{1896：两人独立完成。}Hadamard 和比利时数学家 Charles de la Vallée-Poussin 在同一年独立地证明了素数定理。两人都使用了复分析工具。Hadamard 证明的关键在于：Riemann zeta 函数在 $\Re(s)=1$ 上无零点。这是 19 世纪分析数论的巅峰。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{为什么重要？}素数定理的证明不仅是数论的胜利——它是复分析（18 世纪的技术）渗透进数论（古老王国）的象征。Riemann 的梦想被 Hadamard 实现了。这场证明开启了整个 20 世纪解析数论的大厦。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.57) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个世纪的问题，两个独立的头脑，同一年完成——1896 是素数年。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Hadamard 积 ---
+\newcommand{\hdprodSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Hadamard 积：从矩阵分析到深度学习反向传播}{\faIcon{times-circle}\enspace $A \odot B$ — 逐元素乘法 · 优雅的代数 · AI 时代的地下基石}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=prodpanel,draw=badgeProd!55] at (0,2.65)
+    {\textbf{Hadamard 积是什么？}两个同型矩阵的逐元素乘积：$(A \odot B)_{ij} = A_{ij} \cdot B_{ij}$。它不同于通常的矩阵乘法——没有行列交错，只是对应位置相乘。Hadamard 在研究矩阵不等式时引入了这个概念。};
+  \node[item,fill=numbpanel,draw=badgeNumb!55] at (0,0.85)
+    {\textbf{深度学习中的 Hadamard 积。}在反向传播中，每一层的梯度计算需要将上游梯度与激活函数的导数逐元素相乘：$\delta_l = (W_{l+1}^\top \delta_{l+1}) \odot \sigma'(z_l)$。这个 $\odot$ 就是 Hadamard 积。\\[3pt]在 PyTorch / TensorFlow 中，{\ttfamily *} 运算符默认就是 Hadamard 积——绝大多数 AI 工程师只知道这是"按位相乘"，不知道它的数学起源来自 {\bfseries 1893 年 Hadamard 的行列式研究}。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{Hadamard 矩阵。}Hadamard 在研究行列式的最大绝对值时引入了 Hadamard 矩阵：元素为 $\pm 1$，且 $HH^T = nI$。这类矩阵在今天用于 CDMA 通信（3G 编码）、量子计算、编码理论。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Hadamard 在 1893 年研究了行列式不等式——100 多年后，他的逐元素乘法成了 AI 的血液。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 复分析与Cauchy-Hadamard ---
+\newcommand{\complexSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{复分析与泛函分析：Hadamard 的分析王国}{Cauchy–Hadamard 公式 · 因式分解定理 · 间隙定理 · 三圆定理}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=numbpanel,draw=badgeNumb!55] at (0,2.65)
+    {\textbf{Cauchy–Hadamard 公式。}幂级数 $\sum a_n z^n$ 的收敛半径为 $R = 1/\limsup \sqrt[n]{|a_n|}$。这个公式以 Cauchy 和 Hadamard 命名——但 Hadamard 给出了最清晰的现代形式。它现在是每个数学系本科生必须掌握的工具。};
+  \node[item,fill=creatpanel,draw=badgeCreat!55] at (0,0.85)
+    {\textbf{Hadamard 因式分解定理。}任何有限阶的整函数都可以表示为：$f(z) = z^m e^{g(z)} \prod_{n=1}^{\infty} E_p(z/a_n)$。这是 Weierstrass 因式分解定理的深化——Hadamard 根据函数的增长阶精确定义了乘积因子。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{Ostrowski–Hadamard 间隙定理 · 三圆定理。}间隙定理：如果幂级数系数有足够大的"空白"，收敛边界是自然边界。三圆定理：解析函数在同心圆上的最大模的对数是半径的凸函数。这些结果深刻影响了整个 20 世纪的复分析。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 如果说 Weierstrass 建造了复分析的大教堂，Hadamard 则为它装上了最精确的钟表。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. PDE ---
+\newcommand{\pdeSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{偏微分方程的革命}{适定性 (Well-posed Problem) · 降维法 · Cauchy 问题}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=numbpanel,draw=badgeNumb!55] at (0,2.65)
+    {\textbf{适定性 (Well-posed Problem)。}Hadamard 首次明确提出了 PDE 的"适定性"概念：一个问题的解必须 (1) 存在，(2) 唯一，(3) 连续依赖于初始数据。这三个条件现在定义了整个 PDE 理论的目标。他通过反例（Hadamard 的反例）展示了不适定的 Cauchy 问题——解对初值无连续依赖性。};
+  \node[item,fill=prodpanel,draw=badgeProd!55] at (0,0.85)
+    {\textbf{降维法 (Method of Descent)。}将高维波动方程的解通过积分降维到低维。例如，三维波动方程 → 二维波动方程。这是一个优雅的技术——用简单的维度获得困难的维度的结果。Hadamard 在 1923 年的 Yale 讲座中系统阐述了这一方法。};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.55)
+    {\textbf{百科全书式的工作。}Hadamard 的《Cauchy 问题与双曲型线性偏微分方程》(1932) 是 PDE 理论的经典。他在 Sorbonne、École Polytechnique、Collège de France 的讲座将 PDE 从 19 世纪物理直觉发展为 20 世纪数学的支柱。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "适定性"是 Hadamard 送给应用数学的最持久的礼物——它定义了问题是否能被科学地回答。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 创造力 ---
+\newcommand{\creativitySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数学创造力的心理学}{《数学领域中的发明心理学》· 无词思维 · 赫尔姆霍兹四阶段}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=creatpanel,draw=badgeCreat!55] at (0,2.65)
+    {\textbf{一部独一无二的著作。}1945 年出版的《An Essay on the Psychology of Invention in the Mathematical Field》是数学史上罕见的自我分析。Hadamard 以普鲁斯特式的内省研究自己的思维过程——他声称自己的数学思维"几乎无言的"（largely wordless），通常伴随完整解决方案的意象。};
+  \node[item,fill=numbpanel,draw=badgeNumb!55] at (0,0.85)
+    {\textbf{调查 100 位物理学家。}Hadamard 向 100 位当时的顶尖物理学家（约 1900 年代）发出问卷，询问他们如何工作。他收集了 Gauss、Helmholtz、Poincaré 等人的第一手资料。结论：创造过程有四阶段——准备、孵化、顿悟、验证。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{与语言的决裂。}Hadamard 坚决反对将语言等同于思维。他描述 Poincaré 在登上公共汽车时突然意识到 Fuchsian 函数与双曲几何等价——没有语言参与。"思想可以在符号之前存在。数学的真理先于它们的表达。"};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Hadamard 可能是唯一一个既证明了素数定理、又严肃研究了思维本质的数学家。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. Dreyfus事件与二战 ---
+\newcommand{\dreyfusSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{德雷福斯事件与二战流亡}{犹太身份 · 政治良知 · 从法国到哥伦比亚再到伦敦}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=prodpanel,draw=badgeProd!55] at (0,2.65)
+    {\textbf{与 Dreyfus 的家族纽带。}Hadamard 的远房表妹 Lucie 嫁给了 Alfred Dreyfus——德雷福斯事件的核心人物。这一事件撕裂了法国社会：反犹太主义 vs 人权。Hadamard 积极参与为 Dreyfus 辩护，从此成为犹太事业的坚定支持者——尽管他自称无神论者。};
+  \node[item,fill=numbpanel,draw=badgeNumb!55] at (0,0.85)
+    {\textbf{二战逃离。}1940 年德军入侵，Hadamard 逃往法国南部。1941 年维希政府允许他离境前往美国。他在 Columbia University（纽约）获得访问职位。1944 年移居伦敦，1945 年战争结束后返回法国——80 岁的老人。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{97 年的生命。}Hadamard 活到 97 岁，跨越了法国从第二帝国到第五共和国的全部历程。1936 年他受邀访问中国——一个用数学连接世界的灵魂。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1865→1963：一个几乎活到登月时代的 19 世纪法国数学家。他的生命本身就是一部历史。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 学生与传承 ---
+\newcommand{\studentsSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{法兰西公学院的传承：Fréchet · Lévy · Weil}{Poincaré 的继承者 · 泛函分析 · 概率论 · 代数几何}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=numbpanel,draw=badgeNumb!55] at (0,2.65)
+    {\textbf{继承 Poincaré。}1916 年，Hadamard 当选法国科学院院士——接替的席位正是 Henri Poincaré 留下的。他还参与了 Poincaré 全集的编辑。这是法国数学两大山脉的交接仪式。};
+  \node[item,fill=creatpanel,draw=badgeCreat!55] at (0,0.85)
+    {\textbf{杰出的学生们。}Maurice René Fréchet（度量空间·泛函分析之父）、Paul Lévy（概率论巨匠·Lévy 过程）、Szolem Mandelbrojt（Benoît Mandelbrot 的叔叔！）、André Weil（代数几何·Bourbaki 创始人）。这份学生名单本身就是半部 20 世纪数学史。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{法兰西公学院的讲台。}1909 年起任 Collège de France 教授，同时在 École Polytechnique 和 École Centrale 任分析教授。他在三所法国最顶尖的学府同时授课——这是法国数学制度的独特荣誉。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Picard → Hadamard → Fréchet / Lévy / Weil ——这是法国分析数学的完整传承线。Hadamard 位于正中。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 荣誉、晚年与遗产 ---
+\newcommand{\legacySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{荣誉、晚年与遗产}{CNRS 金质奖章 · 荣誉军团大十字 · Cartan–Hadamard 定理 · 以他命名的一切}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=creatpanel,draw=badgeCreat!55] at (0,2.65)
+    {\textbf{荣誉满身。}1892：Grand Prix des Sciences Mathématiques；1898：Prix Poncelet；1916：法国科学院院士（接替 Poincaré）；1920：荷兰皇家科学院外籍院士；1929：苏联科学院外籍院士；1932：伦敦皇家学会外籍院士；1956（91岁！）：CNRS 金质奖章；荣誉军团大十字勋章。};
+  \node[item,fill=numbpanel,draw=badgeNumb!55] at (0,0.85)
+    {\textbf{以 Hadamard 命名的一切。}Hadamard 积、Hadamard 矩阵、Hadamard 不等式、Cauchy–Hadamard 公式、Cartan–Hadamard 定理（负曲率流形是 $\mathbb{R}^n$ 的覆盖空间）、Hadamard 因式分解定理、Ostrowski–Hadamard 间隙定理、Hermite–Hadamard 不等式、Hadamard 流形……};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.55)
+    {\textbf{终极的广博。}1963 年 10 月 17 日逝世于巴黎，享年 97 岁。他的一生见证了数学从 19 世纪的直观分析到 20 世纪公理化的全部转型。数论、复分析、泛函分析、PDE、微分几何、创造力心理学、数学教育——他是最后一个真正意义上的"通才数学家"之一。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1865→1963。从普法战争前夜到登月时代，Hadamard 是法国数学的不朽见证者。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.2cm]current page.center) {"数学的真理先于它们的表达。"};
+  \node[anchor=center, font=\fontsize{16}{22}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.2cm]current page.center) {Hadamard 积 $\odot$ — 从 19 世纪末的行列式不等式};
+  \node[anchor=center, font=\fontsize{16}{22}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=-0.6cm]current page.center) {到 21 世纪人工智能的核心运算};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-1.3cm, xshift=-3.5cm]current page.center)
+    -- ([yshift=-1.3cm, xshift=3.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-2.0cm]current page.center)
+    {—— 雅克·阿达玛, 1865–1963};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-2.8cm]current page.center)
+    {雅克·阿达玛\quad Jacques Hadamard\quad 1865 — 1963};
+  \node[anchor=center, font=\fontsize{6.5}{8}\selectfont, text=badgeLegacy!60]
+    at ([yshift=-3.5cm]current page.center)
+    {从素数定理到反向传播——Hadamard 的名字刻在数学的每一块基石上。};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{infinity}\enspace Hadamard 积 \enspace|\enspace 素数定理 \enspace|\enspace 适定性 \enspace|\enspace 创造力研究 \enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlylifeslide
+\pntSlide
+\hdprodSlide
+\complexSlide
+\pdeSlide
+\creativitySlide
+\dreyfusSlide
+\studentsSlide
+\legacySlide
+\closingslide
+\end{document}

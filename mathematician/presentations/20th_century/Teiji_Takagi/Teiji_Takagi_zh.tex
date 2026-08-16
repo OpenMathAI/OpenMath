@@ -1,0 +1,295 @@
+% =============================================================
+%  类域论的孤岛创造者：高木貞治 (Teiji Takagi)
+%  Hilbert 的学生 · 类域论创立者 · 日本文化勋章
+%  资料来源：Wikipedia (Teiji Takagi)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：日本朱红 + 数论墨黑 + 樱花淡粉 =====
+\definecolor{bgmain}{RGB}{247,245,240}
+\definecolor{coverprimary}{HTML}{BF3131}
+\definecolor{coveraccent}{HTML}{1A1A2E}
+\definecolor{coverdark}{HTML}{1A1A1A}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{badgeCFT}{HTML}{BF3131}
+\definecolor{badgeAnalysis}{HTML}{D4A5A5}
+\definecolor{badgeHonors}{HTML}{C9A84C}
+\definecolor{badgeLegacy}{HTML}{2E4A62}
+\definecolor{titlecolor}{RGB}{18,18,25}
+\definecolor{muteddark}{RGB}{85,75,70}
+\definecolor{cftpanel}{RGB}{248,237,237}
+\definecolor{analysispanel}{RGB}{250,245,245}
+\definecolor{honorspanel}{RGB}{252,247,235}
+\definecolor{legacypanel}{RGB}{237,242,248}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCFT!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeAnalysis!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeHonors!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{17}{20.5}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{6.5}{8.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace Japan\enspace|\enspace Hilbert 的学生\enspace|\enspace 类域论创立者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {高木貞治};
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.3cm, yshift=-0.3cm]current page.north east) {\includegraphics[width=1.92cm]{Teiji_Takagi.jpg}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Teiji Takagi\enspace·\enspace 1875 — 1960\enspace·\enspace 84岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Takagi 存在定理 · 类域论 · Blancmange 曲线 · 日本数学之父};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeCFT, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-5.5,0) {类域论\\[2pt]存在定理\\[2pt]理想类群对应\\Abel扩张};
+      \node[rounded corners=8pt, fill=badgeAnalysis, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (-1.85,0) {分析\\[2pt]Takagi曲线\\Blancmange\\[2pt]处处连续不可导};
+      \node[rounded corners=8pt, fill=badgeHonors, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white!92] at (1.85,0) {荣誉\\[2pt]文化勋章\\ICM副主席\\Fields首届评委};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\footnotesize\bfseries, text=white] at (5.5,0) {传承\\[2pt]日本数学之父\\[2pt]教科书奠基\\Langlands前驱};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {"1920 年 ICM 几乎无人听懂 →
+    1926 年 Hasse 的 Klassenkörperbericht 使世界认识到他的伟大。
+    —— 类域论的创立者被追认。"};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace 岐阜 → 东京 → 哥廷根\enspace|\enspace Hilbert 的学生\enspace|\enspace ICM 1920 · 1932 · 1936};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 总览 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{孤岛上的天才：类域论的创立者}{Hilbert 的日本学生 · 一战隔绝中独立突破 · 日本数学的奠基人}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=cftpanel,draw=badgeCFT!55,text=badgeCFT!85!black]
+    (a) at (-5.5,1.1) {类域论\\[2pt]Takagi 存在定理\\Abel扩张对应\\[2pt]理想类群};
+  \node[nodebox,fill=analysispanel,draw=badgeAnalysis!55,text=badgeAnalysis!85!black]
+    (b) at (-1.85,1.1) {分析学\\[2pt]Takagi曲线\\Autonne–Takagi\\[2pt]复对称矩阵分解};
+  \node[nodebox,fill=honorspanel,draw=badgeHonors!55,text=badgeHonors!85!black]
+    (c) at (1.85,1.1) {荣誉\\[2pt]文化勋章\\ICM副主席\\Fields首届评委};
+  \node[nodebox,fill=legacypanel,draw=badgeLegacy!55,text=badgeLegacy!85!black]
+    (d) at (5.5,1.1) {传承\\[2pt]日本数学之父\\Iyanaga/Nakayama\\Langlands前驱};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.30) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 高木贞治是 David Hilbert 的日本学生——}\\{\fontsize{7.0}{9.0}\selectfont 在第一次世界大战期间，与欧洲数学界完全隔绝的情况下，\\[1pt]他独立完成了类域论的整个体系——Takagi 存在定理是 20 世纪纯数学最伟大的成就之一。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} 1920 年 ICM Strasbourg 宣讲时几乎无人听懂——直到 1926 年 Hasse 的 Klassenkörperbericht，世界才认识到他的伟大。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年：从岐阜到哥廷根 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{从岐阜乡村到哥廷根：Hilbert 的日本学生 (1875–1914)}{Japan\enspace|\enspace 岐阜 → 东京帝国大学 → 哥廷根 → Hilbert 的门下}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=cftpanel,draw=badgeCFT!55] at (0,2.55)
+    {\textbf{1875 · 岐阜乡村少年。}高木贞治出生于日本岐阜县 Kazuya 村。中学时期，由于日本尚无数学教科书，他开始自学英文数学著作——这一经历塑造了他终身用多语种阅读数学文献的习惯。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,0.85)
+    {\textbf{东京帝国大学。}进入当时日本唯一的大学——东京帝国大学（今东京大学）。他用 Salmon 的 *Algebra* 和 Weber 的 *Lehrbuch der Algebra* 学习数学——这两本书成为他走向数论世界的钥匙。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.65)
+    {\textbf{哥廷根 · Hilbert。}高木远赴德国哥廷根大学，在 **David Hilbert** 的指导下完成研究。当时的哥廷根是世界数学的中心——Hilbert、Klein、Minkowski 正引领着数学的现代化。高木成为 Hilbert 极少数来自日本的门徒之一。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一个岐阜乡村少年 → 东京帝国大学 → 哥廷根 → Hilbert 的门徒——明治时代日本数学的传奇开篇。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 孤岛上的天才 ---
+\newcommand{\islandslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{孤岛上的天才：一战隔绝中的独立突破 (1914–1920)}{第一次世界大战 · 与欧洲隔绝 · 独自完成类域论 · 1920 ICM 无人听懂}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=cftpanel,draw=badgeCFT!55] at (0,2.65)
+    {\textbf{1914 · 一战爆发。}第一次世界大战切断了日本与欧洲之间的一切学术联系。对于绝大多数数学家，这意味着失去方向；对于高木，这意味着——他可以不受欧洲传统的干扰，独立追随自己的思路。};
+  \node[item,fill=cftpanel,draw=badgeCFT!55] at (0,0.65)
+    {\textbf{1914–1918 · 类域论的诞生。}在完全孤立的情况下，高木贞治完成了{\bf 类域论的核心证明}——**Takagi 存在定理**。他证明了：代数数域 K 的每个有限 Abel 扩张，与 K 的理想类群的某个商群之间存在完美的一一对应。这是将数域的 Galois 理论与理想论统一起来的最高成就。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,-0.80)
+    {\textbf{1920 · ICM Strasbourg。}战争结束后，高木在斯特拉斯堡 ICM 上宣讲他的理论——题为 \emph{Sur quelques théoremes généraux de la théorie des nombres algébriques}。然而，当时德国数学家被排除在大会之外，而代数数论的核心研究者几乎全在德国——他的报告几乎无人能真正理解。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.2) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 隔绝不是诅咒——是祝福。没有欧洲数学界的"常识"束缚，高木看到了别人看不到的道路。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 迟到的认可 ---
+\newcommand{\recognitionslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{迟到的认可：Artin → Hasse → 世界级大师 (1922–1926)}{1922 Emil Artin 首先理解 · 1925 Hasse DMV 报告 · 1926 Klassenkörperbericht}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=cftpanel,draw=badgeCFT!55] at (0,2.55)
+    {\textbf{1922 · Emil Artin 第一个看懂。}高木的论文在日本发表两年后，德国数学家 Emil Artin 仔细研读了高木的工作——他立刻意识到，这是代数数论的一个完整体系，远超 Weber 的工作。Artin 成为高木在欧洲的第一个"知音"。};
+  \node[item,fill=honorspanel,draw=badgeHonors!55] at (0,0.75)
+    {\textbf{1925 · Hasse DMV 报告。}Helmut Hasse——当时最活跃的德国数论学家——在1925年 Danzig 的德国数学会 (DMV) 大会上专题报告了高木的类域论。这是德国数学界首次系统地接触到高木的工作。Carl Ludwig Siegel 也同时指出其重要性。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,-0.65)
+    {\textbf{1926 · Klassenkörperbericht。}Hasse 在 DMV 年报上发表了著名的 *Klassenkörperbericht*（类域论报告）——以整整 100 页的篇幅系统介绍并推广了高木的类域论。从此，高木贞治被公认为世界顶尖的数论学家之一。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 他等了 6 年——从 1920 的无人听懂到 1926 的世界承认。这不是"被发现"，这是"被追认"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 日本数学之父 ---
+\newcommand{\japanslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{日本数学之父：从教科书到国际舞台 (1926–1960)}{教科书的奠基 · ICM 副主席 · Fields 首届评委 · Purple 密码}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,2.35)
+    {\textbf{日本数学教科书的创始人。}高木贞治编写了大量日本数学和几何教科书——在当时的日本，这意味着为整个民族奠定了现代数学教育的基础。他的教科书影响了几代日本数学家。};
+  \node[item,fill=cftpanel,draw=badgeCFT!55] at (0,0.55)
+    {\textbf{国际舞台。}1932 年出任 ICM Zürich 副主席——这是极少数早期亚洲数学家在 ICM 担任的高级职务。1936 年，他被选为**首届 Fields 奖评选委员会**委员——从被忽视的局外人变成了评判世界最佳数学家的裁判。};
+  \node[item,fill=analysispanel,draw=badgeAnalysis!55] at (0,-0.85)
+    {\textbf{战争与密码。}二战期间，高木贞治参与了日本 Purple 密码机的数学开发工作——这是二战最重要的密码系统之一。他的数论知识在战争中以另一种方式服务于国家。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 从岐阜村到东京帝国大学，再到世界舞台——高木贞治独自定义了日本现代数学的起点。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 荣誉与传承 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{荣誉与传承：文化勋章与 Langlands 的前驱}{日本文化勋章 · 四位数学传人 · 类域论在 Langlands 纲领中的延续}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=honorspanel,draw=badgeHonors!55] at (0,2.35)
+    {\textbf{日本文化勋章 (Order of Culture)。}高木贞治被授予日本最高荣誉——文化勋章和文化功劳者称号。在日本，这是为国家文化做出不可磨灭贡献的最高认可。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,0.55)
+    {\textbf{四位杰出学生。}高木培养了 Shokichi Iyanaga（弥永昌吉，日本战后数学领袖）、Tadasi Nakayama（中山正，中山引理）、Kenjiro Shoda（正田建次郎，代数学）、Sigekatu Kuroda（黑田成胜，数理论理学）。这四位学生构成了日本战后数学的中坚力量。};
+  \node[item,fill=cftpanel,draw=badgeCFT!55] at (0,-0.85)
+    {\textbf{Langlands 纲领的前驱。}高木的类域论是关于 Abel 扩张的最完美描述——这正是 Langlands 纲领的 **GL(1)** 情形。当 Robert Langlands 在 1967 年写下他的著名猜想时，高木已在七年前离开人世——但他完成的类域论，是 Langlands 大厦最深最牢的地基。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 类域论 (1920) → Artin 互反律 (1927) → Chevalley (1930s) → Langlands 纲领 (1967) → Wiles 证明 Fermat (1994) —— 这场千年接力赛的第一棒，是由高木递出的。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {在孤立中走到数学的最前沿};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {类域论 · 日本数学之父};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {高木貞治\enspace·\enspace Teiji Takagi\enspace·\enspace 1875 — 1960};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Takagi 存在定理 → Artin 互反律 → Hasse Klassenkörperbericht → Langlands 纲领};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeLegacy!70]
+    at ([yshift=-2.1cm]current page.center) {"internationally recognized as one of the world's leading number theorists." — 自 1926 年 Klassenkörperbericht 之后};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace 类域论 \enspace|\enspace 分析学 \enspace|\enspace 日本数学 \enspace|\enspace Langlands 前驱 \enspace|\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}
+}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\islandslide
+\recognitionslide
+\japanslide
+\legacyslide
+\closingslide
+\end{document}

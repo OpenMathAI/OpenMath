@@ -1,0 +1,679 @@
+% =============================================================
+%  计算的普罗米修斯：艾伦·图灵 (Alan Turing)
+%  Beamer 演示 —— 参照 Weil / von Neumann / Hilbert 版式
+%  资料来源：mathematician/pages/Alan_Turing + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：图灵 —— 深黑 + 亮青（磷光终端）+ 电光蓝 + 暖金 =====
+\definecolor{bgmain}{RGB}{242,244,248}
+\definecolor{coverprimary}{HTML}{0D1B1E}   % 深黑带青 — 计算机终端的底色
+\definecolor{coveraccent}{HTML}{00BCD4}    % 亮青色 — 算法的光芒（原 B0BEC5 冷银太灰）
+\definecolor{coverteal}{HTML}{009688}      % 青绿色 — 磷光终端色（原 00897B）
+\definecolor{coverwarm}{HTML}{FFB300}      % 暖金 — 生命的温度（原 F9A825）
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{10,25,28}
+\definecolor{muteddark}{RGB}{70,90,95}
+\definecolor{cyanpanel}{RGB}{218,243,240}   % 青底面板（原 224,242,240 — 更饱和）
+\definecolor{bluepanel}{RGB}{224,234,248}
+\definecolor{goldpanel}{RGB}{255,244,222}   % 暖金面板（原 252,246,230 — 更暖）
+\definecolor{graypanel}{RGB}{238,242,246}
+\definecolor{darkpanel}{RGB}{230,236,242}   % 暗面板（原 228,232,235 — 更亮）
+\definecolor{redpanel}{RGB}{255,230,235}    % 红色面板（原 250,235,238 — 更饱和）
+% 图灵四大支柱 — 大幅提升饱和度
+\definecolor{badgecomputation}{HTML}{00BFA5}  % 可计算性/Turing 机 — 亮青绿（原 00897B）
+\definecolor{badgecrypto}{HTML}{455A64}       % 密码学/Enigma — 深蓝灰（原 37474F）
+\definecolor{badgeAI}{HTML}{5C6BC0}           % 人工智能 — 靛蓝电光（原 90A4AE 冷银太灰）
+\definecolor{badgebio}{HTML}{FFA000}          % 形态发生/生物 — 琥珀暖金（原 F9A825）
+\definecolor{badgephilosophy}{HTML}{8D6E63}  % 心灵哲学/Morcom — 暖灰褐（原 6D4C41 太暗）
+\definecolor{amberpanel}{RGB}{255,243,225}   % Morcom叙事面板 — 奶油暖色（原 250,245,235）
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% ===== 多变边框栏：不同领域不同配色 =====
+% 可计算性 — 亮青绿侧边竖条
+\newcommand{\cyanbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[badgecomputation, opacity=0.22] (current page.south west) rectangle ([yshift=0.50cm]current page.south east);
+  \draw[badgecomputation, opacity=0.85, line width=1.6pt] ([yshift=0.50cm]current page.south west) -- ([yshift=0.50cm]current page.south east);
+  \fill[badgecomputation, opacity=0.35] (current page.north west) rectangle ([xshift=0.30cm]current page.south west);
+\end{tikzpicture}%
+}
+
+% 密码学 — 深蓝灰底部双线 + 右侧竖条
+\newcommand{\darkbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[badgecrypto, opacity=0.20] (current page.south west) rectangle ([yshift=0.50cm]current page.south east);
+  \draw[badgecrypto, opacity=0.85, line width=1.0pt] ([yshift=0.50cm]current page.south west) -- ([yshift=0.50cm]current page.south east);
+  \draw[badgecrypto, opacity=0.50, line width=0.6pt] ([yshift=0.60cm]current page.south west) -- ([yshift=0.60cm]current page.south east);
+  \fill[badgecrypto, opacity=0.30] (current page.north east) rectangle ([xshift=-0.28cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% AI — 亮靛蓝左侧竖标 + 底部虚线
+\newcommand{\silverbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \draw[badgeAI, opacity=0.80, line width=1.2pt, dash pattern=on 3pt off 2pt] ([yshift=0.48cm]current page.south west) -- ([yshift=0.48cm]current page.south east);
+  \fill[badgeAI, opacity=0.28] (current page.north west) ++(0,-0.18) rectangle ++(0.25,-1.8);
+  \node[anchor=north west, font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=badgeAI!80!black, rotate=90]
+    at ([xshift=0.08cm, yshift=-0.6cm]current page.north west) {A R T I F I C I A L\ \  I N T E L L I G E N C E};
+\end{tikzpicture}%
+}
+
+% 生物数学 — 琥珀暖金波浪底部
+\newcommand{\goldbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[badgebio, opacity=0.20] (current page.south west) rectangle ([yshift=0.50cm]current page.south east);
+  \draw[badgebio, opacity=0.85, line width=1.6pt] ([yshift=0.50cm]current page.south west) -- ([yshift=0.50cm]current page.south east);
+  \draw[badgebio, opacity=0.45, line width=1.0pt] ([yshift=0.70cm]current page.south west) -- ([yshift=0.40cm, xshift=2.0cm]current page.south west)
+    -- ([yshift=0.70cm, xshift=4.0cm]current page.south west) -- ([yshift=0.40cm, xshift=6.0cm]current page.south west)
+    -- ([yshift=0.70cm, xshift=8.0cm]current page.south west) -- ([yshift=0.40cm, xshift=10.0cm]current page.south west)
+    -- ([yshift=0.70cm, xshift=12.0cm]current page.south west) -- ([yshift=0.40cm, xshift=14.0cm]current page.south west)
+    -- ([yshift=0.70cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 悲剧/暗面 — 暗红渐变底部 + 左右双暖金角标
+\newcommand{\redbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \shade[bottom color=coverprimary!35, top color=coverprimary!0] (current page.south west) rectangle ([yshift=0.75cm]current page.south east);
+  \draw[coverwarm, opacity=0.70, line width=1.2pt] ([yshift=0.48cm]current page.south west) -- ([yshift=0.48cm]current page.south east);
+  \fill[coverwarm, opacity=0.35] (current page.south west) ++(0,0.1) rectangle ++(0.22,0.50);
+  \fill[coverwarm, opacity=0.35] (current page.south east) ++(-0.22,0.1) rectangle ++(0.22,0.50);
+\end{tikzpicture}%
+}
+
+% 遗产/总结 — 四种颜色高亮拼接底部条
+\newcommand{\gradientbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[badgecomputation, opacity=0.30] (current page.south west) rectangle ([xshift=4.0cm, yshift=0.50cm]current page.south west);
+  \fill[badgecrypto, opacity=0.30]      ([xshift=4.0cm]current page.south west) rectangle ([xshift=8.0cm, yshift=0.50cm]current page.south west);
+  \fill[badgeAI, opacity=0.30]          ([xshift=8.0cm]current page.south west) rectangle ([xshift=12.0cm, yshift=0.50cm]current page.south west);
+  \fill[badgebio, opacity=0.30]         ([xshift=12.0cm]current page.south west) rectangle ([yshift=0.50cm]current page.south east);
+  \draw[coveraccent, opacity=0.55, line width=1.0pt] ([yshift=0.50cm]current page.south west) -- ([yshift=0.50cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgecomputation!25] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgecrypto!20] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coveraccent!25] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgebio!18] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!75!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{terminal}\enspace 计算的普罗米修斯};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {艾伦·图灵};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Alan Turing\enspace·\enspace 1912 — 1954};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coverteal!70!black]
+    at ([yshift=1.1cm]current page.center) {英国数学家 · Turing 机的发明者 · Enigma 的破译者 · AI 的先知};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgecomputation, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {可计算性\\Computation};
+      \node[rounded corners=8pt, fill=badgecrypto, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {密码学\\Crypto};
+      \node[rounded corners=8pt, fill=badgeAI, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {人工智能\\AI};
+      \node[rounded corners=8pt, fill=badgebio, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {生物数学\\Bio};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"他给了我们'可计算'的数学定义，世界从此不同。"};
+  % Turing 肖像（右上）
+  \node[draw=coverteal!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.5cm,height=3.2cm,keepaspectratio]{portrait.jpg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.2cm]current page.center)
+    {Alan Turing, 1930s};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{award}\enspace OBE 1946 · FRS 1951\enspace|\enspace Cambridge · Bletchley · Manchester};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么图灵是改变人类文明的数学家}{Turing 机 · Enigma · AI · 生物数学 —— 一个思想改变一切}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=cyanpanel, draw=badgecomputation!50, text=coverprimary!85!black]
+    (a) at (-5.7,1.05) {Turing 机\\[2pt]可计算性\\[2pt]停机问题};
+  \node[nodebox, fill=darkpanel, draw=badgecrypto!50, text=badgecrypto!85!black]
+    (b) at (-1.9,1.05) {Enigma 破译\\Bombe 机\\[2pt]缩短二战};
+  \node[nodebox, fill=bluepanel, draw=badgeAI!50, text=badgeAI!85!black]
+    (c) at (1.9,1.05) {Turing 测试\\[2pt]模仿游戏\\AI 的蓝图};
+  \node[nodebox, fill=goldpanel, draw=badgebio!50, text=badgebio!85!black]
+    (d) at (5.7,1.05) {Turing 图案\\[2pt]反应扩散方程\\[2pt]数学生物学};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他不是工程师，却定义了"计算机"的概念。他不是密码学家，却破解了纳粹的 Enigma。\\[2pt]他不是哲学家，却提出了"机器能思考吗？" —— 一个至今无人能回答的问题。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} Turing 机不是一个物理机器 —— 它是人类对"算法"和"计算"的第一个精确数学定义。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. Sherborne 到 Princeton ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Sherborne 到 Princeton (1912–1938)}{寄宿学校 · 国王学院 · Alonzo Church —— 一个天才的成长轨迹}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=cyanpanel, draw=badgecomputation!40] at (0,2.55)
+    {\textbf{1912 · 生于伦敦 Maida Vale。}父亲在印度殖民政府任职，Turing 从小与父母聚少离多。1926 年入读 Sherborne School —— 一所保守的英国寄宿男校。他在古典教育体系中格格不入，但数学成绩一骑绝尘。校长在一份报告上写道："如果他只做一个科学专家，那将是这个公学的浪费。"};
+  \node[item, fill=amberpanel, draw=badgephilosophy!40] at (0,1.05)
+    {\textbf{1930 · Christopher Morcom 之死。}Turing 16 岁时，挚友 Morcom 因牛结核病猝逝。这场早逝触发了他终身的追问：心灵是否能在物质死亡后存活？这个形而上学问题，后来驱动了他对 AI 和计算的全部探索。Turing 在给 Morcom 母亲的悼念信中写道："他让我看到了一个完全不同的世界。"};
+  \node[item, fill=darkpanel, draw=badgecrypto!30] at (0,-0.25)
+    {\textbf{1931–1938 · 国王学院到普林斯顿。}1931 年入读剑桥国王学院，1934 年以一等荣誉毕业。1935 年，22 岁的 Turing 凭借中心极限定理的原创证明当选国王学院 Fellow。1936–1938 年赴普林斯顿大学，在 Alonzo Church 指导下获得博士学位 —— 正是在此期间，他完成了那篇定义了"可计算"的 36 页论文。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Sherborne → Cambridge → Princeton：一个英国公学的问题学生，用了 12 年成为理论计算机科学之父。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. Turing 机的诞生 ---
+\newcommand{\machineslide}{%
+\begin{frame}
+\cyanbar
+\sectiontitle{Turing 机的诞生 (1936)}{一篇论文 —— 《论可计算数》—— 定义了"计算"本身}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=cyanpanel, draw=badgecomputation!40] at (0,2.55)
+    {\textbf{1936 · 《论可计算数及其在判定问题上的应用》。}当时 24 岁的 Turing 还在剑桥国王学院。这篇论文回答了 Hilbert 的 Entscheidungsproblem（判定问题）：是否存在一种通用算法，能判定任何数学命题的真假？};
+  \node[item, fill=darkpanel, draw=badgecrypto!30] at (0,1.05)
+    {\textbf{Turing 机不是一台"机器"。}它是一个数学思想实验 —— 一条无限长的纸带、一个读写头、一张有限状态表。这个简单到极致的抽象模型，是历史上第一个对"算法"和"计算"的精确数学定义。};
+  \node[item, fill=graypanel, draw=coveraccent!35] at (0,-0.25)
+    {\textbf{普适 Turing 机。}同一篇论文中，Turing 还描述了通用 Turing 机的概念 —— 一台可以模拟任何其他 Turing 机的机器。这本质上就是现代"存储程序计算机"的数学蓝图。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一篇 36 页的论文，发明了计算机科学。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 停机问题 ---
+\newcommand{\haltingslide}{%
+\begin{frame}
+\cyanbar
+\sectiontitle{停机问题}{一劳永逸地回答 Hilbert 的 Entscheidungsproblem}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=cyanpanel, draw=badgecomputation!50] at (0,2.55)
+    {\textbf{停机问题：存在一个程序，能判定任意程序是否会停机吗？}Turing 的答案是：不存在。他用对角线论证证明了这个结论 —— 这直接否定了 Hilbert 的判定问题：不存在一个通用算法能判定所有数学命题。};
+  \node[item, fill=darkpanel, draw=badgecrypto!30] at (0,1.05)
+    {\textbf{Church–Turing 论题。}几乎同时，Alonzo Church 用 $\lambda$ 演算得出了相同结论。Turing 的方法更直观 —— 他用一个"机器"的概念来说服数学界。两人共同奠定了可计算性理论。};
+  \node[item, fill=graypanel, draw=coveraccent!35] at (0,-0.25)
+    {\textbf{影响深远。}停机问题不仅是一个数学结论 —— 它揭示了计算的"终极边界"。今天的计算机科学家仍在研究由此衍生的复杂度类、不可近似性、随机性与计算的关系等问题。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 有的问题永远无法被任何算法解决。Turing 第一个精确证明了这一点。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. Bletchley Park ---
+\newcommand{\bletchleyslide}{%
+\begin{frame}
+\darkbar
+\sectiontitle{Bletchley Park (1939–1945)}{秘密战争中的数学家：密码破译改变了二战的进程}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=darkpanel, draw=badgecrypto!50] at (0,2.35)
+    {\textbf{1939 · 加入 GCHQ。}二战爆发后第二天，Turing 向 Bletchley Park 报到 —— 这是英国政府密码学校（GC\&CS）的战时驻地。他的任务：破解德国 Enigma 密码机的加密算法。};
+  \node[item, fill=cyanpanel, draw=badgecomputation!30] at (0,0.85)
+    {\textbf{Bombe 机 (1940)。}Turing 设计了 Bombe —— 一种机电装置，能大幅加速 Enigma 密码的破解过程。它基于波兰数学家 Marian Rejewski 的战前基础，但 Turing 将破解针对了 Enigma 的持续改进。Bombe 将解密时间从天降到了小时。};
+  \node[item, fill=graypanel, draw=coveraccent!30] at (0,-0.45)
+    {\textbf{战时秘密。}Hut 8（Turing 负责的海军 Enigma 破译组）的工作属于最高机密。Bletchley Park 的成功直到 1970 年代才公之于众。官方战史学家 Hinsley 估计，这些工作让欧洲战场缩短了超过两年。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 历史学家估计：Bletchley Park 让二战缩短了至少两年，拯救了数百万人的生命。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. Bombe 与 Enigma ---
+\newcommand{\bombeslide}{%
+\begin{frame}
+\darkbar
+\sectiontitle{Bombe 与 Enigma 的破解}{数学如何击败纳粹密码机}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=darkpanel, draw=badgecrypto!50] at (0,2.35)
+    {\textbf{Banburismus 序贯分析法。}Turing 发明了 Banburismus —— 一种基于 Bayes 定理的统计密码分析方法。它将信号情报变成了一个数学问题：根据 intercepted 消息中的字母频率，推断 Enigma 的当日设置。};
+  \node[item, fill=cyanpanel, draw=badgecomputation!30] at (0,0.85)
+    {\textbf{Turingery (1942)。}针对更为复杂的 Lorenz 密码机（用于希特勒与高级将领间的电传通信），Turing 发明了 Turingery 方法 —— 通过分析密码流中的统计偏差来恢复密钥。这一方法为后续的 Colossus 计算机铺平了道路。};
+  \node[item, fill=graypanel, draw=coveraccent!30] at (0,-0.45)
+    {\textbf{密码学的数学化。}Turing 在 Bletchley Park 的工作将密码学从"语言学家和侦探"的领域转变为"数学家和统计学家"的领域。这是现代密码学诞生的关键一步。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从 Bayes 定理到 Bombe 机 —— 数学第一次在大规模战争中发挥了决定性作用。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. ACE 与存储程序架构 ---
+\newcommand{\aceslide}{%
+\begin{frame}
+\cyanbar
+\sectiontitle{ACE 与存储程序架构 (1945–1947)}{从数学机器到电子计算机的独立设计}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=cyanpanel, draw=badgecomputation!50] at (0,2.35)
+    {\textbf{1945 · ACE 设计报告。}战后，Turing 加入国家物理实验室 (NPL)，设计了 ACE（自动计算机）。他的设计是存储程序计算机的独立方案 —— 与 von Neumann 的 EDVAC 报告几乎同时完成。};
+  \node[item, fill=darkpanel, draw=badgecrypto!30] at (0,0.85)
+    {\textbf{激进到无法实现。}Turing 的 ACE 设计过于超前 —— 它要求极高的内存速度，当时的工程技术无法满足。最终建成的 Pilot ACE 大幅简化了他的设计，但仍然远快于同期的其他计算机。};
+  \node[item, fill=graypanel, draw=coveraccent!30] at (0,-0.45)
+    {\textbf{独立发明者。}1936–38 年在普林斯顿读博期间，von Neumann 曾邀请 Turing 留任 IAS 助手。两人独立提出了存储程序架构，彼此高度评价。Turing 如今被公认为理论计算机科学之父 —— 不是因为他建造了第一台计算机，而是因为他定义了"计算机"这个概念本身。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个理论上的"通用机器"概念，终于变成了电子电路中的现实。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 曼彻斯特岁月 ---
+\newcommand{\manchesterslide}{%
+\begin{frame}
+\cyanbar
+\sectiontitle{曼彻斯特岁月 (1948–1954)}{Ferranti Mark I · 计算机实验室 · 计算的黎明}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=cyanpanel, draw=badgecomputation!50] at (0,2.35)
+    {\textbf{1948 · 加入曼彻斯特大学。}Turing 应 Max Newman 邀请，就任计算机实验室副主任。曼彻斯特当时正在建造世界上最早的一批存储程序计算机 —— Ferranti Mark I。};
+  \node[item, fill=darkpanel, draw=badgecrypto!30] at (0,0.85)
+    {\textbf{编程的先驱。}Turing 在 Manchester 编写了世界上最早的编程手册之一。他不仅设计了机器，还亲自编写了子程序库、浮点运算例程 —— 这些是今天"操作系统"和"编译器"的雏形。};
+  \node[item, fill=goldpanel, draw=badgebio!30] at (0,-0.45)
+    {\textbf{1950 · 计算机与智能。}正是在曼彻斯特，Turing 写下了《计算机器与智能》—— 提出了著名的 Turing 测试。这篇论文奠定了人工智能的哲学和操作基础。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从图纸到硅片 —— Turing 经历了计算机从理论到物理的完整演变。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. Turing 测试 ---
+\newcommand{\testslide}{%
+\begin{frame}
+\silverbar
+\sectiontitle{Turing 测试 (1950)}{"机器能思考吗？" —— 一个哲学问题的工程转化}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=graypanel, draw=badgeAI!50] at (0,2.35)
+    {\textbf{1950 · 《计算机器与智能》。}论文以 "I propose to consider the question, 'Can machines think?'" 开篇。Turing 认为这个问题太模糊 —— 他需要一个可操作的定义。};
+  \node[item, fill=cyanpanel, draw=badgecomputation!35] at (0,0.85)
+    {\textbf{模仿游戏。}Turing 提出了"模仿游戏"（后来称为 Turing 测试）：如果一个人类评判通过文字对话无法区分对方是人还是机器，那么这台机器就展示了智能。这不是一个工程标准，而是一个哲学基准。};
+  \node[item, fill=darkpanel, draw=badgecrypto!30] at (0,-0.45)
+    {\textbf{"到 2000 年……"}Turing 预言：到 2000 年，一台拥有 100MB 存储的计算机将有 30\% 的概率通过 5 分钟的测试。这个预言并未实现 —— 但他的框架至今仍是 AI 讨论的核心参照。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "机器能思考吗？"不是一个工程问题 —— 它是现代哲学的基石之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. AI 的哲学深度 ---
+\newcommand{\aiphilosophyslide}{%
+\begin{frame}
+\silverbar
+\sectiontitle{人工智能的哲学深度}{从国际象棋到学习机器 —— Turing 为 AI 铺设了蓝图}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgephilosophy!45] at (0,2.55)
+    {\textbf{一切的起点：Christopher Morcom (1930)。}Turing 16 岁时，挚友 Morcom 因牛结核病猝逝。这场早逝触发了他终身的追问：心灵是否能在物质死亡后存活？这个形而上学问题，后来转化为一个工程问题 —— 机器能否拥有心灵？};
+  \node[item, fill=graypanel, draw=badgeAI!55] at (0,1.15)
+    {\textbf{Turing 的 AI 愿景。}在同一篇论文中，Turing 提出了几个 AI 的子方向：机器下棋、自然语言处理、机器学习（"与其写出一个程序来模拟成人心智，不如写出一个模拟儿童心智的程序，然后教育它"）。这些奠定了现代 AI 的所有主要方向。};
+  \node[item, fill=cyanpanel, draw=badgecomputation!30] at (0,-0.05)
+    {\textbf{反对意见的预先回应。}Turing 在论文中用整整一节逐一反驳了 9 种反对机器智能的论点 —— 包括神学反对、数学反对（Gödel 不完备性）、"头在沙子中"反对等。这些讨论至今仍是 AI 伦理的经典文本。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 70 年前，Turing 为 AI 铺设了蓝图。今天的 ChatGPT 和强化学习，都在沿着他画下的路线前进。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. Turing 图案 ---
+\newcommand{\patternsslide}{%
+\begin{frame}
+\goldbar
+\sectiontitle{Turing 图案 (1952)}{反应扩散方程 —— 斑马条纹、豹子斑点的数学}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgebio!55] at (0,2.35)
+    {\textbf{1952 · 《形态发生的化学基础》。}Turing 发表了一篇关于生物图案形成的数学论文。他提出：动物皮毛上的条纹和斑点可以用反应扩散方程来解释 —— 两种化学物质（"形态素"）以不同速率扩散并相互作用，自发产生稳定的空间图案。};
+  \node[item, fill=cyanpanel, draw=badgecomputation!30] at (0,0.85)
+    {\textbf{Turing 不稳定性。}他发现了"Turing 不稳定性"：在均匀状态下稳定的系统，当扩散速率差异足够大时，会自发形成空间图案。这一发现解释了斑马条纹、豹子斑点、鱼鳞花纹等。};
+  \node[item, fill=graypanel, draw=coveraccent!30] at (0,-0.45)
+    {\textbf{早于 DNA 双螺旋。}Turing 发表这篇论文时，Watson 和 Crick 还未发现 DNA 双螺旋结构（1953）。Turing 在完全不知道 DNA 存在的情况下，用纯数学推导出了生命图案形成的逻辑必要条件。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 在最黑暗的时期，他的思想依然在创造全新的科学 —— 数学生物学的奠基论文之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 在黑暗中创造光明 ---
+\newcommand{\darklightsslide}{%
+\begin{frame}
+\redbar
+\sectiontitle{在黑暗中创造光明}{化学阉割与生物数学 —— 两条平行线的惊人交汇}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgecomputation!60] at (0,2.55)
+    {\textbf{1952 · 被定罪。}Turing 因同性恋行为被判"严重猥亵罪"（gross indecency）。他选择接受雌激素注射（stilboestrol）替代监狱，以便能继续工作。药物导致乳房发育、阳痿，身心遭受巨大摧残。};
+  \node[item, fill=goldpanel, draw=badgebio!50] at (0,1.05)
+    {\textbf{同一年的两篇论文。}在被定罪和接受化学阉割的同年，Turing 发表了《形态发生的化学基础》—— 数学生物学的奠基之作。在肉体和精神承受最大痛苦的时候，他的思想飞向了生命最深层的规则。};
+  \node[item, fill=darkpanel, draw=badgecrypto!30] at (0,-0.25)
+    {\textbf{对比的震撼。}一边是国家机器用化学手段摧残他的身体，另一边是他在用完全相同的数学工具解释生命如何创造自身的形状。这是 20 世纪科学史上最令人心碎的平行线。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 国家可以用激素改变他的身体，但无法改变他用数学改变世界的能力。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 国家的恶 ---
+\newcommand{\stateslide}{%
+\begin{frame}
+\redbar
+\sectiontitle{国家的恶 (1952–1954)}{当国家机器摧毁了它最伟大的英雄}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgecomputation!55] at (0,2.35)
+    {\textbf{1952 · 法律与暴行。}根据 1885 年《刑法修正案》第 11 条，Turing 被判有罪。他被迫在监狱和化学阉割之间选择。为了能继续他的数学研究和计算机工作，他选择了后者 —— 但这摧毁了他的健康和精神。};
+  \node[item, fill=darkpanel, draw=badgecrypto!35] at (0,0.85)
+    {\textbf{安全许可被撤销。}定罪后，Turing 失去了 GCHQ 的安全许可。这位曾经为国家安全做出无可估量贡献的人，被禁止接触任何政府机密 —— 包括他亲手创建的技术领域。};
+  \node[item, fill=graypanel, draw=coveraccent!30] at (0,-0.45)
+    {\textbf{沉默的尊严。}Turing 从未公开抗议，也从未为此道歉。他继续工作、继续发表论文、继续跑步。他的沉默不是屈服，是一种安静的尊严 —— 在历史的长镜头中，沉默本身就是最有力的控诉。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 铁律：一个国家的伟大程度，取决于它如何对待自己最杰出的公民。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 最后的苹果 ---
+\newcommand{\appleslide}{%
+\begin{frame}
+\redbar
+\sectiontitle{最后的苹果 (1954)}{41 岁的终点 —— 咬了一口的氰化物苹果}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=cyanpanel, draw=badgecomputation!45] at (0,2.35)
+    {\textbf{1954 年 6 月 7 日。}Turing 在 Wilmslow 的家中被发现死亡，身旁是一只咬了一口的氰化物浸泡苹果。官方裁定为自杀（41岁）。但一些学者（如 Jack Copeland）指出，证据同样兼容意外中毒 —— Turing 当时正在用氰化物进行电镀实验。};
+  \node[item, fill=goldpanel, draw=badgebio!35] at (0,0.85)
+    {\textbf{白雪公主。}Turing 酷爱 1937 年的迪士尼电影《白雪公主》—— 尤其是毒苹果的场景。咬了一口的苹果是否是故意的引用，无人知晓。};
+  \node[item, fill=darkpanel, draw=badgecrypto!30] at (0,-0.45)
+    {\textbf{迟到的正义。}2009 年，英国首相 Gordon Brown 代表政府正式道歉。2013 年，伊丽莎白二世女王颁发皇家赦免令。2017 年，《Turing 法》赦免了所有因同性恋罪名被定罪的历史受害者。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从定罪到赦免，国家用了 61 年承认错误。但数学不必等待正义 —— Turing 的贡献早在他去世前就已永存。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15b. 苹果标志的传说 ---
+\newcommand{\applelogoslide}{%
+\begin{frame}
+\cyanbar
+\sectiontitle{被咬了一口的苹果：传说与真相}{从 Turing 之死到全球最著名的商标 —— 一个拒绝死亡的传说}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  % Apple logo — centered modest size
+  \node[draw=badgecomputation!30, line width=0.8pt, fill=white, rounded corners=5pt, inner sep=5pt]
+    at (0, 2.25) {\includegraphics[width=1.2cm,keepaspectratio]{apple_logo.png}};
+
+  \node[item, fill=cyanpanel, draw=badgecomputation!45] at (0, 0.35)
+    {\textbf{一个拒绝死亡的传说。}很多人相信，Apple 公司的标志 —— 那颗被咬了一口的苹果 —— 是对 Alan Turing 的致敬。Turing 1954 年死于氰化物浸泡的苹果旁，而这颗全球最值钱的"苹果"被认为是对沉默暴力的无声抗议，是对"被国家毁灭的天才"的永久纪念。};
+
+  \node[item, fill=darkpanel, draw=badgecrypto!30] at (0, -1.2)
+    {\textbf{设计的真相与传说的力量。}设计师 Rob Janoff 多次明确否认这一关联："咬一口只是为了区分苹果和樱桃。"但文化符号有其独立生命 —— 一个足够好的传说，本身就是一种历史真理。Turing 奠定了现代计算机的数学基础，iPhone 上的每一次触摸，背后都是 Turing 机理论的迭代。};
+
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0, -2.5) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 传说可以被否认，事实无法被否认：没有 Turing 机，就没有你手中的每一台计算机。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 16. 图灵奖 —— 计算机界的诺贝尔 ---
+\newcommand{\turingawardslide}{%
+\begin{frame}
+\gradientbar
+\sectiontitle{图灵奖 —— 计算机界的诺贝尔}{ACM 以他的名字命名了计算机科学的最高荣誉}
+\vspace{-0.6cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=cyanpanel, draw=badgecomputation!55] at (0,2.55)
+    {\textbf{1966 · ACM 设立图灵奖。}Turing 去世 12 年后，美国计算机学会 (ACM) 设立了以他命名的最高奖项 —— A.M.\ Turing Award。每年颁发一次，奖励"对计算机领域产生持久重大技术贡献"的个人。};
+  \node[item, fill=goldpanel, draw=badgebio!45] at (0,1.05)
+    {\textbf{首届获奖者：Alan Perlis (1966)。}Perlis 是早期编程语言的先驱（ALGOL 58/60），获奖理由："在高级编程语言和编译器构造领域的奠基性贡献。"这是对"让计算机编程成为科学"的表彰。};
+  \node[item, fill=darkpanel, draw=badgecrypto!35] at (0,-0.25)
+    {\textbf{100 万美元奖金 + 青铜奖杯。}自 2014 年起，Google 赞助将图灵奖奖金提升至 100 万美元，与诺贝尔奖奖金水平看齐。奖杯设计为刻有 Turing 肖像的青铜碗 —— "计算机界的诺贝尔奖"实至名归。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 图灵奖不仅是荣誉 —— 它是计算机科学从"辅助工具"成为独立学科的里程碑。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 17. Turing 的遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\gradientbar
+\sectiontitle{图灵的遗产}{从 £50 钞票到 Turing 奖 —— 他的思想无处不在}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=cyanpanel, draw=badgecomputation!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgecomputation} 计算理论}\\[3pt]Turing 机\\[2pt]可计算性\\Church–Turing 论题};
+  \node[leg, fill=darkpanel, draw=badgecrypto!50, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgecrypto} 密码学}\\[3pt]Bombe 机\\Banburismus\\[2pt]现代密码分析};
+  \node[leg, fill=graypanel, draw=badgeAI!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAI!85!black} 人工智能}\\[3pt]Turing 测试\\[2pt]模仿游戏\\AI 蓝图};
+  \node[leg, fill=goldpanel, draw=badgebio!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgebio!85!black} 生物数学}\\[3pt]Turing 图案\\[2pt]反应扩散方程\\[2pt]形态发生};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他不是某一个学科的创始人 ——\\[2pt]他是"计算"这个概念本身的发现者。}\\[4pt]
+{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      Turing 机 → 现代计算机 → 智能手机 → 云服务 → AI → ChatGPT，\\
+      这整条链条的起点，是 1936 年一个 24 岁的英国人在剑桥写下的一篇论文。\\
+      2021 年起，Turing 的肖像印在英国 £50 钞票上 —— 国家终于用最高敬意回应了他。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 18. 升起海水 ---
+\newcommand{\epitaphslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center] at ([yshift=2.2cm]current page.center) {
+    \begin{tikzpicture}
+      \node[draw=coverprimary!20, line width=0.8pt, fill=white, rounded corners=4pt, inner sep=2pt]
+        {\includegraphics[width=5.5cm,keepaspectratio]{statue.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{17}{24}\selectfont\bfseries, text=coverprimary!90!black,
+        align=center, text width=13cm]
+    at ([yshift=-0.6cm]current page.center) {他给了我们"可计算"};
+  \node[anchor=center, font=\fontsize{17}{24}\selectfont\bfseries, text=coverprimary!90!black,
+        align=center, text width=13cm]
+    at ([yshift=-1.6cm]current page.center) {的数学定义。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-2.4cm, xshift=-2.5cm]current page.center)
+    -- ([yshift=-2.4cm, xshift=2.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-3.3cm]current page.center)
+    {艾伦·图灵\quad Alan Turing\quad 1912 — 1954};
+  \node[anchor=south, font=\fontsize{6.5}{8}\selectfont, text=coverdark!45]
+    at ([yshift=0.35cm]current page.south) {Bletchley Park · Turing Statue};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 19. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.9cm]current page.center) {世界从此不同。};
+  \node[anchor=center, font=\fontsize{15}{20}\selectfont\bfseries, text=coverteal!70!black, align=center]
+    at ([yshift=0.6cm]current page.center) {"We can only see a short distance ahead,\\[3pt]
+         but we can see plenty there that needs to be done."};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.55cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-0.55cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.6cm]current page.center)
+    {艾伦·图灵\quad Alan Turing\quad 1912 — 1954};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{terminal}\enspace 计算的普罗米修斯\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\machineslide
+\haltingslide
+\bletchleyslide
+\bombeslide
+\aceslide
+\manchesterslide
+\testslide
+\aiphilosophyslide
+\patternsslide
+\darklightsslide
+\stateslide
+\appleslide
+\applelogoslide
+\turingawardslide
+\legacyslide
+\epitaphslide
+\closingslide
+\end{document}

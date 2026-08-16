@@ -1,0 +1,140 @@
+% =============================================================
+%  打破维度壁垒的拓扑学家：斯蒂芬·斯梅尔 (Stephen Smale)
+%  Fields 奖 1966 · Wolf 奖 2007 · 高维 Poincaré 猜想 · h-协边定理 · 马蹄映射
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% 配色：Smale — Berkeley 蓝 + 拓扑金 + 动力系统红
+\definecolor{bgmain}{RGB}{248,246,243}
+\definecolor{coverprimary}{HTML}{003262}
+\definecolor{coveraccent}{HTML}{C4820E}
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{5A6B7D}
+\definecolor{titlecolor}{RGB}{18,20,30}
+\definecolor{muteddark}{RGB}{75,70,60}
+\definecolor{bluepanel}{RGB}{218,230,245}
+\definecolor{graypanel}{RGB}{242,244,248}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{greenpanel}{RGB}{225,240,230}
+\definecolor{silverpanel}{RGB}{240,240,242}
+\definecolor{redpanel}{RGB}{252,236,236}
+\definecolor{badgeTop}{HTML}{003262}
+\definecolor{badgeDS}{HTML}{C4820E}
+\definecolor{badgeHorse}{HTML}{B22222}
+\definecolor{badgeLegacy}{HTML}{8A8A8A}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{\begin{tikzpicture}[remember picture, overlay]\fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);\draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);\end{tikzpicture}}
+\newcommand{\deckbackground}{\begin{tikzpicture}[remember picture, overlay]\fill[coveraccent!4] (current page.north west) rectangle (current page.south east);\fill[badgeTop!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);\fill[badgeDS!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);\fill[badgeHorse!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);\fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);\foreach \x in {-0.2,0.8,...,16.2} {\draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);}\foreach \y in {-0.2,0.7,...,9.3} {\draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);}\fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);\end{tikzpicture}}
+\newcommand{\sectiontitle}[2]{\vspace{-0.52cm}\begin{center}{\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]{\fontsize{7.5}{9.5}\selectfont\slshape\color{muteddark} #2}\\[3pt]\textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}\end{center}\vspace{0.06cm}}
+\input{../../cover/openmath_page.tex}
+
+% ===== 01. 封面 =====
+\newcommand{\titleslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=3.55cm]current page.center) {\faIcon{globe-americas}\enspace "在里约的海滩上做出了最好的工作"};
+\node[font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black] at ([yshift=2.45cm]current page.center) {斯蒂芬·斯梅尔};
+\node[anchor=north east, inner sep=0pt] at ([xshift=0cm, yshift=0cm]current page.north east) {\includegraphics[width=3.2cm]{Stephen_Smale.jpg}};
+\node[font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black] at ([yshift=1.55cm]current page.center) {Stephen Smale\enspace·\enspace 1930年出生};
+\node[font=\fontsize{9}{12}\selectfont\slshape, text=coveraccent!70!black] at ([yshift=1.1cm]current page.center) {高维 Poincaré 猜想 · h-协边定理 · 马蹄映射 · Smale 18 问题};
+\draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center) -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+\node at ([yshift=-0.75cm]current page.center) {\begin{tikzpicture}
+\node[rounded corners=8pt, fill=badgeTop, inner xsep=8pt, inner ysep=5pt, text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {拓扑学};
+\node[rounded corners=8pt, fill=badgeDS, inner xsep=8pt, inner ysep=5pt, text width=2.5cm, align=center, font=\small\bfseries, text=coverdark] at (-1.8,0) {动力系统};
+\node[rounded corners=8pt, fill=badgeHorse, inner xsep=8pt, inner ysep=5pt, text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {混沌理论};
+\node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt, text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {传承};
+\end{tikzpicture}};
+\node[font=\fontsize{10}{14}\selectfont\slshape, text=muteddark, align=center, text width=13cm] at ([yshift=-2.35cm]current page.center)
+  {"我的最好工作是在里约的海滩上完成的。" — Smale, 引起 NSF 拨款争议};
+\node[font=\fontsize{7}{8.5}\selectfont, text=coverdark!55] at ([yshift=0.38cm]current page.south)
+  {\faIcon{globe}\enspace 美国\enspace|\enspace\faIcon{medal}\enspace Fields 1966 · Wolf 2007 · 国家科学奖章 1996\enspace|\enspace UC Berkeley};
+\end{tikzpicture}\end{frame}}
+
+% ===== 02. 总览 =====
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{打破维度壁垒的数学家}{高维 Poincaré 猜想 · h-协边定理 · 马蹄映射 · Smale 的 18 个问题}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=bluepanel, draw=badgeTop!50, text=badgeTop!85!black] (a) at (-5.7,1.05) {拓扑学\\[2pt]高维 Poincaré 猜想\\h-协边定理 1962};
+\node[nodebox, fill=goldpanel, draw=badgeDS!50, text=badgeDS!85!black] (b) at (-1.9,1.05) {动力系统\\Morse–Smale 系统\\[2pt]马蹄映射 1967};
+\node[nodebox, fill=redpanel, draw=badgeHorse!50, text=badgeHorse!85!black] (c) at (1.9,1.05) {交叉领域\\[2pt]数理经济学\\[2pt]实数计算理论\\Smale 18 问题};
+\node[nodebox, fill=silverpanel, draw=badgeLegacy!50, text=badgeLegacy!85!black] (d) at (5.7,1.05) {政治活动家\\[2pt]反越战 · HUAC 传唤\\[2pt]言论自由运动};
+\node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 从 C 等生到 Fields 奖——他打破了人们对数学家应该如何工作的所有刻板印象。}}\end{tikzpicture}\end{center}\end{frame}}
+
+% ===== 03. 早年：非典型数学之路 =====
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：从 C 等生到 Fields 奖 (1930–1960)}{在密歇根大学差点被开除——Bott 的学生——芝加哥的起点}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=bluepanel, draw=badgeTop!55] at (0,2.55) {\textbf{1930 · 生于美国密歇根州 Flint。}1948 年进入密歇根大学。大二和大三成绩惨淡——大多是 B 和 C, 核物理甚至得了 F。研究生初期平均分 C——系主任 Hildebrandt 威胁要开除他。};
+\node[item, fill=goldpanel, draw=badgeDS!25] at (0,0.85) {\textbf{觉醒与转变。}在被开除的威胁下, Smale 开始认真学习。1957 年获得博士学位, 导师 Raoul Bott。博士论文《Riemann 流形上的正则曲线》——拓扑学的起点。};
+\node[item, fill=redpanel, draw=badgeHorse!25] at (0,-0.65) {\textbf{芝加哥大学讲师 (1957–1960)。}毕业后在芝加哥大学开始职业生涯。1959 年发表了关于二维球面浸入分类的三篇关键论文——包括球面翻转 (sphere eversion) 的突破性结果。};
+\node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个差点被赶出研究生院的学生——后来成为 20 世纪最伟大的拓扑学家之一。}}\end{tikzpicture}\end{center}\end{frame}}
+
+% ===== 04. 高维 Poincaré 猜想 =====
+\newcommand{\poincareslide}{\begin{frame}\plainbar\sectiontitle{高维 Poincaré 猜想 (1961) — Fields 奖的核心}{Smale 证明了 n ≥ 5 时的广义 Poincaré 猜想——打破了维度壁垒}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=bluepanel, draw=badgeTop!60] at (0,2.55) {\textbf{Poincaré 猜想。}每一个单连通闭三维流形是否同胚于三维球面 $S^3$？Poincaré (1904) 提出的原始问题——困扰数学家近 60 年。低维 (3 和 4) 极其困难——Perelman 直到 2003 年才解决三维情形。};
+\node[item, fill=goldpanel, draw=badgeDS!40] at (0,0.65) {\textbf{Smale 的突破 (1961)。}对于 $n \geq 5$ 维, Smale 证明了广义 Poincaré 猜想。关键工具: 自索引 Morse 函数——将 Morse 理论和柄体分解 (handle decomposition) 结合, 用梯度流消除不必要的临界点。};
+\node[item, fill=redpanel, draw=badgeHorse!25] at (0,-1.05) {\textbf{h-协边定理 (1962)。}Smale 进一步证明了更强大的 h-协边定理——如果两个单连通流形之间的协边是同伦平凡的, 则它们微分同胚。这给出了五维单连通光滑流形的完整分类。};
+\node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.2) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Smale 证明了前人认为"过于困难"的高维情形——因为高维给了更多操作空间。}}\end{tikzpicture}\end{center}\end{frame}}
+
+% ===== 05. 球面翻转 =====
+\newcommand{\eversionslide}{\begin{frame}\plainbar\sectiontitle{球面翻转 (Sphere Eversion) — Smale 悖论}{不撕裂和不产生折痕的情况下把球面从里向外翻转——可能吗?}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=bluepanel, draw=badgeTop!55] at (0,2.55) {\textbf{问题。}能否通过一族浸入 (immersion) 将标准球面连续变形为其自身的"翻转"版本 (法向量处处反向)？直观上似乎不可能——但 Smale 证明这是可能的。};
+\node[item, fill=goldpanel, draw=badgeDS!35] at (0,0.85) {\textbf{Smale 的证明 (1959)。}他研究了二维球面浸入到三维欧氏空间的问题。通过将浸入理论转化为 Stiefel 流形的代数拓扑问题, 他完全分类了浸入的正则同伦类。球面翻转是直接的推论。};
+\node[item, fill=redpanel, draw=badgeHorse!25] at (0,-0.65) {\textbf{影响。}Hirsch–Smale 浸入理论后来被 Gromov 发展为 h-原理——这是微分拓扑中最重要的概念之一。球面翻转成为拓扑学可视化最著名的例子之一。};
+\node[draw=coveraccent!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "球面翻转"被证明存在——尽管没有人能在物理现实中想象它。这是拓扑学超越直觉的力量。}}\end{tikzpicture}\end{center}\end{frame}}
+
+% ===== 06. 马蹄映射 =====
+\newcommand{\horseshoeslide}{\begin{frame}\plainbar\sectiontitle{马蹄映射 (1967) — 混沌的拓扑学起源}{一个简单的几何构造揭示了确定性混沌的本质结构}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=redpanel, draw=badgeHorse!60] at (0,2.35) {\textbf{定义。}马蹄映射是一个正方形上的微分同胚: 先将正方形沿一个方向拉伸、沿另一个方向压缩, 然后弯折成马蹄形放回正方形。迭代后产生 Cantor 集上的符号动力系统。};
+\node[item, fill=goldpanel, draw=badgeDS!40] at (0,0.65) {\textbf{数学意义。}马蹄映射具有无穷多个周期轨道、对初始条件的敏感依赖、以及稠密轨道——混沌的三个核心特征。Smale 用这个简单的模型证明了混沌是结构稳定 (structurally stable) 的。};
+\node[item, fill=bluepanel, draw=badgeTop!25] at (0,-0.85) {\textbf{"可微动力系统" (1967)。}这篇发表在 Bull. AMS 上的 71 页综述论文彻底革新了动力系统理论。Smale 将拓扑学和动力系统融合, 建立了现代动力系统理论的框架——包括 Axiom A 和 $\Omega$-稳定性。};
+\node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.1) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个简单的马蹄——却包含了混沌数学的全部DNA。这是动力系统理论的"E = mc²"时刻。}}\end{tikzpicture}\end{center}\end{frame}}
+
+% ===== 07. 经济学与计算 =====
+\newcommand{\econslide}{\begin{frame}\plainbar\sectiontitle{数理经济学 · 实数计算 · Smale 18 问题}{从拓扑到市场——一位数学家永不枯竭的好奇心}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=goldpanel, draw=badgeDS!55] at (0,2.55) {\textbf{数理经济学。}1970 年代, Smale 将 Morse 理论和动力系统引入一般均衡理论——研究市场均衡的存在性、唯一性和稳定性。与 Gerard Debreu (1983 年诺贝尔经济学奖) 合作。};
+\node[item, fill=bluepanel, draw=badgeTop!40] at (0,0.85) {\textbf{Blum–Shub–Smale (BSS) 机器 (1989)。}将计算理论推广到实数域——定义了实数上的 NP 完全性。这为数值分析的复杂性理论奠定了基础。P = NP 问题在实数模型下与经典图灵模型具有不同的答案。};
+\node[item, fill=redpanel, draw=badgeHorse!25] at (0,-0.65) {\textbf{Smale 的 18 个问题 (1998)。}仿效 Hilbert 的 23 个问题, Smale 为 21 世纪提出了 18 个数学问题。包括: Riemann 猜想、Poincaré 猜想 (已解决)、P = NP、Navier–Stokes 方程。其中 3 个也是 Clay 千禧年问题。};
+\node[draw=coveraccent!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.05) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 拓扑 $\rightarrow$ 动力系统 $\rightarrow$ 经济学 $\rightarrow$ 计算机科学 $\rightarrow$ 学习理论——Smale 的学术轨迹是数学跨界的最佳示范。}}\end{tikzpicture}\end{center}\end{frame}}
+
+% ===== 08. 政治 =====
+\newcommand{\politicalslide}{\begin{frame}\plainbar\sectiontitle{数学界最著名的政治活动家}{"在里约的海滩上"——一句引发 NSF 风波的实话}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=bluepanel, draw=badgeTop!55] at (0,2.35) {\textbf{"里约的海滩"争议。}Smale 说他证明高维 Poincaré 猜想的最好工作"是在里约的海滩上完成的"——当时他持 NSF 资助在巴西访问。这句话引发美国国会对 NSF 拨款政策的调查。};
+\node[item, fill=redpanel, draw=badgeHorse!50] at (0,0.65) {\textbf{1966 年莫斯科记者会。}在莫斯科接受 Fields 奖时, Smale 召开了记者会——同时谴责美国的越南战争、苏联对匈牙利的干预、以及苏联对知识分子的迫害。回国后 NSF 拒绝续签他的资助。};
+\node[item, fill=goldpanel, draw=badgeDS!25] at (0,-0.85) {\textbf{HUAC 传唤。}Smale 是言论自由运动 (Free Speech Movement) 的积极参与者。曾因支持古巴的公平对待委员会 (Fair Play for Cuba Committee) 被众议院非美活动委员会 (HUAC) 传唤。};
+\node[draw=coveraccent!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.05) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 在冷战时期敢于同时批评美国和苏联——他在政治上的勇气和数学上的才华一样非凡。}}\end{tikzpicture}\end{center}\end{frame}}
+
+% ===== 09. 遗产 =====
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：从拓扑到混沌——Smale 的多重遗产}{Fields 1966 · Wolf 2007 · Veblen 1966 · 国家科学奖章 1996 · Chauvenet 1988}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=bluepanel, draw=badgeTop!55] at (0,2.55) {\textbf{拓扑学。}高维 Poincaré 猜想的证明 (1961)——将 Morse 理论与微分拓扑融合，推广至 $n\ge 5$ 维。h-协边定理为高维流形分类提供了核心工具。球面翻转 (sphere eversion) 成为拓扑可视化最著名的例子。};
+\node[item, fill=goldpanel, draw=badgeDS!40] at (0,0.85) {\textbf{动力系统。}马蹄映射 (1967) 揭示了确定性混沌的拓扑本质——结构稳定、无穷周期轨道、稠密轨道。Axiom A 系统与 $\Omega$-稳定性定理奠定了现代动力系统理论的数学框架。};
+\node[item, fill=redpanel, draw=badgeHorse!25] at (0,-0.65) {\textbf{跨学科贡献。}数理经济学 (1970s)：将 Morse 理论和动力系统引入一般均衡分析。Blum–Shub–Smale 机器 (1989)：实数域上的计算理论。Smale 的 18 个问题 (1998)：为 21 世纪数学指明方向。};
+\node[draw=coveraccent!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.2) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他打破了维度的壁垒——也打破了人们对"数学家应该如何工作"的一切成见。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% ===== 10. 结束页 =====
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {最好的数学——};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {往往不在实验室里诞生。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Stephen Smale};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {斯蒂芬·斯梅尔\quad Stephen Smale\quad 生于 1930};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south)
+  {\faIcon{globe-americas}\enspace Fields 1966 · Wolf 2007 · 国家科学奖章 · Smale 18 问题\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide \titleslide \hookslide \earlyslide \poincareslide \eversionslide \horseshoeslide \econslide \politicalslide \legacyslide \closingslide
+\end{document}
