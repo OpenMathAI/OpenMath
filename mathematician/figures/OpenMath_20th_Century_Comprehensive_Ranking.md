@@ -266,7 +266,7 @@
 | 1990 | Vladimir Drinfeld | 苏联/美国 | 量子群，几何 Langlands | 🔲 | 🔲 |
 | 1990 | Vaughan Jones | 新西兰/美国 | Jones 多项式，纽结理论 | 🔲 | 🔲 |
 | 1990 | 森重文 (Shigefumi Mori) | 日本 | 三维双有理几何，Mori 纲领 | 🔲 | 🔲 |
-| 1990 | Edward Witten | 美国 | 拓扑量子场论，超弦理论 | 🔲 | 🔲 |
+| 1990 | Edward Witten | 美国 | 拓扑量子场论，超弦理论 | ✅ | ✅ |
 | 1994 | Jean Bourgain | 比利时 | 调和分析，Banach 空间几何 | 🔲 | 🔲 |
 | 1994 | Pierre-Louis Lions | 法国 | 非线性 PDE，平均场博弈 | 🔲 | 🔲 |
 | 1994 | Jean-Christophe Yoccoz | 法国 | 动力系统 | 🔲 | 🔲 |
