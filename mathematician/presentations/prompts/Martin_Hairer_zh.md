@@ -304,3 +304,5 @@
 | ★ | Mirage（海市蜃楼） | inspiring-electronic | 电子梦幻/抽象，抽象思维与代数结构 |
 
 **操作**：复制选定的 `.wav` 到 `Martin_Hairer/` 目录，`make video` 自动混入。
+
+**已选用（2026-08-17）**：`The Flow of Time`（时间之流，`35-jqIDnltiDRI-The-Flow-of-Time.wav`）已复制到 `20th_century/Martin_Hairer-F/` 目录作为主 BGM——纪录片时间感 + 随机过程的流动与演化，契合 Hairer 沉稳克制、数百页证明耐心的人格特质。
