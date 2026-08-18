@@ -23,7 +23,7 @@
 - **设计母题**：**自相似性（self-similarity）**。重整化群的核心思想是「在不同观察尺度上，物理规律保持形式不变」——这与分形、递归、嵌套结构天然对应，是比「对称性」更贴合 Wilson 的视觉语言。
 - **本地 Wikipedia**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/physicist/presentations/20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson.html`（第 0 步下载）
 - **参考模板**：
-  - 物理学家首例成品：`physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner_zh.tex`（15 页）
+  - 物理学家首例成品：`physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner_zh.tex`（16 页）
   - 数学家标杆：`mathematician/presentations/20th_century/Alexander_Grothendieck-F/Alexander_Grothendieck_zh.tex`
   - 项目首页模板：`physicist/presentations/cover/openphysicist_page.tex`（统一 `\input`）
 
@@ -46,7 +46,7 @@
   - 博士导师（Murray Gell-Mann，1969 诺奖得主）；博士论文《An investigation of the Low equation and the Chew-Mandelstam equations》
   - 博士后（Harvard + CERN）
   - 主要任职机构（Cornell 1963–1988，1970 正教授/1974 James A. Weeks 教授，期间 SLAC；1985 康奈尔理论中心主任；Ohio State 1988–2008）
-  - 关键荣誉（Nobel 1982；Wolf 1980 与 Fisher/Kadanoff 共享；Franklin 1982；Heineman 1973；Boltzmann 1975；Eringen 1984；Dirac 1989；NAS/AAAS 院士 1975、APS 会员 1984）
+  - 关键荣誉（Nobel 1982；Wolf 1980 与 Fisher/Kadanoff 共享；Franklin 1982；Heineman 1973；Boltzmann 1975；Eringen 1984；Dirac 1989；NAS/AAAS 院士 1975、美国哲学学会会员 1984、APS Fellow 1998）
   - 知名博士生（Roman Jackiw、Michael Peskin、Steven R. White、Paul Ginsparg、H. R. Krishnamurthy、Serge Rudaz）
   - 核心贡献清单（见第 4 步）
   - 关键时间线（15–20 个节点）
@@ -141,7 +141,7 @@
 | 陷阱 | 说明 |
 |------|------|
 | 重整化群归属 | Wilson 把重整化群**系统化为临界现象理论**，但思想源头有 Kadanoff 的标度假设，勿写成"独自发明" |
-| 诺奖理由 | Wikipedia 正文表述为 "for his work on critical phenomena using the renormalization group"，强调**相变/临界现象**，不是泛泛的"重整化群" |
+| 诺奖理由 | 官方措辞为 "for his theory for critical phenomena in connection with phase transitions"（强调**相变/临界现象**，不是泛泛的"重整化群"）；Wikipedia 正文另有转述 "for his work on critical phenomena using the renormalization group"，两者勿混用 |
 | 早年细节 | 16 岁进哈佛（非普通年龄），主修**数学**，1954/1956 两度 Putnam 前五；还是田径队一英里选手，勿写成"物理本科" |
 | 父亲身份 | 父 E. Bright Wilson 是哈佛**化学家（微波光谱先驱）**，不是"化学教授"的泛称；母亲亦受过物理学训练 |
 | 去世地 | 2013-06-15 逝于**缅因州萨科（Saco, Maine）**，勿与出生地混淆 |
@@ -149,7 +149,7 @@
 | 博士生 | Roman Jackiw（轴子/反常）、Michael Peskin（QFT 教科书作者）、Steven R. White（DMRG 奠基人）、Paul Ginsparg（arXiv 创始人）等，勿写成"学生不详" |
 | 格点 QCD | Wilson 是格点规范场论奠基人之一，但完整 QCD 由多人共同发展 |
 | Wilson loop | 是格点规范场论的规范不变量，不要与重整化群混淆 |
-| 奖项完整性 | 除 Nobel 1982、Wolf 1980 外，还有 Franklin 1982、Heineman 1973、Boltzmann 1975、Eringen 1984、Dirac 1989；1975 年当选 NAS/AAAS 院士 |
+| 奖项完整性 | 除 Nobel 1982、Wolf 1980 外，还有 Franklin 1982、Heineman 1973、Boltzmann 1975、Eringen 1984、Dirac 1989；1975 年当选 NAS/AAAS 院士，1984 年当选美国哲学学会会员，1998 年当选 APS Fellow（勿混淆 1984 的美国哲学学会与 1998 的 APS） |
 | 康奈尔理论中心 | 1985 年任中心主任，是美国 NSF 五个国家超级计算中心之一，勿遗漏其计算物理先驱身份 |
 
 **术语清单**：
