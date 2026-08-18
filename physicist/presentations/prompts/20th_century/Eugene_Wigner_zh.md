@@ -234,5 +234,21 @@
 | `MySQL/seed_wigner_relations.py` | 社会关系入库（第 4.5 步） |
 | `maintenance_guide/database_schema.md` | 数据库表结构（fields / person_field / person_relation） |
 
+## 背景音乐选择 ✅
+
+- **选定曲目**: **Timeless** — Alex-Productions (132k views, 最高受众)
+- **风格**: 沉稳 / 纪录片 / 长期纲领
+- **匹配理由**:
+  - "长期纲领" 完美匹配维格纳的贡献本质 —— 对称性原理不是单一突破，而是贯穿现代物理的纲领：Wigner 定理、Wigner–Eckart 定理、群论入量子力学，一次性奠定半个世纪的结构框架
+  - "沉稳" 匹配其气质 —— 沉静、对称、理性，跨越物理与数学，从布达佩斯到普林斯顿，不事张扬却影响深远
+  - "纪录片" 匹配传记叙事 —— Fasori 中学神童 → 哥廷根 Hilbert 助手 → 普林斯顿 → 曼哈顿计划反应堆设计 → 1963 诺奖。不是探险，是命运推动的学术历程
+  - 维格纳的悲剧感也契合 Timeless 的深沉：曼哈顿计划后长期为核政策与官僚体系拉锯，晚年更以 "Wigner's friend" 逼问量子测量的哲学边界 —— 一个建造了对称性大厦的人，对自己参与的事业产生了反思
+- **备选** (未采用):
+  - ★★ Eternals — "宏大/深远/长期影响" 匹配其横跨量子到随机矩阵的数学遗产，但受众偏低 (49k)，纪录片沉稳感弱于 Timeless
+  - ★★ PAST — "历史感/深沉" 匹配曼哈顿计划与冷战时代背景，但受众偏低 (86k)
+  - ★ Symphony No. 7 — "律动/庄严/数学之舞" 匹配对称性即结构之舞，但属古典长曲 (37:40)，不适配 15 页短视频
+- **本地路径**: `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` → `presentations/20th_century/Eugene_Wigner/Timeless.wav`
+- **时长**: 128 秒 > 15 页 × 7 秒 ≈ 105 秒 → ffmpeg `-shortest` 自动对齐
+
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
