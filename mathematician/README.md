@@ -9,11 +9,11 @@ Wikipedia API
     ↓ fetch_mathematicians.py     (列表索引：~11,000 人)
 mathematicians.md
     ↓ fetch_full_pages.py         (每人完整页面：HTML + Markdown + Wikidata 元数据)
-pages/<Name>/{page.html, page.md, metadata.json, images.txt}
+pages/<世纪>/<Name>/{page.html, page.md, metadata.json, images.txt}
     ↓ to_tex.py                   (HTML → LaTeX，下载图片，生成 Makefile)
-tex/<Name>/{<Name>.tex, body.tex, metadata.tex, images/, Makefile}
+pages/<世纪>/<Name>/latex/{<Name>.tex, body.tex, metadata.tex, images/, Makefile}
     ↓ make                        (xelatex 编译)
-tex/<Name>/<Name>.pdf
+pages/<世纪>/<Name>/latex/<Name>.pdf
 ```
 
 ## 环境
@@ -61,26 +61,23 @@ python to_tex.py --limit 5
 python to_tex.py --no-images      # 不下载图片（编译时需联网）
 ```
 
-每人产出 `tex/<Name>/`：
+每人产出 `pages/<世纪>/<Name>/latex/`：
 - `<Name>.tex`   — 主文件（`\documentclass + \input{body.tex}`）
 - `body.tex`     — pandoc 从 HTML 转换的正文
 - `metadata.tex` — 由 metadata.json 生成的 `\renewcommand`
 - `images/`      — 下载的图片（离线可编译）
 - `Makefile`     — 子 Makefile
 
-并生成顶层 `tex/Makefile` 和 `tex/index.tex`。
-
 ## 编译 PDF
 
 ```bash
-cd tex
-make            # 串行编译所有人
-make parallel   # 用 `-jN` 并行编译（N=CPU核数）
+cd pages/<世纪>/<Name>/latex     # 进入某位数学家的 LaTeX 目录
+make            # 编译 PDF
 make clean      # 清掉中间文件，保留 PDF
 make distclean  # 清掉所有产物（含 PDF）
 
-# 单独编译某一位
-make -C Carl_Friedrich_Gauss
+# 中文版
+cd ../latex_zh && make
 ```
 
 每个子目录的 Makefile：
@@ -119,4 +116,4 @@ distclean: # 也清掉 PDF
 ## 自定义样式
 
 修改 `common/preamble.tex` 后，运行 `make clean && make` 即可全量重编。
-顶层 `to_tex.py` 在每次运行时会把 `common/preamble.tex` 复制到 `tex/common/`。
+`common/preamble.tex` 直接作为各 `latex/` 目录的共用导言区被引用。

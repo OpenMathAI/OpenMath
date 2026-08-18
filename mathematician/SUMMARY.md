@@ -27,7 +27,7 @@ Wikipedia → 名单（11k 人） → 每人完整页面 → 每人独立 LaTeX/
                ▼
 ┌──────────────────────────────┐
 │ ② fetch_full_pages.py        │  对每个人调 REST API 拿渲染后 HTML
-│   → pages/<Name>/            │  + Wikidata 拿结构化元数据（生卒、领域、获奖…）
+│   → pages/<世纪>/<Name>/      │  + Wikidata 拿结构化元数据（生卒、领域、获奖…）
 │      ├ page.html             │  + HTML→Markdown 转换
 │      ├ page.md               │
 │      ├ metadata.json         │
@@ -37,7 +37,7 @@ Wikipedia → 名单（11k 人） → 每人完整页面 → 每人独立 LaTeX/
                ▼
 ┌──────────────────────────────┐
 │ ③ to_tex.py                  │  HTML 进一步清洗 → pandoc → LaTeX
-│   → tex/<Name>/              │  下载图片本地化，生成 Makefile
+│   → pages/<世纪>/<Name>/latex/ │  下载图片本地化，生成 Makefile
 │      ├ <Name>.tex            │
 │      ├ body.tex              │
 │      ├ metadata.tex          │
@@ -47,8 +47,8 @@ Wikipedia → 名单（11k 人） → 每人完整页面 → 每人独立 LaTeX/
                │
                ▼
 ┌──────────────────────────────┐
-│ ④ make (in tex/)             │  latexmk -xelatex
-│   → tex/<Name>/<Name>.pdf    │  自动多轮编译 + 自动清理中间产物
+│ ④ make (in latex/)           │  latexmk -xelatex
+│   → pages/<世纪>/<Name>/latex/<Name>.pdf │  自动多轮编译 + 自动清理中间产物
 └──────────────────────────────┘
 ```
 
@@ -82,7 +82,7 @@ LaTeX 编译需要多次跑（目录、交叉引用、长表格列宽），latex
 
 - 失败可隔离：一个人编不过，不影响其他 11,000+ 人
 - 增量友好：改一个人的 `body.tex`，只重编那个人
-- 可并行：顶层 Makefile 用 `make -jN` 并行调用子 Makefile
+- 可并行：各 latex 目录互不依赖，可同时并行编译
 
 ---
 
@@ -126,7 +126,7 @@ python fetch_full_pages.py --from-md mathematicians.md --limit 100
 python to_tex.py
 
 # 4. 编译（自动并行 + 自动清理中间产物）
-cd tex && make parallel
+# 进入对应目录编译：cd pages/<世纪>/<Name>/latex && make
 ```
 
 ### 场景 B：抓全量 11,326 人
@@ -152,7 +152,7 @@ tail -f fetch.log
 nohup python to_tex.py > totex.log 2>&1 &
 
 # 4. 并行编译
-cd tex && nohup make parallel > build.log 2>&1 &
+# 逐个进入 pages/<世纪>/<Name>/latex/ 执行 make
 ```
 
 ### 场景 C：只想要"重要数学家"
@@ -172,7 +172,7 @@ EOF
 
 python fetch_full_pages.py --from-list top_50.txt
 python to_tex.py
-cd tex && make parallel
+# 进入对应目录编译：cd pages/<世纪>/<Name>/latex && make
 ```
 
 或者按"奖项"过滤——参考 [`README.md` 的"如何分类"章节](./README.md)。
@@ -195,31 +195,16 @@ python fetch_full_pages.py --from-md 数学家.md --lang zh
 
 - `fetch_full_pages.py` 当前**没有断点续传**。如果你抓一半失败，会重抓全部。
   → **TODO**：在 `process_one` 开头加 `if (person_dir / "page.md").exists(): return`
-- `to_tex.py` 也类似，重跑会覆盖已生成的 `tex/<Name>/`，但**图片有缓存**（`if not dst.exists()`），所以不会重复下载。
+- `to_tex.py` 也类似，重跑会覆盖已生成的 `pages/<世纪>/<Name>/latex/`，但**图片有缓存**（`if not dst.exists()`），所以不会重复下载。
 
-### 6.2 顶层 Makefile 会被 `to_tex.py` 覆写
+### 6.2 每个 latex 目录独立编译
 
-当前 `to_tex.py --only X` 会把顶层 `tex/Makefile` 重新生成为**只包含 X**——这是一个 bug。
-**建议改法**（未实现）：`write_top_level()` 应当扫描 `tex/` 下**所有**子目录，而不是只用本次处理的。
+当前 `to_tex.py --only X` 只会处理匹配到的目录，输出到各自的 `pages/<世纪>/<Name>/latex/`。
+已无顶层 Makefile：`write_top_level()` 已随 `tex/` 目录一并移除。
 
-> 临时绕过：用下面这段 Python 全量重写顶层 Makefile：
-> ```python
-> from to_tex import TOP_MAKEFILE_HEAD, SUB_MAKEFILE
-> from pathlib import Path
-> tex = Path('tex')
-> subs = sorted(p.name for p in tex.iterdir() if p.is_dir() and p.name != 'common')
-> top = TOP_MAKEFILE_HEAD.format(subdirs=' '.join(subs), targets=' '.join(subs))
-> Path(tex / 'Makefile').write_text(top + '\n' + '\n'.join(f'{d}:\n\t$(MAKE) -C {d} pdf\n' for d in subs))
-> ```
+### 6.3 编译失败的目录相互独立
 
-### 6.3 编译失败的人物会卡住整个 `make`
-
-顶层 Makefile 用 `for` 循环串行，`|| exit $$?` 会在第一个失败时停掉。
-若想"失败的跳过、继续编其它人"，加 `-k` flag：
-```bash
-make -k             # keep going on errors
-make -k parallel    # 同上 + 并发
-```
+各 `latex/` 目录的 Makefile 互不影响，某一位编译失败不会影响其它人。
 
 ### 6.4 Wikimedia 限流
 
@@ -242,7 +227,7 @@ Missing character: There is no ⓘ (U+24D8) in font Times New Roman
 按"投入产出比"从高到低：
 
 1. **断点续传** —— 让 `fetch_full_pages.py` 和 `to_tex.py` 跳过已完成的，便于增量抓取
-2. **顶层 Makefile bug 修复** —— `to_tex.py: write_top_level` 改为扫描 `tex/` 全目录
+2. **批量编译入口** —— 为各世纪目录提供一个批量编译脚本（当前需逐个进入 latex/ 目录 make）
 3. **并发抓取** —— `fetch_full_pages.py` 加 `--jobs N` 用 `ThreadPoolExecutor`
 4. **失败清单** —— 单独输出 `failed.txt`，方便重跑
 5. **进度条** —— 加 `tqdm`
@@ -263,7 +248,6 @@ Missing character: There is no ⓘ (U+24D8) in font Times New Roman
 | `to_tex.py` | 想换转换工具，或加新的 LaTeX 后处理规则 |
 | `common/preamble.tex` | 想改 PDF 排版样式（字体、颜色、版芯、页眉） |
 | `to_tex.py` 里的 `SUB_MAKEFILE` | 想改每人的编译/清理逻辑 |
-| `to_tex.py` 里的 `TOP_MAKEFILE_HEAD` | 想改批量编译/并行策略 |
 
 ---
 
@@ -281,7 +265,7 @@ ls pages/
 python to_tex.py --only Carl_Friedrich_Gauss
 
 # 3. 编译
-cd tex && make
+cd pages/19th_century/Carl_Friedrich_Gauss/latex && make
 # 看到 "✅ 全部完成" 就行
 ```
 
