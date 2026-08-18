@@ -11,7 +11,7 @@
 - **气质关键词**: **对称性的先知、群论进入物理的桥梁、核时代的建筑师、数学哲学家** — "因对原子核和基本粒子理论的贡献，特别是基本对称性原理的发现与应用"（1963 诺贝尔物理学奖获奖理由）
 - **本地 Wikipedia**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner.html`
   - 已从中提取正文、肖像 `images/Wigner.jpg`
-- **已生成成品**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner_zh.tex`（15 页，编译通过）
+- **已生成成品**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner_zh.tex`（16 页，编译通过）
 - **参考模板**:
   - `/Users/ericksun/workspace/codebuddy/OpenMathAI/physicist/presentations/cover/openphysicist_page.tex` — OpenPhysicist 项目首页（统一 `\input`）
   - 数学家侧成品 `mathematician/presentations/hilbert/David_Hilbert_zh.tex` — 卡片版式参考
@@ -36,8 +36,9 @@
   - 生卒日期 (1902-11-17 ~ 1995-01-01，享年 92 岁)
   - 国籍变迁 (奥匈帝国/匈牙利 → 美国，naturalized 1937)
   - 博士导师 (Michael Polanyi；学术顾问 László Rátz、Richard Becker)
+  - 教育 (布达佩斯技术大学 → 柏林工大·化学工程，博士 1925《Bildung und Zerfall von Molekülen》)
   - 主要任职机构 (Göttingen 1926–27 → Princeton University 1930–1971；Manhattan Project；Oak Ridge / Clinton Lab 1946–47)
-  - 关键荣誉 (Nobel Prize in Physics 1963；Enrico Fermi Award 1958；Max Planck Medal 1961；Franklin Medal 1950；Medal for Merit 1946)
+  - 关键荣誉 (Nobel Prize in Physics 1963；Enrico Fermi Award 1958；Max Planck Medal 1961；Franklin Medal 1950；Medal for Merit 1946；Atoms for Peace 1959；National Medal of Science 1969；Albert Einstein Award 1972；Wigner Medal 1978)
   - 知名学生 (John Bardeen — 唯一两获诺奖；Victor Weisskopf、Marcos Moshinsky、Abner Shimony、Edwin T. Jaynes、Frederick Seitz、Conyers Herring 等)
   - Wikipedia 正文提取的**关键时间线**（按年份列出 15–20 个节点）
   - 核心贡献清单（见第 4 步）
@@ -138,7 +139,7 @@
   - `badgeQm` 量子力学 — 青绿 `#0E7C7B`
   - `badgeNucl` 原子核 — 陶土 `#B85C38`
   - `badgePhil` 数学哲学 — 棕灰 `#8D6E63`
-- 背景采用左右镜像对称的圆形装饰呼应"对称性"主题（已实现于成品）
+- 背景采用柔和气泡（稀疏大块实心圆）呼应"对称性"主题（已实现于成品，替代早期左右镜像对称圆形装饰）
 
 ### 5.1 格式硬要求（对齐 OpenMath 数学家 deck 规范）★
 
@@ -155,12 +156,12 @@
 
 ---
 
-## 第 6 步：规划幻灯片序列（实际成品 15 页）
+## 第 6 步：规划幻灯片序列（实际成品 16 页）
 
 ```
 00  OpenPhysicist 项目首页（\input cover/openphysicist_page.tex）
 01  封面 — 顶部标签「20 世纪物理学 · 对称性理论」/ Eugene Wigner 1902–1995 + 四色 badge + 右上头像 + 国籍行
-02  身份信息页（★ 必做）— 主标题「尤金·维格纳 - 从布达佩斯到诺贝尔奖」+ 副标题「生卒·本名·国籍·师承·荣誉」+ 左头像 + 右信息网格：生卒 / 本名 / 国籍 / 出生地 / 师承 / 任职 / 主要荣誉 / 核心领域
+02  身份信息页（★ 必做）— 主标题「尤金·维格纳 - 从布达佩斯到诺贝尔奖」+ 副标题「生卒·本名·国籍·师承·任职·荣誉」+ 左头像 + 右 2×2 信息网格：生卒 / 本名 / 国籍 / 出生地 / 去世地 / 教育 / 师承 / 任职 / 主要荣誉 / 核心领域
 03  核心贡献概览 — 对称性 / 群论 / 原子核 / 数学哲学
 04  早年：布达佩斯 — Fasori 中学、与 von Neumann 同窗、妹妹嫁 Dirac
 05  哥廷根岁月 — Hilbert 助手、Wigner D-矩阵
@@ -183,10 +184,12 @@
 - 文件名：`physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner_zh.tex`
 - 每页用 `\newcommand{\xxxslide}{...}` 定义，配色与卡片版式见成品
 - **身份信息页实现模式**（参照成品 `\profileslide`）：
-  - 用 `\newcommand{\lab}[1]{...}` 定义字段标签样式（小号加粗金色）
-  - 左：`\includegraphics[width=2.7cm,height=3.5cm,keepaspectratio]{Wigner.jpg}` + 姓名注
-  - 右：4 个 `infob` 圆角卡片（text width≈11cm，居中于 x=1.4），分别放 生卒+本名 / 国籍+出生地 / 师承+任职 / 荣誉+核心领域
-  - 任职务必含 `Göttingen 1926–27（Hilbert 助手）· 普林斯顿 1930–1971 · 曼哈顿计划 · 橡树岭`，与封面底部状态栏一致
+  - 用 `\newcommand{\lab}[1]{...}` 定义字段标签样式（小号加粗金色，字号 7.0/8.8pt）
+  - 左：`\IfFileExists{images/Wigner.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Wigner.jpg}}{...}` 头像 + 姓名注（条件包含，缺图时显示占位框）
+  - 右：2×2 信息网格，`infob` 圆角卡片（rounded corners=6pt，inner ysep=9pt，text width=4.8cm，字号 7.4/9.4pt）
+    - 上排两张卡 `anchor=north`（上边缘对齐）：生卒+本名+国籍 / 师承+任职
+    - 下排两张卡 `anchor=south`（下边缘对齐）：出生地+去世地+教育 / 主要荣誉+核心领域
+  - 任职务必含 `Göttingen 1926–27 · Princeton 1930–1971 · Manhattan`，与封面底部状态栏一致；教育栏补充 `化学工程`（Wigner 柏林工大所学专业，人生转折关键）
 
 ---
 
@@ -228,7 +231,7 @@
 | 文件 | 用途 |
 |------|------|
 | `physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner.html` | 本地 Wikipedia 正文 |
-| `physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner_zh.tex` | 成品 Beamer（15 页） |
+| `physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner_zh.tex` | 成品 Beamer（16 页） |
 | `physicist/presentations/cover/openphysicist_page.tex` | 项目首页模板 |
 | `MySQL/seed_wigner_full.py` | 研究领域入库（第 4 步） |
 | `MySQL/seed_wigner_relations.py` | 社会关系入库（第 4.5 步） |
@@ -246,9 +249,9 @@
 - **备选** (未采用):
   - ★★ Eternals — "宏大/深远/长期影响" 匹配其横跨量子到随机矩阵的数学遗产，但受众偏低 (49k)，纪录片沉稳感弱于 Timeless
   - ★★ PAST — "历史感/深沉" 匹配曼哈顿计划与冷战时代背景，但受众偏低 (86k)
-  - ★ Symphony No. 7 — "律动/庄严/数学之舞" 匹配对称性即结构之舞，但属古典长曲 (37:40)，不适配 15 页短视频
+- ★ Symphony No. 7 — "律动/庄严/数学之舞" 匹配对称性即结构之舞，但属古典长曲 (37:40)，不适配 16 页短视频
 - **本地路径**: `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` → `presentations/20th_century/Eugene_Wigner/Timeless.wav`
-- **时长**: 128 秒 > 15 页 × 7 秒 ≈ 105 秒 → ffmpeg `-shortest` 自动对齐
+- **时长**: 128 秒 > 16 页 × 7 秒 ≈ 112 秒 → ffmpeg `-shortest` 自动对齐
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
