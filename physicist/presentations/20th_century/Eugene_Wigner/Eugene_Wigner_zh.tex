@@ -1,0 +1,181 @@
+% =============================================================
+%  对称性的先知：尤金·维格纳 (Eugene Paul Wigner)
+%  Beamer 演示 —— 参照 OpenMath 数学家版式
+%  资料来源：本地 Wikipedia (Eugene_Wigner.html)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% ===== 配色：深海军蓝 + 香槟金 + 对称紫 + 量子青绿 =====
+\definecolor{bgmain}{RGB}{248,246,243}
+\definecolor{coverprimary}{HTML}{0D1B2A}
+\definecolor{coveraccent}{HTML}{C9A227}
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,20,30}
+\definecolor{muteddark}{RGB}{75,70,60}
+\definecolor{badgeSym}{HTML}{4C5FD5}      % 对称性 / 群论 靛蓝
+\definecolor{badgeQm}{HTML}{0E7C7B}       % 量子力学 青绿
+\definecolor{badgeNucl}{HTML}{B85C38}     % 原子核 陶土
+\definecolor{badgePhil}{HTML}{8D6E63}     % 哲学 棕灰
+\definecolor{sympanel}{RGB}{226,230,250}
+\definecolor{qmpanel}{RGB}{222,240,239}
+\definecolor{nuclpanel}{RGB}{246,232,224}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{silverpanel}{RGB}{240,240,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  % 对称性：左右镜像的圆形装饰
+  \fill[badgeSym!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeSym!8] (current page.north east) ++(-1.55,-1.35) circle (2.45cm);
+  \fill[badgeQm!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeQm!8] (current page.south west) ++(1.9,1.45) circle (2.70cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 物理学家版项目首页
+\input{../../cover/openphysicist_page.tex}
+
+% --- 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{balance-scale}\enspace 对称性的先知\enspace·\enspace 匈牙利—美国};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {尤金·维格纳};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Eugene Paul Wigner\enspace·\enspace 1902 — 1995};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {量子力学对称性理论奠基人 · 群论进入物理 · 1963 诺贝尔物理学奖};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeSym, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {对称性理论\\Symmetry};
+      \node[rounded corners=8pt, fill=badgeQm, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {群论\\Group Theory};
+      \node[rounded corners=8pt, fill=badgeNucl, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {原子核\\Nuclear};
+      \node[rounded corners=8pt, fill=badgePhil, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {数学哲学\\Philosophy};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"因对原子核和基本粒子理论的贡献，特别是基本对称性原理的发现与应用。" —— 1963 诺贝尔物理学奖获奖理由};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Wigner.jpg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center)
+    {Eugene Wigner};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 匈牙利 $\rightarrow$ 美国\enspace|\enspace \faIcon{university}\enspace Göttingen · Princeton\enspace|\enspace Nobel 1963 · Fermi 1958};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{对称性的先知}{群论进入物理 · Wigner 定理 · 曼哈顿计划 · 数学哲学}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=sympanel, draw=badgeSym!50, text=badgeSym!85!black] (a) at (-5.7,1.05) {对称性与群论\\1927–1931 · 与 Weyl 一起\\[2pt]把群论引入量子力学};
+\node[nodebox, fill=goldpanel, draw=coveraccent!60, text=coveraccent!85!black] (b) at (-1.9,1.05) {Wigner 定理\\1931 · 量子力学\\[2pt]对称变换的数学基石};
+\node[nodebox, fill=nuclpanel, draw=badgeNucl!50, text=badgeNucl!85!black] (c) at (1.9,1.05) {原子核理论\\1930s · 核结构\\[2pt]宇称守恒等};
+\node[nodebox, fill=silverpanel, draw=badgePhil!50, text=badgePhil!85!black] (d) at (5.7,1.05) {数学哲学\\1960 · 不可思议的\\有效性};
+\node[draw=coveraccent!60, fill=silverpanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他让物理学家第一次真正理解：宇宙的规律，本质上是对称性的规律。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：布达佩斯到哥廷根 (1902–1930)}{制革厂之子 · 与冯·诺依曼同窗 · 希尔伯特的助手}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=sympanel, draw=badgeSym!55] at (0,2.55) {\textbf{1902 · 生于布达佩斯。}犹太中产家庭，父亲经营制革厂。在家接受启蒙教育，后入 Fasori 路德宗中学——与比他低一级的 János von Neumann（冯·诺依曼）同窗。};
+\node[item, fill=qmpanel, draw=badgeQm!45] at (0,1.05) {\textbf{1921 · 柏林工业大学。}原习化学工程，却迷上了物理。参加德国物理学会周三讨论会，亲聆爱因斯坦、普朗克等大师。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{1927 · 哥廷根。}应 Sommerfeld 之邀，担任数学大师 David Hilbert 的助手。虽因 Hilbert 年迈而独立钻研，却在此奠定量子力学对称性理论的基础。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从化学工程到量子力学——他走了一条非比寻常的路，却最终改变了物理学的面貌。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 对称性理论 ---
+\newcommand{\symmetryslide}{\begin{frame}\plainbar\sectiontitle{对称性与群论：物理学的统一语言}{Wigner 定理 · Wigner–Eckart 定理 · 宇称守恒}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=sympanel, draw=badgeSym!60] at (0,2.55) {\textbf{Wigner 定理 (1931)。}量子力学数学表述的基石：任何保持跃迁概率不变的对称变换，要么是幺正算子，要么是反幺正算子。};
+\node[item, fill=qmpanel, draw=badgeQm!45] at (0,0.85) {\textbf{Wigner–Eckart 定理。}矩阵元 $\langle j'm'|T^{(k)}_q|jm\rangle$ 可分解为约化矩阵元 $\times$ Clebsch–Gordan 系数——让群论成为计算工具。};
+\node[item, fill=nuclpanel, draw=badgeNucl!40] at (0,-0.65) {\textbf{宇称守恒与 Wigner D-矩阵。}他系统地应用表示论于量子系统，D-矩阵描述角动量的旋转对称性，成为光谱与核物理的标准语言。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 对称性不是物理的装饰，而是物理的骨架——Wigner 让这句话从格言变成了定理。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 曼哈顿计划 ---
+\newcommand{\manhattanslide}{\begin{frame}\plainbar\sectiontitle{曼哈顿计划：反应堆的设计者}{爱因斯坦–西拉德信 · 铀到钚 · 原子时代}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=nuclpanel, draw=badgeNucl!55] at (0,2.55) {\textbf{1939 · 爱因斯坦–西拉德信。}与 Leó Szilárd、Einstein 会面，推动罗斯福总统启动铀咨询委员会——担心纳粹德国率先造出原子弹。};
+\node[item, fill=sympanel, draw=badgeSym!40] at (0,0.85) {\textbf{1942 · 反应堆设计。}领导团队设计将铀转化为武器级钚的生产反应堆。彼时反应堆只存在于纸面，他选择了保守却可靠的 1 型堆设计。};
+\node[item, fill=goldpanel, draw=coveraccent!35] at (0,-0.65) {\textbf{1946 · 橡树岭。}战后出任克林顿实验室（今橡树岭国家实验室）研发主任，但因不愿陷于行政事务，次年回到普林斯顿大学。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一位理论物理学家，在战争年代亲手把原子核的对称性变成了改变世界的力量。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 数学哲学与荣誉 ---
+\newcommand{\philosophyslide}{\begin{frame}\plainbar\sectiontitle{数学的有效性与荣誉}{「不可思议的有效性」 · 诺贝尔奖 · 费米奖}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=silverpanel, draw=badgePhil!55] at (0,2.55) {\textbf{1960 · 数学的有效性。}发表经典论文《数学在自然科学中不可思议的有效性》——提出为何抽象数学如此精确地描述物理世界这一深刻哲学之问。};
+\node[item, fill=goldpanel, draw=coveraccent!50] at (0,0.85) {\textbf{1963 · 诺贝尔物理学奖。}与 Maria Goeppert Mayer、J. Hans D. Jensen 共享——表彰对称性原理与核壳层结构理论的贡献。};
+\node[item, fill=qmpanel, draw=badgeQm!40] at (0,-0.65) {\textbf{荣誉。}Medal for Merit (1946)、Franklin Medal (1950)、Enrico Fermi Award (1958)、Max Planck Medal (1961) 等——横跨科学与工程。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他晚年追问的不再是「对称性如何工作」，而是「数学为何如此有效」。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：对称性的永恒影响}{从群论到标准模型——一道贯穿现代物理的线索}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=sympanel, draw=badgeSym!50,line width=0.7pt] (b) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSym} 对称性}\\[3pt]Wigner 定理\\Wigner–Eckart 定理\\[2pt]宇称与表示论};
+\node[leg, fill=qmpanel, draw=badgeQm!50,line width=0.7pt] (a) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeQm} 量子力学}\\[3pt]群论方法\\[2pt]对称变换的数学化};
+\node[leg, fill=nuclpanel, draw=badgeNucl!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeNucl} 原子核}\\[3pt]核壳层模型\\[2pt]曼哈顿计划};
+\node[leg, fill=silverpanel, draw=badgePhil!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePhil} 哲学}\\[3pt]数学有效性\\[2pt]物理与认知};
+\node[draw=coveraccent!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 对称性，是 20 世纪物理学的统一语言。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} Wigner 的群论方法 $\rightarrow$ 杨–米尔斯规范理论 $\rightarrow$ 标准模型 $\rightarrow$ 希格斯机制\\[2pt]他的学生 John Bardeen 两次获诺贝尔奖，是唯一两次获得诺贝尔物理奖的人。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {对称性，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是宇宙写给物理学家的一封密信。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Eugene Paul Wigner};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {尤金·维格纳\quad Eugene Wigner\quad 1902 — 1995};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{balance-scale}\enspace Nobel 1963 · Fermi 1958 · Wigner 定理\enspace|\enspace OpenPhysicist};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide \titleslide \hookslide \earlyslide \symmetryslide \manhattanslide \philosophyslide \legacyslide \closingslide
+\end{document}
