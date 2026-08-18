@@ -36,13 +36,18 @@
 
 ### 第 0 步：下载并核对 Wikipedia 页面 【人物专属】
 
-- 下载 `https://en.wikipedia.org/wiki/Kenneth_G._Wilson` 到 `Kenneth_G_Wilson.html`
-- 提取 infobox 与正文，输出供校验：
-  - 生卒日期（1936-06-08 ~ 2013-06-15，享年 77 岁）
+- ✅ 已下载 `https://en.wikipedia.org/wiki/Kenneth_G._Wilson` 到 `Kenneth_G_Wilson.html`（268 KB，第一轮 review 已完成事实核对）
+- ✅ 已下载头像到 `images/Wilson.jpg`（Wikipedia infobox 照片）
+- 提取 infobox 与正文，输出供校验（**第一轮已核对，事实基准如下**）：
+  - 生卒日期（1936-06-08 生于马萨诸塞州沃尔瑟姆 ~ 2013-06-15 逝于缅因州萨科，享年 77 岁）
   - 国籍（美国）
-  - 博士导师（Murray Gell-Mann，1969 诺奖得主）；教育（哈佛本科 → Caltech 博士）
-  - 主要任职机构（Cornell University 1963–1988 → Ohio State University 1988–2008）
-  - 关键荣誉（Nobel Prize in Physics 1982；Wolf Prize in Physics 1980；Dannie Heineman Prize 1973；Boltzmann Medal 1975）
+  - 父母（父 E. Bright Wilson 为哈佛化学家/微波光谱先驱；母 Emily Buckingham Wilson 受过物理学训练）
+  - 教育（16 岁进哈佛主修数学，1954/1956 两度 Putnam 前五，田径队一英里选手；Caltech 博士 1961）
+  - 博士导师（Murray Gell-Mann，1969 诺奖得主）；博士论文《An investigation of the Low equation and the Chew-Mandelstam equations》
+  - 博士后（Harvard + CERN）
+  - 主要任职机构（Cornell 1963–1988，1970 正教授/1974 James A. Weeks 教授，期间 SLAC；1985 康奈尔理论中心主任；Ohio State 1988–2008）
+  - 关键荣誉（Nobel 1982；Wolf 1980 与 Fisher/Kadanoff 共享；Franklin 1982；Heineman 1973；Boltzmann 1975；Eringen 1984；Dirac 1989；NAS/AAAS 院士 1975、APS 会员 1984）
+  - 知名博士生（Roman Jackiw、Michael Peskin、Steven R. White、Paul Ginsparg、H. R. Krishnamurthy、Serge Rudaz）
   - 核心贡献清单（见第 4 步）
   - 关键时间线（15–20 个节点）
 
@@ -56,7 +61,7 @@
 
 ### 第 3 步：收集图片 【人物专属】
 
-- 下载 Wilson 肖像（优先 1982 诺奖前后照片）到 `images/Wilson.jpg`
+- ✅ 已下载 Wilson 肖像到 `images/Wilson.jpg`（Wikipedia infobox 照片，162×227 JPEG）
 
 ### 第 4 步：研究领域梳理 + 入库 【模板通用，人物专属内容】
 
@@ -103,19 +108,20 @@
 ```
 00  OpenPhysicist 项目首页（\input cover/openphysicist_page.tex）
 01  封面 — 重整化群奠基人 / Kenneth G. Wilson 1936–2013 + 四色 badge + 右上头像 + 国籍行
-02  身份信息页（★ 必做）— 左头像 + 右信息网格
+02  身份信息页（★ 必做）— 左头像 + 右信息网格（含去世地、教育、师承、任职、荣誉、核心领域）
 03  核心贡献概览 — 重整化群 / 临界现象 / 格点场论 / 场论方法
-04  早年：从哈佛到 Caltech — Gell-Mann 门下
-05  康奈尔岁月：重整化群的诞生
-06  重整化群：把无穷大变成尺度（核心贡献页）
-07  临界现象与相变（诺奖核心）
-08  格点规范场论：把时空离散化
-09  以 Wilson 命名的成果 — Wilson loop / 格点费米子 / OPE
-10  门生与传承
-11  荣誉与认可 — 诺奖 1982 · Wolf 1980
-12  代表著作
-13  遗产：从临界现象到现代物理
-14  结尾
+04  早年：沃尔瑟姆神童 (1936–1956) — 16岁进哈佛、Putnam前五、田径、Woods Hole
+05  Caltech 博士：Gell-Mann 门下 (1956–1961) — Low 方程、Chew–Mandelstam 方程
+06  博士后：哈佛与 CERN (1961–1963)
+07  康奈尔岁月：重整化群的诞生 (1963–1974) — SLAC、1970 正教授、1974 Weeks 教授
+08  重整化群：把无穷大变成尺度（核心贡献页）
+09  格点规范场论：把时空离散化 — Wilson loop、格点 QCD、Wilson 费米子
+10  以 Wilson 命名的成果 — Wilson action / loop / ratio / Ginsparg–Wilson / NRG
+11  门生与传承 — Roman Jackiw、Michael Peskin、Steven R. White
+12  荣誉与认可 — Nobel 1982 · Wolf 1980 · Franklin 1982 · 院士
+13  超级计算与物理教育 — 康奈尔理论中心主任、Science by Inquiry
+14  遗产：从临界现象到现代物理
+15  结尾
 ```
 
 ### 第 7 步：编写 Beamer 源码 【模板通用】
@@ -135,9 +141,16 @@
 | 陷阱 | 说明 |
 |------|------|
 | 重整化群归属 | Wilson 把重整化群**系统化为临界现象理论**，但思想源头有 Kadanoff 的标度假设，勿写成"独自发明" |
-| 诺奖理由 | "for his theory for critical phenomena in connection with phase transitions"，强调**相变相关的临界现象**，不是泛泛的"重整化群" |
+| 诺奖理由 | Wikipedia 正文表述为 "for his work on critical phenomena using the renormalization group"，强调**相变/临界现象**，不是泛泛的"重整化群" |
+| 早年细节 | 16 岁进哈佛（非普通年龄），主修**数学**，1954/1956 两度 Putnam 前五；还是田径队一英里选手，勿写成"物理本科" |
+| 父亲身份 | 父 E. Bright Wilson 是哈佛**化学家（微波光谱先驱）**，不是"化学教授"的泛称；母亲亦受过物理学训练 |
+| 去世地 | 2013-06-15 逝于**缅因州萨科（Saco, Maine）**，勿与出生地混淆 |
+| 博士后 | 有 Harvard + CERN 两站博士后，勿遗漏 |
+| 博士生 | Roman Jackiw（轴子/反常）、Michael Peskin（QFT 教科书作者）、Steven R. White（DMRG 奠基人）、Paul Ginsparg（arXiv 创始人）等，勿写成"学生不详" |
 | 格点 QCD | Wilson 是格点规范场论奠基人之一，但完整 QCD 由多人共同发展 |
 | Wilson loop | 是格点规范场论的规范不变量，不要与重整化群混淆 |
+| 奖项完整性 | 除 Nobel 1982、Wolf 1980 外，还有 Franklin 1982、Heineman 1973、Boltzmann 1975、Eringen 1984、Dirac 1989；1975 年当选 NAS/AAAS 院士 |
+| 康奈尔理论中心 | 1985 年任中心主任，是美国 NSF 五个国家超级计算中心之一，勿遗漏其计算物理先驱身份 |
 
 **术语清单**：
 
