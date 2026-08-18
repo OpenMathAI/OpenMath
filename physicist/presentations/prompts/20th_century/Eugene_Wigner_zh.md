@@ -140,26 +140,35 @@
   - `badgePhil` 数学哲学 — 棕灰 `#8D6E63`
 - 背景采用左右镜像对称的圆形装饰呼应"对称性"主题（已实现于成品）
 
+### 5.1 格式硬要求（对齐 OpenMath 数学家 deck 规范）★
+
+> 每一位物理学家的立传 deck **必须**满足以下三点，否则视为未完成：
+
+1. **封面有头像**：右上角放置人物肖像（如 `Wigner.jpg`），配 `draw=coveraccent!50` 细边框 + 姓名小字注。
+2. **封面有国籍**：顶部副标题或底部状态栏明示国籍（如"匈牙利—美国"），且底部状态栏给出 `国籍 | 机构 | 主要奖项` 三要素。
+3. **必须有身份信息页**（Identity / Bio 速览页）：置于封面之后、核心贡献之前。布局为**左侧头像 + 右侧信息网格**，含至少：生卒、本名、国籍、出生地、师承（博士导师/中学老师/学术顾问）、任职（机构与年份）、主要荣誉、核心领域。事实取自本地 Wikipedia infobox（见第 0 步），不得杜撰。
+
 ---
 
 ## 第 6 步：规划幻灯片序列（实际成品 15 页）
 
 ```
 00  OpenPhysicist 项目首页（\input cover/openphysicist_page.tex）
-01  封面 — 《对称性的先知》/ Eugene Wigner 1902–1995 + 四色 badge
-02  核心贡献概览 — 对称性 / 群论 / 原子核 / 数学哲学
-03  早年：布达佩斯 — Fasori 中学、与 von Neumann 同窗、妹妹嫁 Dirac
-04  哥廷根岁月 — Hilbert 助手、Wigner D-矩阵
-05  学术黄金期 — 普林斯顿、1931 群论专著、Wigner–Seitz 原胞
-06  对称性与群论 — Wigner 定理、Wigner–Eckart 定理
-07  鲜为人知的「维格纳家族」 — Jordan–Wigner、Wigner 晶体、Wigner 拟概率、Wigner's friend
-08  曼哈顿计划 — 爱因斯坦–西拉德信、反应堆设计
-09  橡树岭与官僚之战 — Clinton Lab、AEC 冲突
-10  门生与传承 — John Bardeen（两获诺奖）、匈牙利「火星人」
-11  数学的有效性与荣誉 — 不可思议的有效性、诺贝尔奖、费米奖
-12  代表著作 — 1931 群论德文原著、中子链式反应堆、回忆录
-13  遗产 — 对称性贯穿现代物理
-14  结尾
+01  封面 — 《对称性的先知》/ Eugene Wigner 1902–1995 + 四色 badge + 右上头像 + 国籍行
+02  身份信息页（★ 必做）— 左头像 + 右信息网格：生卒 / 本名 / 国籍 / 出生地 / 师承 / 任职 / 主要荣誉 / 核心领域
+03  核心贡献概览 — 对称性 / 群论 / 原子核 / 数学哲学
+04  早年：布达佩斯 — Fasori 中学、与 von Neumann 同窗、妹妹嫁 Dirac
+05  哥廷根岁月 — Hilbert 助手、Wigner D-矩阵
+06  学术黄金期 — 普林斯顿、1931 群论专著、Wigner–Seitz 原胞
+07  对称性与群论 — Wigner 定理、Wigner–Eckart 定理
+08  鲜为人知的「维格纳家族」 — Jordan–Wigner、Wigner 晶体、Wigner 拟概率、Wigner's friend
+09  曼哈顿计划 — 爱因斯坦–西拉德信、反应堆设计
+10  橡树岭与官僚之战 — Clinton Lab、AEC 冲突
+11  门生与传承 — John Bardeen（两获诺奖）、匈牙利「火星人」
+12  数学的有效性与荣誉 — 不可思议的有效性、诺贝尔奖、费米奖
+13  代表著作 — 1931 群论德文原著、中子链式反应堆、回忆录
+14  遗产 — 对称性贯穿现代物理
+15  结尾
 ```
 
 ---
@@ -168,6 +177,11 @@
 
 - 文件名：`physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner_zh.tex`
 - 每页用 `\newcommand{\xxxslide}{...}` 定义，配色与卡片版式见成品
+- **身份信息页实现模式**（参照成品 `\profileslide`）：
+  - 用 `\newcommand{\lab}[1]{...}` 定义字段标签样式（小号加粗金色）
+  - 左：`\includegraphics[width=2.7cm,height=3.5cm,keepaspectratio]{Wigner.jpg}` + 姓名注
+  - 右：4 个 `infob` 圆角卡片（text width≈11cm，居中于 x=1.4），分别放 生卒+本名 / 国籍+出生地 / 师承+任职 / 荣誉+核心领域
+  - 任职务必含 `Göttingen 1926–27（Hilbert 助手）· 普林斯顿 1930–1971 · 曼哈顿计划 · 橡树岭`，与封面底部状态栏一致
 
 ---
 
