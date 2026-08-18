@@ -46,7 +46,7 @@
   - 博士导师（Murray Gell-Mann，1969 诺奖得主）；博士论文《An investigation of the Low equation and the Chew-Mandelstam equations》
   - 博士后（Harvard + CERN）
   - 主要任职机构（Cornell 1963–1988，1970 正教授/1974 James A. Weeks 教授，期间 SLAC；1985 康奈尔理论中心主任；Ohio State 1988–2008）
-  - 关键荣誉（Nobel 1982；Wolf 1980 与 Fisher/Kadanoff 共享；Franklin 1982；Heineman 1973；Boltzmann 1975；Eringen 1984；Dirac 1989；NAS/AAAS 院士 1975、美国哲学学会会员 1984、APS Fellow 1998）
+  - 关键荣誉（Nobel 1982；Wolf 1980 与 Fisher/Kadanoff 共享；Franklin 1982；Heineman 1973；Boltzmann 1975；Golden Plate 1983；Eringen 1984；Dirac 1989；Aneesur Rahman 1993；NAS/AAAS 院士 1975、美国哲学学会会员 1984、APS Fellow 1998）
   - 知名博士生（Roman Jackiw、Michael Peskin、Steven R. White、Paul Ginsparg、H. R. Krishnamurthy、Serge Rudaz）
   - 核心贡献清单（见第 4 步）
   - 关键时间线（15–20 个节点）
@@ -94,7 +94,7 @@
   - `badgeCrit` 临界现象 — 青绿 `#0E7C7B`
   - `badgeLattice` 格点场论 — 琥珀 `#E07B30`
   - `badgeOPE` 场论方法 — 玫瑰 `#C4204F`
-- **背景母题**：柔和气泡（稀疏大块实心圆），呼应重整化群的尺度不变性
+- **背景母题**：柔和气泡（稀疏大块实心圆，四种大小错落），以不同尺度的圆呼应「自相似性」——重整化群在不同观察尺度上保持形式不变的核心思想（与第 2 步设计母题一致）
 
 ### 5.1 物理学家格式硬要求 【模板通用，★ 必须满足】
 
