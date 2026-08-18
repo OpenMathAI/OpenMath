@@ -1,0 +1,257 @@
+% =============================================================
+%  重整化群的奠基人：肯尼斯·威尔逊 (Kenneth Geddes Wilson)
+%  Beamer 骨架 —— OpenPhysicist 物理学家立传模板标杆
+%  设计母题：自相似性 (self-similarity) —— 嵌套同心圆呼应重整化群的尺度不变性
+%  资料来源：本地 Wikipedia (Kenneth_G_Wilson.html)
+%  【模板】本文件是物理学家立传模板，可整体复用到任何物理学家，替换配色/文案/头像即可
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% ===== 配色：深靛蓝（理论深度）+ 香槟金（诺奖）+ 自相似四色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{coverprimary}{HTML}{1A237E}   % 深靛蓝 — 理论深度
+\definecolor{coveraccent}{HTML}{C9A227}    % 香槟金 — 诺贝尔奖
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{24,26,64}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{badgeRG}{HTML}{4C5FD5}        % 重整化群 — 靛蓝
+\definecolor{badgeCrit}{HTML}{0E7C7B}      % 临界现象 — 青绿
+\definecolor{badgeLattice}{HTML}{E07B30}   % 格点场论 — 琥珀
+\definecolor{badgeOPE}{HTML}{C4204F}       % 场论方法 — 玫瑰
+\definecolor{rgpanel}{RGB}{228,232,250}
+\definecolor{critpanel}{RGB}{220,240,238}
+\definecolor{latticepanel}{RGB}{248,233,220}
+\definecolor{opepanel}{RGB}{246,228,236}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 自相似母题：嵌套同心圆（重整化群 = 尺度不变性 = 自相似）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  % 四个角落的嵌套同心圆（自相似）
+  \foreach \r in {0.8,1.5,2.2,2.9} {
+    \draw[badgeRG!22, line width=0.7pt] ([xshift=1.5cm,yshift=-1.5cm]current page.north west) circle (\r cm);
+  }
+  \foreach \r in {0.8,1.5,2.2,2.9} {
+    \draw[badgeRG!22, line width=0.7pt] ([xshift=-1.5cm,yshift=-1.5cm]current page.north east) circle (\r cm);
+  }
+  \foreach \r in {0.8,1.5,2.2} {
+    \draw[badgeCrit!20, line width=0.7pt] ([xshift=1.8cm,yshift=1.8cm]current page.south west) circle (\r cm);
+  }
+  \foreach \r in {0.8,1.5,2.2} {
+    \draw[badgeCrit!20, line width=0.7pt] ([xshift=-1.8cm,yshift=1.8cm]current page.south east) circle (\r cm);
+  }
+  % 细网格（格点场论意象）
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.03, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 物理学家项目首页
+\input{../../cover/openphysicist_page.tex}
+
+% --- 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{expand-alt}\enspace 重整化群奠基人\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {肯尼斯·威尔逊};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Kenneth G. Wilson\enspace·\enspace 1936 — 2013};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {临界现象与相变理论 · 把无穷大重新理解为尺度依赖 · 1982 诺贝尔物理学奖};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeRG] at (-5.05,0)
+        {重整化群\\Renormalization Group\par\scriptsize 尺度依赖的核心};
+      \node[badge, fill=badgeCrit] at (-1.68,0)
+        {临界现象\\Critical Phenomena\par\scriptsize 相变与普适性};
+      \node[badge, fill=badgeLattice] at (1.68,0)
+        {格点场论\\Lattice Gauge\par\scriptsize 时空离散化};
+      \node[badge, fill=badgeOPE] at (5.05,0)
+        {场论方法\\Quantum Fields\par\scriptsize 算符乘积展开};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"因对相变相关的临界现象理论作出贡献。" —— 1982 诺贝尔物理学奖获奖理由};
+  % 头像（条件包含：有 Wilson.jpg 则显示，否则占位框）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Wilson.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Wilson.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center)
+    {Kenneth G. Wilson};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Cornell · Ohio State\enspace|\enspace Nobel 1982 · Wolf 1980};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 身份信息页（★ 物理学家硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{6.4}{8.2}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{肯尼斯·威尔逊 - 从 Caltech 到诺贝尔奖}{生卒 · 本名 · 国籍 · 师承 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=6pt, text width=6.2cm,
+      font=\fontsize{6.6}{8.0}\selectfont, align=left}
+  ]
+  % 左侧头像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at (-6.31,0.1) {\IfFileExists{images/Wilson.jpg}{\includegraphics[width=2.6cm,height=3.4cm,keepaspectratio]{Wilson.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.6}{6.6}\selectfont\itshape, text=covermuted]
+    at (-6.31,-1.95) {Kenneth G. Wilson (1982)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, text width=4.35cm] at (-2.08,1.84)
+    {\lab{生卒}\quad 1936-06-08 — 2013-06-15\\[1pt]\lab{本名}\quad Kenneth Geddes Wilson};
+  \node[infob, fill=rgpanel, draw=badgeRG!50, text width=4.35cm] at (-2.08,-1.11)
+    {\lab{国籍}\quad 美国\\[1pt]\lab{出生地}\quad 马萨诸塞州 · 沃尔瑟姆};
+  \node[infob, fill=critpanel, draw=badgeCrit!45, text width=4.3cm, inner xsep=2pt, inner ysep=2pt] at (3.1,1.55)
+    {\lab{师承}\quad Murray Gell-Mann（博士导师）\\[1pt]
+     \lab{教育}\quad 哈佛大学本科 $\rightarrow$ Caltech 博士\\[1pt]
+     \lab{任职}\quad Cornell 1963–1988\\[1pt]
+     \quad Ohio State 1988–2008};
+  \node[infob, fill=latticepanel, draw=badgeLattice!45, text width=4.3cm, inner xsep=2pt, inner ysep=2pt] at (3.1,-0.55)
+    {\lab{主要荣誉}\quad 诺贝尔物理学奖 1982\\[1pt]
+     \quad Wolf Prize 1980\\[1pt]
+     \quad Heineman 1973 · Boltzmann 1975\\[1pt]
+     \lab{核心领域}\quad 重整化群 · 临界现象\\[1pt]
+     \quad 格点场论 · 量子场论};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{把无穷大变成尺度}{重整化群 · 临界现象 · 格点场论 · 场论方法}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=rgpanel, draw=badgeRG!50, text=badgeRG!85!black] (a) at (-5.7,1.05) {重整化群\\1971 · 核心思想\\[2pt]尺度依赖的数学化};
+\node[nodebox, fill=goldpanel, draw=coveraccent!60, text=coveraccent!85!black] (b) at (-1.9,1.05) {临界现象\\1982 诺奖\\[2pt]相变与普适性};
+\node[nodebox, fill=latticepanel, draw=badgeLattice!50, text=badgeLattice!85!black] (c) at (1.9,1.05) {格点场论\\1974 · Wilson loop\\[2pt]时空离散化};
+\node[nodebox, fill=silverpanel, draw=badgeOPE!50, text=badgeOPE!85!black] (d) at (5.7,1.05) {场论方法\\OPE · 短距行为\\[2pt]算符乘积展开};
+\node[draw=coveraccent!60, fill=silverpanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他让物理学家第一次真正理解：无穷大不是 bug，而是尺度的语言。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：从哈佛到 Caltech (1936–1961)}{Gell-Mann 门下 · 理论物理的起点}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=rgpanel, draw=badgeRG!55] at (0,2.55) {\textbf{1936 · 生于马萨诸塞州沃尔瑟姆。}父亲是哈佛化学教授 E. Bright Wilson，家学渊源使他对科学耳濡目染。};
+\node[item, fill=critpanel, draw=badgeCrit!45] at (0,1.05) {\textbf{1956 · 哈佛本科。}主修数学与物理，成绩优异，随后进入加州理工学院（Caltech）攻读博士。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{1961 · Caltech 博士。}师从 Murray Gell-Mann（1969 诺奖得主），研究量子场论，为日后重整化群革命埋下伏笔。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从哈佛到 Caltech，他一路走向理论物理最艰深的核心。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 康奈尔岁月 ---
+\newcommand{\cornellslide}{\begin{frame}\plainbar\sectiontitle{康奈尔岁月：重整化群的诞生 (1963–1974)}{从量子场论到临界现象 · 一场静默的革命}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=critpanel, draw=badgeCrit!45] at (0,2.55) {\textbf{加入康奈尔。}1963 年成为康奈尔大学助理教授，此后二十余年在此完成一生最重要的工作。};
+\node[item, fill=rgpanel, draw=badgeRG!55] at (0,1.05) {\textbf{重整化群革命。}1971 年发表两篇奠基性论文，把重整化群从粒子物理的工具，改造为理解临界现象与相变的普适框架。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{不动点思想。}核心洞察：临界行为由重整化流的「不动点」决定，不同系统的共性源于同一不动点——这就是普适性的数学根源。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 在康奈尔的十年，他完成了一场静默却彻底的理论革命。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 重整化群核心 ---
+\newcommand{\rgslide}{\begin{frame}\plainbar\sectiontitle{重整化群：把无穷大变成尺度}{不动点 · 普适性 · 尺度变换}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=rgpanel, draw=badgeRG!60] at (0,2.55) {\textbf{尺度依赖。}物理耦合常数随观察尺度变化——在重整化群的框架下，这是可计算的「流动」，而非需要回避的发散。};
+\node[item, fill=critpanel, draw=badgeCrit!45] at (0,0.85) {\textbf{不动点与普适性。}临界现象由重整化流的不动点控制：铁磁体、液气临界点等看似无关的系统，共享同一临界指数。};
+\node[item, fill=latticepanel, draw=badgeLattice!40] at (0,-0.65) {\textbf{从量子到统计。}他把粒子物理的重整化群思想迁移到统计力学，打通了量子场论与临界现象之间的深层联系。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 无穷大不是灾难，而是尺度依赖的线索——Wilson 让这句话成为现代物理的共识。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 格点场论 ---
+\newcommand{\latticeslide}{\begin{frame}\plainbar\sectiontitle{格点规范场论：把时空离散化}{Wilson loop · 格点 QCD · 非微扰计算}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=latticepanel, draw=badgeLattice!55] at (0,2.55) {\textbf{1974 · Wilson loop。}引入规范不变量「Wilson 圈」，为格点规范场论提供基本构造块。};
+\node[item, fill=rgpanel, draw=badgeRG!40] at (0,0.85) {\textbf{格点 QCD。}把时空离散为格点，使强相互作用的非微扰计算成为可能——现代格点 QCD 的奠基。};
+\node[item, fill=critpanel, draw=badgeCrit!40] at (0,-0.65) {\textbf{格点费米子。}处理格点上费米子的「加倍问题」，提出 Wilson 费米子方案，至今仍是格点场论的标准工具。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 连续时空是幻觉，格点才是计算的起点。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 以 Wilson 命名的成果 ---
+\newcommand{\wilsonslide}{\begin{frame}\plainbar\sectiontitle{以 Wilson 命名的成果}{跨越场论与统计物理的印记}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=7pt, text width=3.05cm, font=\fontsize{6.6}{8.6}\selectfont, align=center}]
+\node[leg, fill=rgpanel, draw=badgeRG!50,line width=0.7pt] (a) at (-5.4,1.35) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeRG} 重整化群}\\[3pt]Wilson 重整化群方程\\[2pt]不动点理论\\[2pt]普适性分类};
+\node[leg, fill=latticepanel, draw=badgeLattice!50,line width=0.7pt] (b) at (-1.8,1.35) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeLattice} 格点场论}\\[3pt]Wilson loop\\[2pt]格点 QCD\\[2pt]Wilson 费米子};
+\node[leg, fill=critpanel, draw=badgeCrit!50,line width=0.7pt] (c) at (1.8,1.35) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeCrit} 临界现象}\\[3pt]临界指数\\[2pt]相变理论\\[2pt]Monte Carlo 重整化群};
+\node[leg, fill=opepanel, draw=badgeOPE!50,line width=0.7pt] (d) at (5.4,1.35) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeOPE} 场论方法}\\[3pt]算符乘积展开\\[2pt]短距展开\\[2pt]有效场论};
+\node[draw=coveraccent!65, fill=goldpanel, rounded corners=6pt, inner sep=9pt, text width=13.0cm, align=center] at (0,-1.55) {{\fontsize{8.6}{11}\selectfont\bfseries\color{coverdark!88} 从高能粒子到凝聚态，他的名字贯穿现代理论物理的主干。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 荣誉 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与认可}{诺贝尔奖 1982 · Wolf Prize 1980}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=goldpanel, draw=coveraccent!50] at (0,2.55) {\textbf{1982 · 诺贝尔物理学奖。}单独获奖，表彰其「相变相关的临界现象理论」——重整化群思想获得最高认可。};
+\node[item, fill=rgpanel, draw=badgeRG!45] at (0,0.85) {\textbf{1980 · Wolf Prize。}与 Michael Fisher、Leo Kadanoff 共享，表彰临界现象理论的共同奠基。};
+\node[item, fill=critpanel, draw=badgeCrit!40] at (0,-0.65) {\textbf{早期荣誉。}Dannie Heineman Prize (1973)、Boltzmann Medal (1975)——在诺奖之前，学界早已公认其分量。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个思想的重量，最终由时间与奖项共同称量。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：从临界现象到现代物理}{一道贯穿粒子物理与凝聚态的线索}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=rgpanel, draw=badgeRG!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeRG} 重整化群}\\[3pt]不动点\\普适性\\[2pt]尺度依赖};
+\node[leg, fill=critpanel, draw=badgeCrit!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCrit} 临界现象}\\[3pt]相变理论\\[2pt]统计力学};
+\node[leg, fill=latticepanel, draw=badgeLattice!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLattice} 格点场论}\\[3pt]格点 QCD\\[2pt]非微扰计算};
+\node[leg, fill=silverpanel, draw=badgeOPE!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeOPE} 场论方法}\\[3pt]OPE\\[2pt]有效场论};
+\node[draw=coveraccent!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 尺度，是 20 世纪物理学的深层语言。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} Wilson 的重整化群 $\rightarrow$ 临界现象 $\rightarrow$ 格点 QCD $\rightarrow$ 现代凝聚态物理\\[2pt]他的思想，仍在粒子物理与统计力学之间流动。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {无穷大，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {只是尺度在低语。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Kenneth Geddes Wilson};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {肯尼斯·威尔逊\quad Kenneth G. Wilson\quad 1936 — 2013};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace Nobel 1982 · Wolf 1980 · 重整化群\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\cornellslide
+\rgslide
+\latticeslide
+\wilsonslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}
