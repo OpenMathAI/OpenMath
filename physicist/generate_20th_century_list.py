@@ -1,61 +1,55 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""从 Nobel_Physics_Laureates_20th_21st_Century.md 提取 20 世纪名单，
-去掉 Wikipedia 链接，参考数学家侧文档形式，生成结构化 md。"""
+"""从 nobel_physics_citations.json 读取 20 世纪诺贝尔物理学奖得主（含获奖理由），
+参考数学家侧文档形式，生成含「获奖理由 / 立传 / Review」列的结构化 md。
+
+先运行 fetch_nobel_citations.py 生成 nobel_physics_citations.json，再运行本脚本。
+"""
 from __future__ import annotations
 
-import re
+import json
 from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-SRC = ROOT / "presentations" / "Nobel_Physics_Laureates_20th_21st_Century.md"
+SRC = ROOT / "nobel_physics_citations.json"
 OUT = ROOT / "presentations" / "20th_century" / "OpenPhysicist_20th_Century_Nobel_Laureates.md"
 
-
-def strip_links(text: str) -> str:
-    """去掉 markdown 链接 [text](url) -> text"""
-    return re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", text)
+# 已立传的物理学家（姓名需与获奖者名单精确匹配）。
+# 新增立传时在此补充姓名。
+BIOGRAPHIES_DONE = {
+    "Eugene Paul Wigner",
+    "Kenneth G. Wilson",
+}
 
 
 def main() -> int:
-    text = SRC.read_text(encoding="utf-8")
-
-    # 提取 20 世纪 block（## 20 世纪 到 ## 21 世纪 之间）
-    m = re.search(r"## 20 世纪.*?(?=\n## 21 世纪)", text, re.DOTALL)
-    if not m:
-        print("未找到 20 世纪段落")
+    if not SRC.exists():
+        print(f"✗ 缺少获奖理由数据：{SRC}")
+        print("  请先运行：python3 fetch_nobel_citations.py")
         return 1
-    block = strip_links(m.group(0))
 
-    # 解析表格行：| 年份 | 姓名 | 国籍 |
-    row_pat = re.compile(r"^\|\s*(\d{4})\s*\|\s*([^|]+?)\s*\|\s*([^|]*?)\s*\|$")
-    rows: list[tuple[str, str, str]] = []
-    for line in block.splitlines():
-        line = line.strip()
-        mm = row_pat.match(line)
-        if mm:
-            year = mm.group(1)
-            name = mm.group(2).strip()
-            country = mm.group(3).strip() or "—"
-            # 跳过表头分隔行
-            if set(name.replace(":", "").replace("-", "")) <= {"-", ":"}:
-                continue
-            rows.append((year, name, country))
+    data = json.loads(SRC.read_text(encoding="utf-8"))
+    # 仅保留 20 世纪（1901–2000）
+    rows = [r for r in data if r.get("year") and r["year"] <= 2000]
+    rows.sort(key=lambda r: r["year"])
 
     total_items = len(rows)
-    unique_names = [n for _, n, _ in rows]
-    unique_people = set(unique_names)
+    names = [r["name"] for r in rows]
+    unique_people = set(names)
 
     # 两度获奖者
-    cnt = Counter(unique_names)
+    cnt = Counter(names)
     double = {k for k, v in cnt.items() if v > 1}
 
-    # 女性获奖者（20 世纪已知女性）
+    # 女性获奖者（20 世纪）
     women = {"Marie Curie", "Maria Goeppert Mayer"}
 
     # 国籍分布
-    country_counter = Counter(c for _, _, c in rows)
+    country_counter = Counter(r["country"] for r in rows)
+
+    # 立传 / Review 状态
+    done_count = sum(1 for r in rows if r["name"] in BIOGRAPHIES_DONE)
 
     lines: list[str] = []
     lines.append("# 20 世纪诺贝尔物理学奖得主 — OpenPhysicist 名录\n")
@@ -64,22 +58,31 @@ def main() -> int:
         ">\n"
         "> 从 Röntgen 的 X 射线到 Kilby 的集成电路：一百年间，物理学奖见证了现代物理从经典走向量子的全过程。\n"
         ">\n"
+        "> 获奖理由（Citation）为诺贝尔奖官方英文原文；「立传」表示是否已生成立传 Beamer，「Review」表示是否已完成事实核查。\n"
+        ">\n"
         "> 数据来源：英文维基百科「List of Nobel laureates in Physics」。\n"
         % (total_items, len(unique_people))
     )
     lines.append("---\n")
 
     lines.append("\n## 一、完整名单（按年份）\n")
-    lines.append("\n| 年份 | 姓名 | 国籍 |")
-    lines.append("|:--:|------|:--:|")
-    for year, name, country in rows:
-        lines.append("| %s | %s | %s |" % (year, name, country))
+    lines.append("\n| 年份 | 获奖者 | 国籍 | 获奖理由 | 立传 | Review |")
+    lines.append("|:--:|------|------|------|:--:|:--:|")
+    for r in rows:
+        name = r["name"]
+        country = r["country"] or "—"
+        citation = r["citation"].replace("|", "/")  # 表格内转义竖线
+        bio = "✅" if name in BIOGRAPHIES_DONE else "🔲"
+        review = "🔲"
+        lines.append("| %d | %s | %s | %s | %s | %s |" % (r["year"], name, country, citation, bio, review))
 
     lines.append("\n---\n")
     lines.append("\n## 二、统计说明\n")
     lines.append("\n- **获奖年份跨度**：1901–2000")
     lines.append("- **获奖总项数**：%d 项" % total_items)
     lines.append("- **获奖总人数**：%d 位" % len(unique_people))
+    lines.append("- **已立传**：%d 位（%s）" % (done_count, "、".join(sorted(BIOGRAPHIES_DONE)) if BIOGRAPHIES_DONE else "暂无"))
+    lines.append("- **已 Review**：0 位")
     if double:
         lines.append("- **两度获奖者**：" + "、".join(sorted(double)) + "（唯一两度获诺贝尔物理学奖者）")
     if women:
@@ -101,6 +104,7 @@ def main() -> int:
     OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("wrote:", OUT)
     print("总项数:", total_items, "总人数:", len(unique_people), "两度获奖:", sorted(double))
+    print("已立传:", done_count, "位")
     return 0
 
 
