@@ -41,7 +41,7 @@
   - **教育**：苏黎世联邦理工学院（ETH Zurich，机械工程）；苏黎世大学博士 1869，论文《Studien über Gase》（论气体）
   - **博士导师**：Gustav Zeuner；**学术导师**：August Kundt（伦琴是其最喜爱的学生，毕业后跟随 Kundt 辗转维尔茨堡 → 斯特拉斯堡）
   - **主要任职机构**：斯特拉斯堡大学讲师 1874 → 物理教授 1876；霍恩海姆农学院教授 1875；吉森大学物理教席 1879；维尔茨堡大学 1888；慕尼黑大学 1900（巴伐利亚政府特邀）
-  - **关键荣誉**：诺贝尔物理学奖 1901（首位得主）；Rumford Medal 1896（与 Philipp Lenard 共享）；Matteucci Medal 1896；Elliott Cresson Medal 1898；Pour le Mérite 1911
+  - **关键荣誉**：诺贝尔物理学奖 1901（首位得主）；Rumford Medal 1896（与 Philipp Lenard 共享）；Matteucci Medal 1896；Elliott Cresson Medal 1898（infobox 记 1897，正文表格记 1898，Beamer 采用 1898）；Pour le Mérite 1911
   - **知名学生**：Abram Ioffe（阿布拉姆·约费，苏联物理学奠基人）、Rudolf Ladenburg、Herman March、Ernst Wagner、Emil Silbernagel、John Patrick Donaghey
   - **核心贡献**：1895-11-08 在维尔茨堡大学物理研究所发现 X 射线（详见第 4 步）
   - **关键时间线**（15–20 个节点）：
@@ -193,7 +193,7 @@
   - 右：2×2 信息网格，`infob` 圆角卡片（上排两张 `anchor=north`，下排两张 `anchor=south`）
     - 上排：生卒+本名+国籍 / 师承+任职
     - 下排：出生地+去世地+教育 / 主要荣誉+核心领域
-  - 任职务必含 `Strasbourg · Giessen · Würzburg · Munich`，与封面底部状态栏一致；国籍栏补充 `普鲁士 → 无国籍 → 德国` 的变迁
+  - 任职务必含 `Strasbourg · Hohenheim · Giessen · Würzburg · Munich`（Hohenheim 为 1875 年农学院教授，勿遗漏），与封面底部状态栏一致；国籍栏补充 `普鲁士 → 无国籍 → 德国` 的变迁
 
 ---
 
@@ -219,6 +219,7 @@
 | 拒绝诺奖演讲 | 因公开演讲害羞而拒绝发表诺贝尔演讲，勿写成"缺席颁奖" |
 | 妻子 X 光片 | 史上第一张医学 X 光片是其妻子 Anna Bertha 的手（1895-12-22），妻子惊呼"I have seen my death!" |
 | 元素命名 | 第 111 号元素 roentgenium（錀，Rg）2004 年以他命名，勿写成"伦琴元素" |
+| Elliott Cresson Medal 年份 | Wikipedia 内部矛盾：infobox 写 1897，正文 Recognition 表格写 1898。Beamer 采用 1898（正文表格更详细、有 citation 支撑）；如需进一步核实可查 Franklin Institute 官方记录 |
 | 晚年 | 一战后德国通胀导致其破产，晚年生活困顿，勿忽略此史实 |
 
 ### 术语清单
