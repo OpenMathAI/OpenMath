@@ -220,6 +220,7 @@
 | 妻子 X 光片 | 史上第一张医学 X 光片是其妻子 Anna Bertha 的手（1895-12-22），妻子惊呼"I have seen my death!" |
 | 元素命名 | 第 111 号元素 roentgenium（錀，Rg）2004 年以他命名，勿写成"伦琴元素" |
 | Elliott Cresson Medal 年份 | Wikipedia 内部矛盾：infobox 写 1897，正文 Recognition 表格写 1898。Beamer 采用 1898（正文表格更详细、有 citation 支撑）；如需进一步核实可查 Franklin Institute 官方记录 |
+| Ioffe 师承表述 | 门生页勿写"Ioffe 培养出朗道"——朗道学术思想主要受 Bohr 影响、师承有微妙之处；宜写"门下走出了以卡皮察、朗道为代表的一代苏联物理学家" |
 | 晚年 | 一战后德国通胀导致其破产，晚年生活困顿，勿忽略此史实 |
 
 ### 术语清单
@@ -250,14 +251,17 @@
 
 ## 背景音乐选择 ✅ 【人物专属】
 
-- **选定曲目**: **Beethoven · Karajan — Symphony No. 3 "Eroica"** 或 **Timeless**（Alex-Productions）
-- **风格**: 古典庄严 / 沉稳纪录片
+- **选定曲目**: **The Invisible Light** — Infraction（Documentary Cinematic / 纪录片电影）
+- **风格**: 纪录片 / 稳重 / 电影感
 - **匹配理由**:
-  - 伦琴是古典物理时代的里程碑人物，X 射线的发现开创了现代物理与医学的新纪元，古典交响乐的庄严与其历史地位相称
-  - "沉稳"匹配其静默探索的气质——不事张扬，拒绝专利、拒绝演讲，甘愿让全社会受益
-  - "穿透/透视"的母题契合 X 射线穿透物质、揭示内在的隐喻
-- **本地路径**: `music_audio/` 下选定曲目 → `presentations/20th_century/Wilhelm_Rontgen/`
-- **时长**: 与 16 页 × 7 秒 ≈ 112 秒对齐，ffmpeg `-shortest` 自动对齐
+  - **曲名即主题**：「无形之光」(The Invisible Light) 完美呼应伦琴"让不可见成为可见"的核心命题——X 射线正是那束看不见、却能透视内在的光
+  - "纪录片/稳重"匹配其静默探索的气质——不事张扬，拒绝专利、拒绝演讲，甘愿让全社会受益
+  - 避开 Wigner / Wilson 已使用的 Timeless，为伦琴选择更具辨识度的专属曲目
+- **备选**（未采用）:
+  - Beethoven · Karajan — Symphony No. 3 "Eroica"：古典庄严贴合其古典物理时代气质，但文件 562MB（48:52）过重，且 ffmpeg 仅截取前 112 秒无法体现英雄主题
+  - Timeless（Alex-Productions）：沉稳纪录片气质契合，但 Wigner / Wilson 已复用，缺乏人物辨识度
+- **本地路径**: `music_audio/inspiring-electronic/19-tGxXsgSKPiQ-...The Invisible Light.wav` → `presentations/20th_century/Wilhelm_Rontgen/TheInvisibleLight.wav`
+- **时长**: 154 秒（2:34）> 16 页 × 7 秒 ≈ 112 秒 → ffmpeg `-shortest` 自动对齐
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
