@@ -1,0 +1,275 @@
+% =============================================================
+%  X 射线的发现者：威廉·康拉德·伦琴 (Wilhelm Conrad Röntgen)
+%  Beamer 骨架 —— OpenPhysicist 物理学家立传（标杆：Kenneth_G_Wilson）
+%  设计母题：穿透性 (penetration) —— 柔和气泡呼应 X 射线穿透物质、透视内在
+%  资料来源：本地 Wikipedia (Wilhelm_Rontgen.html / pages/20th_century/Wilhelm_Conrad_Röntgen/page.md)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% ===== 配色：深邃黑蓝（穿透的静默）+ 香槟金（诺奖）+ 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{coverprimary}{HTML}{0D1B2A}   % 深邃黑蓝 — 静默的实验大师
+\definecolor{coveraccent}{HTML}{C9A227}    % 香槟金 — 诺贝尔奖
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{24,26,64}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{badgeXray}{HTML}{1A237E}      % X 射线物理 — 深靛蓝
+\definecolor{badgeExp}{HTML}{0E7C7B}       % 实验物理 — 青绿
+\definecolor{badgeEm}{HTML}{E07B30}        % 电磁辐射 — 琥珀
+\definecolor{badgeMed}{HTML}{C4204F}       % 医学成像 — 玫瑰
+\definecolor{xraypanel}{RGB}{228,232,250}
+\definecolor{exppanel}{RGB}{220,240,238}
+\definecolor{empanel}{RGB}{248,233,220}
+\definecolor{medpanel}{RGB}{246,228,236}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：稀疏柔和的实心圆，呼应 X 射线的穿透与透视
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeXray!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeExp!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeEm!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 物理学家项目首页
+\input{../../cover/openphysicist_page.tex}
+
+% --- 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{expand-alt}\enspace X 射线发现者\enspace·\enspace 德国};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {威廉·伦琴};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Wilhelm Röntgen\enspace·\enspace 1845 — 1923};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {X 射线的发现 · 让不可见成为可见 · 1901 首届诺贝尔物理学奖};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeXray] at (-5.05,0)
+        {X 射线物理\\X-ray Physics\par\scriptsize 穿透物质的射线};
+      \node[badge, fill=badgeExp] at (-1.68,0)
+        {实验物理\\Experimental\par\scriptsize 真空放电研究};
+      \node[badge, fill=badgeEm] at (1.68,0)
+        {电磁辐射\\Radiation\par\scriptsize 电磁波谱拓展};
+      \node[badge, fill=badgeMed] at (5.05,0)
+        {医学成像\\Medical Imaging\par\scriptsize 透视人体};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"因发现后来以他的名字命名的非凡射线所作出的杰出贡献。" —— 1901 诺贝尔物理学奖获奖理由};
+  % 头像（条件包含）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Rontgen.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Rontgen.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center)
+    {Wilhelm Röntgen};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国\enspace|\enspace \faIcon{university}\enspace Würzburg · Munich\enspace|\enspace Nobel 1901};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 身份信息页（★ 物理学家硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{威廉·伦琴 - 从伦内普到诺贝尔奖}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  % 左侧头像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Rontgen.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Rontgen.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Wilhelm Conrad Röntgen (1901)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1845-03-27 — 1923-02-10\\[2pt]\lab{本名}\quad Wilhelm Conrad Röntgen\\[2pt]\lab{国籍}\quad 普鲁士 $\rightarrow$ 无国籍 $\rightarrow$ 德国};
+  \node[infob, fill=exppanel, draw=badgeExp!45, anchor=north] at (3.8,2.35)
+    {\lab{师承}\quad G. Zeuner（博士导师）\\[2pt]
+     \quad A. Kundt（学术导师）\\[2pt]
+     \lab{任职}\quad Strasbourg · Giessen\\[2pt]
+     \quad Würzburg · Munich};
+  \node[infob, fill=xraypanel, draw=badgeXray!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 普鲁士 · 伦内普\\[2pt]\lab{去世地}\quad 德国 · 慕尼黑\\[2pt]\lab{教育}\quad ETH Zurich $\rightarrow$ 苏黎世大学博士};
+  \node[infob, fill=empanel, draw=badgeEm!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Nobel 1901（首位得主）\\[2pt]
+     \quad Rumford 1896 · Matteucci 1896\\[2pt]
+     \quad Cresson 1898 · Pour le Mérite 1911\\[2pt]
+     \lab{核心领域}\quad X 射线物理 · 实验物理\\[2pt]
+     \quad 电磁辐射 · 医学成像};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{让不可见成为可见}{X 射线物理 · 实验物理 · 电磁辐射 · 医学成像}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=xraypanel, draw=badgeXray!50, text=badgeXray!85!black] (a) at (-5.7,1.05) {X 射线物理\\1895 · 核心贡献\\[2pt]穿透物质的射线};
+\node[nodebox, fill=goldpanel, draw=coveraccent!60, text=coveraccent!85!black] (b) at (-1.9,1.05) {实验物理\\真空放电研究\\[2pt]阴极射线管实验};
+\node[nodebox, fill=empanel, draw=badgeEm!50, text=badgeEm!85!black] (c) at (1.9,1.05) {电磁辐射\\电磁波谱拓展\\[2pt]波长更短的辐射};
+\node[nodebox, fill=medpanel, draw=badgeMed!50, text=badgeMed!85!black] (d) at (5.7,1.05) {医学成像\\透视人体\\[2pt]X 射线摄影术};
+\node[draw=coveraccent!60, fill=silverpanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 一束看不见的射线，第一次让人得以透视自己，也透视了物质的深处。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：伦内普与乌得勒支 (1845–1865)}{商人之子 · 迁居荷兰 · 被诬陷开除}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=xraypanel, draw=badgeXray!55] at (0,2.55) {\textbf{1845 · 生于普鲁士伦内普。}父亲 Friedrich Conrad Röntgen 是商人兼布料制造商，母亲 Charlotte Constanze Frowein——家中独子。};
+\node[item, fill=exppanel, draw=badgeExp!45] at (0,1.05) {\textbf{1848 · 迁居荷兰。}随父母迁往母亲家族所在的荷兰，从此失去普鲁士国籍，成为无国籍者——这一身份持续了整整四十年。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{1862–1865 · 乌得勒支技术学校。}就读近两年后，1865 年被诬陷画教师讽刺漫画而遭开除——漫画实为他人所画，他却因此失去文凭。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一次不公的开除，反而把他推向了苏黎世——命运在此转弯。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 苏黎世求学 ---
+\newcommand{\zurichslide}{\begin{frame}\plainbar\sectiontitle{苏黎世求学 (1865–1869)}{ETH 机械工程 · 苏黎世大学博士 · Kundt 门下}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=exppanel, draw=badgeExp!45] at (0,2.55) {\textbf{1865 · 进入苏黎世联邦理工学院。}无高中文凭的他无法在荷兰正常入学，遂赴瑞士通过 ETH Zurich 入学考试，成为机械工程学生。};
+\node[item, fill=xraypanel, draw=badgeXray!55] at (0,1.05) {\textbf{1869 · 苏黎世大学博士。}获博士学位，论文《Studien über Gase》（论气体）；August Kundt 教授视其为最喜爱的学生。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{跟随 Kundt。}毕业后追随 Kundt 辗转维尔茨堡，又于 1873 年赴斯特拉斯堡——从工程转向实验物理的关键引路人。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 机械工程的训练，日后成为他摆弄真空放电管时最扎实的底子。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 斯特拉斯堡与吉森 ---
+\newcommand{\strasbourgslide}{\begin{frame}\plainbar\sectiontitle{斯特拉斯堡与吉森 (1874–1888)}{从讲师到教授 · 吉森物理教席}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=xraypanel, draw=badgeXray!55] at (0,2.55) {\textbf{1874 · 斯特拉斯堡讲师。}成为斯特拉斯堡大学讲师，次年转任霍恩海姆农学院教授。};
+\node[item, fill=exppanel, draw=badgeExp!45] at (0,1.05) {\textbf{1876 · 斯特拉斯堡物理教授。}回到斯特拉斯堡任物理教授，1879 年获吉森大学物理教席——学术地位稳步上升。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{持续深耕实验物理。}这段时期他潜心气体与热学研究，积累了驾驭精密实验仪器的深厚功力。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 十四年默默耕耘，他等待的，只是那一束即将照亮世界的射线。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 维尔茨堡：发现 X 射线 ---
+\newcommand{\discoveryslide}{\begin{frame}\plainbar\sectiontitle{维尔茨堡：发现 X 射线 (1888–1895)}{1895-11-08 · 阴极射线实验 · 荧光屏的微光}
+\vspace{-0.55cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=5pt, inner xsep=10pt, inner ysep=10pt, text width=12.6cm, font=\fontsize{6.8}{8.6}\selectfont, align=left}]
+\node[item, fill=xraypanel, draw=badgeXray!60] at (0,2.55) {\textbf{1888 · 重返维尔茨堡。}重新取得德国国籍（此前无国籍四十年），获维尔茨堡大学物理教席，主持物理研究所。};
+\node[item, fill=exppanel, draw=badgeExp!45] at (0,0.4) {\textbf{1895-11-08 · 那个傍晚。}在暗室中研究阴极射线穿过 Crookes–Hittorf 真空管时，他注意到几步外的铂氰酸钡荧光屏发出微弱的闪光——即便管子已被黑纸板包严。};
+\node[item, fill=empanel, draw=badgeEm!40] at (0,-1.55) {\textbf{一种未知的射线。}他意识到这是一种能穿透黑纸板、使荧光屏发光的新射线，遂以数学记号"X"命名——X 射线就此诞生。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=7pt, text width=12.6cm, align=center] at (0,-2.65) {{\fontsize{8.0}{10.2}\selectfont\bfseries\color{coverdark!88} 偶然的微光，被一颗有准备的头脑捕捉。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- X 射线：一种新的射线 ---
+\newcommand{\xrayslide}{\begin{frame}\plainbar\sectiontitle{X 射线：一种新的射线}{《Ueber eine neue Art von Strahlen》 · 妻子手部照片 · 拒绝专利}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=xraypanel, draw=badgeXray!60] at (0,2.55) {\textbf{1895-12-28 · 论文发表。}《Ueber eine neue Art von Strahlen》（论一种新的射线）问世，系统报告 X 射线的产生与性质。};
+\node[item, fill=medpanel, draw=badgeMed!45] at (0,1.05) {\textbf{1895-12-22 · 妻子之手。}他拍下妻子 Anna Bertha 手部的 X 光片——史上第一张医学 X 光片；妻子惊呼"I have seen my death!"。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{三篇论文 · 拒绝专利。}1895–1897 年间仅发表三篇 X 射线论文；与居里夫妇一样拒绝申请专利，愿全社会受益。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从骨骼到金属，一束射线让物质的内在第一次裸裎于眼前。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 科学反响 ---
+\newcommand{\impactslide}{\begin{frame}\plainbar\sectiontitle{科学反响}{Becquerel 放射性 · 居里夫妇 · 医学革命}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=empanel, draw=badgeEm!45] at (0,2.55) {\textbf{Becquerel 的接力。}X 射线的发现激起巨大轰动，促使 Henri Becquerel 寻找其与磷光的联系，1896 年意外发现天然放射性。};
+\node[item, fill=exppanel, draw=badgeExp!40] at (0,0.85) {\textbf{居里夫妇的转向。}Marie 与 Pierre Curie 同样被 X 射线工作吸引，听闻 Becquerel 的发现后转向放射性同位素的分离与鉴定。};
+\node[item, fill=medpanel, draw=badgeMed!40] at (0,-0.65) {\textbf{医学的即时应用。}X 射线迅速用于骨折诊断与体内异物定位，开启现代医学影像学的纪元。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一束射线，点燃了放射性研究与医学成像的两条大河。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 1901 诺贝尔奖 ---
+\newcommand{\nobelslide}{\begin{frame}\plainbar\sectiontitle{1901 诺贝尔物理学奖}{史上首位得主 · 拒绝演讲 · 拒绝专利}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=goldpanel, draw=coveraccent!50] at (0,2.55) {\textbf{1901 · 史上首位得主。}获首届诺贝尔物理学奖，"因发现后来以他的名字命名的非凡射线所作出的杰出贡献"。};
+\node[item, fill=xraypanel, draw=badgeXray!45] at (0,0.85) {\textbf{拒绝演讲。}因公开演讲害羞而拒绝发表诺贝尔演讲——他把荣誉看得淡，把研究看得重。};
+\node[item, fill=exppanel, draw=badgeExp!40] at (0,-0.65) {\textbf{拒绝专利。}与居里夫妇立场一致，拒绝为 X 射线申请专利，希望全社会都能从其实用中获益。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 荣誉加身，他却始终是那个安静坐在实验室里的人。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 门生与传承 ---
+\newcommand{\studentslide}{\begin{frame}\plainbar\sectiontitle{门生与传承}{Abram Ioffe · Rudolf Ladenburg · 实验物理血脉}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=xraypanel, draw=badgeXray!55] at (0,2.55) {\textbf{Abram Ioffe（阿布拉姆·约费）。}苏联实验物理学奠基人之一，伦琴的博士生，日后培养出朗道、卡皮察等一代苏联物理学家。};
+\node[item, fill=exppanel, draw=badgeExp!45] at (0,1.05) {\textbf{Rudolf Ladenburg。}另一位博士学生，实验物理学家，后赴美在普林斯顿等地继续研究。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{实验物理的血脉。}Herman March、Ernst Wagner 等亦出其门下——他把精确、耐心与实验精神传给了下一代。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从维尔茨堡到列宁格勒，实验物理的血脉跨越国界延续。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 荣誉与纪念 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与纪念}{Rumford 1896 · 元素 111 錀 · 世界放射学日}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=goldpanel, draw=coveraccent!50] at (0,2.55) {\textbf{科学荣誉。}Rumford Medal 1896（与 Lenard 共享）· Matteucci Medal 1896 · Elliott Cresson Medal 1898 · Pour le Mérite 1911。};
+\node[item, fill=xraypanel, draw=badgeXray!45] at (0,0.85) {\textbf{元素 111 · 錀 (Roentgenium, Rg)。}2004 年 IUPAC 将第 111 号元素命名为錀，以纪念这位 X 射线的发现者。};
+\node[item, fill=medpanel, draw=badgeMed!40] at (0,-0.65) {\textbf{世界放射学日。}每年 11 月 8 日被定为世界放射学日，恰是 1895 年 X 射线被发现的日子。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个名字，凝固在元素周期表与人类健康的日常之中。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 晚年：慕尼黑 ---
+\newcommand{\laterslide}{\begin{frame}\plainbar\sectiontitle{晚年：慕尼黑 (1900–1923)}{慕尼黑教席 · 一战与通胀 · 静默谢幕}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=xraypanel, draw=badgeXray!55] at (0,2.55) {\textbf{1900 · 慕尼黑大学。}应巴伐利亚政府特邀，转任慕尼黑大学物理教席——职业生涯的最后一站。};
+\node[item, fill=exppanel, draw=badgeExp!45] at (0,0.85) {\textbf{一战与通胀。}原计划赴美任教（哥伦比亚大学）并已购船票，因一战爆发作罢；战后德国恶性通胀使其陷入破产。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1919–1923 · 静默谢幕。}1919 年妻子 Anna Bertha 去世；1923-02-10 因结直肠癌逝于慕尼黑，享年 77 岁。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 晚年清贫，却从未后悔把 X 射线无偿献给世界。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：穿透一切的一束光}{从物理学到医学的持久革命}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=xraypanel, draw=badgeXray!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeXray} X 射线物理}\\[3pt]穿透性\\波长更短\\[2pt]物质分析};
+\node[leg, fill=exppanel, draw=badgeExp!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeExp} 实验物理}\\[3pt]真空放电\\[2pt]精密测量};
+\node[leg, fill=empanel, draw=badgeEm!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeEm} 电磁辐射}\\[3pt]电磁波谱\\[2pt]辐射探测};
+\node[leg, fill=medpanel, draw=badgeMed!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeMed} 医学成像}\\[3pt]放射诊断\\[2pt]影像学};
+\node[draw=coveraccent!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 让不可见，成为可见。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 从伦琴的暗室到今天的 CT 与放射治疗，X 射线改变了医学，也重塑了人类对物质的认知。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {让不可见，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {成为可见。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Wilhelm Conrad Röntgen};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {威廉·伦琴\quad Wilhelm Röntgen\quad 1845 — 1923};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace Nobel 1901 · X 射线\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\zurichslide
+\strasbourgslide
+\discoveryslide
+\xrayslide
+\impactslide
+\nobelslide
+\studentslide
+\honorsslide
+\laterslide
+\legacyslide
+\closingslide
+\end{document}

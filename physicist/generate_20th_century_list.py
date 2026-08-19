@@ -19,6 +19,7 @@ OUT = ROOT / "presentations" / "20th_century" / "OpenPhysicist_20th_Century_Nobe
 # 已立传的物理学家（姓名需与获奖者名单精确匹配）。
 # 新增立传时在此补充姓名。
 BIOGRAPHIES_DONE = {
+    "Wilhelm Conrad Röntgen",
     "Eugene Paul Wigner",
     "Kenneth G. Wilson",
 }
