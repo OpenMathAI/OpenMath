@@ -77,7 +77,38 @@
 | 3 | quantum field theory | 量子场论 | 算符乘积展开（OPE） | 场论方法页 |
 | 4 | statistical mechanics | 统计力学 | 重整化群在统计物理的应用 | 临界页 |
 
+#### 4.1 入库操作（见 `MySQL/seed_wilson_full.py`）
+
+- 新建/更新 `people` 主记录（`name_en='Kenneth G. Wilson'`，本次入库 id=1047），设置 `primary_occupation='physicist'`、`has_biography=1`、`has_social_data=1`
+- 关联职业 `physicist`（rank 0）、国籍 `United States`
+- 将 5 个领域写入 `person_field`（带 rank），缺失领域先在 `fields` 建字典项（`renormalization group` 等 4 个为新补建，`statistical mechanics` 已存在）
+- 校验：`SELECT f.name_en, pf.rank FROM person_field pf JOIN fields f ON f.id=pf.field_id WHERE pf.person_id=<id> ORDER BY pf.rank`
+
 ### 第 4.5 步：社会关系梳理 + 入库 【模板通用，人物专属内容】
+
+| 关系类型 | 对方 | 方向 | note |
+|---------|------|------|------|
+| advisor-student | Murray Gell-Mann | 师→生（博士导师） | Caltech 博士导师，1969 诺奖得主 |
+| colleague | Michael Fisher | 无向 | 康奈尔同事，临界现象理论并肩者 |
+| colleague | Leo Kadanoff | 无向 | 重整化群的先驱思想来源 |
+| co-honored | Michael Fisher / Leo Kadanoff | 无向 | 1980 Wolf Prize 共同得主 |
+
+**门生（亦已入库，源自 Wikipedia 第 0 步）**：
+
+| 关系类型 | 对方 | 方向 | note |
+|---------|------|------|------|
+| advisor-student | Roman Jackiw | Wilson → 学生 | 轴子 / 量子反常 |
+| advisor-student | Michael Peskin | Wilson → 学生 | 《An Introduction to Quantum Field Theory》作者 |
+| advisor-student | Steven R. White | Wilson → 学生 | DMRG 奠基人 |
+| advisor-student | Paul Ginsparg | Wilson → 学生 | arXiv 创始人 |
+| advisor-student | H. R. Krishnamurthy | Wilson → 学生 | — |
+| advisor-student | Serge Rudaz | Wilson → 学生 | — |
+
+#### 4.5.1 入库操作（见 `MySQL/seed_wilson_relations.py`）
+
+- 以 `name_en='Kenneth G. Wilson'` 为中心写入 `person_relation`
+- 方向约定：导师（Gell-Mann → Wilson）、门生（Wilson → 学生）有向；同事/共同荣誉无向
+- 缺失人物先建占位（`has_biography=0`），关系 note 加 `[材料待展开] ` 前缀
 
 | 关系类型 | 对方 | 方向 | note |
 |---------|------|------|------|
@@ -191,6 +222,8 @@
 | `physicist/presentations/cover/openphysicist_page.tex` | 项目首页模板 |
 | `physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner_zh.tex` | 物理学家首例成品参考 |
 | `mathematician/presentations/20th_century/Alexander_Grothendieck-F/Alexander_Grothendieck_zh.tex` | 数学家标杆参考 |
+| `MySQL/seed_wilson_full.py` | 人物主记录 + 研究领域入库（第 4 步） |
+| `MySQL/seed_wilson_relations.py` | 社会关系入库（第 4.5 步） |
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
