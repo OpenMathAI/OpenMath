@@ -16,7 +16,7 @@
 
 | 年份 | 获奖者 | 国籍 | 获奖理由 | 立传 | Review |
 |:--:|------|------|------|:--:|:--:|
-| 1901 | Wilhelm Conrad Röntgen (威廉·康拉德·伦琴) | Germany | 表彰他发现后来以他的名字命名的非凡射线（X 射线）所作出的杰出贡献 | ✅ | 🔲 |
+| 1901 | Wilhelm Conrad Röntgen (威廉·康拉德·伦琴) | Germany | 表彰他发现后来以他的名字命名的非凡射线（X 射线）所作出的杰出贡献 | ✅ | ✅ |
 | 1902 | Hendrik Antoon Lorentz (亨德里克·安东·洛伦兹) | Netherlands | 表彰他们研究磁对辐射现象的影响所作出的杰出贡献 | 🔲 | 🔲 |
 | 1902 | Pieter Zeeman (彼得·塞曼) | Netherlands | 表彰他们研究磁对辐射现象的影响所作出的杰出贡献 | 🔲 | 🔲 |
 | 1903 | Antoine Henri Becquerel (安托万·亨利·贝克勒尔) | France | 表彰他发现天然放射性所作出的杰出贡献 | 🔲 | 🔲 |
@@ -189,7 +189,7 @@
 - **获奖总项数**：162 项
 - **获奖总人数**：161 位
 - **已立传**：3 位（Eugene Paul Wigner、Kenneth G. Wilson、Wilhelm Conrad Röntgen）
-- **已 Review**：0 位
+- **已 Review**：1 位（Wilhelm Conrad Röntgen）
 - **两度获奖者**：John Bardeen（唯一两度获诺贝尔物理学奖者）
 - **女性获奖者**（20 世纪）：Maria Goeppert Mayer、Marie Curie
 

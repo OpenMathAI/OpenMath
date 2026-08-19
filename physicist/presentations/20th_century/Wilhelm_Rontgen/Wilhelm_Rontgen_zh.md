@@ -235,6 +235,22 @@
 | roentgenium | 錀（Rg） | 第 111 号元素 |
 | fluoroscopy | 荧光透视 | X 射线透视成像 |
 
+### 第 9.5 步：Review 完成后更新名单状态 ★
+
+> **两轮 Review 全部完成后，必须同步更新总名单的「Review」列**，否则名单会一直停留在 🔲。
+
+- 编辑 `physicist/generate_20th_century_list.py`，将伦琴姓名加入 `REVIEWS_DONE` 集合：
+  ```python
+  REVIEWS_DONE = {
+      "Wilhelm Conrad Röntgen",
+  }
+  ```
+- 重新生成名单：
+  ```bash
+  cd physicist && python3 generate_20th_century_list.py
+  ```
+- 校验：`OpenPhysicist_20th_Century_Nobel_Laureates.md` 中伦琴行应为 `| ✅ | ✅ |`，统计区显示「已 Review：N 位」。
+
 ---
 
 ## 关键参考文件清单

@@ -415,6 +415,22 @@ make video
 - **引号问题审阅者提出 → 坚决改**（引号是专业读者的红线）。
 - 可尝试审阅者建议，也可回退——尝试是尊重，回退是判断。
 
+### 6.7 Review 完成后更新总名单状态 ★（易遗漏）
+
+> **两轮 Review 全部完成后，必须同步更新总名单的「Review」列**，否则名单会一直停留在 🔲。这是独立于 Beamer 与数据库的收尾步骤，极易遗漏。
+
+- 编辑 `physicist/generate_20th_century_list.py`，将姓名加入 `REVIEWS_DONE` 集合（与 `BIOGRAPHIES_DONE` 并列）：
+  ```python
+  REVIEWS_DONE = {
+      "{Name}",
+  }
+  ```
+- 重新生成名单：
+  ```bash
+  cd physicist && python3 generate_20th_century_list.py
+  ```
+- 校验：名单中该人物行应为 `| ✅ | ✅ |`（立传 + Review 双通过），统计区「已 Review」计数 +1。
+
 ---
 
 ## 七、LaTeX 告警检测重叠与溢出（★ 借鉴数学家指南 §13）
