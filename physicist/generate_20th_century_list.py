@@ -29,6 +29,7 @@ BIOGRAPHIES_DONE = {
 # 完成两轮 Review 后在此补充姓名。
 REVIEWS_DONE = {
     "Wilhelm Conrad Röntgen",
+    "Hendrik Antoon Lorentz",
 }
 
 # 获奖者英文名 → 中文名（诺贝尔物理学奖得主常用中译）。

@@ -94,7 +94,9 @@
 ### 与其他已立传物理学家的关系网络
 
 - **Pieter Zeeman** — 同事兼前学生（"其他知名学生"），1896 实验发现塞曼效应，Lorentz 提供理论解释，1902 共享诺奖。两人是理论与实验印证关系的典范
-- **Albert Einstein** — 深厚友谊；1910 年 Lorentz 邀其继任莱顿教席被拒（Einstein 刚赴 ETH），最终选 Ehrenfest 继任。Einstein 称 Lorentz 是其一生最敬重之人
+- **Albert Einstein** — 深厚友谊；1910 年 Lorentz 邀其继任莱顿教席被拒（Einstein 刚赴 ETH），最终选 Ehrenfest 继任。Einstein 对 Lorentz 的评价（page.md 原文，须逐字溯源）：
+  - 1928 悼词："The enormous significance of his work consisted therein, that it forms the basis for the theory of atoms and for the general and special theories of relativity."（"构成原子论、广义与狭义相对论的基础"）
+  - 1953："For me personally he meant more than all the others I have met on my life's journey."（"对我个人而言，他比我人生旅途中遇到的所有其他人都更重要"）
 - **Henri Poincaré** — 高度评价 Lorentz 理论，命名"洛伦兹变换"与"相对性公设"，是 Lorentz 理论的重要诠释者
 - **Paul Ehrenfest** — 1912 年继任者，Lorentz 的学生辈物理学家
 - **Joseph Larmor** — 1897 年独立使用相同变换描述电子（Lorentz 当时不知情），变换的早期并行发现者
@@ -267,7 +269,7 @@
 | 塞曼效应的归属 | 塞曼效应是 Zeeman 1896 实验发现，Lorentz 提供理论解释。不要写成"洛伦兹发现塞曼效应" |
 | 博士导师 | 博士导师是 Pieter Rijke；Frederik Kaiser 是"学术引路人"（天文学家，引导其成为物理学家）。两者勿混淆 |
 | 局域时间（local time） | 1892/1895 提出"局域时间"，Poincaré 称为其"最巧妙的构想"。这是洛伦兹变换的数学前身，但当时 Lorentz 未给出物理解释，勿写成"已理解相对论" |
-| 长度收缩 | 1892 提出（与 FitzGerald 独立，合称 Lorentz–FitzGerald contraction），目的是解释迈克耳孙-莫雷实验。勿遗漏 FitzGerald 的并行贡献 |
+| 长度收缩 | 1892 提出（与 FitzGerald 独立，合称 Lorentz–FitzGerald contraction），目的是解释迈克耳孙-莫雷实验。勿遗漏 FitzGerald 的并行贡献。注意：page.md 正文仅说 Lorentz 1892 提出、未明确提 FitzGerald，但 metadata `notable_work` 含 "Lorentz–FitzGerald contraction" 佐证，Beamer 写"与 FitzGerald 独立"属准确常识 |
 | Einstein 继任 | 1910 年 Lorentz 邀 Einstein 继任莱顿教席，Einstein 拒绝（刚赴 ETH），最终选 Ehrenfest。体现二人关系，勿写成"Einstein 继任" |
 | 须德海工程 | 1918–1926 主持 Afsluitdijk 拦海大坝水文计算，预测准确，一组水闸以他命名。这是"理论物理做工程"的独特故事，勿遗漏 |
 | 葬礼致敬 | 1928-02-10 葬礼，荷兰电报电话停运三分钟致敬；Einstein、Marie Curie 出席。这是其声望的极致体现 |
@@ -340,10 +342,10 @@
 
 - **气质**：经典物理的庄严、相对论前夜的深邃、荷兰的沉稳、领航者的从容
 - **建议曲目**（精选自 `music_audio/curated_tracks.md`）：
-  - **首选**: Beethoven · Karajan — Symphony No. 3 "Eroica"（英雄交响曲，古典庄严，契合"经典物理集大成者"的历史地位）
-  - **备选**: Timeless（Alex-Productions，沉稳纪录片，但 Wigner/Wilson 已复用，缺乏辨识度）
-  - **备选**: Eternals（Alex-Productions，宏大深远，契合"为相对论奠基"的深远影响）
-- **本地路径**: `music_audio/` 下选定曲目 → `presentations/20th_century/Hendrik_Lorentz/`
+  - **已选定**: **Eternals**（Alex-Productions，宏大深远，契合"为相对论奠基"的深远影响）
+  - 备选: Timeless（Alex-Productions，沉稳纪录片，但 Wigner/Wilson 已复用，缺乏辨识度）
+  - 未采用: Beethoven · Karajan — Symphony No. 3 "Eroica"（古典庄严，但 562MB 过重，ffmpeg 截取前 119 秒无法体现英雄主题）
+- **本地路径**: `music_audio/alex-productions/76-V5T_kW2PH_s-Eternals.wav` → `presentations/20th_century/Hendrik_Lorentz/Eternals.wav`
 - **时长**: 与 17 页 × 7 秒 ≈ 119 秒对齐，ffmpeg `-shortest` 自动对齐
 
 > **开始执行。每完成一步向我汇报。**
