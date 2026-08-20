@@ -21,6 +21,7 @@ OUT = ROOT / "presentations" / "20th_century" / "OpenPhysicist_20th_Century_Nobe
 BIOGRAPHIES_DONE = {
     "Wilhelm Conrad Röntgen",
     "Hendrik Antoon Lorentz",
+    "Pieter Zeeman",
     "Eugene Paul Wigner",
     "Kenneth G. Wilson",
 }

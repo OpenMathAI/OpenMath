@@ -1,0 +1,298 @@
+% =============================================================
+%  塞曼效应的发现者：彼得·塞曼 (Pieter Zeeman)
+%  Beamer 骨架 —— OpenPhysicist 物理学家立传（标杆：Hendrik_Lorentz）
+%  设计母题：光谱分裂 (spectral splitting) —— 柔和细线从中心向两侧发散，呼应光谱线在磁场中分裂
+%  资料来源：本地 Wikipedia (Pieter_Zeeman.html / pages/20th_century/Pieter_Zeeman/page.md)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% ===== 配色：深松绿（实验的冷静）+ 香槟金（诺奖）+ 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{coverprimary}{HTML}{1B4D3E}   % 深松绿 — 冷静的实验精神
+\definecolor{coveraccent}{HTML}{C9A227}    % 香槟金 — 诺贝尔奖
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{24,26,64}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{badgeZeeman}{HTML}{1B4D3E}    % 塞曼效应 — 深松绿
+\definecolor{badgeMagneto}{HTML}{1A237E}   % 磁光学 — 深靛蓝
+\definecolor{badgeSpectro}{HTML}{E07B30}   % 光谱学 — 琥珀
+\definecolor{badgeAtom}{HTML}{C4204F}      % 原子物理 — 玫瑰
+\definecolor{zeemanpanel}{RGB}{225,238,233}
+\definecolor{magnetopanel}{RGB}{228,232,250}
+\definecolor{spectropanel}{RGB}{248,233,220}
+\definecolor{atompanel}{RGB}{246,228,236}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 光谱分裂背景：柔和细线从中心向两侧发散
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeZeeman!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeMagneto!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeSpectro!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  % 光谱分裂细线
+  \draw[badgeZeeman!30, line width=1.2pt] (current page.center) ++(-4.0,2.0) -- ++(1.6,0);
+  \draw[badgeZeeman!22, line width=1.2pt] (current page.center) ++(-4.0,2.0) -- ++(-1.6,0);
+  \draw[badgeSpectro!25, line width=1.2pt] (current page.center) ++(-3.6,-2.2) -- ++(1.4,0);
+  \draw[badgeSpectro!18, line width=1.2pt] (current page.center) ++(-3.6,-2.2) -- ++(-1.4,0);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 物理学家项目首页
+\input{../../cover/openphysicist_page.tex}
+
+% --- 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{expand-alt}\enspace 塞曼效应发现者\enspace·\enspace 荷兰};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {彼得·塞曼};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Pieter Zeeman\enspace·\enspace 1865 — 1943};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {光谱线在磁场中分裂 · 揭示原子结构 · 1902 诺贝尔物理学奖};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeZeeman] at (-5.05,0)
+        {塞曼效应\\Zeeman Effect\par\scriptsize 光谱线分裂};
+      \node[badge, fill=badgeMagneto] at (-1.68,0)
+        {磁光学\\Magneto-optics\par\scriptsize 磁光克尔效应};
+      \node[badge, fill=badgeSpectro] at (1.68,0)
+        {光谱学\\Spectroscopy\par\scriptsize 光谱分析};
+      \node[badge, fill=badgeAtom] at (5.05,0)
+        {原子物理\\Atomic Physics\par\scriptsize 原子结构};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"因他们研究磁对辐射现象的影响所作出的杰出贡献。" —— 1902 诺贝尔物理学奖获奖理由};
+  % 头像（条件包含）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Zeeman.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Zeeman.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center)
+    {Pieter Zeeman};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 荷兰\enspace|\enspace \faIcon{university}\enspace Leiden · Amsterdam\enspace|\enspace Nobel 1902};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 身份信息页（★ 物理学家硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{彼得·塞曼 - 塞曼效应的发现者}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  % 左侧头像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Zeeman.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Zeeman.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Pieter Zeeman (1925)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1865-05-25 — 1943-10-09\\[2pt]\lab{本名}\quad Pieter Zeeman\\[2pt]\lab{国籍}\quad 荷兰};
+  \node[infob, fill=magnetopanel, draw=badgeMagneto!45, anchor=north] at (3.8,2.35)
+    {\lab{师承}\quad H. Kamerlingh Onnes（博士导师）\\[2pt]
+     \quad H. Lorentz（学术引路人）\\[2pt]
+     \lab{任职}\quad Leiden · Amsterdam\\[2pt]
+     \quad 1908 物理研究所所长};
+  \node[infob, fill=zeemanpanel, draw=badgeZeeman!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 荷兰 · 宗内迈尔\\[2pt]\lab{去世地}\quad 荷兰 · 阿姆斯特丹\\[2pt]\lab{教育}\quad 莱顿大学博士 1893};
+  \node[infob, fill=spectropanel, draw=badgeSpectro!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Nobel 1902（与 Lorentz 共享）\\[2pt]
+     \quad Matteucci 1912 · Draper 1921\\[2pt]
+     \quad Rumford 1922 · Franklin 1925\\[2pt]
+     \lab{核心领域}\quad 塞曼效应 · 磁光学\\[2pt]
+     \quad 光谱学 · 原子物理};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{光谱线在磁场中分裂}{塞曼效应 · 磁光学 · 光谱学 · 原子物理}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=zeemanpanel, draw=badgeZeeman!50, text=badgeZeeman!85!black] (a) at (-5.7,1.05) {塞曼效应\\1896 · 核心贡献\\[2pt]光谱线分裂};
+\node[nodebox, fill=goldpanel, draw=coveraccent!60, text=coveraccent!85!black] (b) at (-1.9,1.05) {磁光学\\磁光克尔效应\\[2pt]光在磁场中的行为};
+\node[nodebox, fill=spectropanel, draw=badgeSpectro!50, text=badgeSpectro!85!black] (c) at (1.9,1.05) {光谱学\\光谱线分析\\[2pt]原子结构探针};
+\node[nodebox, fill=atompanel, draw=badgeAtom!50, text=badgeAtom!85!black] (d) at (5.7,1.05) {原子物理\\揭示原子结构\\[2pt]电子论前奏};
+\node[draw=coveraccent!60, fill=silverpanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 一束光在磁场中的分裂，成为揭示原子结构的第一把钥匙。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：宗内迈尔的牧师之子 (1865–1883)}{荷兰归正教会家庭 · 泽里茨高中}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=zeemanpanel, draw=badgeZeeman!55] at (0,2.55) {\textbf{1865 · 生于荷兰宗内迈尔。}父 Catharinus Forandinus Zeeman，荷兰归正教会（Dutch Reformed Church）牧师；母 Willemina Worst。};
+\node[item, fill=spectropanel, draw=badgeSpectro!45] at (0,1.05) {\textbf{早年对物理的兴趣。}年幼时即对物理产生兴趣，就读于泽里茨（Zierikzee）高中。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{1883 · 极光事件。}这一年，极光罕见地在荷兰可见——这个契机，让少年塞曼第一次与《Nature》结缘。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从牧师家庭走出的少年，即将迎来他的第一次科学亮相。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 极光与 Nature ---
+\newcommand{\auroraslide}{\begin{frame}\plainbar\sectiontitle{极光与 Nature：少年的科学天赋 (1883)}{高中生投稿 · 被误称"教授"}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=spectropanel, draw=badgeSpectro!55] at (0,2.55) {\textbf{1883 · 观察并记录极光。}泽里茨高中的学生塞曼绘制并描述了罕见的极光现象，投给《Nature》并获发表。};
+\node[item, fill=zeemanpanel, draw=badgeZeeman!45] at (0,0.85) {\textbf{编辑的误称。}《Nature》编辑称赞"来自宗内迈尔天文台的 Zeeman 教授的仔细观测"——把这位高中生误称为"教授"。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{一颗科学新星。}这次投稿不仅展现了他的观察力，也预示了他日后作为实验物理学家的敏锐与严谨。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 编辑的一句"教授"，是对少年塞曼最早的、也是最意外的认可。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 莱顿岁月 ---
+\newcommand{\leidenslide}{\begin{frame}\plainbar\sectiontitle{莱顿岁月：两位巨匠门下 (1885–1893)}{Kamerlingh Onnes 与 Lorentz · 从助手到博士}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=zeemanpanel, draw=badgeZeeman!55] at (0,2.55) {\textbf{1883–1885 · 代尔夫特补古典语言。}高中毕业后赴代尔夫特补习古典语言（大学入学要求），期间首次遇见未来的博士导师 Kamerlingh Onnes。};
+\node[item, fill=magnetopanel, draw=badgeMagneto!45] at (0,0.85) {\textbf{1885 · 入莱顿大学。}师从 Kamerlingh Onnes 与 Hendrik Lorentz 两位巨匠，研习物理。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1890 · 成为 Lorentz 助手。}得以参与克尔效应（Kerr effect）研究计划——这成为他博士论文的起点。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 在实验大师与理论大师的双重熏陶下，他的科学道路逐渐清晰。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 博士论文 ---
+\newcommand{\thesisslide}{\begin{frame}\plainbar\sectiontitle{博士论文：克尔效应 (1893)}{偏振光在磁化表面的反射}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=magnetopanel, draw=badgeMagneto!55] at (0,2.55) {\textbf{1893 · 博士论文。}以克尔效应（偏振光在磁化表面的反射）为题提交博士论文，指导教授为 Kamerlingh Onnes。};
+\node[item, fill=zeemanpanel, draw=badgeZeeman!45] at (0,0.85) {\textbf{斯特拉斯堡半年。}获博士学位后，赴斯特拉斯堡 Friedrich Kohlrausch 研究所访学半年，拓展实验视野。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1895 · 回莱顿任编外讲师。}回到莱顿任 Privatdozent（编外讲师），讲授数学与物理，继续磁光效应的研究。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 克尔效应的训练，为两年后的重大发现埋下了伏笔。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 发现塞曼效应 ---
+\newcommand{\discoveryslide}{\begin{frame}\plainbar\sectiontitle{发现塞曼效应 (1896)}{光谱线在强磁场中分裂}
+\vspace{-0.55cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=5pt, inner xsep=10pt, inner ysep=10pt, text width=12.6cm, font=\fontsize{6.8}{8.6}\selectfont, align=left}]
+\node[item, fill=zeemanpanel, draw=badgeZeeman!60] at (0,2.55) {\textbf{1896 · 搬往阿姆斯特丹前夕。}在从莱顿搬往阿姆斯特丹前不久，塞曼测量了光谱线在强磁场中的分裂——这一发现后来被称为塞曼效应。};
+\node[item, fill=spectropanel, draw=badgeSpectro!45] at (0,0.4) {\textbf{研究的问题。}这项研究考察磁场对光源的影响：他发现，在磁场存在下，一条光谱线会分裂成若干分量。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-1.55) {\textbf{一个划时代的现象。}光谱线的分裂，第一次把"光"与"磁场"、进而与"原子内部结构"联系在了一起。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=7pt, text width=12.6cm, align=center] at (0,-2.65) {{\fontsize{8.0}{10.2}\selectfont\bfseries\color{coverdark!88} 一条光谱线的分裂，揭开了原子世界的面纱一角。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Lorentz 理论解释 ---
+\newcommand{\lorentzslide}{\begin{frame}\plainbar\sectiontitle{Lorentz 的理论解释：下周一的故事 (1896)}{周六通报 · 下周一解释 · 实验与理论印证}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=zeemanpanel, draw=badgeZeeman!55] at (0,2.55) {\textbf{1896-10-31 · 周六。}Kamerlingh Onnes 在荷兰皇家艺术与科学学院会议上，通报了塞曼的观测结果。};
+\node[item, fill=magnetopanel, draw=badgeMagneto!45] at (0,0.85) {\textbf{下周一 · Lorentz 的解释。}Lorentz 立即召见塞曼，基于其电磁辐射理论给出了观测现象的理论解释。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{实验与理论的完美印证。}塞曼的实验发现 + Lorentz 的理论解释，成为 1902 年两人共享诺奖的直接依据。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从周六的通报，到周一的解释——理论与实验的距离，只有一个周末。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 电子论前奏 ---
+\newcommand{\meaningslide}{\begin{frame}\plainbar\sectiontitle{塞曼效应的意义：电子论的前奏}{先于电子发现 · 揭示原子结构}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=atompanel, draw=badgeAtom!55] at (0,2.55) {\textbf{证实 Lorentz 的预言。}塞曼效应证实了 Lorentz 关于光在磁场中偏振的预言——发光的振荡粒子是真实存在的。};
+\node[item, fill=zeemanpanel, draw=badgeZeeman!45] at (0,0.85) {\textbf{先于电子的发现。}在 J. J. Thomson 1897 年发现电子之前，塞曼效应就已表明：发光粒子带负电，且比氢原子轻约千倍。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{揭示原子结构的工具。}塞曼效应由此成为阐明原子结构的重要工具，影响深远至今。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 在电子被命名之前，塞曼效应已经"看见"了它。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 1902 诺奖 ---
+\newcommand{\nobelslide}{\begin{frame}\plainbar\sectiontitle{1902 诺贝尔物理学奖}{与 Lorentz 共享 · 磁对辐射的影响}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=goldpanel, draw=coveraccent!50] at (0,2.55) {\textbf{1902 · 与 Lorentz 共享诺奖。}"因他们研究磁对辐射现象的影响所作出的杰出贡献"，塞曼与 Lorentz 共享诺贝尔物理学奖。};
+\node[item, fill=zeemanpanel, draw=badgeZeeman!45] at (0,0.85) {\textbf{实验与理论的分工。}塞曼因实验发现获奖，Lorentz 因理论解释获奖——这是实验与理论相互成就的典范。};
+\node[item, fill=spectropanel, draw=badgeSpectro!40] at (0,-0.65) {\textbf{荷兰物理的荣光。}继 Röntgen 1901 年之后，1902 年荷兰物理学家站上了诺奖舞台，开启荷兰科学的黄金时代。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一束分裂的光，照亮了荷兰物理学的黄金时代。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Amsterdam 生涯 ---
+\newcommand{\amsterdamslide}{\begin{frame}\plainbar\sectiontitle{Amsterdam 生涯：从讲师到所长 (1896–1935)}{1900 教授 · 1908 接替 van der Waals}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=zeemanpanel, draw=badgeZeeman!55] at (0,2.55) {\textbf{1896 秋 · 阿姆斯特丹讲师。}发现塞曼效应后不久，获阿姆斯特丹大学讲师职位，秋天入职。};
+\node[item, fill=spectropanel, draw=badgeSpectro!45] at (0,0.85) {\textbf{1900 · 升教授。}升任阿姆斯特丹大学物理教授；1908 年接替 van der Waals 任正教授兼物理研究所所长。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1935 · 退休。}在阿姆斯特丹执教近四十年，1935 年以教授身份退休。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从莱顿到阿姆斯特丹，他把实验物理的薪火传遍荷兰。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 等效原理验证 ---
+\newcommand{\equivalenceslide}{\begin{frame}\plainbar\sectiontitle{等效原理验证 (1918)}{引力质量与惯性质量之比}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=spectropanel, draw=badgeSpectro!55] at (0,2.55) {\textbf{1918 · 等效原理的实验验证。}发表"关于引力的一些实验：晶体与放射性物质的质量与重量之比"，实验验证了引力质量与惯性质量的等效。};
+\node[item, fill=atompanel, draw=badgeAtom!45] at (0,0.85) {\textbf{广义相对论的意义。}这一工作为 Einstein 广义相对论的等效原理提供了实验支持，体现了实验物理学家对理论的敏锐回应。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{后期的研究转向。}后期他还对运动介质中的光传播、质谱学产生兴趣，持续拓展研究边界。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 实验家的敏锐，让他始终站在物理前沿的潮头。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 门生与传承 ---
+\newcommand{\studentslide}{\begin{frame}\plainbar\sectiontitle{门生与传承}{博士生 · 实验物理血脉}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=zeemanpanel, draw=badgeZeeman!55] at (0,2.55) {\textbf{Cornelis Jan Bakker。}塞曼的博士生，实验物理学家，传承了其磁光效应的研究传统。};
+\node[item, fill=spectropanel, draw=badgeSpectro!45] at (0,0.85) {\textbf{一代实验物理学家。}门下走出了 Pier Bosch、Take Luite de Bruin 等一批实验物理学者，延续荷兰实验物理的血脉。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{Zeeman 实验室。}1923 年阿姆斯特丹新建的实验室，1940 年更名为 Zeeman 实验室，成为其学术传承的象征。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从门生到实验室，实验物理的血脉在阿姆斯特丹延续。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 荣誉与纪念 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与纪念}{Matteucci · Draper · Rumford · Franklin · Zeeman 实验室}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=goldpanel, draw=coveraccent!50] at (0,2.55) {\textbf{科学荣誉。}Matteucci Medal 1912 · Henry Draper Medal 1921 · Rumford Medal 1922 · Franklin Medal 1925。};
+\node[item, fill=zeemanpanel, draw=badgeZeeman!45] at (0,0.85) {\textbf{学术地位。}1898 荷兰皇家艺术与科学学院院士；1921 英国皇家学会外籍会员；1936 宗座科学院院士。};
+\node[item, fill=spectropanel, draw=badgeSpectro!40] at (0,-0.65) {\textbf{Zeeman 实验室。}1940 年阿姆斯特丹新实验室更名为 Zeeman 实验室，以铭记其发现。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个名字，铭刻在实验室的门楣与物理学的基石之上。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：从塞曼效应到原子结构}{光谱线分裂的深远回响}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=zeemanpanel, draw=badgeZeeman!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeZeeman} 塞曼效应}\\[3pt]光谱线分裂\\[2pt]磁场与光};
+\node[leg, fill=magnetopanel, draw=badgeMagneto!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeMagneto} 磁光学}\\[3pt]磁光效应\\[2pt]偏振光};
+\node[leg, fill=spectropanel, draw=badgeSpectro!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSpectro} 光谱学}\\[3pt]光谱分析\\[2pt]原子探针};
+\node[leg, fill=atompanel, draw=badgeAtom!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAtom} 原子物理}\\[3pt]电子论前奏\\[2pt]原子结构};
+\node[draw=coveraccent!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 让光谱线开口说话。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 从一条光谱线的分裂，到电子论的前奏、原子结构的揭示——塞曼用最敏锐的实验观察，为量子世界打开了第一道门缝。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {让光谱线开口说话，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {让原子结构现身。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Pieter Zeeman};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {彼得·塞曼\quad Pieter Zeeman\quad 1865 — 1943};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace Nobel 1902 · 塞曼效应\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\auroraslide
+\leidenslide
+\thesisslide
+\discoveryslide
+\lorentzslide
+\meaningslide
+\nobelslide
+\amsterdamslide
+\equivalenceslide
+\studentslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

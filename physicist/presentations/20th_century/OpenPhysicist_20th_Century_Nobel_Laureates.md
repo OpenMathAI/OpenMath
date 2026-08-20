@@ -18,7 +18,7 @@
 |:--:|------|------|------|:--:|:--:|
 | 1901 | Wilhelm Conrad Röntgen (威廉·康拉德·伦琴) | Germany | 表彰他发现后来以他的名字命名的非凡射线（X 射线）所作出的杰出贡献 | ✅ | ✅ |
 | 1902 | Hendrik Antoon Lorentz (亨德里克·安东·洛伦兹) | Netherlands | 表彰他们研究磁对辐射现象的影响所作出的杰出贡献 | ✅ | ✅ |
-| 1902 | Pieter Zeeman (彼得·塞曼) | Netherlands | 表彰他们研究磁对辐射现象的影响所作出的杰出贡献 | 🔲 | 🔲 |
+| 1902 | Pieter Zeeman (彼得·塞曼) | Netherlands | 表彰他们研究磁对辐射现象的影响所作出的杰出贡献 | ✅ | 🔲 |
 | 1903 | Antoine Henri Becquerel (安托万·亨利·贝克勒尔) | France | 表彰他发现天然放射性所作出的杰出贡献 | 🔲 | 🔲 |
 | 1903 | Pierre Curie (皮埃尔·居里) | France | 表彰他们基于亨利·贝克勒尔教授所发现的辐射现象进行的联合研究所作出的杰出贡献 | 🔲 | 🔲 |
 | 1903 | Marie Curie (玛丽·居里) | France | 表彰他们基于亨利·贝克勒尔教授所发现的辐射现象进行的联合研究所作出的杰出贡献 | 🔲 | 🔲 |
@@ -188,7 +188,7 @@
 - **获奖年份跨度**：1901–2000
 - **获奖总项数**：162 项
 - **获奖总人数**：161 位
-- **已立传**：4 位（Eugene Paul Wigner、Hendrik Antoon Lorentz、Kenneth G. Wilson、Wilhelm Conrad Röntgen）
+- **已立传**：5 位（Eugene Paul Wigner、Hendrik Antoon Lorentz、Kenneth G. Wilson、Pieter Zeeman、Wilhelm Conrad Röntgen）
 - **已 Review**：2 位（Hendrik Antoon Lorentz、Wilhelm Conrad Röntgen）
 - **两度获奖者**：John Bardeen（唯一两度获诺贝尔物理学奖者）
 - **女性获奖者**（20 世纪）：Maria Goeppert Mayer、Marie Curie
