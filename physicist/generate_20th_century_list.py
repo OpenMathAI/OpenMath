@@ -31,6 +31,7 @@ BIOGRAPHIES_DONE = {
 REVIEWS_DONE = {
     "Wilhelm Conrad Röntgen",
     "Hendrik Antoon Lorentz",
+    "Pieter Zeeman",
 }
 
 # 获奖者英文名 → 中文名（诺贝尔物理学奖得主常用中译）。

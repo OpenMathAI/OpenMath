@@ -254,6 +254,8 @@
 | 去世地 | 逝于阿姆斯特丹，葬于哈勒姆（Haarlem）。勿把两地混淆 |
 | Zeeman 实验室 | 1923 年新建实验室，1940 年才更名 Zeeman 实验室。勿写"1923 年更名" |
 | 博士论文主题 | 博士论文是关于克尔效应（Kerr effect），不是塞曼效应。塞曼效应是 1896 年才发现的 |
+| "量子世界"（★ 术语错误） | 塞曼效应是经典电子论（Lorentz electron theory）成果，1896 年尚无量子理论。勿写"为量子世界打开门缝"，应写"为原子世界打开一扇窗" |
+| "第一次/第一道"（★ 绝对断言） | 勿用"第一次把光与磁场联系起来""第一道门缝"等绝对断言，page.md 无此记载。写"把光与磁场联系起来"即可 |
 | Röntgen 国籍（★ 表述歧义） | 1901 首届诺奖得主 Röntgen 是德国人，非荷兰人。写"荷兰物理的荣光"时，勿用"继 Röntgen 之后"这种易把 Röntgen 误读为荷兰人的表述，应写成"继 1901 年首届诺奖之后，1902 年两位荷兰物理学家（Lorentz 与 Zeeman）同登诺奖舞台" |
 
 ### 术语清单
@@ -316,10 +318,10 @@
 
 - **气质**：实验的冷静、光谱的绚烂、敏锐观察、揭示原子结构的庄严
 - **建议曲目**（精选自 `music_audio/curated_tracks.md`）：
-  - **首选**: The Flow of Time（Alex-Productions，时间感纪录片，契合"光谱线分裂→原子结构揭示"的科学史叙事）
-  - **备选**: SEA（Alex-Productions，流动平稳，契合光谱的流动感）
-  - **备选**: Daylight（Alex-Productions，明亮轻快，契合"少年投稿 Nature"的朝气）
-- **本地路径**: `music_audio/` 下选定曲目 → `presentations/20th_century/Pieter_Zeeman/`
+  - **已选定**: **The Flow of Time**（Alex-Productions，时间感纪录片，契合"光谱线分裂→原子结构揭示"的科学史叙事）
+  - 备选: SEA（Alex-Productions，流动平稳，契合光谱的流动感）
+  - 备选: Daylight（Alex-Productions，明亮轻快，契合"少年投稿 Nature"的朝气）
+- **本地路径**: `music_audio/alex-productions/35-jqIDnltiDRI-The-Flow-of-Time.wav` → `presentations/20th_century/Pieter_Zeeman/The-Flow-of-Time.wav`
 - **时长**: 与 17 页 × 7 秒 ≈ 119 秒对齐，ffmpeg `-shortest` 自动对齐
 
 > **开始执行。每完成一步向我汇报。**
