@@ -20,6 +20,7 @@ OUT = ROOT / "presentations" / "20th_century" / "OpenPhysicist_20th_Century_Nobe
 # 新增立传时在此补充姓名。
 BIOGRAPHIES_DONE = {
     "Wilhelm Conrad Röntgen",
+    "Hendrik Antoon Lorentz",
     "Eugene Paul Wigner",
     "Kenneth G. Wilson",
 }
