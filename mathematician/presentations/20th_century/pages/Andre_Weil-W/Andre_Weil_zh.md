@@ -1,0 +1,357 @@
+# 安德烈·韦伊 (André Weil) 立传提示词
+
+> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)，以 Weyl、Kolmogorov、Cartan、Grothendieck 等成品为参考模板。
+> 直接复制本文件内容到新对话中使用。
+
+---
+
+## 背景信息
+
+- **目标数学家**: André Weil (1906–1998)
+- **气质关键词**: **数论与代数几何的建筑师、布尔巴基的灵魂、Weil 猜想的预言者、在牢房里做数学的人**
+- **Wikipedia 页面**: ⚠️ **尚未下载。** 第一步需要运行下载脚本：
+  - 页面路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Andre_Weil/`
+- **参考模板**: `grothendieck/`, `riemann/`, `hilbert/`, `serre/`, `noether/`, `neumann/`, `kolmogorov/`, `weyl/`, `cartan/` 等完整源码
+- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+
+---
+
+## 第 0 步：下载 Wikipedia 页面并校验
+
+下载到 `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Andre_Weil/`
+
+输出以下信息供校验：
+
+- **生卒日期**：1906-05-06 ~ 1998-08-06，享年 92 岁
+- **国籍**：法国
+- **出生地**：巴黎
+- **博士导师**：Jacques Hadamard（阿达玛）
+- **博士论文**：1928，《L'arithmétique sur les courbes algébriques》（代数曲线上的算术）
+- **主要任职机构**：
+  - 1930–1932: 阿里格尔（Aligarh）穆斯林大学，印度
+  - 1933–1939: 斯特拉斯堡大学
+  - 1941–1945: 哈弗福德学院（Haverford College，美国，战时流亡）
+  - 1945–1947: 圣保罗大学（巴西）
+  - 1947–1958: 芝加哥大学
+  - 1958–1976: 普林斯顿高等研究院（IAS）
+- **关键荣誉**：
+  - 1940 年代: 提出 Weil 猜想（20 世纪数学最重要的猜想之一）
+  - 1979: Wolf 数学奖（第二届）
+  - 1980: 京都奖（Kyoto Prize）—— 首届数学科学奖
+  - 1994: 京都奖 25 周年庆典演讲——数学史上"最像古代印度智者的现代数学家"
+  - 法国科学院院士
+  - 英国皇家学会外籍院士
+- **重要合作者/同事/学生**：
+  - 妹妹: Simone Weil（西蒙娜·韦伊）—— 20 世纪最重要的哲学家之一
+  - 布尔巴基同仁: Henri Cartan, Claude Chevalley, Jean Delsarte, Jean Dieudonné, Szolem Mandelbrojt, René de Possel
+  - IAS 同事: Einstein, Gödel, von Neumann, Oppenheimer
+  - 学生/后继: Pierre Deligne（证明了 Weil 猜想，直接继承其工作）
+  - **特殊经历**：
+    - 1939: 在芬兰因间谍嫌疑被捕（冬季战争爆发时）；关于生命危险的报道"被证明是夸大的"。并非"Nevanlinna救了他"——Nevanlinna 不在 page.md 中。
+    - 1940: 回到法国后被控逃避兵役，在勒阿弗尔和鲁昂被监禁——在监狱中完成了使他成名的工作
+    - 1941: 流亡美国，在 Lehigh University 任教两年（不被赏识、超负荷、低薪），后去巴西圣保罗大学
+  - 1976: 退休后隐居普林斯顿，继续数学研究直到晚年
+
+### 关键时间线（15–20 个节点）：
+- 1906: 生于巴黎一个犹太知识分子家庭，父亲是医生
+- 1914–1922: 在巴黎接受精英教育，早年即展现数学天赋（自学梵文以阅读印度数学原著）
+- 1922: 16 岁考入巴黎高等师范学院（École Normale Supérieure）
+- 1925: 19 岁获得数学教师资格（agrégation），开始攻读博士
+- 1928: 22 岁获博士学位（导师 Hadamard），论文题目：《代数曲线上的算术》
+- 1930–1932: 在印度阿里格尔大学任教两年——与印度数学和哲学的深刻接触
+- 1934–1935: 与 Henri Cartan 等人秘密筹备"布尔巴基"（Bourbaki）—— 一个用公理化方法重写全部数学的宏伟计划
+- 1935: 布尔巴基正式成立，Weil 是灵魂人物和精神领袖
+- 1939: 二战爆发，Weil 在芬兰被捕——险些被处决
+- 1940: 回到法国，因"逃避兵役"被判入狱 5 年——在鲁昂监狱中完成了他最重要的数论工作
+- 1940–1941: 在狱中写了给妹妹 Simone 的一封著名信件，阐述数学与神秘主义的联系
+    - 1941: 出狱，流亡美国
+    - 1942–1945: 在 Lehigh University 任教（不被赏识，1945 年辞职），同时继续布尔巴基的工作
+    - 1946: 《代数几何基础》（Foundations of Algebraic Geometry）出版——代数几何严格化的里程碑
+    - ~1949–1950: Weil 猜想开始产生影响——连接代数几何、数论与拓扑的惊人预言
+    - 1958: 加入 IAS，直到退休
+    - 1967: 《基础数论》（Basic Number Theory）出版
+    - 1973: Deligne 完成最后一个 Weil 猜想的证明——Weil 的预言成真
+- 1979: 获 Wolf 数学奖（与 Jean Leray 分享）
+- 1991: 出版自传《一个数学家的学徒生涯》（Souvenirs d'apprentissage）——数学史上最诚实的自传之一
+- 1998: 在普林斯顿逝世，享年 92 岁
+
+### 人格特质线索：
+- 极其博学——精通梵文、希腊文、拉丁文，能阅读印度原文数学经典
+- 性格尖刻而诚实——他的自传毫不掩饰对同行的批评和对自己的审视
+- 终身与妹妹 Simone Weil 保持深厚的精神对话——两人分别代表了 20 世纪的数学思维和哲学思维
+- 他是 agnostic（不可知论者），印度教思想对他有深远影响
+- 对布尔巴基的狂热信仰——他认为数学可以被彻底公理化重建，这份雄心贯穿一生
+- 在印度生活的两年深刻影响了他的世界观
+
+---
+
+## 第 0.5 步：数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 `pages/André_Weil/metadata.json` 逐项核对下表并填值，产出即入库脚本 `seed_weil_full.py` 的字段依据。无值写 `NULL` 并注明原因，不得留空。
+
+| # | 表 | 字段 | 核对值 |
+|:--:|---|------|--------|
+| 1 | `people` | qid | `Q323232` |
+| 2 | `people` | name_en | `André Weil` |
+| 3 | `people` | name_zh | `安德烈·韦伊` |
+| 4 | `people` | name_variants | `["布尔巴基的灵魂","Weil 猜想的预言者","在牢房里做数学的人"]` |
+| 5 | `people` | gender | `male` |
+| 6 | `people` | birth_date | `1906-05-06` |
+| 7 | `people` | death_date | `1998-08-06` |
+| 8 | `people` | description | `French mathematician (1906-1998)` |
+| 9 | `people` | primary_occupation | `mathematician` |
+| 10 | `person_occupation` | 职业（rank） | `mathematician(0)`、`historian of mathematics(1)`、`university teacher(2)` |
+| 11 | `person_field` | 领域（rank） | `number theory(0)`、`algebraic geometry(1)`、`mathematics(2)` |
+| 12 | `award_laureate` | 获奖（year/edition/share_type/note） | `Wolf Prize in Mathematics 1979(edition=2, shared with Jean Leray)`；`Kyoto Prize 1980(edition=1)`；`Foreign Member of Royal Society`；`Leroy P. Steele Prize`；`Guggenheim Fellowship`；`Cours Peccot`；`Prix Francoeur` |
+| 13 | `person_institution` | 教育/任职（relation/起止年） | `education: ENS、Science Faculty of Paris、Lycée Saint-Louis、Lycée Montaigne、Göttingen`；`employment: Strasbourg(1933–1939)、Aligarh(1930–1932)、Haverford(1941–1945)、São Paulo(1945–1947)、Chicago(1947–1958)、IAS(1958–1976)` |
+| 14 | `person_nationality` | 国籍 | `France` |
+| 15 | `person_relation` | 社会关系 | 见第 4.5 步（已入库 16 条） |
+| 16 | `rankings` | 榜单（list_key/rank/status） | `list_key=20th_century_ranking`、`rank=?`、`status=立传` |
+
+核对完成后：写 `MySQL/seed_weil_full.py`（`INSERT IGNORE` 幂等），入库后按 §21.4 一键校验并汇报：「新建/更新 X 人、职业 Y 条、领域 Z 条、奖项 A 条、机构 B 条、国籍 C 条、社会关系 D 条」。
+
+---
+
+## 核心数学与科学贡献
+
+| 领域 | 贡献 | 年代 |
+|------|------|:--:|
+| 代数几何基础 | 代数几何的严格代数基础——特征 p 上的代数几何、交截理论 | 1940s–1946 |
+| Weil 猜想 | 有限域上代数簇的 ζ 函数猜想——算术几何的罗塞塔石碑 | 1949 |
+| 数论 | adele/idele 语言引入数论——类域论的现代化 | 1930s–1960s |
+| 椭圆曲线 | Weil 配对（Weil pairing）——现代密码学的数学基础之一 | 1940s |
+| 代数群 | 阿贝尔簇理论的基础工作、代数群的系统研究 | 1940s–1950s |
+| 拓扑学 | Weil 上同调理论的构想——推动 étale 上同调和 motive 理论 | 1949–1950s |
+| 布尔巴基 | 现代数学的公理化体系——改变了全世界的数学符号和语言 | 1935–1980s |
+| 模形式 | Weil 倒数律（Weil reciprocity law） | 1940s |
+| 一致分布 | 与 Weyl 相关的均匀分布理论扩展 | 1930s |
+
+### ★ 韦伊独有的叙事线索
+
+1. **布尔巴基的灵魂** — Weil 不是一个孤独的天才，他是一场数学运动的建筑师。布尔巴基试图用公理化方法重写全部数学——"只用一个"集合论"作为基础"。这个计划今天看来有些疯狂，但它深刻地改变了现代数学的语言和符号体系。∅、⊗、N、Z、Q、R、C —— 这些今天每个数学家都在用的符号，是布尔巴基的遗产。
+2. **Weil 猜想：一座跨越三个世界的桥梁** — 1949 年，Weil 提出了关于有限域上代数簇的 ζ 函数的四个猜想。这些猜想惊人地连接了：拓扑学（Betti 数）、代数几何（特征 p 的簇）、解析数论（Riemann zeta 函数的类比）。1974 年 Deligne 完成了最后一个猜想的证明——这是 20 世纪数学最伟大的成就之一。
+3. **"我在监狱里做数学"** — 1940 年，Weil 因逃避兵役被判 5 年监禁。在鲁昂监狱的几个月（1940年2月–5月）中，他"完成了使他成名的工作"——有限域上曲线的 Riemann 猜想证明。这在数学史上极为罕见。
+4. **两兄妹：数学与哲学** — André 和 Simone Weil 是 20 世纪法国知识界最引人注目的一对兄妹。André 成为 20 世纪最具影响力的数学家之一，Simone 成为著名的哲学家。两人终身保持通信。1940 年 Weil 在狱中给 Simone 写了一封长信，后以《论数学中的类比》发表。
+5. **印度烙印** — Weil 在 24–26 岁时在印度生活了两年。他自学梵文，阅读梵文数学文献，并深受印度哲学影响。他晚年的智慧和从容（"京都奖"演讲中展现的东方智者气质）与这段经历不无关系。
+6. **Deligne 的继承** — Weil 猜想最重要的验证者是 Pierre Deligne。1974 年 Deligne 证明最后一个 Weil 猜想时，Weil 已经 68 岁。这是一个"大师提出框架、下一代完成证明"的经典案例。Grothendieck 的整个 étale 上同调大厦，很大程度上就是为了证明 Weil 猜想而建造的。
+7. **从数学到自传** — 晚年 Weil 专注于写作——1991 年出版自传《一个数学家的学徒生涯》，是数学史上最坦诚的自传之一。他还撰写了数论历史著作。
+
+### 人物关系
+
+- **Simone Weil（妹妹）** — 哲学家，基督教神秘主义者，20 世纪最深刻的思想家之一。两人的精神对话是知识分子史上最独特的兄妹关系
+- **Jacques Hadamard（导师）** — 法国分析大师，素数定理证明者
+- **Henri Cartan** — 布尔巴基的联合创始人，终身的亲密朋友
+- **Claude Chevalley** — 布尔巴基创始人之一，代数群理论合作者
+- **Jean Dieudonné** — 布尔巴基最狂热的拥护者和执行者
+- **Pierre Deligne** — 学术继承人，证明了 Weil 猜想，Fields 奖得主
+- **Grothendieck** — 代数几何的后继者，Étale 上同调的建筑师，深受 Weil 猜想推动
+- **Rolf Nevanlinna** — 1939 年在芬兰救了 Weil 的命
+- **Oswald Veblen** — 帮助 Weil 在战时在美国找到教职
+
+---
+
+## 第 4.5 步：社会关系梳理 + 数据库入库 ★（数据库同步）
+
+> 完整规范见工作指南 **§二十**。参考脚本：`MySQL/seed_weil_relations.py`（已执行，13 条关系 + 3 条补充，缺失 4 人占位）。
+> 数据库全部字段（职业/领域/奖项/机构/国籍/排行榜）梳理规范见工作指南 **§二十一**。
+
+**入库范围（提示词「人物关系」节，16 条）**：
+| 关系类型 | 人物 | 状态 |
+|---|---|---|
+| 妹妹（parent-child） | Simone Weil | ✅ 已入库 |
+| 导师（advisor-student） | Hadamard → Weil | ✅ 已入库 |
+| 继承人（advisor-student） | Weil → Deligne | ✅ 已入库 |
+| 合作者（collaborator） | 布尔巴基：Henri Cartan、Chevalley、Delsarte、Dieudonné、Mandelbrojt、de Possel | ✅ 已入库 |
+| 同事（colleague） | Einstein、Gödel、von Neumann、Oppenheimer、Nevanlinna、Veblen | ✅ 已入库 |
+| 后继者（advisor-student） | Grothendieck | ✅ 已入库 |
+
+**校验**：
+```sql
+SELECT a.name_en AS 甲, rt.name_zh AS 关系, b.name_en AS 乙, pr.note
+FROM person_relation pr JOIN people a ON a.id=pr.from_id
+JOIN people b ON b.id=pr.to_id JOIN relation_types rt ON rt.relation_key=pr.relation_type
+WHERE a.name_en='André Weil' OR b.name_en='André Weil';
+```
+
+---
+
+## 第 5 步：设计配色方案
+
+- **建议配色：勃艮第深红 + 石板暖灰 + 象牙金** —— 法国数学的优雅 + 布尔巴基的严谨 + 印度智慧的温暖
+- 需要与已有配色完全不同！
+  - Hilbert：普鲁士蓝 + 金
+  - Grothendieck：深靛 + 金
+  - Serre：勃艮第红 + 象牙暖金（需区分！Weil 的勃艮第更深、更暗，偏向酒红）
+  - Noether：深紫罗兰 + 暗玫瑰金
+  - Riemann：墨绿 + 银灰
+  - Kolmogorov：深松绿 + 古铜金
+  - von Neumann：深黑 + 电路绿
+  - Weyl：深琥珀金 + 星夜紫
+  - Cartan：法兰西几何紫 + 象牙
+- 四个分类色，对应 Weil 的四大支柱：
+  - **badgenumber** (数论/类域论/Weil配对) — 勃艮第深红 `#6B1D2F`
+  - **badgegeometry** (代数几何/Weil猜想/abel簇) — 石板暖灰 `#5C5C4F`
+  - **badgebourbaki** (布尔巴基/公理化/数学语言) — 象牙金 `#C9AF7B`
+  - **badgewisdom** (印度智慧/哲学/自传) — 赤陶暖 `#A06030`
+
+---
+
+## 第 6 步：规划幻灯片序列（建议 19 页）
+
+```
+00  OpenMath 项目首页（从 cover 模板 \input，见 §3.4）
+
+=== 封面与总览 ===
+01  封面 — 《安德烈·韦伊：数论与代数几何的建筑师》 / André Weil 1906–1998
+02  为什么 Weil 是"建筑师" — 布尔巴基 + Weil 猜想 + 代数几何基础的三角架构
+
+=== 早年 ===
+03  巴黎的神童 (1906–1928) — 16岁高师、22岁博士、自学梵文
+04  印度岁月 (1930–1932) — 东方智慧如何塑造一位西方数学家
+
+=== 布尔巴基 ===
+05  布尔巴基的诞生 (1934–1935) — 一群法国年轻人决定重写全部数学
+06  布尔巴基的遗产 — ∅, ⊗, N/Z/Q/R/C……你每天都在用他们的发明
+
+=== 战时传奇 ===
+07  芬兰被捕 (1939) — 间谍嫌疑、被捕、返回法国
+08  监狱里的数学 (1940) — 在鲁昂监狱中完成了使他成名的工作
+
+=== 数学巅峰 ===
+09  Weil 猜想 (1949) — 连接代数几何、数论与拓扑的罗塞塔石碑
+10  代数几何的基础 — 特征 p 上的代数几何、交截理论的严格化
+
+=== 数论 ===
+11  类域论与 adele/idele — 现代数论语言的创造者
+12  Weil 配对 — 从椭圆曲线到现代密码学的数学基石
+
+=== 晚年与反思 ===
+13  IAS 岁月 (1958–1976) — 普林斯顿的智者
+14  与妹妹 Simone — 一位数学家与一位哲学家的兄妹对话
+15  晚年回顾 — 自传、京都奖、数论历史写作
+
+=== 遗产 ===
+16  Deligne 的证明 (1974) — Weil 猜想的最后一个堡垒被攻克
+17  韦伊的遗产 — 从你的银行卡加密到费马大定理证明
+
+=== 结尾 ===
+18  思想回响 — 他在监狱里为数学画下了通向未来的地图
+19  结束页 — 主题句：他是数论与代数几何的蓝图设计师。
+```
+
+---
+
+## 第 9 步：史实审查
+
+### 韦伊特有的史实陷阱（★ 高危）
+
+| 陷阱类型 | 高危点 |
+|---------|--------|
+| **芬兰被捕的具体原因** | Weil 1939 年在芬兰因间谍嫌疑被捕。**★ 关于生命危险的报道"被证明是夸大的"。** 不要写"险些被处决"或"Nevanlinna救了他"——Nevanlinna 不在 page.md 中。正确叙述："被怀疑为间谍而逮捕→经由瑞典和英国返回法国。" |
+| **狱中工作的性质** | Weil 在鲁昂监狱（1940年2月–5月）完成了什么？"he completed the work that made his reputation"——即有限域上曲线的 Riemann 猜想证明。不要添油加醋。 |
+| **★ 捏造引语高危** | ★ page.md 中**没有**以下任何引语：(1) "我的数学工作从来没有这么顺畅过" (2) "我们布尔巴基一代人走得太远了" (3) "数学不只是一个工具，它是一种文明"(4) "她是我见过的最聪明的人" (5) "抽象的偶像崇拜"。所有这些引语在 Beamer 中均不可使用。 |
+| **Weil 猜想 ≠ 费马大定理** | Weil 猜想的证明（Deligne, 1973）并非费马大定理的证明（Wiles, 1994）。不过 Weil 的工作为后来的算术几何发展奠定了关键基础。两者的关系是"间接的"。 |
+| **布尔巴基的"空集符号"** | ∅ 是布尔巴基引入的——page.md 记载 Weil 本人选择了来自挪威字母 Ø 的符号。但"⊗（张量积）、⇒、⇔、∈、N、Z、Q、R、C"并非都直接归功于布尔巴基——有些此前已在使用。 |
+| **与 Grothendieck 的关系** | Weil 和 Grothendieck 的关系复杂。Weil 是 Grothendieck 的前辈，但 Grothendieck 的 étale 上同调革命性地超越了 Weil 设想的框架。两人没有直接的师生关系，但存在明显的学术传承。 |
+| **"逃避兵役"的道德判断** | 不要用"懦夫"或"英雄"等道德判断。客观描述：Weil 认为自己的数学工作比当兵更有价值。他为此付出了入狱代价。 |
+| **Simone Weil 的描述** | ★ page.md 说 Simone "would later become a famous philosopher"，仅此而已。不要添加"基督教神秘主义""终极苦难""抽象的偶像崇拜"等标签。 |
+
+### 术语清单
+
+| 英文 | 正确中文译法 | 风险点 |
+|------|-------------|--------|
+| Weil conjectures | Weil 猜想 | 复数形式——四个猜想 |
+| étale cohomology | étale 上同调 | 不要翻译"étale"（法文，意为"平静的"） |
+| adele/idele | 阿代尔/伊代尔 | 类域论的核心概念，不翻译为中文 |
+| Weil pairing | Weil 配对 | 椭圆曲线密码学的基础 |
+| Zeta function | ζ 函数 / Zeta 函数 | 有限域上的代数簇的 ζ 函数与 Riemann ζ 函数不同 |
+| Bourbaki | 布尔巴基 | Nicolas Bourbaki——一个虚构的法国数学家 |
+| Foundations of Algebraic Geometry | 《代数几何基础》 | 1946 年出版，代数几何严格化的经典 |
+| Basic Number Theory | 《基础数论》 | 1973 年，Weil 的晚期著作 |
+| Souvenirs d'apprentissage | 《一个数学家的学徒生涯》 | Weil 1991 年自传 |
+| Riemann hypothesis for curves over finite fields | 有限域上曲线的 Riemann 猜想 | Weil 1940 年在监狱中证明的 |
+
+### 通用陷阱
+
+| 陷阱类型 | 检查点 |
+|---------|--------|
+| **Weil 猜想"被 Deligne 解决"** | 准确：Deligne 1973 年证明了最后一个（也是最难的）Weil 猜想 |
+| **布尔巴基成员** | Weil 是布尔巴基的**创始成员**，不是唯一创始人。创始人有 6-7 位 |
+| **"印度影响"的量** | 不要过度渲染 Weil 的印度经历。他在印度只待了 2 年。但其影响确实深远——他在自传中花了大量篇幅 |
+| **监狱的时长** | 只关了几个月（1940 年 2 月–5 月），不是若干年。不要夸大 |
+| **"逃避兵役"的事实** | 1940 年他确实因"failure to report for duty"被判刑。但他认为自己在做更重要的事。不要回避这个事实，也不要美化 |
+
+---
+
+> **开始执行。每完成一步向我汇报。**
+>
+> **特别提醒：**
+> 1. Weil 的独特性在于他**既是建筑师（布尔巴基），又是预言者（Weil 猜想），还是幸存者（芬兰+监狱+流亡）**
+> 2. 狱中数学的叙事是无可替代的亮点——数学史上没有第二个人在监狱里完成了里程碑级的工作
+> 3. 与妹妹 Simone 的关系——两兄妹代表了 20 世纪法国知识分子的两个方向：数学与哲学
+> 4. Weil 猜想的"桥梁"隐喻——这是算术几何的罗塞塔石碑，连接了三个看似无关的数学世界
+> 5. 布尔巴基不要过度夸大为"Weil 的个人事业"——这是集体运动，Weil 是灵魂但非唯一
+> 6. 印度影响让他与其他法国数学家（Cartan, Serre, Grothendieck）区分开来——他是读梵文的法国数学家
+> 7. **所有引语必须来自 page.md** —— 不要使用任何无法在 page.md 中逐字验证的引语
+
+---
+
+## 第 13 步：本地文档终审（★ 提交前必做）
+
+### 终审执行流程
+
+```
+1. 打开 pages/André_Weil/page.md，从头到尾逐段阅读全文
+2. 同时打开 Andre_Weil_zh.tex 源码，逐页对照
+3. 发现不一致 → 标注优先级（P0/P1/P2）
+4. 全部扫描完毕 → 先修复所有 P0，再评估 P1，P2 可选
+5. 修复后重新编译 → 确认零错误
+```
+
+### ⚠️ Weil 特有的终审高危点
+
+| 高危点 | 为什么高危 | 终审时如何检查 |
+|--------|---------|--------------|
+| **Nevanlinna 传说** | ★ 不在 page.md 中；且危险"被夸大" | page.md 搜索 "Nevanlinna" → 无结果 |
+| **"我们走得太远了"** | ★ 不在 page.md 中 | page.md 搜索 "too far" → 无结果 |
+| **"数学是一种文明"** | ★ 不在 page.md 中 | page.md 搜索 "civilization" → 无结果 |
+| **"我的数学工作从来没有这么顺畅"** | ★ 不在 page.md 中 | page.md 搜索 "smooth" → 无结果 |
+| **"她是我见过的最聪明的人"** | ★ 不在 page.md 中 | page.md 搜索 "clever" → 无结果 |
+| **Simone "神秘主义""偶像崇拜"标签** | ★ page.md 只说 "famous philosopher" | page.md 搜索 "mystic" → 无结果 |
+| **Validity year** | Deligne 证明 Weil 猜想是 1973，Basic Number Theory 是 1967 | page.md 逐字核对年份 |
+| **Lehigh 而非 Haverford** | Weil 在 Lehigh University (1941–1945)，非 Haverford | page.md 搜索 "Lehigh" |
+
+### 优先级定义
+
+| 优先级 | 定义 | Weil 实际案例（本轮） |
+|:--:|------|------|
+| 🔴 P0 | **事实错误** | Nevanlinna不在页面、危险被夸大vs生死一线、Bourbaki"走得太远"引语捏造、"文明"引语捏造 |
+| 🟡 P1 | **来源存疑/捏造引语** | 狱中顺畅引语、Simone聪明引语、抽象偶像崇拜、密码学银行卡、神秘主义标签 |
+| 🟢 P2 | **重要遗漏** | 1890 Hilbert基础定理, Siegel friendship, 巴西与Zariski合作 |
+
+---
+
+> **特别提醒（终审专用）：**
+> 1. **Weil 的页面较短（~30K）** —— 意味着很多著名轶事不在其中
+> 2. **不要从"布尔巴基传说"中借料** —— 咖啡馆故事、Nevanlinna传闻、各种引语都可能不在 page.md 中
+> 3. **芬兰事件的核心是"夸大"** —— page.md 用词是 "exaggerated"，不是 heroic rescue
+> 4. **Deligne 年份是 1973** —— 不是 1974，不是 1978（Fields奖年份）
+
+---
+
+## 第 14 步：音乐选择
+
+> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+
+韦伊的气质：**深邃、预言者、布尔巴基的灵魂、狱中数学的传奇、梵文与对称的东方智慧** — 深沉史诗感，带有探索者的远征气质。
+
+**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+
+| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
+|:--:|------|------|------|------|
+| ★★★ | Expedition | alex-productions | `music_audio/alex-productions/33--_CEmB_dHpA-Expedition.wav` | 探索史诗，Weil 猜想的跨世纪远征 |
+| ★★★ | Eternals | alex-productions | `music_audio/alex-productions/76-V5T_kW2PH_s-Eternals.wav` | 宏大深远，算术几何的罗塞塔石碑 |
+| ★★ | Tragedy | alex-productions | `music_audio/alex-productions/80-K5f65-22sY4-Tragedy.wav` | 深色戏剧性，芬兰监狱的传奇 |
+| ★ | Timeless | alex-productions | `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` | 沉稳纪录片风，布尔巴基的永恒遗产 |
+
+**操作**：复制选定的 `.wav` 到 `Andre_Weil/` 目录，`make video` 自动混入。

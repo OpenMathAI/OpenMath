@@ -1,0 +1,315 @@
+% =============================================================
+%  描述集合论先驱：米哈伊尔·苏斯林 (Mikhail Suslin)
+%  Suslin 集 · Suslin 问题 · 解析集理论 · 24 岁早逝
+%  资料来源：Wikipedia (Mikhail Suslin)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{1E4E79}
+\definecolor{coveraccent}{HTML}{B8860B}
+\definecolor{coverdark}{HTML}{1A2738}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeAlg}{HTML}{1E4E79}
+\definecolor{badgeCom}{HTML}{1E6E6E}
+\definecolor{badgeHist}{HTML}{B8860B}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{80,85,95}
+\definecolor{algpanel}{RGB}{234,242,248}
+\definecolor{companel}{RGB}{232,244,240}
+\definecolor{histpanel}{RGB}{250,244,232}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\deckbackground}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {\draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);}
+  \foreach \y in {-0.2,0.7,...,9.3} {\draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\sectiontitle}[3][line]{\vspace{-0.52cm}\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #2}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #3}\\[3pt]
+  \def\@sectlinedefault{line}\ifx\@sectlinedefault#1\textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}\fi
+\end{center}\vspace{0.06cm}}
+
+\input{../../cover/openmath_page.tex}
+
+\newcommand{\titleslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace Russian Empire\enspace·\enspace Moscow State University (Luzin)\enspace·\enspace 24 岁};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {米哈伊尔·苏斯林};
+  % 肖像照片 —— 右上角，与 Cartan/Sinai 风格统一
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt, anchor=north east]
+    at ([xshift=-0.27cm, yshift=-1.51cm]current page.north east)
+    {\includegraphics[natwidth=470,natheight=652,width=1.92cm]{Mikhail_Suslin.jpeg}};
+
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Mikhail Suslin\quad·\quad 1894--1919\quad·\quad 24岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Suslin 集 · Suslin 问题 · 解析集理论 · 24 岁早逝};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (-5.5,0) {\textbf{Suslin 集}\\[2pt]1917 引入};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (-1.85,0) {\textbf{Suslin 问题}\\[2pt]独立于 ZFC};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (1.85,0) {\textbf{Souslin 线}\\[2pt]全序拓扑};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (5.5,0) {\textbf{Suslin 树}\\[2pt]组合等价};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {俄罗斯数学家，对一般拓扑与描述集合论做出重大贡献，24 岁英年早逝。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Krasavka 1894\enspace·\enspace Balashov 中学 (1905--13)\enspace·\enspace 莫斯科大学 (Luzin)\enspace·\enspace Krasavka 1919};
+\end{tikzpicture}
+\end{frame}}
+
+\newcommand{\hookslide}{\begin{frame}
+\plainbar
+\sectiontitle[skip]{描述集合论先驱：24 岁陨落的天才}{Suslin 集 · Suslin 问题 · 解析集理论 · Luzin 学派}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {Suslin 集\\[2pt]1917 引入};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {Suslin 问题\\[2pt]独立于 ZFC};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {Souslin 线\\[2pt]全序拓扑};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {Suslin 树\\[2pt]组合等价};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.70) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 解析集理论奠基 + 独立于 ZFC 的 Suslin 问题——24 岁陨落的天才。}\\{\fontsize{7.0}{9.0}\selectfont Krasavka (1894) $\rightarrow$ Balashov 中学 (1905--13) $\rightarrow$ 莫斯科大学 (Luzin, 1913--17) $\rightarrow$ Krasavka 1919 伤寒早逝。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} 导师 Nikolai Luzin $\cdot$ 发现 Lebesgue 错误 $\cdot$ 一生仅发表 1 篇 4 页笔记 $\cdot$ 24 岁}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\earlyslide}{\begin{frame}
+\plainbar
+\sectiontitle{早年与教育：Krasavka 1894 $\rightarrow$ 莫斯科大学 (Luzin)}{1894 Krasavka\enspace·\enspace Balashov 中学 1905--13\enspace·\enspace Luzin 导师\enspace·\enspace 1917 毕业}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{出生。}\textbf{Mikhail Yakovlevich Suslin} 1894 年 11 月 15 日生于萨拉托夫省\textbf{克拉斯夫卡}（Krasavka）村，是贫苦农民 Yakov 与 Matrena Suslin 唯一的孩子。小学教师 Vera Andreevna Teplogorskaya-Smirnova 发掘了他的数学天赋。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{莫斯科大学。}1905--1913 年就读于\textbf{巴拉绍夫男子文法学校}。1913 年进入\textbf{帝国莫斯科大学}，师从 \textbf{Nikolai Luzin}（描述集合论之父），1917 年获数学学位。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{任职与早逝。}1917 年毕业后立即到\textbf{伊万诺沃-沃兹涅先斯克理工学院}工作。1919 年 10 月 21 日在莫斯科斑疹伤寒大流行（俄罗斯内战期间）中去世，年仅 24 岁。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Krasavka 少年 $\rightarrow$ Balashov 中学 $\rightarrow$ 莫斯科大学 (Luzin) $\rightarrow$ 1919 伤寒早逝。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\lemmaslide}{\begin{frame}
+\plainbar
+\sectiontitle{Suslin 集与解析集理论：发现 Lebesgue 的错误 (1917)}{解析集\enspace·\enspace Lebesgue 错误\enspace·\enspace Borel 集连续像\enspace·\enspace 描述集合论}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{发现 Lebesgue 的错误。}1917 年，作为 Luzin 研究生的 Suslin 发现 \textbf{Lebesgue} 论证中的一个错误：Lebesgue 曾以为 $\mathbb{R}^2$ 中任意 Borel 集到实轴的\textbf{投影}仍是 Borel 集——Suslin 证明这不成立。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{解析集（Suslin 集）。}由此 Suslin 引入\textbf{解析集}（analytic sets，又称 Suslin 集）——Borel 集的连续像，可经树定义的实数集。这是\textbf{描述集合论}的开端，与导师 Luzin 共同发展。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{Suslin 定理。}由 Suslin 工作引出：一个集合既是解析集又是其余解析集（coanalytic），则必为 Borel 集——解析集理论的核心结果。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 投影不保 Borel——Suslin 集（解析集）的诞生。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\theoremslide}{\begin{frame}
+\plainbar
+\sectiontitle{Suslin 问题与 Souslin 线：独立于 ZFC}{Suslin 问题\enspace·\enspace Souslin 线\enspace·\enspace 独立于 ZFC\enspace·\enspace 全序集}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{Suslin 问题。}\textbf{Suslin 问题}询问：是否存在\textbf{Souslin 线}？——即满足可数链条件（ccc）但不同序同构于实数线的完备、稠密、无界全序集。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{独立于 ZFC。}Suslin 问题的答案最终被证明\textbf{独立于}集合论标准公理系统 \textbf{ZFC}——由 \textbf{Solovay--Tennenbaum}（1971）证明其一致性。它不是"未解决"，而是"独立"。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{Souslin 线。}Souslin 线是满足可数链条件但不与实数线同构的全序集——Suslin 假设（SH）断言其不存在。这是拓扑与集合论交叉的经典对象。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Suslin 问题——独立于 ZFC 的经典问题。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\lpspaceslide}{\begin{frame}
+\plainbar
+\sectiontitle{Suslin 树：Suslin 假设的组合等价物}{Suslin 树\enspace·\enspace 高度 $\omega_1$\enspace·\enspace 组合等价\enspace·\enspace 独立性}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Suslin 树。}\textbf{Suslin 树}是高度为 $\omega_1$ 的树，其每条分支与每条反链至多可数——是 Suslin 假设的组合等价物。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{等价性。}存在 Souslin 线当且仅当存在 Suslin 树——这一组合等价把有序集问题转化为树的问题，是集合论中的经典技巧。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{独立性。}Suslin 树的存在性独立于 ZFC：在可构造宇宙 $L$ 中存在 Suslin 树，而经力迫可使其不存在——是力迫法的标志性应用之一。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Suslin 树——Suslin 假设的组合等价。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\gudkovslide}{\begin{frame}
+\plainbar
+\sectiontitle{描述集合论：Suslin 集的深远影响}{描述集合论\enspace·\enspace 解析集层次\enspace·\enspace 射影集\enspace·\enspace Borel 决定性}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{描述集合论。}Suslin 的工作开创了\textbf{描述集合论}——研究可定义集合（Borel、解析、射影）的复杂性。这一领域后来由 Luzin、Novikov、Addison 等人发展。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{Suslin 运算与表示。}Suslin 引入了\textbf{Suslin 运算}（由 Suslin 方案构造集合）与 \textbf{Suslin 表示}（树投影）——是解析集可定义性的核心工具。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{后续发展。}Suslin 集引出了解析集层次、射影集论、Borel 决定性等——是现代描述集合论（Moschovakis 教科书）的起点。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Suslin 集——描述集合论的开端。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\ergodicslide}{\begin{frame}
+\plainbar
+\sectiontitle{24 岁早逝：一生只发表一篇 4 页笔记}{1919 伤寒\enspace·\enspace 24 岁\enspace·\enspace 仅 1 篇论文\enspace·\enspace 悲怆的天才}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{24 岁早逝。}Suslin 1919 年死于\textbf{斑疹伤寒}（莫斯科大流行，俄罗斯内战期间），年仅 24 岁——数学史上最悲怆的天才故事之一。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{仅 1 篇论文。}他一生\textbf{只发表了一篇 4 页笔记}：《Sur une définition des ensembles mesurables B sans nombres transfinis》（1917，C. R. Acad. Sci. Paris）。从入门到顶峰不到 6 年。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{身后出版。}他的问题与结果在他去世后由他人整理出版（Fundamenta Mathematicae，1920、1923）——其思想持续影响描述集合论。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 24 岁、1 篇 4 页笔记——数学史上的悲怆传奇。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\leningradschoolslide}{\begin{frame}
+\plainbar
+\sectiontitle{Luzin 学派：描述集合论的开端}{Luzin 学派\enspace·\enspace 1917 解析集论文\enspace·\enspace 莫斯科学派}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{Luzin 学派。}Suslin 是 \textbf{Nikolai Luzin} 学派（莫斯科）的成员——Luzin 学派是描述集合论的核心，Suslin 1917 年的解析集工作是其标志性成果。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{Suslin 集后续。}\textbf{Suslin 集}后来成为描述集合论的核心概念——引出了解析集、射影集等层次结构。Suslin 的短文是描述集合论的开创性文献。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{传承。}Luzin 在 Suslin 去世后继承并发展了描述集合论——现代教科书（如 Moschovakis《Descriptive Set Theory》）都以 Suslin 集为基础。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Luzin 学派天才——24 岁的描述集合论先驱。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\honorsslide}{\begin{frame}
+\plainbar
+\sectiontitle{整体遗产：以 Suslin 命名的概念群}{Suslin 集/问题/线/树/运算\enspace·\enspace 描述集合论\enspace·\enspace 24 岁}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{命名概念群。}以 Suslin 命名的核心概念：\textbf{Suslin 集}、\textbf{Suslin 问题}、\textbf{Souslin 线}、\textbf{Suslin 树}、\textbf{Suslin 运算}、\textbf{Suslin 代数}、\textbf{Suslin 基数}、\textbf{Suslin 表示}、\textbf{Suslin 方案}等——一位 24 岁天才的名字覆盖描述集合论与拓扑学。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{影响。}Suslin 的工作开创了\textbf{描述集合论}——其概念在 Borel 决定性、射影集合论、力迫法中持续发挥影响。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{历史地位。}Suslin 的名字与 Luzin、Lebesgue、Novikov 并列——是描述集合论学派的开创者之一。他的工作虽少，但影响深远。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Suslin 集 + 问题 + 线 + 树——24 岁的命名遗产。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\closingslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {描述集合论天才，24 岁陨落};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {Suslin 集 · Suslin 问题 · Souslin 线 · 描述集合论};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Mikhail Suslin\quad·\quad 1894--1919\quad·\quad 24岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Krasavka (1894) $\rightarrow$ Balashov 中学 (1905--13) $\rightarrow$ 莫斯科大学 (Luzin, 1917)};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.65cm]current page.center) {发现 Lebesgue 错误 1917 $\rightarrow$ 伊万诺沃理工学院 $\rightarrow$ Krasavka 1919 伤寒};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {He was a Russian mathematician who made major contributions to general topology and descriptive set theory. -- Wikipedia};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace Suslin 集 \enspace·\enspace Suslin 问题 \enspace·\enspace 描述集合论 \enspace·\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\lemmaslide
+\theoremslide
+\lpspaceslide
+\gudkovslide
+\ergodicslide
+\leningradschoolslide
+\honorsslide
+\closingslide
+\end{document}

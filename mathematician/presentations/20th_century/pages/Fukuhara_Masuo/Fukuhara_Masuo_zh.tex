@@ -1,0 +1,315 @@
+% =============================================================
+%  常微分方程大师：福原满洲雄 (Fukuhara Masuo)
+%  Fukuhara 不动点定理 · 常微分方程 · RIMS 首任所长 · 101 岁高寿
+%  资料来源：立传提示词（本地无 Wikipedia 页面）
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{8B1A1A}
+\definecolor{coveraccent}{HTML}{B8860B}
+\definecolor{coverdark}{HTML}{1A2738}
+\definecolor{covermuted}{HTML}{6A7480}
+\definecolor{badgeAlg}{HTML}{8B1A1A}
+\definecolor{badgeCom}{HTML}{1E6E6E}
+\definecolor{badgeHist}{HTML}{B8860B}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{80,85,95}
+\definecolor{algpanel}{RGB}{250,236,238}
+\definecolor{companel}{RGB}{232,244,240}
+\definecolor{histpanel}{RGB}{250,244,232}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\deckbackground}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {\draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);}
+  \foreach \y in {-0.2,0.7,...,9.3} {\draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\sectiontitle}[3][line]{\vspace{-0.52cm}\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #2}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #3}\\[3pt]
+  \def\@sectlinedefault{line}\ifx\@sectlinedefault#1\textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}\fi
+\end{center}\vspace{0.06cm}}
+
+\input{../../cover/openmath_page.tex}
+
+\newcommand{\titleslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace Japan\enspace·\enspace RIMS 首任所长之一\enspace·\enspace 101 岁};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {福原满洲雄};
+  % 肖像照片 —— 右上角，与 Cartan/Sinai 风格统一
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt, anchor=north east]
+    at ([xshift=-0.27cm, yshift=-1.51cm]current page.north east)
+    {\includegraphics[width=1.92cm]{Fukuhara_Masuo.jpg}};
+
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Fukuhara Masuo\quad·\quad 1905--2007\quad·\quad 101岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {Fukuhara 不动点定理 · 常微分方程 · RIMS 所长 · 101 岁高寿};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (-5.5,0) {\textbf{Fukuhara 定理}\\[2pt]1929 不动点};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (-1.85,0) {\textbf{RIMS 所长}\\[2pt]1963--1969};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (1.85,0) {\textbf{复微分方程}\\[2pt]Poincaré 传统};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (5.5,0) {\textbf{101 岁高寿}\\[2pt]日本数学老寿星};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {日本数学家，常微分方程与复微分方程大师，京都大学数理解析研究所（RIMS）首任所长之一。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Tokyo 1905\enspace·\enspace 东京帝大 1929\enspace·\enspace 九州/东京/京都\enspace·\enspace RIMS 所长 1963\enspace·\enspace 2007};
+\end{tikzpicture}
+\end{frame}}
+
+\newcommand{\hookslide}{\begin{frame}
+\plainbar
+\sectiontitle[skip]{常微分方程大师与 RIMS 首任所长：101 年的日本数学人生}{Fukuhara 定理 · 常微分方程 · RIMS 所长 · 101 岁高寿}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {Fukuhara 定理\\[2pt]1929 不动点};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {RIMS 所长\\[2pt]1963--1969};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {复微分方程\\[2pt]Poincaré 传统};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {101 岁高寿\\[2pt]日本老寿星};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.70) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 常微分方程 + 复微分方程——日本微分方程学派的代表。}\\{\fontsize{7.0}{9.0}\selectfont Tokyo (1905) $\rightarrow$ 东京帝大 (1929) $\rightarrow$ 九州 (1939)/东京 (1948) $\rightarrow$ 京都 + RIMS (1963) $\rightarrow$ 农工大学长 (1973--79) $\rightarrow$ 2007。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} 父福原鐐二郎 $\cdot$ 日本学士院奖 1963 $\cdot$ 日本数学会理事长 4 次 $\cdot$ 101 岁}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\earlyslide}{\begin{frame}
+\plainbar
+\sectiontitle{早年与教育：Tokyo 1905 $\rightarrow$ 东京帝国大学 1929}{1905 Tokyo\enspace·\enspace 四中/一高/帝大\enspace·\enspace 1929 毕业\enspace·\enspace 三级跳教授}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{出生。}\textbf{福原满洲雄}（Fukuhara Masuo）1905 年 12 月 24 日生于日本\textbf{东京}；2007 年 2 月 7 日去世，享年 101 岁——从明治时代到平成时代，横跨整个 20 世纪。父为福原鐐二郎。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{东京帝国大学。}福原就读\textbf{东京府立第四中学} $\rightarrow$ \textbf{第一高等学校}（理科甲类）$\rightarrow$ \textbf{东京帝国大学理学部数学科}（1929 年毕业）——日本精英教育的完整路径。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{三级跳教授。}1939 年任\textbf{九州帝国大学教授}，1948 年任\textbf{东京大学教授}，1963 年转\textbf{京都大学教授}并任 RIMS 首任所长之一（1963--1969），1973--1979 年任\textbf{东京农工大学学长}。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 东京少年 $\rightarrow$ 帝大 $\rightarrow$ 九州/东京/京都 $\rightarrow$ RIMS——101 年数学人生。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\lemmaslide}{\begin{frame}
+\plainbar
+\sectiontitle{Fukuhara 不动点定理 (1929)}{不动点定理\enspace·\enspace Brouwer/Schauder 并列\enspace·\enspace ODE 存在性\enspace·\enspace 1929}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Fukuhara 不动点定理（1929）。}福原在 1929 年证明的\textbf{连续映射不动点定理}——与 Brouwer 不动点定理、Schauder 不动点定理并列的早期不动点理论贡献。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{常微分方程理论。}福原是日本\textbf{常微分方程}与\textbf{复微分方程}学派的代表——他系统整理了 ODE 理论，并把西方经典引进日本。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{不动点方法。}不动点定理是微分方程存在性证明的核心工具——福原把不动点思想用于 ODE 初值问题的存在唯一性研究。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Fukuhara 不动点定理——ODE 存在性工具。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\theoremslide}{\begin{frame}
+\plainbar
+\sectiontitle{常微分方程大师与复微分方程}{ODE 理论\enspace·\enspace 复微分方程\enspace·\enspace Poincaré 译著\enspace·\enspace 岩波教材}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{常微分方程大师。}福原是日本\textbf{常微分方程理论}的奠基人之一——他的《常微分方程》专著（岩波全书）成为日本数学教育的标准教材。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{复微分方程。}他还研究\textbf{复微分方程}（复平面上的 ODE）——这是 Poincaré、Picard 方向在日本的延续，福原深入研习了西方经典。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{译著。}他翻译了 \textbf{Poincaré} 的微分方程经典著作——把西方微分方程理论系统引进日本，是日本微分方程学派的重要文献。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} ODE 大师——日本微分方程学派。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\lpspaceslide}{\begin{frame}
+\plainbar
+\sectiontitle{RIMS 数理解析研究所：首任所长之一 (1963--69)}{RIMS 创建\enspace·\enspace 首任所长之一\enspace·\enspace 京都数学中枢}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{RIMS 数理解析研究所。}1963 年福原参与创建\textbf{京都大学数理解析研究所}（RIMS）——并担任\textbf{首任所长之一}（1963--1969）。RIMS 是日本数学研究的最高机构，培养了日本现代数学的核心力量。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{京都数学中枢。}RIMS 后来成为日本数学研究的中枢——福原为 RIMS 的创建与发展奠定了基础，他的同事与后辈遍布日本数学界。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{数学行政。}福原还是\textbf{日本数学会理事长}（4 次连任）——长期领导日本数学界的学术组织与制度建设。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} RIMS——日本数学研究的中枢。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\gudkovslide}{\begin{frame}
+\plainbar
+\sectiontitle{数学教育贡献与经典教材}{《常微分方程》\enspace·\enspace 《射影几何》\enspace·\enspace 《变分学入门》\enspace·\enspace 日本数学教育}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{数学教育。}福原撰写多部经典教材：\textbf{《常微分方程》}（岩波全书）、\textbf{《射影几何》}、\textbf{《变分学入门》}——这些教材培养了几代日本数学家。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{教育理念。}福原强调严谨而清晰的教学——他的教材以推导完整、例子丰富著称，是日本数学教育的典范。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{学科影响。}福原的工作与教材影响了日本微分方程学派的发展——为后来日本在 PDE、动力系统的成就奠定基础。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 数学教育——岩波全书教材。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\ergodicslide}{\begin{frame}
+\plainbar
+\sectiontitle{101 岁高寿：日本数学的老寿星}{101 岁\enspace·\enspace 明治到平成\enspace·\enspace 日本最高寿数学家之一}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{101 岁高寿。}福原 2007 年 2 月 7 日去世，享年\textbf{101 岁}——他是日本数学史上最高寿的数学家之一。从明治时代到平成时代，横跨整个 20 世纪。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{家族。}父\textbf{福原鐐二郎}——福原家是日本学术世家。福原满洲雄的一生见证了日本数学从引进到走向世界的全过程。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{长寿见证。}101 岁的高寿使他成为日本数学的活化石——他的学生与后辈遍布日本各大学。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 101 岁高寿——日本数学老寿星。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\leningradschoolslide}{\begin{frame}
+\plainbar
+\sectiontitle{东京农工大学学长与数学会理事长 (1973--79)}{东京农工大学\enspace·\enspace 数学会理事长 4 次\enspace·\enspace 数学行政}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{东京农工大学学长。}1973--1979 年，福原任\textbf{东京农工大学学长}（校长）——这是他学术行政生涯的重要一站，展示了数学家领导大学的能力。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{数学会理事长。}福原\textbf{4 次}担任\textbf{日本数学会理事长}——是日本数学学术行政的长期领导者，推动了日本数学的制度建设。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{学术传承。}福原与吉田耕作、山中健、正田建次郎等日本数学家合作——共同推动了日本微分方程与数学研究的发展。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 农工大学长——数学家领导的大学。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\honorsslide}{\begin{frame}
+\plainbar
+\sectiontitle{荣誉与整体遗产：日本数学的 20 世纪领袖}{Fukuhara 定理\enspace·\enspace RIMS 首任所长\enspace·\enspace 日本学士院奖 1963\enspace·\enspace 101 岁}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{核心成就。}福原的成就：\textbf{Fukuhara 不动点定理}（1929）、\textbf{常微分方程大师}、\textbf{RIMS 首任所长之一}、\textbf{101 岁高寿}——一条完整的日本数学人生。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{荣誉。}1963 年获\textbf{日本学士院奖}（Japan Academy Prize）——表彰其在微分方程与数学研究上的贡献。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{影响。}福原的工作与教材培养了日本微分方程学派——从九州到东京再到京都，他是日本数学的中坚力量。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Fukuhara 定理 + RIMS 所长 + 101 岁——日本数学领袖。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+\newcommand{\closingslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {常微分方程大师，101 岁};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {Fukuhara 定理 · 常微分方程 · RIMS 所长 · 101 岁};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Fukuhara Masuo\quad·\quad 1905--2007\quad·\quad 101岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Tokyo (1905) $\rightarrow$ 东京帝大 (1929) $\rightarrow$ 九州 (1939)/东京 (1948)};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.65cm]current page.center) {京都 + RIMS 所长 (1963) $\rightarrow$ 农工大学长 (1973--79) $\rightarrow$ 2007};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {Japanese mathematician known for ordinary differential equations and as a founding director of RIMS.};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace Fukuhara 定理 \enspace·\enspace 常微分方程 \enspace·\enspace RIMS 所长 \enspace·\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\lemmaslide
+\theoremslide
+\lpspaceslide
+\gudkovslide
+\ergodicslide
+\leningradschoolslide
+\honorsslide
+\closingslide
+\end{document}

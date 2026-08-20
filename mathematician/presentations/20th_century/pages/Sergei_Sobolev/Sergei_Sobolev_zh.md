@@ -1,0 +1,183 @@
+# 索伯列夫 (Sergei Sobolev) 立传提示词 — 优化版
+
+> 严格遵循 [Mathematician_Biography_Guide.md](../Mathematician_Biography_Guide.md)。
+> 模板版本: v2.0 (2026-08-07)，参考: Schwartz, Hörmander, Gelfand。
+
+---
+
+## 一、结构化元数据
+
+| 字段 | 值 | 来源 |
+|------|-----|------|
+| 全名 | Sergei Lvovich Sobolev (Сергей Львович Соболев) | Wikidata Q323337 |
+| 生卒 | 1908-10-06 ~ 1989-01-03 (80岁) | Wikidata |
+| 国籍 | 俄罗斯帝国 → 苏联 | Wikidata |
+| 出生地 | 圣彼得堡 (后改名彼得格勒, 1924年改列宁格勒) | Wikipedia |
+| 逝世地 | 莫斯科, 苏联 | Wikipedia |
+| 父亲 | Lev Aleksandrovich Sobolev — 律师 | Wikipedia |
+| 母亲 | Natalya Georgievna | Wikipedia |
+| 配偶 | Ariadna Dmitrievna (1930年结婚) | Wikipedia |
+| 博士导师 | Nikolai Günther (主导师), Vladimir Smirnov (第二导师) | Wikidata |
+| 博士 | 1929, 列宁格勒大学 (21岁!) | Wikipedia |
+| 任职 | Steklov 数学研究所 (1934–), 莫斯科国立大学 (1935–1957), Kurchatov 原子能研究所副所长 (1943–1957), 新西伯利亚大学, Sobolev 数学研究所首任所长 | Wikipedia |
+| 荣誉 | 斯大林奖×3 (1941,1951,1953), 社会主义劳动英雄 (1951), 苏联国家奖 (1983), Lomonosov 金质奖章 (1988), 列宁勋章×6, 十月革命勋章, 劳动红旗勋章, 荣誉勋章 | Wikidata |
+| 知名学生 | Olga Ladyzhenskaya | Wikipedia |
+| 知名工作 | Sobolev 空间 $W^{k,p}$, Sobolev 嵌入定理, 广义函数 (1935, 分布理论的先驱), 弱导数, Riesz–Sobolev 不等式 | Wikidata + Wikipedia |
+| 其他成就 | 苏联原子弹项目数学计算, 三进制计算机 Setun (1958), Akademgorodok 创始人之一 | Wikipedia |
+| 历史地位 | 广义函数概念的第一人（早于 Schwartz 10年）; PDE 现代理论的语法奠基者; "没有 Sobolev 空间就没有现代 PDE" | Wikipedia |
+
+## 二、精确时间线
+
+| 年份 | 事件 |
+|------|------|
+| 1908.10.06 | 生于圣彼得堡 — 城市先后改名彼得格勒 (1914), 列宁格勒 (1924) |
+| 1929 | 列宁格勒大学毕业 (21岁!) — 师从 Nikolai Günther, 后随 Vladimir Smirnov |
+| 1932 | 在列宁格勒工作 |
+| 1934 | 加入 Steklov 数学研究所 (莫斯科) |
+| 1935 | **首次引入广义函数概念** — 弱解理论的先驱, 比 Schwartz 分布理论早 10 年 |
+| 1935–1957 | 莫斯科国立大学教授 |
+| 1936 | 发表 Sobolev 嵌入定理 |
+| 1938 | 系统发表 Sobolev 空间理论 |
+| 1941 | 第一次斯大林奖 |
+| 1941–1945 | 二战期间率 Steklov 研究所疏散至喀山 |
+| 1943–1957 | Kurchatov 原子能研究所副所长 — 参与苏联原子弹项目数学计算 |
+| 1951 | 第二次斯大林奖, 社会主义劳动英雄 |
+| 1953 | 第三次斯大林奖 |
+| 1956 | 联合提议建立苏联科学院西伯利亚分院 |
+| 1957 | Akademgorodok 新西伯利亚科学城建设 — Sobolev 数学研究所首任所长 |
+| 1958 | 与 Nikolay Brusentsov 领导开发三进制计算机 Setun |
+| 1962 | 呼吁苏联教育系统改革 |
+| 1983 | 苏联国家奖 |
+| 1988 | Lomonosov 金质奖章 |
+| 1989.01.03 | 在莫斯科逝世 |
+
+## 二五、数据库字段核对（★ 补全 greatminds，规范见工作指南 §二十一）
+
+> 对照 metadata.json 逐项核对下表并填值。缺失项按 §21.5 写 `MySQL/seed_sobolev_full.py` 补齐。
+
+| # | 表 | 字段 | 核对值 | 库中现状 |
+|:--:|---|------|--------|:--:|
+| 1 | `people` | qid | `Q323337` | ⚠️ 待核 |
+| 2 | `people` | name_zh | `谢尔盖·索博列夫` | ⚠️ NULL |
+| 3 | `people` | name_variants | `["Sobolev 空间之父","广义函数的先驱","数学物理的桥梁"]` | ⚠️ 空 |
+| 4 | `people` | gender | `male` | ⚠️ NULL |
+| 5 | `people` | birth_date / death_date | `1908-09-23` / `1989-01-03` | ⚠️ **NULL 全缺** |
+| 6 | `people` | description | `Russian mathematician (1908–1989)` | ⚠️ 待核 |
+| 7 | `person_occupation` | 职业 | `mathematician(0)`、`university teacher(1)` | ⚠️ 需补 |
+| 8 | `person_field` | 领域 | `Sobolev space`、`functional analysis`、`partial differential equation`、`mathematical physics`、`computational mathematics`、`mathematics` | ⚠️ 待核 |
+| 9 | `award_laureate` | 获奖 ★全部收录 | `Stalin 1941/1951/1953`、`USSR State 1983`、`Lomonosov 1988`、`Order of Lenin`、`Hero of Socialist Labour 1951`、`October Revolution` | ⚠️ 空 |
+| 10 | `person_institution` | 教育/任职 | `education: Saint Petersburg`；`employment: Steklov、Kurchatov、MSU、Novosibirsk、Sobolev Institute` | ⚠️ 全空 |
+| 11 | `person_nationality` | 国籍 | `Russian Empire`、`Soviet Union` | ⚠️ 待核 |
+| 12 | `person_relation` | 社会关系 | 见二六（7 条） | ⚠️ 仅 1 条 |
+| 13 | `rankings` | 榜单 | `OpenMath_20th_Century_Top50` 待查 | ⚠️ |
+
+## 二六、社会关系入库 ★（§二十）
+
+| 关系类型 | 人物 | 方向 | 状态 |
+|---|---|---|---|
+| 导师 | Vladimir Smirnov → Sobolev | 有向 | ⚠️ 占位 |
+| 导师 | Nikolai Günther → Sobolev | 有向 | ⚠️ 占位 |
+| 学生 | Sobolev → Olga Ladyzhenskaya | 有向 | ⚠️ 占位 |
+| 学生 | Sobolev → Mikhail Lavrentyev | 有向 | ⚠️ 占位 |
+| 学生 | Sobolev → Nikolai Bakhvalov | 有向 | ⚠️ 占位 |
+| 同事 | Andrey Kolmogorov | 无向 | ✅ 在库（id=5） |
+| 同事 | Israel Gelfand | 无向 | ✅ 在库（id=436） |
+
+- 缺失人物（5 人）先建占位，note 加 `[材料待展开]`；幂等 `INSERT IGNORE`。脚本：`MySQL/seed_sobolev_relations.py`
+
+## 三、核心贡献表
+
+| 领域 | 贡献 | 关键年份 |
+|------|------|:--:|
+| 泛函分析 | **Sobolev 空间** $W^{k,p}(\Omega)$ — 弱导数可积函数空间 | 1935–1938 |
+| 泛函分析 | **Sobolev 嵌入定理** — $W^{k,p} \hookrightarrow L^q$ 等 | 1936–1938 |
+| 广义函数 | **弱导数 / 广义函数** — Sobolev 1935 首次引入, Schwartz 1945 系统化 | 1935 |
+| 不等式 | **Sobolev 不等式**, Riesz–Sobolev 不等式 | 1930s |
+| PDE | 椭圆/抛物/双曲 PDE 弱解理论的语法基础 | 1930s– |
+| 应用数学 | 苏联原子弹项目 — 核反应 PDE 数值计算 | 1943–1957 |
+| 计算机科学 | 三进制计算机 **Setun** (平衡三进制) | 1958 |
+| 学术组织 | Akademgorodok 创始人, Sobolev 数学研究所首任所长 | 1957– |
+
+## 四、三幕叙事结构
+
+### 第一幕: 列宁格勒的天才少年 (1908–1934)
+- 生于圣彼得堡律师家庭 — 城市在他成年前改了三遍名字
+- 列宁格勒大学 — 师从 Günther 和 Smirnov
+- 1929 年 21 岁毕业 — 苏联数学界的超级新星
+- 1932 年起在列宁格勒, 1934 年赴莫斯科 Steklov 研究所
+
+### 第二幕: PDE 语法的创造者 (1935–1957)
+- 1935 年引入广义函数 — 让不可微的"函数"也能求导数
+- 1936 年 Sobolev 嵌入定理 — 泛函分析的基石之一
+- 1938 年系统建立 Sobolev 空间理论
+- 1943–1957 年: 原子弹项目 — 核反应 PDE 数值解
+- 斯大林奖 ×3, 社会主义劳动英雄
+
+### 第三幕: 西伯利亚的学术拓荒者 (1957–1989)
+- 1957 年 — Akademgorodok 新西伯利亚科学城的核心建设者
+- Sobolev 数学研究所首任所长
+- 1958 年 Setun — 世界少有的三进制计算机
+- Ladyzhenskaya 的导师 — 苏联 PDE 学派传承
+- 1989 年逝世 — Sobolev 空间成为 PDE 研究永恒的语法
+
+## 五、史实陷阱清单
+
+| 陷阱 | 真相 |
+|------|------|
+| "Sobolev = 分布理论之父" | ❌ Sobolev (1935) 首次引入广义函数概念, 但 Schwartz (1945–1950) 系统建立了分布理论 |
+| "博士导师只有 Smirnov" | ❌ 主导师是 Nikolai Günther, Smirnov 是第二导师 |
+| Sobolev 嵌入定理年份 | ✅ 1936–1938 (不是单一论文) |
+| 斯大林奖 | ✅ 1941, 1951, 1953 三次 (不是一次) |
+| 原子弹项目角色 | ✅ 副所长, 负责数学计算 (PDE 数值解) |
+| Setun 计算机 | ✅ 1958, 三进制 (非二进制), 与 Brusentsov 合作 |
+| 出生日期 | ✅ 1908-10-06 (不是 1908-09-23, 后者为儒略历) |
+| 逝世日期 | ✅ 1989-01-03 |
+
+## 六、配色方案
+
+**气质**: 苏联深红 + 西伯利亚金 + PDE 绿
+
+| 变量 | 色值 | 用途 |
+|------|------|------|
+| `coverprimary` | `#8B0000` | 苏联深红 — 封面主色 |
+| `coveraccent` | `#DAA520` | 金 — 强调/分隔线 |
+| `coverdark` | `#1F2937` | 深灰 — 正文文本 |
+| `bgmain` | `#F8F6F3` | 象牙白 — 背景 |
+| `badgeSob` | `#8B0000` | Sobolev空间红 |
+| `badgeDist` | `#DAA520` | 广义函数金 |
+| `badgeAtom` | `#2E5A40` | 原子弹/计算机绿 |
+| `badgeLegacy` | `#8A8A8A` | 遗产银灰 |
+
+## 七、幻灯片设计 (8 页内容)
+
+| 页 | 标题 | 核心内容 |
+|:--:|------|------|
+| 00 | OpenMath 首页 | 统一品牌 |
+| 01 | 封面 | 姓名、生卒、肖像、🇷🇺→🇸🇺国籍、Sobolev空间/广义函数/原子弹 |
+| 02 | 总览 | 四大贡献概览 |
+| 03 | 早年: 列宁格勒→莫斯科 | 21岁博士, Günther+Smirnov, 三城变名 |
+| 04 | Sobolev 空间 $W^{k,p}$ | 弱导数、完备性、嵌入定理 |
+| 05 | 原子弹与Setun计算机 | 1943–1957 Kurchatov研究所 |
+| 06 | 遗产 | Sobolev→弱解→有限元→数值PDE |
+| 07 | 结束页 | "微积分需要现代版本" |
+
+## 八、国籍标识
+
+封面: `\faIcon{globe}\enspace 俄罗斯帝国 → 苏联`
+
+## 九、音乐建议
+
+- 主轨道: 苏联进行曲 → 西伯利亚沉思
+- 情绪弧: 十月革命后的天才 → 战时使命 → 西伯利亚拓荒
+
+## 十、编译验证清单
+
+- [ ] 生卒: 1908-10-06 ~ 1989-01-03 ✅
+- [ ] 博士: Günther (主) + Smirnov (第二) ✅
+- [ ] 广义函数: 1935, 先于 Schwartz ✅
+- [ ] Sobolev 嵌入定理: 1936 ✅
+- [ ] 斯大林奖 ×3: 1941, 1951, 1953 ✅
+- [ ] Setun 三进制计算机: 1958 ✅
+- [ ] Akademgorodok 创始人 ✅
+
+> **开始执行。**

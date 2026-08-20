@@ -1,0 +1,348 @@
+% =============================================================
+%  代数分析之父：佐藤幹夫 (Mikio Sato)
+%  超函数理论 · 代数分析 · Bernstein–Sato · Sato–Tate · RIMS
+%  资料来源：Wikipedia (Mikio Sato)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{8B1A1A}
+\definecolor{coveraccent}{HTML}{B8860B}
+\definecolor{coverdark}{HTML}{3A0E0E}
+\definecolor{covermuted}{HTML}{7A6A6A}
+\definecolor{badgeAlg}{HTML}{8B1A1A}
+\definecolor{badgeCom}{HTML}{1E6E6E}
+\definecolor{badgeHist}{HTML}{B8860B}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{badgeMart}{HTML}{8A1020}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{90,85,80}
+\definecolor{algpanel}{RGB}{250,236,238}
+\definecolor{companel}{RGB}{232,244,240}
+\definecolor{histpanel}{RGB}{250,244,232}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{martpanel}{RGB}{250,236,238}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\deckbackground}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {\draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);}
+  \foreach \y in {-0.2,0.7,...,9.3} {\draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\sectiontitle}[3][line]{\vspace{-0.52cm}\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #2}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #3}\\[3pt]
+  \def\@sectlinedefault{line}\ifx\@sectlinedefault#1\textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}\fi
+\end{center}\vspace{0.06cm}}
+
+\input{../../cover/openmath_page.tex}
+
+\newcommand{\titleslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace Japan\enspace·\enspace 代数分析之父\enspace·\enspace Wolf Prize 2003};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {佐藤幹夫};
+  % 肖像照片 —— 右上角，与 Cartan/Sinai 风格统一
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt, anchor=north east]
+    at ([xshift=-0.27cm, yshift=-1.51cm]current page.north east)
+    {\includegraphics[width=1.92cm]{Mikio_Sato.jpg}};
+
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Mikio Sato\quad·\quad 1928--2023\quad·\quad 94岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {超函数理论 · 代数分析 · Bernstein--Sato · Sato--Tate · RIMS};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (-5.5,0) {\textbf{超函数理论}\\[2pt]hyperfunction};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (-1.85,0) {\textbf{代数分析}\\[2pt]algebraic analysis};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (1.85,0) {\textbf{Bernstein--Sato}\\[2pt]D-模奇点};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (5.5,0) {\textbf{RIMS 1970--91}\\[2pt]1987--91 所长};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {日本数学家，以超函数、代数分析、Bernstein--Sato 多项式、Sato--Tate 猜想闻名。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Tokyo 1928\enspace·\enspace 东京大学 (1952/1963)\enspace·\enspace 大阪/东京/京都\enspace·\enspace RIMS 1970--91\enspace·\enspace 京都 2023};
+\end{tikzpicture}
+\end{frame}}
+
+\newcommand{\hookslide}{\begin{frame}
+\plainbar
+\sectiontitle[skip]{代数分析之父：94 年的京都数学传奇}{超函数 · 代数分析 · Bernstein–Sato · Sato–Tate · RIMS}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {超函数理论\\[2pt]hyperfunction};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {代数分析\\[2pt]分析即代数几何};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {Bernstein--Sato\\[2pt]奇点多项式};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {Wolf 2003\\[2pt]京都学派};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.70) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 把分析当作代数几何——94 岁的代数分析之父。}\\{\fontsize{7.0}{9.0}\selectfont Tokyo (1928) → 东京大学 (1952/1963) → 大阪/东京/京都 → RIMS (1970-91) → 京都 (2023)。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} Wolf 2003 · Asahi 1969 · Japan Academy Prize 1976 · Schock 1997 · 文化功劳者 1984}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 3. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}
+\plainbar
+\sectiontitle{早年与教育：东京 → 东京大学（Iyanaga 导师）}{1928 Tokyo\enspace·\enspace 1952 BSc\enspace·\enspace 1963 博士论文《超函数理论》\enspace·\enspace 京都 94 岁}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{1928 · 出生。}1928 年 4 月 18 日出生于东京（大日本帝国）；2023 年 1 月 9 日在京都去世，享年 94 岁。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{东京大学。}在\textbf{东京大学}获得 1952 年理学士与 1963 年博士学位——博士论文题为 \textbf{《超函数理论》}（Theory of hyperfunctions），导师为 \textbf{Iyanaga（弥永祥吉）}（metadata 同时列出 Kōsaku Yosida 为导师）。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{三个机构。}他先后在\textbf{大阪大学}、\textbf{东京大学}与\textbf{京都大学}任职——京都成为他长期基地，RIMS 是他 1970-91 年的舞台。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 东京少年 → 东大博士 → 京都——日本数学走向世界的轨迹。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 超函数理论 ---
+\newcommand{\hyperfuncslide}{\begin{frame}
+\plainbar
+\sectiontitle{超函数理论 (1960s)：分布理论的延伸}{hyperfunction\enspace·\enspace 边界值\enspace·\enspace 层论/局部上同调\enspace·\enspace 与 Grothendieck 独立实现}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{1960 · 超函数。}Sato 提出\textbf{超函数（hyperfunction）}概念——把分布推广到任意解析区域上的"边界值"，是分布理论的自然延伸。其博士论文《超函数理论》(1963) 总结了这一工作。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{局部上同调。}超函数用\textbf{局部上同调}（local cohomology）刻画——这与 Grothendieck 的层论工作\textbf{独立实现}。客观记录：二者是平行成果，不写 Grothendieck 贡献给 Sato。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{Schapira 评价。}Pierre Schapira：Sato 处理分析的方式与 Grothendieck 相似，\textbf{有难以置信的胆识}——这是第三方学者对其工作风格的精准刻画。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 分布理论的下一代——超函数用层论重新定义解析性。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 5. 代数分析 ---
+\newcommand{\algebraicanslide}{\begin{frame}
+\plainbar
+\sectiontitle{代数分析 (1970s)：分析即代数几何}{algebraic analysis\enspace·\enspace D-模\enspace·\enspace 微局部分析\enspace·\enspace 谱层}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{代数分析。}Sato 创立了\textbf{代数分析（algebraic analysis）}——把分析学当作代数几何处理。这一思想流派由 D-模、微局部分析、谱层（spectral sheaves）等构成。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{D-模。}微分算子模（D-module）是代数分析的核心对象——它把线性 PDE 系统翻译为代数几何对象。这一概念由 Sato 与 Kashiwara 在 1970s 推广。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{深远影响。}代数分析在 21 世纪的镜像对称、几何表示论中持续发挥影响——Sato 学派是日本数学走向世界的关键力量。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 把分析"代数几何化"——胆识惊人的代数分析之父。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 6. Bernstein--Sato 多项式 ---
+\newcommand{\bsslide}{\begin{frame}
+\plainbar
+\sectiontitle{Bernstein--Sato 多项式：与 Bernstein 共同命名}{b-function\enspace·\enspace D-模\enspace·\enspace 奇点理论\enspace·\enspace 独立发现}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{Bernstein--Sato 多项式。}\textbf{Bernstein--Sato polynomials}（又称 b-函数）是定义于 D-模与奇点理论的核心不变量——Sato 与 Joseph Bernstein 在 1970 年代\textbf{独立}发现，共同命名。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{应用。}b-函数刻画了奇点强度、Milnor 纤维化、混合 Hodge 结构——它是奇点理论与代数几何的一座桥梁。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{Kashiwara 突破。}1975-76 年 \textbf{Masaki Kashiwara}（佐藤学生）证明 Bernstein--Sato 多项式存在性的 \textbf{Kashiwara 定理}——把这一理论推向新高度。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一个多项式，把奇点与 D-模连在一起。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 7. Sato--Tate 猜想 ---
+\newcommand{\satoTateslide}{\begin{frame}
+\plainbar
+\sectiontitle{Sato--Tate 猜想：与 John Tate 独立提出}{椭圆曲线 L 函数\enspace·\enspace 约 1960 提出\enspace·\enspace 2010s 证明}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{独立提出。}\textbf{Sato--Tate conjecture}（约 1960）由 Sato 与 John Tate \textbf{独立}提出——描述椭圆曲线 L 函数素数分布的统计规律。不写 Sato 独占。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{统计规律。}猜想说椭圆曲线 Frobenius 角在 $\pi/2$ 附近呈 \textbf{Sato--Tate 分布}——即 $\frac{2}{\pi}\sqrt{\sin^2\theta}$——属于半圆分布的三角变形。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{2010s 证明。}Sato--Tate 猜想在 2010s 由 \textbf{Taylor--Harris--Shepherd-Barron--Clozel} 等完全证明——这是数论世纪大事，证明了 Sato 与 Tate 半个世纪前的洞察。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 一个猜想，跨越半个世纪——独立洞察终获证明。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 8. 前齐性向量空间 ---
+\newcommand{\prehoslide}{\begin{frame}
+\plainbar
+\sectiontitle{前齐性向量空间：数论与分析的桥梁}{prehomogeneous vector spaces\enspace·\enspace Sato--Shintani\enspace·\enspace zeta 函数}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{前齐性空间。}\textbf{Prehomogeneous vector spaces}（Sato 与 Shintani 提出）——线性代数群在向量空间上的开放稠密轨道——是数论与表示论的重要对象。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{zeta 函数。}对应的 zeta 函数理论由 Sato--Shintani--柏原正樹发展——它把 zeta 函数工具推广到代数群轨道几何。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{应用。}前齐性向量空间在 zeta 函数、自守形式、Langlands 纲领中有广泛应用——是 Sato 在数论方向的关键贡献之一。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 开放稠密轨道——代数群作用的几何。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 9. holonomic quantum field & 孤立子 ---
+\newcommand{\holonomicslide}{\begin{frame}
+\plainbar
+\sectiontitle{holonomic quantum field 与孤立子理论}{1970s--80s\enspace·\enspace 与 Jimbo/Miwa\enspace·\enspace tau 函数/KP 方程}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{holonomic quantum field。}1970s--80s，Sato 与 \textbf{Jimbo、Miwa} 合作发展 \textbf{holonomic quantum field}——Ising 模型与统计力学的形式化推广，用 tau 函数统一多种可积模型。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{KP 方程。}无穷维 Grassmannian 上的\textbf{KP 方程}（Kadomtsev--Petviashvili）——其解由 tau 函数刻画，是孤立子理论的核心。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{现代物理。}holonomic quantum field 在随机矩阵、量子场论、共形场论中有持续影响——是 Sato 学派对数学物理的贡献。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} tau 函数的世界——可积系统的代数语言。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 10. Sato 学派 ---
+\newcommand{\schoolsatlslide}{\begin{frame}
+\plainbar
+\sectiontitle{Sato 学派：日本代数分析学派}{Kashiwara\enspace·\enspace Kawai\enspace·\enspace Miwa\enspace·\enspace Jimbo\enspace·\enspace 桃李满天下}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,2.65)
+    {\textbf{Sato 学派。}Sato 培养了一代代数分析学家——形成\textbf{Sato 学派}，是 20 世纪日本数学走向世界的关键力量。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{代表性学生。}四位主要学生包括：\textbf{Masaki Kashiwara}（柏原正樹，Fields 奖级贡献，D-模/微局部分析）、\textbf{Takahiro Kawai}（河井公一，微局部分析）、\textbf{Tetsuji Miwa}（三輪哲二，统计力学/可积系统）、\textbf{Michio Jimbo}（神保道夫，量子群）。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{桃李。}Sato 学派还包括 \textbf{Motohico Mulase}（数学物理）等多人——形成日本现代数学的核心团队。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 四位代表性学生——日本代数分析学派。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 11. RIMS 与荣誉 ---
+\newcommand{\rimsslide}{\begin{frame}
+\plainbar
+\sectiontitle{RIMS 1970-91 与完整荣誉墙}{京都数理解析研究所\enspace·\enspace 1987-91 所长\enspace·\enspace 5 项国际大奖}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{RIMS 21 年。}1970 年起 Sato 进入京都大学\textbf{数理解析研究所（RIMS）}任职长达 21 年（1970-91）；其中 1987-91 年担任所长——领导京都数学研究。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{5 项大奖。}他获得 5 项重要荣誉：\textbf{Asahi Prize 1969}（朝日科学奖）、\textbf{Japan Academy Prize 1976}（日本学士院奖）、\textbf{Person of Cultural Merits 1984}（文化功劳者）、\textbf{Rolf Schock Prize 1997}（数学）、\textbf{Wolf Prize 2003}（数学）。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{京都 2023。}2023 年 1 月 9 日在京都去世，享年 94 岁——他的学术遗产仍在世界数学中活跃。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} RIMS 21 年所长，5 项国际大奖——京都数学的守护者。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {把分析当作代数几何};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {超函数 · 代数分析 · Bernstein–Sato · Sato–Tate · RIMS · Wolf 2003};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Mikio Sato\quad·\quad 1928 -- 2023\quad·\quad 94岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Tokyo (1928) → 东京大学 (1952/1963) → 大阪/东京/京都};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.65cm]current page.center) {RIMS 1970--91 → 1987--91 所长 → Wolf 2003 → 京都 2023};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {Known for Bernstein–Sato polynomials, Sato–Tate conjecture, algebraic analysis, hyperfunctions. -- Wikipedia};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace 超函数 \enspace·\enspace 代数分析 \enspace·\enspace Bernstein–Sato \enspace·\enspace Sato–Tate \enspace·\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\hyperfuncslide
+\algebraicanslide
+\bsslide
+\satoTateslide
+\prehoslide
+\holonomicslide
+\schoolsatlslide
+\rimsslide
+\closingslide
+\end{document}

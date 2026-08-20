@@ -1,0 +1,348 @@
+% =============================================================
+%  囚徒困境命名者与 KKT 条件：阿尔伯特·塔克 (Albert W. Tucker)
+%  囚徒困境命名 · KKT 条件 · 普林斯顿博弈论学派 · Nash/Shapley/Minsky 导师
+%  资料来源：Wikipedia (Albert W. Tucker)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+\definecolor{bgmain}{RGB}{250,246,239}
+\definecolor{coverprimary}{HTML}{B8860B}
+\definecolor{coveraccent}{HTML}{8B1A1A}
+\definecolor{coverdark}{HTML}{5A4500}
+\definecolor{covermuted}{HTML}{7A6A6A}
+\definecolor{badgeAlg}{HTML}{B8860B}
+\definecolor{badgeCom}{HTML}{1E6E6E}
+\definecolor{badgeHist}{HTML}{8B1A1A}
+\definecolor{badgeDyn}{HTML}{2E6E5C}
+\definecolor{badgeMart}{HTML}{8A1020}
+\definecolor{titlecolor}{RGB}{24,30,28}
+\definecolor{muteddark}{RGB}{90,85,80}
+\definecolor{algpanel}{RGB}{250,244,232}
+\definecolor{companel}{RGB}{232,244,240}
+\definecolor{histpanel}{RGB}{250,236,238}
+\definecolor{dynpanel}{RGB}{232,244,240}
+\definecolor{martpanel}{RGB}{250,236,238}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\deckbackground}{\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCom!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeHist!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeAlg!8] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeDyn!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {\draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);}
+  \foreach \y in {-0.2,0.7,...,9.3} {\draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}}
+\newcommand{\sectiontitle}[3][line]{\vspace{-0.52cm}\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #2}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #3}\\[3pt]
+  \def\@sectlinedefault{line}\ifx\@sectlinedefault#1\textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}\fi
+\end{center}\vspace{0.06cm}}
+
+\input{../../cover/openmath_page.tex}
+
+\newcommand{\titleslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.65cm]current page.center) {\faIcon{globe}\enspace Canada\enspace·\enspace Princeton 1933--1974\enspace·\enspace 89 岁};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.55cm]current page.center) {阿尔伯特·塔克};
+  % 肖像照片 —— 右上角，与 Cartan/Sinai 风格统一
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt, anchor=north east]
+    at ([xshift=-0.27cm, yshift=-1.51cm]current page.north east)
+    {\includegraphics[width=1.92cm]{Albert_W._Tucker.jpg}};
+
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.60cm]current page.center) {Albert W. Tucker\quad·\quad 1905--1995\quad·\quad 89岁};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.10cm]current page.center) {囚徒困境命名 · KKT 条件 · 普林斯顿博弈论学派 · Nash/Shapley 导师};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.60cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.60cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.85cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeAlg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (-5.5,0) {\textbf{囚徒困境命名}\\[2pt]1950 Flood--Dresher};
+      \node[rounded corners=8pt, fill=badgeCom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (-1.85,0) {\textbf{KKT 条件}\\[2pt]1951 非线性规划};
+      \node[rounded corners=8pt, fill=badgeHist, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (1.85,0) {\textbf{Tucker 引理}\\[2pt]组合拓扑};
+      \node[rounded corners=8pt, fill=badgeDyn, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\scriptsize\bfseries, text=white] at (5.5,0) {\textbf{普林斯顿系主任}\\[2pt]20 年};
+    \end{tikzpicture}};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont\itshape, text=muteddark, align=center, text width=13cm]
+    at ([yshift=-2.75cm]current page.center)
+    {加拿大数学家，对拓扑、博弈论与非线性规划做出重要贡献。};
+  \node[anchor=south, font=\fontsize{6}{7.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace Oshawa, Ontario 1905\enspace·\enspace Toronto (1928/29)\enspace·\enspace Princeton 1932 PhD (Lefschetz)\enspace·\enspace Princeton 1933--1974\enspace·\enspace Hightstown NJ 1995};
+\end{tikzpicture}
+\end{frame}}
+
+\newcommand{\hookslide}{\begin{frame}
+\plainbar
+\sectiontitle[skip]{囚徒困境命名者与 KKT 之父：89 年的普林斯顿传奇}{囚徒困境 · KKT · 普林斯顿系主任 · Nash/Shapley/Minsky 导师}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=10pt,inner ysep=9pt,font=\fontsize{7.0}{9.0}\selectfont\bfseries,align=center}]
+  \node[nodebox,fill=algpanel,draw=badgeAlg!55,text=badgeAlg!85!black]
+    (a) at (-5.5,1.1) {囚徒困境命名\\[2pt]1950 Flood--Dresher};
+  \node[nodebox,fill=companel,draw=badgeCom!55,text=badgeCom!85!black]
+    (b) at (-1.85,1.1) {KKT 条件\\[2pt]1951 非线性规划};
+  \node[nodebox,fill=histpanel,draw=badgeHist!55,text=badgeHist!85!black]
+    (c) at (1.85,1.1) {Tucker 引理\\[2pt]组合拓扑};
+  \node[nodebox,fill=dynpanel,draw=badgeDyn!55,text=badgeDyn!85!black]
+    (d) at (5.5,1.1) {Nash 导师\\[2pt]Shapley/Minsky};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.70) {
+    {\fontsize{8.5}{10.5}\selectfont\bfseries\color{coverdark!88} 囚徒困境命名 + KKT 条件——博弈论与优化之父。}\\{\fontsize{7.0}{9.0}\selectfont Oshawa (1905) → Toronto (1928/29) → Princeton PhD (1932, Lefschetz) → Princeton 教授 (1933-74) → Hightstown NJ (1995)。}\\[2pt]
+    {\fontsize{7.0}{9.0}\selectfont\color{covermuted} John von Neumann Theory Prize 1980 · 20 年数学系主任 · Nash Nobel 1994 导师}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 3. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}
+\plainbar
+\sectiontitle{早年与教育：Oshawa 1905 → 多伦多 → 普林斯顿}{1905 Oshawa\enspace·\enspace Toronto 1928/29\enspace·\enspace Princeton 1932（Lefschetz）\enspace·\enspace 1933 加入}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{出生。}\textbf{Albert William Tucker} 1905 年 11 月 28 日生于加拿大\textbf{安大略省奥沙瓦}（Oshawa, Ontario），1995 年 1 月 25 日卒于美国\textbf{新泽西州海茨敦}（Hightstown, NJ），享年 89 岁。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{多伦多本科/硕士。}1928 年获 \textbf{多伦多大学 BA}，1929 年获 \textbf{MA}——加拿大本土教育背景。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{普林斯顿博士。}1932 年在\textbf{普林斯顿大学}获博士学位——导师 \textbf{Solomon Lefschetz}（组合拓扑大师）。博士论文《An Abstract Approach to Manifolds》（1932）。1933 年正式加入 Princeton 任教——\textbf{41 年的 Princeton 生涯开始}。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Oshawa 少年 → Toronto → Princeton 博士 (Lefschetz) → 终身 Princeton 教授。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 囚徒困境命名 (1950) ---
+\newcommand{\prisonerslide}{\begin{frame}
+\plainbar
+\sectiontitle{囚徒困境 (1950)：命名与普及}{Flood--Dresher 模型\enspace·\enspace Tucker 命名\enspace·\enspace 博弈论著名悖论}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{1950 命名。}1950 年 RAND 公司 \textbf{Flood 与 Dresher} 提出了合作-冲突数学模型——Tucker \textbf{命名}为 \textbf{囚徒困境（Prisoner's Dilemma）}。这是博弈论最著名的悖论。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,1.05)
+    {\textbf{归属清晰。}模型原由 Flood/Dresher 提出，Tucker 是命名者与推广者——\textbf{不写 Tucker 发明模型}。他的命名使这一博弈成为博弈论教科书的开篇案例。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{影响。}囚徒困境影响了 1950s 后的军事战略（冷战、军备竞赛）、经济学（竞争/合作）、生物学（演化稳定策略 ESS）、政治学（投票理论）——是 20 世纪最具影响的"思维实验"之一。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 囚徒困境——博弈论最著名的悖论。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 5. KKT 条件 ---
+\newcommand{\kktslide}{\begin{frame}
+\plainbar
+\sectiontitle{KKT 条件 (1951)：非线性规划最优性}{Karush 1939 先有\enspace·\enspace Kuhn--Tucker 1951 独立\enspace·\enspace 现代优化基石}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{KKT 条件。}\textbf{Karush–Kuhn–Tucker 条件}是\textbf{非线性规划}的最优性必要条件——把 Lagrange 乘子法推广到不等式约束情形，是现代优化的基本定理。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{归属历史。}\textbf{Karush} 1939 年硕士论文已含此结果；\textbf{Kuhn–Tucker} 1951 年独立发表更一般的形式。命名为 \textbf{KKT} 三人共同——Tucker 是其中之一（与 Kuhn 合作）。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{应用。}KKT 条件是 SVM（支持向量机）、凸优化、机器学习、数值优化的理论基础——是 20 世纪应用数学最重要的条件之一。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Karush 先有 + Kuhn–Tucker 独立——KKT 三人共同命名。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 6. Tucker 引理 + 有向拟阵 ---
+\newcommand{\tuckermatroidslide}{\begin{frame}
+\plainbar
+\sectiontitle{Tucker 引理与有向拟阵}{组合拓扑\enspace·\enspace 着色引理\enspace·\enspace 组合线性代数}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=companel,draw=badgeCom!55] at (0,2.65)
+    {\textbf{Tucker 引理。}\textbf{Tucker's lemma} 是组合拓扑的着色引理——是 \textbf{Borsuk–Ulam 定理}的离散版本，被广泛应用于不动点理论、博弈论（Nash 平衡证明）。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{有向拟阵。}\textbf{Oriented matroid}（有向拟阵）——组合线性代数的抽象结构，Tucker 早期贡献。它是研究超平面排列、凸多面体、线性不等式系统的统一框架。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{数学结构。}这两个概念覆盖组合拓扑与组合代数——Tucker 工作的多面性展示。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 引理 + 拟阵——组合拓扑与组合代数的双重贡献。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 7. 普林斯顿系主任 ---
+\newcommand{\princetonslide}{\begin{frame}
+\plainbar
+\sectiontitle{普林斯顿数学系主任：20 年的黄金时代}{1933--1974\enspace·\enspace 40 年 Princeton 生涯\enspace·\enspace 黄金时代管理者}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{1933--1974。}Tucker 1933 年起在 \textbf{普林斯顿大学}任教至 1974 年退休——\textbf{整整 41 年}，其中约 20 年担任\textbf{数学系主任}。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{管理者角色。}他管理普林斯顿数学系的\textbf{黄金时代}——同期还有 \textbf{von Neumann}（1933-57 Princeton）、\textbf{Weyl}、\textbf{Einstein}（1933-55 IAS）等大师。这是普林斯顿数学的巅峰。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{教学贡献。}他同时是普林斯顿本科生教学的支柱——培养了 \textbf{Nash、Shapley、Minsky、Gale} 等明星学生，并撰写数学教育文献。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 41 年 Princeton 生涯——20 年系主任的黄金时代。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 8. 学生王朝 ---
+\newcommand{\studentsslide}{\begin{frame}
+\plainbar
+\sectiontitle{学生王朝：Nash/Shapley/Minsky/Gale}{Nash Nobel 1994\enspace·\enspace Shapley Nobel 2012\enspace·\enspace Minsky Turing 1969\enspace·\enspace 普林斯顿学派}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=dynpanel,draw=badgeDyn!55] at (0,2.65)
+    {\textbf{星光阵容。}Tucker 的博士生阵容是 20 世纪最耀眼的：\textbf{John Nash}（Nobel 经济 1994，纳什均衡）、\textbf{Lloyd Shapley}（Nobel 经济 2012，稳定匹配）、\textbf{Marvin Minsky}（Turing 1969，人工智能之父）、\textbf{David Gale}（博弈论/数学经济）。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{Nash。}\textbf{John Nash} 1950 年博士论文《Non-cooperative Games》（仅 28 页）——奠定了非合作博弈论的基础。Tucker 是其主要导师。Nash 30 年精神病困扰后获 Nobel，是科学史的传奇。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{Minsky/Gale。}\textbf{Marvin Minsky} 1954 博士（普林斯顿），后建立 MIT AI Lab；\textbf{David Gale} 1949 博士——稳定匹配 Shapley 算法合作者。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} Nash + Shapley + Minsky——三大奖学生的导师。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 9. 博弈论学派与 von Neumann ---
+\newcommand{\vonneumannslide}{\begin{frame}
+\plainbar
+\sectiontitle{博弈论学派：von Neumann 时代的普林斯顿}{von Neumann 1933--57 Princeton\enspace·\enspace Nash 与 Tucker 的合作\enspace·\enspace 博弈论黄金时代}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{von Neumann 在 Princeton。}\textbf{John von Neumann} 1933 年起在 \textbf{普林斯顿大学}（与 IAS 并行）任教授至 1957 年——他是 \textbf{现代博弈论}的奠基者（《Theory of Games and Economic Behavior》, 1944, 与 Morgenstern）。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{Tucker 的位置。}在 von Neumann 主导的博弈论研究中，Tucker 是\textbf{核心传承者}——他培养的 Nash（纳什均衡）正是对 von Neumann/Morgenstern 工作的扩展。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,-0.35)
+    {\textbf{1980 John von Neumann 奖。}1980 年 Tucker 获 \textbf{John von Neumann Theory Prize}（INFORMS 颁发的运筹学/管理科学最高奖）——印证其在博弈论与管理科学的地位。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} von Neumann → Tucker → Nash——博弈论的金色传承链。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 10. 数学教育与口述历史 ---
+\newcommand{\educationslide}{\begin{frame}
+\plainbar
+\sectiontitle{数学教育与口述历史：AP 微积分 + 1980s 口述史}{AP 微积分委员会 1960--63\enspace·\enspace MAA 主席 1961--62\enspace·\enspace 1980s 口述史项目}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,2.65)
+    {\textbf{数学教育贡献。}1960-63 年 Tucker 任 \textbf{AP 微积分委员会主席}，1961-62 年任 \textbf{MAA（美国数学协会）主席}——他对美国数学教育贡献巨大，包括 \textbf{George Thomas 微积分教科书}的撰写贡献。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,1.05)
+    {\textbf{1980s 口述历史。}1980s Tucker 主持建立\textbf{普林斯顿数学社区口述史项目}（Sloan 基金支持）——保存了 von Neumann、Churchman 等大师的访谈记录，是数学史的珍贵档案。};
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,-0.35)
+    {\textbf{Kemeny 推荐。}他还曾建议 \textbf{Dartmouth College} 雇佣 \textbf{John Kemeny}——后者成为 Dartmouth 数学系主任、继而担任校长。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} AP 微积分 + 口述历史——数学教育的双重贡献。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 11. 整体遗产 ---
+\newcommand{\legacyslide}{\begin{frame}
+\plainbar
+\sectiontitle{整体遗产：博弈论/优化/拓扑三栖}{囚徒困境 + KKT + Tucker 引理\enspace·\enspace Nash/Shapley/Minsky 导师\enspace·\enspace 89 岁高寿}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=histpanel,draw=badgeHist!55] at (0,2.65)
+    {\textbf{多领域贡献。}Tucker 的工作横跨\textbf{博弈论}（囚徒困境）、\textbf{优化}（KKT）、\textbf{拓扑}（Tucker 引理）、\textbf{组合代数}（有向拟阵）——是 20 世纪应用数学的多栖大师。};
+  \node[item,fill=algpanel,draw=badgeAlg!55] at (0,1.05)
+    {\textbf{师承链。}Lefschetz（拓扑）→ Tucker（普林斯顿 41 年）→ Nash/Shapley/Minsky/Gale——这条师承链是 20 世纪数学经济与人工智能的核心脉络。};
+  \node[item,fill=companel,draw=badgeCom!55] at (0,-0.35)
+    {\textbf{89 岁高寿。}1995 年 1 月 25 日 Tucker 在新泽西海茨敦去世——享年 89 岁。他的工作继续支撑着现代优化、博弈论与人工智能。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-1.7) {
+    {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverdark!88} 博弈论 + 优化 + 拓扑——多栖大师 89 年传奇。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.8cm]current page.center) {囚徒困境命名，KKT 之父};
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverprimary!55!black]
+    at ([yshift=0.7cm]current page.center) {囚徒困境 · KKT 条件 · 普林斯顿系主任 · Nash/Shapley/Minsky 导师};
+  \node[anchor=center, font=\fontsize{8.5}{12}\selectfont, text=covermuted!60!black]
+    at ([yshift=-0.1cm]current page.center) {Albert W. Tucker\quad·\quad 1905 -- 1995\quad·\quad 89岁};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.6cm, xshift=-4.0cm]current page.center)
+    -- ([yshift=-0.6cm, xshift=4.0cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.3cm]current page.center) {Oshawa (1905) → Toronto (1928/29) → Princeton PhD (1932, Lefschetz)};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-1.65cm]current page.center) {Princeton 教授 (1933--74) → von Neumann 奖 (1980) → Hightstown 1995};
+  \node[anchor=center, font=\fontsize{7}{9}\selectfont, text=badgeHist!70]
+    at ([yshift=-2.1cm]current page.center) {Known for Tucker's lemma, Karush–Kuhn–Tucker conditions, Prisoner's dilemma. -- Wikipedia};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{circle}\enspace 囚徒困境 \enspace·\enspace KKT 条件 \enspace·\enspace Tucker 引理 \enspace·\enspace OpenMath};
+\end{tikzpicture}
+\end{frame}}
+
+% ========================= BUILD =========================
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\prisonerslide
+\kktslide
+\tuckermatroidslide
+\princetonslide
+\studentsslide
+\vonneumannslide
+\educationslide
+\legacyslide
+\closingslide
+\end{document}

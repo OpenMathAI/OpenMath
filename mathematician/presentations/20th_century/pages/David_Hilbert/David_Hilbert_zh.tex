@@ -1,0 +1,721 @@
+% =============================================================
+%  数学之王：大卫·希尔伯特 (David Hilbert)
+%  Beamer 演示 —— 参照 Grothendieck / Riemann 版式
+%  资料来源：mathematician/pages/David_Hilbert + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% 用 TikZ 绘制的可缩放半圆符号，替代 wasysym 的 \halfcircle（避免位图字体在极小字号下的 warning）
+\newcommand{\halfcircle}{%
+  \tikz[baseline=-0.55ex, scale=0.10]{%
+    \fill (90:1) arc (90:270:1) -- (0,0) -- cycle;
+    \draw (0,0) circle (1);
+  }%
+}
+
+% ===== 配色：希尔伯特 —— 普鲁士蓝 + 金色（王者 + Göttingen 黄金时代） =====
+\definecolor{bgmain}{RGB}{244,242,250}
+\definecolor{coverprimary}{HTML}{1B3A5C}   % 普鲁士深蓝 — 主色
+\definecolor{coveraccent}{HTML}{D4A843}    % 金色 — Göttingen 黄金时代
+\definecolor{coveramber}{HTML}{C2733A}     % 暖铜对比
+\definecolor{coverpurple}{HTML}{6B3FA0}    % 紫罗兰点缀
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{18,32,56}
+\definecolor{muteddark}{RGB}{72,80,100}
+\definecolor{bluepanel}{RGB}{228,234,248}    % 浅蓝面板
+\definecolor{greenpanel}{RGB}{224,244,235}   % 浅绿面板
+\definecolor{amberpanel}{RGB}{255,242,228}   % 暖铜面板
+\definecolor{purplepanel}{RGB}{238,230,252}  % 浅紫面板
+\definecolor{goldpanel}{RGB}{252,246,230}    % 暖金面板
+\definecolor{graypanel}{RGB}{242,244,248}
+% 主题四色
+\definecolor{badgealgebra}{HTML}{1B4F72} % 代数 — 藏青
+\definecolor{badgeaxiom}{HTML}{1E6E4E}   % 几何/公理 — 墨绿
+\definecolor{badgeanalysis}{HTML}{C2733A} % 分析 — 暖铜
+\definecolor{badgelogic}{HTML}{6B3FA0}    % 逻辑 — 紫罗兰
+\definecolor{coverteal}{HTML}{009688}       % 青绿 — 来自 openmath_page
+\definecolor{coverwarm}{HTML}{FFB300}        % 暖金 — 来自 openmath_page
+\definecolor{badgecomputation}{HTML}{00BFA5} % 来自 openmath_page
+\definecolor{badgeAI}{HTML}{5C6BC0}          % 来自 openmath_page
+\definecolor{badgebio}{HTML}{FFA000}         % 来自 openmath_page
+\definecolor{badgephilosophy}{HTML}{8D6E63} % 来自 openmath_page
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgelogic!10] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeaxiom!10] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coveraccent!16] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgealgebra!8] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{15}{19}\selectfont\bfseries, text=coveraccent!75!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{crown}\enspace 数\,学\,之\,王};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {大卫·希尔伯特};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {David Hilbert\enspace·\enspace 1862 — 1943};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=1.05cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=1.05cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.35cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgealgebra, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {代数 Algebra};
+      \node[rounded corners=8pt, fill=badgeaxiom, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {几何 Geometry};
+      \node[rounded corners=8pt, fill=badgeanalysis, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {分析 Analysis};
+      \node[rounded corners=8pt, fill=badgelogic, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {逻辑 Logic};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-1.95cm]current page.center)
+    {Wir müssen wissen — wir werden wissen.（我们必须知道，我们必将知道）};
+  % 希尔伯特肖像（右上）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.8cm,height=3.2cm,keepaspectratio]{portrait_1907.jpg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.2cm]current page.center)
+    {Göttingen, 1907};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{medal}\enspace 史上最具影响力的数学家之一\enspace|\enspace 约 69 位博士生\enspace|\enspace Göttingen};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 为什么希尔伯特如此重要 ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么他是"数学之王"}{从不变理论到证明论 —— 没有他未触碰的领域}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=13pt, inner ysep=9pt, font=\fontsize{8.5}{10.4}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=bluepanel, draw=badgealgebra!35, text=badgealgebra!85!black]
+    (a) at (-5.7,1.05) {81 年人生\\[2pt]横跨四大领域};
+  \node[nodebox, fill=greenpanel, draw=badgeaxiom!40, text=badgeaxiom!80!black]
+    (b) at (-1.9,1.05) {23 问题\\[2pt]指引整个 20 世纪};
+  \node[nodebox, fill=amberpanel, draw=badgeanalysis!45, text=badgeanalysis!80!black]
+    (c) at (1.9,1.05) {约 69 位博士生\\[2pt]一代宗师桃李天下};
+  \node[nodebox, fill=purplepanel, draw=badgelogic!35, text=badgelogic!80!black]
+    (d) at (5.7,1.05) {从代数到量子力学\\[2pt]数学物理双全才};
+  \node[draw=coveraccent!60, fill=goldpanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他不只是证明定理，他为整个数学界制定议程。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} "Wir müssen wissen — wir werden wissen" —— 这句话刻在他的墓碑上。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. Königsberg 岁月 ---
+\newcommand{\konigsbergslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Königsberg 岁月 (1862–1895)}{与 Minkowski 的终身友谊，博士论文的崭露头角}
+\vspace{-0.95cm}
+\begin{columns}[T]
+\begin{column}{0.54\textwidth}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=7pt, inner ysep=2.5pt, text width=7.0cm, font=\fontsize{6.8}{8.4}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgealgebra!30] (a) at (0,1.6)
+    {\textbf{1862 · 东普鲁士 Wehlau 附近出生（Hilbert 自述为 Königsberg）。}父亲 Otto 为地方法官，母亲 Maria 爱好哲学与天文。祖父 David Hilbert 亦为普鲁士司法官员。};
+  \node[item, fill=amberpanel, draw=badgeanalysis!35] (b) at (0,0.3)
+    {\textbf{1880 · 入读柯尼斯堡大学。}先在海德堡短暂求学，后回 Königsberg。1882 年遇见 Hermann Minkowski，结下终身友谊。};
+  \node[item, fill=purplepanel, draw=badgelogic!30] (c) at (0,-0.9)
+    {\textbf{1884 · 三人组成立。}Adolf Hurwitz 来到 Königsberg，与 Hilbert、Minkowski 形成紧密的学术交流圈。};
+  \node[item, fill=greenpanel, draw=badgeaxiom!35] (d) at (0,-2.0)
+    {\textbf{1885 · 博士学位。}师从 Ferdinand von Lindemann（$\pi$ 的超越性证明者），论文研究特殊二元型的不变性质。};
+\end{tikzpicture}
+\end{column}
+\begin{column}{0.44\textwidth}
+\centering
+\begin{tikzpicture}
+  \node[draw=coverprimary!25, line width=0.6pt, fill=white, rounded corners=3pt, inner sep=2pt]
+    {\includegraphics[width=2.6cm,keepaspectratio]{portrait_1886.jpg}};
+\end{tikzpicture}\\[1pt]
+{\fontsize{6}{7.4}\selectfont\color{covermuted} Hilbert, 1886 (Königsberg)}\\[5pt]
+\begin{tikzpicture}
+  \node[draw=badgealgebra!45, fill=bluepanel, rounded corners=5pt, inner sep=5pt, text width=5.5cm, align=center]
+  {{\fontsize{7.2}{9.0}\selectfont\bfseries\color{coverdark!85} Minkowski: 终身挚友}\\[2pt]
+   {\fontsize{6.4}{8.0}\selectfont\color{covermuted} "我最好、最真诚的朋友" —— Hilbert 如此评价 Minkowski。二人的相互影响贯穿整个学术生涯。}};\end{tikzpicture}
+\end{column}
+\end{columns}
+\end{frame}
+}
+
+% --- 4. Göttingen 黄金时代 ---
+\newcommand{\gottingenslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Göttingen 黄金时代 (1895–1943)}{Felix Klein 的召唤，打造世界数学中心}
+\vspace{-0.8cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=9pt, inner ysep=2.5pt, text width=12.4cm, font=\fontsize{6.8}{8.4}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgealgebra!30] (a) at (0,1.95)
+    {\textbf{1886–1895 · Königsberg 编外讲师。}十年如一日，在不变量理论领域做出突破性工作。1888 年证明著名的 Hilbert 基定理。};
+  \node[item, fill=amberpanel, draw=badgeanalysis!35] (b) at (0,0.55)
+    {\textbf{1895 · Felix Klein 的召唤。}Klein 力邀 Hilbert 赴 Göttingen 任数学教授。Klein-Hilbert 时代，Göttingen 成为世界数学圣地。};
+  \node[item, fill=greenpanel, draw=badgeaxiom!35] (c) at (0,-0.75)
+    {\textbf{1897 · Zahlbericht。}《代数数论报告》—— 统一了代数数论领域，为后来的类域论奠定基石。};
+  \node[item, fill=purplepanel, draw=badgelogic!30] (d) at (0,-2.0)
+    {\textbf{1899 · 几何基础。}《Grundlagen der Geometrie》—— 欧氏几何的严格公理化，现代公理化方法的里程碑。Hilbert："必须始终能用'桌子、椅子、啤酒杯'替代'点、线、面'。"};
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=4pt, text width=12.8cm, align=center] at (0,-3.0)
+    {{\fontsize{7.2}{9.0}\selectfont\color{coverdark!85} Göttingen 在 Klein \& Hilbert 时代吸引了全世界的数学天才，成为 20 世纪上半叶的数学首都。}};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 数学家之王：约 69 位博士生 ---
+\newcommand{\studentsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数学家之王}{约 69 位博士生，一代宗师，桃李满天下}
+\vspace{-0.7cm}
+\begin{center}
+\begin{tikzpicture}[
+  pupil/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=5pt, text width=3.4cm,
+                font=\fontsize{6.8}{8.6}\selectfont, align=center}
+]
+  % Hilbert 顶部
+  \node[rounded corners=6pt, fill=coverprimary!85, inner sep=5pt, text width=4.5cm, align=center] (h) at (0,3.1) {
+    {\fontsize{8.4}{10.2}\selectfont\bfseries\color{white} David Hilbert}\\[1pt]
+    {\fontsize{7}{8.5}\selectfont\color{coveraccent!90!white} 约 69 位博士生 · Göttingen}
+  };
+  % 连线
+  \draw[-{Stealth[length=2.8mm]}, badgealgebra!65, line width=1.4pt] (h.south) ++(-0.55,0) to[out=-90,in=90] (-5.4,1.2);
+  \draw[-{Stealth[length=2.8mm]}, badgeanalysis!65, line width=1.4pt] (h.south) ++(-0.18,0) to[out=-90,in=90] (-1.8,1.2);
+  \draw[-{Stealth[length=2.8mm]}, badgeaxiom!65, line width=1.4pt] (h.south) ++(0.18,0) to[out=-90,in=90] (1.8,1.2);
+  \draw[-{Stealth[length=2.8mm]}, badgelogic!65, line width=1.4pt] (h.south) ++(0.55,0) to[out=-90,in=90] (5.4,1.2);
+  \node[pupil, fill=bluepanel, draw=badgealgebra!45] at (-5.4,1.0) {
+    {\fontsize{7.6}{9.2}\selectfont\bfseries\color{badgealgebra} Hermann Weyl}\\[2pt] 数学物理 · 规范理论\\Hilbert 的继任者};
+  \node[pupil, fill=amberpanel, draw=badgeanalysis!45] at (-1.8,1.0) {
+    {\fontsize{7.6}{9.2}\selectfont\bfseries\color{badgeanalysis} Richard Courant}\\[2pt] Courant 研究所创始人\\[2pt]数学物理方法};
+  \node[pupil, fill=greenpanel, draw=coveraccent!80, line width=1.2pt] at (1.8,1.0) {
+    {\fontsize{7.6}{9.2}\selectfont\bfseries\color{badgeaxiom} John von Neumann}\\[2pt] Hilbert 的助手与合作者\\[2pt]量子 · 计算机 · 博弈论};
+  \node[pupil, fill=purplepanel, draw=badgelogic!45] at (5.4,1.0) {
+    {\fontsize{7.6}{9.2}\selectfont\bfseries\color{badgelogic} Ernst Zermelo}\\[2pt] 集合论公理化\\ZFC 的奠基者};
+  % 底部全景
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=6pt, inner sep=6pt, text width=13.8cm, align=center] at (0,-1.5) {
+    {\fontsize{6.6}{8.4}\selectfont\color{covermuted} Max Dehn · Erich Hecke · Hugo Steinhaus · Wilhelm Ackermann · Ernst Hellinger · Alfréd Haar …… Göttingen 学派代表人物: \textbf{Emmy Noether}（Hilbert \& Klein 为其争取教职）。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 不变量理论 ---
+\newcommand{\invariantslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{不变量理论 (1888)}{"这不是数学，这是神学" —— Hilbert 基定理的革命}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  invstep/.style={rounded corners=5pt, inner xsep=8pt, inner ysep=8pt, text width=3.8cm,
+                  font=\fontsize{7.2}{9.2}\selectfont, align=center},
+  arrow/.style={-{Stealth[length=3.5mm]}, line width=1.6pt}
+]
+  \node[invstep, fill=graypanel!80, draw=covermuted!50] (a) at (-4.8,1.5)
+    {\textbf{Gordan 问题}\\[3pt]20 年前 Paul Gordan 用繁重计算证明了二元型的有限基，但\textbf{多元情形无法推广}。};
+  \node[invstep, fill=bluepanel, draw=badgealgebra!55] (b) at (0,1.5)
+    {\textbf{Hilbert 的存在性证明}\\[3pt]放弃构造性方法，用\textbf{抽象存在性论证}一举解决任意多变元情形。};
+  \node[invstep, fill=amberpanel, draw=badgeanalysis!50] (c) at (4.8,1.5)
+    {\textbf{Gordan 的评论}\\[3pt]\textit{"Das ist nicht Mathematik.}\\[1pt]\textit{Das ist Theologie."}\\[3pt]—— 后来他承认"神学也有其价值"。};
+  \draw[arrow, badgealgebra!55] (a.east) -- (b.west);
+  \draw[arrow, badgeanalysis!50] (b.east) -- (c.west);
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=6pt, inner sep=9pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{8.4}{10.6}\selectfont\bfseries\color{coverdark!88} Klein 评价："这无疑是《数学年刊》发表过的最重要的代数学论文。"}\\[2pt]
+    {\fontsize{7.6}{9.4}\selectfont\color{covermuted} Hilbert 基定理 + Nullstellensatz（零点定理）—— 交换代数与代数几何的基石。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 代数数论 ---
+\newcommand{\numbertheoryslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{代数数论：Zahlbericht (1897)}{统一代数数论，为类域论奠基}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.0cm, font=\fontsize{7.8}{9.8}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgealgebra!30] at (0,2.35)
+    {\textbf{《数论报告》(Zahlbericht)。}应德国数学会之邀撰写，希尔伯特系统整理了代数数论的全部已知成果，并以全新的统一视角重新表述。};
+  \node[item, fill=amberpanel, draw=badgeanalysis!35] at (0,0.95)
+    {\textbf{Hilbert 类域。}定义 Hilbert 类域，提出一系列关于类域论的猜想 —— 他的学生 Teiji Takagi 后来证明了其中大部分，奠定了类域论的基础。};
+  \node[item, fill=purplepanel, draw=badgelogic!30] at (0,-0.35)
+    {\textbf{Hilbert 符号。}局部类域论中的核心工具，至今仍是现代数论的基本概念。Hilbert 模形式也是这一脉的延伸。};
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=6pt, text width=12.0cm, align=center] at (0,-1.65) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "这不是一份综述，而是一次对代数数论的重新奠基。"}\\[1pt]
+    {\fontsize{7.2}{8.8}\selectfont\color{covermuted} 后来的 Hilbert 第 9、11、12 问题都与此脉相承。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 几何基础 ---
+\newcommand{\geometryslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{几何基础 (1899)}{"必须始终能用桌子、椅子、啤酒杯替代点、线、面"}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.4}{9.4}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgeaxiom!35] at (0,2.55)
+    {\textbf{欧氏几何的严格公理化。}Hilbert 提出 20 条公理，分为关联、顺序、合同、平行、连续五组，彻底修补了欧几里得《几何原本》中的逻辑漏洞。};
+  \node[item, fill=bluepanel, draw=badgealgebra!30] at (0,1.1)
+    {\textbf{现代公理化方法的里程碑。}受 Moritz Pasch (1882) 的先驱工作启发，Hilbert 给出了最完整、最有影响力的公理化体系。公理不是自明的真理，而是定义关系的规则。};
+  \node[item, fill=amberpanel, draw=badgeanalysis!35] at (0,-0.15)
+    {\textbf{一则广为流传的 Hilbert 轶事。}几何中的"点"、"线"、"面"可以被任何满足公理的对象替代——"桌子、椅子、啤酒杯"。重要的不是对象是什么，而是它们之间的关系。};
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.75) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 这一思想标志着现代数学从"直观"到"形式"的根本转变。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. Hilbert 空间 ---
+\newcommand{\hilbertspaceslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Hilbert 空间 (1904–1910s)}{从积分方程到泛函分析 —— 量子力学的数学语言}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.4}{9.4}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgeanalysis!40] at (0,2.65)
+    {\textbf{积分方程研究。}Hilbert 在 1904 年起深入研究积分方程，建立了后来称为 Hilbert 空间的理论基础 —— 无穷维内积空间。Schmidt, Fréchet, Riesz 等人共同推动了概念的形成。};
+  \node[item, fill=bluepanel, draw=badgealgebra!30] at (0,1.2)
+    {\textbf{谱理论。}将线性代数中的特征值理论推广到无穷维，建立自伴算子的谱分解，奠定了现代泛函分析的基础。Stefan Banach 后来将概念推广为 Banach 空间。};
+  \node[item, fill=purplepanel, draw=badgelogic!30] at (0,-0.15)
+    {\textbf{量子力学。}1920s–1930s，von Neumann 建立了 Hilbert 空间的严格公理化形式。量子态由 Hilbert 空间中的射线表示，可观测量由相应算子表示，统一了 Schrödinger 的波动力学与 Heisenberg 的矩阵力学。};
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.75) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从积分方程到量子力学 —— Hilbert 空间是 20 世纪分析学最深远的概念之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 23 问题全表 ---
+\newcommand{\problemsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{23 问题 (1900)}{为 20 世纪数学绘制地图 —— 全表}
+\vspace{-1.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  pbox/.style={rounded corners=3pt, inner sep=0.6pt, text width=7.8cm,
+               font=\fontsize{4.9}{5.9}\selectfont, align=left, anchor=north west}
+]
+  % 总说明条
+  \node[draw=coveraccent!50, fill=goldpanel, rounded corners=4pt, inner sep=3pt, text width=15.0cm, align=center] at (0,3.55)
+    {{\fontsize{5.8}{7.2}\selectfont\bfseries\color{coverdark!88} 图例：\enspace
+      {\color{badgeaxiom}\textbf{\faCheck 已解决}}\enspace|\enspace
+      {\color{badgeanalysis}\textbf{\halfcircle 部分解决}}\enspace|\enspace
+      {\color{badgealgebra}\textbf{? 未解决}}\enspace|\enspace
+      {\color{badgelogic}\textbf{$\approx$ 情况复杂}}\enspace|\enspace
+      {\color{covermuted}\textbf{\,\textasciitilde\, 表述模糊}}
+    }};
+
+  % ====== 左列: 问题 1–12 ======
+  \node[pbox, fill=white, draw=coverlight] (L1) at (-7.8,2.80)
+    {{\color{badgelogic}$\approx$\;{\bf 1 连续统假设}}\;{\color{coverdark} Gödel 1940 + Cohen 1963：独立于 ZFC}};
+  \node[pbox, fill=white, draw=coverlight] (L2) at (-7.8,2.36)
+    {{\color{badgelogic}$\approx$\;{\bf 2 算术公理相容性}}\;{\color{coverdark} Gödel 第二不完备定理; 原方案未实现}};
+  \node[pbox, fill=white, draw=coverlight] (L3) at (-7.8,1.92)
+    {{\color{badgeaxiom}\faCheck\;{\bf 3 等体积多面体剖分（证伪）}}\;{\color{coverdark} Dehn 1900: 反例，答案为否}};
+  \node[pbox, fill=white, draw=coverlight] (L4) at (-7.8,1.48)
+    {{\color{covermuted}\textasciitilde\;{\bf 4 直线为测地线度量}}\;{\color{coverdark} 各种解释差异极大}};
+  \node[pbox, fill=white, draw=coverlight] (L5) at (-7.8,1.04)
+    {{\color{badgeanalysis}\halfcircle\;{\bf 5 Lie群可微假设}}\;{\color{coverdark} Gleason, M-Z 1952, 仍有推广}};
+  \node[pbox, fill=white, draw=coverlight] (L6) at (-7.8,0.60)
+    {{\color{badgeanalysis}\halfcircle\;{\bf 6 物理学公理化}}\;{\color{coverdark} 2025 Deng–Hani–Ma: 微观→Boltzmann→流体}};
+  \node[pbox, fill=white, draw=coverlight] (L7) at (-7.8,0.16)
+    {{\color{badgeaxiom}\faCheck\;{\bf 7 无理数/超越数}}\;{\color{coverdark} Gelfond-Schneider 1934}};
+  \node[pbox, fill=white, draw=coverlight] (L8) at (-7.8,-0.28)
+    {{\color{badgealgebra}?\;{\bf 8 Riemann 猜想}}\;{\color{coverdark} 悬而未决 · 千年难题}};
+  \node[pbox, fill=white, draw=coverlight] (L9) at (-7.8,-0.72)
+    {{\color{badgelogic}$\approx$\;{\bf 9 数域最一般互反律}}\;{\color{coverdark} Artin互反律\faCheck Langlands推进中}};
+  \node[pbox, fill=white, draw=coverlight] (L10) at (-7.8,-1.16)
+    {{\color{badgeaxiom}\faCheck\;{\bf 10 Diophantine判定（证伪）}}\;{\color{coverdark} Matiyasevich 1970: 不可判定}};
+  \node[pbox, fill=white, draw=coverlight] (L11) at (-7.8,-1.60)
+    {{\color{badgeanalysis}\halfcircle\;{\bf 11 二次型理论}}\;{\color{coverdark} Hasse-Minkowski: 主要情形解决}};
+  \node[pbox, fill=white, draw=coverlight] (L12) at (-7.8,-2.04)
+    {{\color{badgealgebra}?\;{\bf 12 Kronecker青春梦}}\;{\color{coverdark} 虚二次域\faCheck 一般未解}};
+
+  % ====== 右列: 问题 13–23 ======
+  \node[pbox, fill=white, draw=coverlight] (R13) at (0,2.80)
+    {{\color{badgeanalysis}\halfcircle\;{\bf 13 七次方程}}\;{\color{coverdark} Kolmogorov–Arnold 1957: 连续函数版解决}};
+  \node[pbox, fill=white, draw=coverlight] (R14) at (0,2.36)
+    {{\color{badgeaxiom}\faCheck\;{\bf 14 不变量环有限生成（证伪）}}\;{\color{coverdark} Nagata 1959: 反例(答案为否)}};
+  \node[pbox, fill=white, draw=coverlight] (R15) at (0,1.92)
+    {{\color{badgelogic}$\approx$\;{\bf 15 Schubert计数}}\;{\color{coverdark} 核心已解决, 推广仍在研究}};
+  \node[pbox, fill=white, draw=coverlight] (R16) at (0,1.48)
+    {{\color{badgealgebra}?\;{\bf 16 曲线曲面拓扑}}\;{\color{coverdark} 部分解决, 整体未解}};
+  \node[pbox, fill=white, draw=coverlight] (R17) at (0,1.04)
+    {{\color{badgeaxiom}\faCheck\;{\bf 17 平方和表示}}\;{\color{coverdark} Artin 1927：解决}};
+  \node[pbox, fill=white, draw=coverlight] (R18) at (0,0.60)
+    {{\color{badgeaxiom}\faCheck\;{\bf 18 空间群、基本域与球堆积}}\;{\color{coverdark} Bieberbach 1910–12 · Reinhardt 1928 · Hales 1998}};
+  \node[pbox, fill=white, draw=coverlight] (R19) at (0,0.16)
+    {{\color{badgeaxiom}\faCheck\;{\bf 19 正则变分解解析}}\;{\color{coverdark} De Giorgi + Nash 1950s：经典问题解决}};
+  \node[pbox, fill=white, draw=coverlight] (R20) at (0,-0.28)
+    {{\color{badgelogic}$\approx$\;{\bf 20 一般边值问题}}\;{\color{coverdark} 泛函分析大幅推进, 太广难以完结}};
+  \node[pbox, fill=white, draw=coverlight] (R21) at (0,-0.72)
+    {{\color{badgeaxiom}\faCheck\;{\bf 21 线性微分方程单值群}}\;{\color{coverdark} Plemelj 1908 → Bolibrukh 1990：严格形式出现反例}};
+  \node[pbox, fill=white, draw=coverlight] (R22) at (0,-1.16)
+    {{\color{badgeanalysis}\halfcircle\;{\bf 22 自守函数统一化}}\;{\color{coverdark} 单变量\faCheck 多变量部分}};
+  \node[pbox, fill=white, draw=coverlight] (R23) at (0,-1.60)
+    {{\color{badgelogic}$\approx$\;{\bf 23 变分法发展}}\;{\color{coverdark} 演化为现代变分法研究纲领}};
+
+  % 底部小结
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=4pt, inner sep=2.5pt, text width=15.0cm, align=center] at (0,-2.65)
+    {{\fontsize{5.6}{6.8}\selectfont\bfseries\color{coverdark!85}
+      {\color{badgeaxiom}\faCheck\,8个 已解决}\;\;{\color{badgeanalysis}\halfcircle\,5个 部分解决}\;\;{\color{badgealgebra}?\,3个 未解决}\;\;{\color{badgelogic}$\approx$\,6个 情况复杂}\;\;{\color{covermuted}\,\textasciitilde\,1个 表述模糊}\;\;=\;23\;\;|\;\;
+      催生了 Fields · Wolf · Abel 奖中的数十项获奖工作
+    }};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+ % --- 11. Hilbert 问题的百年回响 ---
+\newcommand{\problemssolversslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Hilbert 问题的百年回响}{一个世纪后，哪些数学大奖仍能追溯到他的议程}
+\vspace{-1.1cm}
+\begin{center}
+\begin{tikzpicture}[
+  solver/.style={rounded corners=4pt, inner xsep=5pt, inner ysep=2.5pt, text width=3.5cm,
+                 font=\fontsize{5.4}{7.0}\selectfont, align=center}
+]
+  % Row 1
+  \node[solver, fill=bluepanel, draw=badgealgebra!45]
+    (s1) at (-5.6,2.5)
+    {\textbf{Paul Cohen}\\[0.5pt]Fields 1966\\[0.5pt]{\color{coverprimary!70}问题 1: CH}\\[2pt]集合论·力迫法};
+
+  \node[solver, fill=amberpanel, draw=badgeanalysis!45]
+    (s2) at (-1.9,2.5)
+    {\textbf{A. Gelfond}\\[0.5pt]{\scriptsize 解决于 1934}\\[0.5pt]{\color{coverprimary!70}问题 7: 超越数}\\Gelfond-Schneider};
+
+  \node[solver, fill=greenpanel, draw=badgeaxiom!45]
+    (s3) at (1.9,2.5)
+    {\textbf{G. Faltings}\\[0.5pt]Fields 1986\\[0.5pt]{\color{coverprimary!70}算术几何 · Mordell 猜想}\\[2pt]代数曲线有理点};
+
+  \node[solver, fill=purplepanel, draw=badgelogic!45]
+    (s4) at (5.6,2.5)
+    {\textbf{A. Wiles}\\[0.5pt]Abel 2016 · Wolf\\[0.5pt]{\color{coverprimary!70}代数数论}\\Fermat 大定理};
+
+  % Row 2
+  \node[solver, fill=purplepanel, draw=badgelogic!45]
+    (s6) at (-5.6,0.9)
+    {\textbf{P. Deligne}\\[0.5pt]F'78 · W'08 · A'13\\[0.5pt]{\color{coverprimary!70}代数几何 · Weil 猜想}\\$\ell$-进上同调};
+
+  \node[solver, fill=greenpanel, draw=badgeaxiom!45]
+    (s7) at (-1.9,0.9)
+    {\textbf{M. Kashiwara}\\[0.5pt]Abel 2025\\[0.5pt]{\color{coverprimary!70}Riemann–Hilbert 体系}\\D-模 · 晶体基};
+
+  \node[solver, fill=bluepanel, draw=badgealgebra!45]
+    (s8) at (1.9,0.9)
+    {\textbf{J. Milnor}\\[0.5pt]F'62 · W'89 · A'11\\[0.5pt]{\color{coverprimary!70}多问题}\\[2pt]流形拓扑};
+
+  \node[solver, fill=graypanel!80, draw=covermuted!45]
+    (s9) at (5.6,0.9)
+    {\textbf{J.-P. Serre}\\[0.5pt]F'54 · W'00 · A'03\\[0.5pt]{\color{coverprimary!70}问题 9/11}};
+
+  % Row 3 — 跨越世纪的回应
+  \node[solver, fill=amberpanel, draw=coveraccent!75, line width=1.1pt, text width=4.3cm]
+    (s9) at (-4.35,-0.45)
+    {\textbf{Yu Deng}\\[0.5pt]
+     Fields Medal 2026\\[0.5pt]
+     {\color{coverprimary!70}Hilbert 第 6 问}\\
+     Newton $\to$ Boltzmann $\to$ Euler/Navier-Stokes};
+
+  \node[solver, fill=graypanel!80, draw=covermuted!45]
+    (s11) at (0,-0.45)
+    {\textbf{J. Nash}\\[0.5pt]
+     Abel 2015\\[0.5pt]
+     {\color{coverprimary!70}问题 19 · PDE 正则性}\\
+     De Giorgi–Nash 理论};
+
+  \node[solver, fill=graypanel!80, draw=covermuted!45]
+    (s12) at (3.7,-0.45)
+    {\textbf{D. Sullivan}\\[0.5pt]
+     W'10 · A'22\\[0.5pt]
+     {\color{coverprimary!70}拓扑 · 动力系统}\\
+     流形理论 · 动力系统};
+
+  % 底部全景
+  \node[draw=coveraccent!60, fill=goldpanel, rounded corners=5pt, inner sep=4pt, text width=15.0cm, align=center] at (0,-1.85) {
+    {\fontsize{5.8}{7.4}\selectfont\color{coverdark!85}
+      此外: {\bfseries Novikov}(F'70,W'05), {\bfseries Carleson}(A'06), {\bfseries P.-L. Lions}(F'94), {\bfseries Ngô}(F'10),
+      {\bfseries Lafforgue}(F'02), {\bfseries Voevodsky}(F'02), {\bfseries Margulis}(F'78,W'05,A'20),
+      {\bfseries Langlands}(W'96,A'18), {\bfseries Artin}, {\bfseries Matiyasevich}, {\bfseries Gleason} …}\\[1pt]
+    {\fontsize{5.5}{6.8}\selectfont\color{covermuted} 1900 → 2026：Hilbert 第 6 问跨越 126 年，在 Deng 手中得到流体力学路线的突破性回应。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. Einstein-Hilbert 作用量 ---
+\newcommand{\einsteinslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{与爱因斯坦的赛跑 (1915)}{Einstein–Hilbert 作用量 —— 广义相对论的协变形式}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.2}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgealgebra!30] at (0,2.35)
+    {\textbf{1912 · 转向物理学。}Minkowski 去世三年后，Hilbert 将研究重心转向物理学，从气体动理论开始，迅速深入到辐射理论和广义相对论。};
+  \node[item, fill=amberpanel, draw=badgeanalysis!35] at (0,0.95)
+    {\textbf{1915 · 平行研究与优先权争议。}Einstein 与 Hilbert 在 1915 年 11 月几乎同时得到广义相对论场方程的关键形式，但路径完全不同：Einstein 从物理与协变性出发，Hilbert 从变分原理出发。};
+  \node[item, fill=purplepanel, draw=badgelogic!30] at (0,-0.3)
+    {\textbf{Hilbert 的谦逊。}他公开承认："Einstein 做了这个工作，而不是数学家们。"他还打趣说："Göttingen 街上的每个男孩都比 Einstein 更懂四维几何 —— 但 Einstein 完成了这项事业。"};
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.75) {
+    {\fontsize{7.6}{9.6}\selectfont\bfseries\color{coverdark!88} Hilbert 将引力理论写成作用量原理：$S = \int R\sqrt{-g}\,d^4x$ —— 这一变分结构成为现代场论的重要范式。}\\[1pt]
+    {\fontsize{7.0}{8.8}\selectfont\color{covermuted} 广义相对论使用 Lorentz 几何（拟黎曼几何），而非严格意义的正定黎曼几何。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. Hilbert 纲领 ---
+\newcommand{\programslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Hilbert 纲领 (1920s)}{"我们必须知道，我们必将知道" —— 为数学建立绝对基础}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.4}{9.2}\selectfont, align=left}
+]
+  \node[item, fill=purplepanel, draw=badgelogic!35] at (0,2.5)
+    {\textbf{纲领目标。}Hilbert 希望：1) 所有数学都可以从一组有限的公理推导出来；2) 该公理系统可以被证明是相容的（即不会推出矛盾）。};
+  \node[item, fill=bluepanel, draw=badgealgebra!30] at (0,1.05)
+    {\textbf{形式主义纲领。}数学是一套按照形式规则进行符号操作的自主思维活动。Hilbert 引入 $\varepsilon$ 演算作为证明论的核心工具。};
+  \node[item, fill=amberpanel, draw=badgeanalysis!35] at (0,-0.3)
+    {\textbf{与 Brouwer 的论战。}直觉主义创始人 Brouwer 反对排中律在无限集合上的使用。Hilbert 回应："从数学家手中夺走排中律，就如同禁止拳击手使用他的拳头。"};
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.85) {
+    {\fontsize{8.4}{10.6}\selectfont\bfseries\color{coverdark!88} 1930 年 Königsberg 演讲："Wir müssen wissen — wir werden wissen."}\\[1pt]
+    {\fontsize{7.4}{9.2}\selectfont\color{covermuted} 他拒绝 Emil du Bois-Reymond 的悲观格言 "Ignoramus et ignorabimus"（我们不知道，也无法知道）。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. Gödel 不完备定理 ---
+\newcommand{\godelslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Gödel 不完备定理 (1931)}{纲领遭遇根本性限制，但 Hilbert 以尊严接受}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=purplepanel, draw=badgelogic!40] at (0,2.45)
+    {\textbf{1930 · 历史性的前后一天。}9 月 7 日，Gödel 在 Königsberg 会议讨论中首次公开宣布不完备性结果；9 月 8 日，Hilbert 发表著名的"我们必须知道"演讲 —— 此时他还不知道 Gödel 的结果。};
+  \node[item, fill=bluepanel, draw=badgealgebra!30] at (0,0.95)
+    {\textbf{定理的内容。}任何包含基本算术的相容形式系统，都必然存在在该系统内既不能证明也不能否证的命题。特别地，该系统无法证明自身的相容性。};
+  \node[item, fill=amberpanel, draw=badgeanalysis!35] at (0,-0.35)
+    {\textbf{Hilbert 的反应。}Hilbert 接受了这一结果。他的纲领虽未按原计划实现，但催生了递归论、证明论和理论计算机科学 —— Church、Turing 的工作皆源于此。};
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.85) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Gödel 证明了"不可以"，但 Hilbert 让整个逻辑学由此起飞。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. Göttingen 的黄昏 (1933) ---
+\newcommand{\nazislide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Göttingen 的黄昏 (1933)}{纳粹清洗 —— Hilbert 目睹一生心血流逝}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgeanalysis!35] at (0,2.45)
+    {\textbf{1933 · 种族清洗。}纳粹通过《恢复职业公务员法》，以种族与政治标准清洗大学，大量学者遭解聘、迫害或被迫离境：Emmy Noether、Richard Courant、Max Born、Hermann Weyl、Edmund Landau……};
+  \node[item, fill=bluepanel, draw=badgealgebra!30] at (0,0.95)
+    {\textbf{流传最广的逸闻。}约一年后，Hilbert 在一次宴会上坐在新任教育部长 Bernhard Rust 旁边。Rust 问："Göttingen 数学系真的因为犹太人离开而受损了吗？" Hilbert 回答："受损？它已经不存在了，不是吗？"};
+  \node[item, fill=purplepanel, draw=badgelogic!30] at (0,-0.4)
+    {\textbf{1943 · 葬礼。}Hilbert 去世时，纳粹已将 Göttingen 数学系几乎全部换血。葬礼只有不到 12 人参加，其中仅两位是学术界同行，包括 Arnold Sommerfeld。他的死讯数月后才为外界所知。};
+  \node[draw=coveraccent!55, fill=goldpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.95) {
+    {\fontsize{8.2}{10.4}\selectfont\bfseries\color{coverdark!88} Göttingen 的数学帝国在 Hilbert 眼前化为废墟。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 墓碑 ---
+\newcommand{\epitaphslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center] at ([yshift=1.8cm]current page.center) {
+    \begin{tikzpicture}
+      \node[draw=coverprimary!20, line width=0.8pt, fill=white, rounded corners=4pt, inner sep=2pt]
+        {\includegraphics[width=4.5cm,keepaspectratio]{grave.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{20}{30}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=-1.6cm]current page.center) {Wir müssen wissen.};
+  \node[anchor=center, font=\fontsize{20}{30}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=-2.6cm]current page.center) {Wir werden wissen.};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-3.4cm, xshift=-2.5cm]current page.center)
+    -- ([yshift=-3.4cm, xshift=2.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center]
+    at ([yshift=-3.9cm]current page.center)
+    {我们必须知道。我们必将知道。};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-4.7cm]current page.center)
+    {大卫·希尔伯特\quad David Hilbert\quad 1862 — 1943};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!45]
+    at ([yshift=0.38cm]current page.south) {Göttingen 城市公墓 · 1930 年 Königsberg 演讲的结语};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 16. 升起海水 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{他改变了数学}{不只是一系列定理 —— 而是一种定义"什么是数学"的方式}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{7.0}{9.0}\selectfont, align=center}
+]
+  \node[leg, fill=bluepanel, draw=badgealgebra!45, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgealgebra} 代数}\\[3pt]基定理 · Nullstellensatz\\Zahlbericht · 类域论};
+  \node[leg, fill=greenpanel, draw=badgeaxiom!45, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeaxiom} 几何}\\[3pt]公理化\\[2pt]欧氏几何\\Hilbert 曲线};
+  \node[leg, fill=amberpanel, draw=badgeanalysis!45, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeanalysis} 分析}\\[3pt]Hilbert 空间\\[2pt]谱理论\\[2pt]量子力学数学语言};
+  \node[leg, fill=purplepanel, draw=badgelogic!45, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgelogic} 逻辑}\\[3pt]Hilbert 纲领\\[2pt]证明论\\$\varepsilon$ 演算 · 形式系统};
+  \node[draw=coveraccent!65, fill=goldpanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他是有史以来最具影响力的数学家之一 ——\\[2pt]他是 20 世纪数学的议程制定者。}\\[4pt]
+    {\fontsize{7.8}{10.0}\selectfont\color{coverdark!85}
+      从 Bieberbach 到 Courant，从 Weyl 到 von Neumann，\\
+      从 Gödel 到 Turing —— Hilbert 的问题意识与方法\\
+      深刻影响了 20 世纪数学的诸多方向。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 17. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.9cm]current page.center) {Wir müssen wissen — wir werden wissen.};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=1.05cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=1.05cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=0.2cm]current page.center)
+    {他一生没有重复自己。他定义了一个时代的数学，\\
+    也定义了数学在下一个时代应该走向哪里。};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.4cm]current page.center)
+    {大卫·希尔伯特\quad David Hilbert\quad 1862 — 1943};
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\faIcon{crown}\enspace 数学之王 · 史上最具影响力的数学家之一\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 0. OpenMath 项目首页 ---
+\input{../../cover/openmath_page.tex}
+
+% SLIDES_HERE
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\konigsbergslide
+\gottingenslide
+\studentsslide
+\invariantslide
+\numbertheoryslide
+\geometryslide
+\hilbertspaceslide
+\problemsslide
+\problemssolversslide
+\einsteinslide
+\programslide
+\godelslide
+\nazislide
+\epitaphslide
+\legacyslide
+\closingslide
+\end{document}

@@ -1,0 +1,560 @@
+% =============================================================
+%  驯服随机无穷的人：马丁·海尔 (Sir Martin Hairer)
+%  Beamer 演示 —— 参照 Witten / Weyl 版式
+%  资料来源：Fields_Medal/pages/2014/Martin Hairer + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：随机深蓝 + 正则青紫 + 代码墨绿 + 银灰 =====
+\definecolor{bgmain}{RGB}{248,247,246}
+\definecolor{coverprimary}{HTML}{16121F}
+\definecolor{coveraccent}{HTML}{5B3FA0}        % 正则青紫
+\definecolor{badgeReg}{HTML}{5B3FA0}           % 正则结构理论
+\definecolor{badgeProb}{HTML}{1B4D6B}          % 随机分析/概率 深蓝
+\definecolor{badgeRough}{HTML}{4A5568}         % 粗糙路径/KPZ 石墨灰
+\definecolor{badgeCode}{HTML}{2F855A}          % Amadeus/软件 墨绿
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{20,18,40}
+\definecolor{muteddark}{RGB}{90,80,90}
+\definecolor{regpanel}{RGB}{237,232,246}
+\definecolor{probpanel}{RGB}{231,236,242}
+\definecolor{roughpanel}{RGB}{237,239,242}
+\definecolor{codepanel}{RGB}{232,243,236}
+\definecolor{graypanel}{RGB}{242,244,248}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeReg!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeProb!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeRough!7] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeCode!7] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+  \node[badgeReg!4, font=\fontsize{28}{34}\selectfont] at ([xshift=0.3cm, yshift=-1.0cm]current page.north west) {$\partial_t u$};
+  \node[badgeProb!4, font=\fontsize{26}{32}\selectfont] at ([xshift=-0.5cm, yshift=1.2cm]current page.south east) {$\xi$};
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 奥地利 + 英国 (Austrian-British)\enspace·\enspace \faIcon{dice}\enspace 驯服随机无穷的人};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {马丁·海尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Sir Martin Hairer KBE FRS\enspace·\enspace 1975 — };
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {正则结构理论之父 · 随机偏微分方程 · 数学家兼程序员};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeReg, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {正则结构理论\\Regularity\\Structures};
+      \node[rounded corners=8pt, fill=badgeProb, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {随机偏微分方程\\SPDE};
+      \node[rounded corners=8pt, fill=badgeRough, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {粗糙路径\\Rough\\Paths};
+      \node[rounded corners=8pt, fill=badgeCode, inner xsep=8pt, inner ysep=5pt,
+            text width=2.6cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {Amadeus\\软件\\程序员};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"因对随机偏微分方程理论的杰出贡献，特别是为此类方程创建了正则结构理论。" —— 2014 菲尔兹奖获奖理由};
+  % 肖像（右上）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.0cm,height=2.7cm,keepaspectratio]{Martin_Hairer.jpg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center)
+    {Martin Hairer (2014)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 奥地利 + 英国\enspace|\enspace \faIcon{university}\enspace Warwick · Imperial · EPFL\enspace|\enspace Fields 2014 + Breakthrough 2021};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么海尔独一无二}{正则结构理论之父 · 菲尔兹奖 · 数学家兼程序员}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=10pt, inner ysep=9pt, font=\fontsize{7.6}{9.6}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=regpanel, draw=badgeReg!55, text=coverprimary!85!black]
+    (a) at (-5.7,1.05) {正则结构理论 (2014)\\[2pt]用代数驯服无穷\\随机分析范式转变};
+  \node[nodebox, fill=probpanel, draw=badgeProb!55, text=badgeProb!85!black]
+    (b) at (-1.9,1.05) {随机偏微分方程\\[2pt]风吹落叶·股市起伏\\底层规律的数学};
+  \node[nodebox, fill=roughpanel, draw=badgeRough!55, text=badgeRough!85!black]
+    (c) at (1.9,1.05) {粗糙路径理论\\[2pt]处理高度振荡\\不光滑的信号};
+  \node[nodebox, fill=codepanel, draw=badgeCode!55, text=badgeCode!85!black]
+    (d) at (5.7,1.05) {Amadeus 软件\\[2pt]Mac 音频编辑器\\数学家兼程序员};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 物理博士出身的数学家，用代数语言重写了随机分析。}\\[1pt]
+    {\fontsize{8.0}{10}\selectfont\color{covermuted} 从日内瓦的数学世家，到菲尔兹奖、突破奖——他白天研究随机无穷，晚上维护 Mac 软件。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 身份信息页 ---
+\newcommand{\identityslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{身份信息页}{Sir Martin Hairer KBE FRS · 数学家 · 数学物理学家}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  field/.style={rounded corners=3pt, inner xsep=8pt, inner ysep=4pt, text width=6.1cm, font=\fontsize{6.6}{8.4}\selectfont, align=left}
+]
+  % 左列
+  \node[field, fill=probpanel, draw=badgeProb!50] at (-3.55,2.5)
+    {\textbf{出生} · 1975-11-14 · 瑞士日内瓦};
+  \node[field, fill=regpanel, draw=badgeReg!40] at (-3.55,1.25)
+    {\textbf{国籍} · 奥地利 + 英国（双重国籍）};
+  \node[field, fill=roughpanel, draw=badgeRough!35] at (-3.55,0.0)
+    {\textbf{语言} · 法语 · 德语 · 英语};
+  \node[field, fill=codepanel, draw=badgeCode!35] at (-3.55,-1.25)
+    {\textbf{头衔} · Sir · KBE · FRS};
+  % 右列
+  \node[field, fill=probpanel, draw=badgeProb!50] at (3.55,2.5)
+    {\textbf{职业} · 数学家 · 数学物理学家};
+  \node[field, fill=regpanel, draw=badgeReg!40] at (3.55,1.25)
+    {\textbf{研究领域} · 随机分析 · 随机偏微分方程};
+  \node[field, fill=roughpanel, draw=badgeRough!35] at (3.55,0.0)
+    {\textbf{任职} · EPFL · Imperial · Warwick};
+  \node[field, fill=codepanel, draw=badgeCode!35] at (3.55,-1.25)
+    {\textbf{导师} · Jean-Pierre Eckmann};
+  % 底部教育时间线
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.55) {
+    {\fontsize{7.6}{9.6}\selectfont\bfseries\color{coverdark!88} 教育经历}\\[2pt]
+    {\fontsize{6.8}{8.6}\selectfont\color{coverdark!80}
+      1994 Collège Claparède 高中毕业\quad→\quad 1998 数学学士 · 物理学硕士\quad→\quad 2001 物理学博士（Eckmann 指导）}\\[2pt]
+    {\fontsize{6.4}{8.2}\selectfont\itshape\color{covermuted} 博士论文：《随机偏微分方程的渐近行为》}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. Amadeus 的诞生 ---
+\newcommand{\amadeusslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Amadeus 的诞生 (1990s)}{高中科学竞赛 · Mac 音频编辑器 · HairerSoft}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=codepanel, draw=badgeCode!55] at (0,2.55)
+    {\textbf{高中科学竞赛的作品。}Hairer 高中时参加学校科学竞赛，开发了一款声音编辑软件——后来发展为 Mac 平台上广受欢迎的音频编辑器 \textbf{Amadeus}。};
+  \node[item, fill=regpanel, draw=badgeReg!35] at (0,0.85)
+    {\textbf{持续维护至今。}他以 "HairerSoft" 名义长期开发 Macintosh 软件，一边做数学一边维护 Amadeus，该软件直到 2020 年仍被广泛使用，并曾获 Macworld 编辑选择奖 (2007)。};
+  \node[item, fill=probpanel, draw=badgeProb!20] at (0,-0.55)
+    {\textbf{数学家兼程序员。}他是极少数"既发顶级数学论文、又维护商业软件"的数学家——数学论文与软件工程在他身上并行不悖。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 白天做数学、晚上写代码——两个世界，在他身上完美并行。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 随机偏微分方程的挑战 ---
+\newcommand{\spdechallenge}{%
+\begin{frame}
+\plainbar
+\sectiontitle{随机偏微分方程的挑战}{风吹落叶 · 股市起伏 · 奇异噪声的"病态"问题}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=probpanel, draw=badgeProb!55] at (0,2.55)
+    {\textbf{随机无序的底层规律。}风吹落叶的飘动、股市的起伏、界面生长的粗糙形状——这些随机无序现象，背后由随机偏微分方程 (SPDE) 描述。};
+  \node[item, fill=roughpanel, draw=badgeRough!35] at (0,0.85)
+    {\textbf{病态的无穷。}然而，随机噪声使这类方程的解"病态"——传统微积分无法赋予其意义。以 KPZ 方程（Kardar–Parisi–Zhang 方程，1986）为代表的界面生长方程，几十年来缺乏严格的数学基础。};
+  \node[item, fill=regpanel, draw=badgeReg!20] at (0,-0.55)
+    {\textbf{Hairer 的使命。}如何驯服随机方程中的无穷，让它获得严格的数学意义？这成为 Hairer 数十年研究的核心问题。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 随机世界的无穷，等待一种全新的代数语言来驯服。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 粗糙路径理论 ---
+\newcommand{\roughpathslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{粗糙路径理论 (2000s)}{处理高度振荡信号 · 路径积分的新框架}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=roughpanel, draw=badgeRough!55] at (0,2.55)
+    {\textbf{粗糙路径 (Rough Paths)。}粗糙路径理论由 Terry Lyons 开创，用于处理高度振荡、不光滑信号的路径积分。Hairer 是该理论的重要发展者之一。};
+  \node[item, fill=probpanel, draw=badgeProb!35] at (0,0.85)
+    {\textbf{随机动力学的工具。}它为随机微分方程和随机偏微分方程提供了新的分析工具，使原本无法处理的病态路径得以严格描述。};
+  \node[item, fill=regpanel, draw=badgeReg!20] at (0,-0.55)
+    {\textbf{通往正则结构的台阶。}粗糙路径理论的思想——用代数结构编码路径的高阶信息——为 Hairer 后来的正则结构理论奠定了基础。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 当信号不再光滑，数学需要新的语言。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 正则结构理论 ---
+\newcommand{\regularityslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{正则结构理论 (2014)}{用代数框架驯服随机偏微分方程的无穷}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=regpanel, draw=badgeReg!55] at (0,2.55)
+    {\textbf{核心思想。}2014 年，Hairer 提出正则结构理论 (Regularity Structures)，用一个高度抽象的代数框架——正则性结构、Hopf 代数、重整化群——重新诠释随机偏微分方程中那些"本不该有意义"的奇异项。};
+  \node[item, fill=probpanel, draw=badgeProb!35] at (0,0.85)
+    {\textbf{驯服无穷。}这套理论把随机方程中的无穷大系统化地处理掉，使原本意义不清的奇异随机偏微分方程变得严格可解。};
+  \node[item, fill=roughpanel, draw=badgeRough!20] at (0,-0.55)
+    {\textbf{范式转变。}它被誉为"随机分析的一次范式转变"，为整个领域提供了统一的分析语言。这是 Hairer 的菲尔兹奖核心工作。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 无穷不再是障碍——代数给了它秩序。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. KPZ 方程的严格解 ---
+\newcommand{\kpzslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{KPZ 方程的严格解}{界面生长 · 燃烧前沿 · 统计物理的数学基础}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=roughpanel, draw=badgeRough!55] at (0,2.55)
+    {\textbf{KPZ 方程。}Kardar–Parisi–Zhang 方程 (1986) 由物理学家提出，描述界面生长、燃烧前沿等物理现象。但因随机噪声导致解"病态"，几十年来缺乏严格数学基础。};
+  \node[item, fill=regpanel, draw=badgeReg!35] at (0,0.85)
+    {\textbf{正则结构的威力。}Hairer 的正则结构理论给出了严格的数学基础，使 KPZ 方程等长期悬而未决的方程获得了严格的数学意义。};
+  \node[item, fill=probpanel, draw=badgeProb!20] at (0,-0.55)
+    {\textbf{从物理到数学的桥梁。}这是"物理学家提出方程、数学家给出严格基础"的经典案例，联系了统计物理与随机分析两大领域。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 几十年的悬案，被一套代数理论终结。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 菲尔兹奖 ---
+\newcommand{\fieldsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{菲尔兹奖 (2014)}{首尔 ICM · 与 Avila、Mirzakhani、Bhargava 同届}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=regpanel, draw=badgeReg!55] at (0,2.55)
+    {\textbf{2014 首尔 ICM。}2014 年，Hairer 在首尔国际数学家大会 (ICM) 上获菲尔兹奖——数学界的最高荣誉之一。};
+  \node[item, fill=probpanel, draw=badgeProb!35] at (0,0.85)
+    {\textbf{获奖理由。}"因对随机偏微分方程理论的杰出贡献，特别是为此类方程创建了正则结构理论。" 同届获奖者还有 Artur Avila、Maryam Mirzakhani（首位女性菲尔兹奖得主）与 Manjul Bhargava。};
+  \node[item, fill=graypanel, draw=badgeRough!20] at (0,-0.55)
+    {\textbf{物理博士的数学桂冠。}一位物理学博士出身的数学家，凭借纯粹数学的成就站上了数学界的最高领奖台。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 正则结构理论，让他成为菲尔兹奖得主。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 正则结构的影响 ---
+\newcommand{\impactslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{正则结构的影响}{随机分析的一次范式转变}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=regpanel, draw=badgeReg!55] at (0,2.55)
+    {\textbf{统一的分析语言。}正则结构理论为随机偏微分方程提供了统一框架，使此前各自为战的技巧得以系统化。};
+  \node[item, fill=probpanel, draw=badgeProb!35] at (0,0.85)
+    {\textbf{广泛的后续工作。}该理论催生了大量后续研究，成为随机分析领域最活跃的方向之一，深刻影响了当代数学。};
+  \node[item, fill=roughpanel, draw=badgeRough!20] at (0,-0.55)
+    {\textbf{2021 突破奖。}因正则结构理论的开创性工作，Hairer 于 2020 年获 2021 年数学突破奖 (Breakthrough Prize in Mathematics)。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一套理论，重塑了整个领域。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. 数学家兼程序员 ---
+\newcommand{\coderlifeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{白天做数学、晚上写软件}{HairerSoft 与 Amadeus Pro}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=codepanel, draw=badgeCode!55] at (0,2.55)
+    {\textbf{并行不悖的双重身份。}作为顶级数学家，Hairer 长期以 HairerSoft 名义开发 Mac 软件，最著名的是音频编辑器 Amadeus Pro。};
+  \node[item, fill=regpanel, draw=badgeReg!35] at (0,0.85)
+    {\textbf{学术与工程的结合。}他的软件工程能力与数学素养相得益彰——正则结构理论动辄数百页的证明，需要超凡的细致与耐心，这与优秀程序员的结构化思维高度一致。};
+  \node[item, fill=probpanel, draw=badgeProb!20] at (0,-0.55)
+    {\textbf{极少数人。}他是极少数"既发顶级数学论文、又发商业 Mac 软件"的数学家，打破了"数学家不食人间烟火"的刻板印象。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 数学与代码，是他一体的两面。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 爵士数学家 ---
+\newcommand{\knightslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{爵士数学家}{KBE · FRS · Sylvester Medal 的荣誉之路}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=regpanel, draw=badgeReg!55] at (0,2.55)
+    {\textbf{爵士头衔。}2016 年获荣誉 KBE（大英帝国爵级司令勋章），2019 年转为实授，成为罕见的拥有爵士头衔的当代数学家——Sir Martin Hairer。};
+  \node[item, fill=probpanel, draw=badgeProb!35] at (0,0.85)
+    {\textbf{皇家学会院士。}2014 年当选英国皇家学会院士 (FRS)，2025 年获皇家学会西尔维斯特奖章 (Sylvester Medal)——英国数学界的最高荣誉之一。};
+  \node[item, fill=graypanel, draw=badgeRough!20] at (0,-0.55)
+    {\textbf{多项院士头衔。}奥地利科学院、Leopoldina 科学院、Academia Europaea、美国数学会会士、波兰科学院外籍院士等。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从日内瓦到世界——荣誉纷至沓来。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 数百页的证明耐力 ---
+\newcommand{\methodslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数百页的证明耐力}{正则结构理论的代数方法}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=regpanel, draw=badgeReg!55] at (0,2.55)
+    {\textbf{代数方法的系统化。}正则结构理论的核心论文动辄数百页，用 Hopf 代数、正则性结构等代数工具，系统化地处理随机方程的重整化问题。};
+  \node[item, fill=probpanel, draw=badgeProb!35] at (0,0.85)
+    {\textbf{超凡的细致与耐心。}这需要极致的耐心与结构组织能力，与许多"灵光一现"型数学家形成鲜明对比。};
+  \node[item, fill=roughpanel, draw=badgeRough!20] at (0,-0.55)
+    {\textbf{研究领域广泛。}除正则结构外，他还研究了 Hörmander 定理变体、Lyapunov 函数、非马尔可夫系统的遍历性、多尺度分析、均匀化、路径采样等。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 深度与广度，在他身上并存。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 数学与物理的桥梁 ---
+\newcommand{\bridgeSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{数学与物理的桥梁}{从 KPZ 到统计物理}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=probpanel, draw=badgeProb!55] at (0,2.55)
+    {\textbf{统计物理的数学化。}Hairer 的工作将统计物理中的界面生长、相变等现象纳入严格的数学框架。};
+  \node[item, fill=regpanel, draw=badgeReg!35] at (0,0.85)
+    {\textbf{随机分析的物理渊源。}他的物理学博士背景，使他对随机偏微分方程的物理意义有深刻理解，这是他区别于纯数学家的独特优势。};
+  \node[item, fill=roughpanel, draw=badgeRough!20] at (0,-0.55)
+    {\textbf{跨学科的影响力。}从物理学家提出的 KPZ 方程，到数学家建立的严格理论，Hairer 架起了数学与物理之间的桥梁。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 物理提出方程，数学给出严格基础。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 荣誉 ---
+\newcommand{\awardsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{荣誉与影响}{菲尔兹 · 突破奖 · 费萨尔国王奖 · 西尔维斯特奖章}
+\vspace{-0.3cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[rounded corners=5pt, fill=regpanel, draw=badgeReg!50, line width=0.6pt,
+        inner sep=6pt, text width=3.0cm, font=\fontsize{4.8}{6}\selectfont, align=center]
+    at (-5.7,1.05) {\small\faIcon{trophy}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeReg}菲尔兹奖 (2014)}\\[2pt]正则结构理论};
+  \node[rounded corners=5pt, fill=probpanel, draw=badgeProb!50, line width=0.6pt,
+        inner sep=6pt, text width=3.0cm, font=\fontsize{4.8}{6}\selectfont, align=center]
+    at (-1.9,1.05) {\small\faIcon{star}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeProb}突破奖 (2021)}\\[2pt]数学突破奖};
+  \node[rounded corners=5pt, fill=roughpanel, draw=badgeRough!50, line width=0.6pt,
+        inner sep=6pt, text width=3.0cm, font=\fontsize{4.8}{6}\selectfont, align=center]
+    at (1.9,1.05) {\small\faIcon{medal}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeRough}西尔维斯特奖章 (2025)}\\[2pt]皇家学会最高荣誉之一};
+  \node[rounded corners=5pt, fill=codepanel, draw=badgeCode!50, line width=0.6pt,
+        inner sep=6pt, text width=3.0cm, font=\fontsize{4.8}{6}\selectfont, align=center]
+    at (5.7,1.05) {\small\faIcon{crown}\\[2pt]{\fontsize{5.5}{7}\selectfont\bfseries\color{badgeCode}KBE 爵士 (2016/2019)}\\[2pt]大英帝国爵级司令勋章};
+  \node[rounded corners=6pt, fill=graypanel, draw=coveraccent!55, line width=0.8pt,
+        inner sep=9pt, text width=13cm, font=\fontsize{7}{9}\selectfont, align=center]
+    at (0,-1.35) {
+    {\fontsize{8}{10.5}\selectfont\bfseries\color{coverprimary!90!black} 更多荣誉}\\[2pt]
+    {\color{coverdark!80} {\fontsize{6.5}{8.5}\selectfont Whitehead Prize (2008) · Fermat Prize (2013) · Fröhlich Prize (2014)}\\[2pt]
+    {\fontsize{6.5}{8.5}\selectfont 费萨尔国王奖 (2022) · ESI Medal (2022) · 英国皇家学会院士 FRS (2014)}\\[2pt]
+    {\fontsize{6.5}{8.5}\selectfont 奥地利科学院 · Leopoldina · Academia Europaea 院士}}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 16. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{海尔的遗产}{正则结构 · 随机分析 · 数学与代码}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=regpanel, draw=badgeReg!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeReg} 正则结构理论}\\[3pt]Regularity Structures\\Hopf 代数\\重整化};
+  \node[leg, fill=probpanel, draw=badgeProb!50, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeProb} 随机分析}\\[3pt]SPDE\\遍历性\\Lyapunov 函数};
+  \node[leg, fill=roughpanel, draw=badgeRough!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeRough} 粗糙路径 / KPZ}\\[3pt]Rough Paths\\KPZ 方程\\界面生长};
+  \node[leg, fill=codepanel, draw=badgeCode!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCode} 软件 / 传承}\\[3pt]Amadeus\\HairerSoft\\一门三代数};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他用代数，驯服了随机世界的无穷。}\\[4pt]
+{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      从风吹落叶、股市起伏的随机无序，到界面生长的粗糙形状。\\
+      他用正则结构理论，给这些"病态"方程以严格的数学意义。\\
+      白天研究随机无穷，晚上维护 Mac 软件——数学与代码在他身上融为一体。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 17. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {他用代数，};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {驯服了随机世界的无穷。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.5cm]current page.center)
+    {从日内瓦的数学世家，到正则结构理论之父，再到菲尔兹奖、突破奖得主。};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!60!black]
+    at ([yshift=-2.4cm]current page.center)
+    {马丁·海尔\quad Sir Martin Hairer KBE FRS\quad 1975 — };
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{dice}\enspace 正则结构 · 随机分析 · 数学家兼程序员\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\identityslide
+\amadeusslide
+\spdechallenge
+\roughpathslide
+\regularityslide
+\kpzslide
+\fieldsslide
+\impactslide
+\coderlifeslide
+\knightslide
+\methodslide
+\bridgeSlide
+\awardsslide
+\legacyslide
+\closingslide
+\end{document}

@@ -1,0 +1,462 @@
+% =============================================================
+%  秩序与混乱之间的控制论之父：诺伯特·维纳 (Norbert Wiener)
+%  Beamer 演示 —— 参照 Ramanujan / Hardy 版式
+%  资料来源：mathematician/pages/Norbert_Wiener + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：电路绿 + 石墨灰 + 信号白 + 控制黑 =====
+\definecolor{bgmain}{RGB}{245,247,245}
+\definecolor{coverprimary}{HTML}{0D1F0D}
+\definecolor{coveraccent}{HTML}{2D8C3C}
+\definecolor{badgeCybernetics}{HTML}{2D8C3C}      % 电路绿
+\definecolor{badgeMathematics}{HTML}{4A5568}       % 石墨灰
+\definecolor{badgeEthics}{HTML}{C9A84C}            % 警示金
+\definecolor{badgeLegacy}{HTML}{1B5C8B}            % 信号蓝
+\definecolor{coverdark}{HTML}{1A2A1A}
+\definecolor{covermuted}{HTML}{5C7A5C}
+\definecolor{titlecolor}{RGB}{18,28,18}
+\definecolor{muteddark}{RGB}{75,95,75}
+\definecolor{cyberpanel}{RGB}{230,250,232}
+\definecolor{mathpanel}{RGB}{238,240,243}
+\definecolor{ethicspanel}{RGB}{252,244,224}
+\definecolor{legacypanel}{RGB}{228,238,248}
+\definecolor{graypanel}{RGB}{242,245,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!3] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCybernetics!7] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeMathematics!7] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeEthics!7] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  % --- 右上角头像 ---
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.8cm, yshift=-0.7cm]current page.north east) {
+    \begin{tikzpicture}
+      \clip[rounded corners=6pt] (0,0) rectangle (2.6,3.2);
+      \node[anchor=center] at (1.3,1.6) {\includegraphics[width=2.6cm, height=3.2cm, keepaspectratio]{images/portrait.jpeg}};
+    \end{tikzpicture}
+  };
+  \draw[coveraccent!50, line width=1.2pt, rounded corners=6pt] ([xshift=-0.8cm, yshift=-0.7cm]current page.north east) rectangle ++(-2.6cm,-3.2cm);
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=-2.1cm, yshift=-3.98cm]current page.north east) {N. Wiener, c.1940s};
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=badgeCybernetics!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{robot}\enspace 秩序与混乱之间的控制论之父};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {诺伯特·维纳};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {Norbert Wiener\enspace·\enspace 1894 — 1964};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {控制论 · Wiener 过程 · 信息论 · 调和分析 · 人工智能的预言者};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeCybernetics, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {控制论\\Cybernetics};
+      \node[rounded corners=8pt, fill=badgeMathematics, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {数学\\Mathematics};
+      \node[rounded corners=8pt, fill=badgeEthics, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=badgeEthics!65!black] at (1.8,0) {伦理\\Ethics};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {遗产\\Legacy};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"信息就是信息，不是物质也不是能量。" —— 诺伯特·维纳,《控制论》1948};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{map-pin}\enspace 美国 Columbia, MO → Stockholm\enspace|\enspace MIT 1919–1960\enspace|\enspace Bôcher 1933 · Nat. Medal of Science 1963\enspace|\enspace 69 岁};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么维纳独一无二}{神童 · Wiener 过程 · 控制论创始人 · 信息时代的预言家}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt,inner xsep=11pt,inner ysep=9pt,font=\fontsize{8}{10}\selectfont\bfseries,align=center}
+]
+  \node[nodebox,fill=cyberpanel,draw=badgeCybernetics!55,text=badgeCybernetics!85!black]
+    (a) at (-5.7,1.05) {控制论之父\\[2pt]1948年创立\\[2pt]反馈·通信·控制\\"信息就是信息"};
+  \node[nodebox,fill=mathpanel,draw=badgeMathematics!55,text=badgeMathematics!85!black]
+    (b) at (-1.9,1.05) {Wiener 过程\\[2pt]布朗运动数学模型\\[2pt]从花粉到金融\\Black–Scholes 基石};
+  \node[nodebox,fill=ethicspanel,draw=badgeEthics!55,text=badgeEthics!85!black]
+    (c) at (1.9,1.05) {科学家的良知\\[2pt]拒绝军事项目\\"A Scientist Rebels"\\[2pt]最早警告 AI 伦理};
+  \node[nodebox,fill=legacypanel,draw=badgeLegacy!55,text=badgeLegacy!85!black]
+    (d) at (5.7,1.05) {跨学科革命\\[2pt]AI·机器人学·认知科学\\[2pt]系统生物学·控制工程\\70年后回响};
+  \node[draw=coveraccent!60,fill=graypanel,rounded corners=5pt,inner sep=12pt,text width=13.4cm,align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 3岁阅读 · 14岁学士 · 19岁哈佛PhD\\[1pt]Wiener过程→金融数学 · 防空火炮→控制论 · 反馈机制→AI}\\[1pt]
+    {\fontsize{8.0}{10}\selectfont\color{covermuted} 他比时代早了 50 年。信息时代的核心概念——在他笔下首先成为一门科学。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 神童 ---
+\newcommand{\prodigyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{神童的炼成与创伤 (1894–1913)}{3 岁阅读 · 11 岁高中 · 14 岁学士 · 19 岁 PhD · 父亲的高压教育}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=cyberpanel,draw=badgeCybernetics!55] at (0,2.55)
+    {\textbf{神童之路。}父亲 Leo Wiener 是哈佛斯拉夫语教授，通晓 20+ 种语言。他在家中实施自制教学法——每天数小时高强度训练，失败就打耳光。3岁阅读，7岁读完达尔文和但丁。10 岁撰写短文《无知论》，质疑人类知识的无限性。};
+  \node[item,fill=mathpanel,draw=badgeMathematics!35] at (0,0.95)
+    {\textbf{加速的人生。}11 岁高中毕业 → 14 岁 Tufts College 数学学士 → 17 岁哈佛哲学硕士 → 19 岁哈佛 PhD。博士论文首次用集合论公理化定义有序对——Kuratowski 后来简化了这一定义，成为标准。};
+  \node[item,fill=graypanel,draw=badgeEthics!20] at (0,-0.45)
+    {\textbf{高压的代价。}维纳晚年自传承认：父亲的"教育"是不折不扣的心理虐待。但他在同一本书里也对父亲的博学表达了深深的敬意——"他给了我无与伦比的基础"。这是一个爱恨交织的故事。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 神童不是童话。他的一生都在天才的光环与创伤的阴影之间摇摆。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 欧洲 ---
+\newcommand{\europeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{欧洲游学与数理逻辑 (1914–1915)}{Russell · Hardy · Hilbert · Husserl · 有序对的集合论定义}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=mathpanel,draw=badgeMathematics!55] at (0,2.45)
+    {\textbf{剑桥：Russell 与 Hardy。}1914 年赴英，师从罗素和哈代。Wiener 后来说罗素"教我物理和常识"。在剑桥期间继续研究数理逻辑，发表了他对有序对的定义（1914）——这是关系理论可以完全还原为集合论的首次公开证明。};
+  \node[item,fill=cyberpanel,draw=badgeCybernetics!35] at (0,0.75)
+    {\textbf{哥廷根：Hilbert · Landau · Husserl。}转入哥廷根后，听 Hilbert 的数学课、Landau 的数论课，以及 Husserl 的三门现象学课程——"一门关于康德的伦理学，一门伦理学原理，以及现象学研讨班。"（致 Russell 信, 1914 年夏）};
+  \node[item,fill=graypanel,draw=badgeLegacy!20] at (0,-0.55)
+    {\textbf{从逻辑到应用。}一战中断了学术生涯。尽管视力和体格问题使他两次被军队拒绝，最终他还是参了军——被分到阿伯丁试验场做弹道学研究。纯粹的数学逻辑学家开始接触工程问题——这是改变一切的转折点。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Husserl 的现象学影响了维纳的一生——控制论中"观察者与被观察系统"的关系正源于此。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. Wiener 过程 ---
+\newcommand{\wienerprocessSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Wiener 过程：从花粉到金融 (1923)}{布朗运动的严格数学模型 —— 概率论的里程碑}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=mathpanel,draw=badgeMathematics!55] at (0,2.35)
+    {\textbf{1923 · 用测度论定义布朗运动。}维纳在连续函数空间上构造了一个概率测度——即 Wiener 测度。连续时间、连续状态、独立增量、Gauss 分布——这就是 Wiener 过程 $W_t$。它第一次将"随机"赋予了严格的数学定义。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,0.75)
+    {\textbf{80 年后的回响：金融数学。}1973 年，Black–Scholes–Merton 用 Wiener 过程作为股价运动模型，提出了期权定价公式。现在全球金融衍生品市场规模以万亿计——它们的数学根基，就在 Wiener 1923 年的那篇论文里。};
+  \node[item,fill=graypanel,draw=badgeCybernetics!20] at (0,-0.55)
+    {\textbf{Wiener 过程的影响远超出金融。}随机微分方程（Itô 积分）、随机控制理论、物理学中的扩散模型、生物学中的群体动态——几乎所有需要"噪声"的数学模型，最终都追溯到 Wiener 过程。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他定义的不是"随机"——他定义的是"随机可以是数学"。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 调和分析 ---
+\newcommand{\harmonicslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{调和分析的建筑师}{Wiener–Khinchin · Paley–Wiener · Tauberian 定理}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=mathpanel,draw=badgeMathematics!55] at (0,2.35)
+    {\textbf{广义调和分析 (1930)。}维纳发展了非周期函数的谱分析方法——无需 Fourier 级数，只需自相关函数的 Fourier 变换。这一思想后来孕育了 Wiener–Khinchin 定理：功率谱密度 = 自相关函数的 Fourier 变换。信号处理的基石。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,0.75)
+    {\textbf{Paley–Wiener 定理 (1934)。}与 R.E.A.C. Paley 合作（Paley 次年死于雪崩，年仅 26 岁）。定理在 Fourier 变换与解析函数之间建立了精确联系：紧支函数 $\leftrightarrow$ 指数型整函数。调和分析与复分析的深度连接。};
+  \node[item,fill=graypanel,draw=badgeEthics!20] at (0,-0.55)
+    {\textbf{Wiener's Tauberian Theorem (1932)。}Tauberian 定理处理"发散级数何时可以求和"。维纳的版本如此强大，以至于可以给出素数定理的全新证明。Hardy 称之为"维纳最伟大的分析成就"。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 调和分析 + 概率论 + Tauberian 定理 —— 维纳在 1920–30 年代构建了分析学的一座迷宫。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 防空火炮 ---
+\newcommand{\wartimeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{从防空火炮到 Wiener 滤波 (1940–1945)}{战争中的数学家 · 信号处理的基石}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=cyberpanel,draw=badgeCybernetics!55] at (0,2.50)
+    {\textbf{NDRC 的邀请。}1941 年，Vannevar Bush 邀请维纳加入国家防务研究委员会（NDRC）的火力控制部门。任务是：设计防空火炮的自动瞄准系统。飞机在飞、炮弹在飞、噪声在干扰——如何在混乱中做出精确预测？};
+  \node[item,fill=mathpanel,draw=badgeMathematics!55] at (0,0.90)
+    {\textbf{Wiener 滤波器的诞生。}维纳将目标跟踪问题转化为统计估计问题：给定被噪声污染的信号，如何最优地恢复原始信号？答案是 Wiener 滤波器——它最小化估计误差的均方值。这是现代信号处理的基石，从雷达到 GPS 到语音识别无处不在。};
+  \node[item,fill=ethicspanel,draw=badgeEthics!20] at (0,-0.55)
+    {\textbf{这次战争研究改变了维纳的一切。}他第一次深入工程问题，第一次将数学与机器控制联系起来。"反馈"的概念从防空系统的伺服机构进入了他的思想。控制论的种子，是在硝烟中种下的。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 战争让维纳从纯粹数学家变成了跨学科的工程思想家——控制论正是在这一转变中诞生的。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. 控制论 ---
+\newcommand{\cyberneticsSlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{控制论的诞生 (1948)}{《Cybernetics》· 反馈机制 · "信息就是信息，不是物质也不是能量"}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=cyberpanel,draw=badgeCybernetics!55] at (0,2.55)
+    {\textbf{"控制论"的命名。}维纳从希腊词 $\kappa\nu\beta\varepsilon\rho\nu\acute{\eta}\tau\eta\varsigma$（kybernetes = 舵手）创造了 cybernetics 这个词。取义于：舵手通过不断反馈调整航向——这正是控制论的核心隐喻。柏拉图曾用同一个词比喻治理国家的艺术。};
+  \node[item,fill=mathpanel,draw=badgeMathematics!55] at (0,0.95)
+    {\textbf{核心思想：反馈的普遍性。}动物、机器、社会系统——它们共享一个数学结构：通过反馈机制实现目标导向的行为。1943 年论文"Behavior, Purpose and Teleology"（与 Rosenblueth, Bigelow）就是这一思想的宣言。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,-0.45)
+    {\textbf{"信息就是信息，不是物质也不是能量。"}《控制论》中最著名的句子。维纳理解到信息是独立于物理世界的一种存在形式——这是 20 世纪最深远的科学洞见之一，直接预示了信息时代的到来。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 《控制论》不只是数学书——它是一个新时代的宣言。控制、通信、计算从此成为同一门科学的三个分支。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 人、机器与社会 ---
+\newcommand{\macyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{人、机器与社会}{Macy 会议 · 认知科学 · AI 的预言 · 人类对人的使用}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=cyberpanel,draw=badgeCybernetics!55] at (0,2.55)
+    {\textbf{Macy 控制论会议 (1946–1953)。}维纳发起并主持了一系列跨学科会议，聚集了数学家（von Neumann）、神经科学家（McCulloch, Pitts）、人类学家（Mead, Bateson）、心理学家——这是认知科学和人工智能共同的子宫。};
+  \node[item,fill=ethicspanel,draw=badgeEthics!55] at (0,0.85)
+    {\textbf{《人有人的用处》(1950)。}维纳以通俗笔调阐述了控制论的社会意义。他预言自动化将导致大规模失业——如果社会不做好准备。他警告：不要让机器来决定人的命运。"把人的问题留给机器解决，就是把人的问题交出去。"};
+  \node[item,fill=legacypanel,draw=badgeLegacy!20] at (0,-0.55)
+    {\textbf{与 McCulloch 的决裂。}1950 年代初期，维纳突然切断了与整个控制论团队的联系。原因至今有争议——一种说法是维纳的妻子 Margaret 厌恶 McCulloch 的生活方式，强制维纳断绝关系。这对认知科学的早期发展造成了不可挽回的损失。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.2) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 维纳在 70 年前提出的问题——AI 伦理、自动化与失业——今天正是全球最核心的社会议题。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 伦理 ---
+\newcommand{\ethicsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{科学家的良知}{"A Scientist Rebels" · 拒绝军方 · 与 von Neumann 的对立}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=ethicspanel,draw=badgeEthics!55] at (0,2.55)
+    {\textbf{1947 · "A Scientist Rebels"。}在《大西洋月刊》发表宣言，呼吁科学家拒绝为军事机器服务。"一个经历过战争的科学家的经验……使得继续毫无保留地为军方提供科学秘密成为一种对科学的诋毁。"这是 20 世纪最早的科学家伦理宣言之一。};
+  \node[item,fill=cyberpanel,draw=badgeCybernetics!55] at (0,0.95)
+    {\textbf{拒绝军方资助。}二战后，维纳拒绝一切政府军事项目资助。这与 von Neumann 形成鲜明对比——后者深度参与核武研发和军事策略。两位控制论时代的巨人，在科学家对社会的责任上站在了对立面。};
+  \node[item,fill=graypanel,draw=badgeMathematics!20] at (0,-0.55)
+    {\textbf{冷战中的怀疑。}维纳曾与苏联学者保持学术交流。冷战时期这引起怀疑——他受到 FBI 监视。他同时拒绝将科学成果用于冷战目的，这使他在当时的主流学术界中处于边缘地位。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 今天 AI 的伦理讨论——武器化、隐私、偏见——维纳在 70 年前就已经开始了。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. MIT 传奇 ---
+\newcommand{\personalityslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{MIT 的传奇}{心不在焉 · 轶事 · 药物依赖 · 教授中的教授}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=cyberpanel,draw=badgeCybernetics!55] at (0,2.65)
+    {\textbf{搬家轶事。}维纳一家搬家。妻子怕他找不到新家，把新地址写在纸上给他。维纳在办公室用那张纸做了演算笔记后扔掉了。下班后走回旧家，发现空无一人。问路边小女孩"你知道维纳家搬哪儿去了吗？"女孩回答："是的，爸爸——妈妈让我来接你。"};
+  \node[item,fill=mathpanel,draw=badgeMathematics!55] at (0,0.95)
+    {\textbf{午饭轶事。}在 MIT 校园里走着，被学生拦下问 Fourier 分析问题。他拿出纸详细解答后，学生感激离开。维纳叫住他："等一下——我碰到你时是往哪个方向走的？" 学生指出方向。维纳说："好，那说明我已经吃过午饭了。"};
+  \node[item,fill=graypanel,draw=badgeEthics!20] at (0,-0.55)
+    {\textbf{药物依赖。}自传中承认一生滥用 Benzedrine（苯丙胺），未充分意识到其危害。他在 MIT 期间的同事描述他时而亢奋、时而抑郁——可能与此有关。这是天才的代价，也是时代的悲剧。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他在 MIT 度过了整个职业生涯。他的照片曾在 Infinite Corridor 挂了几十年——他不只是一个教授，他是一个传奇。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 控制论的遗产 ---
+\newcommand{\cyberlegacySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{控制论的遗产}{AI · 机器人学 · 自动控制 · 系统生物学 · 信息时代}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt,inner xsep=7pt,inner ysep=9pt,text width=2.8cm,
+              font=\fontsize{6.8}{8.8}\selectfont,align=center}
+]
+  \node[leg,fill=cyberpanel,draw=badgeCybernetics!55,line width=0.7pt] (a) at (-5.8,1.2)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCybernetics}AI}\\[3pt]反馈学习机制\\[2pt]强化学习先驱\\[2pt]智能控制基础};
+  \node[leg,fill=mathpanel,draw=badgeMathematics!55,line width=0.7pt] (b) at (-1.95,1.2)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeMathematics}机器人学}\\[3pt]自适应控制\\[2pt]传感反馈\\[2pt]自主系统};
+  \node[leg,fill=legacypanel,draw=badgeLegacy!55,line width=0.7pt] (c) at (1.95,1.2)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy}系统生物学}\\[3pt]反馈调控\\[2pt]神经网络\\[2pt]生物信息学};
+  \node[leg,fill=ethicspanel,draw=badgeEthics!55,line width=0.7pt] (d) at (5.8,1.2)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeEthics!80!black}信息社会}\\[3pt]人机关系\\[2pt]自动化伦理\\AI 治理};
+  \node[draw=coveraccent!65,fill=graypanel,rounded corners=6pt,inner sep=11pt,text width=13.4cm,align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} "任何一种不承认这一点的唯物主义，在今天都无法生存。"}\\[4pt]
+    {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      控制论 → AI 与机器学习 · Wiener 过程 → 金融数学与随机分析\\
+      反馈原理 → 机器人学与自动控制 · Macy 会议 → 认知科学\\
+      信息即信息 → 数字时代的哲学基础}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 数学遗产 ---
+\newcommand{\mathlegacySlide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Wiener 过程的遗产}{金融数学 · 随机分析 · 物理学 · 工程信号处理}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt,inner xsep=10pt,inner ysep=5pt,text width=12.4cm,font=\fontsize{7.0}{9.0}\selectfont,align=left}
+]
+  \node[item,fill=mathpanel,draw=badgeMathematics!55] at (0,2.35)
+    {\textbf{概率论 → 金融。}Wiener 过程 → Itô 积分 (1944) → Black–Scholes–Merton 期权定价 (1973) → 诺贝尔经济学奖 (1997)。从花粉到金融——一个纯数学概念如何支撑起万亿级市场。};
+  \node[item,fill=legacypanel,draw=badgeLegacy!55] at (0,0.75)
+    {\textbf{信号处理 → 工程。}Wiener 滤波器 → Kalman 滤波器 (1960) → 现代控制理论。从 Apollo 登月的导航系统到 iPhone 的降噪算法——Wiener 的思想嵌入了每一块电路板。};
+  \node[item,fill=cyberpanel,draw=badgeCybernetics!20] at (0,-0.65)
+    {\textbf{调和分析 → 数学内部。}Paley–Wiener 定理 → Hörmander 的微局部分析。Wiener's Tauberian Theorem → Gelfand 的 Banach 代数理论。维纳的分析学是 20 世纪数学基础设施的一部分。};
+  \node[draw=coveraccent!55,fill=graypanel,rounded corners=5pt,inner sep=6pt,text width=12.4cm,align=center] at (0,-2.2) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 很少有纯粹数学家的工作能像 Wiener 过程一样渗透到如此广泛的工程和社会应用中。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.2cm]current page.center) {"信息就是信息，};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.2cm]current page.center) {不是物质也不是能量。"};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.8cm, xshift=-3.5cm]current page.center)
+    -- ([yshift=-0.8cm, xshift=3.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.6cm]current page.center)
+    {—— 诺伯特·维纳,《控制论》1948};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!55!black]
+    at ([yshift=-2.4cm]current page.center)
+    {诺伯特·维纳\quad Norbert Wiener\quad 1894 — 1964};
+  \node[anchor=center, font=\fontsize{6.5}{8}\selectfont, text=badgeLegacy!60]
+    at ([yshift=-3.1cm]current page.center)
+    {他比时代早了 50 年。当信息终于成为一门科学——人们才发现，先知已经来过。};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{infinity}\enspace 控制论 \enspace|\enspace Wiener 过程 \enspace|\enspace 调和分析 \enspace|\enspace AI 伦理 \enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\prodigyslide
+\europeslide
+\wienerprocessSlide
+\harmonicslide
+\wartimeslide
+\cyberneticsSlide
+\macyslide
+\ethicsslide
+\personalityslide
+\cyberlegacySlide
+\mathlegacySlide
+\closingslide
+\end{document}

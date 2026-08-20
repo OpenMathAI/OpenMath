@@ -1,0 +1,282 @@
+# 闵可夫斯基 (Hermann Minkowski) 立传提示词
+
+> 严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)。
+> 数据库字段梳理见工作指南 §二十一；社会关系入库见 §二十。
+
+---
+
+## 背景信息
+
+- **目标数学家**: Hermann Minkowski (1864–1909)
+- **气质关键词**: **数的几何、Minkowski 时空——理论物理的关键数学语言**
+- **Wikipedia 页面**: ✅ 已下载
+  - 路径: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Hermann_Minkowski/`
+  - Wikipedia 英文条目: `Hermann Minkowski`
+- **Beamer 文件**: `mathematician/presentations/Hermann_Minkowski/Hermann_Minkowski_zh.tex` (待创建)
+- **参考模板**: `wiener/`, `ramanujan/`, `hecke/` 的完整源码
+  - `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/wiener/Norbert_Wiener_zh.tex`
+  - `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/hecke/Makefile`
+- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+
+---
+
+## 第 0 步：核对 Wikipedia 页面 ✅
+
+已下载到 `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Hermann_Minkowski/`
+
+- **全名**: Hermann Minkowski
+- **生卒日期**: 1864-06-22 ~ 1909-01-12，享年 **44** 岁（英年早逝）
+- **国籍**: 🇩🇪 German / Prussian（生于 Suwałki Governorate，今立陶宛考纳斯；各方表述不一：German/Polish/Lithuanian/Russian）
+- **出生地**: Aleksotas, Suwałki Governorate, Kingdom of Poland / Russian Empire（今立陶宛 Kaunas）
+- **逝世地**: Göttingen, German Empire
+- **博士导师**: Ferdinand von Lindemann（柯尼斯堡大学，1885 博士）
+- **教育经历**:
+  - Altstadt Gymnasium（柯尼斯堡）
+  - University of Königsberg（柯尼斯堡大学，1885 博士）
+  - Frederick William University Berlin（柏林大学，短期）
+- **主要任职机构**:
+  - University of Bonn（波恩大学，1887–1894）
+  - University of Königsberg（柯尼斯堡大学，1894–1896）
+  - ETH Zurich（苏黎世联邦理工，1896–1902，爱因斯坦的老师）
+  - University of Göttingen（哥廷根大学，1902–1909）
+- **关键荣誉**:
+  - Grand prix des sciences mathématiques（法国科学院数学大奖）1883——**18 岁**，与 Henry Smith 共享（Smith 追授）
+- **博士学生**: Konstantinos Carathéodory、Dénes Kőnig、Louis Kollros、Theodor Laumann、Paul August Ludwig Wernicke、Albert Wink、Elijah Swift
+- **研究领域**: geometry of numbers（数的几何）、number theory（数论）、convex geometry（凸几何）、mathematical physics（数学物理）、theory of relativity（相对论）、Minkowski spacetime
+- **配偶**: Auguste Adler（1897 结婚，两个女儿）
+- **家族**: 兄 Oskar Minkowski（1858–1931，著名医生）；女婿 Reinhold Rudenberg（电气工程师）
+
+### 关键时间线：
+
+- 1864: 6月22日生于 Aleksotas（今立陶宛考纳斯附近），犹太家庭
+- 1872: 家族为逃避俄国排犹迫害迁居柯尼斯堡
+- 1883: **18 岁获法国科学院数学大奖**（二次型理论，与 Henry Smith 共享），引发英国数学界不满
+- 1885: 柯尼斯堡大学博士（Lindemann 指导）
+- 1887–1894: 波恩大学任教
+- 1889: 成为柯尼斯堡大学讲师
+- 1894–1896: 柯尼斯堡大学
+- 1896: 提出**数的几何**（geometry of numbers），几何方法解决数论问题
+- 1896–1902: ETH Zurich，**爱因斯坦的老师**
+- 1897: 与 Auguste Adler 结婚
+- 1902: 任哥廷根大学教授，与好友 Hilbert 同校
+- 1905: 爱因斯坦发表狭义相对论
+- 1908: **Minkowski 时空**——"空间与时间"演讲：*"Henceforth space by itself, and time by itself, are doomed to fade away into mere shadows"*
+- 1909: 1月12日因阑尾炎逝世于哥廷根，享年 44 岁。Hilbert 写就感人悼词
+
+### ★ 叙事亮点：
+
+1. **数的几何（1896）** — 用凸体与格点的几何语言重写数论。Minkowski 定理（凸体格点定理）、Minkowski 不等式、Brunn–Minkowski 定理——现代凸几何与格论的基石。
+2. **Minkowski 时空（1908）** — 狭义相对论的几何化：把时间与空间统一为四维流形，x²+y²+z²−c²t² 不变量。让爱因斯坦的 1905 相对论有了真正的几何表述，也是广义相对论的数学前奏。
+3. **18 岁获法国科学院大奖** — 史上最年轻的数学奖得主之一；与英国大师 Henry Smith 共享（Smith 追授），引发英国数学界抗议但委员会不改决定。
+4. **与 Hilbert 的生死之交** — 柯尼斯堡同窗，一生挚友。Hilbert 的悼词："他是我天赐的稀有礼物……他的精神仍在我们心中活跃。"
+5. **爱因斯坦的老师** — ETH 任教时教过爱因斯坦；1908 年"空间与时间"演讲把相对论几何化，是数学与物理交汇的标志性时刻。
+6. **44 岁英年早逝** — 阑尾炎（现代医学可轻易治愈），Minkowski 时空发表后仅数月即去世，更显悲情与传奇。
+
+### ★ 史实注意：
+
+- **"空间与时间"演讲（1908.9.21）**：80 届德国自然科学家与医生大会，科隆。名句出自此文。
+- **Minkowski 时空 vs 广义相对论**：Minkowski 做的是狭义相对论的几何化（1908）；爱因斯坦的广义相对论（1915）在此框架上发展。Minkowski 本人未及见证广义相对论。
+- **国籍复杂性**：生于波兰（俄帝国）、家族犹太、迁居普鲁士，常称"German"；各国史料表述不一，不武断定性。
+- **18 岁获奖细节**：1883 年获奖时是柯尼斯堡在校生，评审与 Henry Smith 共享（Smith 1883 年去世，追授）。这是"全部奖项收录"原则的典型案例。
+- **Brunn–Minkowski 定理**：与 Karl Brunn 合作（Brunn 1887 年发现，Minkowski 推广），注意归属。
+
+---
+
+## 数据库字段核对表（第 0 步之后必填）
+
+| # | 表 | 字段 | 核对值 |
+|:--:|---|------|--------------------------|
+| 1 | `people` | qid | `Q57246` |
+| 2 | `people` | name_en | `Hermann Minkowski` |
+| 3 | `people` | name_zh | `赫尔曼·闵可夫斯基` |
+| 4 | `people` | name_variants | `["数的几何的创造者","Minkowski 时空的提出者"]` |
+| 5 | `people` | gender | `male` |
+| 6 | `people` | birth_date | `1864-06-22` |
+| 7 | `people` | death_date | `1909-01-12` |
+| 8 | `people` | description | `German mathematician and physicist (1864–1909)` |
+| 9 | `people` | primary_occupation | `mathematician` |
+| 10 | `person_occupation` | 职业（rank 排序） | `mathematician(0)`、`university teacher(1)`、`physicist(2)` |
+| 11 | `person_field` | 领域（rank 排序） | `geometry of numbers(0)`、`number theory(1)`、`mathematical physics(2)`、`theory of relativity(3)` |
+| 12 | `award_laureate` | 获奖记录 | `Grand prix des sciences mathématiques 1883(与 Henry Smith 共享)` |
+| 13 | `person_institution` | 教育/任职 | `education: Königsberg(1885博士)、Berlin`；`employment: Bonn(1887–1894)、Königsberg(1894–1896)、ETH Zurich(1896–1902)、Göttingen(1902–1909)` |
+| 14 | `person_nationality` | 国籍 | `Kingdom of Prussia` |
+| 15 | `person_relation` | 社会关系 | 见 §二十（第 4.5 步） |
+| 16 | `rankings` | 榜单 | `OpenMath_20th_Century_51_108`、`rank=60`、`status=🔲/🔲` |
+
+> ★ 奖项列注意：**全部收录**（含追授/政治勋章/名誉类，见 21.2.4）。
+
+---
+
+## 第 4.5 步：社会关系入库（MySQL）
+
+> 已按 §二十 梳理，参考实现 `MySQL/seed_minkowski_relations.py`。
+
+**社会关系清单：**
+
+| 关系类型 | 对象 | 方向 | note |
+|---------|------|------|------|
+| 老师 | Ferdinand von Lindemann | 师→生 | 柯尼斯堡博士导师（1885） |
+| 同事/挚友 | David Hilbert | 无向 | 柯尼斯堡同窗、哥廷根同事、一生挚友；Hilbert 写就悼词 |
+| 老师 | Albert Einstein | 师→生 | ETH 任教时教过爱因斯坦（1896–1902） |
+| 学生 | Constantin Carathéodory | 师→生 | 哥廷根学生，测度论与变分法 |
+| 学生 | Dénes Kőnig | 师→生 | 图论先驱 |
+| 学生 | Louis Kollros | 师→生 | 几何学家 |
+| 荣誉共同体 | Henry John Stephen Smith | 无向 | 1883 年共享法国科学院数学大奖（Smith 追授） |
+| 同事 | Max Born | 无向 | 哥廷根晚辈；Minkowski 逝世时 Born 代表数学学生致悼词 |
+| 家族 | Oskar Minkowski | 兄弟 | 著名医生（1858–1931） |
+| 配偶 | Auguste Adler | 夫妻 | 1897 结婚 |
+
+**入库操作：**
+1. `people` 表：Minkowski 已存在（id=60），补齐 qid/Q57246、name_variants、description、birth/death；`has_social_data` 置 1
+2. `fields` 字典：geometry of numbers 新建；number theory/mathematical physics/theory of relativity 已存在
+3. `institutions` 字典：Königsberg/Bonn/ETH Zurich 已存在
+4. `person_relation`：Lindemann → Minkowski（新建占位）；Minkowski ↔ Hilbert（已有）、Einstein（已有 349，注意是 Minkowski→Einstein 师生）；Minkowski → Carathéodory（已有 80）、Kőnig、Kollros（新建占位）；Smith、Born（新建占位）；Oskar Minkowski（新建占位，家族）
+5. 缺失人物先建占位（`has_biography=0`），关系 note 加 `[材料待展开]` 前缀
+
+**校验：**
+```sql
+SELECT a.name_en AS 甲, rt.name_zh AS 关系, b.name_en AS 乙, pr.note
+FROM person_relation pr
+JOIN people a ON a.id=pr.from_id
+JOIN people b ON b.id=pr.to_id
+JOIN relation_types rt ON rt.relation_key=pr.relation_type
+WHERE a.name_en='Hermann Minkowski' OR b.name_en='Hermann Minkowski';
+```
+
+---
+
+## 第 5 步：设计配色方案
+
+- **建议配色：时空深蓝 + 格点金 + 光速青 + 手稿米** —— 数的几何与时空的融合
+- 与已有配色完全不同！
+
+- 主要色值：
+  | 用途 | 色名 | 建议色值 | 说明 |
+  |------|------|---------|------|
+  | 背景 | `bgmain` | `#F8F5EE` | 手稿米 —— 几何手稿的气质 |
+  | 主色 | `coverprimary` | `#1A2A5A` | 时空深蓝 —— Minkowski 时空 |
+  | 强调色 | `coveraccent` | `#C9A227` | 格点金 —— 数的几何 |
+  | 深色文本 | `coverdark` | `#1F2A28` | 深墨色 |
+  | 浅色文本 | `covermuted` | `#6A7480` | 蓝灰 |
+
+- 四个分类色：
+  - **badgeGeometry** (数的几何) — 格点金 `#C9A227`
+  - **badgeSpacetime** (Minkowski 时空) — 时空深蓝 `#2E4A7A`
+  - **badgeRelativity** (相对论) — 光速青 `#1F7A8C`
+  - **badgeGöttingen** (哥廷根) — 学术红 `#B04A4A`
+
+---
+
+## 第 6 步：规划幻灯片序列（12 页）
+
+```
+00  OpenMath 项目首页
+
+=== 封面与总览 ===
+01  封面 — 《闵可夫斯基：时空的几何诗人》 / Hermann Minkowski 1864–1909
+02  Hook — 为什么闵可夫斯基独一无二：18 岁法国科学院大奖·数的几何·Minkowski 时空
+
+=== 生平与核心贡献 ===
+03  早年与教育 (1864–1885) — Aleksotas·柯尼斯堡·18 岁大奖·Lindemann 门下
+04  数的几何 (1896) — 凸体与格点·Minkowski 定理·Brunn–Minkowski
+05  Minkowski 时空 (1908) — 四维流形·"空间与时间"演讲·相对论几何化
+06  数学物理的桥梁 — 从二次型到电磁学·x²+y²+z²−c²t²
+
+=== 学派与传承 ===
+07  哥廷根的黄金时代 — 与 Hilbert 的生死之交·哥廷根数学巅峰
+08  爱因斯坦的老师 — ETH 任教·相对论的几何化·物理学家的数学引路人
+
+=== 人格与历史 ===
+09  44 岁英年早逝 — 阑尾炎·Hilbert 悼词·"他是我天赐的稀有礼物"
+10  Minkowski 的世纪遗产 — 从数的几何到时空几何·现代数学物理的骨架
+
+=== 结尾 ===
+11  结束页 — "他用几何重新发明了数论，又用四维时空重新发明了物理；44 岁的生命，装下了整个世纪的数学与物理。"
+```
+
+---
+
+## 第 9 步：史实审查
+
+### Minkowski 特有的史实陷阱
+
+| 陷阱类型 | 高危点 |
+|---------|--------|
+| **18 岁获奖** | 1883 年柯尼斯堡在校生获法国科学院大奖，与 Henry Smith 共享（Smith 当年追授） |
+| **国籍** | 生于波兰（俄帝国）、犹太家族、迁居普鲁士——不武断定性为单一国籍 |
+| **狭义 vs 广义相对论** | Minkowski 时空是狭义相对论的几何化（1908）；广义相对论（1915）在其上发展，Minkowski 未及见证 |
+| **爱因斯坦师生关系** | Minkowski 在 ETH 任教时教过爱因斯坦（1896–1902），后者的 1905 相对论被 Minkowski 几何化 |
+| **Brunn–Minkowski 定理** | Brunn 1887 先发现，Minkowski 推广——归属要写全 |
+| **Minkowski 时空演讲日期** | 1908 年 9 月 21 日，科隆，80 届德国自然科学家与医生大会 |
+
+---
+
+## 第 13 步：Wikipedia 本地文档终审（提交前必做）
+
+### 终审清单
+- [ ] 生卒日期与 metadata.json 一致（1864-06-22 ~ 1909-01-12）
+- [ ] 博士导师 Ferdinand von Lindemann 正确
+- [ ] 18 岁法国科学院大奖 1883 正确
+- [ ] 数的几何 1896 正确
+- [ ] Minkowski 时空演讲 1908.9.21 正确
+- [ ] 逝世 1909 阑尾炎正确
+- [ ] 编译: `make distclean && make` — 零错误
+
+---
+
+## 十三、立传完成后操作（★ 勿遗漏）
+
+- [x] **Wikipedia 下载**: `pages/Hermann_Minkowski/page.md` + `metadata.json` ✅
+- [x] **头像**: `Hermann_Minkowski.png` 嵌入 (1.92cm, 右上角, 下移30px) ✅
+- [x] **排名文件更新**: `figures/OpenMath_20th_Century_Comprehensive_Ranking.md` 第60行 Minkowski: `🔲 → ✅` ✅
+- [x] **数据库联动**: `people.has_biography` 设为 `1` ✅ (id=60, 社会关系已在库中 9条, `has_social_data=1`)
+- [x] **编译验证**: `make distclean && make` → 12页 472KB, 0错误 ✅
+
+### 第1轮 Review 记录 (2026-08-11)
+
+> 对照 Wikipedia (`pages/Hermann_Minkowski/page.md`) 逐页核查。
+
+**修复清单：零。** 11/11页全部与 Wikipedia 一致。
+
+| 页 | 核查内容 | 结果 |
+|:--:|------|:--:|
+| 封面 | 姓名·生卒(1864-1909,44岁)·Kingdom of Prussia·Grand Prix 1883·头像1.92cm右上角·名句中英对照 | ✅ |
+| 总览 | 时间线(Königsberg→Bonn→ETH→Göttingen)·Hilbert悼词"rare gift from heaven" | ✅ |
+| 早年 | Aleksotas·父Lewin Boruch·1872迁柯尼斯堡·Henry Smith共享追授·1885 Lindemann博士 | ✅ |
+| 数的几何 | 1896·Minkowski定理·Brunn–Minkowski(Brunn 1887) | ✅ |
+| Minkowski时空 | 1908.9.21科隆·80届·x²+y²+z²−c²t²·名句原文一字不差 | ✅ |
+| 数学物理 | 二次型→Lorentz·电磁应力张量·Einstein 1915 | ✅ |
+| 哥廷根 | 1902 Hilbert引入·悼词全文"best, most dependable friend...garden full of flowers"·Born致学生悼词 | ✅ |
+| 爱因斯坦老师 | 1896-1902 ETH·"one of Einstein's teachers"·1905→1908几何化 | ✅ |
+| 44岁早逝 | 阑尾炎1909.1.12·Geometrie der Zahlen(1910)·Gesammelte Abhandlungen(1911) | ✅ |
+| 世纪遗产 | Minkowski界·Minkowski–Hlawka·Smith–Minkowski–Siegel | ✅ |
+| 结束页 | 引语·时间线·生卒·底部标签 | ✅ |
+
+**结论：第1轮 Review 通过。零问题。** Wikipedia+TeX 完全一致。
+
+---
+
+### Review-1 复核记录 (2026-08-12)
+
+> 结合本地 Wikipedia (`pages/Hermann_Minkowski/page.md`) 复核，对照其他项目格式（Hecke/Zermelo/Rokhlin 系）。
+
+- **头像** ✅：`images/Hermann_Minkowski.png`（63KB Wikipedia 1883 照片，右上角 1.92cm）
+- **国籍** ✅：封面 `\faIcon{globe}\enspace Kingdom of Prussia\enspace|\enspace Grand Prix 1883\enspace|\enspace Minkowski 时空`（历史准确：出生于波兰王国/Congress Poland，1872 移居普鲁士）
+- **事实复核**：生卒(1864-06-22~1909-01-12, 44岁, 阑尾炎)/1883 18岁法国大奖(与 Henry Smith 共享)/1885 博士(Lindemann)/教职 Bonn-Königsberg-Zürich-Göttingen/1908 科隆演讲/1909 逝世 —— 与 Wikipedia 一致
+- **修正 1（伪引语红线 §14.6）**：删"懒狗"(lazy dog)逸事（Wikipedia 无此记载）→ 改为"当时还只是 ETH 一名普通学生——Minkowski 或许未曾预见其未来的成就"
+- **修正 2（同上）**：删"数学史上最优雅的'打脸'" → 改为老师与学生一同载入史册
+- **修正 3（反事实推测红线）**：删"如果 Minkowski 多活 10 年——他几乎可以肯定参与..."虚构推测 → 改为事实陈述
+- **修正 4（无 Wikipedia 来源）**："Hilbert 亲自整理遗著"（Wikipedia 未明确）→ 改为"为 Minkowski 撰写动人悼词"
+- **修正 5（同上）**：删"爱因斯坦最初态度冷淡/多余的学问"（Wikipedia 无来源）→ 改为"完全依赖 Minkowski 的四维框架"
+- **补充**：hookslide 时间线补 `Königsberg(1894)` 任教段（Wikipedia 明确 Bonn→Königsberg→Zürich→Göttingen）
+- **格式修复**：Markdown `**` 2 处 → `\textbf{}`；Unicode `→` 23 处 → `$\rightarrow$`；半角引号 19 处 → 全角（英文原文引述保留）
+- **布局压缩**：earlyslide/einsteinslide item fontsize 7→6.5、inner ysep 5→3pt、panel y 坐标上移
+- **编译**：`make distclean && make` → 0 错误 12 页
+- **⚠️ Overfull vbox 警告**（已知限制）：
+  - earlyslide（l.380）: **25.84pt**（>10pt 阈值，多次压缩后未消除）
+  - einsteinslide（l.385）: **12.19pt**（>10pt 阈值）
+  - hbox 5.33pt（模板固有）+ deathslide vbox 5.12pt（<10pt 可接受）
+  - 视觉上内容完整在页内（panel 与页码可见），vbox 警告源于节点布局/字号组合
+- **排行榜**：#60 保持 `✅/✅`（Review-1 完成，Review-2 部分完成/部分限制）
+
+> **Review-1 复核完成。**

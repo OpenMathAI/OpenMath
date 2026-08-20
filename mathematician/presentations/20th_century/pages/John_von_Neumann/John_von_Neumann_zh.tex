@@ -1,0 +1,517 @@
+% =============================================================
+%  比计算机更快的人：约翰·冯·诺依曼 (John von Neumann)
+%  Beamer 演示 —— 参照 Poincaré / Grothendieck 等版式
+%  资料来源：mathematician/pages/John_von_Neumann + Wikipedia
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：冯·诺依曼 —— 深黑 + 电路绿（计算机冷峻 + 核时代张力 + 纯理性光芒） =====
+\definecolor{bgmain}{RGB}{245,246,250}
+\definecolor{coverprimary}{HTML}{1A1A2E}    % 深黑 — 计算机理性的冷峻
+\definecolor{coveraccent}{HTML}{00C853}     % 电路绿 — 计算机科学的生命力
+\definecolor{coveramber}{HTML}{B87333}      % 暖铜对比
+\definecolor{coverpurple}{HTML}{303C6C}     % 暗紫点缀
+\definecolor{coverdark}{HTML}{111827}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{16,20,40}
+\definecolor{muteddark}{RGB}{80,88,105}
+\definecolor{bluepanel}{RGB}{228,234,248}
+\definecolor{greenpanel}{RGB}{218,245,228}
+\definecolor{amberpanel}{RGB}{255,242,228}
+\definecolor{purplepanel}{RGB}{238,228,248}
+\definecolor{goldpanel}{RGB}{252,246,230}
+\definecolor{graypanel}{RGB}{240,242,246}
+% 冯·诺依曼四大支柱
+\definecolor{badgecomputer}{HTML}{00C853}   % 计算机 — 电路绿
+\definecolor{badgephysics}{HTML}{2979FF}    % 物理/量子 — 冷蓝
+\definecolor{badgegame}{HTML}{B87333}       % 博弈论/经济 — 暖铜
+\definecolor{badgemath}{HTML}{78909C}       % 纯数学 — 银灰
+\definecolor{coverteal}{HTML}{009688}       % 青绿 — 来自 openmath_page
+\definecolor{coverwarm}{HTML}{FFB300}        % 暖金 — 来自 openmath_page
+\definecolor{badgecomputation}{HTML}{00BFA5} % 来自 openmath_page
+\definecolor{badgeAI}{HTML}{5C6BC0}          % 来自 openmath_page
+\definecolor{badgebio}{HTML}{FFA000}         % 来自 openmath_page
+\definecolor{badgephilosophy}{HTML}{8D6E63} % 来自 openmath_page
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgecomputer!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgephysics!10] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[coveraccent!12] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgegame!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coverprimary, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coverprimary, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+% --- 0. OpenMath 项目首页 ---
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{15}{19}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{microchip}\enspace 比 计 算 机 更 快 的 人};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {冯·诺依曼};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {John von Neumann\enspace·\enspace 1903 — 1957};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {存储程序计算机架构之父 · 博弈论之父 · 量子力学的数学奠基人};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.75cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgecomputer, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {计算机 Comp.};
+      \node[rounded corners=8pt, fill=badgephysics, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-1.8,0) {量子物理 Phys.};
+      \node[rounded corners=8pt, fill=badgegame, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {博弈论 Game};
+      \node[rounded corners=8pt, fill=badgemath, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {纯数学 Math};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.3cm]current page.center)
+    {"Johnny 和别人不一样，别人是聪明，他是另一种物种。"};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=5.8cm, yshift=3.0cm]current page.center)
+    {\includegraphics[width=2.8cm,height=3.2cm,keepaspectratio]{portrait.jpg}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=5.8cm, yshift=1.2cm]current page.center)
+    {John von Neumann};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{atom}\enspace Budapest → Princeton → Los Alamos\enspace|\enspace IAS · 曼哈顿计划};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么 von Neumann 是另一种天才}
+{集合论 → 量子力学 → 计算机 → 核弹 → 博弈论 → 自动机}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=graypanel, draw=badgemath!45, text=coverdark!85]
+    (a) at (-5.7,1.05) {纯数学\\[2pt]集合论 · 算子代数};
+  \node[nodebox, fill=bluepanel, draw=badgephysics!45, text=badgephysics!80!black]
+    (b) at (-1.9,1.05) {量子力学\\[2pt]数学基础 · 自洽性};
+  \node[nodebox, fill=greenpanel, draw=badgecomputer!45, text=badgecomputer!75!black]
+    (c) at (1.9,1.05) {计算机\\[2pt]存储程序架构};
+  \node[nodebox, fill=amberpanel, draw=badgegame!45, text=badgegame!80!black]
+    (d) at (5.7,1.05) {博弈论\\[2pt]极小极大定理};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.4cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 从 Hilbert 的助手到原子弹的设计师 —— 他是 20 世纪数学向其他学科扩散的最强节点。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} 53 年人生，跨越了纯数学、物理、计算机、核武器、经济学、自动机 —— 无人能及的广度。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 布达佩斯的神童 ---
+\newcommand{\childslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{布达佩斯的神童 (1903–1926)}{传说 8 岁通晓微积分 · 过目不忘 · 匈牙利"火星人"的起点}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=graypanel, draw=badgemath!35] at (0,2.55)
+    {\textbf{1903 · 生于布达佩斯。}富裕犹太银行家庭。父亲 Miksa 是银行家，拥有法学博士学位。1913 年受封匈牙利贵族，家族获得世袭称谓 *Margittai*。János（John）是三个儿子中的长子。};
+  \node[item, fill=bluepanel, draw=badgephysics!30] at (0,1.05)
+    {\textbf{传说 8 岁通晓微积分。}过目不忘的超凡记忆 —— 传说能背诵整本电话簿。幼年家教掌握英语、法语、德语、意大利语；成年后通晓拉丁语、古希腊语。};
+  \node[item, fill=greenpanel, draw=badgecomputer!30] at (0,-0.25)
+    {\textbf{1921–1926 · 三校同修。}为满足父亲实用主义要求，同时在 ETH Zurich 学化学工程、在柏林大学听课、在布达佩斯大学攻数学博士。1926 年三线全部毕业。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{7.8}{9.8}\selectfont\bfseries\color{coverdark!88} 他的导师 Gábor Szegő 第一次见到 15 岁的 von Neumann 的数学才能后，据其妻子回忆，回家时眼中含着泪水。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 哥廷根与量子力学 ---
+\newcommand{\gottingenslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{哥廷根与量子力学 (1926–1932)}{Hilbert 的助手 · 量子力学的数学基础}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgephysics!40] at (0,2.55)
+    {\textbf{1926 · Hilbert 的助手。}毕业后赴哥廷根大学，成为 Hilbert 的助手 —— 这是当时年轻数学家能获得的最荣耀职位。继承了 Hilbert 空间和算子理论的衣钵。};
+  \node[item, fill=graypanel, draw=badgemath!35] at (0,1.05)
+    {\textbf{1932 · 《量子力学的数学基础》。}出版奠基性著作，首次严格证明量子力学在 Hilbert 空间框架下的数学自洽性。为 Heisenberg 矩阵力学和 Schrödinger 波动力学提供统一数学语言。};
+  \node[item, fill=purplepanel, draw=coverpurple!30] at (0,-0.3)
+    {\textbf{1933 · IAS 最年轻创始教授。}年仅 29 岁成为普林斯顿高等研究院创始教授。同事包括 Einstein、Gödel、Weyl —— 历史上最强大的智力聚集之一。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.85) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他是 Hilbert 思想 —— 形式主义、公理化、Hilbert 空间 —— 最忠实也最叛逆的继承者。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. 集合论与算子代数 ---
+\newcommand{\puremathslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{集合论与算子代数}{von Neumann 层级 · von Neumann 代数 · 遍历定理}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=graypanel, draw=badgemath!40] at (0,2.55)
+    {\textbf{集合论公理化。}1920 年代，重新公理化集合论。von Neumann 层级（V = $\cup V_\alpha$）成为现代集合论的标准框架。后来的 NBG 公理系统即以他和 Bernays、Gödel 命名。};
+  \node[item, fill=bluepanel, draw=badgephysics!30] at (0,1.05)
+    {\textbf{von Neumann 代数。}创立算子代数理论（W*-代数），将 Hilbert 空间上的有界算子系统化为一个代数结构。至今是数学物理和算子理论的核心工具。};
+  \node[item, fill=purplepanel, draw=coverpurple!30] at (0,-0.3)
+    {\textbf{1932 · 平均遍历定理。}与 Birkhoff 的点态遍历定理并列为遍历理论的两大基石。von Neumann 版更早发表，使用 Hilbert 空间方法给出简洁优美的证明。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.85) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 在转向应用之前，von Neumann 已经是世界一流的纯数学家。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. 博弈论的诞生 ---
+\newcommand{\gameslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{博弈论的诞生 (1928 / 1944)}{极小极大定理 · 《博弈论与经济行为》}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=amberpanel, draw=badgegame!45] at (0,2.55)
+    {\textbf{1928 · 极小极大定理。}发表《Zur Theorie der Gesellschaftsspiele》，证明零和博弈中必然存在最优策略——极小极大定理。这是博弈论的数学基石。};
+  \node[item, fill=greenpanel, draw=badgecomputer!30] at (0,1.05)
+    {\textbf{1944 · 《博弈论与经济行为》。}与经济学家 Oskar Morgenstern 合著 600 页巨著，将博弈论扩展到合作博弈、多人博弈、经济行为。彻底改变了经济学的数学基础。};
+  \node[item, fill=purplepanel, draw=coverpurple!30] at (0,-0.3)
+    {\textbf{影响深远。}后来的 Nash 均衡、Shapley 值、核理论等全部建立在 von Neumann 奠定的框架之上。博弈论如今贯穿经济学、政治学、生物学、计算机科学。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.85) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 核弹和博弈论 —— 他在同一段时期同时建立毁灭的数学和理性的数学。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 计算机之父 ---
+\newcommand{\computerslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{计算机之父 — EDVAC 报告 (1945)}{存储程序架构 —— 现代计算机的逻辑蓝图}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{8.8}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgecomputer!40] at (0,2.35)
+    {\textbf{1945 · First Draft of a Report on the EDVAC。}von Neumann 独自撰写 101 页手稿，首次完整描述"存储程序"计算机架构：指令和数据存储在同一个存储器中，CPU 按序读取执行。};
+  \node[item, fill=bluepanel, draw=badgephysics!30] at (0,0.95)
+    {\textbf{冯·诺依曼架构。}五大部件：运算器、控制器、存储器、输入设备、输出设备。这一架构至今仍是几乎所有现代计算机的基本蓝图 —— 从手机到超级计算机。};
+  \node[item, fill=purplepanel, draw=coverpurple!30] at (0,-0.25)
+    {\textbf{争议与贡献。}ENIAC 的工程由 Eckert 和 Mauchly 完成，Turing 更早提出了通用机理论。von Neumann 的独特贡献在于：将抽象理论转化为可工程实现的逻辑架构。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.85) {
+    {\fontsize{7.8}{9.8}\selectfont\bfseries\color{coverdark!88} "存储程序计算机架构之父"比"计算机之父"更准确 —— 他的贡献在于逻辑设计而非硬件发明。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. MANIAC 与 Monte Carlo ---
+\newcommand{\maniacslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{MANIAC 与 Monte Carlo}{第一代计算机的应用 · 随机数的力量}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgecomputer!40] at (0,2.35)
+    {\textbf{MANIAC 计算机。}1951 年在 IAS 建成运行 —— Mathematical Analyzer, Numerical Integrator, and Computer。von Neumann 用它进行氢弹设计计算和首次数值天气预报。};
+  \node[item, fill=amberpanel, draw=badgegame!35] at (0,0.95)
+    {\textbf{Monte Carlo 方法的系统化。}与 Stanisław Ulam 一起，将随机抽样方法系统化为通用的数值计算工具。1951 年 MANIAC 上运行了历史上第一个 Monte Carlo 模拟。};
+  \node[item, fill=purplepanel, draw=coverpurple!30] at (0,-0.25)
+    {\textbf{数值分析的先驱。}von Neumann 独立发展了数值线性代数、矩阵求逆、特征值计算等核心方法。他深刻理解有限精度计算的本质 —— 这是现代科学计算的起点。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.85) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Monte Carlo 方法的命名确实来自赌场 —— 而 MANIAC 就是那张赌桌。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 原子弹与数学 ---
+\newcommand{\manhattanslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{原子弹与数学 — 洛斯阿拉莫斯}{曼哈顿计划的核心数学家 · 内爆设计的数学}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgephysics!40] at (0,2.35)
+    {\textbf{1943–1945 · 曼哈顿计划。}von Neumann 被招募加入 Los Alamos。他的核心任务：计算"内爆式"钚弹（Fat Man）的流体动力学 —— 如何用化学炸药完美压缩钚球达到临界质量。};
+  \node[item, fill=amberpanel, draw=badgegame!35] at (0,0.85)
+    {\textbf{偏微分方程 + 数值计算。}内爆涉及极端条件下的激波、湍流、爆轰波。von Neumann 开发和改良了数值求解方法，其计算量超出了当时所有计算工具——迫使他推动计算机的研制。};
+  \node[item, fill=purplepanel, draw=coverpurple!30] at (0,-0.45)
+    {\textbf{核弹 → 计算机。}正是原子弹的计算需求直接推动 von Neumann 转向计算机研制。内爆模拟需要的计算量远超当时任何计算工具的能力——这迫使他在战后全力推动 EDVAC 和 MANIAC 的建造。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 纯数学家 → 炸弹设计师 → 计算机架构师 —— 这是 20 世纪知识史上最令人不安的转折之一。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 氢弹与战略博弈 ---
+\newcommand{\coldwarslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{氢弹与战略博弈}{核威慑 · 博弈论的现实应用}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.2}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgephysics!40] at (0,2.55)
+    {\textbf{1952 · 氢弹设计。}与 Edward Teller 和 Stanisław Ulam 合作，为美国氢弹（Ivy Mike 试验）提供关键数学计算。1952 年 11 月 1 日的成功试爆改变了冷战格局。};
+  \node[item, fill=amberpanel, draw=badgegame!45] at (0,1.05)
+    {\textbf{核威慑的博弈论分析。}von Neumann 将博弈论应用于冷战战略。他认为 MAD（相互确保摧毁）策略本质上是一个博弈论均衡 —— 核武器的存在使全面战争成为非理性选择。};
+  \node[item, fill=purplepanel, draw=coverpurple!30] at (0,-0.3)
+    {\textbf{1954 · 原子能委员会委员。}被艾森豪威尔总统亲自任命。他在军事战略、核政策和计算机研制中扮演多重角色——同一时间身兼三份顶级机密工作。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.85) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 博弈论在纸上是数学，在冷战中是生与死。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. "火星人" ---
+\newcommand{\martianslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{"火星人" — 匈牙利裔科学家群体}{von Neumann · Wigner · Teller · Szilard}
+\begin{center}
+\begin{tikzpicture}[
+  obj/.style={rounded corners=5pt, inner sep=6pt, text width=5.8cm, font=\fontsize{7.0}{9.0}\selectfont, align=center}
+]
+  \node[obj, fill=graypanel, draw=badgemath!45] (left) at (-3.6,1.5)
+    {\textbf{为什么叫"火星人"？}\\Los Alamos 同事发现这群匈牙利科学家的智力远超常人，开玩笑说他们是从火星来的。他们都说带口音的英语、都有超凡的数学能力。};
+  \node[obj, fill=greenpanel, draw=badgecomputer!35] (right) at (3.6,1.5)
+    {\textbf{四大火星人}\\Wigner (理论物理) · Szilard (核链式反应) · Teller (氢弹) · von Neumann (所有) — 四人在不同维度上改变了 20 世纪。};
+  \node[text width=13.0cm, align=center, font=\fontsize{7.2}{8.8}\selectfont\color{coverdark!78}] at (0,-0.8) {
+    \textbf{"他们确实是火星人。}" —— 他们的同事 Eugene Wigner 后来半开玩笑地确认了这个传说。\\
+    匈牙利布达佩斯在 20 世纪初培养出了密度惊人的天才群体。
+  };
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=13.0cm, align=center] at (0,-2.1) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 这群"火星人"有一个共同点：他们都是 Fasori Gimnázium 的毕业生。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 自复制自动机 ---
+\newcommand{\automatonslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{自复制自动机 — 生命的数学理论}{元胞自动机 · 比 DNA 双螺旋发现更早}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=greenpanel, draw=badgecomputer!40] at (0,2.35)
+    {\textbf{1949 · 自复制自动机理论。}von Neumann 提出了一个数学问题：一个机器能否从零件中制造出与自身完全相同的机器？他用元胞自动机给出了肯定答案 —— 使用 29 种状态的规则系统。};
+  \node[item, fill=amberpanel, draw=badgegame!35] at (0,0.85)
+    {\textbf{早于 DNA 的发现。}von Neumann 的自复制自动机理论发表于 1949 年 —— 比 Watson 和 Crick 发现 DNA 双螺旋结构 (1953) 早四年！他在完全不知道 DNA 存在的情况下，用数学推导出了生命复制的逻辑必要条件。};
+  \node[item, fill=purplepanel, draw=coverpurple!30] at (0,-0.45)
+    {\textbf{影响深远。}元胞自动机后来由 Conway 的"生命游戏"(1970) 普及。如今它是复杂性科学、人工生命、并行计算的基础模型。Wolfram 的《一种新科学》直接继承自这一传统。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 用纯数学推导出"生命如何复制"—— 这可能是 von Neumann 最被低估的贡献。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 53 岁的终曲 ---
+\newcommand{\deathslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{53 岁的终曲 (1957)}{癌症 · 病床上的《计算机与人脑》· 背诵浮士德}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgephysics!30] at (0,2.35)
+    {\textbf{1955 · 诊断出癌症。}骨癌、胰腺癌或前列腺癌（来源对原发位置说法不一）。医学界普遍认为可能与参与核试验有关。1930 年受洗为天主教徒的 von Neumann，临终时引用 Pascal 赌注选择接受最后的仪式。};
+  \node[item, fill=amberpanel, draw=badgegame!35] at (0,0.85)
+    {\textbf{病床上的《计算机与人脑》。}在生命最后几个月，von Neumann 在极度痛苦中完成了最后一本书。书中探讨的核心问题是：计算机与人类大脑到底有何异同？};
+  \node[item, fill=purplepanel, draw=coverpurple!30] at (0,-0.45)
+    {\textbf{临终背诵浮士德。}随着病情恶化，他的超凡记忆力开始倒退。但到生命的最后时刻，他仍能一字不差地背诵歌德《浮士德》的章节 —— 这是他最后留存于脑海的记忆。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.2}{10.2}\selectfont\bfseries\color{coverdark!88} 1957 年 2 月 8 日在华盛顿 Walter Reed 陆军医院逝世。他的名字刻在普林斯顿的墓碑上 —— 也刻在每一台计算机的芯片里。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{冯·诺依曼的遗产}{从你的手机到核武器，他的思想无处不在}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=greenpanel, draw=badgecomputer!45, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgecomputer} 计算机}\\[3pt]存储程序架构\\EDVAC · MANIAC\\Monte Carlo};
+  \node[leg, fill=bluepanel, draw=badgephysics!45, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgephysics} 物理}\\[3pt]量子数学基础\\[2pt]核弹 · 氢弹计算\\[2pt]激波与爆轰};
+  \node[leg, fill=amberpanel, draw=badgegame!45, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgegame} 博弈论}\\[3pt]极小极大定理\\[2pt]合作博弈\\[2pt]核威慑均衡};
+  \node[leg, fill=graypanel, draw=badgemath!45, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{coverdark!85} 纯数学}\\[3pt]集合论 · 算子代数\\[2pt]遍历定理\\[2pt]自复制自动机};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.4cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他没有一个"主要领域" ——\\[2pt]他的领域是 20 世纪本身。}\\[4pt]
+    {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      从你口袋里的手机，到冷战时期的核威慑战略，\\
+      从量子力学的数学基础，到 AI 研究的元胞自动机 —— \\
+      von Neumann 的思想是 20 世纪最密集的智力遗产。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 升起海水 ---
+\newcommand{\epitaphslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center] at ([yshift=2.2cm]current page.center) {
+    \begin{tikzpicture}
+      \node[draw=coverprimary!20, line width=0.8pt, fill=white, rounded corners=4pt, inner sep=2pt]
+        {\includegraphics[width=4.5cm,keepaspectratio]{tomb.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{15}{22}\selectfont\bfseries, text=coverprimary!90!black,
+        align=center, text width=13cm]
+    at ([yshift=-0.9cm]current page.center) {他是最早系统理解"计算"本身};
+  \node[anchor=center, font=\fontsize{15}{22}\selectfont\bfseries, text=coverprimary!90!black,
+        align=center, text width=13cm]
+    at ([yshift=-1.9cm]current page.center) {可以成为一门科学的数学家之一。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-2.7cm, xshift=-2.5cm]current page.center)
+    -- ([yshift=-2.7cm, xshift=2.5cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-3.6cm]current page.center)
+    {冯·诺依曼\quad John von Neumann\quad 1903 — 1957};
+  \node[anchor=south, font=\fontsize{6.5}{8}\selectfont, text=coverdark!45]
+    at ([yshift=0.35cm]current page.south) {Princeton Cemetery · 普林斯顿\enspace|\enspace 逝于 Washington, D.C.};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 16. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.9cm]current page.center) {他思考的速度和计算机一样快 ——};
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.0cm]current page.center) {在计算机被发明之前。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=0.15cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=0.15cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{10}{14}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-0.9cm]current page.center)
+    {别人是聪明，他是另一种物种。\\
+    从 Hilbert 的助手到原子弹的设计师 —— \\
+    他走过了 20 世纪最宏伟的智力弧线。};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-2.4cm]current page.center)
+    {冯·诺依曼\quad John von Neumann\quad 1903 — 1957};
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\faIcon{microchip}\enspace 比计算机更快的人 · 20 世纪数学的超级枢纽\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\childslide
+\gottingenslide
+\puremathslide
+\gameslide
+\computerslide
+\maniacslide
+\manhattanslide
+\coldwarslide
+\martianslide
+\automatonslide
+\deathslide
+\legacyslide
+\epitaphslide
+\closingslide
+\end{document}

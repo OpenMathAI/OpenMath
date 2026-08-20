@@ -1,0 +1,478 @@
+% =============================================================
+%  从模空间到计算机视觉：大卫·芒福德 (David Mumford)
+%  Beamer 演示
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：芒福德 — 哈佛深红 + 模式紫 + GIT 金 + 转型蓝 =====
+\definecolor{bgmain}{RGB}{248,246,243}
+\definecolor{coverprimary}{HTML}{111827}
+\definecolor{coveraccent}{HTML}{A51C30}
+\definecolor{coveramber}{HTML}{C9A227}
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{coverlight}{HTML}{E5E7EB}
+\definecolor{titlecolor}{RGB}{18,20,30}
+\definecolor{muteddark}{RGB}{75,70,60}
+\definecolor{redpanel}{RGB}{250,225,228}
+\definecolor{goldpanel}{RGB}{255,248,220}
+\definecolor{purplepanel}{RGB}{240,230,242}
+\definecolor{bluepanel}{RGB}{218,232,245}
+\definecolor{graypanel}{RGB}{242,244,248}
+\definecolor{greenpanel}{RGB}{220,240,228}
+\definecolor{amberpanel}{RGB}{255,240,220}
+\definecolor{badgeModuli}{HTML}{A51C30}
+\definecolor{badgeVision}{HTML}{5B3256}
+\definecolor{badgeSurf}{HTML}{C9A227}
+\definecolor{badgeLegacy}{HTML}{003366}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!3] (current page.north west) rectangle (current page.south east);
+  \fill[badgeModuli!8] (current page.north west) ++(1.55,-1.35) circle (2.45cm);
+  \fill[badgeVision!8] (current page.south east) ++(-1.9,1.45) circle (2.70cm);
+  \fill[badgeSurf!6] (current page.north east) ++(-2.9,-1.8) circle (0.85cm);
+  \fill[badgeLegacy!6] (current page.south west) ++(3.1,3.1) circle (1.60cm);
+  \foreach \x in {-0.2,0.8,...,16.2} {
+    \draw[coveraccent, opacity=0.04, line width=0.25pt] ([xshift=\x cm]current page.south west) -- ([xshift=\x cm]current page.north west);
+  }
+  \foreach \y in {-0.2,0.7,...,9.3} {
+    \draw[coveraccent, opacity=0.035, line width=0.25pt] ([yshift=\y cm]current page.south west) -- ([yshift=\y cm]current page.south east);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=3.55cm]current page.center) {\faIcon{project-diagram}\enspace 从模空间到计算机视觉};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=2.45cm]current page.center) {大卫·芒福德};
+  \node[anchor=north east, inner sep=0pt] at ([xshift=-0.8cm, yshift=-0.8cm]current page.north east) {
+    \includegraphics[width=2.4cm, keepaspectratio]{David_Mumford.jpg}};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([yshift=1.55cm]current page.center) {David Mumford\enspace·\enspace 1937 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([yshift=1.1cm]current page.center) {模空间 · GIT · Deligne–Mumford 叠 · Mumford–Shah 泛函};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont, text=coverprimary!55!black]
+    at ([yshift=0.68cm]current page.center) {\faIcon{globe}\enspace 英国 $\rightarrow$ 美国};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.25cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.25cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-1.0cm]current page.center) {
+    \begin{tikzpicture}
+      \node[rounded corners=8pt, fill=badgeModuli, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (-5.4,0) {模空间};
+      \node[rounded corners=8pt, fill=badgeSurf, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=coverdark] at (-1.8,0) {GIT·曲面};
+      \node[rounded corners=8pt, fill=badgeVision, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (1.8,0) {视觉/AI};
+      \node[rounded corners=8pt, fill=badgeLegacy, inner xsep=8pt, inner ysep=5pt,
+            text width=2.5cm, align=center, font=\small\bfseries, text=white] at (5.4,0) {传承};
+    \end{tikzpicture}
+  };
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{medal}\enspace Fields 1974 · Wolf 2008 · Shaw 2006 · National Medal of Science 2010\enspace|\enspace Harvard 1961-96 · Brown 1996--};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. Hook ---
+\newcommand{\hookslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{为什么 Fields 奖之后还要转型？}{模空间 · GIT · Deligne–Mumford 叠 · Mumford–Shah}
+\begin{center}
+\begin{tikzpicture}[
+  nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}
+]
+  \node[nodebox, fill=redpanel, draw=badgeModuli!50, text=badgeModuli!85!black]
+    (a) at (-5.7,1.05) {模空间 (1961)\\{曲线模概形}\\Zariski 的学生};
+  \node[nodebox, fill=goldpanel, draw=badgeSurf!60, text=badgeSurf!85!black]
+    (b) at (-1.9,1.05) {GIT (1965)\\{商空间存在性}\\Bombieri 曲面分类};
+  \node[nodebox, fill=purplepanel, draw=badgeVision!50, text=badgeVision!85!black]
+    (c) at (1.9,1.05) {Deligne–Mumford 叠\\[2pt]模叠理论\\[2pt]算术几何基础};
+  \node[nodebox, fill=bluepanel, draw=badgeLegacy!50, text=badgeLegacy!85!black]
+    (d) at (5.7,1.05) {50岁转型\\Fields→计算机视觉\\Mumford–Shah};
+  \node[draw=coveraccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {
+    {\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他先定义了"模空间"——然后在 50 岁时转身去教计算机如何"看"。}\\[1pt]
+    {\fontsize{8.2}{10}\selectfont\color{covermuted} Fields 奖之后的最罕见转型——从代数几何到视觉科学。他证明了数学的生命力在于不断重新开始。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 3. 早年 ---
+\newcommand{\earlyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{早年：英格兰到哈佛 (1937–1961)}{Putnam Fellow ×2 · Westinghouse 奖 · Zariski 的学生}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgeSurf!50] at (0,2.55)
+    {\textbf{1937 · 生于英格兰 Worth, West Sussex。}父亲 William Mumford——剑桥 St John's 数学 Tripos。母亲 Edith Read——剑桥 Girton College。幼年移居美国。**英国→美国双重背景**。};
+  \node[item, fill=bluepanel, draw=badgeLegacy!40] at (0,1.05)
+    {\textbf{Phillips Exeter Academy。}继电器计算机获 Westinghouse 科学奖。1955、1956 两次 Putnam Fellow。哈佛大学——成为 Oscar Zariski 的学生。};
+  \node[item, fill=redpanel, draw=badgeModuli!25] at (0,-0.25)
+    {\textbf{1961 · 哈佛博士。}论文：《任意亏格曲线的模概形存在性》。Zariski 教他代数几何的严格性——他将在一个根本性的新方向上推进代数几何。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 英国出生、美国成长。Zariski 的学生。模空间在 24 岁时诞生。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 4. 模空间 ---
+\newcommand{\modulisilde}{%
+\begin{frame}
+\plainbar
+\sectiontitle{模空间：1961 PhD — 曲线的模}{John Tate (ICM 1974): 模空间是现代代数几何的主战场}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeModuli!55] at (0,2.55)
+    {\textbf{什么是模空间？}"模空间"是一个几何空间，其点对应几何对象（曲线、阿贝尔簇）的同构类。Riemann 知道维数 ($3g-3$)——Mumford 证明了**存在性**。};
+  \node[item, fill=goldpanel, draw=badgeSurf!40] at (0,1.05)
+    {\textbf{构造模空间。}Hilbert 概形 + 射影线性群轨道空间。任意亏格 $g$、任意代数闭域——Mumford 的博士论文构造了第一个完整证明。};
+  \node[item, fill=purplepanel, draw=badgeVision!25] at (0,-0.45)
+    {\textbf{模空间 = 主战场。}Wiles 的费马大定理（模形式）到弦论的 Calabi–Yau 模空间——一切都依赖于 Mumford 奠定的理论。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "Mumford 多管齐下地攻击模簇问题"——John Tate。模空间是现代代数几何的核心结构。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 5. GIT ---
+\newcommand{\gitslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{GIT：几何不变量理论 (1965)}{商空间存在性 —— 从 Donaldson 到 quiver 簇的通用框架}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgeSurf!55] at (0,2.35)
+    {\textbf{核心问题。}代数群 $G$ 作用于代数簇 $X$。轨道空间 $X/G$ 何时是好的代数簇？答案：只考虑"稳定"点——Mumford 的 GIT 框架。};
+  \node[item, fill=redpanel, draw=badgeModuli!40] at (0,0.85)
+    {\textbf{稳定性。}轨道闭且迷向子群有限。关键洞见：在不稳定处商空间不存在——但可通过 blow-up 修正。};
+  \node[item, fill=bluepanel, draw=badgeLegacy!25] at (0,-0.45)
+    {\textbf{GIT 无处不在。}模空间构造 · Donaldson–Uhlenbeck Yang–Mills · quiver 簇 · 辛约化 Kempf–Ness。GIT 是 20 世纪代数几何最通用的工具之一。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "商空间何时存在？"——Mumford 回答了这个问题。稳定性 = 可商化。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 6. Deligne–Mumford 叠 ---
+\newcommand{\stackslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Deligne–Mumford 叠}{当模空间不够好——比概形更精细的"叠"的诞生}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=purplepanel, draw=badgeVision!55] at (0,2.35)
+    {\textbf{模空间的问题。}有些模问题在概形范畴内无好解——对象有非平凡自同构群。Mumford 指出：需要比概形更精细的结构——"叠" (stack)。};
+  \node[item, fill=goldpanel, draw=badgeSurf!40] at (0,0.85)
+    {\textbf{Deligne–Mumford 叠 (1970s)。}与 Pierre Deligne 合作——定义代数叠。每个点携带几何信息 + 稳定子群。算术几何中不可或缺的语言。};
+  \node[item, fill=redpanel, draw=badgeModuli!25] at (0,-0.45)
+    {\textbf{叠的革命。}椭圆曲线模叠 $\overline{M}_{1,1}$——第一个完整例子。今天代数叠是 Gromov–Witten 理论的标准语言。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 当模空间不够好——你需要"叠"。Mumford 和 Deligne 为代数几何增添了新维度。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 7. 正特征曲面 ---
+\newcommand{\surfacesslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{正特征曲面的完全分类 (1969–1976)}{与 Bombieri 合作 —— 两个 Fields 奖得主的正特征革命}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgeSurf!55] at (0,2.55)
+    {\textbf{从复数到正特征。}Enriques–Kodaira 分类了复曲面。Mumford 和 Bombieri (三篇论文, 1969–1976) 推广到正特征 $p$ 的代数闭域。};
+  \node[item, fill=purplepanel, draw=badgeVision!40] at (0,1.05)
+    {\textbf{四大类 + 新类型。}$-\infty$: 直纹面。0: K3, 阿贝尔, Enriques + quasi-hyperelliptic, quasi-elliptic（正特征特有！）。1: 椭圆。2: 一般型。};
+  \node[item, fill=redpanel, draw=badgeModuli!25] at (0,-0.25)
+    {\textbf{里程碑。}正特征代数几何基石——Mori 后来推广到三维。两个 Fields 奖得主 (1974) 的合作——Mumford + Bombieri。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 两个 Fields 奖得主联手——把曲面分类从 $\mathbb{C}$ 推到了任意特征。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 8. Grothendieck 使者 ---
+\newcommand{\grothsilde}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Grothendieck 的美国使者 (1963–64)}{哈佛讲授概形语言——《代数曲面上的曲线》}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeModuli!55] at (0,2.35)
+    {\textbf{1963–64 · 哈佛。}Mumford 讲授 Grothendieck 概形理论——美国最早系统接触 EGA/SGA 的课程。讲义出版为《代数曲面上的曲线》(1966)。};
+  \node[item, fill=bluepanel, draw=badgeLegacy!40] at (0,0.85)
+    {\textbf{解决意大利学派遗留问题。}代数曲面"特征系统完备性"——意大利学派声称正确但无严格证明。Mumford 用 Grothendieck 语言给出了充要条件。};
+  \node[item, fill=goldpanel, draw=badgeSurf!25] at (0,-0.45)
+    {\textbf{哈佛重镇。}同时 Hartshorne 主持"留数与对偶"研讨班。Tate、Lichtenbaum 参与。Mumford 和 Hartshorne 将 Grothendieck 革命带到美国。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Grothendieck 在美国的第一代使者——用概形语言回答了意大利学派无法回答的问题。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 9. 阿贝尔簇 ---
+\newcommand{\abelianslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{阿贝尔簇与 theta 函数}{Heisenberg 群 · 环面嵌入 · Castelnuovo–Mumford}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=goldpanel, draw=badgeSurf!55] at (0,2.55)
+    {\textbf{1966–67 · 阿贝尔簇的代数理论。}传统 theta 函数是解析/超越的。Mumford 用纯代数方法——Heisenberg 群有限类比——重建整个理论。远离复分析的里程碑。};
+  \node[item, fill=redpanel, draw=badgeModuli!40] at (0,1.05)
+    {\textbf{环面嵌入 (toroidal embedding)。}环簇理论先驱——用环面嵌入紧化阿贝尔簇退化。Faltings–Chai 紧化的基础。};
+  \node[item, fill=purplepanel, draw=badgeVision!25] at (0,-0.25)
+    {\textbf{Castelnuovo–Mumford 正则性。}同调代数概念→Gröbner 基复杂度度量→计算代数几何核心工具。从 1960s 纯代数到 1990s 计算革命。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从 Heisenberg 群到环面嵌入到正则性——一套工具跨越了纯代数到计算。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 10. 50岁转型 ---
+\newcommand{\transitionslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{50 岁的重生：从 Fields 到 AI (1980s)}{代数几何 → 计算机视觉 —— Fields 奖史上最罕见的转型}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=bluepanel, draw=badgeLegacy!55] at (0,2.35)
+    {\textbf{为什么转型？}50 岁时发现：视觉、感知、智能——比模空间更根本。他将代数几何的严格性带入缺乏数学基础的计算机视觉。};
+  \node[item, fill=purplepanel, draw=badgeVision!40] at (0,0.85)
+    {\textbf{Ulf Grenander 的模式理论。}概率模型描述视觉世界。"代数的精确性 + 概率的灵活性"——Mumford 的第二职业生涯。};
+  \node[item, fill=goldpanel, draw=badgeSurf!25] at (0,-0.45)
+    {\textbf{从哈佛到布朗 (1996)。}彻底离开代数几何——加入布朗大学应用数学系。"我不再是代数学家——我是试图理解智能的数学家。"};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Fields 奖之后——他没有躺在荣誉上。50 岁时重新开始。这是数学家的最高勇气。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 11. Mumford–Shah ---
+\newcommand{\visionslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{Mumford–Shah 泛函 (1989) — 教计算机"看"}{图像分割 → 变分问题 —— 30 多年后仍是经典}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=purplepanel, draw=badgeVision!55] at (0,2.35)
+    {\textbf{1989 · Mumford–Shah 泛函。}图像分割 = 最优分段光滑逼近。泛函含两项：保真度（与原始差异）+ 边缘长度（惩罚过多边界）。经典变分方法。};
+  \node[item, fill=bluepanel, draw=badgeLegacy!40] at (0,0.85)
+    {\textbf{"经典"和"基础性"。}2011 年《数学成像方法手册》称 Mumford–Shah 为"经典"。2024 评估："保留边缘分割图像的基础性方法。" 30+ 年仍是标准。};
+  \node[item, fill=redpanel, draw=badgeModuli!25] at (0,-0.45)
+    {\textbf{视觉皮层贝叶斯模型 (2002)。}与 Tai Sing Lee 合作——概率模型解释大脑视觉。"革命性贝叶斯方法"。从分割到理解大脑。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个泛函——定义了图像分割的数学基础。30年后仍是经典。代数几何的精确性在视觉科学中开花。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 12. 计算代数几何 ---
+\newcommand{\computeslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{"What can be computed?" (1993)}{与 Dave Bayer 合作 —— 从 Gröbner 基到计算代数几何}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeModuli!55] at (0,2.55)
+    {\textbf{1993 · 与 Dave Bayer。}"What can be computed in algebraic geometry?"——计算代数几何的奠基文献。Gröbner 基 + Castelnuovo–Mumford 正则性 = 实际算法。};
+  \node[item, fill=goldpanel, draw=badgeSurf!40] at (0,1.05)
+    {\textbf{从存在性到可计算性。}代数几何传统上是"存在性"科学。Mumford 和 Bayer 改变了这一点——用计算机能实际计算什么？};
+  \node[item, fill=purplepanel, draw=badgeVision!25] at (0,-0.25)
+    {\textbf{计算代数几何的诞生。}Macaulay2、SINGULAR——这些系统实现了 Mumford 的愿景。从抽象存在性到具体算法——Mumford 是桥梁。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "What can be computed?"——改变了代数几何。从存在到算法。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 13. 荣誉 ---
+\newcommand{\honorsslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{荣誉：Fields→MacArthur→Wolf→Shaw→国家科学奖章}{从 37 岁到 80 岁 —— 跨越纯数学和应用数学的最高荣誉}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}
+]
+  \node[item, fill=redpanel, draw=badgeModuli!55] at (0,2.9)
+    {\textbf{Fields 奖 (1974, 37岁)。}ICM 温哥华。Tate 颁奖词："Mumford 多管齐下地攻击模簇问题。" Zariski 第一个获 Fields 奖的学生。};
+  \node[item, fill=goldpanel, draw=badgeSurf!45] at (0,1.55)
+    {\textbf{MacArthur '天才'奖 (1987) · Shaw 奖 (2006) · Steele 奖 (2007)。}MacArthur——自由探索。Shaw——"东方诺贝尔"。Steele 阐述奖——表彰优雅数学写作。};
+  \node[item, fill=purplepanel, draw=badgeVision!40] at (0,0.35)
+    {\textbf{Wolf 奖 (2008) · 国家科学奖章 (2010) · BBVA 奖 (2012)。}Wolf——数学最高荣誉之一。国家科学奖章——美国公民最高科学荣誉。};
+  \node[item, fill=bluepanel, draw=badgeLegacy!25] at (0,-0.85)
+    {\textbf{在世荣誉。}Royal Society 外籍院士。AMS Fellow。Sloan Fellow (1962)。Longuet-Higgins 奖 (2005, 2009 两次！)。跨越纯数学和应用数学的荣誉之路。};
+  \node[draw=coveraccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.35) {
+    {\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Fields 1974 → MacArthur 1987 → Shaw 2006 → Wolf 2008 → 国家科学奖章 2010。一条路跨越两个世界。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{%
+\begin{frame}
+\plainbar
+\sectiontitle{那些以 Mumford 命名的概念}{从 Deligne–Mumford 叠到 Mumford–Shah —— 两个世界的语言}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm,
+              font=\fontsize{6.8}{8.8}\selectfont, align=center}
+]
+  \node[leg, fill=redpanel, draw=badgeModuli!50, line width=0.7pt] (a) at (-5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeModuli} 模与商}\\[3pt]模空间构造\\GIT · 稳定性\\Deligne–Mumford 叠};
+  \node[leg, fill=goldpanel, draw=badgeSurf!60, line width=0.7pt] (b) at (-1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSurf} 曲面与簇}\\[3pt]Bombieri–Mumford 分类\\Mumford 曲面\\[2pt]环面嵌入};
+  \node[leg, fill=purplepanel, draw=badgeVision!50, line width=0.7pt] (c) at (1.8,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeVision} 视觉与计算}\\[3pt]Mumford–Shah 泛函\\C–M 正则性\\[2pt]模式理论};
+  \node[leg, fill=bluepanel, draw=badgeLegacy!50, line width=0.7pt] (d) at (5.4,1.3)
+    {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy} 传承}\\[3pt]50位博士生\\Grothendieck 使者\\Harvard→Brown};
+  \node[draw=coveraccent!65, fill=graypanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {
+    {\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他先定义了模空间，然后教计算机如何"看"。Mumford的名字跨越了两个世界。}\\[4pt]
+    {\fontsize{7.6}{9.8}\selectfont\color{coverdark!85}
+      Deligne–Mumford 叠 $\to$ GIT $\to$ Bombieri–Mumford 分类 $\to$ Castelnuovo–Mumford 正则性\\
+      $\to$ Mumford–Shah 泛函 $\to$ Mumford 曲面 $\to$ 模空间构造\\
+      名称跨越纯代数几何和应用数学。}
+  };
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{16}{20}\selectfont\bfseries, text=coverprimary!90!black]
+    at ([yshift=1.5cm]current page.center) {模空间是现代代数几何的主战场。};
+  \node[anchor=center, font=\fontsize{16}{20}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([yshift=0.4cm]current page.center) {计算机视觉也应该是。};
+  \draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center)
+    -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black]
+    at ([yshift=-1.2cm]current page.center)
+    {— David Mumford};
+  \node[anchor=center, font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black]
+    at ([yshift=-2.0cm]current page.center)
+    {大卫·芒福德\quad David Mumford\quad 1937\,--\quad Worth, England $\rightarrow$ Harvard $\rightarrow$ Brown};
+  \node[anchor=south, font=\fontsize{5.5}{7}\selectfont, text=coverdark!40]
+    at ([yshift=0.35cm]current page.south) {\faIcon{project-diagram}\enspace 模空间·GIT·Deligne–Mumford·计算机视觉跨界先驱\enspace|\enspace OpenMathAI};
+\end{tikzpicture}
+\end{frame}
+}
+
+\begin{document}
+\openmathslide
+\titleslide
+\hookslide
+\earlyslide
+\modulisilde
+\gitslide
+\stackslide
+\surfacesslide
+\grothsilde
+\abelianslide
+\transitionslide
+\visionslide
+\computeslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}
