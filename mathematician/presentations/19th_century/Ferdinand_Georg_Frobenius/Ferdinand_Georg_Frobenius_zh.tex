@@ -1,0 +1,251 @@
+% =============================================================
+%  群表示论的奠基人：弗罗贝尼乌斯 (Ferdinand Georg Frobenius)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Ferdinand_Georg_Frobenius
+%  设计母题：群作用下的轨道 / 共轭类 —— 柔和气泡呼应对称结构的自相似性
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：普鲁士深蓝 + 学术金 + 群表示三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{prussianblue}{HTML}{1A237E}   % 普鲁士深蓝 — 柏林学术传统
+\definecolor{goldaccent}{HTML}{C9A227}     % 学术金 — 普鲁士科学院 / 奠基性贡献
+\definecolor{badgeRep}{HTML}{4C5FD5}       % 群表示 — 靛蓝
+\definecolor{badgeNum}{HTML}{0E7C7B}       % 数论 — 青绿
+\definecolor{badgeDiff}{HTML}{E07B30}      % 微分方程 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}    % 石版灰 — 传承 / 遗产
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{reppanel}{RGB}{228,232,250}
+\definecolor{numpanel}{RGB}{220,240,238}
+\definecolor{diffpanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[goldaccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应群作用的轨道 / 共轭类 / 自相似
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[goldaccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeRep!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeNum!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeDiff!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[goldaccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{goldaccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=prussianblue!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 德国\enspace·\enspace 群表示论的奠基人\enspace·\enspace 柏林学术传统的继承者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=prussianblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {弗罗贝尼乌斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=prussianblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Ferdinand Georg Frobenius\enspace·\enspace 1849 — 1917};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=goldaccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {群表示论 · 群特征标 · Frobenius 自同构 · Frobenius 方法};
+  \draw[goldaccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeRep] at (-5.05,0)
+        {群表示论\\Representation\par\scriptsize 对称性的分解};
+      \node[badge, fill=badgeNum] at (-1.68,0)
+        {群特征标\\Character Theory\par\scriptsize 群结构的基本工具};
+      \node[badge, fill=badgeDiff] at (1.68,0)
+        {Frobenius 自同构\\Frobenius Element\par\scriptsize 素数到 Galois 群};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {Frobenius 方法\\Frobenius Method\par\scriptsize 正则奇点幂级数};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把对称性变成了可计算的语言——群表示论由此诞生。};
+  % 头像占位（Frobenius 无 Wikipedia 肖像，用装饰圆）
+  \node[draw=goldaccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \fill[badgeRep!12] (0,0) circle (1.0cm);
+      \node at (0,0.28) {\textcolor{badgeRep}{\faIcon{user}\enspace}};
+      \node[font=\fontsize{5}{6}\selectfont\itshape, text=covermuted] at (0,-0.55) {无肖像存世};
+    \end{tikzpicture}};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国\enspace|\enspace \faIcon{university}\enspace Berlin · ETH Zürich\enspace|\enspace 群表示论 · 普鲁士科学院院士};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{goldaccent!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{弗罗贝尼乌斯 - 从夏洛滕堡到柏林科学院}{生卒 · 本名 · 国籍 · 师承 · 任职 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  % 左侧头像占位
+  \node[draw=goldaccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\begin{tikzpicture}
+      \fill[badgeRep!12] (0,0) rectangle (3.0,3.9);
+      \node at (1.5,2.2) {\textcolor{badgeRep}{\fontsize{28}{28}\selectfont\faIcon{user}}};
+      \node[font=\fontsize{7}{9}\selectfont\itshape, text=covermuted, align=center] at (1.5,0.6) {无肖像存世};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Ferdinand Georg Frobenius (1849–1917)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=goldaccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1849-10-26 — 1917-08-03\\[2pt]\lab{本名}\quad Ferdinand Georg Frobenius\\[2pt]\lab{国籍}\quad 德国（普鲁士王国）};
+  \node[infob, fill=numpanel, draw=badgeNum!45, anchor=north] at (3.8,2.35)
+    {\lab{师承}\quad K. Weierstrass（博士导师）\\[2pt]
+     \lab{任职}\quad ETH Zürich 1875–1892\\[2pt]
+     \quad 柏林大学 1893–1917};
+  \node[infob, fill=reppanel, draw=badgeRep!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 柏林 · 夏洛滕堡\\[2pt]\lab{教育}\quad 哥廷根大学 · 柏林大学\\[2pt]\lab{荣誉}\quad 普鲁士科学院院士 (1893)};
+  \node[infob, fill=diffpanel, draw=badgeDiff!45, anchor=south] at (3.8,-2.01)
+    {\lab{核心领域}\quad 群表示论 · 群特征标\\[2pt]
+     \quad 数论 · 微分方程\\[2pt]
+     \lab{门生}\quad Schur · Landau · Knopp};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{对称性的可计算语言}{群表示论 · 群特征标 · Frobenius 自同构 · Frobenius 方法}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{7.0}{9.0}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=reppanel, draw=badgeRep!50, text=badgeRep!85!black] (a) at (-5.7,1.05) {群表示论\\1896 创立\\[2pt]对称性的分解};
+\node[nodebox, fill=goldpanel, draw=goldaccent!60, text=goldaccent!85!black] (b) at (-1.9,1.05) {群特征标\\特征标表\\[2pt]群结构的基本工具};
+\node[nodebox, fill=numpanel, draw=badgeNum!50, text=badgeNum!85!black] (c) at (1.9,1.05) {Frobenius 自同构\\数论\\[2pt]素数到 Galois 群};
+\node[nodebox, fill=diffpanel, draw=badgeDiff!50, text=badgeDiff!85!black] (d) at (5.7,1.05) {Frobenius 方法\\微分方程\\[2pt]正则奇点幂级数};
+\node[draw=goldaccent!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他让群不再只是抽象集合——而是可以被表示、被计算、被分类的对象。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1849–1874)}{夏洛滕堡出生 · 牧师之家 · 柏林受业 · 1870 博士}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=reppanel, draw=badgeRep!55] at (0,2.55) {\textbf{1849 · 生于夏洛滕堡。}1849 年 10 月 26 日生于柏林郊区的夏洛滕堡。父亲 Christian Ferdinand Frobenius 是新教牧师，母亲 Christine Elizabeth Friedrich——虔诚的学者之家。};
+\node[item, fill=numpanel, draw=badgeNum!45] at (0,1.05) {\textbf{求学之路。}1860 年（近 11 岁）进入 Joachimsthal Gymnasium；1867 年毕业后入哥廷根大学，仅读一学期便返回柏林，先后聆听 Leopold Kronecker、Ernst Kummer、Karl Weierstrass 的课。};
+\node[item, fill=goldpanel, draw=goldaccent!40] at (0,-0.25) {\textbf{1870 · 博士。}在 Weierstrass 指导下以优等成绩获博士学位，论文研究微分方程的解。此后先在 Joachimsthal Gymnasium、Sophienrealschule 任教，1874 年受聘为柏林大学数学副教授。};
+\node[draw=goldaccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 柏林——Weierstrass、Kronecker、Kummer 云集之地——为他铺就了严格的学术底色。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 5. 苏黎世岁月 ---
+\newcommand{\zurichslide}{\begin{frame}\plainbar\sectiontitle{苏黎世岁月 (1875–1892)}{ETH Zürich 十七年 · 成家 · 跨领域高产}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=reppanel, draw=badgeRep!55] at (0,2.55) {\textbf{赴苏黎世。}在柏林仅一年，1875 年便前往苏黎世，出任苏黎世理工学院（Polytechnikum，今 ETH Zürich）正教授。};
+\node[item, fill=numpanel, draw=badgeNum!45] at (0,1.05) {\textbf{十七年深耕。}1875–1892 年间，他在苏黎世结婚、成家，并在数学的多个不同领域完成大量重要工作——这段岁月是他学术生涯的高产期。};
+\node[item, fill=goldpanel, draw=goldaccent!40] at (0,-0.25) {\textbf{领域的广度。}从椭圆函数、双线性型、二次型，到微分方程与群论，他的兴趣横跨代数、分析与几何——这种广度为他日后创立群表示论埋下伏笔。};
+\node[draw=goldaccent!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 远离柏林学术中心的日子里，他静默地建立着自己的数学王国。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 6. 群论与表示论（核心） ---
+\newcommand{\representationslide}{\begin{frame}\plainbar\sectiontitle{群表示论：对称性的分解}{Sylow 定理抽象群证明 · 特征标理论 · Frobenius 互反律}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=reppanel, draw=badgeRep!60] at (0,2.55) {\textbf{Sylow 定理的抽象群证明。}Frobenius 最早给出 Sylow 定理对抽象群的证明（此前证明仅针对置换群）；其第一 Sylow 定理（存在性）的证明至今仍被广泛使用。};
+\node[item, fill=goldpanel, draw=goldaccent!50] at (0,0.85) {\textbf{群特征标与表示理论。}1896 年第一篇特征标论文构造了 PSL(2,p) 的特征标表；他创立群特征标与群表示理论，使之成为研究群结构的基本工具，并导出 Frobenius 互反律、定义 Frobenius 群。};
+\node[item, fill=numpanel, draw=badgeNum!40] at (0,-0.65) {\textbf{一个百年猜想。}若正整数 $n$ 整除有限群 $G$ 的阶，则 $x^n=1$ 的解数为 $k\cdot n$；猜想 $k=1$ 时解集构成子群——该猜想直到 1991 年（有限单群分类完成后）才被完全证明。};
+\node[draw=goldaccent!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 对称性，从此可以被分解、被追踪、被计算——群表示论是 20 世纪数学与物理的共同语言。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 7. 数论：Frobenius 自同构 ---
+\newcommand{\numberslide}{\begin{frame}\plainbar\sectiontitle{数论：Frobenius 自同构}{素数到 Galois 群共轭类的典范映射 · 推广 Dirichlet 定理}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=numpanel, draw=badgeNum!60] at (0,2.55) {\textbf{把素数变成共轭类。}Frobenius 引入一种典范方法，把素数 p 映到 Galois 群 $\mathrm{Gal}(K/\mathbb{Q})$ 中的共轭类——对每个不分歧的素数 p，存在唯一（至多共轭）的 Frobenius 元素 g，满足 $g(x) \equiv x^p \pmod{P}$。};
+\node[item, fill=reppanel, draw=badgeRep!40] at (0,0.85) {\textbf{Frobenius 元素。}变动 p 上方的素理想 P，g 变为其共轭元；这一共轭类典范地关联于 p，称为 Frobenius 共轭类，其中任一元素称为 Frobenius 元素。};
+\node[item, fill=goldpanel, draw=goldaccent!40] at (0,-0.65) {\textbf{推广 Dirichlet 定理。}取 $K$ 为分圆域，Frobenius 类即 $p \bmod m$——由此视角，Frobenius 共轭类的分布推广了 Dirichlet 关于算术级数中素数的经典结果，成为研究无穷次扩张 Galois 群的关键构造。};
+\node[draw=goldaccent!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 素数不再是孤立的点——它们在 Galois 群的对称中获得了位置。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 8. 微分方程：Frobenius 方法 ---
+\newcommand{\diffeqslide}{\begin{frame}\plainbar\sectiontitle{微分方程：Frobenius 方法}{正则奇点处的幂级数解 · 标准 Taylor 法失效时的解法}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=diffpanel, draw=badgeDiff!55] at (0,2.55) {\textbf{正则奇点。}线性变系数常微分方程在奇点附近，标准 Taylor 级数法常常失效。Frobenius 精细地发展了幂级数方法，专门处理这类正则奇点。};
+\node[item, fill=reppanel, draw=badgeRep!40] at (0,0.85) {\textbf{Frobenius 方法。}以 $y=x^r\sum_{n\ge 0}a_nx^n$ 的广义幂级数形式求解，通过指标方程（indicial equation）确定指数 r——这一算法今称 Frobenius 方法。};
+\node[item, fill=goldpanel, draw=goldaccent!40] at (0,-0.65) {\textbf{至今仍是标准工具。}从物理中的特殊函数（Bessel、Legendre、超几何方程）到工程应用，Frobenius 方法是求解变系数线性常微分方程的基石，也是每一位数学物理学生的必修内容。};
+\node[draw=goldaccent!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个多世纪后，他的名字仍出现在每一本常微分方程教科书里。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 9. 以 Frobenius 命名的成果 ---
+\newcommand{\namedslide}{\begin{frame}\plainbar\sectiontitle{以 Frobenius 命名的成果}{跨越代数 · 分析 · 几何 · 数学物理的印记}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=7pt, text width=3.05cm, font=\fontsize{6.6}{8.6}\selectfont, align=center}]
+\node[leg, fill=reppanel, draw=badgeRep!50,line width=0.7pt] (a) at (-5.4,1.35) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeRep} 代数}\\[3pt]Frobenius 范数 / 内积\\[2pt]Cayley–Hamilton 证明\\[2pt]Frobenius 群};
+\node[leg, fill=numpanel, draw=badgeNum!50,line width=0.7pt] (b) at (-1.8,1.35) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeNum} 数论}\\[3pt]Frobenius 自同构\\[2pt]Frobenius 元素\\[2pt]推广 Dirichlet 定理};
+\node[leg, fill=diffpanel, draw=badgeDiff!50,line width=0.7pt] (c) at (1.8,1.35) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeDiff} 分析}\\[3pt]Frobenius 方法\\[2pt]Padé 逼近（最早引入）\\[2pt]Frobenius–Stickelberger};
+\node[leg, fill=legacypanel, draw=badgeLegacy!50,line width=0.7pt] (d) at (5.4,1.35) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeLegacy} 现代回响}\\[3pt]Perron–Frobenius 定理\\[2pt]Frobenius 流形\\[2pt]表示论的基石};
+\node[draw=goldaccent!65, fill=goldpanel, rounded corners=6pt, inner sep=9pt, text width=13.0cm, align=center] at (0,-1.55) {{\fontsize{8.6}{11}\selectfont\bfseries\color{coverdark!88} 从非负矩阵到数学物理，他的名字贯穿现代数学的主干。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 10. 学术传承 ---
+\newcommand{\studentslide}{\begin{frame}\plainbar\sectiontitle{学术传承}{Issai Schur · Edmund Landau · Konrad Knopp}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=reppanel, draw=badgeRep!55] at (0,2.55) {\textbf{星光熠熠的门生。}其博士生含 Issai Schur（继承表示论衣钵）、Edmund Landau（解析数论）、Konrad Knopp（函数论）等，另指导 Richard Fuchs、Walter Schnee、Ernst Jacobsthal、Robert Remak 等。};
+\node[item, fill=numpanel, draw=badgeNum!45] at (0,1.05) {\textbf{Schur 的继承。}Issai Schur 是 Frobenius 表示论最忠实的继承者，Schur 引理、Schur 指标等延续并深化了特征标理论，使柏林成为 20 世纪初表示论的中心。};
+\node[item, fill=legacypanel, draw=badgeLegacy!40] at (0,-0.25) {\textbf{柏林学派的延续。}从 Weierstrass 到 Frobenius，再到 Schur，柏林学派以严格与结构著称，深刻影响了 20 世纪的代数学与数论。};
+\node[draw=goldaccent!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他培养的不是一个学派，而是一条严格数学的传承谱系。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 11. 回柏林与科学院 ---
+\newcommand{\berlinslide}{\begin{frame}\plainbar\sectiontitle{回柏林与科学院 (1893–1917)}{接替 Kronecker · 普鲁士科学院院士 · 柏林数学的中心}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=goldpanel, draw=goldaccent!50] at (0,2.55) {\textbf{接替 Kronecker。}1891 年 12 月 Kronecker 去世，柏林教席空缺。Weierstrass 坚信 Frobenius 是让柏林保持数学前沿的不二人选，动用其巨大影响力力荐之。};
+\node[item, fill=reppanel, draw=badgeRep!45] at (0,0.85) {\textbf{1893 · 回柏林。}他回到柏林，并当选普鲁士科学院院士——这一身份标志着他进入德国学术的最高殿堂。};
+\node[item, fill=numpanel, draw=badgeNum!40] at (0,-0.65) {\textbf{柏林的中心。}此后直至 1917 年去世，他在柏林大学执教，延续 Weierstrass–Kronecker 的严格传统，使柏林成为德国数学的另一极。};
+\node[draw=goldaccent!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1917 年 8 月 3 日，弗罗贝尼乌斯逝于柏林，享年 67 岁。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=prussianblue!90!black] at ([yshift=1.5cm]current page.center) {对称性，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=goldaccent!85!black] at ([yshift=0.4cm]current page.center) {从此可以被计算。};
+\draw[goldaccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=prussianblue!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Ferdinand Georg Frobenius};
+\node[font=\fontsize{8}{10}\selectfont, text=prussianblue!60!black] at ([yshift=-2.0cm]current page.center) {弗罗贝尼乌斯\quad Ferdinand Georg Frobenius\quad 1849 — 1917};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 群表示论 · 群特征标 · Frobenius 自同构\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\zurichslide
+\representationslide
+\numberslide
+\diffeqslide
+\namedslide
+\studentslide
+\berlinslide
+\closingslide
+\end{document}
