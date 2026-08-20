@@ -1,7 +1,7 @@
 # 19 世纪 数学家页面索引
 
 > 生成时间：2026-08-20 15:43:08
-> 共 **29** 人
+> 共 **30** 人
 
 - [Adrien-Marie Legendre](Adrien-Marie_Legendre/page.md) （1752–1833） — French mathematician (1752–1833)
 - [Arthur Cayley](Arthur_Cayley/page.md) （1821–1895） — English mathematician (1821-1895)
@@ -14,6 +14,7 @@
 - [Charles Hermite](Charles_Hermite/page.md) （1822–1901） — French mathematician (1822-1901)
 - [Ernst Kummer](Ernst_Kummer/page.md) （1810–1893） — German mathematician (1810–1893)
 - [Felix Klein](Felix_Klein/page.md) （1849–1925） — German mathematician, author of the Erlangen Program (1849-1925)
+- [Ferdinand Georg Frobenius](Ferdinand_Georg_Frobenius/page.md) （1849–1917） — German mathematician (1849–1917)
 - [Georg Cantor](Georg_Cantor/page.md) （1845–1918） — German mathematician, inventor of set theory (1845–1918)
 - [George Boole](George_Boole/page.md) （1815–1864） — English mathematician, philosopher and logician (1815–1864)
 - [Gotthold Eisenstein](Gotthold_Eisenstein/page.md) （1823–1852） — German mathematician (1823–1852)

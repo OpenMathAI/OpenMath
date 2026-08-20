@@ -21,6 +21,7 @@ ZH_NAMES = {
     'Carl_Gustav_Jacob_Jacobi': '卡尔·古斯塔夫·雅可比',
     'Charles_Hermite': '夏尔·埃尔米特',
     'Ernst_Kummer': '恩斯特·库默尔',
+    'Ferdinand_Georg_Frobenius': '费迪南德·格奥尔格·弗罗贝尼乌斯',
     'Évariste_Galois': '埃瓦里斯特·伽罗瓦',
     'Felix_Klein': '费利克斯·克莱因',
     'Georg_Cantor': '格奥尔格·康托尔',
