@@ -168,3 +168,27 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+---
+
+## Review-1 记录 (2026-08-20)
+
+> 结合本地 Wikipedia (`pages/Ferdinand_Georg_Frobenius/page.md` + `metadata.json`) 逐页比对。
+
+- **头像** ✅：`images/Ferdinand_Georg_Frobenius.jpeg`（竖版 373×536 JPEG，已提供）。封面右上角圆角裁剪 `clip[rounded corners=4pt]` 2.0×2.9cm + 姓名小字注；身份信息页左侧竖版裁剪 2.6×3.5cm。原「无肖像存世」占位符已移除。
+- **国籍** ✅：封面顶部 `\faIcon{globe}\enspace 德国`，身份信息页 `德国（普鲁士王国）`（Wikidata nationality: ["Kingdom of Prussia"]，用「德国」现代对应）。
+- **身份信息页** ✅：Slide 2 已存在（`\profileslide`），涵盖生卒/本名/国籍/师承/任职/荣誉/核心领域，符合 Wilson 模板硬性要求。
+- **事实复核**：生卒(1849-10-26~1917-08-03, 67岁)/Charlottenburg 出生(柏林郊区)/父 Christian Ferdinand Frobenius(新教牧师)/母 Christine Elizabeth Friedrich/1860 入 Joachimsthal Gymnasium(近11岁)/1867 哥廷根一学期/柏林听 Kronecker·Kummer·Weierstrass 课/1870 博士(Weierstrass 指导,优等)/1874 柏林大学副教授/1875–1892 ETH Zürich(十七年,成家)/1891-12 Kronecker 去世/1893 回柏林接替其教席并当选普鲁士科学院院士/1917-08-03 逝于柏林——全部与 Wikipedia 一致。
+- **核心贡献复核**：Sylow 定理抽象群证明(第一 Sylow 存在性)、1896 特征标论文 PSL(2,p) 特征标表、Frobenius 互反律、Frobenius 群、Frobenius 群猜想(1991 有限单群分类后证明)、Frobenius 自同构/元素/共轭类(推广 Dirichlet 定理)、Frobenius 方法(正则奇点)、Cayley–Hamilton 首个完整证明、Padé 逼近最早引入、Perron–Frobenius 定理(与 Perron 共同命名)、Frobenius 流形——全部准确，无杜撰。
+- **门生**：Issai Schur、Edmund Landau、Konrad Knopp、Richard Fuchs、Walter Schnee、Ernst Jacobsthal、Robert Remak 等，与 metadata `doctoral_student` 一致。
+- **编译**：`make distclean && make` → ✅ 13 页，0 错误。
+
+## Review-2 记录 (2026-08-20)
+
+> 结构优化 + Overfull 修复 + 编译验证。
+
+- **Overfull 修复**：
+  1. **profileslide（身份信息页）**：原 Overfull hbox 24.125pt + vbox 3.563pt。根因是头像 3.0×3.9cm 过大 + 信息网格 `text width=4.8cm` 过宽 + 位置过于靠边。修复：头像缩至 2.6×3.5cm（位置 -6.15→-6.0）、infob `text width=4.8cm→4.35cm`、`inner xsep=10pt→9pt`、`inner ysep=9pt→8pt`、字号 7.4/9.4→7.2/9.2、四节点位置收拢（±1.8→±1.6 / ±3.8→±3.5，纵向 2.35/2.01→2.3/1.85）。
+  2. **namedslide（以 Frobenius 命名的成果）**：原 Overfull hbox 10.43pt。根因是 4 个成果卡片 `text width=3.05cm` 过宽。修复：`text width=3.05cm→2.85cm`、`inner xsep=7pt→6pt`、字号 6.6/8.6→6.5/8.5、位置收拢（±5.4→±5.3 / ±1.8→±1.77）。
+- **结果**：仅剩 Overfull hbox 3.92pt（<10pt 可接受），0 错误。
+- **编译**：`make distclean && make` → ✅ 13 页，169 比例（453.54×255.12 pts），肖像已嵌入（PDF 167KB→201KB）。
