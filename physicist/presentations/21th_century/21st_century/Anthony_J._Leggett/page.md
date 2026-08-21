@@ -1,0 +1,102 @@
+---
+name: "Anthony J. Leggett"
+wikidata: Q192718
+wikipedia: https://en.wikipedia.org/wiki/Anthony_J._Leggett
+description: "British physicist (1938–2026)"
+date_of_birth: ["1938-03-26"]
+date_of_death: ["2026-03-08"]
+nationality: ["United States", "United Kingdom"]
+field_of_work: ["physics"]
+occupation: ["physicist", "university teacher"]
+award_received: ["Fellow of the Royal Society", "Knight Commander of the Order of the British Empire", "Fellow of the American Physical Society", "Maxwell Medal and Prize", "Fritz London Award", "IOP Dirac Medal", "Feenberg Medal", "Wolf Prize in Physics", "Nobel Prize in Physics", "honorary doctor of the University of Madrid Complutense", "honorary doctor of Toulouse-III University", "Simon Memorial Prize"]
+doctoral_advisor: ["Dirk ter Haar"]
+educated_at: ["Merton College", "Wimbledon College", "University of Oxford", "Balliol College", "Magdalen College"]
+---
+
+Anthony Leggett
+
+| [Professor](https://en.wikipedia.org/wiki/Professor "Professor")  Sir Anthony Leggett  [KBE](https://en.wikipedia.org/wiki/Knight_Commander_of_the_Order_of_the_British_Empire "Knight Commander of the Order of the British Empire") [FRS](https://en.wikipedia.org/wiki/Fellow_of_the_Royal_Society "Fellow of the Royal Society") [HonFInstP](https://en.wikipedia.org/wiki/Honorary_Fellows_of_the_Institute_of_Physics "Honorary Fellows of the Institute of Physics") | |
+| --- | --- |
+| Leggett in 2007 | |
+| Born | Anthony James Leggett  (1938-03-26)26 March 1938  [Camberwell](https://en.wikipedia.org/wiki/Camberwell "Camberwell"), London, England |
+| Died | 8 March 2026(2026-03-08) (aged 87)  [Urbana, Illinois](https://en.wikipedia.org/wiki/Urbana,_Illinois "Urbana, Illinois"), US |
+| Citizenship | United Kingdom United States |
+| Alma mater | [University of Oxford](https://en.wikipedia.org/wiki/University_of_Oxford "University of Oxford") (BA, DPhil) |
+| Known for | - [Caldeira–Leggett model](https://en.wikipedia.org/wiki/Caldeira–Leggett_model?action=edit&redlink=1 "Caldeira–Leggett model") of [quantum dissipation](https://en.wikipedia.org/wiki/Quantum_dissipation "Quantum dissipation") - [Leggett–Garg inequality](https://en.wikipedia.org/wiki/Leggett–Garg_inequality "Leggett–Garg inequality") - [Leggett inequality](https://en.wikipedia.org/wiki/Leggett_inequality "Leggett inequality") - [Superfluid](https://en.wikipedia.org/wiki/Superfluidity "Superfluidity") [phase of helium-3](https://en.wikipedia.org/wiki/Helium-3 "Helium-3") |
+| Spouse | Haruko Kinase   ​ (m. 1972)​ |
+| Awards | - [Maxwell Medal and Prize](https://en.wikipedia.org/wiki/Maxwell_Medal_and_Prize "Maxwell Medal and Prize") (1975) - [FRS](https://en.wikipedia.org/wiki/Fellow_of_the_Royal_Society "Fellow of the Royal Society") (1980) - [IOP Dirac Medal](https://en.wikipedia.org/wiki/IOP_Dirac_Medal "IOP Dirac Medal") (1992) - [Nobel Prize in Physics](https://en.wikipedia.org/wiki/Nobel_Prize_in_Physics "Nobel Prize in Physics") (2003) - [Wolf Prize in Physics](https://en.wikipedia.org/wiki/Wolf_Prize_in_Physics "Wolf Prize in Physics") (2002) - [KBE](https://en.wikipedia.org/wiki/Order_of_the_British_Empire "Order of the British Empire") (2004) |
+| **Scientific career** | |
+| Fields | [Physics](https://en.wikipedia.org/wiki/Physics "Physics") |
+| Institutions | - [University of Sussex](https://en.wikipedia.org/wiki/University_of_Sussex "University of Sussex") - [University of Waterloo](https://en.wikipedia.org/wiki/University_of_Waterloo "University of Waterloo") - [Institute for Quantum Computing](https://en.wikipedia.org/wiki/Institute_for_Quantum_Computing "Institute for Quantum Computing") - [U of Illinois Urbana-Champaign](https://en.wikipedia.org/wiki/University_of_Illinois_Urbana-Champaign "University of Illinois Urbana-Champaign") |
+| [Thesis](https://en.wikipedia.org/wiki/Thesis "Thesis") | *Some Problems in the Theory of Many-Body Systems*  (1964) |
+| [Doctoral advisor](https://en.wikipedia.org/wiki/Doctoral_advisor "Doctoral advisor") | [Dirk ter Haar](https://en.wikipedia.org/wiki/Dirk_ter_Haar "Dirk ter Haar") |
+| Doctoral students | - [Amir Caldeira](https://en.wikipedia.org/wiki/Amir_Caldeira "Amir Caldeira") - [Matthew Fisher](https://en.wikipedia.org/wiki/Matthew_P._A._Fisher "Matthew P. A. Fisher") - [Mohit Randeria](https://en.wikipedia.org/wiki/Mohit_Randeria "Mohit Randeria") |
+|  | |
+
+**Sir Anthony James Leggett** (26 March 1938 – 8 March 2026) was a British–American [theoretical physicist](https://en.wikipedia.org/wiki/Theoretical_physics "Theoretical physics") and professor at the University of Illinois Urbana-Champaign (UIUC). Leggett was widely recognised as a world leader in the theory of [low-temperature physics](https://en.wikipedia.org/wiki/Cryogenics "Cryogenics"), and his pioneering work on [superfluidity](https://en.wikipedia.org/wiki/Superfluid "Superfluid") was recognised by the 2003 [Nobel Prize in Physics](https://en.wikipedia.org/wiki/Nobel_Prize_in_Physics "Nobel Prize in Physics"). He shaped the theoretical understanding of normal and superfluid [helium](https://en.wikipedia.org/wiki/Helium "Helium") liquids and strongly coupled superfluids. He set directions for research in the [quantum physics](https://en.wikipedia.org/wiki/Quantum_physics "Quantum physics") of macroscopic [dissipative systems](https://en.wikipedia.org/wiki/Dissipative_system "Dissipative system") and use of condensed systems to test the foundations of [quantum mechanics](https://en.wikipedia.org/wiki/Quantum_mechanics "Quantum mechanics").
+
+## Early life and education
+
+Leggett was born on 26 March 1938, in [Camberwell](https://en.wikipedia.org/wiki/Camberwell "Camberwell"), south London, and raised [Catholic](https://en.wikipedia.org/wiki/Catholic "Catholic"). His father's forebears were village cobblers in a small village in Hampshire; Leggett's grandfather broke with this tradition to become a greengrocer. His mother's parents were of Irish descent; her father had moved to Britain and worked as a clerk in the [naval dockyard in Chatham](https://en.wikipedia.org/wiki/Chatham_Dockyard "Chatham Dockyard"). His maternal grandmother, who survived into her eighties, was sent out to [domestic service](https://en.wikipedia.org/wiki/Domestic_service "Domestic service") at the age of twelve.
+
+His father and mother were each the first in their families to receive a university education; they met and became engaged while students at the Institute of Education at the [University of London](https://en.wikipedia.org/wiki/University_of_London "University of London") but were unable to get married for some years because his father had to care for his own mother and siblings. His father worked as a secondary school teacher of [physics](https://en.wikipedia.org/wiki/Physics "Physics"), [chemistry](https://en.wikipedia.org/wiki/Chemistry "Chemistry") and [mathematics](https://en.wikipedia.org/wiki/Mathematics "Mathematics"). His mother also taught secondary school mathematics for a time but had to give this up when he was born. He was eventually followed by two sisters, Clare and Judith, and two brothers, Terence and Paul, all raised in their parents' [Roman Catholic](https://en.wikipedia.org/wiki/Roman_Catholic "Roman Catholic") faith. Leggett ceased to be a practising [Catholic](https://en.wikipedia.org/wiki/Catholic "Catholic") in his early twenties.
+
+Soon after he was born, his parents bought a house in [Upper Norwood](https://en.wikipedia.org/wiki/Upper_Norwood "Upper Norwood"), south London. When he was 18 months old, [WWII](https://en.wikipedia.org/wiki/WWII "WWII") broke out and he was evacuated to [Englefield Green](https://en.wikipedia.org/wiki/Englefield_Green "Englefield Green"), a small village in [Surrey](https://en.wikipedia.org/wiki/Surrey "Surrey") on the edge of the great park of [Windsor Castle](https://en.wikipedia.org/wiki/Windsor_Castle "Windsor Castle"), where he stayed for the duration of the war. After the end of the war, he returned to the Upper Norwood house and lived there until 1950; his father taught at a school in north-east London and his mother looked after the five children full-time. He attended the local Catholic primary school and, following a successful performance in the [11-plus](https://en.wikipedia.org/wiki/Eleven-plus_exam "Eleven-plus exam"), which he took rather earlier than most, transferred to [Wimbledon College](https://en.wikipedia.org/wiki/Wimbledon_College "Wimbledon College").
+
+He later attended Beaumont College, a [Jesuit](https://en.wikipedia.org/wiki/Jesuit "Jesuit") school in Old Windsor. He and his two younger brothers, Terrence and Paul, attended Beaumont as a consequence of his father's appointment to teach science at the college. While there, Leggett primarily studied classics, since that was generally regarded as the most prestigious field at the time; this study led directly to his [Greats](https://en.wikipedia.org/wiki/Greats "Greats") degree while at Oxford. Despite Leggett's emphasis on classics at Beaumont, his father ran an evening 'science club' for his younger son and a couple of others. In his last year at Beaumont, Leggett won every single prize for the subjects that he studied that year.
+
+Leggett won a scholarship to [Balliol College, Oxford](https://en.wikipedia.org/wiki/Balliol_College,_Oxford "Balliol College, Oxford"), in December 1954 and entered the university the following year with the intention of reading the degree technically known as [Literae Humaniores](https://en.wikipedia.org/wiki/Literae_Humaniores "Literae Humaniores") (classics). After completing his first degree, he began a second undergraduate degree, this time in physics at [Merton College, Oxford](https://en.wikipedia.org/wiki/Merton_College,_Oxford "Merton College, Oxford"). One person who was willing to overlook Leggett's unorthodox credentials was [Dirk ter Haar](https://en.wikipedia.org/wiki/Dirk_ter_Haar "Dirk ter Haar"), then a reader in theoretical physics and a fellow of [Magdalen College, Oxford](https://en.wikipedia.org/wiki/Magdalen_College,_Oxford "Magdalen College, Oxford"); so Leggett signed up for research under ter Haar's supervision. As with all of ter Haar's students in that period, the tentatively assigned thesis topic was *"Some Problems in the Theory of Many-Body Systems"*, which left a considerable degree of latitude.
+
+Dirk took a great interest in the personal welfare of his students and their families, and was meticulous in making sure they received adequate support; indeed, he encouraged Leggett to apply for a Prize Fellowship at Magdalen, which he held from 1963 to 1967. In the end, Leggett's thesis consisted of studies of two somewhat disconnected problems in the general area of liquid [helium](https://en.wikipedia.org/wiki/Helium "Helium"), one on higher-order [phonon](https://en.wikipedia.org/wiki/Phonon "Phonon") interaction processes in [superfluid](https://en.wikipedia.org/wiki/Superfluid "Superfluid") 4He and the other on the properties of dilute solutions of 4He in normal liquid 3He (a system which turned out to be much less experimentally accessible than the other side of the phase diagram, dilute solutions of 3He in 4He). The [University of Oxford](https://en.wikipedia.org/wiki/University_of_Oxford "University of Oxford") awarded Leggett an [Honorary DLitt](https://en.wikipedia.org/wiki/Honorary_degree "Honorary degree") in June 2005.
+
+## Career
+
+Leggett spent the period August 1964 – August 1965 as a [postdoctoral research](https://en.wikipedia.org/wiki/Postdoctoral_research "Postdoctoral research") fellow at UIUC, and [David Pines](https://en.wikipedia.org/wiki/David_Pines "David Pines") and his colleagues ([John Bardeen](https://en.wikipedia.org/wiki/John_Bardeen "John Bardeen"), [Gordon Baym](https://en.wikipedia.org/wiki/Gordon_Baym "Gordon Baym"), [Leo Kadanoff](https://en.wikipedia.org/wiki/Leo_Kadanoff "Leo Kadanoff") and others) provided a fertile environment. He then spent a year in the group of Professor [Takeo Matsubara](https://en.wikipedia.org/wiki/Takeo_Matsubara "Takeo Matsubara") at [Kyoto University](https://en.wikipedia.org/wiki/Kyoto_University "Kyoto University") in Japan.
+
+After one more postdoctoral year which he spent in "roving" mode, spending time at Oxford, Harvard, and Illinois, in the autumn of 1967 he took up a lectureship at the [University of Sussex](https://en.wikipedia.org/wiki/University_of_Sussex "University of Sussex"), where he was to spend the majority of the next fifteen years of his career. During the mid 1970s, he spent considerable time in Japan at the [University of Tokyo](https://en.wikipedia.org/wiki/University_of_Tokyo "University of Tokyo") and also at [Kwame Nkrumah University of Science and Technology](https://en.wikipedia.org/wiki/Kwame_Nkrumah_University_of_Science_and_Technology "Kwame Nkrumah University of Science and Technology") in [Kumasi, Ghana](https://en.wikipedia.org/wiki/Kumasi,_Ghana "Kumasi, Ghana").
+
+In early 1982, he accepted an offer from UIUC of the MacArthur Chair with which the university had recently been endowed. As he had already committed himself to an eight-month stay as a visiting scientist at [Cornell](https://en.wikipedia.org/wiki/Cornell "Cornell") in early 1983, he finally arrived in Urbana in the early fall of that year, and remained there for the rest of his career.
+
+Leggett's own research interests shifted away from superfluid 3He from around 1980 on. He worked inter alia on the low-temperature properties of glasses, high-temperature superconductivity, the [Bose–Einstein condensate (BEC)](https://en.wikipedia.org/wiki/Bose–Einstein_condensate "Bose–Einstein condensate") atomic gases, and above all on the theory of experiments to test whether the formation of quantum mechanics will continue to describe the physical world as we push it up from the atomic level towards that of everyday life.
+
+[![](https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Anthony_Leggett_at_GYSS_19Jan2016_2.jpg/250px-Anthony_Leggett_at_GYSS_19Jan2016_2.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)](https://en.wikipedia.org/wiki/File:Anthony_Leggett_at_GYSS_19Jan2016_2.jpg)
+
+Leggett at the Global Young Scientists Summit in [Singapore](https://en.wikipedia.org/wiki/Singapore "Singapore") (2016)
+
+From 2006 to 2016, he also held a position at the [Institute for Quantum Computing](https://en.wikipedia.org/wiki/Institute_for_Quantum_Computing "Institute for Quantum Computing") in Waterloo, Canada.
+
+As of April 2023, he was chief scientist at the [Institute for Condensed Matter Theory](https://en.wikipedia.org/wiki/Institute_for_Condensed_Matter_Theory "Institute for Condensed Matter Theory"), a research institute at the UIUC.
+
+In 2013, he became the founding director of the Shanghai Center for Complex Physics.
+
+## Death
+
+Leggett died at his home in Urbana, Illinois, on 8 March 2026, at the age of 87.
+
+## Research
+
+His research focused on cuprate [superconductivity](https://en.wikipedia.org/wiki/Superconductivity "Superconductivity"), [superfluidity](https://en.wikipedia.org/wiki/Superfluidity "Superfluidity") in highly degenerate [atomic gases](https://en.wikipedia.org/wiki/Atomic_gases "Atomic gases"), low temperature properties of [amorphous solids](https://en.wikipedia.org/wiki/Amorphous_solids "Amorphous solids"), conceptual issues in the formulation of [quantum mechanics](https://en.wikipedia.org/wiki/Quantum_mechanics "Quantum mechanics") and [topological quantum computation](https://en.wikipedia.org/wiki/Topological_quantum_computation "Topological quantum computation").
+
+The edition of 29 December 2005 of the *[International Herald Tribune](https://en.wikipedia.org/wiki/International_Herald_Tribune "International Herald Tribune")* printed an article, "New tests of [Einstein](https://en.wikipedia.org/wiki/Einstein "Einstein")'s 'spooky' reality", which referred to Leggett's Autumn 2005 debate at a conference in [Berkeley, California](https://en.wikipedia.org/wiki/Berkeley,_California "Berkeley, California"), with fellow Nobel laureate [Norman Ramsey](https://en.wikipedia.org/wiki/Norman_Ramsey "Norman Ramsey") of [Harvard University](https://en.wikipedia.org/wiki/Harvard_University "Harvard University"). Both debated the worth of attempts to change quantum theory. Leggett thought attempts were justified, Ramsey opposed. Leggett believed quantum mechanics may be incomplete because of the [quantum measurement problem](https://en.wikipedia.org/wiki/Measurement_problem "Measurement problem").
+
+## Awards and honours
+
+Leggett was a member of the [National Academy of Sciences](https://en.wikipedia.org/wiki/United_States_National_Academy_of_Sciences "United States National Academy of Sciences"), the [American Philosophical Society](https://en.wikipedia.org/wiki/American_Philosophical_Society "American Philosophical Society"), the [American Academy of Arts and Sciences](https://en.wikipedia.org/wiki/American_Academy_of_Arts_and_Sciences "American Academy of Arts and Sciences"), the [Russian Academy of Sciences](https://en.wikipedia.org/wiki/Russian_Academy_of_Sciences "Russian Academy of Sciences") (foreign member), and the [American Institute of Physics](https://en.wikipedia.org/wiki/American_Institute_of_Physics "American Institute of Physics"), and was elected a [Fellow of the Royal Society (FRS) in 1980](https://en.wikipedia.org/wiki/List_of_Fellows_of_the_Royal_Society_elected_in_1980 "List of Fellows of the Royal Society elected in 1980"), a [Fellow of the American Physical Society](https://en.wikipedia.org/wiki/Fellow_of_the_American_Physical_Society "Fellow of the American Physical Society") in 1985, an [Honorary Fellow of the Institute of Physics](https://en.wikipedia.org/wiki/Honorary_Fellow_of_the_Institute_of_Physics "Honorary Fellow of the Institute of Physics") (HonFInstP) in 1998, and a Foreign Fellow of the [Indian National Science Academy](https://en.wikipedia.org/wiki/Indian_National_Science_Academy "Indian National Science Academy") in 2011.
+
+Leggett was awarded the 2003 Nobel Prize in Physics (with [V. L. Ginzburg](https://en.wikipedia.org/wiki/Vitaly_Ginzburg "Vitaly Ginzburg") and [A. A. Abrikosov](https://en.wikipedia.org/wiki/Alexei_Alexeyevich_Abrikosov "Alexei Alexeyevich Abrikosov")) for pioneering contributions to the theory of superconductors and superfluids. He was an Honorary Fellow of the [Institute of Physics](https://en.wikipedia.org/wiki/Institute_of_Physics "Institute of Physics") (UK). He was appointed [Knight Commander of the Order of the British Empire](https://en.wikipedia.org/wiki/Knight_Commander_of_the_Order_of_the_British_Empire "Knight Commander of the Order of the British Empire") (KBE) in the [2004](https://en.wikipedia.org/wiki/2004_Birthday_Honours "2004 Birthday Honours") [Queen's Birthday Honours](https://en.wikipedia.org/wiki/Queen's_Birthday_Honours "Queen's Birthday Honours") "for services to physics". He won the 2002/2003 [Wolf Prize in Physics](https://en.wikipedia.org/wiki/Wolf_Prize_in_Physics "Wolf Prize in Physics"), for research on condensed forms of matter (with [B. I. Halperin](https://en.wikipedia.org/wiki/Bertrand_Halperin "Bertrand Halperin")). He was also honoured with the [Eugene Feenberg Memorial Medal](https://en.wikipedia.org/wiki/Eugene_Feenberg_Memorial_Medal "Eugene Feenberg Memorial Medal") (1999).
+
+## Personal life
+
+In June 1973, he married Haruko Kinase. They met at Sussex University, in Brighton, England. In 1978, they had a daughter Asako. His wife Haruko earned a PhD in cultural anthropology from UIUC and has done research on the hospice system. Their daughter, Asako, also graduated from UIUC with a joint major in geography and chemistry.
+
+## See also
+
+- [List of University of Waterloo people](https://en.wikipedia.org/wiki/List_of_University_of_Waterloo_people "List of University of Waterloo people")
+
+## References
+
+## External links
+
+- [Anthony J. Leggett](https://www.nobelprize.org/laureate/768) on Nobelprize.org  including the Nobel Lecture *Superfluid 3-He: The Early Days as Seen by a Theorist*
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikiquote-logo.svg/20px-Wikiquote-logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail) Quotations related to [Anthony Leggett](https://en.wikiquote.org/wiki/Special:Search/Anthony%20Leggett "wikiquote:Special:Search/Anthony Leggett") at Wikiquote

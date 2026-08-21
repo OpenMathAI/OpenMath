@@ -93,7 +93,7 @@
 | 1961 | Robert Hofstadter (罗伯特·霍夫施塔特) | United States | 表彰他开创性地研究原子核中的电子散射，并由此获得关于核子结构的发现 | 🔲 | 🔲 |
 | 1961 | Rudolf Ludwig Mössbauer (鲁道夫·路德维希·穆斯堡尔) | West Germany | 表彰他关于伽马辐射共振吸收的研究，以及在此研究中发现以他名字命名的效应 | 🔲 | 🔲 |
 | 1962 | Lev Davidovich Landau (列夫·达维多维奇·朗道) | Soviet Union | 表彰他关于凝聚态物质、尤其是液氦的开创性理论 | 🔲 | 🔲 |
-| 1963 | Eugene Paul Wigner (尤金·保罗·维格纳) | United States | 表彰他对原子核和基本粒子理论的贡献，尤其是发现并应用基本对称原理 | ✅ | 🔲 |
+| 1963 | Eugene Paul Wigner (尤金·保罗·维格纳) | United States | 表彰他对原子核和基本粒子理论的贡献，尤其是发现并应用基本对称原理 | ✅ | ✅ |
 | 1963 | Maria Goeppert Mayer (玛丽亚·格佩特-梅耶) | United States | 表彰他们关于核壳层结构的发现 | 🔲 | 🔲 |
 | 1963 | J. Hans D. Jensen (汉斯·丹尼尔·延森) | West Germany | 表彰他们关于核壳层结构的发现 | 🔲 | 🔲 |
 | 1964 | Charles Hard Townes (查尔斯·哈德·汤斯) | United States | 表彰他们在量子电子学领域的基础工作，这些工作促成了基于微波激射-激光原理的振荡器和放大器的建造 | 🔲 | 🔲 |
@@ -136,7 +136,7 @@
 | 1981 | Nicolaas Bloembergen (尼古拉斯·布洛姆伯根) | United States | 表彰他们对激光光谱学发展的贡献 | 🔲 | 🔲 |
 | 1981 | Arthur Leonard Schawlow (阿瑟·伦纳德·肖洛) | United States | 表彰他们对激光光谱学发展的贡献 | 🔲 | 🔲 |
 | 1981 | Kai M. Siegbahn (凯·西格班) | Sweden | 表彰他对高分辨率电子光谱学发展的贡献 | 🔲 | 🔲 |
-| 1982 | Kenneth G. Wilson (肯尼斯·威尔逊) | United States | 表彰他关于与相变相关的临界现象的理论 | ✅ | 🔲 |
+| 1982 | Kenneth G. Wilson (肯尼斯·威尔逊) | United States | 表彰他关于与相变相关的临界现象的理论 | ✅ | ✅ |
 | 1983 | Subrahmanyan Chandrasekhar (苏布拉马尼扬·钱德拉塞卡) | United States | 表彰他对恒星结构和演化具有重要意义的物理过程的理论研究 | 🔲 | 🔲 |
 | 1983 | William Alfred Fowler (威廉·福勒) | United States | 表彰他对宇宙中化学元素形成具有重要意义的核反应的理论和实验研究 | 🔲 | 🔲 |
 | 1984 | Carlo Rubbia (卡洛·鲁比亚) | Switzerland | 表彰他们对大型项目的决定性贡献，该项目促成了弱相互作用传递者 W 和 Z 场粒子的发现 | 🔲 | 🔲 |
@@ -189,7 +189,7 @@
 - **获奖总项数**：162 项
 - **获奖总人数**：161 位
 - **已立传**：8 位（Chen Ning Yang、Eugene Paul Wigner、Hendrik Antoon Lorentz、Kenneth G. Wilson、Pieter Zeeman、Tsung-Dao Lee、Wilhelm Conrad Röntgen、Wolfgang Pauli）
-- **已 Review**：6 位（Chen Ning Yang、Hendrik Antoon Lorentz、Pieter Zeeman、Tsung-Dao Lee、Wilhelm Conrad Röntgen、Wolfgang Pauli）
+- **已 Review**：8 位（Chen Ning Yang、Eugene Paul Wigner、Hendrik Antoon Lorentz、Kenneth G. Wilson、Pieter Zeeman、Tsung-Dao Lee、Wilhelm Conrad Röntgen、Wolfgang Pauli）
 - **两度获奖者**：John Bardeen（唯一两度获诺贝尔物理学奖者）
 - **女性获奖者**（20 世纪）：Maria Goeppert Mayer、Marie Curie
 
