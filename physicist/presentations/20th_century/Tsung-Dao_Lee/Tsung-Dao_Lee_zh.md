@@ -166,6 +166,21 @@
 - **本地路径**：`music_audio/alex-productions/` 下选定曲目 → `20th_century/Tsung-Dao_Lee/`
 - **时长**：12 页 × 7 秒 ≈ 84 秒 → ffmpeg `-shortest` 自动对齐
 
+## 第 9.5 步：Review 完成后更新名单状态 ★
+
+> **两轮 Review 全部完成后，必须同步更新总名单的「Review」列**，否则名单会一直停留在 🔲。
+
+- 编辑 `physicist/generate_20th_century_list.py`，将李政道姓名加入 `BIOGRAPHIES_DONE`（立传）与 `REVIEWS_DONE`（Review）集合：
+  ```python
+  BIOGRAPHIES_DONE = {..., "Tsung-Dao Lee"}
+  REVIEWS_DONE = {..., "Tsung-Dao Lee"}
+  ```
+- 重新生成名单：
+  ```bash
+  cd physicist && python3 generate_20th_century_list.py
+  ```
+- 校验：名单中李政道行应为 `| ✅ | ✅ |`，统计区「已立传」「已 Review」计数 +1。
+
 ## 五、关键参考文件清单
 
 | 文件 | 用途 |
