@@ -182,3 +182,34 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+---
+
+## Review-1 记录 (2026-08-21)
+
+> 结合本地 Wikipedia (`pages/20th_century/Chen_Ning_Yang/page.md` + `metadata.json`) 逐页比对。
+
+- **头像** ✅：`images/Yang.jpg`（Wikipedia "Yang in 1957" 照片，250×354 竖版，已下载）。封面右上角圆角裁剪 + 姓名注 "Yang, 1957"；身份信息页左侧竖版裁剪 + "Chen Ning Yang (1957)"。
+- **国籍** ✅：封面底部 `中国（原美国）`，身份信息页 `中国（原美国·中华民国）`（Wikipedia Citizenship: ROC 1922–2015 → US 1964–2015 → PRC 2015–2025）。
+- **身份信息页** ✅：Slide 2 存在，涵盖生卒/本名/国籍/师承/任职/荣誉/核心领域，符合 Wilson 模板硬性要求。
+- **生卒**：1922-10-01 ~ 2025-10-18（103 岁），与 Wikipedia infobox + 正文一致（metadata 另含 1922-09-22 旧历，正文统一用 10-01）。
+- **家庭**：父杨武之（Ko-Chuen Yang，1896–1973，数学家）、母罗孟华——与 Wikipedia 一致；tex 用"杨武之"（Wikipedia 汉字误作"楊克純"，tex 更准确）。
+- **教育轨迹**：北平中小学 → 1937 合肥 → 1938 昆明西南联大 → 1942 BS（吴大猷·群论分子光谱）→ 1944 MS（清华·王竹溪·统计力学）→ 庚款留美 → 1946 芝加哥 → 1948 PhD（Teller）——全部准确。
+- **核心贡献复核**：杨-米尔斯 1954（核心思想属杨，Mills 亲述）/ 宇称不守恒 1956（与李政道，吴健雄实验证实，Telegdi–Friedman、Garwin–Lederman 独立确认，1957 诺奖）/ 李-杨定理 1952 / 李-黄-杨修正 1957 / Byers–Yang 1961 / ODLRO 1962 / Yang–Baxter 1967 / Wu–Yang 磁单极子+词典 1975 / 积分形式 1974——全部准确，无杜撰。
+- **13 项贡献**（2012 清华黑方块）：统计力学 4 项、凝聚态 2 项、粒子物理 4 项、场论 3 项，与 Wikipedia "13 seminal contributions" 逐一吻合。
+- **生涯与荣誉**：石溪 1965–1999（Einstein 讲座教授、首任所长）→ 1999 退休回国清华 → 2015 弃美籍；Nobel 1957 / Rumford 1980 / 国家科学奖章 1986 / Oskar Klein 1988（首位得主）/ 爱因斯坦奖章 1995 / Onsager 1999 / King Faisal 2001 / Marcel Grossmann 2015；1955 APS 会士、1958 中央研究院院士、皇家学会/俄科院/美科院院士——全部准确。
+- **门生**：Bill Sutherland (1968)、Brosl Hasslacher (1972)、Alexander Wu Chao (1974)，1986 应陈省身之邀建陈省身数学研究所理论物理分部——与 Wikipedia 一致。
+- **编译**：`make` → ✅ 13 页，0 错误。
+
+## Review-2 记录 (2026-08-21)
+
+> 结构优化 + Overfull 检查 + 编译验证。
+
+- **Overfull 现状**：`xelatex` 两遍编译后，Overfull 为 hbox 6.03pt / 5.85pt / 4.16pt + vbox 1.17pt，全部 **<10pt 可接受**。
+  - line 235/236：结尾页 22pt 大字号金句「对称性，」「是相互作用的源泉。」——居中文本，溢出向两侧各约 1mm，不可见，保留 22pt 醒目字号。
+  - line 242：共享封面模板 `openphysicist_page.tex` 的 `\openphysicistslide`——共享资源，不在本 tex 内改动。
+- **肖像**：`keepaspectratio` 下封面 2.0×2.8cm、身份页 3.0×3.9cm 均正常缩放，无变形。
+- **中文标点/断行**：全角引号、破折号、`\quad` 间距统一，与 Wilson 标杆一致。
+- **编译**：`make distclean && make` → ✅ 13 页，169 比例，肖像已嵌入，中文渲染正常。
+
+> 结论：两轮 Review 通过，无需事实修正；Overfull 均在可接受范围内。
