@@ -24,6 +24,8 @@ BIOGRAPHIES_DONE = {
     "Pieter Zeeman",
     "Eugene Paul Wigner",
     "Kenneth G. Wilson",
+    "Chen Ning Yang",
+    "Tsung-Dao Lee",
     "Wolfgang Pauli",
 }
 
@@ -33,6 +35,8 @@ REVIEWS_DONE = {
     "Wilhelm Conrad Röntgen",
     "Hendrik Antoon Lorentz",
     "Pieter Zeeman",
+    "Chen Ning Yang",
+    "Tsung-Dao Lee",
     "Wolfgang Pauli",
 }
 

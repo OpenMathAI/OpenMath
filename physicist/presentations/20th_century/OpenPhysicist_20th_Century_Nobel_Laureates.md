@@ -82,8 +82,8 @@
 | 1956 | William Bradford Shockley (威廉·肖克利) | United States | 表彰他们对半导体的研究以及发现晶体管效应 | 🔲 | 🔲 |
 | 1956 | John Bardeen (约翰·巴丁) | United States | 表彰他们对半导体的研究以及发现晶体管效应 | 🔲 | 🔲 |
 | 1956 | Walter Houser Brattain (沃尔特·豪泽·布拉顿) | United States | 表彰他们对半导体的研究以及发现晶体管效应 | 🔲 | 🔲 |
-| 1957 | Chen Ning Yang (杨振宁) | Republic of China | 表彰他们对所谓的宇称定律进行的深入探究，由此带来了关于基本粒子的重要发现 | 🔲 | 🔲 |
-| 1957 | Tsung-Dao Lee (李政道) | Republic of China | 表彰他们对所谓的宇称定律进行的深入探究，由此带来了关于基本粒子的重要发现 | 🔲 | 🔲 |
+| 1957 | Chen Ning Yang (杨振宁) | Republic of China | 表彰他们对所谓的宇称定律进行的深入探究，由此带来了关于基本粒子的重要发现 | ✅ | ✅ |
+| 1957 | Tsung-Dao Lee (李政道) | Republic of China | 表彰他们对所谓的宇称定律进行的深入探究，由此带来了关于基本粒子的重要发现 | ✅ | ✅ |
 | 1958 | Pavel Alekseyevich Cherenkov (帕维尔·阿列克谢耶维奇·切伦科夫) | Soviet Union | 表彰他们对切伦科夫效应的发现与解释 | 🔲 | 🔲 |
 | 1958 | Il'ja Mikhailovich Frank (伊利亚·米哈伊洛维奇·弗兰克) | Soviet Union | 表彰他们对切伦科夫效应的发现与解释 | 🔲 | 🔲 |
 | 1958 | Igor Yevgenyevich Tamm (伊戈尔·叶夫根耶维奇·塔姆) | Soviet Union | 表彰他们对切伦科夫效应的发现与解释 | 🔲 | 🔲 |
@@ -188,8 +188,8 @@
 - **获奖年份跨度**：1901–2000
 - **获奖总项数**：162 项
 - **获奖总人数**：161 位
-- **已立传**：6 位（Eugene Paul Wigner、Hendrik Antoon Lorentz、Kenneth G. Wilson、Pieter Zeeman、Wilhelm Conrad Röntgen、Wolfgang Pauli）
-- **已 Review**：4 位（Hendrik Antoon Lorentz、Pieter Zeeman、Wilhelm Conrad Röntgen、Wolfgang Pauli）
+- **已立传**：8 位（Chen Ning Yang、Eugene Paul Wigner、Hendrik Antoon Lorentz、Kenneth G. Wilson、Pieter Zeeman、Tsung-Dao Lee、Wilhelm Conrad Röntgen、Wolfgang Pauli）
+- **已 Review**：6 位（Chen Ning Yang、Hendrik Antoon Lorentz、Pieter Zeeman、Tsung-Dao Lee、Wilhelm Conrad Röntgen、Wolfgang Pauli）
 - **两度获奖者**：John Bardeen（唯一两度获诺贝尔物理学奖者）
 - **女性获奖者**（20 世纪）：Maria Goeppert Mayer、Marie Curie
 
