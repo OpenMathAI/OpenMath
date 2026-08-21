@@ -1,0 +1,245 @@
+% =============================================================
+%  宇称不守恒的年轻天才：李政道 (Tsung-Dao Lee)
+%  Beamer 演示 —— OpenPhysicist 物理学家立传（参照 Kenneth G. Wilson 标杆）
+%  设计母题：对称性的破缺 (symmetry breaking) —— 柔和气泡呼应镜像不对称/宇称破缺
+%  资料来源：本地 Wikipedia (physicist/presentations/pages/20th_century/Tsung-Dao_Lee)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% ===== 配色：深青蓝（破缺/深度）+ 香槟金（诺奖）+ 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{coverprimary}{HTML}{0E4D64}   % 深青蓝 — 对称性破缺/理论深度
+\definecolor{coveraccent}{HTML}{C9A227}    % 香槟金 — 诺贝尔奖
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{14,44,58}
+\definecolor{muteddark}{RGB}{62,78,92}
+\definecolor{badgeParity}{HTML}{0E7C7B}    % 宇称不守恒 — 青绿
+\definecolor{badgeParticle}{HTML}{4C5FD5}  % 粒子物理 — 靛蓝
+\definecolor{badgeStat}{HTML}{E07B30}      % 统计力学 — 琥珀
+\definecolor{badgeSoliton}{HTML}{C4204F}   % 孤子/天体物理 — 玫瑰
+\definecolor{paritypanel}{RGB}{220,240,238}
+\definecolor{particlepanel}{RGB}{228,232,250}
+\definecolor{statpanel}{RGB}{248,233,220}
+\definecolor{solitonpanel}{RGB}{246,228,236}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应对称性破缺/镜像不对称
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeParity!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeParticle!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeStat!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openphysicist_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coverprimary!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{expand-alt}\enspace 宇称不守恒的年轻天才\enspace·\enspace 中美物理的桥梁};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {李政道};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Tsung-Dao Lee\enspace·\enspace 1926 — 2024};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!75!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {宇称不守恒 · 李-杨定理 · 非拓扑孤子 · 1957 诺贝尔物理学奖};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeParity] at (-5.05,0)
+        {宇称不守恒\\Parity Violation\par\scriptsize 1957 诺贝尔奖};
+      \node[badge, fill=badgeParticle] at (-1.68,0)
+        {粒子物理\\Particle Physics\par\scriptsize Lee model · KLN 定理};
+      \node[badge, fill=badgeStat] at (1.68,0)
+        {统计力学\\Statistical Mechanics\par\scriptsize 李-杨定理 · 相变};
+      \node[badge, fill=badgeSoliton] at (5.05,0)
+        {孤子与天体物理\\Solitons\par\scriptsize 孤子星 · RHIC};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"因对所谓宇称定律的深入考察，带来了关于基本粒子的重要发现。" —— 1957 诺贝尔物理学奖获奖理由};
+  % 肖像（竖版，1956 年照片）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Lee.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Lee.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center) {Lee, 1956};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国（原中华民国）\enspace|\enspace \faIcon{university}\enspace Columbia · RIKEN-BNL\enspace|\enspace Nobel 1957 · 爱因斯坦奖 1957};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{李政道 - 从上海到诺贝尔奖}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Lee.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Lee.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Tsung-Dao Lee (1956)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1926-11-24 — 2024-08-04\\[2pt]\lab{本名}\quad Tsung-Dao Lee（李政道）\\[2pt]\lab{国籍}\quad 美国（原中华民国）};
+  \node[infob, fill=particlepanel, draw=badgeParticle!45, anchor=north] at (3.8,2.35)
+    {\lab{师承}\quad E. Fermi（博士导师）\\[2pt]
+     \lab{任职}\quad Columbia 1953–2012\\[2pt]
+     \quad RIKEN-BNL 1997–2003};
+  \node[infob, fill=paritypanel, draw=badgeParity!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 上海\\[2pt]\lab{去世地}\quad 旧金山\\[2pt]\lab{教育}\quad 浙大 → 西南联大\\[2pt]\quad 芝加哥大学 PhD (1950)};
+  \node[infob, fill=statpanel, draw=badgeStat!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Nobel 1957 · 爱因斯坦奖 1957\\[2pt]
+     \quad Oskar Klein 1993 · Matteucci 1995\\[2pt]
+     \lab{核心领域}\quad 宇称不守恒 · 粒子物理\\[2pt]
+     \quad 统计力学 · 非拓扑孤子};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{从宇称到孤子：跨越四大领域}{宇称不守恒 · 粒子物理 · 统计力学 · 孤子与天体物理}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{7.0}{9.0}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=paritypanel, draw=badgeParity!50, text=badgeParity!85!black] (a) at (-5.7,1.05) {宇称不守恒\\1956 · 与杨振宁\\[2pt]1957 诺奖};
+\node[nodebox, fill=goldpanel, draw=coveraccent!60, text=coveraccent!85!black] (b) at (-1.9,1.05) {粒子物理\\Lee model · KLN\\[2pt]高能中微子};
+\node[nodebox, fill=statpanel, draw=badgeStat!50, text=badgeStat!85!black] (c) at (1.9,1.05) {统计力学\\李-杨定理\\[2pt]相变理论};
+\node[nodebox, fill=solitonpanel, draw=badgeSoliton!50, text=badgeSoliton!85!black] (d) at (5.7,1.05) {孤子与天体物理\\非拓扑孤子\\[2pt]孤子星 · RHIC};
+\node[draw=coveraccent!60, fill=silverpanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 自然界并不总是左右对称——这一发现让 30 岁的他站上了诺贝尔奖的领奖台。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1926–1950)}{上海出生 · 浙大 · 西南联大 · 芝加哥 Fermi 门下}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=paritypanel, draw=badgeParity!55] at (0,2.55) {\textbf{1926 · 生于上海。}祖籍苏州。父亲李骏康是金陵大学首批毕业生、化学实业家；祖父李仲覃是苏州圣约翰堂首位华人卫理公会主任牧师。};
+\node[item, fill=particlepanel, draw=badgeParticle!45] at (0,1.05) {\textbf{战火中的求学。}中学就读上海东吴大学附中与江西联合中学，因抗战中断学业、未获中学文凭；1943 年直接考入国立浙江大学，初入化工系，很快转入物理系。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{从浙大到芝加哥。}舒星北、王淦昌指导其浙大物理学习；1945 年转西南联大师从吴大猷；1946 年经吴健雄推荐获奖学金赴芝加哥大学，师从 Fermi，1950 年获博士。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 博士论文《白矮星的氢含量》——Fermi 门下的起点，白矮星这一主题贯穿了他的一生。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 5. 宇称不守恒 ---
+\newcommand{\parityslide}{\begin{frame}\plainbar\sectiontitle{宇称不守恒 (1956)}{与杨振宁共同提出 · 吴健雄实验证实 · 1957 诺贝尔奖}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=paritypanel, draw=badgeParity!60] at (0,2.55) {\textbf{τ–θ 之谜。}1956 年初，李政道意识到 K 介子衰变之谜的关键在于宇称不守恒：τ 与 θ 衰变产物宇称相异却无法区分，二者本是同一种粒子（即 K 介子）。};
+\node[item, fill=particlepanel, draw=badgeParticle!45] at (0,0.85) {\textbf{吴健雄实验证实。}在李政道建议下，先由 Steinberger 组做超子衰变可行性检验；随后吴健雄团队 1956–57 年实验决定性证实宇称不守恒，杨振宁亦共同参与系统研究。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1957 · 诺贝尔奖。}李政道与杨振宁共获 1957 诺贝尔物理学奖，时年 30 岁——二战后最年轻科学诺奖得主，史上第三年轻（Bragg 25、Heisenberg 30）。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 吴健雄实验证实了理论却未获诺奖，成为诺贝尔奖史上的一段著名争议。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 6. 李-杨定理与统计力学 ---
+\newcommand{\statmechslide}{\begin{frame}\plainbar\sectiontitle{统计力学：李-杨定理与相变}{配分函数零点 · 相变理论 · 流体力学}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=statpanel, draw=badgeStat!60] at (0,2.55) {\textbf{李-杨定理 (1952)。}与杨振宁合作，用解析延拓研究相变，证明相变的数学根源在于配分函数零点的分布——相变理论的一座里程碑。};
+\node[item, fill=paritypanel, draw=badgeParity!45] at (0,0.85) {\textbf{李-杨理论。}把液气相变等临界行为与统计力学配分函数的解析结构联系起来，为严格相变理论奠定基础。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{广泛兴趣。}除粒子物理外，李政道还活跃于统计力学、天体物理、流体力学、多体系统、固态物理与格点 QCD——理论视野极其宽广。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从 K 介子到相变，他的统计力学工作横跨粒子与凝聚态两大领域。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 7. Lee model 与粒子物理 ---
+\newcommand{\particleslide}{\begin{frame}\plainbar\sectiontitle{粒子物理：从 Lee model 到 KLN 定理}{可解场论模型 · KLN 定理 · 高能中微子}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=particlepanel, draw=badgeParticle!60] at (0,2.55) {\textbf{1953 · Lee model。}加入哥伦比亚大学后的第一项工作，是一个可解的量子场论模型——以他的名字命名，成为研究重整化与发散的重要范例。};
+\node[item, fill=paritypanel, draw=badgeParity!45] at (0,0.85) {\textbf{1964 · KLN 定理。}与 Michael Nauenberg 分析零质量粒子的发散，提出处理这些发散的一般方法——至今仍在 QCD 的无质量胶子研究中发挥重要作用。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1960s 初 · 高能中微子物理。}与合作者共同开创高能中微子物理这一重要领域，拓展了粒子物理的实验前沿。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Lee model、KLN 定理、高能中微子——他的名字刻在粒子物理的基础工具上。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 8. 非拓扑孤子与孤子星 ---
+\newcommand{\solitonslide}{\begin{frame}\plainbar\sectiontitle{非拓扑孤子与孤子星}{高密度物质新形态 · RHIC 物理 · 黑洞}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=solitonpanel, draw=badgeSoliton!60] at (0,2.55) {\textbf{1974–75 · RHIC 物理。}发表"高密度物质新形态"系列论文，开创了相对论重离子对撞（RHIC）物理这一现代领域，主导今日高能核物理。};
+\node[item, fill=paritypanel, draw=badgeParity!45] at (0,0.85) {\textbf{1975 起 · 非拓扑孤子。}与合作者建立非拓扑孤子领域，1980s–90s 进而研究孤子星与黑洞——跨越粒子物理与天体物理的桥梁。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1983 · 时间离散化。}论文《时间可以是离散动力学变量吗？》引发一系列用差分方程表述基础物理的研究，保持连续群平移与旋转的严格不变性。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从高密度核物质到孤子星，他把理论物理的疆域推向天体尺度。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 9. 格点 QCD 与超级计算 ---
+\newcommand{\latticeqcslide}{\begin{frame}\plainbar\sectiontitle{格点 QCD 与超级计算}{RIKEN-BNL · QCDSP · QCDOC · 薛定谔方程新解法}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=particlepanel, draw=badgeParticle!55] at (0,2.55) {\textbf{1997–2003 · RIKEN-BNL 主任。}任理化学研究所-布鲁克海文国家实验室研究中心主任，领导格点 QCD 的超级计算攻关。};
+\node[item, fill=statpanel, draw=badgeStat!45] at (0,1.05) {\textbf{QCDSP 与 QCDOC。}1998 年完成 1 teraflops 的 QCDSP 超算，2005 年完成 10 teraflops 的 QCDOC——为格点 QCD 提供强大算力。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{2005 前 · 新方法。}与 Richard M. Friedberg 发展薛定谔方程新解法，得到双阱势等长期量子简并问题的收敛迭代解，并研究中微子映射矩阵。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从超算到解析新方法，他在格点 QCD 的前沿持续耕耘。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 10. CUSPEA 与教育贡献 ---
+\newcommand{\cuspeaslide}{\begin{frame}\plainbar\sectiontitle{CUSPEA 与教育贡献}{中美物理桥梁 · 䇹政基金}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=paritypanel, draw=badgeParity!55] at (0,2.55) {\textbf{CUSPEA。}中美关系恢复后不久，李政道与妻子秦惠䇹回国讲学，并组织中美联合招考物理研究生项目（CUSPEA），为一代中国学子铺就赴美深造之路。};
+\node[item, fill=particlepanel, draw=badgeParticle!45] at (0,1.05) {\textbf{1998 · 䇹政基金。}为纪念三年前去世的妻子，设立"秦惠䇹—李政道中国大学生见习基金"，资助六所高校本科生，入选者称"䇹政学者"。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{诺奖金牌捐赠。}2014 年，其子 James Lee 将父亲的诺奖金牌捐赠给上海交通大学，陈列于李政道图书馆。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他不仅是物理学家，更是中美物理交流的一座桥梁。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 11. 荣誉与晚年 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与晚年}{诺贝尔奖 · 院士 · 97 岁}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=goldpanel, draw=coveraccent!50] at (0,2.55) {\textbf{荣誉满身。}Nobel 1957 · 爱因斯坦奖 1957 · Galileo Galilei 1979 · 意大利共和国功绩勋章 1986 · Oskar Klein 1993 · Matteucci 1995 · 小行星 3443 命名 1997 · Marcel Grossmann 2015。};
+\node[item, fill=particlepanel, draw=badgeParticle!45] at (0,0.85) {\textbf{院士身份。}美国国家科学院、美国艺术与科学院、美国哲学学会、中央研究院、林琴国家科学院、中国科学院、第三世界科学院、宗座科学院等多家院士。};
+\node[item, fill=paritypanel, draw=badgeParity!40] at (0,-0.65) {\textbf{97 岁谢世。}2024 年 8 月 4 日逝于旧金山，享年 97 岁。2012 年自哥伦比亚大学退休，此前 59 年在该校任教。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从 30 岁获诺奖到 97 岁谢世，他见证并塑造了几乎整个现代粒子物理。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 12. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {对称性，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {可以被打破。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Tsung-Dao Lee};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {李政道\quad Tsung-Dao Lee\quad 1926 — 2024};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace Nobel 1957 · 宇称不守恒 · 李-杨定理\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\parityslide
+\statmechslide
+\particleslide
+\solitonslide
+\latticeqcslide
+\cuspeaslide
+\honorsslide
+\closingslide
+\end{document}
