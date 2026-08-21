@@ -1,0 +1,245 @@
+% =============================================================
+%  量子力学的良心：沃尔夫冈·泡利 (Wolfgang Ernst Pauli)
+%  Beamer 演示 —— OpenPhysicist 物理学家立传（参照 Kenneth G. Wilson 标杆）
+%  设计母题：不相容性/排他性 (exclusion) —— 柔和气泡呼应泡利不相容原理
+%  资料来源：本地 Wikipedia (physicist/presentations/pages/20th_century/Wolfgang_Pauli)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% ===== 配色：深紫罗兰（量子深度+心理神秘）+ 香槟金（诺奖）+ 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{coverprimary}{HTML}{4A235A}   % 深紫罗兰 — 量子深度/心理神秘
+\definecolor{coveraccent}{HTML}{C9A227}    % 香槟金 — 诺贝尔奖
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{52,30,66}
+\definecolor{muteddark}{RGB}{82,68,92}
+\definecolor{badgeExclusion}{HTML}{4C5FD5} % 不相容原理 — 靛蓝
+\definecolor{badgeSpin}{HTML}{0E7C7B}      % 自旋理论 — 青绿
+\definecolor{badgeNeutrino}{HTML}{E07B30}  % 中微子物理 — 琥珀
+\definecolor{badgeQFT}{HTML}{C4204F}       % 量子场论 — 玫瑰
+\definecolor{exclusionpanel}{RGB}{228,232,250}
+\definecolor{spinpanel}{RGB}{220,240,238}
+\definecolor{neutrinopanel}{RGB}{248,233,220}
+\definecolor{qftpanel}{RGB}{246,228,236}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应不相容性/自旋二元性
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeExclusion!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeSpin!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeNeutrino!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openphysicist_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coverprimary!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{expand-alt}\enspace 量子力学的良心\enspace·\enspace 不相容原理的发现者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {沃尔夫冈·泡利};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Wolfgang Ernst Pauli\enspace·\enspace 1900 — 1958};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!75!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {泡利不相容原理 · 中微子预言 · 自旋理论 · 1945 诺贝尔物理学奖};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeExclusion] at (-5.05,0)
+        {不相容原理\\Exclusion Principle\par\scriptsize 1945 诺贝尔奖};
+      \node[badge, fill=badgeSpin] at (-1.68,0)
+        {自旋理论\\Spin Theory\par\scriptsize 泡利矩阵 · 泡利方程};
+      \node[badge, fill=badgeNeutrino] at (1.68,0)
+        {中微子\\Neutrino\par\scriptsize 1930 预言 · 1956 证实};
+      \node[badge, fill=badgeQFT] at (5.05,0)
+        {量子场论\\Quantum Fields\par\scriptsize 自旋统计定理};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"因发现不相容原理，也称泡利原理。" —— 1945 诺贝尔物理学奖获奖理由};
+  % 肖像（竖版，c.1924）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Pauli.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Pauli.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center) {Pauli, c.1924};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 奥地利 → 美国 → 瑞士\enspace|\enspace \faIcon{university}\enspace ETH Zurich · IAS · 汉堡\enspace|\enspace Nobel 1945 · Max Planck 1958};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{沃尔夫冈·泡利 - 从维也纳到诺贝尔奖}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Pauli.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Pauli.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Wolfgang Ernst Pauli (c.1924)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1900-04-25 — 1958-12-15\\[2pt]\lab{本名}\quad Wolfgang Ernst Pauli\\[2pt]\lab{国籍}\quad 奥地利 → 美国 → 瑞士};
+  \node[infob, fill=exclusionpanel, draw=badgeExclusion!45, anchor=north] at (3.8,2.35)
+    {\lab{师承}\quad A. Sommerfeld（博士导师）\\[2pt]
+     \lab{任职}\quad 汉堡 1923–1928\\[2pt]
+     \quad ETH Zurich 1928 · IAS 1940};
+  \node[infob, fill=spinpanel, draw=badgeSpin!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 维也纳（奥匈帝国）\\[2pt]\lab{去世地}\quad 苏黎世\\[2pt]\lab{教育}\quad Döblinger-Gymnasium\\[2pt]\quad LMU Munich PhD (1921)};
+  \node[infob, fill=neutrinopanel, draw=badgeNeutrino!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Nobel 1945 · Lorentz 1931\\[2pt]
+     \quad Franklin 1952 · Max Planck 1958\\[2pt]
+     \lab{核心领域}\quad 不相容原理 · 自旋理论\\[2pt]
+     \quad 中微子 · 量子场论};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{从不相容到中微子：四大贡献}{不相容原理 · 自旋理论 · 中微子 · 量子场论}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{7.0}{9.0}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=exclusionpanel, draw=badgeExclusion!50, text=badgeExclusion!85!black] (a) at (-5.7,1.05) {不相容原理\\1925 · 四个量子数\\[2pt]电子壳层结构};
+\node[nodebox, fill=goldpanel, draw=coveraccent!60, text=coveraccent!85!black] (b) at (-1.9,1.05) {自旋理论\\1924–1927\\[2pt]泡利矩阵 · 泡利方程};
+\node[nodebox, fill=neutrinopanel, draw=badgeNeutrino!50, text=badgeNeutrino!85!black] (c) at (1.9,1.05) {中微子预言\\1930 · β 衰变\\[2pt]1956 实验证实};
+\node[nodebox, fill=qftpanel, draw=badgeQFT!50, text=badgeQFT!85!black] (d) at (5.7,1.05) {量子场论\\1940 · 1949\\[2pt]自旋统计 · 正则化};
+\node[draw=coveraccent!60, fill=silverpanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 没有两个电子能处于完全相同的量子态——这句话奠定了整个物质结构理论。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1900–1921)}{维也纳神童 · Sommerfeld 门下 · 237 页相对论综述}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=exclusionpanel, draw=badgeExclusion!55] at (0,2.55) {\textbf{1900 · 生于维也纳。}父 Wolfgang Josef Pauli（原姓 Pascheles），母 Bertha Camilla Schütz；中间名 Ernst 为纪念教父——物理学家 Ernst Mach。妹妹 Hertha Pauli 后成作家、演员。};
+\node[item, fill=spinpanel, draw=badgeSpin!45] at (0,1.05) {\textbf{神童初现。}就读维也纳 Döblinger-Gymnasium，1918 年以优等毕业；毕业两个月后即发表第一篇论文，讨论爱因斯坦广义相对论。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{Sommerfeld 门下。}入慕尼黑大学师从 Arnold Sommerfeld，1921 年获博士，论文研究双原子氢离子（H$^+_2$）；受 Sommerfeld 之邀撰写 237 页相对论综述，爱因斯坦盛赞并作专著出版。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 未满二十，他的相对论综述已成为该领域的标准参考文献。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 5. 泡利不相容原理 ---
+\newcommand{\exclusionslide}{\begin{frame}\plainbar\sectiontitle{泡利不相容原理 (1925)}{四个量子数 · 电子壳层结构 · 物质结构的基石}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=exclusionpanel, draw=badgeExclusion!60] at (0,2.55) {\textbf{1924 · 两值量子数。}为解释分子光谱与量子力学理论的矛盾，泡利提出一个新的量子自由度，只能取两个值——这成为不相容原理的雏形。};
+\node[item, fill=spinpanel, draw=badgeSpin!45] at (0,0.85) {\textbf{1925 · 不相容原理。}系统表述为：没有两个电子能处于完全相同的量子态，量子态由四个量子数（含新引入的两值自由度）唯一确定。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1945 · 诺贝尔奖。}因发现不相容原理获诺贝尔物理学奖（爱因斯坦提名）；该原理是理解原子壳层结构、元素周期表与物质结构的基础。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 元素周期表的秩序，最终源于这条"排他"的法则。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 6. 自旋理论 ---
+\newcommand{\spinslide}{\begin{frame}\plainbar\sectiontitle{自旋理论 (1924–1927)}{两值量子数 · 泡利矩阵 · 泡利方程}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=spinpanel, draw=badgeSpin!60] at (0,2.55) {\textbf{自旋的辨认。}自旋思想源于 Ralph Kronig；一年后 Uhlenbeck 与 Goudsmit 认定泡利的新自由度即电子自旋——泡利一度长期拒绝相信这一诠释。};
+\node[item, fill=exclusionpanel, draw=badgeExclusion!45] at (0,0.85) {\textbf{1927 · 泡利矩阵与泡利方程。}引入 2×2 泡利矩阵作为自旋算符的基，解出非相对论自旋理论；该工作（含泡利方程）深刻影响了 Dirac 的电子相对论方程。};
+\node[item, fill=neutrinopanel, draw=badgeNeutrino!40] at (0,-0.65) {\textbf{1926 · 泡利顺磁性。}认识金属自由电子须服从 Fermi–Dirac 统计，据此发展顺磁性理论；他却戏言"固体物理是脏物理"。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 自旋的二元性（±1/2），是微观世界最深刻的排他律之一。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 7. 中微子预言 ---
+\newcommand{\neutrinoslide}{\begin{frame}\plainbar\sectiontitle{中微子预言 (1930)}{β 衰变 · "亲爱的放射性女士们先生们" · 1956 证实}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=neutrinopanel, draw=badgeNeutrino!60] at (0,2.55) {\textbf{1930 · 致放射性同行的信。}为保住 β 衰变中的能量守恒，泡利在致 Lise Meitner 等人的信中（开头"亲爱的放射性女士们先生们"）预言一种未观测到的中性粒子，质量不超过质子的 1\%。};
+\node[item, fill=exclusionpanel, draw=badgeExclusion!45] at (0,0.85) {\textbf{1934 · Fermi 命名"中微子"。}Fermi 将这种粒子纳入 β 衰变理论，并以意大利语"小中性粒子"命名——"中微子"一词由此而来。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1956 · 实验证实。}Reines 与 Cowan 首次探测到中微子——距泡利预言 26 年；泡利回电："谢谢消息。一切终将归于懂得等待的人。"};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 为守住守恒律，他敢于预言一个"看不见"的粒子。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 8. 量子场论贡献 ---
+\newcommand{\qftslide}{\begin{frame}\plainbar\sectiontitle{量子场论贡献 (1940–1949)}{自旋统计定理 · Pauli–Villars 正则化}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=qftpanel, draw=badgeQFT!60] at (0,2.55) {\textbf{1940 · 自旋统计定理。}重新推导量子场论的关键结果：半整数自旋粒子为费米子，整数自旋粒子为玻色子——粒子的统计性质由自旋决定。};
+\node[item, fill=exclusionpanel, draw=badgeExclusion!45] at (0,0.85) {\textbf{1949 · Pauli–Villars 正则化。}与 Felix Villars 合作提出正则化方法，使发散积分有限化，为重整化与高阶微扰计算铺路。};
+\node[item, fill=spinpanel, draw=badgeSpin!40] at (0,-0.65) {\textbf{1926 · 氢原子光谱。}Heisenberg 矩阵力学发表后，泡利很快用它推导出氢原子光谱——为矩阵力学赢得了信誉。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从自旋统计到正则化，他的名字刻在量子场论的基础工具上。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 9. 物理学的良心 ---
+\newcommand{\conscienceslide}{\begin{frame}\plainbar\sectiontitle{物理学的良心}{not even wrong · Pauli effect · 与 Heisenberg 决裂}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=exclusionpanel, draw=badgeExclusion!55] at (0,2.55) {\textbf{完美主义与毒舌。}他对同事的工作同样严苛，被誉为"物理学的良心"；对含混的理论，他常用德语 \textit{ganz falsch}（完全错误）斥之。};
+\node[item, fill=neutrinopanel, draw=badgeNeutrino!45] at (0,0.85) {\textbf{"not even wrong"。}对不可证伪、无从评判的论文，他留下名言："这甚至不是错的。"——比错误更糟，因为它无法被证明是错的。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{与 Heisenberg 决裂。}因 1958 年统一场论新闻稿称他为"Heisenberg 的助手"，泡利愤而斥之，两人关系破裂；最终该场论被证明站不住，印证了泡利的批评。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 保罗效应——据传他只要靠近，实验仪器就会失灵。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 10. 与荣格的对话 ---
+\newcommand{\jungslide}{\begin{frame}\plainbar\sectiontitle{与荣格的对话}{共时性 · Pauli–Jung 猜想 · 137 执念}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=spinpanel, draw=badgeSpin!55] at (0,2.55) {\textbf{1930 年末的危机。}离婚与母亲去世后，泡利陷入个人危机；1932 年起求助于住在苏黎世附近的荣格，荣格开始分析他极具原型色彩的梦境。};
+\node[item, fill=qftpanel, draw=badgeQFT!45] at (0,0.85) {\textbf{Pauli–Jung 猜想。}两人共同探讨"共时性"，提出"心物中性的实在"——精神与物理皆源于这更深层的实在，形成一种二元层面理论。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{137 执念。}泡利毕生追问精细结构常数为何近似等于 1/137——这个谜题，与他 1958 年在苏黎世去世的病房号，奇妙地重合了。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 物理学与深度心理学的交汇，是他一生最独特的思想实验。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 11. 荣誉与晚年 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与晚年}{诺贝尔奖 · Max Planck 奖章 · 58 岁}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=goldpanel, draw=coveraccent!50] at (0,2.55) {\textbf{荣誉满身。}Lorentz Medal 1931 · Nobel 1945（独享）· Franklin Medal 1952 · Matteucci 1956 · Max Planck Medal 1958；1953 皇家学会外籍会员、1958 荷兰皇家艺术与科学院外籍院士。};
+\node[item, fill=exclusionpanel, draw=badgeExclusion!45] at (0,0.85) {\textbf{学术地位。}Max Born 称他"唯有爱因斯坦可比，甚至更伟大"；爱因斯坦则称泡利为自己的"精神继承者"。};
+\node[item, fill=neutrinopanel, draw=badgeNeutrino!40] at (0,-0.65) {\textbf{1958 · 谢世。}因胰腺癌病逝于苏黎世 Rotkreuz 医院，享年 58 岁。末任助手 Charles Enz 探视时，泡利问："你看到病房号了吗？"——正是 137。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从维也纳到苏黎世，他见证了量子力学的诞生与成熟。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 12. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {没有两个电子，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {能完全相同。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Wolfgang Ernst Pauli};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {沃尔夫冈·泡利\quad Wolfgang Pauli\quad 1900 — 1958};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace Nobel 1945 · 不相容原理 · 中微子\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\exclusionslide
+\spinslide
+\neutrinoslide
+\qftslide
+\conscienceslide
+\jungslide
+\honorsslide
+\closingslide
+\end{document}
