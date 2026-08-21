@@ -1,0 +1,246 @@
+% =============================================================
+%  规范场论的奠基人：杨振宁 (Chen Ning Yang)
+%  Beamer 演示 —— OpenPhysicist 物理学家立传（参照 Kenneth G. Wilson 标杆）
+%  设计母题：对称性 (symmetry) —— 柔和气泡呼应规范对称性/不变量
+%  资料来源：本地 Wikipedia (physicist/presentations/pages/20th_century/Chen_Ning_Yang)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% ===== 配色：深靛蓝（对称性/理论深度）+ 香槟金（诺奖）+ 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{coverprimary}{HTML}{1A237E}   % 深靛蓝 — 对称性/理论深度
+\definecolor{coveraccent}{HTML}{C9A227}    % 香槟金 — 诺贝尔奖
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{24,26,64}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{badgeGauge}{HTML}{4C5FD5}     % 规范场论 — 靛蓝
+\definecolor{badgeParity}{HTML}{0E7C7B}    % 宇称不守恒 — 青绿
+\definecolor{badgeStat}{HTML}{E07B30}      % 统计力学 — 琥珀
+\definecolor{badgeParticle}{HTML}{C4204F}  % 粒子物理 — 玫瑰
+\definecolor{gaugepanel}{RGB}{228,232,250}
+\definecolor{paritypanel}{RGB}{220,240,238}
+\definecolor{statpanel}{RGB}{248,233,220}
+\definecolor{particlepanel}{RGB}{246,228,236}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coveraccent, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应对称性/规范不变性
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeGauge!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeParity!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeStat!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openphysicist_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coverprimary!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{expand-alt}\enspace 规范场论的奠基人\enspace·\enspace 对称性的大师};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {杨振宁};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Chen Ning Yang\enspace·\enspace 1922 — 2025};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {杨-米尔斯理论 · 宇称不守恒 · 统计力学 · 标准模型的先知};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeGauge] at (-5.05,0)
+        {规范场论\\Yang–Mills\par\scriptsize 对称性决定相互作用};
+      \node[badge, fill=badgeParity] at (-1.68,0)
+        {宇称不守恒\\Parity Violation\par\scriptsize 1957 诺贝尔奖};
+      \node[badge, fill=badgeStat] at (1.68,0)
+        {统计力学\\Statistical Mechanics\par\scriptsize 相变与可积系统};
+      \node[badge, fill=badgeParticle] at (5.05,0)
+        {粒子物理\\Particle Physics\par\scriptsize 标准模型的基石};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"因对所谓宇称定律的深入考察，带来了关于基本粒子的重要发现。" —— 1957 诺贝尔物理学奖获奖理由};
+  % 肖像（竖版）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Yang.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Yang.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center) {Yang, 1957};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 中国（原美国）\enspace|\enspace \faIcon{university}\enspace IAS · Stony Brook · 清华\enspace|\enspace Nobel 1957 · 国家科学奖章 1986};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{杨振宁 - 从合肥到诺贝尔奖}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Yang.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Yang.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Chen Ning Yang (1957)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1922-10-01 — 2025-10-18\\[2pt]\lab{本名}\quad Chen Ning Yang（杨振宁）\\[2pt]\lab{国籍}\quad 中国（原美国·中华民国）};
+  \node[infob, fill=paritypanel, draw=badgeParity!45, anchor=north] at (3.8,2.35)
+    {\lab{师承}\quad E. Teller（博士导师）\\[2pt]
+     \lab{任职}\quad IAS 普林斯顿 1949–1965\\[2pt]
+     \quad Stony Brook 1965–1999};
+  \node[infob, fill=gaugepanel, draw=badgeGauge!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 安徽 · 合肥\\[2pt]\lab{去世地}\quad 北京\\[2pt]\lab{教育}\quad 西南联大 BS → 清华 MS\\[2pt]\quad 芝加哥大学 PhD (1948)};
+  \node[infob, fill=statpanel, draw=badgeStat!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Nobel 1957 · 国家科学奖章 1986\\[2pt]
+     \quad Oskar Klein 1988 · 爱因斯坦奖章 1995\\[2pt]
+     \lab{核心领域}\quad 规范场论 · 宇称不守恒\\[2pt]
+     \quad 统计力学 · 粒子物理};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{对称性决定相互作用}{规范场论 · 宇称不守恒 · 统计力学 · 粒子物理}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{7.0}{9.0}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=gaugepanel, draw=badgeGauge!50, text=badgeGauge!85!black] (a) at (-5.7,1.05) {规范场论\\1954 · 杨-米尔斯\\[2pt]标准模型的基石};
+\node[nodebox, fill=goldpanel, draw=coveraccent!60, text=coveraccent!85!black] (b) at (-1.9,1.05) {宇称不守恒\\1956 · 与李政道\\[2pt]1957 诺奖};
+\node[nodebox, fill=statpanel, draw=badgeStat!50, text=badgeStat!85!black] (c) at (1.9,1.05) {统计力学\\李-杨定理\\[2pt]Yang–Baxter 方程};
+\node[nodebox, fill=particlepanel, draw=badgeParticle!50, text=badgeParticle!85!black] (d) at (5.7,1.05) {规范场拓扑\\Wu–Yang 磁单极子\\[2pt]连接物理与微分几何};
+\node[draw=coveraccent!60, fill=silverpanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 对称性不再是世界的装饰，而是相互作用的来源——杨振宁让这句话成为现代物理的共识。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1922–1948)}{合肥出生 · 西南联大 · 清华硕士 · 芝加哥博士}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=gaugepanel, draw=badgeGauge!55] at (0,2.55) {\textbf{1922 · 生于合肥。}1922 年 10 月 1 日生于安徽合肥。父亲杨武之（Ko-Chuen Yang，1896–1973）是数学家，母亲罗孟华——书香门第。};
+\node[item, fill=paritypanel, draw=badgeParity!45] at (0,1.05) {\textbf{战火中的求学。}在北平（今北京）读中小学；1937 年抗战全面爆发后举家迁往合肥，1938 年又迁昆明——西南联大所在地。同年以二年级生身份通过入学考试。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{学位与转折。}1942 年获西南联大学士（吴大猷指导分子光谱群论）；1944 年获国立清华硕士（王竹溪指导统计力学）；庚款留美，1946 年入芝加哥大学，师从 Teller，1948 年获博士。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从战火中的西南联大到芝加哥，他在群论与统计力学的交汇处奠定了毕生的根基。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 5. 杨-米尔斯理论 ---
+\newcommand{\yangmillsslide}{\begin{frame}\plainbar\sectiontitle{杨-米尔斯理论 (1954)}{非阿贝尔规范场论 · 对称性决定相互作用 · 标准模型基石}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=gaugepanel, draw=badgeGauge!60] at (0,2.55) {\textbf{1954 · 非阿贝尔规范场论。}与 Robert Mills 合作，把电磁学的规范对称性推广到非阿贝尔情形——这就是杨-米尔斯理论，描述标准模型中的核力。};
+\node[item, fill=paritypanel, draw=badgeParity!45] at (0,0.85) {\textbf{核心思想。}Mills 亲述："关键想法是杨的。" 非阿贝尔规范场生成非平凡的李代数，使场之间的相互作用形式变得唯一——对称性本身决定了相互作用。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{现代物理与数学的基石。}杨-米尔斯理论后来成为电弱统一、量子色动力学乃至数学中规范场论的源头；至少 10 位诺奖得主在获奖演讲中引用了杨的工作。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 狄拉克的方程、爱因斯坦的几何、杨振宁的规范场——二十世纪物理的三座丰碑。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 6. 宇称不守恒 ---
+\newcommand{\parityslide}{\begin{frame}\plainbar\sectiontitle{宇称不守恒 (1956)}{与李政道共同提出 · 吴健雄实验证实 · 1957 诺贝尔奖}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=paritypanel, draw=badgeParity!60] at (0,2.55) {\textbf{τ–θ 之谜。}1956 年，杨振宁与李政道分析 τ–θ 之谜：两种粒子衰变产物不同、宇称相异，却无法区分。他们大胆提出：弱相互作用中宇称不守恒，二者本是同一种粒子（即 K 介子）。};
+\node[item, fill=gaugepanel, draw=badgeGauge!45] at (0,0.85) {\textbf{吴健雄实验证实。}为检验这一假设，李政道联系吴健雄团队；1956 年吴健雄实验证实了理论，另两组独立实验（Telegdi/Friedman、Garwin/Lederman）亦予确认。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1957 · 诺贝尔奖。}三人实验于 1957 年初发表，杨振宁与李政道获 1957 年诺贝尔物理学奖——获奖时杨 35 岁、李 30 岁，带来粒子物理的革命性变革。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 自然界并不总是左右对称——这一发现在一年内从预言走向诺奖。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 7. 统计力学贡献 ---
+\newcommand{\statslide}{\begin{frame}\plainbar\sectiontitle{统计力学：从相变到可积系统}{李-杨定理 · Yang–Baxter 方程 · 非对角长程序}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=statpanel, draw=badgeStat!60] at (0,2.55) {\textbf{李-杨定理 (1952)。}与李政道合作，用解析延拓研究液气相变，证明相变的数学根源在于配分函数零点的分布——相变理论的一座里程碑。};
+\node[item, fill=gaugepanel, draw=badgeGauge!45] at (0,0.85) {\textbf{Yang–Baxter 方程 (1967)。}提出一维因子化散射多体系统的一致性条件，复兴了 Bethe ansatz，为可积系统与量子群理论奠定基础。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{玻色子与凝聚态。}李-黄-杨修正（1957，弱相互作用玻色气体）、Byers–Yang 定理（1961，磁通量子化）、ODLRO 非对角长程序（1962，宏观量子现象）。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从相变到超流，从贝特 ansatz 到量子群——杨振宁在统计力学里留下了自己的名字。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 8. 规范场的拓扑 ---
+\newcommand{\topologyslide}{\begin{frame}\plainbar\sectiontitle{规范场的拓扑：物理与几何的交汇}{Wu–Yang 磁单极子 · Wu–Yang 词典 · 纤维丛}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=gaugepanel, draw=badgeGauge!60] at (0,2.55) {\textbf{Wu–Yang 磁单极子 (1975)。}与吴大峻合作阐明一种无 Dirac 弦的磁单极子——不同于 Dirac 磁单极子，它避免了奇异的 Dirac 弦。};
+\node[item, fill=paritypanel, draw=badgeParity!45] at (0,0.85) {\textbf{Wu–Yang 词典。}1975 年论文建立了规范场论与微分几何（纤维丛、联络、曲率）之间的对应关系——物理概念与几何概念的系统翻译。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1974 · 积分形式。}赋予规范理论中非整数相位因子以意义，深化了 Aharonov–Bohm 效应背后的几何理解。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 物理学家与数学家说着不同的语言，杨振宁给出了一部词典。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 9. 十三项开创性贡献 ---
+\newcommand{\thirteenslide}{\begin{frame}\plainbar\sectiontitle{十三项开创性贡献}{2012 年清华"黑方块"——横跨四大领域}
+\vspace{-0.55cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=8pt, text width=2.9cm, font=\fontsize{6.5}{8.5}\selectfont, align=center}]
+\node[leg, fill=statpanel, draw=badgeStat!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeStat} 统计力学}\\[3pt]相变(1952) 李-杨定理\\[2pt]玻色子(1957) 李-黄-杨\\[2pt]Yang–Baxter 方程(1967)\\[2pt]有限温度(1969) Yang–Yang};
+\node[leg, fill=particlepanel, draw=badgeParticle!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeParticle} 凝聚态}\\[3pt]磁通量子化(1961) Byers–Yang\\[2pt]ODLRO(1962) 非对角长程序};
+\node[leg, fill=paritypanel, draw=badgeParity!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeParity} 粒子物理}\\[3pt]宇称不守恒(1956)\\[2pt]CPT 对称(1957)\\[2pt]高能中微子(1960)\\[2pt]CP 不守恒(1964)};
+\node[leg, fill=gaugepanel, draw=badgeGauge!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeGauge} 场论}\\[3pt]规范理论(1954) 杨-米尔斯\\[2pt]积分形式(1974)\\[2pt]纤维丛(1975) Wu–Yang 词典};
+\node[draw=coveraccent!65, fill=goldpanel, rounded corners=6pt, inner sep=9pt, text width=13.0cm, align=center] at (0,-1.55) {{\fontsize{8.6}{11}\selectfont\bfseries\color{coverdark!88} 清华赠予的黑方块上，镌刻着贯穿统计力学、凝聚态、粒子物理与场论的十三项开创性贡献。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 10. 学术传承与回国 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{学术传承与回国}{石溪理论物理所 · 清华高等研究中心 · 中美物理桥梁}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=gaugepanel, draw=badgeGauge!55] at (0,2.55) {\textbf{石溪岁月 (1965–1999)。}任石溪大学 Albert Einstein 讲座教授、理论物理研究所首任所长——该所后改名 C. N. Yang 理论物理研究所；2010 年又设 C. N. Yang Hall。};
+\node[item, fill=paritypanel, draw=badgeParity!45] at (0,1.05) {\textbf{回国与清华 (1999 起)。}1999 年退休后回北京，任清华高等研究中心首位黄汲清-陆启铿讲席教授；2015 年正式放弃美国国籍，恢复中国国籍。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{教育传承。}门生 Bill Sutherland、Brosl Hasslacher、Alexander Wu Chao；1986 年应陈省身之邀在陈省身数学研究所建立理论物理分部。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1971 年他率先重返中国，成为中美物理交流的先声。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 11. 荣誉与晚年 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与晚年}{诺贝尔奖 · 国家科学奖章 · 103 岁}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=goldpanel, draw=coveraccent!50] at (0,2.55) {\textbf{荣誉满身。}Nobel 1957 · Rumford 1980 · 国家科学奖章 1986 · Oskar Klein 1988（首位得主）· 爱因斯坦奖章 1995 · Onsager 1999 · King Faisal 2001 · Marcel Grossmann 2015。};
+\node[item, fill=gaugepanel, draw=badgeGauge!45] at (0,0.85) {\textbf{院士身份。}1955 年美国物理学会会士、1958 年中央研究院院士、俄罗斯科学院、英国皇家学会、美国国家科学院等多家院士。};
+\node[item, fill=paritypanel, draw=badgeParity!40] at (0,-0.65) {\textbf{百岁与谢世。}2022 年 10 月 1 日迎来百岁诞辰；2025 年 10 月 18 日逝于北京，享年 103 岁。讣告次日，清华园内人们排队悼念。};
+\node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从 30 岁获诺奖到 103 岁谢世，他见证并塑造了几乎整个现代粒子物理。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 12. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {对称性，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是相互作用的源泉。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Chen Ning Yang};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {杨振宁\quad Chen Ning Yang\quad 1922 — 2025};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace Nobel 1957 · 杨-米尔斯理论 · 宇称不守恒\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\yangmillsslide
+\parityslide
+\statslide
+\topologyslide
+\thirteenslide
+\legacyslide
+\honorsslide
+\closingslide
+\end{document}
