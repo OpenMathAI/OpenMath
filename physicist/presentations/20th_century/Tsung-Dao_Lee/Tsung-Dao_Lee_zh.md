@@ -178,3 +178,40 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+---
+
+## Review-1 记录 (2026-08-21)
+
+> 结合本地 Wikipedia (`pages/20th_century/Tsung-Dao_Lee/page.md` + `metadata.json`) 逐页比对。
+
+- **头像** ✅：`images/Lee.jpg`（Wikipedia infobox 照片 "TD Lee.jpg"，即 "Lee in 1956"，280×396 竖版），用户已手工确认无误。
+- **生卒**：1926-11-24 ~ 2024-08-04（享年 97），与 Wikipedia 一致（infobox Born 1926-11-24，Died 2024-08-04 aged 97）。
+- **出生/去世地**：上海 → 旧金山（San Francisco），与 Wikipedia 一致。
+- **国籍**：美国（原中华民国）；Wikipedia infobox nationality 为 China (1912–1949) / United States，1963 入籍美国。
+- **家庭**：父李骏康（李駿康，金陵大学首批毕业生、化学实业家）、祖父李仲覃（李仲覃，苏州圣约翰堂首位华人卫理公会主任牧师）——全部准确。
+- **教育轨迹**：上海东吴附中 + 江西联中（未获中学文凭）→ 1943 直接考入浙大（初入化工系转物理，舒星北、王淦昌指导）→ 1945 转西南联大师从吴大猷 → 1946 赴芝加哥大学师从 Fermi → 1950 博士《白矮星的氢含量》——准确。
+- **核心贡献复核**：宇称不守恒 1956（与杨振宁、吴健雄实验证实、Steinberger 组先做超子检验、吴未获奖的争议）/ Lee-Yang 定理 1952 / Lee model 1953（哥大第一项工作，可解 QFT 模型）/ KLN 定理 1964 / 非拓扑孤子 1975 / 孤子星 / RHIC 物理 1974-75 / 时间离散化 1983——全部准确。
+- **荣誉清单**：Nobel 1957、爱因斯坦奖 1957、Guggenheim 1966、Galileo Galilei 1979、意大利共和国功绩勋章 1986、Oskar Klein 1993、Matteucci 1995、小行星 3443 命名 1997、Marcel Grossmann 2015——与 Wikipedia 逐一吻合。
+- **任职**：UC Berkeley 1950-51（research associate/lecturer）→ Columbia 1953-2012（退休）→ RIKEN-BNL 1997-2003（主任）。
+- **最年轻诺奖表述**：Wikipedia 明确 "third-youngest in sciences after Bragg (25) and Heisenberg (also at 30)"，即史上第三年轻，Bragg 25 岁、Heisenberg 亦 30 岁——准确。
+- **编译**：`make` → ✅ 13 页，0 错误。
+
+### 🔴 事实性错误（已修复）
+
+| # | 位置 | 当前内容 | 问题 | 修正 |
+|---|------|------|------|------|
+| 1 | 早年教育页 | 1946 年经**吴健雄**推荐获奖学金赴芝加哥大学 | Wikipedia "Professor Wu nominated Lee for a Chinese government fellowship" 中的 Wu 指代前文正文的 **吴大猷（Wu Ta-You）**（西南联大导师），非图片注中的吴健雄 | 改为"经**吴大猷**推荐" |
+
+## Review-2 记录 (2026-08-21)
+
+> 结构优化 + Overfull 检查 + 编译验证。
+
+- **Overfull 现状**：`xelatex` 两遍编译后，Overfull 为 hbox 6.08pt + vbox 1.17pt，全部 **<10pt 可接受**。
+  - line 234：结尾页 22pt 大字号金句「对称性，」「可以被打破。」——居中文本，溢出向两侧各约 1mm，不可见，保留醒目字号。
+- **肖像**：`keepaspectratio` 下封面 2.0×2.8cm、身份页 3.0×3.9cm 正常缩放，无变形。
+- **封面 badge 字体**：主标题 `\scriptsize`、副标题 `\tiny`（应需求缩小一档），编译无新增告警。
+- **中文标点/断行**：全角引号、破折号、`\quad` 间距统一，与 Wilson 标杆一致。
+- **编译**：`make distclean && make` → ✅ 13 页，169 比例，肖像已嵌入，中文渲染正常。
+
+> 结论：两轮 Review 通过，修复 1 处 P0 事实错误（推荐人吴健雄→吴大猷）；Overfull 均在可接受范围内。
