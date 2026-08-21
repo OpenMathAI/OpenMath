@@ -189,3 +189,40 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+---
+
+## Review-1 记录 (2026-08-21)
+
+> 结合本地 Wikipedia (`pages/20th_century/Wolfgang_Pauli/page.md` + `metadata.json`) 逐页比对。
+
+- **头像** ✅：`images/Pauli.jpg`（Wikipedia "Wolfgang Pauli, c. 1924" 照片，500×626 竖版，灰度）。
+- **生卒**：1900-04-25 ~ 1958-12-15（58 岁），与 Wikipedia infobox + 正文一致。
+- **出生/去世地**：维也纳（奥匈帝国）→ 苏黎世（Rotkreuz 医院），与 Wikipedia 一致。
+- **国籍变迁**：奥地利 → 美国(1946 入籍) → 瑞士(1949 入籍)，与 Wikipedia infobox 一致。
+- **家庭**：父 Wolfgang Josef Pauli（né Pascheles）、母 Bertha Camilla Schütz、教父 Ernst Mach（中间名 Ernst 纪念之）、妹妹 Hertha Pauli（作家、演员）——全部准确。
+- **教育**：Döblinger-Gymnasium（1918 优等毕业）→ LMU Munich PhD 1921（Sommerfeld 门下，论文《Über das Modell des Wasserstoffmolekülions》双原子氢离子 H₂⁺）→ 哥廷根 Born 助手一年 → 哥本哈根一年——准确。
+- **核心贡献复核**：237 页相对论综述（Einstein 出版专著）/ 不相容原理 1925（四量子数）/ 自旋（Kronig 起源、Uhlenbeck-Goudsmit 认定）/ 泡利矩阵+方程 / 泡利顺磁性 1926 / 氢原子光谱 1926 / 中微子预言 1930（致 Lise Meitner 信、质量 ≤ 质子 1%、Fermi 1934 命名、Reines-Cowan 1956 证实）/ 自旋统计定理 1940（re-derived）/ Pauli–Villars 1949——全部准确，无杜撰。
+- **性格轶事**："ganz falsch"、"not even wrong"、Pauli effect、与 Heisenberg 因 1958 新闻稿称"assistant"决裂——与 Wikipedia 一致。
+- **荣格对话**：1930 末离婚+丧母危机 → 1932 求诊荣格 → 共时性、Pauli–Jung 猜想、137 执念——准确。
+- **荣誉清单**：Lorentz 1931、Nobel 1945（Einstein 提名，正文 "nominated by Albert Einstein"）、Franklin 1952、Matteucci 1956、Max Planck 1958、皇家学会 1953、荷兰皇家艺术与科学院 1958——准确。
+- **编译**：`make` → ✅ 13 页，0 错误。
+
+### 🟡 存疑点（Wikipedia 自身矛盾，保留 infobox 口径）
+
+| # | 位置 | 现象 | 处置 |
+|---|------|------|------|
+| 1 | Lorentz Medal 年份 | infobox/奖项表写 **1931**，正文写 "awarded ... in **1930**" | 采用 1931（与 infobox、奖项表一致） |
+| 2 | 泡利矩阵/方程年份 | 正文未标注年份，tex 写 1927 | 1927 为行业公认（Pauli equation 1927），保留 |
+
+## Review-2 记录 (2026-08-21)
+
+> 结构优化 + Overfull 检查 + 编译验证。
+
+- **Overfull 现状**：`xelatex` 两遍编译后，Overfull 为 hbox 9.53pt / 2.68pt + vbox 1.17pt，全部 **<10pt 可接受**。
+  - line 234/235：结尾页 22pt 大字号金句「没有两个电子，」「能完全相同。」——居中文本，溢出向两侧各约 1mm，不可见，保留 22pt 醒目字号。
+- **肖像**：`keepaspectratio` 下封面 2.0×2.8cm、身份页 3.0×3.9cm 正常缩放，无变形。
+- **中文标点/断行**：全角引号、破折号、`\quad` 间距统一，与 Wilson 标杆一致。
+- **编译**：`make distclean && make` → ✅ 13 页，169 比例，肖像已嵌入，中文渲染正常。
+
+> 结论：两轮 Review 通过，无需事实修正；Overfull 均在可接受范围内。

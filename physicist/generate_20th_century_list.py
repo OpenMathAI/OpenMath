@@ -24,6 +24,7 @@ BIOGRAPHIES_DONE = {
     "Pieter Zeeman",
     "Eugene Paul Wigner",
     "Kenneth G. Wilson",
+    "Wolfgang Pauli",
 }
 
 # 已完成 Review（两轮事实核查）的物理学家（姓名需与获奖者名单精确匹配）。
@@ -32,6 +33,7 @@ REVIEWS_DONE = {
     "Wilhelm Conrad Röntgen",
     "Hendrik Antoon Lorentz",
     "Pieter Zeeman",
+    "Wolfgang Pauli",
 }
 
 # 获奖者英文名 → 中文名（诺贝尔物理学奖得主常用中译）。

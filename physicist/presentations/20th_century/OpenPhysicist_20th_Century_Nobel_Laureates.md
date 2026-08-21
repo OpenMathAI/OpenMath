@@ -64,7 +64,7 @@
 | 1939 | Ernest Orlando Lawrence (欧内斯特·奥兰多·劳伦斯) | United States | 表彰他发明并发展回旋加速器，以及利用它取得的成果，尤其是关于人工放射性元素的成果 | 🔲 | 🔲 |
 | 1943 | Otto Stern (奥托·斯特恩) | United States | 表彰他对分子射线方法发展的贡献，以及他发现质子的磁矩 | 🔲 | 🔲 |
 | 1944 | Isidor Isaac Rabi (伊西多·艾萨克·拉比) | United States | 表彰他用共振方法记录原子核磁性的方法 | 🔲 | 🔲 |
-| 1945 | Wolfgang Pauli (沃尔夫冈·泡利) | Austria | 表彰他发现不相容原理，又称泡利原理 | 🔲 | 🔲 |
+| 1945 | Wolfgang Pauli (沃尔夫冈·泡利) | Austria | 表彰他发现不相容原理，又称泡利原理 | ✅ | ✅ |
 | 1946 | Percy Williams Bridgman (珀西·威廉姆斯·布里奇曼) | United States | 表彰他发明产生超高压的装置，以及借此在高压物理领域作出的发现 | 🔲 | 🔲 |
 | 1947 | Edward Victor Appleton (爱德华·维克托·阿普顿) | United Kingdom | 表彰他对高层大气物理的研究，尤其是发现所谓的阿普顿层 | 🔲 | 🔲 |
 | 1948 | Patrick Maynard Stuart Blackett (帕特里克·梅纳德·斯图尔特·布莱克特) | United Kingdom | 表彰他发展威尔逊云室方法，以及借此在核物理和宇宙辐射领域的发现 | 🔲 | 🔲 |
@@ -188,8 +188,8 @@
 - **获奖年份跨度**：1901–2000
 - **获奖总项数**：162 项
 - **获奖总人数**：161 位
-- **已立传**：5 位（Eugene Paul Wigner、Hendrik Antoon Lorentz、Kenneth G. Wilson、Pieter Zeeman、Wilhelm Conrad Röntgen）
-- **已 Review**：3 位（Hendrik Antoon Lorentz、Pieter Zeeman、Wilhelm Conrad Röntgen）
+- **已立传**：6 位（Eugene Paul Wigner、Hendrik Antoon Lorentz、Kenneth G. Wilson、Pieter Zeeman、Wilhelm Conrad Röntgen、Wolfgang Pauli）
+- **已 Review**：4 位（Hendrik Antoon Lorentz、Pieter Zeeman、Wilhelm Conrad Röntgen、Wolfgang Pauli）
 - **两度获奖者**：John Bardeen（唯一两度获诺贝尔物理学奖者）
 - **女性获奖者**（20 世纪）：Maria Goeppert Mayer、Marie Curie
 
