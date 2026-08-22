@@ -44,7 +44,7 @@
 | 1971 | John McCarthy | 1927-2011 | 美国 | Stanford University | 人工智能、Lisp 语言、“人工智能”一词提出者。 | AI 奠基人之一。 | 🔲 | 🔲 |
 | 1972 | Edsger W. Dijkstra | 1930-2002 | 荷兰 | Eindhoven University of Technology | 结构化编程、最短路径算法（Dijkstra 算法）、并发原语。 | 程序设计方法论。 | 🔲 | 🔲 |
 | 1973 | Charles W. Bachman | 1924-2017 | 美国 | — | 数据库系统、CODASYL 网状数据库模型。 | 数据库奠基。 | 🔲 | 🔲 |
-| 1974 | Donald E. Knuth | 1938- | 美国 | Stanford University | 《计算机程序设计艺术》（TAOCP）、算法分析、TeX 排版系统。 | 算法大师。 | ✅ | 🔲 |
+| 1974 | Donald E. Knuth | 1938- | 美国 | Stanford University | 《计算机程序设计艺术》（TAOCP）、算法分析、TeX 排版系统。 | 算法大师。 | ✅ | ✅ |
 | 1975 | Allen Newell | 1927-1992 | 美国 | Carnegie Mellon University | 人工智能、认知科学、逻辑理论机。 | 与 Simon 共获。 | 🔲 | 🔲 |
 | 1975 | Herbert A. Simon | 1916-2001 | 美国 | Carnegie Mellon University | 人工智能、认知科学、有限理性决策。 | 另获诺贝尔经济学奖 1978。 | 🔲 | 🔲 |
 | 1976 | Michael O. Rabin | 1931- | 以色列/美国 | Harvard University | 非确定性自动机理论、随机算法、素性检验。 | — | 🔲 | 🔲 |
