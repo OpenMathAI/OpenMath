@@ -18,11 +18,15 @@ OUT = ROOT / "presentations" / "20th_century" / "OpenChemist_20th_Century_Nobel_
 
 # 已立传的化学家（姓名需与获奖者名单精确匹配）。
 # 新增立传时在此补充姓名。
-BIOGRAPHIES_DONE = set()
+BIOGRAPHIES_DONE = {
+    "Frederick Sanger",
+}
 
 # 已完成 Review（两轮事实核查）的化学家（姓名需与获奖者名单精确匹配）。
 # 完成两轮 Review 后在此补充姓名。
-REVIEWS_DONE = set()
+REVIEWS_DONE = {
+    "Frederick Sanger",
+}
 
 # 获奖者英文名 → 中文名（诺贝尔化学奖得主常用中译）。
 NAME_ZH = {
@@ -403,9 +407,9 @@ def main() -> int:
     # 国籍分布
     country_counter = Counter(r["country"] for r in rows)
 
-    # 立传 / Review 状态
-    done_count = sum(1 for r in rows if r["name"] in BIOGRAPHIES_DONE)
-    review_count = sum(1 for r in rows if r["name"] in REVIEWS_DONE)
+    # 立传 / Review 状态（去重计数，避免两度获奖者被重复统计）
+    done_count = len({r["name"] for r in rows if r["name"] in BIOGRAPHIES_DONE})
+    review_count = len({r["name"] for r in rows if r["name"] in REVIEWS_DONE})
 
     lines: list[str] = []
     lines.append("# 20 世纪诺贝尔化学奖得主 — OpenChemist 名录\n")

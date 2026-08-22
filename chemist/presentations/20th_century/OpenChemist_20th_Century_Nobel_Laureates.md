@@ -77,7 +77,7 @@
 | 1956 | Cyril Norman Hinshelwood (西里尔·诺曼·欣谢尔伍德) | British | 表彰他们对化学反应机理的研究 | 🔲 | 🔲 |
 | 1956 | Nikolay Semyonov (尼古拉·谢苗诺夫) | Soviet | 表彰他们对化学反应机理的研究 | 🔲 | 🔲 |
 | 1957 | Alexander R. Todd (亚历山大·托德) | British | 表彰他在核苷酸和核苷酸辅酶方面的工作 | 🔲 | 🔲 |
-| 1958 | Frederick Sanger (弗雷德里克·桑格) | British | 表彰他对蛋白质结构，尤其是胰岛素结构的研究 | 🔲 | 🔲 |
+| 1958 | Frederick Sanger (弗雷德里克·桑格) | British | 表彰他对蛋白质结构，尤其是胰岛素结构的研究 | ✅ | ✅ |
 | 1959 | Jaroslav Heyrovský (雅罗斯拉夫·海罗夫斯基) | Czechoslovak | 表彰他发现并发展了极谱分析方法 | 🔲 | 🔲 |
 | 1960 | Willard Libby (威拉德·利比) | American | 表彰他利用碳-14 测定考古学、地质学、地球物理学及其他科学领域年代的方法 | 🔲 | 🔲 |
 | 1961 | Melvin Calvin (梅尔文·卡尔文) | American | 表彰他对植物中二氧化碳同化作用的研究 | 🔲 | 🔲 |
@@ -111,7 +111,7 @@
 | 1979 | Georg Wittig (格奥尔格·维蒂希) | West German | 表彰他们分别将含硼化合物和含磷化合物发展成有机合成中的重要试剂 | 🔲 | 🔲 |
 | 1980 | Paul Berg (保罗·伯格) | American | 表彰他对核酸生物化学的基础研究，尤其是关于重组 DNA 的研究 | 🔲 | 🔲 |
 | 1980 | Walter Gilbert (沃尔特·吉尔伯特) | American | 表彰他们在核酸碱基序列测定方面所作出的贡献 | 🔲 | 🔲 |
-| 1980 | Frederick Sanger (弗雷德里克·桑格) | British | 表彰他们在核酸碱基序列测定方面所作出的贡献 | 🔲 | 🔲 |
+| 1980 | Frederick Sanger (弗雷德里克·桑格) | British | 表彰他们在核酸碱基序列测定方面所作出的贡献 | ✅ | ✅ |
 | 1981 | Kenichi Fukui (福井谦一) | Japanese | 表彰他们各自独立提出的关于化学反应进程的理论 | 🔲 | 🔲 |
 | 1981 | Roald Hoffmann (罗德·霍夫曼) | Polish American | 表彰他们各自独立提出的关于化学反应进程的理论 | 🔲 | 🔲 |
 | 1982 | Aaron Klug (阿龙·克卢格) | British | 表彰他发展晶体学电子显微术，并阐明具有生物学重要性的核酸-蛋白质复合物的结构 | 🔲 | 🔲 |
@@ -161,8 +161,8 @@
 - **获奖年份跨度**：1901–2000
 - **获奖总项数**：135 项
 - **获奖总人数**：134 位
-- **已立传**：0 位（暂无）
-- **已 Review**：0 位（暂无）
+- **已立传**：1 位（Frederick Sanger）
+- **已 Review**：1 位（Frederick Sanger）
 - **两度获奖者**：Frederick Sanger（唯一两度获诺贝尔化学奖者）
 - **女性获奖者**（20 世纪）：Dorothy Hodgkin、Irène Joliot-Curie、Marie Curie
 
