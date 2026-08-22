@@ -1,0 +1,325 @@
+% =============================================================
+%  算法分析之父：唐纳德·克努特 (Donald Ervin Knuth)
+%  Beamer 源码 —— OpenTuring 图灵奖得主立传首例
+%  设计母题：算法之美 / 排版艺术 (The Art) —— 递归与网格的秩序感
+%  资料来源：本地 Wikipedia (turing/pages/1974/Donald Knuth/index.html)
+%  【模板】本文件是图灵奖得主立传模板，可整体复用到任何图灵奖得主
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Knuth 专属四分类色：算法/排版/语言/理论 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeAlg}{HTML}{2E5A9E}      % 算法分析 — 蓝
+\definecolor{badgeType}{HTML}{D9A441}     % 计算机排版 — 琥珀
+\definecolor{badgeLang}{HTML}{1E8E8E}     % 编程语言 — 青绿
+\definecolor{badgeTheory}{HTML}{C0395B}   % 理论计算机 — 玫瑰
+\definecolor{algpanel}{RGB}{228,233,246}
+\definecolor{typepanel}{RGB}{249,240,224}
+\definecolor{langpanel}{RGB}{222,240,238}
+\definecolor{theorypanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条（内容页使用）
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景（封面/结尾使用）：以离散圆点呼应「算法/排版」的节奏感
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAlg!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeLang!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeType!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题：{主标题}{副标题}
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签（身份信息页使用）
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{calculator}\enspace 算法分析之父\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {高德纳};
+  \node[anchor=center, font=\fontsize{11}{14}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {唐纳德·克努特（音译）\enspace·\enspace Donald E. Knuth\enspace·\enspace 1938 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {TAOCP 作者 · TeX 排版系统创造者 · 1974 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAlg] at (-5.05,0)
+        {算法分析\\Analysis\par\scriptsize 1974 图灵奖核心};
+      \node[badge, fill=badgeType] at (-1.68,0)
+        {计算机排版\\TeX\par\scriptsize 排版的艺术};
+      \node[badge, fill=badgeLang] at (1.68,0)
+        {编程语言\\Languages\par\scriptsize LR 分析 · 编译器};
+      \node[badge, fill=badgeTheory] at (5.05,0)
+        {理论计算机\\Theory\par\scriptsize TAOCP · 组合数学};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his major contributions to the analysis of algorithms and the design of programming languages, and in particular for his contributions to 'The Art of Computer Programming'." —— 1974 图灵奖获奖理由};
+  % 头像（条件包含：有 Knuth.jpg 则显示，否则占位框）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Knuth.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Knuth.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center)
+    {Donald E. Knuth};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Stanford\enspace|\enspace Turing 1974 · National Medal 1979};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 中文名典故 ---
+\newcommand{\cnnameslide}{\begin{frame}\plainbar\sectiontitle{高德纳：一个中文名的由来}{储枫 1977 年取名 · 意译 + 音译 + 人物特征}
+\vspace{-0.45cm}
+\begin{center}\begin{tikzpicture}[
+    zi/.style={rounded corners=4pt, inner xsep=4pt, inner ysep=4.5pt, text width=2.4cm, font=\fontsize{6.4}{8.2}\selectfont, align=center},
+    fn/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=7pt, text width=2.95cm, font=\fontsize{6.4}{8.2}\selectfont, align=center}
+  ]
+  % 引言：一手来源
+  \node[draw=coverprimary!60, fill=silverpanel, rounded corners=6pt, inner sep=8pt, text width=13.2cm, align=center]
+    at (0,2.45) {{\fontsize{7.8}{9.8}\selectfont\color{coverdark!85} 1977 年访华前夕，姚期智夫人储枫（Frances Yao）为 Knuth 取名「高德纳」；Knuth 本人 Stanford CV 直接写：}\\[2pt]
+    {\fontsize{8.6}{10.5}\selectfont\bfseries\color{coveraccent!88!black} Chinese name: 高德納}};
+  % 三字拆解
+  \node[zi, fill=algpanel, draw=badgeAlg!60] at (-3.35,0.54) {{\fontsize{16}{20}\selectfont\bfseries\color{badgeAlg} 高}\\[4pt]身材高大（约 2 米）\\[2pt]K 与 G 音近};
+  \node[zi, fill=goldpanel, draw=coveraccent!55] at (0,0.54) {{\fontsize{16}{20}\selectfont\bfseries\color{coveraccent!90!black} 德}\\[4pt]内在美德\\[2pt]行为正直};
+  \node[zi, fill=langpanel, draw=badgeLang!60] at (3.35,0.54) {{\fontsize{16}{20}\selectfont\bfseries\color{badgeLang} 纳}\\[4pt]谦和 · 虚怀若谷\\[2pt]Donald 尾音};
+  % 家庭中文名（四列小卡片）
+  \node[fn, fill=algpanel, draw=badgeAlg!50] at (-5.0,-1.05) {{\bfseries\color{badgeAlg} Donald}\\[2pt]Knuth → 高德纳};
+  \node[fn, fill=goldpanel, draw=coveraccent!50] at (-1.7,-1.05) {{\bfseries\color{coveraccent} Jill}\\[2pt]Carter → 高精兰};
+  \node[fn, fill=langpanel, draw=badgeLang!50] at (1.7,-1.05) {{\bfseries\color{badgeLang} John}\\[2pt]Knuth → 高小强};
+  \node[fn, fill=theorypanel, draw=badgeTheory!50] at (5.0,-1.05) {{\bfseries\color{badgeTheory} Jennifer}\\[2pt]Knuth → 高小珍};
+  % 结论
+  \node[draw=coveraccent!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=13.2cm, align=center]
+    at (0,-2.22) {{\fontsize{7.4}{9.6}\selectfont\color{coverdark!85} 这不是外号——Knuth 已把「Chinese name: 高德納」写进自己的正式学术履历（Stanford CV）。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 身份信息页（★ 图灵奖硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{唐纳德·克努特 - 从密尔沃基到算法分析之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  % 左侧头像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Knuth.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Knuth.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Donald E. Knuth (2011)};
+  % 右侧 2×2 信息网格：上面两卡上边缘对齐，下面两卡下边缘对齐
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1938-01-10 —（在世）\\[2pt]\lab{中文名}\quad 高德纳\\[2pt]\lab{本名}\quad Donald Ervin Knuth\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=langpanel, draw=badgeLang!45, anchor=north] at (3.8,2.35)
+    {\lab{师承}\quad Marshall Hall, Jr.（博士导师）\\[2pt]
+     \lab{任职}\quad Caltech 1963–1968\\[2pt]
+     \quad Stanford 1969–（名誉教授）};
+  \node[infob, fill=algpanel, draw=badgeAlg!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 威斯康星州 · 密尔沃基\\[2pt]\lab{教育}\quad Case Institute BS/MS 1960\\[2pt]\quad Caltech PhD 1963};
+  \node[infob, fill=typepanel, draw=badgeType!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1974 · National Medal 1979\\[2pt]
+     \quad Kyoto 1996 · von Neumann 1995\\[2pt]
+     \quad Hopper 1971 · NAS 1975\\[2pt]
+     \lab{核心领域}\quad 算法分析 · 计算机排版\\[2pt]
+     \quad 编程语言 · 理论计算机科学};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{把程序写成艺术}{算法分析 · 计算机排版 · 编程语言 · 理论计算机科学}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=algpanel, draw=badgeAlg!50, text=badgeAlg!85!black] (a) at (-5.7,1.05) {算法分析\\1974 图灵奖\\[2pt]Big O 渐近记号};
+\node[nodebox, fill=goldpanel, draw=coveraccent!60, text=coveraccent!85!black] (b) at (-1.9,1.05) {计算机排版\\TeX · METAFONT\\[2pt]排版的艺术};
+\node[nodebox, fill=langpanel, draw=badgeLang!50, text=badgeLang!85!black] (c) at (1.9,1.05) {编程语言\\LR 分析器\\[2pt]编译器设计};
+\node[nodebox, fill=theorypanel, draw=badgeTheory!50, text=badgeTheory!85!black] (d) at (5.7,1.05) {理论计算机\\TAOCP\\[2pt]组合数学 · 文学编程};
+\node[draw=coverprimary!60, fill=silverpanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他让算法第一次被当作一门可以「读」与「写」的艺术。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：密尔沃基少年 (1938–1956)}{印刷厂之子 · 单词比赛 · 路德宗德裔}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=algpanel, draw=badgeAlg!55] at (0,2.55) {\textbf{1938 · 生于密尔沃基。}父 Ervin Henry Knuth 经营一家小型印刷厂并教簿记，母 Louise Marie Bohning；他自述血统为「中西部路德宗德国人」。};
+\node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{单词比赛天才。}八年级时参加「Ziegler's Giant Bar」字母重组比赛，评委找到 2,500 个词，他靠装病逃课、翻遍足本词典，找出 4,500 多个词，赢得比赛。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{早年印记。}父亲的印刷厂让他从小浸润于「排版与文字」的世界——这或许正是日后 TeX 与排版情结的源头。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个在印刷厂长大的少年，日后将彻底改写计算机排版的历史。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Case ---
+\newcommand{\caseslide}{\begin{frame}\plainbar\sectiontitle{Case：从物理到数学 (1956–1960)}{IBM 650 · 篮球程序 · 双学位}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,2.55) {\textbf{1956 · 物理奖学金入学。}入读 Case Institute of Technology（今 Case Western Reserve），后从物理转向数学。};
+\node[item, fill=algpanel, draw=badgeAlg!55] at (0,1.05) {\textbf{初见计算机。}接触早期商用机 IBM 650，读完手册后决定重写学校的汇编与编译器——只因相信自己能做得更好。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{1960 · 同时获 BS + MS。}因成绩特别优异，被教员授予双学位；期间还为 Burroughs 写 ALGOL 编译器。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 物理转数学，却最终站到了计算机科学的中心。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Caltech 博士 ---
+\newcommand{\caltechslide}{\begin{frame}\plainbar\sectiontitle{Caltech 博士：Marshall Hall 门下 (1960–1963)}{有限半域与射影平面 · 数学的根基}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=theorypanel, draw=badgeTheory!45] at (0,2.55) {\textbf{师从 Marshall Hall, Jr.}在加州理工学院（Caltech）攻读数学博士，导师是著名数学家 Marshall Hall, Jr.。};
+\node[item, fill=algpanel, draw=badgeAlg!55] at (0,1.05) {\textbf{博士论文 (1963)。}《Finite Semifields and Projective Planes》（有限半域与射影平面）——纯数学的组合结构研究。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{1961 · 成婚。}与 Nancy Jill Carter 结婚，育有两子；此后毕生以严谨的数学家思维投入计算机科学。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 数学博士的严谨，奠定了他日后「算法分析」的底色。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- TAOCP ---
+\newcommand{\taocpslide}{\begin{frame}\plainbar\sectiontitle{TAOCP：计算机程序设计艺术 (1962–)}{一部未完的史诗 · 一卷到七卷}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=algpanel, draw=badgeAlg!60] at (0,2.55) {\textbf{1962 · 受委托写编译器书。}Addison-Wesley 委托他写编译器专著，他却决定先建立计算机编程的基础理论——这就是 TAOCP 的起点。};
+\node[item, fill=theorypanel, draw=badgeTheory!45] at (0,0.85) {\textbf{一卷到七卷。}原计划写一本，规划大纲后扩充到六卷、再七卷；1968 年出版第一卷。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{未完的史诗。}2011 年出版 4A 卷，2022 年出版 4B 卷——他把毕生投入这部「编程的百科全书」。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "The best way to communicate from one human being to another is through story."}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 算法分析 ---
+\newcommand{\algoslide}{\begin{frame}\plainbar\sectiontitle{算法分析：把计算变成科学}{Big O · 复杂度 · 1967 命名}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=algpanel, draw=badgeAlg!60] at (0,2.55) {\textbf{严格分析计算复杂度。}系统化了对算法运行时间与空间的数学分析，把「复杂度」从经验变成可计算的对象。};
+\node[item, fill=langpanel, draw=badgeLang!45] at (0,0.85) {\textbf{推广渐近记号。}大力推广 Big O 记号（源于 Bachmann/Landau），让它成为算法分析的标准语言。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1967 · 命名「算法分析」。}在 SIAM 会议上被问及研究领域时，他决定从此回答："Analysis of algorithms"。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1974 图灵奖的核心：他让「算法分析」成为一个独立而严谨的学科。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- TeX ---
+\newcommand{\texslide}{\begin{frame}\plainbar\sectiontitle{TeX：排版的艺术 (1977–)}{为一份校样 · 版本号趋近 π}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=typepanel, draw=badgeType!55] at (0,2.55) {\textbf{1977 · 为排版质量暂停写书。}出版商改用照相排版，TAOCP 第二版校样的质量令他难以忍受，于是他暂停写书，转向数字排版。};
+\node[item, fill=algpanel, draw=badgeAlg!45] at (0,1.05) {\textbf{TeX 与 METAFONT。}他创造了 TeX 排版系统与 METAFONT 字体定义语言，以及 Computer Modern 字体族。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{版本号趣事。}TeX 版本号趋近 π（3.1415926…），METAFONT 版本号趋近 e——「完美」是他的执念。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 为了写出完美的书，他顺带重写了整个世界的排版方式。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 文学编程 ---
+\newcommand{\literateslide}{\begin{frame}\plainbar\sectiontitle{文学编程：程序即文学}{WEB / CWEB · 解释给人类}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=theorypanel, draw=badgeTheory!55] at (0,2.55) {\textbf{程序即文学。}他相信程序员应把程序当作文学作品来写——核心不是指挥机器，而是向人类解释。};
+\node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{WEB 系统。}同一份 WEB 源码既能 weave 成 TeX 文档，也能 tangle 成 Pascal 程序；CWEB 则改用 C/C++/Java。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{1986 · 出版。}用 WEB 编写 TeX 与 METAFONT，并出版为《TeX: The Program》《METAFONT: The Program》。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} "Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do."}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 以 Knuth 命名的成果 ---
+\newcommand{\eponymousslide}{\begin{frame}\plainbar\sectiontitle{以 Knuth 命名的成果}{算法与语言的印记}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=7pt, text width=3.05cm, font=\fontsize{6.6}{8.6}\selectfont, align=center}]
+\node[leg, fill=algpanel, draw=badgeAlg!50,line width=0.7pt] (a) at (-5.4,1.35) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeAlg} 算法}\\[3pt]KMP 字符串匹配\\[2pt]Knuth–Bendix 完备化};
+\node[leg, fill=typepanel, draw=badgeType!50,line width=0.7pt] (b) at (-1.8,1.35) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeType} 记号}\\[3pt]up-arrow 上箭头\\[2pt]大数表示};
+\node[leg, fill=langpanel, draw=badgeLang!50,line width=0.7pt] (c) at (1.8,1.35) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeLang} 解析}\\[3pt]LR 分析器\\[2pt]编译器技术};
+\node[leg, fill=theorypanel, draw=badgeTheory!50,line width=0.7pt] (d) at (5.4,1.35) {{\fontsize{8.6}{11}\selectfont\bfseries\color{badgeTheory} 架构}\\[3pt]MIX / MMIX\\[2pt]TAOCP 教学用};
+\node[draw=coverprimary!65, fill=goldpanel, rounded corners=6pt, inner sep=9pt, text width=13.0cm, align=center] at (0,-1.55) {{\fontsize{8.6}{11}\selectfont\bfseries\color{coverdark!88} 从字符串匹配到指令集架构，他的名字贯穿计算机科学的各个分支。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 门生与传承 ---
+\newcommand{\studentslide}{\begin{frame}\plainbar\sectiontitle{门生与传承}{Robert Sedgewick · Leonidas Guibas · Vaughan Pratt}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=algpanel, draw=badgeAlg!55] at (0,2.55) {\textbf{知名博士生。}Robert Sedgewick（《算法》作者）、Leonidas J. Guibas（计算几何）、Vaughan Pratt（Pratt 解析，KMP 合作者）等皆出其门下。};
+\node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{更多门生。}Michael Fredman（斐波那契堆）、Jeffrey Vitter（外部存储算法）、Scott Kim（字体设计）、Andrei Broder（信息检索）。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{风格影响。}他培养的不是某一学派，而是「用数学严谨性思考算法」的独立研究者——门生遍布算法、图形、检索。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从《算法》到计算几何，他的学生在各自领域继续书写计算机科学。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 荣誉 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与认可}{图灵奖 1974 · National Medal 1979 · Kyoto 1996}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=goldpanel, draw=coveraccent!50] at (0,2.55) {\textbf{1974 · 图灵奖。}因算法分析与编程语言设计的重大贡献获奖，尤其是《计算机程序设计艺术》系列。};
+\node[item, fill=algpanel, draw=badgeAlg!45] at (0,0.85) {\textbf{国家级与终身成就。}1979 美国国家科学奖章 · 1995 von Neumann 奖章与 Harvey 奖 · 1996 京都奖。};
+\node[item, fill=langpanel, draw=badgeLang!40] at (0,-0.65) {\textbf{院士与早期奖项。}1971 Grace Murray Hopper 奖 · 1975 美国国家科学院院士 · 2003 英国皇家学会外籍院士 · 2011 Faraday 奖章。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个思想的重量，最终由时间与奖项共同称量。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 反对软件专利 ---
+\newcommand{\patentslide}{\begin{frame}\plainbar\sectiontitle{反对软件专利：程序员的立场}{显而易见不应专利 · 向 USPTO/EPO 陈词}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=theorypanel, draw=badgeTheory!55] at (0,2.55) {\textbf{鲜明立场。}强烈反对把「显而易见」的软件方案授予专利——他认为这会阻碍而非促进创新。};
+\node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{细致而非一刀切。}对非平凡方案（如线性规划的内点法）持更 nuanced 的态度，展现其严谨与克制。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{直接陈词。}曾直接向美国专利商标局（USPTO）与欧洲专利组织（EPO）表达反对意见。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 对算法自由的坚持，是他「程序即文学」信念的自然延伸。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：程序即文学}{从 TAOCP 到算法分析 · TeX 沿用至今}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=7pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=algpanel, draw=badgeAlg!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAlg} 算法分析}\\[3pt]Big O\\[2pt]1974 图灵奖};
+\node[leg, fill=typepanel, draw=badgeType!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeType} 计算机排版}\\[3pt]TeX\\[2pt]METAFONT};
+\node[leg, fill=langpanel, draw=badgeLang!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLang} 编程语言}\\[3pt]LR 分析\\[2pt]编译器};
+\node[leg, fill=theorypanel, draw=badgeTheory!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeTheory} 理论计算机}\\[3pt]TAOCP\\[2pt]文学编程};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 程序，是可以被读的艺术。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} TAOCP $\rightarrow$ 算法分析 $\rightarrow$ TeX $\rightarrow$ 文学编程\\[2pt]他的思想，仍在计算机科学的每个角落流动。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {过早优化，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是万恶之源。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Donald Ervin Knuth};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {高德纳\quad 唐纳德·克努特\quad Donald E. Knuth\quad 1938 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{calculator}\enspace Turing 1974 · National Medal 1979 · 算法分析\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+% --- 彩蛋：本篇也是用 TeX 排版的 ---
+\newcommand{\eastereggslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+  at ([yshift=2.6cm]current page.center) {\faIcon{star}\enspace 一个彩蛋};
+\node[font=\fontsize{17}{22}\selectfont\bfseries, text=coverprimary!90!black, align=center, text width=14cm]
+  at ([yshift=1.3cm]current page.center) {这份文档，正是用 TeX 排版的};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=0.3cm, xshift=-4.2cm]current page.center) -- ([yshift=0.3cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{10}{13}\selectfont, text=coverprimary!68!black, align=center, text width=13cm]
+  at ([yshift=-0.45cm]current page.center) {高德纳（Knuth）创造了 TeX 排版系统；本系列 Beamer 幻灯片，连同这份立传，\\[2pt]都由 XeLaTeX + Beamer 编译——我们用他发明的工具，讲述他本人的故事。};
+\node[font=\fontsize{7.5}{9.5}\selectfont, text=coverdark!45, align=center, text width=12cm]
+  at ([yshift=-1.9cm]current page.center) {TAOCP 由 TeX 排版 · 本页由 Beamer 排版 · 排版的艺术，仍在延续};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{calculator}\enspace OpenMathAI · OpenTuring\enspace|\enspace Compiled with \TeX};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\cnnameslide
+\profileslide
+\hookslide
+\earlyslide
+\caseslide
+\caltechslide
+\taocpslide
+\algoslide
+\texslide
+\literateslide
+\eponymousslide
+\studentslide
+\honorsslide
+\patentslide
+\legacyslide
+\closingslide
+\eastereggslide
+\end{document}
