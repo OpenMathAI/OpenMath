@@ -167,3 +167,35 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+---
+
+## Review-1 记录 (2026-08-22)
+
+> 立传完成，结合本地 Wikipedia (`pages/Évariste_Galois/page.md` + `metadata.json`) 逐页比对。
+
+- **编译**：`make distclean && make` → ✅ 13 页（含 OpenMath 项目首页），0 错误。
+- **头像** ✅：已从 Wikimedia 下载真实肖像 `images/Evariste_galois.jpg`（250×323），封面与身份信息页两处均已替换为 `\includegraphics`（竖版圆角裁剪），并删除占位宏 `\portraitplaceholder`。
+- **国籍** ✅：封面顶部 `\faIcon{globe}\enspace 法国`，身份信息页 `法国`（Wikidata nationality: ["France"]）。
+- **身份信息页** ✅：Slide 2 已存在（`\profileslide`），涵盖生卒/本名/国籍/出生地/中学教师/身份/荣誉/核心领域，符合 Wilson 模板硬性要求。
+- **事实复核**：生卒(1811-10-25~1832-05-31, 20岁)/布尔拉雷纳出生/父 Nicolas-Gabriel Galois(共和派,曾任市长)/母 Adélaïde-Marie(法学家之女,负责12岁前教育)/1823 入 Louis-le-Grand/教师 L.P.É. Richard/1828-1829 两考 Polytechnique 落榜/1829 父自杀/群论"首次用 groupe"/正规子群(proper decomposition)/伽罗瓦理论(可解群判据)/五次方程(Abel 证不可解,Galois 给一般理论)/有限域 GF(p^n)/GL(ν,p)/PSL(2,p) 单性(p≠2,3)/决斗动机成谜/数学遗嘱致 Chevalier/Hermann Weyl 评价/Liouville 1843 承认、1846 发表/Concours général——全部与 Wikipedia 一致，无杜撰。
+- **史实陷阱复核**：决斗动机写"成谜"、五次方程归属正确（Abel 不可解 / Galois 一般理论）、群论"首次使用 groupe"措辞准确、Cauchy 赏识与 Poisson"不可理解"未写成打压、国籍用「法国」现代对应——均符合终审清单。
+- **视频**：`make video` → ✅ `Évariste_Galois_zh.mp4`（13 页 × 7s）。
+- **背景音乐** ✅：已从 `music_audio/alex-productions/80-K5f65-22sY4-Tragedy.wav` 复制为 `Tragedy.wav`（「悲剧人物 / 深色 / 戏剧性」，契合伽罗瓦「悲剧英雄 / 浪漫燃烧」定调），`make video` 已混入音频轨。
+- **遗留**：
+  1. Overfull hbox 0.92pt（<10pt 可接受）
+
+---
+
+## Review-2 记录 (2026-08-22)
+
+> 结构优化轮：检查告警、中文标点、布局对齐、与同世纪数学家格式一致性。
+
+- **Overfull/Underfull 告警** ✅：全文档仅 1 处 `Overfull \hbox (0.92249pt too wide)`（结束页底部状态栏 `\faIcon{expand-alt}` 行），<10pt 可接受；无 Underfull 告警。
+- **中文标点** ✅：正则扫描 `[\u4e00-\u9fa5][,.;:!?]` 命中 0 处，中文语境全角标点统一，数学符号与英文术语保留原文。
+- **身份信息页布局** ✅：与 Wilson 模板对齐（左肖像 + 右 2×2 信息网格，含生卒/本名/国籍/出生地/中学教师/身份/荣誉/核心领域），竖版肖像 2.6×3.5cm 圆角裁剪。
+- **配色与背景母题** ✅：共和深蓝 `#1A237E` + 革命红 `#C62828` 主副色，四分类色（群论靛蓝 / 方程青绿 / 有限域琥珀 / 遗产石版灰），气泡背景呼应「群作用轨道 / 置换对称」母题。
+- **格式对齐** ✅：封面（头像 + 国籍行 + 四 badge + 底部三要素状态栏）、`\sectiontitle`、`\plainbar`、`\deckbackground`、结束页（无肖像 + 品牌 `OpenMathAI`）均与 Frobenius 模板一致。
+- **编译复验** ✅：`make distclean && make` 0 错误，13 页；`make video` 已生成含 BGM 的 `Évariste_Galois_zh.mp4`（7.08 MB）。
+
+> **Review 结论**：两轮 Review 完成，立传定稿。

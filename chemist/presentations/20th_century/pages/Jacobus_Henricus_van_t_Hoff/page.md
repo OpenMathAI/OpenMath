@@ -1,0 +1,111 @@
+---
+name: "Jacobus Henricus van 't Hoff"
+wikidata: Q102822
+wikipedia: https://en.wikipedia.org/wiki/Jacobus_Henricus_van_%27t_Hoff
+description: "Dutch physical and organic chemist (1852-1911)"
+date_of_birth: ["1852-08-30"]
+date_of_death: ["1911-03-01"]
+nationality: ["Kingdom of the Netherlands"]
+field_of_work: ["physical chemistry", "organic chemistry"]
+occupation: ["chemist", "physicist", "engineer", "geologist", "university teacher", "stereochemist"]
+award_received: ["Pour le Mérite for Sciences and Arts order", "Nobel Prize in Chemistry", "Helmholtz Medal", "Davy Medal", "Bavarian Maximilian Order for Science and Art", "Foreign Member of the Royal Society", "Pour le Mérite", "honorary member of the Physics Association (Frankfurt am Main, Germany)"]
+doctoral_advisor: ["Eduard Mulder"]
+educated_at: ["Leiden University", "Delft University of Technology", "University of Bonn", "Utrecht University", "University of Paris"]
+---
+
+Jacobus Henricus van 't Hoff
+
+| Jacobus Henricus van 't Hoff Jr. | |
+| --- | --- |
+| Van 't Hoff in 1904 | |
+| Born | (1852-08-30)30 August 1852  [Rotterdam](https://en.wikipedia.org/wiki/Rotterdam "Rotterdam"), Netherlands |
+| Died | 1 March 1911(1911-03-01) (aged 58)  [Steglitz](https://en.wikipedia.org/wiki/Steglitz "Steglitz"), Berlin, German Empire |
+| Alma mater | - [Delft University of Technology](https://en.wikipedia.org/wiki/Delft_University_of_Technology "Delft University of Technology") - [University of Leiden](https://en.wikipedia.org/wiki/University_of_Leiden "University of Leiden") - [University of Bonn](https://en.wikipedia.org/wiki/University_of_Bonn "University of Bonn") - [University of Paris](https://en.wikipedia.org/wiki/University_of_Paris "University of Paris") - [University of Utrecht](https://en.wikipedia.org/wiki/University_of_Utrecht "University of Utrecht") |
+| Known for | - One of the founders of [stereochemistry](https://en.wikipedia.org/wiki/Stereochemistry "Stereochemistry") and [physical chemistry](https://en.wikipedia.org/wiki/Physical_chemistry "Physical chemistry") - Modern concept of [chemical affinity](https://en.wikipedia.org/wiki/Chemical_affinity "Chemical affinity") - Predicting the structure of [tetrahedral](https://en.wikipedia.org/wiki/Tetrahedral "Tetrahedral") carbon atom ([asymmetric carbon](https://en.wikipedia.org/wiki/Asymmetric_carbon "Asymmetric carbon")) - Predicting the existence of [chiral](https://en.wikipedia.org/wiki/Chirality_(chemistry) "Chirality (chemistry)") [allenes](https://en.wikipedia.org/wiki/Allenes "Allenes") - [Stereoisomerism](https://en.wikipedia.org/wiki/Stereoisomerism "Stereoisomerism") - [Chemical thermodynamics](https://en.wikipedia.org/wiki/Chemical_thermodynamics "Chemical thermodynamics") - [Chemical kinetics](https://en.wikipedia.org/wiki/Chemical_kinetics "Chemical kinetics") - [Chemical equilibrium](https://en.wikipedia.org/wiki/Chemical_equilibrium "Chemical equilibrium") - [Osmotic pressure](https://en.wikipedia.org/wiki/Osmotic_pressure "Osmotic pressure") - [Van 't Hoff equation](https://en.wikipedia.org/wiki/Van_'t_Hoff_equation "Van 't Hoff equation") - [Van 't Hoff factor](https://en.wikipedia.org/wiki/Van_'t_Hoff_factor "Van 't Hoff factor") - [Le Bel–Van 't Hoff rule](https://en.wikipedia.org/wiki/Le_Bel–Van_'t_Hoff_rule "Le Bel–Van 't Hoff rule") |
+| Awards | - [Davy Medal](https://en.wikipedia.org/wiki/Davy_Medal "Davy Medal") (1893) - [Pour le Mérite](https://en.wikipedia.org/wiki/List_of_recipients_of_the_Pour_le_Mérite_for_Sciences_and_Arts "List of recipients of the Pour le Mérite for Sciences and Arts") (1895) - [ForMemRS](https://en.wikipedia.org/wiki/Fellow_of_the_Royal_Society "Fellow of the Royal Society") (1897) - [Nobel Prize for Chemistry](https://en.wikipedia.org/wiki/Nobel_Prize_for_Chemistry "Nobel Prize for Chemistry") (1901) [Helmholtz Medal](https://en.wikipedia.org/wiki/Berlin-Brandenburg_Academy_of_Sciences_and_Humanities#Medals,_prizes_and_lectures "Berlin-Brandenburg Academy of Sciences and Humanities") (1911) |
+| **Scientific career** | |
+| Fields | [Physical chemistry](https://en.wikipedia.org/wiki/Physical_chemistry "Physical chemistry") [Organic chemistry](https://en.wikipedia.org/wiki/Organic_chemistry "Organic chemistry") [Theoretical chemistry](https://en.wikipedia.org/wiki/Theoretical_chemistry "Theoretical chemistry") |
+| Institutions | - Veterinary College in Utrecht - [University of Amsterdam](https://en.wikipedia.org/wiki/University_of_Amsterdam "University of Amsterdam") - [University of Berlin](https://en.wikipedia.org/wiki/University_of_Berlin "University of Berlin") |
+| [Doctoral advisor](https://en.wikipedia.org/wiki/Doctoral_advisor "Doctoral advisor") | Eduard Mulder |
+| Doctoral students | [Ernst Cohen](https://en.wikipedia.org/wiki/Ernst_Cohen "Ernst Cohen") |
+| Other notable students | [Frederick G. Donnan](https://en.wikipedia.org/wiki/Frederick_G._Donnan "Frederick G. Donnan") |
+|  | |
+
+**Jacobus Henricus van 't Hoff Jr.** (Dutch: [[vɑn (ə)t ˈɦɔf]](https://en.wikipedia.org/wiki/Help:IPA/Dutch "Help:IPA/Dutch"); 30 August 1852 – 1 March 1911) was a Dutch [physical chemist](https://en.wikipedia.org/wiki/Physical_chemistry "Physical chemistry"). A highly influential [theoretical chemist](https://en.wikipedia.org/wiki/Theoretical_chemistry "Theoretical chemistry"), in 1901 Van 't Hoff won the first [Nobel Prize in Chemistry](https://en.wikipedia.org/wiki/Nobel_Prize_in_Chemistry "Nobel Prize in Chemistry") "[for his] discovery of the laws of [chemical dynamics](https://en.wikipedia.org/wiki/Chemical_dynamics "Chemical dynamics") and [osmotic pressure](https://en.wikipedia.org/wiki/Osmotic_pressure "Osmotic pressure") in solutions". His pioneering work helped found the modern theory of [chemical affinity](https://en.wikipedia.org/wiki/Chemical_affinity "Chemical affinity"), [chemical equilibrium](https://en.wikipedia.org/wiki/Chemical_equilibrium "Chemical equilibrium"), [chemical kinetics](https://en.wikipedia.org/wiki/Chemical_kinetics "Chemical kinetics"), and [chemical thermodynamics](https://en.wikipedia.org/wiki/Chemical_thermodynamics "Chemical thermodynamics"). In his 1874 pamphlet, Van 't Hoff formulated the theory of the tetrahedral carbon atom and laid the foundations of [stereochemistry](https://en.wikipedia.org/wiki/Stereochemistry "Stereochemistry"). In 1875, he predicted the correct structures of [allenes](https://en.wikipedia.org/wiki/Allenes "Allenes") and [cumulenes](https://en.wikipedia.org/wiki/Cumulene "Cumulene") as well as their axial [chirality](https://en.wikipedia.org/wiki/Chirality_(chemistry) "Chirality (chemistry)"). He is also widely considered one of the three co-founders of [physical chemistry](https://en.wikipedia.org/wiki/Physical_chemistry "Physical chemistry") as the discipline is known today. The Zeitschrift für physikalische Chemie (Journal of Physical Chemistry) was founded in 1887 by Van ’t Hoff, [Svante Arrhenius](https://en.wikipedia.org/wiki/Svante_Arrhenius "Svante Arrhenius") and [Wilhelm Ostwald](https://en.wikipedia.org/wiki/Wilhelm_Ostwald "Wilhelm Ostwald"), at Leipzig University as the first dedicated scientific journal for the discipline.
+
+## Biography
+
+The third of seven children, Van 't Hoff was born in [Rotterdam](https://en.wikipedia.org/wiki/Rotterdam "Rotterdam"), Netherlands, 30 August 1852. His father was Jacobus Henricus van 't Hoff Sr., a physician, and his mother was Alida Kolff van 't Hoff. From a young age, he was interested in science and nature, and frequently took part in botanical excursions. In his early school years, he showed a strong interest in poetry and [philosophy](https://en.wikipedia.org/wiki/Philosophy "Philosophy"). He considered [Lord Byron](https://en.wikipedia.org/wiki/Lord_Byron "Lord Byron") to be his idol.
+
+Against the wishes of his father, Van 't Hoff chose to study [chemistry](https://en.wikipedia.org/wiki/Chemistry "Chemistry"). First, he enrolled at [Delft University of Technology](https://en.wikipedia.org/wiki/Delft_University_of_Technology "Delft University of Technology") in September 1869, and studied until 1871, when he passed his final exam on 8 July and obtained a degree of [chemical technologist](https://en.wikipedia.org/wiki/Industrial_technology "Industrial technology"). He passed all his courses in two years, although the time assigned to study was three years. Then he enrolled at [University of Leiden](https://en.wikipedia.org/wiki/University_of_Leiden "University of Leiden") to study chemistry. He then studied in [Bonn](https://en.wikipedia.org/wiki/Bonn "Bonn"), Germany, with [August Kekulé](https://en.wikipedia.org/wiki/Friedrich_August_Kekule_von_Stradonitz "Friedrich August Kekule von Stradonitz") and in Paris with [Adolphe Wurtz](https://en.wikipedia.org/wiki/Charles_Adolphe_Wurtz "Charles Adolphe Wurtz"). He received his [doctorate](https://en.wikipedia.org/wiki/Doctor_of_Philosophy "Doctor of Philosophy") under Eduard Mulder at the [University of Utrecht](https://en.wikipedia.org/wiki/Utrecht_University "Utrecht University") in 1874.
+
+In 1878, Van 't Hoff married Johanna Francina Mees. They had two daughters, Johanna Francina (1880–1964) and Aleida Jacoba (1882–1971), and two sons, Jacobus Henricus van 't Hoff III (1883–1943) and Govert Jacob (1889–1918). Van 't Hoff died at the age of 58, on 1 March 1911, at [Steglitz](https://en.wikipedia.org/wiki/Steglitz "Steglitz"), near Berlin, of [tuberculosis](https://en.wikipedia.org/wiki/Tuberculosis "Tuberculosis").
+
+## Career
+
+[![](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Jacobus_Henricus_van_%27t_Hoff.jpg/250px-Jacobus_Henricus_van_%27t_Hoff.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)](https://en.wikipedia.org/wiki/File:Jacobus_Henricus_van_'t_Hoff.jpg)
+
+Van 't Hoff in the 1900s
+
+### Organic chemistry
+
+Van 't Hoff earned his earliest reputation in the field of [organic chemistry](https://en.wikipedia.org/wiki/Organic_chemistry "Organic chemistry"). In 1874, he accounted for the phenomenon of [optical activity](https://en.wikipedia.org/wiki/Optical_activity "Optical activity") by assuming that the [chemical bonds](https://en.wikipedia.org/wiki/Chemical_bond "Chemical bond") between [carbon](https://en.wikipedia.org/wiki/Carbon "Carbon") [atoms](https://en.wikipedia.org/wiki/Atom "Atom") and their neighbors were directed towards the corners of a regular [tetrahedron](https://en.wikipedia.org/wiki/Tetrahedron "Tetrahedron"). This three-dimensional structure accounted for the [isomers](https://en.wikipedia.org/wiki/Isomer "Isomer") found in nature. He shares credit for this with the French chemist [Joseph Le Bel](https://en.wikipedia.org/wiki/Joseph_Le_Bel "Joseph Le Bel"), who independently came up with the same idea.
+
+Three months before his doctoral degree was awarded, Van 't Hoff published this theory, which today is regarded as the foundation of [stereochemistry](https://en.wikipedia.org/wiki/Stereochemistry "Stereochemistry"), first in a Dutch pamphlet in the fall of 1874, and then in the following May in a small French book entitled *La chimie dans l'espace*. A German translation appeared in 1877, at a time when the only job Van 't Hoff could find was at the Veterinary School in Utrecht. In these early years his theory was largely ignored by the scientific community, and was sharply criticized by one prominent chemist, [Hermann Kolbe](https://en.wikipedia.org/wiki/Hermann_Kolbe "Hermann Kolbe"). Kolbe wrote:
+
+> "A Dr. J. H. van 't Hoff of the Veterinary School at Utrecht has no liking, apparently, for exact chemical investigation. He has considered it more convenient to mount Pegasus (apparently borrowed from the Veterinary School) and to proclaim in his *‘La chimie dans l’espace’* how, in his bold flight to the top of the chemical Parnassus, the atoms appeared to him to be arranged in cosmic space."
+
+However, by about 1880, support for Van 't Hoff's theory by such important chemists as [Johannes Wislicenus](https://en.wikipedia.org/wiki/Johannes_Wislicenus "Johannes Wislicenus") and [Viktor Meyer](https://en.wikipedia.org/wiki/Viktor_Meyer "Viktor Meyer") brought recognition.
+
+### Physical chemistry
+
+In 1884, Van 't Hoff published his research on chemical kinetics, titled *Études de Dynamique chimique* (*"Studies in Chemical Dynamics"*), in which he described a new method for determining the [order of a reaction](https://en.wikipedia.org/wiki/Order_(chemistry) "Order (chemistry)") using [graphics](https://en.wikipedia.org/wiki/Graphics "Graphics") and applied the laws of [thermodynamics](https://en.wikipedia.org/wiki/Thermodynamics "Thermodynamics") to chemical equilibria. He also introduced the modern concept of [chemical affinity](https://en.wikipedia.org/wiki/Chemical_affinity "Chemical affinity"). In 1886, he showed a similarity between the behaviour of dilute solutions and gases. In 1887, he and German chemist [Wilhelm Ostwald](https://en.wikipedia.org/wiki/Wilhelm_Ostwald "Wilhelm Ostwald") founded an influential scientific magazine named *Zeitschrift für physikalische Chemie* ("*Journal of Physical Chemistry*"). He worked on [Svante Arrhenius](https://en.wikipedia.org/wiki/Svante_Arrhenius "Svante Arrhenius")'s theory of the dissociation of [electrolytes](https://en.wikipedia.org/wiki/Electrolytes "Electrolytes") and in 1889 provided physical justification for the [Arrhenius equation](https://en.wikipedia.org/wiki/Arrhenius_equation "Arrhenius equation"). In 1896, he became a professor at the [Prussian Academy of Sciences](https://en.wikipedia.org/wiki/Prussian_Academy_of_Sciences "Prussian Academy of Sciences") in Berlin. His studies of the salt deposits at [Stassfurt](https://en.wikipedia.org/wiki/Stassfurt "Stassfurt") were an important contribution to Prussia's chemical industry.
+
+[![](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Van_%27t_Hoff_und_Ostwald_01.jpg/250px-Van_%27t_Hoff_und_Ostwald_01.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)](https://en.wikipedia.org/wiki/File:Van_'t_Hoff_und_Ostwald_01.jpg)
+
+J.H. van 't Hoff with [Wilhelm Ostwald](https://en.wikipedia.org/wiki/Wilhelm_Ostwald "Wilhelm Ostwald") (right)
+
+Van 't Hoff became a lecturer in chemistry and physics at the [Veterinary](https://en.wikipedia.org/wiki/Veterinary_medicine "Veterinary medicine") College in [Utrecht](https://en.wikipedia.org/wiki/Utrecht_(city) "Utrecht (city)"). He then worked as a professor of chemistry, [mineralogy](https://en.wikipedia.org/wiki/Mineralogy "Mineralogy"), and [geology](https://en.wikipedia.org/wiki/Geology "Geology") at the [University of Amsterdam](https://en.wikipedia.org/wiki/University_of_Amsterdam "University of Amsterdam") for almost 18 years before eventually becoming the chairman of the chemistry department. In 1896, van 't Hoff moved to Germany, where he finished his career at the [University of Berlin](https://en.wikipedia.org/wiki/University_of_Berlin "University of Berlin") in 1911. In 1901, he received the first [Nobel Prize in Chemistry](https://en.wikipedia.org/wiki/Nobel_Prize_in_Chemistry "Nobel Prize in Chemistry") for his work with solutions. His work showed that very dilute solutions follow mathematical laws that closely resemble the laws describing the behavior of [gases](https://en.wikipedia.org/wiki/Gas "Gas").
+
+## Honours and awards
+
+In 1885, Van 't Hoff was appointed as a Member of the [Royal Netherlands Academy of Arts and Sciences](https://en.wikipedia.org/wiki/Royal_Netherlands_Academy_of_Arts_and_Sciences "Royal Netherlands Academy of Arts and Sciences"). He was elected to honorary membership of the [Manchester Literary and Philosophical Society](https://en.wikipedia.org/wiki/Manchester_Literary_and_Philosophical_Society "Manchester Literary and Philosophical Society") in1892. In 1904, he was elected as a member to the [American Philosophical Society](https://en.wikipedia.org/wiki/American_Philosophical_Society "American Philosophical Society"). Other distinctions include honorary doctorates from [Harvard](https://en.wikipedia.org/wiki/Harvard_University "Harvard University") and [Yale](https://en.wikipedia.org/wiki/Yale_University "Yale University") (1901), [Victoria University](https://en.wikipedia.org/wiki/Victoria_University_(UK) "Victoria University (UK)"), the [University of Manchester](https://en.wikipedia.org/wiki/University_of_Manchester "University of Manchester") (1903), and [University of Heidelberg](https://en.wikipedia.org/wiki/University_of_Heidelberg "University of Heidelberg") (1908). He was awarded the [Davy Medal](https://en.wikipedia.org/wiki/Davy_Medal "Davy Medal") of the [Royal Society](https://en.wikipedia.org/wiki/Royal_Society "Royal Society") in 1893 (along with [Le Bel](https://en.wikipedia.org/wiki/Joseph_Le_Bel "Joseph Le Bel")), and elected a [Foreign Member of the Royal Society (ForMemRS) in 1897](https://en.wikipedia.org/wiki/List_of_Fellows_of_the_Royal_Society_elected_in_1897 "List of Fellows of the Royal Society elected in 1897"). He was awarded the [Helmholtz Medal](https://en.wikipedia.org/wiki/Helmholtz_Medal "Helmholtz Medal") of the [Prussian Academy of Sciences](https://en.wikipedia.org/wiki/Prussian_Academy_of_Sciences "Prussian Academy of Sciences") (1911), and appointed Knight of the French [Legion of Honour](https://en.wikipedia.org/wiki/Legion_of_Honour "Legion of Honour") (1894) and Senator in the [Kaiser-Wilhelm-Gesellschaft](https://en.wikipedia.org/wiki/Kaiser_Wilhelm_Society "Kaiser Wilhelm Society") (1911). Van 't Hoff became an Honorary Member of the [British Chemical Society](https://en.wikipedia.org/wiki/British_Chemical_Society "British Chemical Society") in London, the [Royal Netherlands Academy of Arts and Sciences](https://en.wikipedia.org/wiki/Royal_Netherlands_Academy_of_Arts_and_Sciences "Royal Netherlands Academy of Arts and Sciences") (1892), [American Chemical Society](https://en.wikipedia.org/wiki/American_Chemical_Society "American Chemical Society") (1898), the [Académie des Sciences](https://en.wikipedia.org/wiki/Académie_des_Sciences "Académie des Sciences") in Paris (1905), and the [Netherlands Chemical Society](https://en.wikipedia.org/wiki/Royal_Netherlands_Chemical_Society "Royal Netherlands Chemical Society") (1908). Of his numerous distinctions, Van 't Hoff regarded winning the first Nobel Prize in Chemistry as the culmination of his career. The following are named after him:
+
+- [Van 't Hoff factor](https://en.wikipedia.org/wiki/Van_'t_Hoff_factor "Van 't Hoff factor")
+- [Van 't Hoff equation](https://en.wikipedia.org/wiki/Van_'t_Hoff_equation "Van 't Hoff equation")
+- [Le Bel–Van 't Hoff rule](https://en.wikipedia.org/wiki/Le_Bel–Van_'t_Hoff_rule "Le Bel–Van 't Hoff rule")
+
+On 14 May 2021, asteroid [34978 van 't Hoff](https://en.wikipedia.org/wiki/34978_van_'t_Hoff "34978 van 't Hoff"), discovered by astronomers with the [Palomar–Leiden survey](https://en.wikipedia.org/wiki/Palomar–Leiden_survey "Palomar–Leiden survey") in 1977, was [named](https://en.wikipedia.org/wiki/Meanings_of_minor-planet_names:_34001–35000#m978 "Meanings of minor-planet names: 34001–35000") in his memory.
+
+## Works
+
+- [*Chimie dans l'espace*](https://gutenberg.beic.it/webclient/DeliveryManager?pid=12404029) (in German). Braunschweig: Vieweg und Sohn. 1894.
+- [*Chemische Dynamik*](https://gutenberg.beic.it/webclient/DeliveryManager?pid=6728373) (in German). Braunschweig: Vieweg und Sohn. 1898.
+- [*Chemische Statik*](https://gutenberg.beic.it/webclient/DeliveryManager?pid=6729180) (in German). Braunschweig: Vieweg und Sohn. 1899.
+- [*Beziehungen zwischen Eigenschaften und Zusammensetzung*](https://gutenberg.beic.it/webclient/DeliveryManager?pid=6727920) (in German). Braunschweig: Vieweg und Sohn. 1900.
+- [*Foundations of the theory of dilute solutions*](https://gutenberg.beic.it/webclient/DeliveryManager?pid=7791658). Edinburgh: Alembic Club. 1929.
+
+## See also
+
+- [Chemical crystallography before X-rays](https://en.wikipedia.org/wiki/Chemical_crystallography_before_X-rays#Late_19th_century "Chemical crystallography before X-rays")
+
+## References
+
+## Further reading
+
+- Patrick Coffey, Cathedrals of Science: The Personalities and Rivalries That Made Modern Chemistry, Oxford University Press, 2008. [ISBN](https://en.wikipedia.org/wiki/ISBN_(identifier) "ISBN (identifier)") [978-0-19-532134-0](https://en.wikipedia.org/wiki/Special:BookSources/978-0-19-532134-0 "Special:BookSources/978-0-19-532134-0")
+- Hornix WJ, Mannaerts SHWM, Van 't Hoff and the emergence of Chemical Thermodynamics, Delft University Press, 2001, [ISBN](https://en.wikipedia.org/wiki/ISBN_(identifier) "ISBN (identifier)") [90-407-2259-5](https://en.wikipedia.org/wiki/Special:BookSources/90-407-2259-5 "Special:BookSources/90-407-2259-5")
+- Works by or about [Jacobus Henricus van 't Hoff](https://en.wikisource.org/wiki/Author:Jacobus%20Henricus%20van%20't%20Hoff "s:Author:Jacobus Henricus van 't Hoff") at [Wikisource](https://en.wikipedia.org/wiki/Wikisource "Wikisource")
+
+## External links
+
+[![Wikimedia Commons logo](https://upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/40px-Commons-logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)](https://en.wikipedia.org/wiki/File:Commons-logo.svg)
+
+Wikimedia Commons has media related to [Jacobus van 't Hoff](https://commons.wikimedia.org/wiki/Category:Jacobus%20van%20't%20Hoff "commons:Category:Jacobus van 't Hoff").
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wikiquote-logo.svg/40px-Wikiquote-logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)
+
+Wikiquote has quotations related to ***[Jacobus Henricus van 't Hoff](https://en.wikiquote.org/wiki/Special:Search/Jacobus%20Henricus%20van%20't%20Hoff "q:Special:Search/Jacobus Henricus van 't Hoff")***.
+
+- [Works by Jacobus Henricus van 't Hoff](https://www.biodiversitylibrary.org/creator/15145) at the [Biodiversity Heritage Library](https://en.wikipedia.org/wiki/Biodiversity_Heritage_Library "Biodiversity Heritage Library")
+- [Jacobus Henricus van 't Hoff](https://www.nobelprize.org/laureate/160) on Nobelprize.org  including the Nobel Lecture, 13 December 1901 *Osmotic Pressure and Chemical Equilibrium*

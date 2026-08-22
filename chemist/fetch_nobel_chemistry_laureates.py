@@ -10,97 +10,113 @@ from __future__ import annotations
 import json
 import re
 import html as H
+import time
 from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
 
 WIKI_PAGE = 'https://en.wikipedia.org/wiki/List_of_Nobel_laureates_in_Chemistry'
+WIKI_TITLE = 'List of Nobel laureates in Chemistry'
 OUT = Path(__file__).parent / 'presentations' / 'Nobel_Chemistry_Laureates_20th_21st_Century.md'
 
 
 def fetch_html() -> str:
-    headers = {'User-Agent': 'OpenMathAI/1.0 (educational use)'}
-    r = requests.get(WIKI_PAGE, headers=headers, timeout=60)
-    r.raise_for_status()
-    return r.text
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
+                      'AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/124.0 Safari/537.36',
+        'Accept': 'text/html; charset=utf-8',
+        'Accept-Language': 'en-US,en;q=0.9',
+    }
+    from urllib.parse import quote
+    url = f"https://en.wikipedia.org/api/rest_v1/page/html/{quote(WIKI_TITLE, safe='')}"
+    last_err = None
+    for attempt in range(5):
+        try:
+            r = requests.get(url, headers=headers, timeout=60)
+            r.raise_for_status()
+            return r.text
+        except requests.HTTPError as e:
+            last_err = e
+            wait = 10 * (2 ** attempt)
+            print(f'  ! HTTP {e.response.status_code}，{wait}s 后重试…')
+            time.sleep(wait)
+    raise last_err
 
 
 def parse(html: str) -> list[dict]:
     soup = BeautifulSoup(html, 'html.parser')
     tbl = soup.find_all('table', class_='wikitable')[0]
-    rows = tbl.find_all('tr')[2:]  # 跳过表头两行
+    rows = tbl.find_all('tr')[2:]  # 跳过两行表头
 
-    def text(c):
-        return re.sub(r'\s+', ' ', H.unescape(c.get_text(' ', strip=True))).strip()
-
-    def is_year_cell(c):
-        return bool(re.match(r'^\d{4}$', text(c)))
-
-    def get_name_url(c):
-        if c.find('img'):
-            return None, ''
-        a = c.find('a', href=True)
-        if not a:
-            return None, ''
-        href = a['href']
-        if '/wiki/' not in href or 'File:' in href:
-            return None, ''
-        t = text(c)
-        if not t or re.match(r'^\d{4}$', t) or t.startswith('"'):
-            return None, ''
-        url = href if href.startswith('http') else 'https://en.wikipedia.org' + href
-        return t, url
-
-    def get_country(c):
-        if not c.find('img'):
-            return ''
-        a = c.find('a', href=True)
-        if not a:
-            return ''
-        href = a['href']
-        if '/wiki/' not in href or 'File:' in href:
-            return ''
-        return text(c)
-
-    laureates = []
-    pending_year = 0
-    pending_country = 0
+    NCOL = 5  # Year | Image | Name | Nationality | Citation
+    rowspans = [0] * NCOL
+    results: list[dict] = []
     cur_year = None
-    cur_country = ''
+    cur_country = None
 
     for tr in rows:
         cells = tr.find_all(['td', 'th'])
-        year = None
+        # 跳过灰色分隔行（<tr bgcolor="lightgrey"><td colspan="5"></td></tr>）
+        if len(cells) == 1 and (cells[0].get('colspan') or '') == '5':
+            continue
+
+        row = [None] * NCOL
+        row_cells = [None] * NCOL  # 保存实际 cell 对象，用于提取姓名链接
+        ci = 0
+        col = 0
+        while col < NCOL:
+            if rowspans[col] > 0:
+                rowspans[col] -= 1
+                col += 1
+                continue
+            if ci >= len(cells):
+                col += 1
+                continue
+            cell = cells[ci]
+            rs = int(cell.get('rowspan', 1) or 1)
+            cs = int(cell.get('colspan', 1) or 1)
+            text = H.unescape(cell.get_text(' ', strip=True)).strip()
+            for k in range(cs):
+                if col + k < NCOL:
+                    row[col + k] = text
+                    row_cells[col + k] = cell
+            if rs > 1:
+                rowspans[col] += rs - 1
+            ci += 1
+            col += cs
+
+        if row[0] and row[0].strip():
+            cur_year = row[0].strip()
+        if row[3] and row[3].strip():
+            cur_country = re.sub(r'\[\s*\d+\s*\]', '', row[3]).strip()
+
+        # 姓名从第 2 列（Name）的 <a> 链接提取
         name = ''
         url = ''
-        country = ''
+        nc = row_cells[2]
+        if nc is not None:
+            a = nc.find('a', href=True)
+            if a:
+                title = (a.get('title') or '').strip()
+                text = a.get_text(strip=True)
+                if title:
+                    # 去掉末尾消歧义后缀，如 "Richard Robson (chemist)" -> "Richard Robson"
+                    name = re.sub(r'\s*\([a-z][^)]*\)\s*$', '', title)
+                    url = 'https://en.wikipedia.org/wiki/' + title.replace(' ', '_')
+                else:
+                    name = text
 
-        for c in cells:
-            if is_year_cell(c):
-                year = int(text(c))
-                rs = int(c.get('rowspan', 1) or 1)
-                pending_year = rs - 1
-                cur_year = year
-            elif get_name_url(c)[0]:
-                name, url = get_name_url(c)
-            elif get_country(c):
-                country = get_country(c)
-                rs = int(c.get('rowspan', 1) or 1)
-                pending_country = rs - 1
-                cur_country = country
+        if name and cur_year and cur_year.isdigit() and name.lower() != 'not awarded':
+            results.append({
+                'year': int(cur_year),
+                'name': name,
+                'url': url,
+                'country': cur_country or '',
+            })
 
-        if year is None and pending_year > 0:
-            year = cur_year
-            pending_year -= 1
-        if not country and pending_country > 0:
-            country = cur_country
-            pending_country -= 1
-
-        if year and name:
-            laureates.append({'year': year, 'name': name, 'url': url, 'country': country})
-
-    return laureates
+    return results
 
 
 def write_md(laureates: list[dict]) -> None:

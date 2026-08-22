@@ -1,0 +1,250 @@
+% =============================================================
+%  群论与伽罗瓦理论的奠基人：伽罗瓦 (Évariste Galois)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Évariste_Galois
+%  设计母题：群作用下的轨道 / 置换对称 —— 柔和气泡呼应对称结构的自相似性
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：共和深蓝 + 革命红 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{republicblue}{HTML}{1A237E}   % 共和深蓝 — 法兰西共和 / 理性主义
+\definecolor{revolutionred}{HTML}{C62828}  % 革命红 — 七月革命 / 决斗与燃烧的青春
+\definecolor{badgeGroup}{HTML}{4C5FD5}     % 群论 — 靛蓝
+\definecolor{badgeTheory}{HTML}{0E7C7B}    % 方程理论 — 青绿
+\definecolor{badgeField}{HTML}{E07B30}     % 有限域 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}    % 石版灰 — 遗产 / 身后
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{grouppanel}{RGB}{228,232,250}
+\definecolor{theorypanel}{RGB}{220,240,238}
+\definecolor{fieldpanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{redpanel}{RGB}{253,228,228}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[revolutionred, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应群作用的轨道 / 置换对称 / 自相似
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[revolutionred!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeGroup!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeTheory!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeField!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[revolutionred!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{revolutionred}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=republicblue!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 群论与伽罗瓦理论的奠基人\enspace·\enspace 决斗前夜的数学遗嘱};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=republicblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {伽罗瓦};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=republicblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Évariste Galois\enspace·\enspace 1811 — 1832};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=revolutionred!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {群论 · 伽罗瓦理论 · 有限域 · 五次方程可解性};
+  \draw[revolutionred!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeGroup] at (-5.05,0)
+        {群论\\Group Theory\par\scriptsize 对称的语言};
+      \node[badge, fill=badgeTheory] at (-1.68,0)
+        {伽罗瓦理论\\Galois Theory\par\scriptsize 根式可解的判据};
+      \node[badge, fill=badgeField] at (1.68,0)
+        {有限域\\Finite Field\par\scriptsize $GF(p^n)$ 伽罗瓦域};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {数学遗嘱\\Testament\par\scriptsize 决斗前夜的手稿};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他用 20 年的生命，点燃了此后一个多世纪的代数学。};
+  % 肖像（真实图片）
+  \node[draw=revolutionred!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Evariste_galois.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Évariste Galois (1811–1832)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace Lycée Louis-le-Grand · École Normale\enspace|\enspace 群论 · 伽罗瓦理论};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{revolutionred!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{伽罗瓦 - 从布尔拉雷纳到决斗之夜}{生卒 · 本名 · 国籍 · 教育 · 身份 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（真实图片）
+  \node[draw=revolutionred!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.6,3.5);
+      \node[anchor=center] at (1.3,1.75) {\includegraphics[width=2.6cm,height=3.5cm,keepaspectratio]{Evariste_galois.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-1.85) {Évariste Galois (1811–1832)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=redpanel, draw=revolutionred!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1811-10-25 — 1832-05-31\\[2pt]\lab{本名}\quad Évariste Galois\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=theorypanel, draw=badgeTheory!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Lycée Louis-le-Grand\\[2pt]
+     \quad École Normale（未获学位）\\[2pt]
+     \lab{身份}\quad 数学家 · 共和派革命者};
+  \node[infob, fill=grouppanel, draw=badgeGroup!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 布尔拉雷纳（巴黎近郊）\\[2pt]\lab{中学教师}\quad L.P.É. Richard\\[2pt]\lab{荣誉}\quad Concours général};
+  \node[infob, fill=fieldpanel, draw=badgeField!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 群论 · 伽罗瓦理论\\[2pt]
+     \quad 有限域 · 抽象代数\\[2pt]
+     \lab{身后}\quad 1846 手稿由 Liouville 发表};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{对称的可解性语言}{群论 · 伽罗瓦理论 · 有限域 · 连分数与阿贝尔积分}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{7.0}{9.0}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=grouppanel, draw=badgeGroup!50, text=badgeGroup!85!black] (a) at (-5.7,1.05) {群论\\首次用 groupe\\[2pt]正规子群与陪集};
+\node[nodebox, fill=theorypanel, draw=badgeTheory!50, text=badgeTheory!85!black] (b) at (-1.9,1.05) {伽罗瓦理论\\可解群\\[2pt]根式可解的判据};
+\node[nodebox, fill=fieldpanel, draw=badgeField!50, text=badgeField!85!black] (c) at (1.9,1.05) {有限域\\$GF(p^n)$\\[2pt]伽罗瓦域};
+\node[nodebox, fill=legacypanel, draw=badgeLegacy!50, text=badgeLegacy!85!black] (d) at (5.7,1.05) {连分数与积分\\阿贝尔积分\\[2pt]分析上的早期贡献};
+\node[draw=revolutionred!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他把"方程能否根式求解"这一古老问题，化约为对称性的可解性。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1811–1829)}{布尔拉雷纳出生 · 母家庭教育 · 两次落榜 · 父亲自杀}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=grouppanel, draw=badgeGroup!55] at (0,2.55) {\textbf{1811 · 生于布尔拉雷纳。}1811 年 10 月 25 日生于巴黎近郊的布尔拉雷纳。父亲 Nicolas-Gabriel Galois 是共和派，曾任该村市长；母亲 Adélaïde-Marie 是法学家之女，通晓拉丁语与古典文学，亲自负责他 12 岁前的教育。};
+\node[item, fill=theorypanel, draw=badgeTheory!45] at (0,1.05) {\textbf{求学之路。}1823 年进入 Lycée Louis-le-Grand，数学教师 Louis Paul Émile Richard 赏识其天赋。14 岁起对数学产生浓厚兴趣，读 Legendre《Éléments de Géométrie》"如读小说"，15 岁便攻读 Lagrange 原著。};
+\node[item, fill=redpanel, draw=revolutionred!40] at (0,-0.25) {\textbf{两次落榜与家庭变故。}1828 年报考当时法国数学最高学府 École Polytechnique，因口试缺乏解释而落榜，同年入 École Normale。1829 年父亲因政治纠纷自杀，数日后他再度报考 Polytechnique 仍失败。};
+\node[draw=revolutionred!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 天才在制度与变故的双重夹击中，早早学会了孤独地前行。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 5. 群论奠基 ---
+\newcommand{\groupslide}{\begin{frame}\plainbar\sectiontitle{群论奠基：对称的语言}{首次使用 groupe · 正规子群 · 陪集分解}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=grouppanel, draw=badgeGroup!60] at (0,2.55) {\textbf{groupe 一词的诞生。}在伽罗瓦之前，Lagrange、Ruffini、Cauchy 等人已考虑过置换的概念；但伽罗瓦是第一个以接近现代技术含义使用 "groupe"（群）一词的人，被公认为群论的创始人之一。};
+\node[item, fill=theorypanel, draw=badgeTheory!45] at (0,0.85) {\textbf{正规子群。}他把群分解为左、右陪集；当左右陪集重合时称为"proper decomposition"（正常分解）——这正是今日"正规子群"概念的雏形，为可解群理论埋下伏笔。};
+\node[item, fill=fieldpanel, draw=badgeField!40] at (0,-0.65) {\textbf{从置换到结构。}他关注的不是具体的置换，而是根之间的对称结构本身——这一视角的转换，使代数从"算方程"走向"研究结构"。};
+\node[draw=revolutionred!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 对称性，从此成为可以被命名、被分解、被研究的第一等对象。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 6. 伽罗瓦理论 ---
+\newcommand{\theoryslide}{\begin{frame}\plainbar\sectiontitle{伽罗瓦理论：根式可解的判据}{可解群 · 正规子群塔 · 五次及以上方程}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=theorypanel, draw=badgeTheory!60] at (0,2.55) {\textbf{核心洞见。}多项式方程能否根式求解，取决于其根的置换群——即伽罗瓦群——的结构。方程可根式解，当且仅当其伽罗瓦群存在一列正规子群塔，且相邻商群皆为阿贝尔群（即伽罗瓦群"可解"）。};
+\node[item, fill=grouppanel, draw=badgeGroup!45] at (0,0.85) {\textbf{五次方程不可解的一般理论。}Abel 1824 年已证明一般五次方程不可根式解；伽罗瓦则给出更深刻的判据——对任意多项式，都能判定它是否可根式解，从而一举解决困扰学界 350 年的问题。};
+\node[item, fill=redpanel, draw=revolutionred!40] at (0,-0.65) {\textbf{超越方程的视野。}这一方法后来被推广到域论、代数几何、数论等众多领域，成为现代数学中"以对称性刻画可解性"的范本。};
+\node[draw=revolutionred!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个悬置 350 年的问题，被他用一个 20 岁青年对对称性的洞察终结。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 7. 有限域与有限单群 ---
+\newcommand{\fieldslide}{\begin{frame}\plainbar\sectiontitle{有限域与有限单群}{$GF(p^n)$ · $GL(\nu,p)$ · $PSL(2,p)$}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=fieldpanel, draw=badgeField!60] at (0,2.55) {\textbf{有限域（伽罗瓦域）。}伽罗瓦首次清晰表述有限域的概念——以素数幂 $p^n$ 为阶的域，今以 $GF(p^n)$ 记之，并以他的名字命名（伽罗瓦域）。};
+\node[item, fill=grouppanel, draw=badgeGroup!45] at (0,0.85) {\textbf{一般线性群 $GL(\nu,p)$。}在致 Chevalier 的遗嘱中，他构造了一般线性群 $GL(\nu,p)$ 并计算其阶，用于研究一般 $p^\nu$ 次方程的伽罗瓦群。};
+\node[item, fill=theorypanel, draw=badgeTheory!40] at (0,-0.65) {\textbf{PSL(2,p) 的单性。}他构造了射影特殊线性群 $PSL(2,p)$（分式线性变换），并观察到当 $p\neq 2,3$ 时为单群——这是继交错群之后的第二类有限单群。};
+\node[draw=revolutionred!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 决斗前夜的遗嘱里，藏着现代有限群论最早的种子。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 8. 政治风暴与牢狱 ---
+\newcommand{\politicslide}{\begin{frame}\plainbar\sectiontitle{政治风暴与牢狱 (1830–1832)}{七月革命 · 被开除 · 国民自卫军 · Sainte-Pélagie 监狱}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=redpanel, draw=revolutionred!50] at (0,2.55) {\textbf{坚定的共和派。}伽罗瓦生活在法国政治动荡的年代，是坚定的共和派，深深卷入 1830 年七月革命的漩涡。他的数学才华与政治热情相互纠缠。};
+\node[item, fill=grouppanel, draw=badgeGroup!40] at (0,0.85) {\textbf{被开除与入狱。}他加入国民自卫军炮兵部队；1831 年因"敬酒"事件（举起匕首为路易-菲利普祝酒）被捕，后被判无罪；同年巴士底日因非法穿着军装再度被捕，囚于 Sainte-Pélagie 监狱数月。};
+\node[item, fill=theorypanel, draw=badgeTheory!40] at (0,-0.65) {\textbf{狱中的数学。}即使在狱中，他仍继续推演自己的数学思想，并整理手稿——政治与数学，构成了他短暂生命的双重底色。};
+\node[draw=revolutionred!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他既是方程的颠覆者，也是旧秩序的颠覆者。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 9. 决斗与数学遗嘱 ---
+\newcommand{\duelslide}{\begin{frame}\plainbar\sectiontitle{决斗与数学遗嘱 (1832 年 5 月)}{动机成谜 · 给 Chevalier 的信 · Hermann Weyl 的评价}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=redpanel, draw=revolutionred!55] at (0,2.55) {\textbf{决斗与死亡。}1832 年 5 月 30 日，伽罗瓦在决斗中腹部中弹，次日晨在巴黎 Hôpital Cochin 去世，年仅 20 岁。决斗的真正动机至今不明，有恋爱纠葛说、共和派政治说等多种推测。};
+\node[item, fill=grouppanel, draw=badgeGroup!45] at (0,0.85) {\textbf{数学遗嘱。}决斗前夜（5 月 29 日），他确信自己将死，通宵给挚友 Auguste Chevalier 写信，概述自己的思想并附三份手稿，请求把工作交给 Jacobi 或 Gauss 评判其重要性。};
+\node[item, fill=theorypanel, draw=badgeTheory!40] at (0,-0.65) {\textbf{Weil 的评价。}数学家 Hermann Weyl 评曰：这封信"若以思想的新颖与深刻论，也许是人类全部文献中最厚重的一篇"。};
+\node[draw=revolutionred!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他把一生最珍贵的思想，仓促而郑重地托付给了后世。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 10. 身后：Liouville 与手稿重见天日 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{身后：手稿重见天日 (1843–1846)}{Joseph Liouville 的整理与发表}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=legacypanel, draw=badgeLegacy!55] at (0,2.55) {\textbf{被尘封的十年。}伽罗瓦去世后，其手稿沉寂了近十年。1842 年 Joseph Liouville 开始研读其未发表论文，并于 1843 年公开承认其价值。};
+\node[item, fill=grouppanel, draw=badgeGroup!40] at (0,0.85) {\textbf{1846 · 正式发表。}Liouville 在《Journal de Mathématiques Pures et Appliquées》上整理并发表了伽罗瓦的手稿，其思想由此重见天日，并深刻影响了后世数学家。};
+\node[item, fill=theorypanel, draw=badgeTheory!40] at (0,-0.65) {\textbf{从遗稿到学科。}伽罗瓦理论此后成为抽象代数的核心支柱，群论、域论、伽罗瓦理论共同构成了现代代数的基础框架。};
+\node[draw=revolutionred!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他未能在生前看到自己的思想被理解，却因此成为现代代数学的先驱。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 11. 连分数与阿贝尔积分 ---
+\newcommand{\analysisslide}{\begin{frame}\plainbar\sectiontitle{分析上的早期贡献}{连分数 · 阿贝尔积分}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=fieldpanel, draw=badgeField!55] at (0,2.55) {\textbf{连分数。}1828 年，17 岁的伽罗瓦发表第一篇论文，证明二次无理数 $\zeta$ 的连分数纯周期当且仅当 $\zeta$ 是既约二次无理数（及其共轭满足 $-1<\eta<0$）。};
+\node[item, fill=theorypanel, draw=badgeTheory!40] at (0,0.85) {\textbf{阿贝尔积分。}在致 Chevalier 的遗嘱中，他从椭圆函数转向最一般的代数微分的积分——今称阿贝尔积分，并把这些积分分为三类。};
+\node[item, fill=grouppanel, draw=badgeGroup!40] at (0,-0.65) {\textbf{横跨代数与分析。}这些工作虽不及群论那样广为人知，却显示了他横跨代数、分析、数论的广度，也预示了 19 世纪后期阿贝尔函数与代数几何的方向。};
+\node[draw=revolutionred!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 即便早逝，他的足迹已遍及现代数学的多个源头。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=republicblue!90!black] at ([yshift=1.5cm]current page.center) {对称性，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=revolutionred!85!black] at ([yshift=0.4cm]current page.center) {让方程可解的秘密。};
+\draw[revolutionred!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=republicblue!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Évariste Galois};
+\node[font=\fontsize{8}{10}\selectfont, text=republicblue!60!black] at ([yshift=-2.0cm]current page.center) {伽罗瓦\quad Évariste Galois\quad 1811 — 1832};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 群论 · 伽罗瓦理论 · 有限域\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\groupslide
+\theoryslide
+\fieldslide
+\politicslide
+\duelslide
+\legacyslide
+\analysisslide
+\closingslide
+\end{document}
