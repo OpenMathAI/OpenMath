@@ -1,0 +1,250 @@
+% =============================================================
+%  五次方程不可解 · 椭圆函数的先驱：阿贝尔 (Niels Henrik Abel)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Niels_Henrik_Abel
+%  设计母题：椭圆函数的周期格 / 对称 —— 柔和气泡呼应对称结构的自相似性
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：挪威深蓝 + 北欧金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{norwayblue}{HTML}{1A237E}    % 挪威深蓝 — 北欧理性
+\definecolor{nordicgold}{HTML}{C9A227}    % 北欧金 — 天才与身后阿贝尔奖
+\definecolor{badgeElliptic}{HTML}{0E7C7B} % 椭圆函数 — 青绿
+\definecolor{badgeEquation}{HTML}{4C5FD5} % 代数方程 — 靛蓝
+\definecolor{badgeAnalysis}{HTML}{E07B30} % 分析 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}   % 石版灰 — 遗产 / 身后
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{ellipticpanel}{RGB}{220,240,238}
+\definecolor{equationpanel}{RGB}{228,232,250}
+\definecolor{analysispanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[nordicgold, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应椭圆函数的周期格 / 对称 / 自相似
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[nordicgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeElliptic!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeEquation!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeAnalysis!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[nordicgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{nordicgold}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=norwayblue!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 挪威\enspace·\enspace 五次方程不可解 · 椭圆函数的先驱\enspace·\enspace 26 岁早逝的天才};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=norwayblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {阿贝尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=norwayblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Niels Henrik Abel\enspace·\enspace 1802 — 1829};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=nordicgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {Abel–Ruffini 定理 · 椭圆函数 · 阿贝尔函数 · 交换群};
+  \draw[nordicgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeEquation] at (-5.05,0)
+        {五次方程不可解\\Abel–Ruffini\par\scriptsize 250 年悬案};
+      \node[badge, fill=badgeElliptic] at (-1.68,0)
+        {椭圆函数\\Elliptic Function\par\scriptsize 双周期性的发现};
+      \node[badge, fill=badgeAnalysis] at (1.68,0)
+        {阿贝尔函数\\Abelian Function\par\scriptsize 积分与级数};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {交换群\\Abelian Group\par\scriptsize 群论的独立发明};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他用 26 年的生命，在贫困中点燃了现代数学的多条源头。};
+  % 肖像（真实图片）
+  \node[draw=nordicgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{abel.jpeg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Niels Henrik Abel (1802–1829)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 挪威\enspace|\enspace \faIcon{university}\enspace Oslo Cathedral School · University of Oslo\enspace|\enspace 五次方程 · 椭圆函数};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{nordicgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{阿贝尔 - 从内德斯特兰到弗罗兰}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（真实图片）
+  \node[draw=nordicgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.6,3.5);
+      \node[anchor=center] at (1.3,1.75) {\includegraphics[width=2.6cm,height=3.5cm,keepaspectratio]{abel.jpeg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-1.85) {Niels Henrik Abel (1802–1829)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=nordicgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1802-08-05 — 1829-04-06\\[2pt]\lab{本名}\quad Niels Henrik Abel\\[2pt]\lab{国籍}\quad 挪威（丹麦-挪威）};
+  \node[infob, fill=ellipticpanel, draw=badgeElliptic!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Oslo Cathedral School\\[2pt]
+     \quad Royal Frederick University\\[2pt]
+     \lab{师承}\quad Bernt Michael Holmboe};
+  \node[infob, fill=equationpanel, draw=badgeEquation!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 内德斯特兰（挪威）\\[2pt]\lab{荣誉}\quad 法国科学院大奖（追授）\\[2pt]\lab{身后}\quad 阿贝尔奖（2003 起）};
+  \node[infob, fill=analysispanel, draw=badgeAnalysis!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 椭圆函数 · 五次方程\\[2pt]
+     \quad 阿贝尔函数 · 交换群\\[2pt]
+     \lab{身份}\quad 数学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{在贫困中开创的数学}{五次方程 · 椭圆函数 · 阿贝尔函数 · 交换群}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{7.0}{9.0}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=equationpanel, draw=badgeEquation!50, text=badgeEquation!85!black] (a) at (-5.7,1.05) {五次方程不可解\\Abel–Ruffini\\[2pt]250 年悬案终结};
+\node[nodebox, fill=ellipticpanel, draw=badgeElliptic!50, text=badgeElliptic!85!black] (b) at (-1.9,1.05) {椭圆函数\\双周期性\\[2pt]比青铜更持久的纪念碑};
+\node[nodebox, fill=analysispanel, draw=badgeAnalysis!50, text=badgeAnalysis!85!black] (c) at (1.9,1.05) {阿贝尔函数\\积分与级数\\[2pt]新一类函数的创立};
+\node[nodebox, fill=legacypanel, draw=badgeLegacy!50, text=badgeLegacy!85!black] (d) at (5.7,1.05) {交换群\\abelian\\[2pt]群论的独立发明};
+\node[draw=nordicgold!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他的全部重要工作，几乎都是在六七年时间里、于贫困中完成的。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1802–1822)}{内德斯特兰出生 · 牧师之家 · 大教堂学校 · Holmboe 赏识}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=equationpanel, draw=badgeEquation!55] at (0,2.55) {\textbf{1802 · 生于内德斯特兰。}1802 年 8 月 5 日生于挪威内德斯特兰，是牧师 Søren Georg Abel 与 Anne Marie Simonsen 的次子。出生时家庭住在 Finnøy 的牧师宅，据传他出生于邻近的内德斯特兰教区。};
+\node[item, fill=ellipticpanel, draw=badgeElliptic!45] at (0,1.05) {\textbf{求学之路。}1815 年（13 岁）进入 Christiania（今奥斯陆）大教堂学校。1818 年 Bernt Michael Holmboe 任数学教师，赏识其天赋，课外私授并资助其求学。};
+\node[item, fill=goldpanel, draw=nordicgold!40] at (0,-0.25) {\textbf{1821–1822 · 大学。}1821 年入 Royal Frederick University（今奥斯陆大学），入学时已是挪威数学最渊博者；1822 年以极其优异的数学成绩毕业。};
+\node[draw=nordicgold!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 偏远北国的贫困少年，早早显露出让整个欧洲瞩目的数学天赋。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 5. 五次方程与 Abel–Ruffini 定理 ---
+\newcommand{\quinticslide}{\begin{frame}\plainbar\sectiontitle{五次方程不可解：Abel–Ruffini 定理}{250 年悬案 · 1824 首证 · 1826 详细证明}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=equationpanel, draw=badgeEquation!60] at (0,2.55) {\textbf{一个悬而未决 250 年的问题。}一般五次及以上方程能否用根式（加、减、乘、除与开方）求解？这个问题困扰了数学家两个多世纪，是当时最著名的开放难题之一。};
+\node[item, fill=ellipticpanel, draw=badgeElliptic!45] at (0,0.85) {\textbf{Abel–Ruffini 定理。}Paolo Ruffini 1799 年已给出（后被发现有缺陷的）证明；Abel 在 1824 年以六页小册子给出\textbf{第一个完整证明}，1826 年又在《Crelle's Journal》首卷发表详细证明——一般五次及以上方程无根式解。};
+\node[item, fill=analysispanel, draw=badgeAnalysis!40] at (0,-0.65) {\textbf{证明的背后。}为完成这一证明，Abel 独立于 Galois 发明了群论的一支——尽管他本人当时未用"群"这一术语。};
+\node[draw=nordicgold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个 250 年的悬案，被一个 22 岁的挪威青年终结。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 6. 椭圆函数与双周期性 ---
+\newcommand{\ellipticslide}{\begin{frame}\plainbar\sectiontitle{椭圆函数与双周期性}{与 Jacobi 竞争 · Legendre 的评价}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=ellipticpanel, draw=badgeElliptic!60] at (0,2.55) {\textbf{双周期性的发现。}Abel 揭示了椭圆函数的\textbf{双周期性}——这类函数在两个独立方向上都具有周期性，这是复分析中的深刻洞见。};
+\node[item, fill=equationpanel, draw=badgeEquation!45] at (0,0.85) {\textbf{与 Jacobi 的竞争。}1828 年，他与 Carl Gustav Jacob Jacobi 在《Astronomische Nachrichten》上竞争性地发表了椭圆函数的重要工作——是"竞争"而非"先后独占"。};
+\node[item, fill=goldpanel, draw=nordicgold!40] at (0,-0.65) {\textbf{Legendre 的评价。}Adrien-Marie Legendre 后来向 Cauchy 赞叹：这是"一座比青铜更持久的纪念碑"（借用罗马诗人贺拉斯的名句）。};
+\node[draw=nordicgold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他让椭圆函数从零散的特例，走向统一的周期结构理论。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 7. 阿贝尔函数 / 积分 / 群 ---
+\newcommand{\abelianslide}{\begin{frame}\plainbar\sectiontitle{阿贝尔函数 · 积分 · 交换群}{新一类函数 · 积分三分类 · abelian 一词}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=analysispanel, draw=badgeAnalysis!60] at (0,2.55) {\textbf{阿贝尔函数。}在 Freiberg 研究椭圆、超椭圆函数时，Abel 创立了一类新的函数，今称"阿贝尔函数"（Abelian functions），深刻影响了后来的代数几何。};
+\node[item, fill=ellipticpanel, draw=badgeElliptic!45] at (0,0.85) {\textbf{阿贝尔积分。}他研究了代数微分的积分——今称阿贝尔积分，并把这类积分分类，为椭圆积分的理论奠定了基石。};
+\node[item, fill=legacypanel, draw=badgeLegacy!40] at (0,-0.65) {\textbf{abelian 一词。}形容词 "abelian"（交换的）源于他的名字，已成数学通用小写术语——如 abelian group（阿贝尔群/交换群）、abelian variety（阿贝尔簇）。};
+\node[draw=nordicgold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他的名字，已悄然融入现代数学的日常语汇。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 8. 欧陆之旅：柏林与巴黎 ---
+\newcommand{\tourslide}{\begin{frame}\plainbar\sectiontitle{欧陆之旅：柏林与巴黎 (1825–1827)}{Crelle 与 Crelle's Journal · 巴黎定理被 Cauchy 搁置}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=equationpanel, draw=badgeEquation!55] at (0,2.55) {\textbf{柏林与 Crelle。}1825 年秋赴欧陆，在柏林结识 August Leopold Crelle，并热忱支持其创办《Journal für die reine und angewandte Mathematik》（Crelle's Journal）——创刊年他贡献了 7 篇文章。};
+\node[item, fill=goldpanel, draw=nordicgold!40] at (0,0.85) {\textbf{巴黎定理被搁置。}1826 年 10 月，他向法国科学院提交了自认最重要的"代数微分加法定理"，交由 Cauchy 审稿；却因被搁置而遗忘，直到他去世都未能发表。};
+\node[item, fill=ellipticpanel, draw=badgeElliptic!40] at (0,-0.65) {\textbf{贫困中的抉择。}1827 年 1 月，拮据的旅费迫使他放弃旅程回国；柏林曾邀他任《Crelle's Journal》编辑，他婉拒了。};
+\node[draw=nordicgold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他把最珍贵的工作托付给了巴黎，却换来了遗忘。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 9. 贫困与死亡 ---
+\newcommand{\deathslide}{\begin{frame}\plainbar\sectiontitle{贫困与死亡 (1827–1829)}{回国贫困 · 肺结核 · 聘书迟到两天}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=analysispanel, draw=badgeAnalysis!55] at (0,2.55) {\textbf{贫困的岁月。}1827 年 5 月回到挪威后，奖学金未获续期，他不得不向 Norges Bank 私人借贷，并靠补习维生，继续向《Crelle's Journal》投稿。};
+\node[item, fill=equationpanel, draw=badgeEquation!45] at (0,0.85) {\textbf{肺结核。}在巴黎期间他已感染肺结核。1828 年圣诞乘雪橇前往 Froland 探望未婚妻 Christine Kemp 途中病情恶化，1829 年 4 月 6 日病逝，年仅 26 岁。};
+\node[item, fill=goldpanel, draw=nordicgold!40] at (0,-0.65) {\textbf{迟到的聘书。}就在他去世前两天，Crelle 的信才寄达——柏林大学已为他谋得教授席位。他一生贫困，却与这一切擦肩而过。};
+\node[draw=nordicgold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他死于肺结核——不是贫困饿死，却在贫困中燃尽了 26 年的天才。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 10. 身后：阿贝尔奖与遗产 ---
+\newcommand{\prizeslide}{\begin{frame}\plainbar\sectiontitle{身后：阿贝尔奖与遗产}{阿贝尔奖 · Holmboe/Sylow/Lie 编订遗作}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=legacypanel, draw=badgeLegacy!55] at (0,2.55) {\textbf{遗作的整理。}Holmboe 于 1839 年由挪威政府资助编订其著作初版；1881 年 Ludwig Sylow 与 Sophus Lie 出版了更完整的全集。};
+\node[item, fill=goldpanel, draw=nordicgold!40] at (0,0.85) {\textbf{阿贝尔奖。}为纪念他而设立的阿贝尔奖（Abel Prize），1899 年即被提议、2003 年首次颁发，是数学界最高荣誉之一——这并非他生前所获。};
+\node[item, fill=equationpanel, draw=badgeEquation!40] at (0,-0.65) {\textbf{身后印记。}他的肖像出现在挪威 500 克朗纸币与邮票上；奥斯陆立有他的雕像，月球上也有以他命名的环形山。};
+\node[draw=nordicgold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 生前被遗忘，身后被铭记——他以另一种方式不朽。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 11. 评价与名言 ---
+\newcommand{\quoteslide}{\begin{frame}\plainbar\sectiontitle{评价与名言}{Hermite · Legendre · Klein 的莫扎特之比}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=goldpanel, draw=nordicgold!50] at (0,2.55) {\textbf{Hermite：} "Abel has left mathematicians enough to keep them busy for five hundred years."（阿贝尔留给数学家的工作，够他们忙上五百年。）};
+\node[item, fill=ellipticpanel, draw=badgeElliptic!45] at (0,0.85) {\textbf{Legendre：} "What a head the young Norwegian has!"（这年轻的挪威人，有着怎样的头脑啊！）};
+\node[item, fill=equationpanel, draw=badgeEquation!40] at (0,-0.65) {\textbf{Klein 的莫扎特之比。}Felix Klein 将其天才比作莫扎特——"把他的创造力与个性与莫扎特相比，我不会显得荒谬"。};
+\node[draw=nordicgold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 后世用最崇高的词汇，追认了一位贫困早逝的天才。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=norwayblue!90!black] at ([yshift=1.5cm]current page.center) {贫困中的天才，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=nordicgold!85!black] at ([yshift=0.4cm]current page.center) {点亮了现代数学。};
+\draw[nordicgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=norwayblue!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Niels Henrik Abel};
+\node[font=\fontsize{8}{10}\selectfont, text=norwayblue!60!black] at ([yshift=-2.0cm]current page.center) {阿贝尔\quad Niels Henrik Abel\quad 1802 — 1829};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 五次方程 · 椭圆函数 · 阿贝尔函数\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\quinticslide
+\ellipticslide
+\abelianslide
+\tourslide
+\deathslide
+\prizeslide
+\quoteslide
+\closingslide
+\end{document}

@@ -165,3 +165,32 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+---
+
+## Review-1 记录 (2026-08-22)
+
+> 立传完成，结合本地 Wikipedia (`pages/Niels_Henrik_Abel/page.md` + `metadata.json`) 逐页比对。
+
+- **编译**：`make distclean && make` → ✅ 13 页（含 OpenMath 项目首页），0 错误。
+- **头像** ✅：已下载真实肖像 `images/abel.jpeg`（561×640 竖版），封面与身份信息页两处均已替换为 `\includegraphics`（竖版圆角裁剪），并删除占位宏 `\portraitplaceholder`。
+- **国籍** ✅：封面顶部 `\faIcon{globe}\enspace 挪威`，身份信息页 `挪威（丹麦-挪威）`（Wikidata nationality: ["Norway"]）。
+- **身份信息页** ✅：Slide 2 已存在（`\profileslide`），涵盖生卒/本名/国籍/出生地/教育/师承/荣誉/核心领域，符合 Wilson 模板硬性要求。
+- **事实复核**：生卒(1802-08-05~1829-04-06, 26岁)/内德斯特兰出生/父 Søren Georg Abel(牧师)/母 Anne Marie Simonsen/1815 入大教堂学校/1818 Holmboe 赏识/1821 入 Royal Frederick University/1822 毕业/Abel–Ruffini 定理(Ruffini 1799 有缺陷、Abel 1824 首完整证明、1826 Crelle's Journal 详细证明)/椭圆函数双周期性(与 Jacobi 竞争)/Legendre"比青铜更持久"/阿贝尔函数与积分/交换群 abelian/欧陆之旅 Crelle 与 Crelle's Journal 创刊年 7 篇/巴黎定理被 Cauchy 搁置/贫困与肺结核(聘书迟到两天)/阿贝尔奖 2003 设立/Hermite"五百年"/Legendre"年轻挪威人的头脑"/Klein 比莫扎特——全部与 Wikipedia 一致，无杜撰。
+- **史实陷阱复核**：Abel–Ruffini 归属正确、群论与 Galois 独立发明表述准确、椭圆函数与 Jacobi"竞争非先后独占"、巴黎定理"被搁置遗忘"非恶意、死于肺结核非贫困饿死、阿贝尔奖 2003 年设立非生前所获、国籍用「挪威」现代对应——均符合终审清单。
+- **视频**：`make video` → ✅ `Niels_Henrik_Abel_zh.mp4`。
+- **背景音乐** ✅：已从 `music_audio/inspiring-electronic/.../Lonesome ... wav` 复制为 `Lonesome.wav`（「悲伤 / 电影感 / 情感」，契合阿贝尔「抒情悲剧 / 北欧清冷」定调），`make video` 已混入音频轨。
+- **遗留**：无（头像、背景音乐均已就绪）。
+
+## Review-2 记录 (2026-08-22)
+
+> 结构优化轮：检查告警、中文标点、布局对齐、与同世纪数学家格式一致性。
+
+- **Overfull/Underfull 告警** ✅：初版 hookslide 的 nodebox (a) 长文本导致 14.98pt Overfull，已缩短为「250 年悬案终结」后全文档 **0 处 Overfull / Underfull**。
+- **中文标点** ✅：中文语境全角标点统一，数学符号与英文术语保留原文。
+- **身份信息页布局** ✅：与 Wilson 模板对齐（左肖像 + 右 2×2 信息网格，含生卒/本名/国籍/出生地/教育/师承/荣誉/核心领域），竖版肖像 2.6×3.5cm 圆角裁剪。
+- **配色与背景母题** ✅：挪威深蓝 `#1A237E` + 北欧金 `#C9A227` 主副色，四分类色（椭圆函数青绿 / 代数方程靛蓝 / 分析琥珀 / 遗产石版灰），气泡背景呼应「椭圆函数周期格 / 对称」母题。
+- **格式对齐** ✅：封面（头像 + 国籍行 + 四 badge + 底部三要素状态栏）、`\sectiontitle`、`\plainbar`、`\deckbackground`、结束页（无肖像 + 品牌 `OpenMathAI`）均与 Galois / Frobenius 模板一致。
+- **编译复验** ✅：`make distclean && make` 0 错误，13 页；`make video` 已生成含 BGM 的 `Niels_Henrik_Abel_zh.mp4`（6.53 MB）。
+
+> **Review 结论**：两轮 Review 完成，立传定稿。

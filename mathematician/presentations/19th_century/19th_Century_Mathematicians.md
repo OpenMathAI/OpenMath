@@ -28,7 +28,7 @@
 | 6 | [Siméon Denis Poisson](https://en.wikipedia.org/wiki/Sim%C3%A9on_Denis_Poisson) | 泊松 | 法国 | 1781–1840 | 泊松分布、泊松方程、位势理论 | 🔲 | 🔲 |
 | 7 | [Jean-Victor Poncelet](https://en.wikipedia.org/wiki/Jean-Victor_Poncelet) | 庞斯莱 | 法国 | 1788–1867 | 射影几何、庞斯莱闭形定理 | 🔲 | 🔲 |
 | 8 | [Augustin-Louis Cauchy](https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy) | 柯西 | 法国 | 1789–1857 | 柯西序列、柯西积分定理、分析严格化 | 🔲 | 🔲 |
-| 9 | [Niels Henrik Abel](https://en.wikipedia.org/wiki/Niels_Henrik_Abel) | 阿贝尔 | 挪威 | 1802–1829 | 阿贝尔群、椭圆函数、五次方程不可解 | 🔲 | 🔲 |
+| 9 | [Niels Henrik Abel](https://en.wikipedia.org/wiki/Niels_Henrik_Abel) | 阿贝尔 | 挪威 | 1802–1829 | 阿贝尔群、椭圆函数、五次方程不可解 | ✅ | ✅ |
 | 10 | [Carl Gustav Jacob Jacobi](https://en.wikipedia.org/wiki/Carl_Gustav_Jacob_Jacobi) | 雅可比 | 德国 | 1804–1851 | 雅可比矩阵、椭圆函数、雅可比行列式 | 🔲 | 🔲 |
 | 11 | [Peter Gustav Lejeune Dirichlet](https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet) | 狄利克雷 | 德国 | 1805–1859 | 狄利克雷函数、解析数论、狄利克雷定理 | 🔲 | 🔲 |
 | 12 | [William Rowan Hamilton](https://en.wikipedia.org/wiki/William_Rowan_Hamilton) | 哈密顿 | 爱尔兰 | 1805–1865 | 四元数、哈密顿力学 | 🔲 | 🔲 |
