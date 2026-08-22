@@ -19,8 +19,8 @@
 ## 二、背景信息 【人物专属】
 
 - **目标得主**：Donald Ervin Knuth（1938-01-10 ~ ，享年待定，截至资料基准日在世）
-- **气质关键词**：**算法分析之父、计算机程序设计艺术（TAOCP）的作者、TeX 排版系统的创造者、"程序即文学"的信徒、极度严谨的完美主义者** —— 1974 图灵奖获奖理由（ACM 官方措辞，需以 `amturing.acm.org` 为准再核实）：
-  > "for his major contributions to the analysis of algorithms and the design of programming languages, and in particular for his contributions to 'The Art of Computer Programming'"（因其对算法分析与编程语言设计的重大贡献，尤其是对《计算机程序设计艺术》的贡献）
+- **气质关键词**：**算法分析之父、计算机程序设计艺术（TAOCP）的作者、TeX 排版系统的创造者、"程序即文学"的信徒、极度严谨的完美主义者** —— 1974 图灵奖获奖理由（ACM 官方措辞，已核实）：
+  > "for his major contributions to the analysis of algorithms and the design of programming languages, and in particular for his contributions to the art of computer programming through his well-known books in a continuous series by this title."（因其对算法分析与编程语言设计的重大贡献，尤其是他通过这一系列连续出版的著作对「计算机程序设计艺术」所作的贡献）
 - **设计母题**：**算法之美 / 排版艺术（The Art）**。Knuth 毕生追求「程序的正确性与美感」——TAOCP 把算法当成艺术来写，TeX 把排版当成科学来做（TeX 版本号趋近 π、Metafont 版本号趋近 e 的细节，正是这种「追求完美」的隐喻）。视觉语言：排版网格、字母与符号（TeX/Computer Modern 字体）、算法的伪代码行、分形的递归结构。
 - **本地 Wikipedia**：
   - 原始 HTML：`turing/pages/1974/Donald Knuth/index.html`（246 KB，含 infobox + 完整正文）
@@ -47,10 +47,11 @@
 - 提取 infobox 与正文，输出供校验（**事实基准如下**）：
   - 生卒日期（1938-01-10 生于威斯康星州密尔沃基 Milwaukee, Wisconsin，在世）
   - 国籍（美国）；父母（父 Ervin Henry Knuth 经营小型印刷厂并教簿记；母 Louise Marie Bohning）
+  - **中文名考证**：Knuth 的中文名「高德纳」（繁体「高德納」，拼音 Gāo Dénà）由姚期智夫人储枫（Frances Yao）于 1977 年访华前夕所取，为「意译 + 音译 + 人物特征」混合命名（高=身材高大且 K/G 音近；德=内在美德、行为正直；纳=谦和虚怀若谷且谐 Donald 尾音）。Knuth 已将此名写入本人 Stanford CV（"Chinese name: 高德納"）。家庭中文名：Jill Carter→高精兰、John→高小强、Jennifer→高小珍。1989 年其名登上《计算机科学与技术学报》刊头。
   - 教育（Milwaukee Lutheran High School → Case Institute of Technology 物理奖学金入学后转数学，1960 同时获 BS + MS → Caltech PhD 1963）
   - 博士导师（Marshall Hall, Jr.）；博士论文《Finite Semifields and Projective Planes》(1963)
-  - 配偶（Nancy Jill Carter）；子女 2 人
-  - 主要任职（Caltech 助理教授 1963 → Stanford 教授 1968 至今，名誉教授；曾为 Burroughs 顾问）
+  - 配偶（Nancy Jill Carter，1961-06-24 结婚）；子女 John Martin、Jennifer Sierra 共 2 人
+  - 主要任职（Caltech 助理教授 1963–1968 → IDA 通信研究部/Princeton 约 1968–1969 → Stanford 教授 1969 至今，名誉教授；曾为 Burroughs 顾问）
   - 关键荣誉（Turing 1974 · Grace Murray Hopper 1971 · National Medal of Science 1979 · Kyoto 1996 · von Neumann Medal 1995 · Harvey 1995 · NAS 院士 1975 · 英国皇家学会外籍院士 2003 · Faraday 2011 · BBVA 2010）
   - 知名博士生（Leonidas J. Guibas、Michael Fredman、Scott Kim、Vaughan Pratt、Robert Sedgewick、Jeffrey Vitter、Andrei Broder）
   - 核心贡献清单（见第 4 步）
@@ -143,22 +144,24 @@
 
 ```
 00  OpenTuring 项目首页（\input cover/openturing_page.tex）
-01  封面 — 算法分析之父 / Donald Knuth 1938– + 四色 badge + 右上头像 + 国籍行
-02  身份信息页（★ 必做）— 左头像 + 右信息网格（含出生地、教育、师承、任职、荣誉、核心领域）
-03  核心贡献概览 — 算法分析 / 计算机排版 / 编程语言 / 理论计算机科学
-04  早年：密尔沃基少年 (1938–1956) — 印刷厂、单词比赛、路德宗德裔
-05  Case：从物理到数学 (1956–1960) — IBM 650、篮球程序、双学位
-06  Caltech 博士：Marshall Hall 门下 (1960–1963) — 有限半域与射影平面
-07  TAOCP：计算机程序设计艺术 (1962–) — 一部未完的史诗
-08  算法分析：Big O 与计算复杂度（核心贡献页）
-09  TeX：排版的艺术 (1977–) — 版本号趋近 π
-10  文学编程：WEB / CWEB — 程序即文学
-11  以 Knuth 命名的成果 — KMP / Knuth–Bendix / up-arrow / LR
-12  门生与传承 — Sedgewick、Guibas、Pratt
-13  荣誉 — Turing 1974 · National Medal 1979 · Kyoto 1996
-14  反对软件专利：程序员的立场
-15  遗产：程序即文学
-16  结尾
+01  封面 — 主标题「高德纳」+ 音译名/英文名 + 四色 badge + 右上头像 + 国籍行
+02  中文名典故 — 储枫 1977 取名「高德纳」：意译+音译+人物特征 + 高氏家庭中文名
+03  身份信息页（★ 必做）— 左头像 + 右信息网格（含中文名、出生地、教育、师承、任职、荣誉、核心领域）
+04  核心贡献概览 — 算法分析 / 计算机排版 / 编程语言 / 理论计算机科学
+05  早年：密尔沃基少年 (1938–1956) — 印刷厂、单词比赛、路德宗德裔
+06  Case：从物理到数学 (1956–1960) — IBM 650、篮球程序、双学位
+07  Caltech 博士：Marshall Hall 门下 (1960–1963) — 有限半域与射影平面
+08  TAOCP：计算机程序设计艺术 (1962–) — 一部未完的史诗
+09  算法分析：Big O 与计算复杂度（核心贡献页）
+10  TeX：排版的艺术 (1977–) — 版本号趋近 π
+11  文学编程：WEB / CWEB — 程序即文学
+12  以 Knuth 命名的成果 — KMP / Knuth–Bendix / up-arrow / LR
+13  门生与传承 — Sedgewick、Guibas、Pratt
+14  荣誉 — Turing 1974 · National Medal 1979 · Kyoto 1996
+15  反对软件专利：程序员的立场
+16  遗产：程序即文学
+17  结尾 — "过早优化，是万恶之源"
+18  彩蛋 — 本页及整份立传均由 TeX（XeLaTeX + Beamer）排版
 ```
 
 ### 第 7 步：编写 Beamer 源码 【模板通用】
