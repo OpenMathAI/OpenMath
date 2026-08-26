@@ -306,6 +306,18 @@ NN  结尾
 | **AI/智能**（Minsky、Hinton） | Alex-Productions | Awaken, Daylight | 未来感、突破 |
 | **悲剧/早逝**（Floyd、Allen） | Inspiring Electronic | Lonesome, Through the Darkness | 暗色调 |
 
+### 选曲落地步骤【模板通用】
+
+> 对标化学家标杆 Sanger 与物理学家标杆 Wilson（二者均选 `Timeless.wav`，与理论内敛气质匹配）。
+
+1. **先读 `music_audio/curated_tracks.md`**，按得主气质在推荐表定位来源与候选曲目。
+2. **选定 1 首**（首选优先级最高、受众最广、气质最贴合者），复制到得主子目录 `{Laureate}/`。
+3. **命名规范**：简洁无空格、无博主前缀，如 `NewLands.wav`（对标 Sanger/Wilson 的 `Timeless.wav`），便于 Makefile `BGM = $(wildcard *.wav)` 自动识别。
+4. **验证**：`make video` 合成后确认 BGM 已混入（`-stream_loop -1` 循环 + `-shortest` 对齐 slides 总时长）；`.wav` 不入 git（已在 `.gitignore`）。
+5. **在人物专属提示词「第 5 步」末尾记录**：选曲名 + 来源博主 + 气质理由，便于 Review 追溯。
+
+> **Knuth 标杆实例**：气质「史诗/奠基」（算法分析之父、TAOCP 作者、TeX 创造者），选 Alex-Productions 的 **New Lands**（152k views，高受众/史诗/开阔，匹配"改写计算机史"的奠基叙事），落地文件 `turing/presentations/Donald_Knuth/NewLands.wav`。
+
 ---
 
 ## 六、Review 流程（★ 两轮，缺一不可）

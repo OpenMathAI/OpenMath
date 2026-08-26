@@ -76,7 +76,7 @@
 | 1997 | Douglas Engelbart | 1925-2013 | 美国 | — | 鼠标、超文本、图形交互（NLS/Augment）。 | 人机交互奠基。 | 🔲 | 🔲 |
 | 1998 | Jim Gray | 1944-2012 | 美国 | Microsoft Research | 数据库系统、事务处理、在线分析处理。 | 数据库。 | 🔲 | 🔲 |
 | 1999 | Fred Brooks | 1931-2022 | 美国 | University of North Carolina | 软件工程、OS/360、《人月神话》。 | — | 🔲 | 🔲 |
-| 2000 | Andrew Yao | 1946- | 美国/中国 | Princeton University / Tsinghua | 计算复杂性、密码学、通信复杂性、量子计算。 | 首位华人得主。 | 🔲 | 🔲 |
+| 2000 | Andrew Yao | 1946- | 美国/中国 | Princeton University / Tsinghua | 计算复杂性、密码学、通信复杂性、量子计算。 | 首位华人得主。 | ✅ | ✅ |
 | 2001 | Ole-Johan Dahl | 1931-2002 | 挪威 | University of Oslo | 面向对象编程（Simula）。 | 与 Nygaard 共获。 | 🔲 | 🔲 |
 | 2001 | Kristen Nygaard | 1926-2002 | 挪威 | University of Oslo | 面向对象编程（Simula）。 | 与 Dahl 共获。 | 🔲 | 🔲 |
 | 2002 | Ronald Rivest | 1947- | 美国 | MIT | 公钥密码学（RSA）。 | RSA 三杰之一。 | 🔲 | 🔲 |
@@ -96,7 +96,7 @@
 | 2011 | Judea Pearl | 1936- | 美国/以色列 | UCLA | 贝叶斯网络、因果推断、概率推理。 | 与统计学交叉显著。 | 🔲 | 🔲 |
 | 2012 | Shafi Goldwasser | 1958- | 美国/以色列 | MIT / Weizmann | 概率加密、零知识证明、多安全计算。 | 与 Micali 共获。 | 🔲 | 🔲 |
 | 2012 | Silvio Micali | 1954- | 意大利/美国 | MIT | 零知识证明、可验证随机函数。 | 与 Goldwasser 共获。 | 🔲 | 🔲 |
-| 2013 | Leslie Lamport | 1941- | 美国 | Microsoft Research | 分布式系统、Paxos 共识、时序逻辑、LaTeX。 | — | 🔲 | 🔲 |
+| 2013 | Leslie Lamport | 1941- | 美国 | Microsoft Research | 分布式系统、Paxos 共识、时序逻辑、LaTeX。 | — | ✅ | ✅ |
 | 2014 | Michael Stonebraker | 1943- | 美国 | MIT | 数据库系统（Ingres、PostgreSQL）、流处理。 | 数据库。 | 🔲 | 🔲 |
 | 2015 | Whitfield Diffie | 1944- | 美国 | — | 公钥密码学（Diffie-Hellman 密钥交换）。 | 与 Hellman 共获。 | 🔲 | 🔲 |
 | 2015 | Martin E. Hellman | 1945- | 美国 | Stanford University | 公钥密码学（Diffie-Hellman 密钥交换）。 | 与 Diffie 共获。 | 🔲 | 🔲 |
