@@ -20,9 +20,9 @@
 
 | # | 英文名 | 中文名 | 国籍 | 生卒 | 核心贡献 | 立传 | Review | 社会关系入库 |
 |:--:|------|:--:|------|:--:|------|:--:|:--:|:--:|
-| 1 | [Adrien-Marie Legendre](https://en.wikipedia.org/wiki/Adrien-Marie_Legendre) | 勒让德 | 法国 | 1752–1833 | 勒让德多项式、勒让德符号、最小二乘法 | 🔲 | 🔲 | ✅ |
-| 2 | [Joseph Fourier](https://en.wikipedia.org/wiki/Joseph_Fourier) | 傅里叶 | 法国 | 1768–1830 | 傅里叶级数、傅里叶变换、热传导方程 | 🔲 | 🔲 | ✅ |
-| 3 | [Sophie Germain](https://en.wikipedia.org/wiki/Sophie_Germain) | 热尔曼 | 法国 | 1776–1831 | 数论、弹性理论、费马大定理部分结果 | 🔲 | 🔲 | ✅ |
+| 1 | [Adrien-Marie Legendre](https://en.wikipedia.org/wiki/Adrien-Marie_Legendre) | 勒让德 | 法国 | 1752–1833 | 勒让德多项式、勒让德符号、最小二乘法 | ✅ | 🔲 | ✅ |
+| 2 | [Joseph Fourier](https://en.wikipedia.org/wiki/Joseph_Fourier) | 傅里叶 | 法国 | 1768–1830 | 傅里叶级数、傅里叶变换、热传导方程 | ✅ | ✅ | ✅ |
+| 3 | [Sophie Germain](https://en.wikipedia.org/wiki/Sophie_Germain) | 热尔曼 | 法国 | 1776–1831 | 数论、弹性理论、费马大定理部分结果 | ✅ | 🔲 | ✅ |
 | 4 | [Carl Friedrich Gauss](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss) | 高斯 | 德国 | 1777–1855 | 数论、微分几何、最小二乘法 | 🔲 | 🔲 | ✅ |
 | 5 | [Bernhard Bolzano](https://en.wikipedia.org/wiki/Bernhard_Bolzano) | 波尔查诺 | 波西米亚 | 1781–1848 | 波尔查诺-魏尔斯特拉斯定理、实分析严格化 | 🔲 | 🔲 | ✅ |
 | 6 | [Siméon Denis Poisson](https://en.wikipedia.org/wiki/Sim%C3%A9on_Denis_Poisson) | 泊松 | 法国 | 1781–1840 | 泊松分布、泊松方程、位势理论 | 🔲 | 🔲 | ✅ |
