@@ -138,6 +138,9 @@ NN  结尾
 
 - 每写完一页 `make clean && make`，用 `pdftoppm` 截图检查溢出/重叠。
 - 修复优先级：删 `\plainbar` → 缩 `inner sep` → 缩字号 → 减行距 → 调 y 坐标。
+- **遗产页（legacy）格式红线【⚠ 实测踩坑，来自 Ken Thompson 立传】**：
+  - ❌ 禁止用 `2×2` 网格 + `text width=5.6cm`：下排卡片（`y=-1.05`）与底部总结框（`y=-2.55`）在 16:9 画布上**纵向重叠**。
+  - ✅ 必须对齐 Andrew_Yao / Leslie_Lamport 标杆的 **1×4 横排**：四卡 `text width=3.05cm`，`node[leg] style={rounded corners=6pt, inner xsep=6pt, inner ysep=8pt, font=\fontsize{6.4}{8.4}}`，横排 `x = -5.4 / -1.8 / 1.8 / 5.4`、`y=1.3`；底部框 `y=-1.6`、`text width=13.0cm`。经 `make distclean && make` 验证无重叠。
 
 ### 第 9 步：史实审查 + 术语审查【人物专属】
 

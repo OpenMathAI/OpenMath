@@ -163,6 +163,11 @@
 | Go (programming language) | Go 语言 | 与 Pike 等共创 |
 | pipe | 管道 | Unix 进程间通信核心 |
 
+**遗产页布局红线（★ 实测踩坑）**：
+
+- ⚠ **禁止用 2×2 网格 + `text width=5.6cm`**。初版因下排卡片 (`y=-1.05`) 与底部总结框 (`y=-2.55`) 间距过近，在 16:9 画布上**纵向重叠**，被 user 截图指出。
+- ✅ **必须对齐 Andrew_Yao / Leslie_Lamport 标杆的 1×4 横排布局**：四张小卡 `text width=3.05cm`、`node[leg] style` 含 `rounded corners=6pt, inner xsep=6pt, inner ysep=8pt, font=\fontsize{6.4}{8.4}`，横排 `x` 坐标为 `-5.4 / -1.8 / 1.8 / 5.4`、`y=1.3`；底部总结框 `y=-1.6`、`text width=13.0cm`。该布局经 `make distclean && make` 验证无重叠。
+
 ---
 
 ## 四、背景音乐选择 【人物专属】
