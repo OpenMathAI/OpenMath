@@ -1,0 +1,248 @@
+% =============================================================
+%  化名求学的数学先驱 · 弹性理论与费马大定理：热尔曼 (Sophie Germain)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Sophie_Germain
+%  设计母题：弹性曲面的曲率 / 振动板 —— 柔和气泡呼应曲面与振动的优雅
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：法国深蓝 + 玫瑰金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{franceblue}{HTML}{1F3A93}      % 法国深蓝 — 法兰西理性
+\definecolor{rosegold}{HTML}{B76E79}        % 玫瑰金 — 女性先驱 / 打破偏见
+\definecolor{badgeNumber}{HTML}{4C5FD5}     % 数论 — 靛蓝
+\definecolor{badgeElastic}{HTML}{0E7C7B}    % 弹性理论 — 青绿
+\definecolor{badgePhilosophy}{HTML}{E07B30} % 哲学 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 化名求学 / 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{numberpanel}{RGB}{228,232,250}
+\definecolor{elasticpanel}{RGB}{220,240,238}
+\definecolor{philosophypanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{rosepanel}{RGB}{248,233,235}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[rosegold, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应弹性曲面 / 振动板
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[rosegold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeElastic!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeNumber!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePhilosophy!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[rosegold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{rosegold}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=franceblue!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 化名求学的先驱\enspace·\enspace 弹性理论与费马大定理};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=franceblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {热尔曼};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=franceblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Sophie Germain\enspace·\enspace 1776 — 1831};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=rosegold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {Sophie Germain 定理 · 弹性理论 · 平均曲率 · 费马大定理};
+  \draw[rosegold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeNumber] at (-5.05,0)
+        {数论\\Number Theory\par\scriptsize 费马大定理第一情形};
+      \node[badge, fill=badgeElastic] at (-1.68,0)
+        {弹性理论\\Elasticity\par\scriptsize 首位获奖女性};
+      \node[badge, fill=badgePhilosophy] at (1.68,0)
+        {平均曲率\\Mean Curvature\par\scriptsize 曲面理论的先驱};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {化名求学\\Le Blanc\par\scriptsize 冲破性别偏见};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {她用化名叩开数学之门，在偏见中点燃了超越时代的才华。};
+  % 肖像（无生前肖像：装饰圆占位）
+  \node[draw=rosegold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \node[anchor=center, font=\fontsize{46}{46}\selectfont, text=rosegold!65] at (1.0,1.45) {\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Sophie Germain (1776–1831)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace 自学 · 化名 Le Blanc\enspace|\enspace 数论 · 弹性理论};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{rosegold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{热尔曼 - 巴黎的隐名女数学家}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（无生前肖像：装饰圆占位）
+  \node[draw=rosegold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \node[anchor=center, font=\fontsize{56}{56}\selectfont, text=rosegold!60] at (1.5,1.95) {\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Sophie Germain (1776–1831)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=rosegold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1776-04-01 — 1831-06-27\\[2pt]\lab{本名}\quad Marie-Sophie Germain\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=elasticpanel, draw=badgeElastic!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 自学为主（École Polytechnique\\[2pt]
+     \quad 讲义，化名 Le Blanc 投稿）\\[2pt]\lab{师承}\quad Lagrange（引路人）};
+  \node[infob, fill=numberpanel, draw=badgeNumber!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 巴黎（法国）\\[2pt]\lab{荣誉}\quad 巴黎科学院大奖（1816）\\[2pt]\lab{身后}\quad Sophie Germain 奖 · 埃菲尔塔};
+  \node[infob, fill=rosepanel, draw=rosegold!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数论 · 弹性理论\\[2pt]
+     \quad 力学 · 哲学\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{隐名者的多重贡献}{数论 · 弹性理论 · 哲学 · 化名求学}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{7.0}{9.0}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=numberpanel, draw=badgeNumber!50, text=badgeNumber!85!black] (a) at (-5.6,1.05) {数论\\Germain 定理\\[2pt]费马大定理第一情形};
+\node[nodebox, fill=elasticpanel, draw=badgeElastic!50, text=badgeElastic!85!black] (b) at (-1.8,1.05) {弹性理论\\振动板方程\\[2pt]首位获奖女性};
+\node[nodebox, fill=philosophypanel, draw=badgePhilosophy!50, text=badgePhilosophy!85!black] (c) at (1.8,1.05) {平均曲率\\Germain 曲率\\[2pt]曲面理论的先驱};
+\node[nodebox, fill=legacypanel, draw=badgeLegacy!50, text=badgeLegacy!85!black] (d) at (5.6,1.05) {化名求学\\Le Blanc\\[2pt]冲破性别偏见};
+\node[draw=rosegold!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 她用化名叩开数学之门，用才华赢得了高斯与拉格朗日的尊重。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 4. 早年与自学 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与自学 (1776–1794)}{资产阶级家庭 · 大革命禁足 · Montucla 与阿基米德}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=rosepanel, draw=rosegold!55] at (0,2.55) {\textbf{1776 · 生于巴黎。}1776 年 4 月 1 日生于巴黎一个资产阶级家庭，父亲 Ambroise-François 是富有的丝绸商（一说金匠），1789 年当选三级会议代表。};
+\node[item, fill=elasticpanel, draw=badgeElastic!45] at (0,1.05) {\textbf{大革命与禁足。}13 岁时巴士底狱陷落，革命动荡迫使她禁足家中；在父亲书房读到 Montucla《数学史》，被阿基米德之死的故事深深吸引，从此爱上数学。};
+\node[item, fill=goldpanel, draw=rosegold!40] at (0,-0.25) {\textbf{深夜自学。}父母反对她学数学，夜里没收她的暖衣与炉火；她却偷偷点起蜡烛、裹着被子继续钻研，甚至自学拉丁语、希腊语以读牛顿与欧拉的著作。};
+\node[draw=rosegold!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个被禁止求学的女孩，在深夜的烛光里爱上了数学。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 5. 化名 Le Blanc 与 Lagrange ---
+\newcommand{\leblancslide}{\begin{frame}\plainbar\sectiontitle{化名 Le Blanc：叩开数学之门}{École Polytechnique · 化名投稿 · 身份揭晓}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=legacypanel, draw=badgeLegacy!60] at (0,2.55) {\textbf{被拒之门外。}1794 年 École Polytechnique 创办，作为女性她被禁止入学；但新教育体系允许索取讲义并提交书面作业。};
+\node[item, fill=rosepanel, draw=rosegold!45] at (0,0.85) {\textbf{化名 Antoine-Auguste Le Blanc。}她借用一个前学生的名字，以「Monsieur Le Blanc」身份提交作业给拉格朗日——她后来向高斯解释，是"害怕女性科学家会遭到的嘲讽"。};
+\node[item, fill=goldpanel, draw=rosegold!40] at (0,-0.65) {\textbf{身份揭晓。}拉格朗日看到 Le Blanc 的才华与原创性，要求见面，热尔曼被迫坦白真实身份；拉格朗日并未介意，反而成为她的导师与朋友。};
+\node[draw=rosegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个男性的名字，掩护了一位女性数学家的才华。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 6. 与 Gauss 的通信与友谊 ---
+\newcommand{\gaussslide}{\begin{frame}\plainbar\sectiontitle{与 Gauss 的通信与友谊}{Disquisitiones · Le Blanc 化名 · 1807 保护 Gauss}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=numberpanel, draw=badgeNumber!55] at (0,2.55) {\textbf{三年研读《算术研究》。}她花三年钻研高斯的《算术研究》，随后仍以 Le Blanc 化名致信高斯本人——高斯比她小一岁。};
+\node[item, fill=rosepanel, draw=rosegold!45] at (0,0.85) {\textbf{1807 · 保护高斯。}拿破仑战争期间法军占领高斯所在的布伦瑞克，她担心高斯重蹈阿基米德的厄运，写信请求 Pernety 将军确保高斯安全。};
+\node[item, fill=goldpanel, draw=rosegold!40] at (0,-0.65) {\textbf{高斯的赞叹。}身份揭晓后高斯回信："……她无疑拥有最高贵的勇气、非凡的才华与卓越的天才。"——两人终身未曾谋面。};
+\node[draw=rosegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 数学王子对她的赞叹，穿透了性别的藩篱。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 7. 费马大定理与 Germain 定理 ---
+\newcommand{\fermatslide}{\begin{frame}\plainbar\sectiontitle{费马大定理与 Germain 定理}{第一情形 · p<197 · Dickson 的推广}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=numberpanel, draw=badgeNumber!60] at (0,2.55) {\textbf{Sophie Germain 定理。}她提出一个判定准则：若存在辅助素数 $P=2Np+1$ 满足特定条件，则费马大定理第一情形对 $p$ 成立。};
+\node[item, fill=elasticpanel, draw=badgeElastic!45] at (0,0.85) {\textbf{第一情形 p<197。}她用该定理证明费马大定理第一情形对所有奇素数 $p<100$ 成立（实际上已证明 $p<197$）——她本人未发表，定理仅因勒让德《数论》中的脚注而传世。};
+\node[item, fill=goldpanel, draw=rosegold!40] at (0,-0.65) {\textbf{Dickson 的推广。}L.E. Dickson 后来用她的定理证明第一情形对所有小于 1700 的奇素数成立，为她的事业延续百年。};
+\node[draw=rosegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 她为费马大定理的探索，奠定了数百年的基础。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 8. 弹性理论与科学院大奖 ---
+\newcommand{\elasticityslide}{\begin{frame}\plainbar\sectiontitle{弹性理论与科学院大奖}{Chladni 振动板 · 1816 获奖 · Kirchhoff–Love 方程特例}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=elasticpanel, draw=badgeElastic!60] at (0,2.55) {\textbf{Chladni 振动板悬赏。}巴黎科学院悬赏"给出弹性曲面振动的数学理论并与实验比较"——拉格朗日断言需发明新的分析分支，劝退了除她与泊松之外的所有人。};
+\node[item, fill=numberpanel, draw=badgeNumber!45] at (0,0.85) {\textbf{1816 · 首位获奖女性。}经三次尝试，她以《Recherches sur la théorie des surfaces élastiques》成为\textbf{第一位获得巴黎科学院奖的女性}。};
+\node[item, fill=goldpanel, draw=rosegold!40] at (0,-0.65) {\textbf{获奖但存缺陷。}她的方程是 Kirchhoff–Love 板方程的特例，但因依赖了 Euler 的一个错误方程，边界条件有误，未能精确预测实验——如实言之。};
+\node[draw=rosegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 她成为第一个从法兰西科学院领奖的女性。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 9. 平均曲率与曲面理论 ---
+\newcommand{\curvatureslide}{\begin{frame}\plainbar\sectiontitle{平均曲率与曲面理论}{Germain 曲率 · 弹性曲面 · Crelle's Journal}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=philosophypanel, draw=badgePhilosophy!60] at (0,2.55) {\textbf{平均曲率。}在《Mémoire sur la courbure des surfaces》（1831）中，她引入平均曲率概念 $(k_1+k_2)/2$——亦称 Germain 曲率。};
+\node[item, fill=elasticpanel, draw=badgeElastic!45] at (0,0.85) {\textbf{弹性曲面的研究。}她关于弹性曲面曲率的论文，发表于《Crelle's Journal》，是其曲面理论工作的集大成。};
+\node[item, fill=goldpanel, draw=rosegold!40] at (0,-0.65) {\textbf{超越时代的洞见。}她的曲面曲率研究，为后世微分几何与板壳理论埋下了伏笔。};
+\node[draw=rosegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 她的名字，刻进了微分几何的曲率概念。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 10. 哲学著作与晚年 ---
+\newcommand{\philosophyslide}{\begin{frame}\plainbar\sectiontitle{哲学著作与晚年}{Pensées · Considérations · 乳腺癌}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=philosophypanel, draw=badgePhilosophy!60] at (0,2.55) {\textbf{科学与人文统一。}她研究哲学与心理学，主张科学与人文之间没有本质区别——《Considérations générales》获孔德（Auguste Comte）高度赞赏。};
+\node[item, fill=elasticpanel, draw=badgeElastic!45] at (0,0.85) {\textbf{身后出版。}《Pensées diverses》与《Considérations》皆由外甥 Lherbette 整理出版（身后），她希望把事实分类并推广为心理学与社会学的规律。};
+\node[item, fill=rosepanel, draw=rosegold!45] at (0,-0.65) {\textbf{1829 · 乳腺癌。}1829 年确诊乳腺癌，仍笔耕不辍；1831 年 6 月 27 日逝于巴黎 rue de Savoie，享年 55 岁。死亡证明上登记为"财产持有人"而非"数学家"。};
+\node[draw=rosegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 直到死亡证明上，她的数学家身份仍未得到承认。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 11. 荣誉与身后 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与身后}{Gauss 争取学位 · Sophie Germain 奖 · 埃菲尔塔}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=goldpanel, draw=rosegold!50] at (0,2.55) {\textbf{高斯迟到的认可。}1837 年（她死后六年），高斯为她在哥廷根大学争取荣誉学位，叹道"她向世界证明，即使女性也能在最严谨抽象的学科中有所成就"——但学位终究未获。};
+\node[item, fill=numberpanel, draw=badgeNumber!45] at (0,0.85) {\textbf{Sophie Germain 奖。}法国科学院 2003 年设立 Sophie Germain 奖（每年 8000 欧元），表彰数学基础领域的法国数学家——这是纪念而非她生前所获。};
+\node[item, fill=elasticpanel, draw=badgeElastic!40] at (0,-0.65) {\textbf{埃菲尔塔与纪念。}她的弹性理论支撑了铁塔建造，却因性别未被列入原 72 人名单（1913 年即被指出是歧视）；2026 年计划将她加入 72 位女性科学家名单。巴黎有 Sophie Germain 街与 Lycée Sophie Germain。};
+\node[draw=rosegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 生前被偏见遮蔽，身后被历史铭记。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=franceblue!90!black] at ([yshift=1.5cm]current page.center) {她用化名叩开数学之门，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=rosegold!85!black] at ([yshift=0.4cm]current page.center) {用才华冲破了性别偏见。};
+\draw[rosegold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=franceblue!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Sophie Germain};
+\node[font=\fontsize{8}{10}\selectfont, text=franceblue!60!black] at ([yshift=-2.0cm]current page.center) {热尔曼\quad Sophie Germain\quad 1776 — 1831};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 数论 · 弹性理论 · 平均曲率\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\leblancslide
+\gaussslide
+\fermatslide
+\elasticityslide
+\curvatureslide
+\philosophyslide
+\honorsslide
+\closingslide
+\end{document}
