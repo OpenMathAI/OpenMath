@@ -1,0 +1,300 @@
+% =============================================================
+%  Unix 与 C 的奠基者：肯·汤普森 (Ken Thompson)
+%  Beamer 源码 —— OpenTuring 图灵奖得主立传
+%  设计母题：系统 / 工程 / 务实 —— 终端与管道的逻辑
+%  资料来源：本地 Wikipedia (turing/pages/1983/Ken Thompson/index.html)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Thompson 专属四分类色：操作系统 / 编程语言 / 系统软件 / 体系与棋 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{goldpanel}{RGB}{249,240,224}
+\definecolor{badgeOS}{HTML}{2E5A9E}        % 操作系统 — 蓝
+\definecolor{badgeLang}{HTML}{1E8E8E}      % 编程语言 — 青绿
+\definecolor{badgeTools}{HTML}{D9A441}     % 系统软件工具 — 琥珀
+\definecolor{badgeTheory}{HTML}{C0395B}   % 计算机体系与棋 — 玫瑰
+\definecolor{ospanel}{RGB}{228,233,246}
+\definecolor{langpanel}{RGB}{222,240,238}
+\definecolor{toolspanel}{RGB}{249,240,224}
+\definecolor{theorypanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条（内容页使用）
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm] current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm] current page.south west) -- ([yshift=0.4cm] current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景（封面/结尾使用）：以离散圆点呼应「终端/管道」的逻辑节奏
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeOS!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeLang!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeTools!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm] current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题：{主标题}{副标题}
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签（身份信息页使用）
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{terminal}\enspace Unix 与 C 的奠基者\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {肯·汤普森};
+  \node[anchor=center, font=\fontsize{11}{14}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Ken Thompson\enspace（音译）\enspace·\enspace Kenneth Lane Thompson\enspace·\enspace 1943 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {Unix 原始作者 · B 语言创造者 · UTF-8 设计者 · 1983 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeOS] at (-5.05,0)
+        {操作系统\\Unix\par\scriptsize 分层文件 · 管道};
+      \node[badge, fill=badgeLang] at (-1.68,0)
+        {编程语言\\B / C\par\scriptsize 现代语言谱系};
+      \node[badge, fill=badgeTools] at (1.68,0)
+        {系统软件\\grep · UTF-8\par\scriptsize 日用工具链};
+      \node[badge, fill=badgeTheory] at (5.05,0)
+        {体系与棋\\Plan 9 · Belle\par\scriptsize 系统与博弈};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"I was always fascinated with logic — even in grade school I'd work on arithmetic problems in binary." —— Ken Thompson};
+  % 头像
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Thompson.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Thompson.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center)
+    {Ken Thompson (2019)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Bell Labs\enspace|\enspace Turing 1983 · National Medal 1998};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 身份信息页（★ 图灵奖硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{肯·汤普森 - 从新奥尔良到 Unix 原始作者}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Thompson.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Thompson.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Ken Thompson (2019)};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1943-02-04 —（在世）\\[2pt]\lab{本名}\quad Kenneth Lane Thompson\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=langpanel, draw=badgeLang!45, anchor=north] at (3.8,2.35)
+    {\lab{师承}\quad Elwyn Berlekamp（硕导）\\[2pt]
+     \lab{任职}\quad Bell Labs 1966–2000\\[2pt]
+     \quad Google 2006–};
+  \node[infob, fill=ospanel, draw=badgeOS!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 路易斯安那州 · 新奥尔良\\[2pt]\lab{教育}\quad UC Berkeley BS 1965 / MS 1966};
+  \node[infob, fill=toolspanel, draw=badgeTools!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1983 · National Medal 1998\\[2pt]
+     \quad IEEE Piore 1982 · NAS 1985\\[2pt]
+     \quad Japan Prize 2011\\[2pt]
+     \lab{核心领域}\quad 操作系统 · 编程语言\\[2pt]
+     \quad 系统软件 · 计算机棋};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{他造了程序员每天用的东西}{操作系统 · 编程语言 · 系统软件 · 体系与棋}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}]
+  \node[nodebox, fill=ospanel, draw=badgeOS!55] (a) at (-5.0,1.25) {操作系统\\Unix\\[2pt]{\fontsize{6.4}{8}\selectfont\mdseries 分层文件 · 进程 · 管道}};
+  \node[nodebox, fill=langpanel, draw=badgeLang!55] (b) at (5.0,1.25) {编程语言\\B (C 的前身)\\[2pt]{\fontsize{6.4}{8}\selectfont\mdseries 现代语言谱系的源头}};
+  \node[nodebox, fill=toolspanel, draw=badgeTools!55] (c) at (-5.0,-1.25) {系统软件\\grep · QED/ed · UTF-8\\[2pt]{\fontsize{6.4}{8}\selectfont\mdseries 正则与文本处理的普及}};
+  \node[nodebox, fill=theorypanel, draw=badgeTheory!55] (d) at (5.0,-1.25) {体系与棋\\Plan 9 · Belle\\[2pt]{\fontsize{6.4}{8}\selectfont\mdseries 分布式 OS 与计算机博弈}};
+  \node[draw=coverprimary!60, fill=silverpanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-2.55) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他让「系统」成为可以亲手把玩、逐行改写的工具。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：新奥尔良的逻辑迷}{1943–1966 · 二进制算术与 Berkeley}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=ospanel, draw=badgeOS!55] at (0,2.55) {\textbf{1943 · 生于新奥尔良。}Kenneth Lane Thompson 自幼着迷于逻辑，自述小学时便用二进制做算术题——"just because I was fascinated"。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{Berkeley 求学。}1965 年获加州大学伯克利分校理学学士、1966 年获硕士学位（电气工程与计算机科学），硕导为组合数学家 Elwyn Berlekamp。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{1966 入职 Bell Labs。}此后近四十年，他把几乎所有重要工作都留在了贝尔实验室。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个喜欢二进制与逻辑的少年，日后写出了程序员每天使用的系统。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Multics 与 Space Travel ---
+\newcommand{\multicsslide}{\begin{frame}\plainbar\sectiontitle{从 Multics 到 Unix 的偶然}{1960 年代 · 一台 PDP-7 与一款游戏}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=ospanel, draw=badgeOS!55] at (0,2.55) {\textbf{Multics 年代。}与 Dennis Ritchie 一同在 Bell Labs 参与 Multics 操作系统，期间创造了 Bon 语言。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{贝尔退出 Multics。}项目被叫停后，为继续玩自己写的游戏《Space Travel》，Thompson 找来一台闲置的 PDP-7，把游戏移植上去。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{工具长成系统。}为了运行游戏而写的一层工具，逐渐演成文件系统、进程、设备文件、命令行与管道——这便是 Unix 的雏形。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} Unix 的起点，竟是一款"为了玩下去"而移植的游戏。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Unix 核心设计 ---
+\newcommand{\unixslide}{\begin{frame}\plainbar\sectiontitle{Unix：一套至今仍在运行的设计}{1970 · 分层文件 · 进程 · 管道}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=ospanel, draw=badgeOS!55] at (0,2.55) {\textbf{分层文件系统。}以树状目录组织文件，统一抽象设备为"设备文件"，奠定了现代 OS 的磁盘与 I/O 模型。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{进程与命令行。}引入"计算机进程"概念与命令行解释器（shell），用户得以组合小程序完成复杂任务。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{管道（pipe）。}用 `|` 把小工具串联起来做进程间通信——"小工具、可组合"成为 Unix 哲学的核心。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 1970 年，Brian Kernighan 从 Multics 双关，把它命名为 "Unix"。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- B 语言与 C 谱系 ---
+\newcommand{\blangslide}{\begin{frame}\plainbar\sectiontitle{B：C 语言的前身}{1970 年代 · 系统编程语言的源头}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=langpanel, draw=badgeLang!55] at (0,2.55) {\textbf{为什么需要 B。}Unix 初成后，Thompson 认为系统需要一门系统编程语言，于是创造了 B——直接脱胎于 BCPL。};
+  \node[item, fill=ospanel, draw=badgeOS!45] at (0,1.05) {\textbf{B 到 C。}B 是 C 的直接前身；随后 Dennis Ritchie 在 B 的基础上发展出 C，二者共同构成现代系统语言谱系。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{谱系延续。}如今 C、C++、Go 乃至无数语言，都可追溯到这条以 B 为源头的脉络。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 你今天写的每一门"类 C"语言，都欠 Thompson 一个 B。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 正则与 grep ---
+\newcommand{\regslide}{\begin{frame}\plainbar\sectiontitle{正则表达式与 grep}{文本处理的普及者}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=toolspanel, draw=badgeTools!55] at (0,2.55) {\textbf{CTSS 上的 QED。}Thompson 在兼容分时系统版编辑器 QED 中加入用正则表达式搜索文本的能力。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{ed 与普及。}他在 Unix 标准编辑器 ed 中延续正则，使正则迅速渗透进各类 Unix 文本处理程序。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{grep 与构造法。}几乎今天所有处理正则的程序，都使用 Thompson 记法某变体；他还提出把正则转为 NFA 的 Thompson 构造算法。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 你敲下的每一条 `grep`，背后都是 1960 年代的记号。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- UTF-8 ---
+\newcommand{\utfslide}{\begin{frame}\plainbar\sectiontitle{UTF-8：让世界写进同一份文件}{1992 ·  Unicode 的高效编码}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=toolspanel, draw=badgeTools!55] at (0,2.55) {\textbf{为 Plan 9 设计。}Thompson 与 Rob Pike 为 Plan 9 操作系统设计了 UTF-8，作为 Unicode 的可变长字节编码。};
+  \node[item, fill=ospanel, draw=badgeOS!45] at (0,1.05) {\textbf{向后兼容 ASCII。}单字节 ASCII 原样保留、多字节自同步——这一简洁设计让它天然适配既有 Unix 文本工具链。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{今日事实标准。}如今 UTF-8 是 Web 与软件的默认文本编码，承载了几乎全世界的语言文字。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 你正在读的这一页，也由 UTF-8 编码承载。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Plan 9 与 Inferno ---
+\newcommand{\planNslide}{\begin{frame}\plainbar\sectiontitle{Plan 9 与 Inferno：把 Unix 思想推到尽头}{1980–90 年代 · 分布式的一切皆文件}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=ospanel, draw=badgeOS!55] at (0,2.55) {\textbf{Plan 9 from Bell Labs。}Thompson 是主要创造者之一，把"一切皆文件"推到网络与分布式计算的极致。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{Inferno。}后续的操作系统研究，延续"小工具、统一命名、网络透明"的 Unix 式理念。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{思想的延续。}即便 Plan 9 未成主流，它对现代容器与云原生"一切皆资源"的隐喻影响深远。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他不止造了一个 Unix，还把它的灵魂带进了下一代系统。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 计算机棋 Belle ---
+\newcommand{\belleslide}{\begin{frame}\plainbar\sectiontitle{Belle：会下棋的机器}{1970–80 年代 · 国际象棋与残局库}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=theorypanel, draw=badgeTheory!55] at (0,2.55) {\textbf{专用象棋机。}Thompson 建造了 Belle——一台以硬件加速国际象棋搜索的机器。};
+  \node[item, fill=ospanel, draw=badgeOS!45] at (0,1.05) {\textbf{残局库（endgame tablebase）。}他系统地计算并存储象棋残局，使机器在残局阶段达到完美走子。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{跨界的好奇。}从操作系统到棋盘，体现的是同一种"把规则拆开、再精确重写"的工程师趣味。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 系统、语言、棋盘——在他手里都是同一种"逻辑游戏"。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Go 语言 ---
+\newcommand{\goslide}{\begin{frame}\plainbar\sectiontitle{Go：在 Google 重新出发}{2006 起 · 与 Rob Pike 等共创}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=langpanel, draw=badgeLang!55] at (0,2.55) {\textbf{2006 加入 Google。}Thompson 与 Rob Pike 等人共同开发了 Go 语言，直面大规模工程的语言痛点。};
+  \node[item, fill=ospanel, draw=badgeOS!45] at (0,1.05) {\textbf{实用主义回归。}Go 强调简洁、并发（goroutine）与快速编译，延续了他"小工具、可组合"的一贯取向。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{半个世纪的回响。}从 B 到 C 谱系，再到 Go，他参与塑造了三代系统语言。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 七十年人生，三代语言——系统工程师的"长波长"。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 荣誉 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉}{从 IEEE 到图灵奖，再到日本奖}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=ospanel, draw=badgeOS!55] at (0,2.55) {\textbf{1982 IEEE Piore 奖 · 1983 图灵奖。}与长期同事 Dennis Ritchie 共同获奖，表彰 Unix 与 C 语言。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{1985 美国国家科学院院士 · 1990 IEEE Hamming 奖章 · 1994 计算机先驱奖。}};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{1998 国家技术奖章 · 2011 日本奖。}从工业实验室到国家与国际最高荣誉，跨越近三十年。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个思想的重量，最终由时间与奖项共同称量。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：你正站在他的肩膀上}{Unix · C · UTF-8 · Go}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=7pt, text width=5.6cm, font=\fontsize{7.6}{9.6}\selectfont, align=center}]
+  \node[leg, fill=ospanel, draw=badgeOS!50] (a) at (-3.3,1.35) {{\fontsize{9}{11}\selectfont\bfseries\color{badgeOS} 操作系统}\\[3pt]Unix 的分层文件·进程·管道\\[2pt]现代服务器的底层隐喻};
+  \node[leg, fill=langpanel, draw=badgeLang!50] (b) at (3.3,1.35) {{\fontsize{9}{11}\selectfont\bfseries\color{badgeLang} 编程语言}\\[3pt]B $\to$ C 谱系\\[2pt]Go 的实用主义回响};
+  \node[leg, fill=toolspanel, draw=badgeTools!50] (c) at (-3.3,-1.05) {{\fontsize{9}{11}\selectfont\bfseries\color{badgeTools} 系统软件}\\[3pt]grep · 正则 · UTF-8\\[2pt]每天被敲下的文本工具};
+  \node[leg, fill=theorypanel, draw=badgeTheory!50] (d) at (3.3,-1.05) {{\fontsize{9}{11}\selectfont\bfseries\color{badgeTheory} 体系与棋}\\[3pt]Plan 9 · Belle\\[2pt]把 Unix 思想推向极致};
+  \node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-2.55) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 系统，是可以被亲手改写的。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} Unix $\to$ C $\to$ UTF-8 $\to$ Go\\[2pt]他的工具，仍在程序员的手边延续。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{24}{30}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=1.5cm]current page.center) {把系统握在手里};
+  \draw[coveraccent, line width=1.2pt] ([yshift=0.55cm]current page.center) -- ([yshift=0.55cm, xshift=3.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverdark!80, align=center, text width=13cm]
+    at ([yshift=-0.15cm]current page.center) {从一台 PDP-7 上的游戏，到运行世界的服务器——\\[2pt]他证明了：真正的工程师，会让别人每天用而不自知。};
+  \node[anchor=center, font=\fontsize{8}{11}\selectfont, text=covermuted, align=center]
+    at ([yshift=-1.25cm]current page.center) {Kenneth Lane Thompson\enspace·\enspace 1943 —\enspace·\enspace Unix · B · grep · UTF-8 · Plan 9 · Go};
+  \node[anchor=south, font=\fontsize{7.5}{9}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south) {\faIcon{code-branch}\enspace OpenMathAI\enspace·\enspace Compiled with \TeX};
+\end{tikzpicture}\end{frame}}
+
+% --- 彩蛋 ---
+\newcommand{\eggslide}{\begin{frame}[plain]\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{20}{26}\selectfont\bfseries, text=coveraccent!88!black]
+    at ([yshift=1.3cm]current page.center) {彩蛋 · 这份文档本身};
+  \node[anchor=center, font=\fontsize{10.5}{14}\selectfont, text=coverdark!82, align=center, text width=13cm]
+    at ([yshift=-0.3cm]current page.center) {你正在阅读的这份 Beamer 幻灯片，\\[2pt]连同整个 OpenMathAI 立传系列，\\[2pt]都由 \textbf{XeLaTeX + Beamer} 排版编译而成。\\[2pt]而 Thompson 与 Ritchie 创造的 Unix 与 C，\\[2pt]正是这份工具链得以运转的底层土壤。};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=covermuted, align=center]
+    at ([yshift=-2.2cm]current page.center) {Compiled with \TeX\enspace·\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\multicsslide
+\unixslide
+\blangslide
+\regslide
+\utfslide
+\planNslide
+\belleslide
+\goslide
+\honorslide
+\legacyslide
+\closingslide
+\eggslide
+\end{document}
