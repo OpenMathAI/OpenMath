@@ -56,7 +56,7 @@
 | 1981 | Edgar F. Codd | 1923-2003 | 英国/美国 | IBM | 关系数据库模型、关系代数与 SQL 理论根基。 | 数据库奠基。 | 🔲 | 🔲 |
 | 1982 | Stephen A. Cook | 1939- | 美国/加拿大 | University of Toronto | P 与 NP 问题、Cook-Levin 定理（NP 完全性）。 | 计算复杂性。 | 🔲 | 🔲 |
 | 1983 | Ken Thompson | 1943- | 美国 | Bell Labs | Unix 操作系统、C 语言、正则表达式。 | 与 Ritchie 共获。 | ✅ | ✅ |
-| 1983 | Dennis Ritchie | 1941-2011 | 美国 | Bell Labs | Unix 操作系统、C 语言设计。 | 与 Thompson 共获。 | 🔲 | 🔲 |
+| 1983 | Dennis Ritchie | 1941-2011 | 美国 | Bell Labs | Unix 操作系统、C 语言设计。 | 与 Thompson 共获。 | ✅ | ✅ |
 | 1984 | Niklaus Wirth | 1934- | 瑞士 | ETH Zurich | Pascal、Modula 等编程语言、结构化程序设计。 | — | 🔲 | 🔲 |
 | 1985 | Richard M. Karp | 1935- | 美国 | UC Berkeley | NP 完全性理论、Karp 归约、组合优化算法。 | 计算复杂性。 | 🔲 | 🔲 |
 | 1986 | John Hopcroft | 1939- | 美国 | Cornell University | 算法设计与自动机理论、图算法。 | 与 Tarjan 共获。 | 🔲 | 🔲 |
