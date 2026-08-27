@@ -9,7 +9,7 @@
 
 > 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**，而非纯数学家版式。这意味着在数学家立传基础上，增加以下**物理学家格式硬性要求**：
 
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注（若 Wikipedia 有头像照片，从 `images.txt` 或 infobox 下载到 `images/`；无则用装饰圆 `\faIcon{user}` 占位）。
+1. **封面有头像**：右上角肖像 + `draw=francegold!50` 细边框 + 姓名小字注（采用用户指定的正确肖像 `images/Adrien-Marie-Legendre.jpeg`；无则用装饰圆 `\faIcon{user}` 占位）。
 2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 法国`），底部状态栏给出 `国籍 | 机构 | 主要成就` 三要素。
 3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧信息网格，至少含：生卒、本名、国籍、出生地、师承、教育、主要荣誉、核心领域。事实取自 Wikipedia infobox，不得杜撰。
 4. **配色 + 气泡背景**：采用「主色 + 强调色 + 三~四分类色」配色；背景用柔和气泡（稀疏大块实心圆）呼应数学结构的「正交 / 对称」母题。
@@ -70,10 +70,10 @@
   - Legendre 是法国大革命前后过渡期的学者，其数学严谨、典雅、影响深远——需要**庄重、古典、理性**的配乐，呼应启蒙时代法兰西的学术气象
   - "典雅" 匹配其《几何原本》教科书百年不衰的教育影响
   - "庄重" 匹配其身后刻名埃菲尔塔的殊荣与 80 岁高寿的完整一生
-- **候选方向**（执行时从音乐库核对具体曲目，优先古典/庄重/典雅风格）：
-  - 首选：古典 / 庄重 / 典雅风格曲目（呼应启蒙时代法国学者）
-  - 备选：历史感深沉曲目（呼应 18-19 世纪之交的时代背景）
-  - 时长需 ≥ 12 页 × 7 秒 ≈ 84 秒，ffmpeg `-shortest` 自动对齐
+- **已选定曲目（✅ 定稿）**：Beethoven Symphony No. 6 "Pastoral"（田园 / 宁静 / 典雅，Karajan 指挥柏林爱乐）
+  - 本地源文件：`music_audio/beethoven-karajan/06-fNXCZXrlX7I-Beethoven "Symphony No 6" Karajan.wav`
+  - 复制到成品目录并重命名为：`beethoven6_pastoral.wav`
+  - 时长 37:37，远 ≥ 12 页 × 7 秒 ≈ 84 秒，ffmpeg `-shortest` 自动对齐
 
 ## 4. Slide 规划（约 12 页，正文采用 Wilson 式结构）
 
@@ -92,7 +92,7 @@
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
-- **【最重要】肖像错误（Mistaken portrait）**：近 200 年（直到 2005 年发现错误）书籍、画作、文章都误把法国**政治家 Louis Legendre（1752–1797）的侧面肖像**当作数学家 Legendre 的肖像。错误源于草图仅标注 "Legendre" 且与 Lagrange 等数学家同书出现。**真正的 Legendre 肖像是 1820 年 Boilly 的水彩漫画（caricature）**（以及《Le Panthéon scientifique de la tour Eiffel》中另一幅）。**封面与身份信息页头像必须用正确肖像（Boilly 漫画 / `images.txt` 第一张 croquis Barral），绝不能用 Louis Legendre 侧面像**——若头像下载失败，宁可用装饰圆占位并注明，也不要用错误肖像。
+- **【最重要】肖像错误（Mistaken portrait）**：近 200 年（直到 2005 年发现错误）书籍、画作、文章都误把法国**政治家 Louis Legendre（1752–1797）的侧面肖像**当作数学家 Legendre 的肖像。错误源于草图仅标注 "Legendre" 且与 Lagrange 等数学家同书出现。**真正的 Legendre 肖像是 1820 年 Boilly 的水彩漫画（caricature）**（以及《Le Panthéon scientifique de la tour Eiffel》中另一幅）。**封面与身份信息页头像最终采用用户指定的正确肖像 `images/Adrien-Marie-Legendre.jpeg`**，绝不能用 Louis Legendre 侧面像——若头像下载失败，宁可用装饰圆占位并注明，也不要用错误肖像。
 - **最小二乘法归属**：Legendre 是**第一个正式发表**（1806）者，但 **Gauss 更早发现**——勿写 Legendre 独家发明，表述为"首次发表，Gauss 先发现"。
 - **二次互反律**：Legendre **猜想**，Gauss **证明**——勿混淆。
 - **素数定理**：Legendre 1798 **猜想**，Hadamard 与 de la Vallée-Poussin 1896 **证明**。
@@ -144,7 +144,7 @@
 ## 10. 终审清单
 
 - [ ] 生卒 1752-09-18 / 1833-01-09，享年 80，出生地以 Paris 为准
-- [ ] 【肖像错误】封面/身份信息页头像用正确肖像（Boilly 漫画 / croquis Barral），绝不用 Louis Legendre 侧面像
+- [ ] 【肖像错误】封面/身份信息页头像用正确肖像 `images/Adrien-Marie-Legendre.jpeg`，绝不用 Louis Legendre 侧面像
 - [ ] 最小二乘法"Legendre 首发表、Gauss 先发现"表述准确
 - [ ] 二次互反律"Legendre 猜想、Gauss 证明"表述准确
 - [ ] 素数定理"1798 猜想、1896 证明"表述准确
@@ -159,7 +159,7 @@
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Adrien-Marie_Legendre/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：优先正确肖像（`images.txt` 第一张 croquis Barral / Boilly 漫画）；**绝不用 Louis Legendre 侧面像**；无则用装饰圆占位并注明
+- [ ] **头像**：采用用户指定正确肖像 `images/Adrien-Marie-Legendre.jpeg`；**绝不用 Louis Legendre 侧面像**；无则用装饰圆占位并注明
 - [ ] **国籍**：封面顶部徽章明示法国
 - [ ] **引语核对**：引语必须在 Wikipedia 原文找到，否则忠实转述
 - [ ] **编译验证**：`make distclean && make`
