@@ -1,0 +1,249 @@
+% =============================================================
+%  数论与椭圆函数的先驱 · 最小二乘法的发表者：勒让德 (Adrien-Marie Legendre)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Adrien-Marie_Legendre
+%  设计母题：勒让德多项式的正交性 / 球谐函数对称 —— 柔和气泡呼应对称结构的正交展开
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+
+% ===== 配色：法国深蓝 + 法国金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{franceblue}{HTML}{1F3A93}      % 法国深蓝 — 法兰西理性 / 王室蓝
+\definecolor{francegold}{HTML}{C9A227}      % 法国金 — 埃菲尔塔 / 荣誉军团
+\definecolor{badgeNumberTheory}{HTML}{4C5FD5} % 数论 — 靛蓝
+\definecolor{badgeElliptic}{HTML}{0E7C7B}     % 椭圆函数 — 青绿
+\definecolor{badgeAnalysis}{HTML}{E07B30}     % 几何与分析 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}       % 最小二乘法 / 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{numberpanel}{RGB}{228,232,250}
+\definecolor{ellipticpanel}{RGB}{220,240,238}
+\definecolor{analysispanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[francegold, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应勒让德多项式的正交性 / 球谐函数对称
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[francegold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeElliptic!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeNumberTheory!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeAnalysis!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[francegold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{francegold}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=franceblue!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 数论与椭圆函数的先驱\enspace·\enspace 最小二乘法的发表者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=franceblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {勒让德};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=franceblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Adrien-Marie Legendre\enspace·\enspace 1752 — 1833};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=francegold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {勒让德多项式 · 勒让德符号 · 勒让德变换 · 最小二乘法};
+  \draw[francegold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeNumberTheory] at (-5.05,0)
+        {数论\\Number Theory\par\scriptsize 二次互反律 · 素数};
+      \node[badge, fill=badgeElliptic] at (-1.68,0)
+        {椭圆函数\\Elliptic\par\scriptsize 椭圆积分的分类};
+      \node[badge, fill=badgeAnalysis] at (1.68,0)
+        {几何与分析\\Analysis\par\scriptsize 勒让德多项式 · 变换};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {最小二乘法\\Least Squares\par\scriptsize 1806 首次发表};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他用 80 年严谨的一生，在 18 与 19 世纪之间架起了数学的桥梁。};
+  % 肖像（正确肖像：croquis Barral）
+  \node[draw=francegold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+  \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Adrien-Marie-Legendre.jpeg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Adrien-Marie Legendre (1752–1833)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace Collège Mazarin · École Militaire\enspace|\enspace 数论 · 椭圆函数 · 最小二乘法};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{francegold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{勒让德 - 从马扎兰学院到法兰西科学院}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（正确肖像：croquis Barral）
+  \node[draw=francegold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Adrien-Marie-Legendre.jpeg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Adrien-Marie Legendre (1752–1833)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=francegold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1752-09-18 — 1833-01-09\\[2pt]\lab{本名}\quad Adrien-Marie\\[2pt]\quad\enspace Legendre\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=ellipticpanel, draw=badgeElliptic!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Collège Mazarin\\[2pt]
+     \lab{师承}\quad Lagrange（引路人）};
+  \node[infob, fill=numberpanel, draw=badgeNumberTheory!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 巴黎（法兰西王国）\\[2pt]\lab{荣誉}\quad 埃菲尔塔 72 名 · 皇家学会\\[2pt]\lab{身后}\quad 月球环形山 · 小行星};
+  \node[infob, fill=analysispanel, draw=badgeAnalysis!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数论 · 椭圆函数\\[2pt]
+     \quad 几何 · 分析 · 最小二乘法\\[2pt]
+     \lab{身份}\quad 数学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{横跨两个世纪的数学}{数论 · 椭圆函数 · 几何与分析 · 最小二乘法}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{7.0}{9.0}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=numberpanel, draw=badgeNumberTheory!50, text=badgeNumberTheory!85!black] (a) at (-5.6,1.05) {数论\\勒让德符号\\[2pt]二次互反律 · 素数};
+\node[nodebox, fill=ellipticpanel, draw=badgeElliptic!50, text=badgeElliptic!85!black] (b) at (-1.8,1.05) {椭圆函数\\积分分类\\[2pt]三卷《椭圆函数论》};
+\node[nodebox, fill=analysispanel, draw=badgeAnalysis!50, text=badgeAnalysis!85!black] (c) at (1.8,1.05) {几何与分析\\多项式 · 变换\\[2pt]《几何原本》百年教科书};
+\node[nodebox, fill=legacypanel, draw=badgeLegacy!50, text=badgeLegacy!85!black] (d) at (5.6,1.05) {最小二乘法\\1806 发表\\[2pt]Gauss 优先权公案};
+\node[draw=francegold!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他的每一项工作，都成为后世数学的基石。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1752–1780)}{巴黎富裕之家 · 马扎兰学院 · 军事学校 · Lagrange 赏识}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=numberpanel, draw=badgeNumberTheory!55] at (0,2.55) {\textbf{1752 · 生于巴黎。}1752 年 9 月 18 日生于巴黎一个富裕家庭，自幼受到良好教育，为其一生的严谨治学奠定根基。};
+\node[item, fill=ellipticpanel, draw=badgeElliptic!45] at (0,1.05) {\textbf{求学马扎兰学院。}就读于巴黎 Collège Mazarin（马扎兰学院 / 四国学院），1770 年答辩物理与数学论文，1775–1780 年任教于 École Militaire（军事学校）。};
+\node[item, fill=goldpanel, draw=francegold!40] at (0,-0.25) {\textbf{1782 · 获 Lagrange 赏识。}1782 年以抛射体论文获柏林科学院奖，引起 Joseph-Louis Lagrange 的注意与赏识——成为他学术上的引路人。};
+\node[draw=francegold!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 启蒙时代的巴黎，见证了一位严谨数学家的起步。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 5. 数论贡献 ---
+\newcommand{\numbertheoryslide}{\begin{frame}\plainbar\sectiontitle{数论：勒让德符号与素数}{二次互反律猜想 · 素数定理猜想 · 费马大定理 n=5}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=numberpanel, draw=badgeNumberTheory!60] at (0,2.55) {\textbf{勒让德符号。}为表述二次互反律，他引入了勒让德符号——如今已成为数论中不可或缺的记号。};
+\node[item, fill=ellipticpanel, draw=badgeElliptic!45] at (0,0.85) {\textbf{二次互反律：猜想而非证明。}Legendre \textbf{猜想}了二次互反律，其严格\textbf{证明}由 Gauss 完成——这是两人贡献的关键区别。};
+\node[item, fill=analysispanel, draw=badgeAnalysis!40] at (0,-0.65) {\textbf{素数分布与费马大定理。}1798 年\textbf{猜想}素数定理（1896 年由 Hadamard 与 de la Vallée-Poussin 证明）；1830 年给出费马大定理 n=5 情形的证明（Dirichlet 于 1828 年独立证明）。};
+\node[draw=francegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他猜想，后人证明——这正是数论代代相传的方式。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 6. 最小二乘法 ---
+\newcommand{\leastsquaresslide}{\begin{frame}\plainbar\sectiontitle{最小二乘法：首次发表者}{1806 发表 · 与 Gauss 的优先权公案 · 统计学的基石}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=legacypanel, draw=badgeLegacy!60] at (0,2.55) {\textbf{1806 · 首次正式发表。}Legendre 把最小二乘法作为彗星轨道书的附录\textbf{首次正式发表}——法语 "méthode des moindres carrés" 正是"最小二乘法"这一名称的直接来源。};
+\node[item, fill=goldpanel, draw=francegold!40] at (0,0.85) {\textbf{优先权公案。}Gauss 实际上\textbf{更早}发现了这一方法，但未发表；于是数学史上留下了一段关于最小二乘法归属的著名公案——表述应为"Legendre 首次发表，Gauss 先发现"。};
+\node[item, fill=numberpanel, draw=badgeNumberTheory!40] at (0,-0.65) {\textbf{统计学的基石。}如今最小二乘法已成为回归分析、统计推断与数据拟合的核心工具，贯穿自然科学与工程。};
+\node[draw=francegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个拟合彗星轨道的方法，最终塑造了整个现代统计。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 7. 椭圆函数与椭圆积分 ---
+\newcommand{\ellipticslide}{\begin{frame}\plainbar\sectiontitle{椭圆积分：系统分类者}{三卷《椭圆函数论》 · Abel / Jacobi 完成双周期性}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=ellipticpanel, draw=badgeElliptic!60] at (0,2.55) {\textbf{三卷《椭圆函数论》。}1825/1826/1830 年出版《Traité des Fonctions Elliptiques》三卷，系统完成了椭圆积分的分类工作，为后世奠定了坚实基础。};
+\node[item, fill=numberpanel, draw=badgeNumberTheory!45] at (0,0.85) {\textbf{双周期性由后人完成。}椭圆函数的\textbf{双周期性}这一完整解决，是由 Abel 与 Jacobi 在 Legendre 分类工作的\textbf{基础之上}完成的。};
+\node[item, fill=goldpanel, draw=francegold!40] at (0,-0.65) {\textbf{对 Abel 的赞赏。}Legendre 对年轻的 Abel 赞叹："这年轻的挪威人，有着怎样的头脑啊！"（What a head the young Norwegian has!）};
+\node[draw=francegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他的分类是地基，后人的双周期性是大厦。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 8. 勒让德多项式 ---
+\newcommand{\polynomialslide}{\begin{frame}\plainbar\sectiontitle{勒让德多项式与球谐函数}{勒让德微分方程 · 1783 奠基 · 物理与工程应用}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=analysispanel, draw=badgeAnalysis!60] at (0,2.55) {\textbf{勒让德多项式。}勒让德微分方程的解——如今以他命名的勒让德多项式，是数学物理中最基本的一族正交多项式。};
+\node[item, fill=numberpanel, draw=badgeNumberTheory!45] at (0,0.85) {\textbf{1783 · 奠基性工作。}其 1783 年论文《Sur l'attraction des Sphéroïdes homogènes》是最早的奠基性工作之一。};
+\node[item, fill=ellipticpanel, draw=badgeElliptic!40] at (0,-0.65) {\textbf{广泛的应用。}勒让德多项式在静电学、球谐函数展开、量子力学与地球引力场分析中无处不在，成为理工科的标准工具。};
+\node[draw=francegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一族人名多项式，贯通了物理与工程的多个世纪。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 9. 勒让德变换 ---
+\newcommand{\transformslide}{\begin{frame}\plainbar\sectiontitle{勒让德变换与 $\Gamma$ 符号}{力学桥梁 · 热力学自由能 · $\beta$/$\gamma$ 函数 · 偏导符号 $\partial$}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=analysispanel, draw=badgeAnalysis!60] at (0,2.55) {\textbf{勒让德变换。}连接拉格朗日力学与哈密顿力学的桥梁；在热力学中，用于由内能导出焓、亥姆霍兹自由能与吉布斯自由能。};
+\node[item, fill=numberpanel, draw=badgeNumberTheory!45] at (0,0.85) {\textbf{$\Gamma$ 符号与 $\beta$/$\gamma$ 函数。}在《Exercices de Calcul Intégral》（1811/1817/1819 三卷）中引入 $\Gamma$ 符号并归一化为 $\Gamma(n+1)=n!$，同时研究 $\beta$、$\gamma$ 函数。};
+\node[item, fill=goldpanel, draw=francegold!40] at (0,-0.65) {\textbf{偏导符号 $\partial$。}引入了偏微分符号 $\partial$，沿用至今——一个符号，承载了微积分的核心记号。};
+\node[draw=francegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他发明的记号，至今仍写在每一块黑板上。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 10. 几何原本与教育影响 ---
+\newcommand{\geometryslide}{\begin{frame}\plainbar\sectiontitle{《几何原本》与百年教科书}{1794 重排欧几里得 · 一个世纪的教科书}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=legacypanel, draw=badgeLegacy!60] at (0,2.55) {\textbf{1794 · 《Éléments de géométrie》。}Legendre 重排并简化了欧几里得《几何原本》的命题，写就《Éléments de géométrie》。};
+\node[item, fill=goldpanel, draw=francegold!40] at (0,0.85) {\textbf{百年主导教科书。}这部著作在此后约 100 年里，成为初等几何领域居主导地位的教科书，深刻影响了几代人的数学教育。};
+\node[item, fill=analysispanel, draw=badgeAnalysis!40] at (0,-0.65) {\textbf{教育者的匠心。}作为 École Polytechnique 的常任数学考官，他把严谨与清晰注入法国的数学教育体系。};
+\node[draw=francegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他用一本书，教了一个世纪的几何。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 11. 荣誉与身后（含肖像错误轶事） ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与身后 · 肖像错误轶事}{埃菲尔塔 72 名 · 月球环形山 · 被误用近 200 年的肖像}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=goldpanel, draw=francegold!50] at (0,2.55) {\textbf{身后荣誉。}名字刻于埃菲尔铁塔 72 位法国科学家之一；月球环形山 Legendre 与小行星 26950 Legendre 皆以其命名。};
+\node[item, fill=numberpanel, draw=badgeNumberTheory!45] at (0,0.85) {\textbf{生前荣誉。}1782 年柏林科学院奖、1789 年当选英国皇家学会 Fellow、1831 年荣誉军团军官、1832 年美国艺术与科学院外籍荣誉会员。};
+\node[item, fill=analysispanel, draw=badgeAnalysis!45] at (0,-0.65) {\textbf{肖像错误（Mistaken portrait）。}近 200 年里，书籍与画作都误把法国\textbf{政治家 Louis Legendre} 的侧面肖像当作数学家 Legendre——直到 2005 年才纠正；真正的肖像是 1820 年 Boilly 的水彩漫画。};
+\node[draw=francegold!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 连他的肖像都曾被历史误认——真正的 Legendre，以另一种方式被铭记。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=franceblue!90!black] at ([yshift=1.5cm]current page.center) {他用 80 年的严谨，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=francegold!85!black] at ([yshift=0.4cm]current page.center) {点亮了两个世纪的数学。};
+\draw[francegold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=franceblue!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Adrien-Marie Legendre};
+\node[font=\fontsize{8}{10}\selectfont, text=franceblue!60!black] at ([yshift=-2.0cm]current page.center) {勒让德\quad Adrien-Marie Legendre\quad 1752 — 1833};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 数论 · 椭圆函数 · 最小二乘法\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\numbertheoryslide
+\leastsquaresslide
+\ellipticslide
+\polynomialslide
+\transformslide
+\geometryslide
+\honorsslide
+\closingslide
+\end{document}
