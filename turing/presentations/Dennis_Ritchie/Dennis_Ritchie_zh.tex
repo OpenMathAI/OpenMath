@@ -1,0 +1,290 @@
+% =============================================================
+%  C 语言与 Unix 的奠基者：丹尼斯·里奇 (Dennis Ritchie)
+%  Beamer 源码 —— OpenTuring 图灵奖得主立传
+%  设计母题：语言 / 系统 / 工程 —— C 的「可移植性」
+%  资料来源：本地 Wikipedia (turing/pages/1983/Dennis Ritchie/index.html)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Ritchie 专属四分类色：编程语言 / 操作系统 / 系统软件 / 体系与密码 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{goldpanel}{RGB}{249,240,224}
+\definecolor{badgeOS}{HTML}{2E5A9E}        % 操作系统 — 蓝
+\definecolor{badgeLang}{HTML}{1E8E8E}      % 编程语言 — 青绿
+\definecolor{badgeTools}{HTML}{D9A441}     % 系统软件 — 琥珀
+\definecolor{badgeTheory}{HTML}{C0395B}   % 体系与密码 — 玫瑰
+\definecolor{ospanel}{RGB}{228,233,246}
+\definecolor{langpanel}{RGB}{222,240,238}
+\definecolor{toolspanel}{RGB}{249,240,224}
+\definecolor{theorypanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条（内容页使用）
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景（封面/结尾使用）：以离散圆点呼应「终端/管道」的逻辑节奏
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeOS!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeLang!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeTools!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题：{主标题}{副标题}
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签（身份信息页使用）
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{code}\enspace C 语言与 Unix 的奠基者\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {丹尼斯·里奇};
+  \node[anchor=center, font=\fontsize{11}{14}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Dennis Ritchie\enspace（音译）\enspace·\enspace Dennis MacAlistair Ritchie\enspace·\enspace 1941 — 2011};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {C 语言创造者 · Unix 共创者 · K\&R 作者 · 1983 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeLang] at (-5.05,0)
+        {编程语言\\C / B\par\scriptsize 可移植的源头};
+      \node[badge, fill=badgeOS] at (-1.68,0)
+        {操作系统\\Unix\par\scriptsize 分层文件 · 进程};
+      \node[badge, fill=badgeTools] at (1.68,0)
+        {系统软件\\K\&R · crypt\par\scriptsize C 标准库};
+      \node[badge, fill=badgeTheory] at (5.05,0)
+        {体系与密码\\M-209 · 理论\par\scriptsize 程序结构};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"The names of Ritchie and Thompson may safely be assumed to be attached to almost everything not otherwise attributed." —— Doug McIlroy};
+  % 头像
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Ritchie.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Ritchie.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center)
+    {Dennis Ritchie (2011)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Bell Labs · Lucent\enspace|\enspace Turing 1983 · National Medal 1998};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 身份信息页（★ 图灵奖硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{丹尼斯·里奇 - 从布朗克斯维尔到 C 语言之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Ritchie.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Ritchie.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Dennis Ritchie (2011)};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1941-09-09 — 2011-10-12\\[2pt]\lab{本名}\quad Dennis MacAlistair Ritchie\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=langpanel, draw=badgeLang!45, anchor=north] at (3.8,2.35)
+    {\lab{师承}\quad Patrick C. Fischer（博士导师）\\[2pt]
+     \lab{任职}\quad Bell Labs 1967–1990s\\[2pt]
+     \quad Lucent 至 2007};
+  \node[infob, fill=ospanel, draw=badgeOS!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 纽约州 · 布朗克斯维尔\\[2pt]\lab{教育}\quad Harvard 物理+应用数学 1963};
+  \node[infob, fill=toolspanel, draw=badgeTools!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1983 · National Medal 1998\\[2pt]
+     \quad IEEE Piore 1982 · Hamming 1990\\[2pt]
+     \quad Japan Prize 2011\\[2pt]
+     \lab{核心领域}\quad 编程语言 · 操作系统\\[2pt]
+     \quad 系统软件 · 密码与理论};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{他写了你每天敲下的语言}{编程语言 · 操作系统 · 系统软件 · 密码与理论}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{8}{10}\selectfont\bfseries, align=center}]
+  \node[nodebox, fill=langpanel, draw=badgeLang!55] (a) at (-5.0,1.25) {编程语言\\C\\[2pt]{\fontsize{6.4}{8}\selectfont\mdseries 可移植的系统语言}};
+  \node[nodebox, fill=ospanel, draw=badgeOS!55] (b) at (5.0,1.25) {操作系统\\Unix\\[2pt]{\fontsize{6.4}{8}\selectfont\mdseries 与 Thompson 共创}};
+  \node[nodebox, fill=toolspanel, draw=badgeTools!55] (c) at (-5.0,-1.25) {系统软件\\K\&R · 标准库\\[2pt]{\fontsize{6.4}{8}\selectfont\mdseries C 与 Unix 的普及}};
+  \node[nodebox, fill=theorypanel, draw=badgeTheory!55] (d) at (5.0,-1.25) {密码与理论\\M-209 · 程序结构\\[2pt]{\fontsize{6.4}{8}\selectfont\mdseries 计算复杂性}};
+  \node[draw=coverprimary!60, fill=silverpanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-2.55) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他让"一门语言"跑遍全世界的机器。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：开关电路理论之家 (1941–1963)}{布朗克斯维尔 · Summit · Harvard}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=ospanel, draw=badgeOS!55] at (0,2.55) {\textbf{1941 · 生于布朗克斯维尔。}父亲 Alistair E. Ritchie 是长期任职 Bell Labs 的科学家，合著《The Design of Switching Circuits》（开关电路理论）。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{少年迁居 Summit。}随家庭搬到新泽西州 Summit，在 Summit High School 毕业——自幼便浸润于工程与电路的世界。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{Harvard 双学位 (1963)。}取得物理（Physics）与应用数学（Applied mathematics）双学位，为日后语言与系统的交叉埋下伏笔。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个开关电路理论之家的孩子，日后写出了跑遍世界的语言。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Harvard 与"遗失的博士论文" ---
+\newcommand{\phdslide}{\begin{frame}\plainbar\sectiontitle{Harvard 与"遗失的博士论文"}{1968 · 计算复杂性与程序结构}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=theorypanel, draw=badgeTheory!55] at (0,2.55) {\textbf{1968 · 论文草稿完成。}在 Harvard 完成博士论文草稿 "Computational Complexity and Program Structure"，导师为 Patrick C. Fischer。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{但从未正式获 PhD。}论文始终未通过正式学位程序；直到 2020 年，Computer History Museum 与两家家属合作，找回了这份"遗失的论文"副本。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{工程重于文凭。}文凭的缺席并未妨碍他成为系统语言领域最深远的人物之一——他的"论文"是 C 与 Unix 本身。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他没有博士学位，却写出了全世界程序员的"必修课"。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Bell Labs 与 Multics ---
+\newcommand{\multicsslide}{\begin{frame}\plainbar\sectiontitle{Bell Labs 与 Multics：通往 Unix 的前夜}{1967 · 一台 PDP-7 与一款游戏}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=ospanel, draw=badgeOS!55] at (0,2.55) {\textbf{1967 · 入职 Bell Labs。}进入 Computing Science Research Center，与 Ken Thompson 一同参与 Multics 操作系统研究。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{Bell 退出 Multics。}项目被叫停后，Thompson 找来一台闲置的 PDP-7，为继续玩《Space Travel》而移植工具——这正是 Unix 的起点。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{1970 · 命名 Unix。}Brian Kernighan 从 Multics 双关提出 "Unix" 一名，Ritchie 与 Thompson 自此开启长期共创。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一段从 Multics 走出的旅程，改变了整个计算机科学的走向。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- B 到 C ---
+\newcommand{\clangslide}{\begin{frame}\plainbar\sectiontitle{B $\to$ C：一门可移植语言的诞生}{1970 年代 · 系统编程语言的跃迁}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=langpanel, draw=badgeLang!55] at (0,2.55) {\textbf{为什么需要 B。}Unix 初成后，Thompson 创造了脱胎于 BCPL 的 B，作为系统级编程语言。};
+  \node[item, fill=ospanel, draw=badgeOS!45] at (0,1.05) {\textbf{C 由 Ritchie 创造。}他在 B 的基础上发展出 C，并多年持续贡献 Unix 与 C 的成长——C 成为系统编程的支柱。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{可移植性。}C 既贴近硬件指令集，又不绑定任何特定机器，使同一份代码能在不同平台上编译运行。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 你今天写的每一门"类 C"语言，都欠 Ritchie 一个 C。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Unix 可移植性 ---
+\newcommand{\unixslide}{\begin{frame}\plainbar\sectiontitle{Unix：用 C 重写，走向可移植}{1970 年代 · 一份代码，跑遍机器}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=ospanel, draw=badgeOS!55] at (0,2.55) {\textbf{Thompson 写原始版本。}Unix 最初由 Thompson 在 PDP-7 上写出；Ritchie 的关键贡献之一，是将 Unix 移植到不同的机器与平台。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{C 与 Unix 互相成就。}用 C 写成的 Unix 更容易移植、阅读与扩展，二者共同奠定了现代操作系统的根基。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{影响深远。}Ritchie 与 Thompson 用 C 编写 Unix，其设计理念被广泛沿用——Doug McIlroy 留下"almost everything"的评价。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 可移植，是 Unix 与 C 共同写下的注脚。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- K&R ---
+\newcommand{\krslide}{\begin{frame}\plainbar\sectiontitle{K\&R：让 C 成为世界的语言}{1978 · The C Programming Language}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=langpanel, draw=badgeLang!55] at (0,2.55) {\textbf{与 Kernighan 合著。}Ritchie 与 Brian Kernighan 合写《The C Programming Language》（1978），常被称为 K\&R。};
+  \node[item, fill=ospanel, draw=badgeOS!45] at (0,1.05) {\textbf{事实上的标准。}这本书长期是 C 语言的权威参考，定义了无数程序员对 C 的第一印象。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{广泛影响。}C 影响了 C++、Objective-C、C\#、Java、Go 等语言，其构造映射到应用层的数据结构。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一本 K\&R，让 C 成为几代程序员的共同母语。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Plan 9 / Inferno / Limbo ---
+\newcommand{\planNslide}{\begin{frame}\plainbar\sectiontitle{Plan 9 / Inferno / Limbo：一切皆文件之后}{1980–90 年代 · 分布式的一切皆文件}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=ospanel, draw=badgeOS!55] at (0,2.55) {\textbf{Plan 9 from Bell Labs。}Ritchie 参与了将"一切皆文件"推到网络与分布式计算极致的操作系统研究。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{Inferno 与 Limbo。}他亦参与后续的 Inferno 操作系统与伴生语言 Limbo，延续"统一命名、网络透明"的理念。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{思想的延续。}即便这些系统未成主流，它们对现代容器与云原生"一切皆资源"的隐喻影响深远。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他不止造了一个 Unix，还把它的灵魂带进了下一代系统。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- M-209 密码分析 ---
+\newcommand{\cryptslide}{\begin{frame}\plainbar\sectiontitle{M-209 密码分析与"未发表的贡献"}{1970s · 唯密文攻击}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=theorypanel, draw=badgeTheory!55] at (0,2.55) {\textbf{与 Reeds、Morris 合作。}1970 年代，Ritchie 与 James Reeds、Robert Morris 对 M-209 美国密码机做唯密文攻击。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{可解 2000–2500 字母。}他们的方法能破解不少于数千字母的密文，体现了他在密码分析上的功底。};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{因 NSA 建议未发表。}经与 NSA 沟通，作者们决定不公开——据称原理仍适用于当时外国政府使用的机器。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 有些贡献，因沉默而更显分量。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 荣誉 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉}{从 IEEE 到图灵奖，再到日本奖}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=ospanel, draw=badgeOS!55] at (0,2.55) {\textbf{1982 IEEE Piore 奖 · 1983 图灵奖。}与长期同事 Ken Thompson 共同获奖，表彰"通用操作系统理论与 UNIX 的实现"。};
+  \node[item, fill=langpanel, draw=badgeLang!45] at (0,1.05) {\textbf{1990 IEEE Hamming 奖章 · 1994 计算机先驱奖 · 1997 CHM Fellow · 2003 Harold Pender 奖。}};
+  \node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{1998 国家技术奖章（1999 颁）· 2011 日本奖。}从工业实验室到国家与国际最高荣誉，跨越近三十年。};
+  \node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个思想的重量，最终由时间与奖项共同称量。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：你每天敲下的 C，仍在运行世界}{C · Unix · K\&R · 密码与理论}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=8pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+  \node[leg, fill=langpanel, draw=badgeLang!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLang} 编程语言}\\[3pt]C $\to$ C++/Java/Go\\[2pt]可移植的源头};
+  \node[leg, fill=ospanel, draw=badgeOS!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeOS} 操作系统}\\[3pt]Unix 的可移植化\\[2pt]服务器底层隐喻};
+  \node[leg, fill=toolspanel, draw=badgeTools!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeTools} 系统软件}\\[3pt]K\&R · C 标准库\\[2pt]每日构建工具};
+  \node[leg, fill=theorypanel, draw=badgeTheory!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeTheory} 体系与密码}\\[3pt]M-209 · 程序结构\\[2pt]把 Unix 推向极致};
+  \node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 语言，是可以被移植到全世界的。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} C $\to$ Unix $\to$ K\&R $\to$ Plan 9\\[2pt]他的语言，仍在程序员的手边延续。}};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{24}{30}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([yshift=1.5cm]current page.center) {让语言先把世界统一};
+  \draw[coveraccent, line width=1.2pt] ([yshift=0.55cm]current page.center) -- ([yshift=0.55cm, xshift=3.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\itshape, text=coverdark!80, align=center, text width=13cm]
+    at ([yshift=-0.15cm]current page.center) {从一门贴近硬件的语言，到运行世界的服务器——\\[2pt]他证明了：真正的工程师，会让别人每天用而不自知。};
+  \node[anchor=center, font=\fontsize{8}{11}\selectfont, text=covermuted, align=center]
+    at ([yshift=-1.25cm]current page.center) {Dennis MacAlistair Ritchie\enspace·\enspace 1941–2011\enspace·\enspace C · Unix · K\&R · Plan 9};
+  \node[anchor=south, font=\fontsize{7.5}{9}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south) {\faIcon{code-branch}\enspace OpenMathAI\enspace·\enspace Compiled with \TeX};
+\end{tikzpicture}\end{frame}}
+
+% --- 彩蛋 ---
+\newcommand{\eggslide}{\begin{frame}[plain]\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{20}{26}\selectfont\bfseries, text=coveraccent!88!black]
+    at ([yshift=1.3cm]current page.center) {彩蛋 · 这份文档本身};
+  \node[anchor=center, font=\fontsize{10.5}{14}\selectfont, text=coverdark!82, align=center, text width=13cm]
+    at ([yshift=-0.3cm]current page.center) {你正在阅读的这份 Beamer 幻灯片，\\[2pt]连同整个 OpenMathAI 立传系列，\\[2pt]都由 \textbf{XeLaTeX + Beamer} 排版编译而成。\\[2pt]而 Ritchie 与 Thompson 创造的 Unix 与 C，\\[2pt]正是这份工具链得以运转的底层土壤。};
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=covermuted, align=center]
+    at ([yshift=-2.2cm]current page.center) {Compiled with \TeX\enspace·\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\phdslide
+\multicsslide
+\clangslide
+\unixslide
+\krslide
+\planNslide
+\cryptslide
+\honorslide
+\legacyslide
+\closingslide
+\eggslide
+\end{document}
