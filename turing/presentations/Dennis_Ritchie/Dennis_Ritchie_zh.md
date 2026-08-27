@@ -203,5 +203,16 @@
 | `turing/presentations/Donald_Knuth/Donald_Knuth_zh.tex` | 通用标杆实例 Beamer 源码 |
 | `turing/turing_award_winners.md` | 图灵奖得主总名单（含立传/Review 标志位） |
 
+---
+
+## 六、Review 记录
+
+### 第一轮 Review（factually wrong，2026-08-27）✅
+
+- **三要素核查**：① 封面头像 ✅（右上角 `images/Ritchie.jpg` + `draw=coveraccent!50` 边框 + 姓名小字注）；② 封面国籍 ✅（副标题"美国" + 底部状态栏 `美国 | Bell Labs · Lucent | Turing 1983 · National Medal 1998`）；③ 身份信息页 ✅（`\profileslide`，封面后第 2 页，左头像 + 右 2×2 信息网格，含生卒/本名/国籍/师承/任职/出生地/教育/荣誉/核心领域）。
+- **事实核查**：身份信息页字段与本地 infobox 一致（生卒 1941-09-09 ~ 2011-10-12、本名 Dennis MacAlistair Ritchie、国籍 美国、任职 Bell Labs 1967– / Lucent 至 2007、出生地 布朗克斯维尔、教育 Harvard 物理+应用数学 1963、荣誉 Turing 1983 · National Medal 1998 · Piore 1982 · Hamming 1990 · Japan Prize 2011）。无事实错误。
+- **待第二轮复核（专业表述）**：身份信息页「师承」写 `Patrick C. Fischer（博士导师）`，但 Ritchie **从未正式获得 PhD**（infobox Education 仅列 Harvard BS）。严格意义上"博士导师"与"未获 PhD"存在表述张力，属第二轮（professionally unstable）复核项，第一轮暂不判定为事实错误。
+- **编译验证**：`make distclean && make` 返回 EXIT=0，16 页，无缺字、无致命溢出。
+
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

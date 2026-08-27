@@ -190,5 +190,16 @@
 | `turing/presentations/Donald_Knuth/Donald_Knuth_zh.md` | 标杆实例人物提示词 |
 | `turing/turing_award_winners.md` | 图灵奖得主总名单（含立传/Review 标志位） |
 
+---
+
+## 六、Review 记录
+
+### 第一轮 Review（factually wrong，2026-08-27）✅
+
+- **三要素核查**：① 封面头像 ✅（右上角 `images/Thompson.jpg` + `draw=coveraccent!50` 边框 + 姓名小字注）；② 封面国籍 ✅（副标题"美国" + 底部状态栏 `美国 | Bell Labs | Turing 1983 · National Medal 1998`）；③ 身份信息页 ✅（`\profileslide`，封面后第 2 页，左头像 + 右 2×2 信息网格，含生卒/本名/国籍/师承/任职/出生地/教育/荣誉/核心领域）。
+- **事实核查**：身份信息页全部字段与本地 infobox 一致（生卒 1943-02-04、本名 Kenneth Lane Thompson、国籍 美国、师承 Elwyn Berlekamp、任职 Bell Labs 1966– / Google 2006–、出生地 新奥尔良、教育 UC Berkeley BS 1965 / MS 1966、荣誉 Turing 1983 · National Medal 1998 · Piore 1982 · NAS 1985 · Japan Prize 2011）。无事实错误。
+- **修正项**：封面引语由 `"…fascinated with logic — even…"` 修正为 `"…fascinated with logic and even…"`（`and` 误作破折号，已对齐 Wikipedia 原文，并保留 `, stuff like that.` 尾部）。
+- **编译验证**：`make distclean && make` 返回 EXIT=0，17 页，无缺字、无致命溢出。
+
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

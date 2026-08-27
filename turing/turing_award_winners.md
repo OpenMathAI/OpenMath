@@ -36,10 +36,10 @@
 
 | 年份 | 得主 | 生卒年 | 国籍/身份 | 获奖时机构 | 主要成果概括 | 备注 | 立传 | Review |
 |---:|---|---|---|---|---|---|:--:|:--:|
-| 1966 | Alan J. Perlis | 1922-1990 | 美国 | Carnegie Mellon University | 编程语言与编译器，Algol 语言的主要推动者。 | 首届得主。 | 🔲 | 🔲 |
-| 1967 | Maurice V. Wilkes | 1913-2010 | 英国 | University of Cambridge | 早期存储程序计算机 EDSAC、微程序设计。 | — | 🔲 | 🔲 |
-| 1968 | Richard Hamming | 1915-1998 | 美国 | Bell Labs | 数值方法、自动编码系统，纠错码（汉明码）奠基。 | 数值与信息论。 | 🔲 | 🔲 |
-| 1969 | Marvin Minsky | 1927-2016 | 美国 | MIT | 人工智能、框架理论、神经网络早期研究。 | AI 奠基人之一。 | 🔲 | 🔲 |
+| 1966 | Alan J. Perlis | 1922-1990 | 美国 | Carnegie Mellon University | 编程语言与编译器，Algol 语言的主要推动者。 | 首届得主。 | ✅ | 🔲 |
+| 1967 | Maurice V. Wilkes | 1913-2010 | 英国 | University of Cambridge | 早期存储程序计算机 EDSAC、微程序设计。 | — | ✅ | 🔲 |
+| 1968 | Richard Hamming | 1915-1998 | 美国 | Bell Labs | 数值方法、自动编码系统，纠错码（汉明码）奠基。 | 数值与信息论。 | ✅ | 🔲 |
+| 1969 | Marvin Minsky | 1927-2016 | 美国 | MIT | 人工智能、框架理论、神经网络早期研究。 | AI 奠基人之一。 | ✅ | 🔲 |
 | 1970 | James H. Wilkinson | 1919-1986 | 英国 | National Physical Laboratory | 数值分析、舍入误差分析、线性代数算法。 | — | 🔲 | 🔲 |
 | 1971 | John McCarthy | 1927-2011 | 美国 | Stanford University | 人工智能、Lisp 语言、“人工智能”一词提出者。 | AI 奠基人之一。 | 🔲 | 🔲 |
 | 1972 | Edsger W. Dijkstra | 1930-2002 | 荷兰 | Eindhoven University of Technology | 结构化编程、最短路径算法（Dijkstra 算法）、并发原语。 | 程序设计方法论。 | 🔲 | 🔲 |
