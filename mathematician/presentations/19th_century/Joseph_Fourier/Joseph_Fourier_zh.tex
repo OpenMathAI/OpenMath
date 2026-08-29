@@ -1,0 +1,388 @@
+% =============================================================
+%  傅里叶级数 · 热的解析理论：傅里叶 (Joseph Fourier)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Joseph_Fourier
+%  设计母题：正弦波的叠加 / 周期格 —— 柔和气泡呼应波动与热扩散的铺陈
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：热力绛红 + 热力琥珀 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{heatred}{HTML}{8C2F39}         % 热力绛红 — 热 / 温度 / 法兰西古典
+\definecolor{heatamber}{HTML}{E07B30}       % 热力琥珀 — 热传导 / 温度
+\definecolor{badgeSeries}{HTML}{4C5FD5}     % 傅里叶级数 — 靛蓝
+\definecolor{badgeHeat}{HTML}{C9481C}       % 热传导方程 — 橙红
+\definecolor{badgeGreenhouse}{HTML}{0E7C7B} % 温室效应 — 青绿
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 多项式实根 / 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{seriespanel}{RGB}{228,232,250}
+\definecolor{heatpanel}{RGB}{250,228,218}
+\definecolor{greenpanel}{RGB}{220,240,238}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[heatamber, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应正弦波叠加 / 周期格
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[heatamber!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeGreenhouse!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeSeries!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeHeat!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[heatamber!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{heatamber}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=heatred!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 傅里叶级数\enspace·\enspace 热的解析理论};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=heatred!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {傅里叶};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=heatred!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Joseph Fourier\enspace·\enspace 1768 — 1830};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=heatamber!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {傅里叶级数 · 傅里叶变换 · 热传导方程 · 温室效应};
+  \draw[heatamber!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeSeries] at (-5.05,0)
+        {傅里叶级数\\Fourier Series\par\scriptsize 正弦波的叠加};
+      \node[badge, fill=badgeHeat] at (-1.68,0)
+        {热传导方程\\Heat Equation\par\scriptsize 热的解析理论};
+      \node[badge, fill=badgeGreenhouse] at (1.68,0)
+        {温室效应\\Greenhouse\par\scriptsize 大气保温的首次提出};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {傅里叶变换\\Fourier Transform\par\scriptsize 信号处理的核心};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他用 62 年的一生，把热与波写进了数学的深处。};
+  % 肖像（正式肖像：Claude Gautherot, c. 1806）
+  \node[draw=heatamber!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{fourier_portrait.jpeg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Joseph Fourier (1768–1830)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace École Normale · École Polytechnique\enspace|\enspace 傅里叶级数 · 热传导};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{heatamber!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{傅里叶 - 从欧塞尔到法兰西科学院}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（正式肖像）
+  \node[draw=heatamber!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{fourier_portrait.jpeg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Joseph Fourier (1768–1830)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=heatamber!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1768-03-21 — 1830-05-16\\[2pt]\lab{本名}\quad Jean-Baptiste\\[2pt]\quad\enspace Joseph Fourier\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=seriespanel, draw=badgeSeries!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad École Normale Supérieure\\[2pt]
+     \lab{师承}\quad Lagrange · Biot};
+  \node[infob, fill=heatpanel, draw=badgeHeat!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 欧塞尔（法国）\\[2pt]\lab{荣誉}\quad 荣誉军团军官 · 埃菲尔塔\\[2pt]\lab{身后}\quad 拉雪兹公墓 · 傅里叶大学};
+  \node[infob, fill=greenpanel, draw=badgeGreenhouse!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 傅里叶级数 · 热传导\\[2pt]
+     \quad 数学物理 · 温室效应\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{从热到波的数学}{傅里叶级数 · 热传导方程 · 温室效应 · 多项式实根}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{7.0}{9.0}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=seriespanel, draw=badgeSeries!50, text=badgeSeries!85!black] (a) at (-5.6,1.05) {傅里叶级数\\正弦波叠加\\[2pt]调和分析的开端};
+\node[nodebox, fill=heatpanel, draw=badgeHeat!50, text=badgeHeat!85!black] (b) at (-1.8,1.05) {热传导方程\\热的解析理论\\[2pt]最典型的抛物型 PDE};
+\node[nodebox, fill=greenpanel, draw=badgeGreenhouse!50, text=badgeGreenhouse!85!black] (c) at (1.8,1.05) {温室效应\\大气保温\\[2pt]概念的首次提出};
+\node[nodebox, fill=legacypanel, draw=badgeLegacy!50, text=badgeLegacy!85!black] (d) at (5.6,1.05) {多项式实根\\傅里叶定理\\[2pt]Budan · Sturm};
+\node[draw=heatamber!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他的每一项工作，都从具体的物理问题出发，通向普遍的数学。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1768–1795)}{裁缝之子 · 孤儿 · 本笃会教育 · 接替拉格朗日}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{heatamber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.4cm}}
+\toprule
+\rowcolor{heatred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{1768} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{生于法国欧塞尔（勃艮第），裁缝之子；9 岁父母双亡成为孤儿} & \cellcolor{heatpanel}\textcolor{badgeHeat!82!black}{出身寒微} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{本笃会} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{经欧塞尔主教推荐入本笃会圣马可修道院受教，后接受军事数学讲师职} & \cellcolor{heatpanel}\textcolor{badgeHeat!82!black}{因出身无缘科学军团} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{1795} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{任教于 École Normale，后接替 Lagrange 在 École Polytechnique 的职位} & \cellcolor{heatpanel}\textcolor{badgeHeat!82!black}{接替拉格朗日} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个裁缝的孤儿，最终接替了拉格朗日。}
+\end{center}
+\end{frame}}
+
+% --- 5. 傅里叶级数（核心贡献页） ---
+\newcommand{\seriesslide}{\begin{frame}\plainbar\sectiontitle{傅里叶级数：正弦波的叠加}{任意函数展开 · Dirichlet 严格化 · 傅里叶变换}
+\vspace{-0.7cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{heatamber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.2cm}|>{\scriptsize}X|>{\scriptsize}X}
+\toprule
+\rowcolor{heatred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{傅里叶的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{今天}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{任意函数展开（1807–1822）} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{提出任意函数可展开为正弦级数，洞见"某些不连续函数是无穷级数之和"} & \cellcolor{heatpanel}\textcolor{badgeHeat!82!black}{调和分析的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{收敛条件（1829）} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{未加条件并不严格成立，收敛条件由 Dirichlet 首次给出满意证明} & \cellcolor{heatpanel}\textcolor{badgeHeat!82!black}{开创而非严格证明} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{傅里叶变换} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{奠定傅里叶分析基础；变换以他命名，由后人系统化} & \cellcolor{heatpanel}\textcolor{badgeHeat!82!black}{信号处理核心工具} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{heatamber!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{heatamber!85!black} 傅里叶级数（Fourier，1807；1822 年系统阐述）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{heatred!88!black}$f(x)=\dfrac{a_0}{2}+\displaystyle\sum_{n=1}^{\infty}\left(a_n\cos nx+b_n\sin nx\right)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 热的解析理论（核心贡献页） ---
+\newcommand{\heatslide}{\begin{frame}\plainbar\sectiontitle{《热的解析理论》与热传导方程}{1822 著作 · 热方程 · 量纲分析 · 傅里叶定律}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\arrayrulecolor{heatamber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.2cm}|>{\scriptsize}X|>{\scriptsize}X}
+\toprule
+\rowcolor{heatred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{傅里叶的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{热传导方程（1822）} & \cellcolor{heatpanel}\textcolor{badgeHeat!82!black}{在《Théorie analytique de la chaleur》中提出热传导的偏微分方程} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{最典型的抛物型 PDE} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{量纲分析} & \cellcolor{heatpanel}\textcolor{badgeHeat!82!black}{提出量纲齐次性：方程两边量纲匹配才可能正确} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{量纲分析的奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{傅里叶热传导定律} & \cellcolor{heatpanel}\textcolor{badgeHeat!82!black}{热流与温度梯度成正比} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{热传导的基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+\fcolorbox{heatamber!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{heatamber!85!black} 一维热传导方程（Fourier，1822）}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{heatred!88!black}$\dfrac{\partial u}{\partial t}=k\,\dfrac{\partial^{2} u}{\partial x^{2}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 贝塞尔函数与 Sturm–Liouville（核心贡献页） ---
+\newcommand{\besselslide}{\begin{frame}\plainbar\sectiontitle{贝塞尔函数与 Sturm–Liouville 理论}{圆柱热扩散 · 早于 Bessel 的讨论 · 启发后世}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{heatamber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.2cm}|>{\scriptsize}X|>{\scriptsize}X}
+\toprule
+\rowcolor{heatred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{傅里叶的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{贝塞尔函数} & \cellcolor{greenpanel}\textcolor{badgeGreenhouse!82!black}{在圆柱热扩散中，早于 Bessel 数年系统讨论贝塞尔函数} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{该函数以 Bessel 命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{Sturm–Liouville 理论} & \cellcolor{greenpanel}\textcolor{badgeGreenhouse!82!black}{圆柱热扩散的处理启发 Liouville 与 Sturm} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{谱理论的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{超越时代的洞见} & \cellcolor{greenpanel}\textcolor{badgeGreenhouse!82!black}{方法上超前，奠定数学物理的谱理论方向} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{一条线索点燃整个领域} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+\fcolorbox{heatamber!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{heatamber!85!black} 贝塞尔微分方程}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{heatred!88!black}$x^{2}y''+xy'+(x^{2}-n^{2})\,y=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 温室效应 ---
+\newcommand{\greenhouseslide}{\begin{frame}\plainbar\sectiontitle{温室效应的发现}{地球温度计算 · 大气保温假说 · de Saussure 实验}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{heatamber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.2cm}|>{\scriptsize}X|>{\scriptsize}X}
+\toprule
+\rowcolor{heatred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{傅里叶的洞察}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{地球温度之谜（1824/1827）} & \cellcolor{greenpanel}\textcolor{badgeGreenhouse!82!black}{仅靠太阳入射辐射，地球本应远冷于实际温度} & \cellcolor{heatpanel}\textcolor{badgeHeat!82!black}{两者相差约 33 度} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{大气保温假说} & \cellcolor{greenpanel}\textcolor{badgeGreenhouse!82!black}{提出大气可能起"绝缘体"作用} & \cellcolor{heatpanel}\textcolor{badgeHeat!82!black}{温室效应的首次提出} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{机制判断} & \cellcolor{greenpanel}\textcolor{badgeGreenhouse!82!black}{误判星际辐射贡献（实际差额来自地球内部放射热）} & \cellcolor{heatpanel}\textcolor{badgeHeat!82!black}{概念开创，机制未对} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 两个世纪前，他就预感到了大气对地球的保温。}
+\end{center}
+\end{frame}}
+
+% --- 9. 埃及远征与行政生涯 ---
+\newcommand{\egyptslide}{\begin{frame}\plainbar\sectiontitle{埃及远征与行政生涯 (1798–1822)}{Institut d'Égypte · 伊泽尔省长 · 《埃及描述》}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{heatamber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.2cm}}
+\toprule
+\rowcolor{heatred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{身份 / 意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{1798} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{作为科学顾问随拿破仑远征埃及，任 Institut d'Égypte 秘书，参与《Description de l'Égypte》} & \cellcolor{greenpanel}\textcolor{badgeGreenhouse!82!black}{组织军需工场} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{1801} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{拿破仑任命其为伊泽尔省（Isère）省长，任内开始热传导实验} & \cellcolor{greenpanel}\textcolor{badgeGreenhouse!82!black}{1807 年提交热传导论文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{1822} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{继 Delambre 任法国科学院常务秘书} & \cellcolor{greenpanel}\textcolor{badgeGreenhouse!82!black}{法国科学界核心} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从埃及的黄沙到格勒诺布尔，他始终带着数学的头脑。}
+\end{center}
+\end{frame}}
+
+% --- 10. 多项式实根定理 ---
+\newcommand{\rootsslide}{\begin{frame}\plainbar\sectiontitle{多项式实根定理}{笛卡尔符号法则 · 傅里叶定理 · Budan 与 Sturm}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{heatamber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.2cm}|>{\scriptsize}X|>{\scriptsize}X}
+\toprule
+\rowcolor{heatred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{傅里叶的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{笛卡尔符号法则} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{年轻时给出笛卡尔符号法则的归纳证明} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{展现纯代数天赋} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{傅里叶实根定理（1820）} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{确定多项式实根位置，与 Budan 定理互为推论} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{方程论的重要结果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{heatamber!88!black}{Sturm 的完整解} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{问题完整解由 Sturm 于 1829 年给出} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{傅里叶证明被普遍采用} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在分析之外，他同样是代数方程论的大师。}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉与身后 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与身后}{埃菲尔塔 72 名 · 拉雪兹公墓 · 傅里叶大学}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=goldpanel, draw=heatamber!50] at (0,2.55) {\textbf{生前荣誉。}法国科学院数学大奖（Grand prix）、荣誉军团军官、英国皇家学会外籍会员、1830 年瑞典皇家科学院外籍会员。};
+\node[item, fill=greenpanel, draw=badgeGreenhouse!45] at (0,0.85) {\textbf{身后纪念。}名字刻于埃菲尔铁塔 72 位法国科学家之一；葬于巴黎拉雪兹神父公墓，墓碑以埃及风格装饰，呼应其 Institut d'Égypte 秘书身份。};
+\node[item, fill=seriespanel, draw=badgeSeries!40] at (0,-0.65) {\textbf{傅里叶大学。}格勒诺布尔的约瑟夫·傅里叶大学（Joseph Fourier University）以其命名——他终身未婚，把一生献给了科学与行政。};
+\node[draw=heatamber!55, fill=graypanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他的名字，刻在铁塔上，也刻进了每一本数学物理教科书。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=heatred!90!black] at ([yshift=1.5cm]current page.center) {他用 62 年的一生，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=heatamber!85!black] at ([yshift=0.4cm]current page.center) {把热与波写进了数学。};
+\draw[heatamber!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=heatred!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Joseph Fourier};
+\node[font=\fontsize{8}{10}\selectfont, text=heatred!60!black] at ([yshift=-2.0cm]current page.center) {傅里叶\quad Joseph Fourier\quad 1768 — 1830};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 傅里叶级数 · 热传导方程 · 温室效应\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\seriesslide
+\heatslide
+\besselslide
+\greenhouseslide
+\egyptslide
+\rootsslide
+\honorsslide
+\closingslide
+\end{document}

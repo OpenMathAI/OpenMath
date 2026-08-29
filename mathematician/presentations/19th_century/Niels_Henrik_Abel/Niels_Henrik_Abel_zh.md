@@ -45,6 +45,8 @@
 
 ## 3. 配色方案（参考 Wilson 式「主色 + 强调 + 分类色」）
 
+> ★ 阿贝尔采用**北欧主题**配色：挪威深蓝为理性主色，北欧金为强调色（呼应天才与身后阿贝尔奖），与高斯（普鲁士深蓝 + 数学金）、魏尔斯特拉斯（柏林深蓝 + 分析金）、伽罗瓦（共和深蓝 + 革命红）形成区分。
+
 | 用途 | 色值 | 说明 |
 |---|---|---|
 | 主色（挪威深蓝） | `#1A237E` | 挪威 / 北欧理性 |
@@ -52,24 +54,31 @@
 | 分类色 1（椭圆函数 — 青绿） | `#0E7C7B` | 椭圆函数 / 双周期性 |
 | 分类色 2（代数方程 — 靛蓝） | `#4C5FD5` | 五次方程 / Abel–Ruffini |
 | 分类色 3（分析 — 琥珀） | `#E07B30` | 阿贝尔积分 / 级数 |
+| 分类色 4（生平 / 遗产 — 石版灰） | `#55606E` | 贫困 / 阿贝尔奖 |
 | 背景 | `#F7F6F9` | 浅灰白 |
 
-- **背景母题**：柔和气泡（稀疏大块实心圆，四档大小错落），呼应「椭圆函数的周期格 / 对称」与「自相似」的视觉语言（与 Wilson 的自相似气泡背景一致）。
+- **背景母题**：柔和气泡（稀疏大块实心圆，四档大小错落），呼应「椭圆函数的周期格 / 对称」的视觉语言。
+- **tex 配色变量命名建议**：`norwayblue`（主色）、`nordicgold`（强调色）、`badgeElliptic` / `badgeEquation` / `badgeAnalysis` / `badgeLegacy`（分类色）、`ellipticpanel` / `equationpanel` / `analysispanel` 等面板底色。
 
 ### 3.5 背景音乐选择 ✅ 【人物专属】
 
 > **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
-> （本次执行无法直接读取音乐库目录，具体 wav 文件名与本地路径需在执行立传时从 `curated_tracks.md` 选定，以下给出风格定调与候选方向。）
 
-- **风格定调**: **抒情悲剧 / 北欧清冷**（天才陨落的哀婉与纯净之美）
-- **匹配理由**:
-  - 阿贝尔的生命短暂而贫困，其数学却清澈、深刻、开创性——需要**抒情、哀婉而不悲怆**的配乐，呼应"天才在贫病中早逝"的怅惘
+- **风格定调**：**抒情悲剧 / 北欧清冷**（天才陨落的哀婉与纯净之美）
+- **匹配理由**：
+  - 阿贝尔的生命短暂而贫困，其数学却清澈、深刻、开创性——需要**抒情、哀婉而不悲怆**的配乐
   - "北欧清冷" 匹配其挪威背景——峡湾、极昼、北方的冷冽与纯净，恰似其数学的澄澈严谨
   - "抒情" 匹配其身后评价——Klein 比作莫扎特、Legendre 惊叹"这年轻挪威人的头脑"、Hermite 说"他留给数学家的够忙五百年"
-- **候选方向**（执行时从音乐库核对具体曲目，优先抒情/悲剧/纯净风格，其次怀旧）:
-  - 首选：抒情悲剧 / 北欧清冷风格曲目（呼应"26 岁天才陨落"）
-  - 备选：`Nostalgia`（怀旧）或 `PAST`（历史感深沉，呼应"遗稿被后世追认"的怅惘）
+- **候选曲目**（从 `curated_tracks.md` 选定）：
+  - 首选：`Timeless`（`alex-productions/42-SyPUvzEkPyc-Timeless.wav`，沉稳/纪录片）——项目当前统一背景音乐风格（高斯、魏尔斯特拉斯、伽罗瓦均用 Timeless）
+  - 备选：`Nostalgia`（`alex-productions/86-5ETNuoDcBg4-Nostalgia.wav`，怀旧/温和）或 `PAST`（`alex-productions/89-geyy8_WXDK0-PAST.wav`，历史感深沉）——呼应"遗稿被后世追认"的怅惘
   - 时长需 ≥ 12 页 × 7 秒 ≈ 84 秒，ffmpeg `-shortest` 自动对齐
+- **接入方式**：软链接到立传目录（不复制大文件）：
+
+  ```bash
+  cd presentations/19th_century/Niels_Henrik_Abel
+  ln -sf /Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav ./bgm.wav
+  ```
 
 ## 4. Slide 规划（约 12 页，正文采用 Wilson 式结构）
 

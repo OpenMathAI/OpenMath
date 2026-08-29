@@ -46,31 +46,40 @@
 
 ## 3. 配色方案（参考 Wilson 式「主色 + 强调 + 分类色」）
 
+> ★ 傅里叶是 19 世纪立传系列中**唯一以"热"为核心主题**的数学家，故破例采用**暖色主色**，与高斯、柯西、伽罗瓦、阿贝尔、魏尔斯特拉斯的深蓝系形成鲜明区分，呼应其热传导 / 温度 / 波动叠加的气质。
+
 | 用途 | 色值 | 说明 |
 |---|---|---|
-| 主色（法国深蓝） | `#1F3A93` | 法兰西理性 |
+| 主色（热力绛红） | `#8C2F39` | 热 / 温度 / 法兰西古典 |
 | 强调色（热力琥珀） | `#E07B30` | 热传导 / 温度 |
 | 分类色 1（傅里叶级数 — 靛蓝） | `#4C5FD5` | 级数 / 变换 |
 | 分类色 2（热传导方程 — 橙红） | `#C9481C` | 热方程 / 热传导定律 |
 | 分类色 3（温室效应 — 青绿） | `#0E7C7B` | 温室效应 / 地球温度 |
+| 分类色 4（生平 / 遗产 — 石板灰） | `#55606E` | 埃及远征 / 行政生涯 |
 | 背景 | `#F7F6F9` | 浅灰白 |
 
 - **背景母题**：柔和气泡（稀疏大块实心圆，四档大小错落），呼应「正弦波的叠加 / 周期格」的视觉语言（傅里叶级数即正弦波叠加）。
+- **tex 配色变量命名建议**：`heatred`（主色）、`heatamber`（强调色）、`badgeSeries` / `badgeHeat` / `badgeClimate` / `badgeLegacy`（分类色）、`seriespanel` / `heatpanel` / `climatepanel` 等面板底色。
 
 ### 3.5 背景音乐选择 ✅ 【人物专属】
 
 > **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
-> （本次执行无法直接读取音乐库目录，具体 wav 文件名与本地路径需在执行立传时从 `curated_tracks.md` 选定，以下给出风格定调与候选方向。）
 
 - **风格定调**：**古典庄重 / 宏大**（法国大革命前后学者的严谨与宏大）
 - **匹配理由**：
   - 傅里叶横跨数学、物理、行政、埃及远征，人生宏大而理性——需**庄重、古典、宏大**的配乐
   - "波动叠加" 呼应其傅里叶级数——可考虑有起伏、铺陈感强的曲目
   - "热与温度" 呼应其热传导与温室效应——温暖而有厚度的音色
-- **已选定曲目（✅ 定稿）**：Beethoven Symphony No. 3 "Eroica"（英雄 / 壮丽 / 里程碑，Karajan 指挥柏林爱乐）
-  - 本地源文件：`music_audio/beethoven-karajan/03-BgIjGSPmk7I-Beethoven "Symphony No 3" Karajan.wav`
-  - 复制到成品目录并重命名为：`beethoven3_eroica.wav`
-  - 时长 48:52，远 ≥ 12 页 × 7 秒 ≈ 84 秒，ffmpeg `-shortest` 自动对齐
+- **已选定曲目（✅ 定稿）**：`Timeless`（沉稳 / 纪录片 / 庄重）
+  - 本地源文件：`music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav`
+  - 项目当前统一背景音乐风格：高斯、魏尔斯特拉斯、伽罗瓦、阿贝尔均用 Timeless
+  - 时长 2 分 8 秒，远 ≥ 12 页 × 7 秒 ≈ 84 秒，ffmpeg `-shortest` 自动对齐
+- **接入方式**：软链接到立传目录（不复制大文件）：
+
+  ```bash
+  cd presentations/19th_century/Joseph_Fourier
+  ln -sf /Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav ./bgm.wav
+  ```
 
 ## 4. Slide 规划（约 12 页，正文采用 Wilson 式结构）
 
