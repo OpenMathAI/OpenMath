@@ -1,0 +1,427 @@
+% =============================================================
+%  现代分析之父：魏尔斯特拉斯 (Karl Weierstrass)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Karl_Weierstrass
+%  设计母题：$\varepsilon$–$\delta$ 邻域 / 处处不可导 —— 柔和气泡呼应分析的严密
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：柏林深蓝 + 分析金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{berlinblue}{HTML}{123C69}     % 柏林深蓝 — 严谨 / 深刻
+\definecolor{analysisgold}{HTML}{B8860B}   % 分析金 — 严格 / 尊崇
+\definecolor{badgeEpsilon}{HTML}{4C5FD5}   % $\varepsilon$–$\delta$ / 连续性 — 靛蓝
+\definecolor{badgeComplex}{HTML}{0E7C7B}   % 复分析 / 椭圆函数 — 青绿
+\definecolor{badgeCounter}{HTML}{D98E2B}   % 反例 / 变分法 — 琥珀
+\definecolor{badgeLife}{HTML}{5B6472}      % 生平 / 遗产 — 石板灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{epsilonpanel}{RGB}{228,232,250}
+\definecolor{complexpanel}{RGB}{220,240,238}
+\definecolor{counterpanel}{RGB}{248,233,220}
+\definecolor{lifepanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[analysisgold, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应 $\varepsilon$–$\delta$ 邻域 / 处处不可导
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[analysisgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeComplex!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeEpsilon!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeCounter!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[analysisgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=berlinblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 德国\enspace·\enspace 现代分析之父\enspace·\enspace 分析的严格化};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=berlinblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {魏尔斯特拉斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=berlinblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Karl Weierstrass\enspace·\enspace 1815 — 1897};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=analysisgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {$\varepsilon$–$\delta$ 定义 · 一致收敛 · 处处不可导函数 · 椭圆函数};
+  \draw[analysisgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeEpsilon] at (-5.05,0)
+        {分析严格化\\Rigor\par\scriptsize $\varepsilon$–$\delta$ 语言};
+      \node[badge, fill=badgeComplex] at (-1.68,0)
+        {复分析\\Complex\par\scriptsize 椭圆函数};
+      \node[badge, fill=badgeCounter] at (1.68,0)
+        {反例\\Counter\par\scriptsize 处处不可导};
+      \node[badge, fill=badgeLife] at (5.05,0)
+        {生平\\Life\par\scriptsize 无学位 → 柏林教授};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他用 $\varepsilon$–$\delta$ 语言，为微积分奠定了逻辑的基石。};
+  % 无肖像：装饰圆占位
+  \node[draw=analysisgold!55, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \node[minimum size=1.9cm, circle, draw=analysisgold!50, fill=goldpanel, inner sep=0pt]
+        {\fontsize{34}{40}\selectfont\color{berlinblue!70}\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Karl Weierstrass (1815–1897)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国（普鲁士王国）\enspace|\enspace \faIcon{university}\enspace 柏林大学 · 明斯特学院\enspace|\enspace 分析 · 复分析 · 椭圆函数};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{analysisgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{魏尔斯特拉斯 - 从中学教师到柏林教授}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧：无肖像，装饰圆占位
+  \node[draw=analysisgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \node[minimum size=2.6cm, circle, draw=analysisgold!50, fill=goldpanel, inner sep=0pt]
+        {\fontsize{44}{52}\selectfont\color{berlinblue!70}\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Karl Weierstrass (1815–1897)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=analysisgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1815-10-31 — 1897-02-19\\[2pt]\lab{本名}\quad Karl Theodor Wilhelm\\[2pt]\quad\enspace Weierstraß\\[2pt]\lab{国籍}\quad 德国（普鲁士王国）};
+  \node[infob, fill=epsilonpanel, draw=badgeEpsilon!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 波恩大学 · 明斯特学院\\[2pt]
+     \lab{博士}\quad 荣誉博士（1854，柯尼斯堡）\\[2pt]\lab{师承}\quad Gudermann};
+  \node[infob, fill=complexpanel, draw=badgeComplex!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 奥斯滕费尔德（威斯特伐利亚）\\[2pt]\lab{荣誉}\quad Copley Medal · Pour le Mérite\\[2pt]\lab{身后}\quad 逝于柏林};
+  \node[infob, fill=counterpanel, draw=badgeCounter!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 分析 · 复分析\\[2pt]
+     \quad 椭圆函数 · 变分法\\[2pt]
+     \lab{身份}\quad 数学家 · 教师 · 物理学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 魏尔斯特拉斯的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{魏尔斯特拉斯的一生}{1815 — 1897 · 从无学位离校到现代分析之父}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{analysisgold!88!black}}
+]
+  \draw[analysisgold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1815/生于奥斯滕费尔德，天主教家庭,
+    2.4/1834/波恩大学无学位离校（私下研究数学）,
+    1.7/1843/任中学教师，教数学、物理、植物学、体操,
+    1.0/1854/柯尼斯堡大学授予荣誉博士,
+    0.3/1864/任柏林大学（腓特烈·威廉大学）教授,
+    -0.4/1870/结识 Sofia Kovalevskaya，私下辅导,
+    -1.1/1872/构造处处连续处处不可导的函数,
+    -1.8/1895/获 Copley Medal,
+    -2.5/1897/于柏林去世
+  }{
+    \fill[analysisgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与无学位离校 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与无学位离校 (1815–1843)}{无学位离校 · 中学教师 · Gudermann 讲座}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{analysisgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.4cm}}
+\toprule
+\rowcolor{berlinblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{1815} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{生于威斯特伐利亚的奥斯滕费尔德，父为政府官员，天主教莱茵兰家庭} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{中学时期开始对数学产生兴趣} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{1834} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{被送入波恩大学学法律、经济、金融（为政府职位准备），却私下专攻数学} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{最终无学位离校} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{明斯特} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{在明斯特学院听 Gudermann 讲座，对椭圆函数产生兴趣} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{获教师资格证，成为中学教师} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{1843} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{在西普鲁士 Deutsch Krone 中学任教，兼教数学、物理、植物学、体操} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{在偏僻中学坚持研究} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 无学位的中学教师，最终成为现代分析之父。}
+\end{center}
+\end{frame}}
+
+% --- 5. $\varepsilon$–$\delta$ 与分析的严格化（核心贡献页） ---
+\newcommand{\epsilonslide}{\begin{frame}\plainbar\sectiontitle{$\varepsilon$–$\delta$ 语言：折磨一代代微积分初学者}{连续性定义 · 介值定理 · Bolzano–Weierstrass}
+\vspace{-0.85cm}
+\begin{center}
+\begin{tikzpicture}[
+  box/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, font=\fontsize{8}{10.5}\selectfont, align=center}
+]
+\node[box, fill=goldpanel, draw=analysisgold!55, text width=12.0cm] at (0,1.3)
+  {\color{berlinblue!88!black}\bfseries 牛顿、莱布尼茨用无穷小，概念混乱；柯西直觉很强，但逻辑不严谨。\\[2pt]
+   两百多年，数学家被"无穷小到底是不是 0"折磨。魏尔斯特拉斯抛出 $\varepsilon$–$\delta$ 定义，\\[2pt]
+   把直观的"无限靠近"翻译成量词逻辑 $\forall\varepsilon\,\exists\delta$。};
+\node[box, fill=lifepanel, draw=badgeLife!50, text width=12.0cm] at (0,-0.35)
+  {\color{coverdark!85}\bfseries 对初学者：量词顺序、去心邻域、逻辑蕴含，极其反直觉——无数人学分析卡在这里。};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{analysisgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.2cm}|>{\scriptsize}X|>{\scriptsize}X}
+\toprule
+\rowcolor{berlinblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成果}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{连续性定义} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{形式化函数连续性的 $\varepsilon$–$\delta$ 定义} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{分析严格化的基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{介值定理} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{用严格定义证明介值定理} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{微积分根基的补全} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{Bolzano–Weierstrass} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{证明并用于闭有界区间上连续函数性质} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{紧性的先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+\fcolorbox{analysisgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{analysisgold!85!black} $\varepsilon$–$\delta$ 连续性定义（Weierstrass）}  {\fontsize{11}{14}\selectfont\color{berlinblue!88!black}$\forall\,\varepsilon>0\ \exists\,\delta>0:\quad |x-x_0|<\delta\ \Rightarrow\ |f(x)-f(x_0)|<\varepsilon$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 一致收敛 ---
+\newcommand{\uniformslide}{\begin{frame}\plainbar\sectiontitle{一致收敛：纠正 Cauchy 的错误}{Cauchy 断言 · Gudermann 观察 · Weierstrass 形式化}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{analysisgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.0cm}|>{\scriptsize}X|>{\scriptsize}X}
+\toprule
+\rowcolor{berlinblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{评价}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{Cauchy（1821）} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{在《Cours d'analyse》中错误断言"连续函数的逐点极限连续"} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{混淆连续与一致连续} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{Gudermann（1838）} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{首次观察到一致收敛现象，但未定义、未阐述} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{先驱观察} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{Weierstrass} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{认识到其重要性，形式化一致收敛概念并广泛应用} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{纠正错误、奠基分析} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一致收敛，让"连续函数的极限连续"在正确的条件下成立。}
+\end{center}
+\end{frame}}
+
+% --- 7. 魏尔斯特拉斯函数（核心贡献页） ---
+\newcommand{\weierstrassfunctionslide}{\begin{frame}\plainbar\sectiontitle{处处连续、处处不可导的函数}{分析史上的著名反例}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+  box/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=6pt, font=\fontsize{8.5}{10.5}\selectfont, align=center}
+]
+\node[box, fill=goldpanel, draw=analysisgold!55, text width=12.0cm] at (0,1.1)
+  {\color{berlinblue!88!black}\bfseries 在微积分直觉中，"连续函数几乎处处可导"曾是普遍信念。\\[2pt]
+  1872 年，魏尔斯特拉斯构造出一个\textbf{处处连续却处处不可导}的函数，震动了整个数学界。};
+\node[box, fill=counterpanel, draw=badgeCounter!55, text width=12.0cm] at (0,-0.6)
+  {\color{coverdark!85}\bfseries 它迫使数学家重新审视分析的直觉基础，是"反例推动严格化"的典范。};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{analysisgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{analysisgold!85!black} 魏尔斯特拉斯函数（1872）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{berlinblue!88!black}$f(x)=\sum_{n=0}^{\infty} a^n \cos(b^n \pi x),\quad 0<a<1,\ b\text{ 为奇整数},\ ab>1+\frac{3\pi}{2}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 复分析与椭圆函数（核心贡献页） ---
+\newcommand{\complexslide}{\begin{frame}\plainbar\sectiontitle{复分析与椭圆函数}{$\wp$ 函数 · M 判别法 · 分解定理}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{analysisgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.4cm}|>{\scriptsize}X|>{\scriptsize}X}
+\toprule
+\rowcolor{berlinblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成果}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{魏尔斯特拉斯 $\wp$ 函数} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{以他命名的椭圆函数，双周期亚纯函数} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{现代椭圆函数理论的基础} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{M 判别法} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{函数项级数一致收敛的判别准则} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{一致收敛的实用工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{分解定理} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{整函数分解为无穷乘积} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{复分析核心定理} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{analysisgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{analysisgold!85!black} 魏尔斯特拉斯 $\wp$ 函数}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{berlinblue!88!black}$\wp(z)=\dfrac{1}{z^{2}}+\displaystyle\sum_{\omega\in\Lambda\setminus\{0\}}\left(\dfrac{1}{(z-\omega)^{2}}-\dfrac{1}{\omega^{2}}\right)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 变分法 ---
+\newcommand{\variationslide}{\begin{frame}\plainbar\sectiontitle{变分法：用严格分析重构理论}{强极值 · Weierstrass–Erdmann 条件}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{analysisgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.4cm}|>{\scriptsize}X|>{\scriptsize}X}
+\toprule
+\rowcolor{berlinblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成果}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{理论重构} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{用自己发展的分析工具完整重构变分法} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{为现代变分法铺路} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{强极值必要条件} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{建立变分问题强极值存在的必要条件} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{严格化变分理论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{Weierstrass–Erdmann} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{给出极值曲线出现"角点"的充分条件} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{求解最小化曲线} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 严格分析，让变分法从直觉走向严密。}
+\end{center}
+\end{frame}}
+
+% --- 10. 与 Sofia Kovalevskaya 的师生情谊 ---
+\newcommand{\kovalevskayaslide}{\begin{frame}\plainbar\sectiontitle{与 Sofia Kovalevskaya 的师生情谊}{1870 — 1891 · 最优秀的学生}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  box/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, font=\fontsize{8}{10.5}\selectfont, align=center}
+]
+\node[box, fill=goldpanel, draw=analysisgold!55, text width=11.8cm] at (0,1.9)
+  {\color{berlinblue!88!black}\bfseries 1870 年（55 岁），魏尔斯特拉斯结识 Sofia Kovalevskaya，\\[2pt]
+   因无法让她入大学，便私下辅导她四年，视其为最优秀的学生。};
+\node[box, fill=epsilonpanel, draw=badgeEpsilon!50, text width=11.8cm] at (0,0.3)
+  {\color{coverdark!85}\bfseries 两人的情谊"远超普通师生关系"。\\[2pt]
+   他帮她获得海德堡大学博士学位（免口试）。};
+\node[box, fill=lifepanel, draw=badgeLife!50, text width=11.8cm] at (0,-1.4)
+  {\color{coverdark!85}\bfseries 1891 年 Kovalevskaya 去世后，魏尔斯特拉斯烧掉了她的来信，\\[2pt]
+   而他的约 150 封信被保留下来。};
+\end{tikzpicture}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 严谨的分析家，也有一颗温热的心。}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉与晚年 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{国际荣誉 · 学术影响 · 严谨风格}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{analysisgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{3.6cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}X}
+\toprule
+\rowcolor{berlinblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{国际荣誉} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Copley Medal（1895）\item Pour le Mérite 勋章\item Helmholtz Medal\item 皇家学会外籍会员\end{itemize}} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{国际学界高度认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{学术影响} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{Cantor、Frobenius、Hilbert 等继承并发展其严谨精神} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{思想延伸至现代数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{analysisgold!88!black}{严谨风格} & \cellcolor{epsilonpanel}\textcolor{badgeEpsilon!82!black}{"分析的严格化"成为后世典范} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{奠定现代分析标准} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 现代分析之父之名，因严谨与深刻而愈发闪耀。}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=berlinblue!90!black] at ([yshift=1.5cm]current page.center) {他用 81 年的一生，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=analysisgold!85!black] at ([yshift=0.4cm]current page.center) {为微积分奠定了逻辑的基石。};
+\draw[analysisgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=berlinblue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是定理，而是一种严谨分析的方法。};
+\node[font=\fontsize{8}{10}\selectfont, text=berlinblue!60!black] at ([yshift=-2.0cm]current page.center) {魏尔斯特拉斯\quad Karl Weierstrass\quad 1815 — 1897};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 分析 · 复分析 · 椭圆函数 · 变分法\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\epsilonslide
+\uniformslide
+\weierstrassfunctionslide
+\complexslide
+\variationslide
+\kovalevskayaslide
+\honorslide
+\closingslide
+\end{document}

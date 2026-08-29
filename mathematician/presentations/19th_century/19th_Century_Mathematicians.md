@@ -37,7 +37,7 @@
 | 15 | [Évariste Galois](https://en.wikipedia.org/wiki/%C3%89variste_Galois) | 伽罗瓦 | 法国 | 1811–1832 | 群论、伽罗瓦理论 | ✅ | ✅ | ✅ |
 | 16 | [James Joseph Sylvester](https://en.wikipedia.org/wiki/James_Joseph_Sylvester) | 西尔维斯特 | 英国 | 1814–1897 | 不变量理论、西尔维斯特矩阵、组合学 | 🔲 | 🔲 | ✅ |
 | 17 | [George Boole](https://en.wikipedia.org/wiki/George_Boole) | 布尔 | 英国 | 1815–1864 | 布尔代数、数理逻辑 | 🔲 | 🔲 | ✅ |
-| 18 | [Karl Weierstrass](https://en.wikipedia.org/wiki/Karl_Weierstrass) | 魏尔斯特拉斯 | 德国 | 1815–1897 | 分析严格化、魏尔斯特拉斯函数 | 🔲 | 🔲 | ✅ |
+| 18 | [Karl Weierstrass](https://en.wikipedia.org/wiki/Karl_Weierstrass) | 魏尔斯特拉斯 | 德国 | 1815–1897 | 分析严格化、魏尔斯特拉斯函数 | ✅ | 🔲 | ✅ |
 | 19 | [Arthur Cayley](https://en.wikipedia.org/wiki/Arthur_Cayley) | 凯莱 | 英国 | 1821–1895 | 凯莱-哈密顿定理、矩阵代数、群论 | 🔲 | 🔲 | ✅ |
 | 20 | [Charles Hermite](https://en.wikipedia.org/wiki/Charles_Hermite) | 埃尔米特 | 法国 | 1822–1901 | 埃尔米特多项式、e 的超越性证明 | 🔲 | 🔲 | ✅ |
 | 21 | [Gotthold Eisenstein](https://en.wikipedia.org/wiki/Gotthold_Eisenstein) | 艾森斯坦 | 德国 | 1823–1852 | 艾森斯坦判别法、数论 | 🔲 | 🔲 | ✅ |
