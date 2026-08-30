@@ -1,0 +1,435 @@
+% =============================================================
+%  超越数的证明者 · 伽罗瓦工作的发掘者：刘维尔 (Joseph Liouville)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Joseph_Liouville
+%  设计母题：超越数 / 相空间 —— 柔和气泡呼应数的稠密与相空间轨迹
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法国深蓝 + 数学金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{liouvilleblue}{HTML}{1F3A93}      % 法国深蓝 — 法兰西理性
+\definecolor{gold}{HTML}{C9A227}               % 数学金 — 超越数 / 尊崇
+\definecolor{badgeTransc}{HTML}{4C5FD5}        % 数论/超越数 — 靛蓝
+\definecolor{badgeComplex}{HTML}{0E7C7B}       % 复分析 — 青绿
+\definecolor{badgePhys}{HTML}{E07B30}          % 数学物理 — 琥珀
+\definecolor{badgeGalois}{HTML}{B76E79}        % 伽罗瓦出版 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{transcpanel}{RGB}{229,232,247}
+\definecolor{complexpanel}{RGB}{220,240,238}
+\definecolor{physpanel}{RGB}{253,241,228}
+\definecolor{galoispanel}{RGB}{246,233,235}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应超越数 / 相空间
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[gold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeTransc!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeComplex!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePhys!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeGalois!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=liouvilleblue!85!black,
+    align=center, text width=12cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 超越数的证明者\enspace·\enspace 伽罗瓦工作的发掘者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=liouvilleblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {刘维尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=liouvilleblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Joseph Liouville\enspace·\enspace 1809 — 1882};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=gold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {刘维尔数 · 刘维尔定理 · Sturm–Liouville 理论 · 伽罗瓦著作};
+  \draw[gold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeTransc] at (-5.05,0)
+        {超越数\\Transcendental\par\scriptsize 刘维尔数};
+      \node[badge, fill=badgeComplex] at (-1.68,0)
+        {复分析\\Complex\par\scriptsize 刘维尔定理};
+      \node[badge, fill=badgePhys] at (1.68,0)
+        {数学物理\\Physics\par\scriptsize Sturm–Liouville};
+      \node[badge, fill=badgeGalois] at (5.05,0)
+        {伽罗瓦出版\\Galois\par\scriptsize 发掘 · 整理 · 出版};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他让一位早逝天才的思想得以传世。};
+  % 肖像（1868 年照片）
+  \node[draw=gold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Liouville_1868.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Joseph Liouville (1868)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace École Polytechnique · 索邦\enspace|\enspace 超越数 · 复分析 · 伽罗瓦出版};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{gold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{刘维尔 - 从圣奥梅尔到巴黎}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（1868 年照片）
+  \node[draw=gold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.6,3.5);
+      \node[anchor=center] at (1.3,1.75) {\includegraphics[width=2.6cm,height=3.5cm,keepaspectratio]{Liouville_1868.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-1.85) {Joseph Liouville (1809–1882)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=transcpanel, draw=badgeTransc!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1809-03-24 — 1882-09-08\\[2pt]\lab{本名}\quad Joseph Liouville\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=complexpanel, draw=badgeComplex!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad École Polytechnique（1827）\\[2pt]
+     \quad 桥梁道路学校\\[2pt]\lab{师承}\quad Poisson · Thénard};
+  \node[infob, fill=physpanel, draw=badgePhys!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 圣奥梅尔（法国）\\[2pt]\lab{荣誉}\quad 荣誉军团指挥官\\[2pt]\lab{身后}\quad 巴黎};
+  \node[infob, fill=galoispanel, draw=badgeGalois!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数论 · 复分析 · 数学物理\\[2pt]
+     \quad 超越数 · 伽罗瓦出版\\[2pt]
+     \lab{身份}\quad 数学家 · 工程师};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 刘维尔的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{刘维尔的一生}{1809 — 1882 · 从圣奥梅尔到巴黎的数学大师}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{gold!88!black}}
+]
+  \draw[gold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1809/生于圣奥梅尔（法国）,
+    2.2/1825/入综合理工,
+    1.5/1836/创办《纯数学与应用数学杂志》,
+    0.8/1838/任综合理工教授,
+    0.1/1844/证明超越数存在,
+    -0.6/1846/出版伽罗瓦著作,
+    -1.3/1857/索邦理性力学教席,
+    -2.0/1882/逝于巴黎，享年 73 岁
+  }{
+    \fill[gold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1809–1836)}{圣奥梅尔出生 · 综合理工 · 桥梁道路学校}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{gold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{liouvilleblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{1809} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{生于圣奥梅尔，父 Claude-Joseph Liouville 为军官} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{出身军人之家} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{1825–1827} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{1825 入综合理工，1827 毕业；后入桥梁道路学校学工程} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{弃工从数} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{1836} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{获博士学位，论文《论函数展开为三角级数》} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{分析根基} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{师承} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{导师 Poisson、Thénard} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{拉普拉斯学派} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 如柯西一样学工程，却毅然选择数学——这是他的第一次重要抉择。}
+\end{center}
+\end{frame}}
+
+% --- 5. 超越数的证明（核心贡献页） ---
+\newcommand{\transcslide}{\begin{frame}\plainbar\sectiontitle{超越数的证明}{1844 第一个证明超越数存在 · 刘维尔数}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{gold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{liouvilleblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{刘维尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{超越数存在} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{1844 年第一个证明超越数存在，给出显式例子} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{数论里程碑} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{刘维尔数} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{构造 $\sum a_k/10^{k!}$ 型超越数} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{首个超越数} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{判据} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{"有理数是代数无理数的糟糕逼近"} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{超越性判据} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{gold!70}{physpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{gold!85!black} 刘维尔数（Liouville number，1844）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{liouvilleblue!88!black}$\dfrac{a_1}{10}+\dfrac{a_2}{10^{2!}}+\dfrac{a_3}{10^{3!}}+\cdots,\quad a_k\in\{0,1,\dots,9\}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 刘维尔定理（复分析）（核心贡献页） ---
+\newcommand{\complexslide}{\begin{frame}\plainbar\sectiontitle{刘维尔定理（复分析）}{有界整函数必为常数}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{gold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{liouvilleblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{刘维尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{整函数} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{研究椭圆积分与双周期函数时发现} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{复分析基石} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{代数基本定理} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{给出代数基本定理的简洁证明} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{经典证明} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{调和函数} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{有界调和函数为常数的类似结论} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{势论延伸} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{gold!70}{physpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{gold!85!black} 刘维尔定理（Liouville's theorem, complex analysis）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{liouvilleblue!88!black}$f\text{ 整函数},\ |f(z)|\le M\ \forall z\in\mathbb{C}\ \implies\ f\equiv\text{常数}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Sturm–Liouville 理论（核心贡献页） ---
+\newcommand{\sturmslide}{\begin{frame}\plainbar\sectiontitle{Sturm–Liouville 理论}{与 Sturm 合作 · 推广傅里叶分析}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{gold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{liouvilleblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{刘维尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{合作建立} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{1830 年代与好友 Sturm 建立理论} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{标准方法} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{推广傅里叶} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{受傅里叶圆柱热扩散启发，推广傅里叶分析} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{泛函先声} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{积分方程} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{现为求解积分方程的标准程序} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{特征值理论} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{gold!70}{physpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{gold!85!black} Sturm–Liouville 方程}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{liouvilleblue!88!black}$-\dfrac{d}{dx}\left(p(x)\dfrac{dy}{dx}\right)+q(x)y=\lambda\,w(x)\,y$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 刘维尔定理（哈密顿力学）（核心贡献页） ---
+\newcommand{\hamiltonslide}{\begin{frame}\plainbar\sectiontitle{刘维尔定理（哈密顿力学）}{相空间体积守恒 · 统计力学基础}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{gold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{liouvilleblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{刘维尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{体积守恒} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{1838 年证明保守系统相空间体积守恒} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{统计力学} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{后被认定} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{Gibbs 之后被认定为统计力学基本结果} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{理论基石} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{作用角变量} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{引入作用-角坐标描述完全可积系统} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{可积性} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{gold!70}{physpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{gold!85!black} 刘维尔定理（Liouville's theorem, Hamiltonian）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{liouvilleblue!88!black}$\dfrac{d\rho}{dt}=\dfrac{\partial\rho}{\partial t}+\{\rho,H\}=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 伽罗瓦工作的发掘与出版（★ 核心叙事页） ---
+\newcommand{\galoisslide}{\begin{frame}\plainbar\sectiontitle{伽罗瓦工作的发掘与出版}{第一位真正的发掘者 · 整理者 · 出版人}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.88}
+\arrayrulecolor{gold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{liouvilleblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{galoispanel}\textcolor{gold!88!black}{天才早逝} & \cellcolor{galoispanel}\textcolor{badgeGalois!82!black}{伽罗瓦（1811–1832）20 岁决斗身亡，生前屡遭误解：Cauchy 搁置、Fourier 未及评审即去世、Poisson 评"难以理解"} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{思想濒危} \\
+\midrule
+\cellcolor{galoispanel}\textcolor{gold!88!black}{遗稿转交} & \cellcolor{galoispanel}\textcolor{badgeGalois!82!black}{临终前将手稿托付好友 Auguste Chevalier} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{传承关键} \\
+\midrule
+\cellcolor{galoispanel}\textcolor{gold!88!black}{发掘整理} & \cellcolor{galoispanel}\textcolor{badgeGalois!82!black}{刘维尔最早真正读懂其价值（one of the first to grasp），投入数年系统整理} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{识珠之明} \\
+\midrule
+\cellcolor{galoispanel}\textcolor{gold!88!black}{首次出版} & \cellcolor{galoispanel}\textcolor{badgeGalois!82!black}{1846 年在自己创办的杂志上首次完整出版伽罗瓦著作} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{群论问世} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 发掘—整理—出版：他让一位 20 岁早逝天才的思想得以传世，推动了现代代数与群论。}
+\end{center}
+\end{frame}}
+
+% --- 10. 创办杂志与学术生涯 ---
+\newcommand{\journalslide}{\begin{frame}\plainbar\sectiontitle{创办杂志与学术生涯}{Journal de Mathématiques · 政治参与}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{gold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{liouvilleblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{创办杂志} & \cellcolor{graypanel}\textcolor{badgeTransc!82!black}{1836 年创办《纯数学与应用数学杂志》，仿 Crelle's Journal} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{法国一流期刊} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{刘维尔杂志} & \cellcolor{graypanel}\textcolor{badgeTransc!82!black}{人称"刘维尔杂志"，1875 年辞去主编后仍如此称呼} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{文化印记} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{政治参与} & \cellcolor{graypanel}\textcolor{badgeTransc!82!black}{1848 革命后任制宪议会议员；拿破仑三世上台后退出} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{短暂从政} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{教学} & \cellcolor{graypanel}\textcolor{badgeTransc!82!black}{1838 综合理工教授，1851 法兰西公学院，1857 索邦教席} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{桃李满门} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他提携了 Hermite、Bertrand、Serret 等一代后辈。}
+\end{center}
+\end{frame}}
+
+% --- 11. Liouville–Green 方法与其他贡献 ---
+\newcommand{\miscslide}{\begin{frame}\plainbar\sectiontitle{Liouville–Green 方法与其他贡献}{WKB 近似 · 分数阶微积分 · 刘维尔函数}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{gold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{liouvilleblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{刘维尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{WKB 近似} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{1837 年求变系数二阶方程渐近解，Green 同年独立发现} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{量子力学} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{分数阶微积分} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{电动力学研究中发展 Riemann–Liouville 积分} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{任意阶微积分} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{刘维尔函数} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{数论中的重要函数 $\lambda(n)$} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{解析数论} \\
+\midrule
+\cellcolor{physpanel}\textcolor{gold!88!black}{非初等积分} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{1835 年证明 $\int e^x/x\,dx$ 非初等} & \cellcolor{transcpanel}\textcolor{badgeTransc!82!black}{微分代数} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 以他命名的概念之多，堪称一部"数学名词词典"。}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=liouvilleblue!90!black] at ([yshift=1.5cm]current page.center) {他证明超越数存在，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=gold!85!black] at ([yshift=0.4cm]current page.center) {也让伽罗瓦的思想得以传世。};
+\draw[gold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=liouvilleblue!70!black] at ([yshift=-1.2cm]current page.center) {从超越数到数学物理，再到一位天才的出版人——他贯通了纯数学与应用数学。};
+\node[font=\fontsize{8}{10}\selectfont, text=liouvilleblue!60!black] at ([yshift=-2.0cm]current page.center) {刘维尔\quad Joseph Liouville\quad 1809 — 1882};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 刘维尔数 · 刘维尔定理 · 伽罗瓦出版\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\transcslide
+\complexslide
+\sturmslide
+\hamiltonslide
+\galoisslide
+\journalslide
+\miscslide
+\closingslide
+\end{document}
