@@ -1,0 +1,532 @@
+% =============================================================
+%  分析学的奠基者 · 18 世纪最伟大的数学家：欧拉 (Leonhard Euler)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Leonhard_Euler
+%  设计母题：欧拉公式 / 多面体 —— 柔和气泡呼应公式的圆满与拓扑的灵动
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：瑞士红 + 数学金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{eulerred}{HTML}{A6192E}       % 瑞士红 — 瑞士 / 巴塞尔
+\definecolor{mathgold}{HTML}{C9A227}       % 数学金 — 18 世纪数学的尊崇
+\definecolor{badgeAnalysis}{HTML}{4C5FD5}  % 分析 — 靛蓝
+\definecolor{badgeNumber}{HTML}{0E7C7B}    % 数论 — 青绿
+\definecolor{badgeGraph}{HTML}{E07B30}     % 图论/拓扑 — 琥珀
+\definecolor{badgeMech}{HTML}{B76E79}      % 力学/物理 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{analysispanel}{RGB}{228,232,250}
+\definecolor{numberpanel}{RGB}{220,240,238}
+\definecolor{graphpanel}{RGB}{248,233,220}
+\definecolor{mechpanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应欧拉公式 / 多面体
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAnalysis!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeNumber!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeGraph!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeMech!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=eulerred!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 瑞士\enspace·\enspace 分析学的奠基者\enspace·\enspace 18 世纪最伟大的数学家};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=eulerred!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {欧拉};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=eulerred!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Leonhard Euler\enspace·\enspace 1707 — 1783};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {欧拉公式 · 巴塞尔问题 · 七桥问题 · 欧拉方程};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAnalysis] at (-5.05,0)
+        {分析\\Analysis\par\scriptsize 欧拉公式};
+      \node[badge, fill=badgeNumber] at (-1.68,0)
+        {数论\\Number Theory\par\scriptsize 巴塞尔问题};
+      \node[badge, fill=badgeGraph] at (1.68,0)
+        {图论与拓扑\\Graph Theory\par\scriptsize 七桥问题};
+      \node[badge, fill=badgeMech] at (5.05,0)
+        {力学\\Mechanics\par\scriptsize 欧拉方程};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把数学的符号、公式与思想，写进了整个现代科学的血脉。};
+  % 肖像（Handmann 1753 油画）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{euler_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Leonhard Euler (1707–1783)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 瑞士\enspace|\enspace \faIcon{university}\enspace 圣彼得堡科学院 · 柏林科学院\enspace|\enspace 分析 · 数论 · 图论 · 力学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{欧拉 - 从巴塞尔到圣彼得堡}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Handmann 1753）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{euler_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Leonhard Euler (1707–1783)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1707-04-15 — 1783-09-18\\[2pt]\lab{本名}\quad Leonhard Euler\\[2pt]\lab{国籍}\quad 瑞士};
+  \node[infob, fill=analysispanel, draw=badgeAnalysis!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 巴塞尔大学（13 岁入学）\\[2pt]
+     \quad 1723 年获哲学硕士\\[2pt]\lab{师承}\quad Johann Bernoulli};
+  \node[infob, fill=numberpanel, draw=badgeNumber!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 巴塞尔（瑞士）\\[2pt]\lab{荣誉}\quad 皇家学会会员（1747）\\[2pt]\lab{身后}\quad 圣彼得堡};
+  \node[infob, fill=mechpanel, draw=badgeMech!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 分析 · 数论 · 图论\\[2pt]
+     \quad 拓扑 · 力学 · 流体\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家 · 天文学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 欧拉的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{欧拉的一生}{1707 — 1783 · 从巴塞尔到圣彼得堡}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1707/生于瑞士巴塞尔，父亲为牧师,
+    2.2/1720/13 岁入巴塞尔大学,
+    1.5/1727/赴圣彼得堡科学院,
+    0.8/1735/解决巴塞尔问题，一举成名,
+    0.1/1741/赴柏林科学院任数学主任,
+    -0.6/1766/返圣彼得堡；晚年双目失明,
+    -1.3/1771/双眼全盲，仍凭记忆口述,
+    -2.0/1783/于圣彼得堡去世，享年 76
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1707–1727)}{巴塞尔出生 · 13 岁入学 · Johann Bernoulli 引路}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{eulerred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1707} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{生于巴塞尔，父 Paul Euler 为归正会牧师，母出身学者世家} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{家庭有学术渊源} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1720} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{13 岁入巴塞尔大学（当时并不罕见），师从 Johann Bernoulli} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{早慧入学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1723} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{获哲学硕士，论文比较笛卡尔与牛顿哲学} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{弃神学从数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1726} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{完成声学论文《De Sono》，未获巴塞尔教职} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{转而北上} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 每周末，Johann Bernoulli 为他答疑——一位伯乐的赏识，改变了数学史。}
+\end{center}
+\end{frame}}
+
+% --- 5. 欧拉公式与欧拉恒等式（核心贡献页） ---
+\newcommand{\eulerformulaslide}{\begin{frame}\plainbar\sectiontitle{欧拉公式与欧拉恒等式}{$e^{i\theta}=\cos\theta+i\sin\theta$ · 数学中最美的公式}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{eulerred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{欧拉的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{欧拉公式} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{建立指数与三角函数的深刻联系} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{复分析基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{欧拉恒等式} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{令 $\theta=\pi$ 得 $e^{i\pi}+1=0$} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{最美公式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{五常数} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{$e$、$\pi$、$i$、$1$、$0$ 五个基本常数联为一体} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{符号的圆融} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 欧拉恒等式（Euler's identity）}\\[2pt]
+  {\fontsize{13}{17}\selectfont\color{eulerred!88!black}$e^{i\pi}+1=0$}\\[3pt]
+  {\fontsize{8.5}{11}\selectfont\itshape\color{muteddark} 源自欧拉公式 $e^{i\theta}=\cos\theta+i\sin\theta$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 巴塞尔问题（核心贡献页） ---
+\newcommand{\baselslide}{\begin{frame}\plainbar\sectiontitle{巴塞尔问题 (1735)}{$\sum 1/n^2=\pi^2/6$ · 28 岁一举成名}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{eulerred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{欧拉的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{问题} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{求 $\sum_{n=1}^{\infty}1/n^2$ 的精确值} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{1644 年 Mengoli 提出} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{解决} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{1735 年证明其等于 $\pi^2/6$} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{解析数论里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{方法} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{借助 $\sin$ 的无穷乘积展开} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{影响后世深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 巴塞尔问题（Basel problem，1735）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{eulerred!88!black}$\sum_{n=1}^{\infty}\dfrac{1}{n^{2}}=\dfrac{\pi^{2}}{6}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 图论与拓扑：七桥问题（核心贡献页） ---
+\newcommand{\graphslide}{\begin{frame}\plainbar\sectiontitle{图论与拓扑：七桥问题}{1736 七桥问题 · 欧拉示性数 $V-E+F=2$}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{eulerred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{欧拉的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{七桥问题} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{1736 年解决柯尼斯堡七桥问题，证明无解} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{图论诞生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{欧拉示性数} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{发现凸多面体 $V-E+F=2$} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{拓扑学先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{欧拉路径} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{提出"一笔画"的充要条件} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{图论基本概念} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 欧拉多面体公式（Euler characteristic）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{eulerred!88!black}$V-E+F=2$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 现代数学符号（特色页） ---
+\newcommand{\notationslide}{\begin{frame}\plainbar\sectiontitle{现代数学符号的奠基者}{$\pi$ · $f(x)$ · $i$ · $\Sigma$ · $\Delta$ · $e$}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{1.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{eulerred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{符号}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{欧拉的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{$\pi$} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{推广 $\pi$ 表示圆周率} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{成为通用记号} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{$f(x)$} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{首次用 $f(x)$ 表示函数值} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{函数概念的雏形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{$i$} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{用 $i$ 表示虚数单位 $\sqrt{-1}$} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{复数的标准记号} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{$e$} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{给自然对数底 $e$ 现代定义（欧拉数）} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{分析核心常数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{$\Sigma,\Delta$} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{用 $\Sigma$ 表求和、$\Delta$ 表差分} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{简洁记号} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 我们今天写下的大半数学符号，都带着欧拉的印记。}
+\end{center}
+\end{frame}}
+
+% --- 9. 解析数论（核心贡献页） ---
+\newcommand{\numbertheoryslide}{\begin{frame}\plainbar\sectiontitle{解析数论}{欧拉 $\varphi$ 函数 · 欧拉乘积 · $\zeta$ 函数}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{eulerred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{欧拉的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{欧拉 $\varphi$ 函数} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{引入 $\varphi(n)$，证明欧拉定理} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{数论基本函数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{欧拉乘积} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{$\zeta(s)=\prod_p(1-p^{-s})^{-1}$} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{素数分布桥梁} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{费马小定理} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{推广费马小定理（欧拉定理）} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{数论奠基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 欧拉乘积（Euler product）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{eulerred!88!black}$\zeta(s)=\sum_{n=1}^{\infty}\dfrac{1}{n^{s}}=\prod_{p\ \mathrm{prime}}\dfrac{1}{1-p^{-s}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 变分法（核心贡献页） ---
+\newcommand{\variationslide}{\begin{frame}\plainbar\sectiontitle{变分法}{欧拉–拉格朗日方程 · 最速降线}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{eulerred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{欧拉的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{变分法奠基} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{与 Lagrange 共同创立变分法} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{优化理论根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{最速降线} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{给出最速降线问题的系统解法} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{经典变分问题} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{欧拉–拉格朗日方程} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{建立变分问题的核心方程} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{贯穿物理数学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 欧拉–拉格朗日方程（Euler–Lagrange equation）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{eulerred!88!black}$\dfrac{\partial L}{\partial q}-\dfrac{d}{dt}\dfrac{\partial L}{\partial \dot{q}}=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 力学（核心贡献页） ---
+\newcommand{\mechanicsslide}{\begin{frame}\plainbar\sectiontitle{力学}{欧拉运动定律 · 刚体动力学}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{eulerred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{欧拉的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{欧拉运动定律} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{《Mechanica》改写牛顿定律为刚体定律} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{刚体力学基础} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{刚体动力学} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{建立刚体转动与平动的完整理论} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{经典力学框架} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{陀螺理论} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{研究刚体旋转、欧拉角} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{天体与工程应用} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 欧拉第二运动定律（Euler's second law）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{eulerred!88!black}$\boldsymbol{F}=\dfrac{d}{dt}(m\boldsymbol{v})$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 流体力学与弹性（核心贡献页） ---
+\newcommand{\fluidslide}{\begin{frame}\plainbar\sectiontitle{流体力学与弹性}{欧拉方程 · 欧拉–伯努利梁理论}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{eulerred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{欧拉的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{欧拉方程} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{给出无粘性流体的偏微分方程} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{流体力学基础} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{梁理论} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{与 D. Bernoulli 建立欧拉–伯努利梁理论} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{弹性力学奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{势论} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{奠定势论的数学基础} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{场论先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 欧拉方程（Euler equations, inviscid flow）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{eulerred!88!black}$\dfrac{\partial \boldsymbol{u}}{\partial t}+(\boldsymbol{u}\cdot\nabla)\boldsymbol{u}=-\dfrac{\nabla p}{\rho}+\boldsymbol{g}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 更多贡献 ---
+\newcommand{\miscslide}{\begin{frame}\plainbar\sectiontitle{更多贡献}{光学 · 音乐理论 · 地理 · 造船}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{eulerred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{欧拉的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{光学} & \cellcolor{graypanel}\textcolor{badgeAnalysis!82!black}{三卷光学著作，推动显微镜、望远镜设计} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{光学工程} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{音乐理论} & \cellcolor{graypanel}\textcolor{badgeAnalysis!82!black}{《新音乐理论》用数学研究音律} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{数学与音乐} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{地理测绘} & \cellcolor{graypanel}\textcolor{badgeAnalysis!82!black}{绘制 1760 世界地图等} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{制图学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{造船} & \cellcolor{graypanel}\textcolor{badgeAnalysis!82!black}{研究船舶稳定性与流体阻力} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{航海工程} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 通才（polymath）之名，绝非虚言。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{866 篇著作 · Opera Omnia · 后世评价}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{eulerred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{产量} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 866 篇出版物（史上最高产）\item 全集《Opera Omnia》至今仍在编纂\item 晚年失明仍凭记忆口述\end{itemize}} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{无与伦比的产量} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 皇家学会会员（1747）\item 巴黎科学院奖 15 次参赛、12 次获奖\end{itemize}} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{国际学界认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{后世评价} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{Laplace："Read Euler, he is the master of us all"；Gauss："欧拉著作是最好的学校"} & \cellcolor{numberpanel}\textcolor{badgeNumber!82!black}{大师的敬仰} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} "读欧拉，读欧拉，他是我们所有人的老师。" —— 拉普拉斯}
+\end{center}
+\end{frame}}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=eulerred!90!black] at ([yshift=1.5cm]current page.center) {他用 866 篇著作，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {书写了整个 18 世纪的数学。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=eulerred!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是公式，而是现代数学的语言本身。};
+\node[font=\fontsize{8}{10}\selectfont, text=eulerred!60!black] at ([yshift=-2.0cm]current page.center) {欧拉\quad Leonhard Euler\quad 1707 — 1783};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 分析 · 数论 · 图论 · 力学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\eulerformulaslide
+\baselslide
+\graphslide
+\notationslide
+\numbertheoryslide
+\variationslide
+\mechanicsslide
+\fluidslide
+\miscslide
+\honorslide
+\closingslide
+\end{document}

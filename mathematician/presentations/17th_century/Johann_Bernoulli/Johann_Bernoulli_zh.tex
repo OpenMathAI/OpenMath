@@ -1,0 +1,495 @@
+% =============================================================
+%  微积分的推广者 · 欧拉之师：约翰·伯努利 (Johann Bernoulli)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/17th_century/pages/Johann_Bernoulli
+%  设计母题：悬链线 / 摆线 —— 柔和气泡呼应曲线的灵动与巴洛克的典雅
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：巴洛克酒红 + 数学金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{baroquered}{HTML}{8B1E3F}     % 巴洛克酒红 — 巴洛克 / 瑞士
+\definecolor{mathgold}{HTML}{C9A227}       % 数学金 — 17-18 世纪数学的尊崇
+\definecolor{badgeCalc}{HTML}{4C5FD5}      % 微积分 — 靛蓝
+\definecolor{badgeVar}{HTML}{0E7C7B}       % 变分法 — 青绿
+\definecolor{badgeMech}{HTML}{E07B30}      % 力学 — 琥珀
+\definecolor{badgeFamily}{HTML}{B76E79}    % 家族传承 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{calcpanel}{RGB}{228,232,250}
+\definecolor{varpanel}{RGB}{220,240,238}
+\definecolor{mechpanel}{RGB}{248,233,220}
+\definecolor{familypanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应悬链线 / 摆线
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCalc!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeVar!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeMech!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeFamily!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=baroquered!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 瑞士\enspace·\enspace 微积分的推广者\enspace·\enspace 欧拉之师};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=baroquered!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {约翰·伯努利};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=baroquered!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Johann Bernoulli\enspace·\enspace 1667 — 1748};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {最速降线 · 悬链线 · 洛必达法则 · 伯努利微分方程};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeCalc] at (-5.05,0)
+        {微积分\\Calculus\par\scriptsize 洛必达法则};
+      \node[badge, fill=badgeVar] at (-1.68,0)
+        {变分法\\Calculus of Variations\par\scriptsize 最速降线};
+      \node[badge, fill=badgeMech] at (1.68,0)
+        {力学\\Mechanics\par\scriptsize 虚功原理};
+      \node[badge, fill=badgeFamily] at (5.05,0)
+        {家族传承\\Legacy\par\scriptsize 欧拉之师};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把莱布尼茨的微积分，推广成为解决一切曲线与运动问题的利器。};
+  % 肖像（Huber c.1740 油画）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{johann_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Johann Bernoulli (1667–1748)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 瑞士\enspace|\enspace \faIcon{university}\enspace 格罗宁根大学 · 巴塞尔大学\enspace|\enspace 微积分 · 变分法 · 力学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{约翰·伯努利 - 从巴塞尔到格罗宁根}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Huber c.1740）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{johann_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Johann Bernoulli (1667–1748)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1667-08-06 — 1748-01-01\\[2pt]\lab{本名}\quad Johann Bernoulli\\[2pt]\lab{国籍}\quad 瑞士};
+  \node[infob, fill=calcpanel, draw=badgeCalc!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 巴塞尔大学（医学博士）\\[2pt]
+     \quad 1694 年获 M.D.\\[2pt]\lab{师承}\quad Jacob Bernoulli};
+  \node[infob, fill=varpanel, draw=badgeVar!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 巴塞尔（瑞士）\\[2pt]\lab{荣誉}\quad 皇家学会会员\\[2pt]\lab{身后}\quad 巴塞尔};
+  \node[infob, fill=familypanel, draw=badgeFamily!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 微积分 · 变分法\\[2pt]
+     \quad 力学 · 微分方程\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家 · 医师};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 约翰·伯努利的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{约翰·伯努利的一生}{1667 — 1748 · 从巴塞尔到格罗宁根}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1667/生于瑞士巴塞尔，父为药剂师,
+    2.2/1680s/与哥哥雅各布一起研习微积分,
+    1.5/1694/获医学博士；任格罗宁根教授,
+    0.8/1696/提出最速降线问题,
+    0.1/1705/返巴塞尔，接替哥哥任数学教授,
+    -0.6/1713/微积分之争中捍卫莱布尼茨,
+    -1.3/1727/开始悉心指导年轻的欧拉,
+    -2.0/1748/于巴塞尔去世，享年 80
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1667–1694)}{巴塞尔出生 · 弃商从医 · 与哥哥研习微积分}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baroquered}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1667} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{生于巴塞尔，父 Nicolaus Bernoulli 为药剂师} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{伯努利家族} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{少年} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{父欲其经商，约翰不喜，说服父亲改学医} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{弃商从医} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1680s} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{与哥哥雅各布一起业余钻研莱布尼茨微积分} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{微积分引路人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1694} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{获医学博士（导师 Nikolaus Eglinger）} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{M.D.} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 兄弟二人，是最早理解并应用莱布尼茨微积分的人。}
+\end{center}
+\end{frame}}
+
+% --- 5. 无穷小微积分的推广（核心贡献页） ---
+\newcommand{\calculusslide}{\begin{frame}\plainbar\sectiontitle{无穷小微积分的推广}{莱布尼茨微积分的早期应用者}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baroquered}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{约翰·伯努利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{微积分推广} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{最早理解并应用莱布尼茨新微积分} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{从符号到工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{应用范围} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{把微积分用于曲线、运动与力学问题} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{开创应用先河} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{微分方程} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{早期微分方程的系统讲授} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{学科奠基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 微积分（infinitesimal calculus）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{baroquered!88!black}$\dfrac{d}{dx}f(x)=\lim_{h\to 0}\dfrac{f(x+h)-f(x)}{h}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 最速降线与变分法（核心贡献页） ---
+\newcommand{\brachistochroneslide}{\begin{frame}\plainbar\sectiontitle{最速降线与变分法}{1696 最速降线问题 · 答案摆线}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baroquered}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{约翰·伯努利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{最速降线} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{1696 提出并悬赏，答案是摆线} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{变分法开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{问题提出} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{重力下质点的最速下滑曲线} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{经典变分问题} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{方法} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{类比光线在不同密度层的路径} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{启发深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 最速降线问题（brachistochrone，1696）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{baroquered!88!black} 答案：摆线（cycloid）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 悬链线（核心贡献页） ---
+\newcommand{\catenaryslide}{\begin{frame}\plainbar\sectiontitle{悬链线}{两端悬挂链条的曲线 · 双曲余弦}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baroquered}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{约翰·伯努利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{悬链线问题} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{解决两端悬挂链条的曲线方程} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{微积分经典应用} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{方程} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{悬链线为双曲余弦曲线} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{与抛物线区分} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{合作} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{与哥哥雅各布等共同解决} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{兄弟竞逐} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 悬链线（catenary）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{baroquered!88!black}$y=a\cdot\cosh\dfrac{x}{a}=\dfrac{a}{2}\left(e^{x/a}+e^{-x/a}\right)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 洛必达法则（核心贡献页） ---
+\newcommand{\hopitalslide}{\begin{frame}\plainbar\sectiontitle{洛必达法则}{Bernoulli's rule · 伯努利发现、洛必达发表}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baroquered}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{约翰·伯努利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{未定式法则} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{发现求解 0/0 型未定式的法则} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{极限计算利器} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{洛必达教科书} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{学生洛必达写入首部微积分教科书} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{1696 出版} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{归属} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{伯努利发现、洛必达署名} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{现称洛必达法则} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 洛必达法则（l'Hôpital's rule / Bernoulli's rule）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{baroquered!88!black}$\lim_{x\to c}\dfrac{f(x)}{g(x)}=\lim_{x\to c}\dfrac{f'(x)}{g'(x)}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 伯努利微分方程（核心贡献页） ---
+\newcommand{\odeslide}{\begin{frame}\plainbar\sectiontitle{伯努利微分方程}{非线性微分方程的线性化}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baroquered}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{约翰·伯努利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{伯努利方程} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{给出可化线性方程的非线性方程解法} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{微分方程经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{解法} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{通过代换化为线性微分方程} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{可解性突破} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{部分分式} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{有理函数积分中的部分分式分解} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{积分技巧} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 伯努利微分方程（Bernoulli differential equation）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{baroquered!88!black}$y'+p(x)y=q(x)y^{n}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 力学与虚功原理（核心贡献页） ---
+\newcommand{\mechanicslide}{\begin{frame}\plainbar\sectiontitle{力学与虚功原理}{virtual work · 静力学奠基}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baroquered}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{约翰·伯努利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{虚功原理} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{系统阐述虚位移与虚功} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{静力学奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{弹性碰撞} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{1724 年参与硬体碰撞问题研究} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{力学竞赛} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{流体力学} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{与儿子丹尼尔同涉水力学} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{家族传承} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 虚功原理（principle of virtual work）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{baroquered!88!black}$\delta W=\sum_{i}\boldsymbol{F}_{i}\cdot\delta\boldsymbol{r}_{i}=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 微积分之争与学术传承 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{微积分之争与学术传承}{莱布尼茨一方 · 洛必达 · 欧拉之师}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baroquered}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{约翰·伯努利}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{微积分之争} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{1713 年坚定站在莱布尼茨一边} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{优先权辩护} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{洛必达} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{受聘为洛必达的家教，传授微积分} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{教科书之缘} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{欧拉} & \cellcolor{familypanel}\textcolor{badgeFamily!82!black}{悉心指导欧拉，每周末答疑} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{欧拉之师} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从洛必达到欧拉，微积分经他之手薪火相传。}
+\end{center}
+\end{frame}}
+
+% --- 12. 伯努利家族 ---
+\newcommand{\familyslide}{\begin{frame}\plainbar\sectiontitle{伯努利家族}{三代数学王朝的核心}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baroquered}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{关系}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{贡献}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{雅各布·伯努利} & \cellcolor{familypanel}\textcolor{badgeFamily!82!black}{哥哥，早期引路人} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{概率论奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{约翰·伯努利} & \cellcolor{familypanel}\textcolor{badgeFamily!82!black}{本人，家族核心} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{微积分推广} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{丹尼尔·伯努利} & \cellcolor{familypanel}\textcolor{badgeFamily!82!black}{儿子} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{流体力学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{欧拉} & \cellcolor{familypanel}\textcolor{badgeFamily!82!black}{学生} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{分析学奠基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一门三代，撑起 17–18 世纪数学的半壁江山。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{皇家学会会员 · 欧拉之师}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{baroquered}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 英国皇家学会会员\item 法国科学院竞赛获奖（1724、1726 荣誉提名）\end{itemize}} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{职位} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 格罗宁根大学数学教授（1695–1705）\item 巴塞尔大学数学教授（1705–1748）\end{itemize}} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{终身教职} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{传承} & \cellcolor{familypanel}\textcolor{badgeFamily!82!black}{欧拉、洛必达、丹尼尔·伯努利等学生} & \cellcolor{varpanel}\textcolor{badgeVar!82!black}{薪火相传} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 微积分经他之手，从莱布尼茨传向欧拉，成为分析学的基石。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=baroquered!90!black] at ([yshift=1.5cm]current page.center) {他教出了欧拉，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {也推广了整个微积分。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=baroquered!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是悬链线的优雅，与伯努利家族的传奇。};
+\node[font=\fontsize{8}{10}\selectfont, text=baroquered!60!black] at ([yshift=-2.0cm]current page.center) {约翰·伯努利\quad Johann Bernoulli\quad 1667 — 1748};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 微积分 · 变分法 · 力学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\calculusslide
+\brachistochroneslide
+\catenaryslide
+\hopitalslide
+\odeslide
+\mechanicslide
+\legacyslide
+\familyslide
+\honorslide
+\closingslide
+\end{document}

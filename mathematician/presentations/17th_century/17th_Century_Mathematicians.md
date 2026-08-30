@@ -33,7 +33,7 @@
 | 11 | [Isaac Newton](https://en.wikipedia.org/wiki/Isaac_Newton) | 牛顿 | 英国 | 1643–1727 | 微积分、万有引力、《自然哲学的数学原理》 | 🔲 | 🔲 | 🔲 |
 | 12 | [Gottfried Wilhelm Leibniz](https://en.wikipedia.org/wiki/Gottfried_Wilhelm_Leibniz) | 莱布尼茨 | 德国 | 1646–1716 | 微积分符号体系、二进制、行列式 | 🔲 | 🔲 | 🔲 |
 | 13 | [Jacob Bernoulli](https://en.wikipedia.org/wiki/Jacob_Bernoulli) | 雅各布·伯努利 | 瑞士 | 1655–1705 | 概率论《猜度术》、伯努利数、大数定律 | 🔲 | 🔲 | 🔲 |
-| 14 | [Johann Bernoulli](https://en.wikipedia.org/wiki/Johann_Bernoulli) | 约翰·伯努利 | 瑞士 | 1667–1748 | 变分法、最速降线、微积分推广（欧拉之师） | 🔲 | 🔲 | 🔲 |
+| 14 | [Johann Bernoulli](https://en.wikipedia.org/wiki/Johann_Bernoulli) | 约翰·伯努利 | 瑞士 | 1667–1748 | 变分法、最速降线、微积分推广（欧拉之师） | ✅ | 🔲 | 🔲 |
 
 ## 三、目录对应关系
 
