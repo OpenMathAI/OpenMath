@@ -80,6 +80,9 @@ python3 seed_turing.py         # 图灵奖 81 位得主
 python3 seed_copss.py          # COPSS 会长奖 46 位得主
 python3 enrich_people.py       # 元数据补全 + 师生关系（有 metadata.json 的人）
 python3 seed_countries.py      # 国籍/政权字典 + 人物国籍
+
+# 单人物数据（社会关系+研究领域+国籍+机构+奖项）改用 YAML 引擎：
+python3 seed_person.py data/          # 幂等入库全部人物
 ```
 
 > 脚本使用 `pymysql` 连接（见 `db_mysql.py`），自动将 SQLite 语法（`?` 占位符、`INSERT OR IGNORE`）转换为 MySQL。依赖：`pip3 install --break-system-packages pymysql`。
@@ -103,7 +106,10 @@ python3 export_people.py --one-line            # Markdown 表格
 | `convert_to_mysql.py` | 脚本改造工具（sqlite3→pymysql） |
 | `build_seed_section.py` | 种子段提取工具（schema 维护用） |
 | `db_mysql.py` | pymysql 连接模块（含 SQLite 语法适配） |
-| `seed_*.py`（10 个） | 各奖项/榜单灌入脚本 |
+| `seed_person.py` | 通用人物入库引擎（读 data/*.yaml，幂等写入人物主记录+领域+国籍+机构+奖项+关系） |
+| `export_db_to_yaml.py` | 数据库 → data/*.yaml 导出工具（迁移/快照） |
+| `data/`（*.yaml） | 人物数据文件（149 位主角的社会关系+研究领域+国籍+机构+奖项） |
+| `seed_*.py`（批量） | 各奖项/榜单/字典批量灌入脚本（ranking/fields/awards/countries 等） |
 | `export_people.py` | 导出工具 |
 | `people_full.md` / `people_one_line.tsv` | 导出快照 |
 | `schema_sqlite_reference.sql` | 原 SQLite schema（参考） |
