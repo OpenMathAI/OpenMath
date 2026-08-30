@@ -12,6 +12,7 @@
 - **标杆实例**：Donald E. Knuth（唐纳德·克努特 / 高德纳，1938-，1974 图灵奖）。
 - **单一产物**：每个图灵奖得主生成一份 Beamer deck（`.tex` → `.pdf`），外加一份人物专属提示词（`.md`）与必要的数据库脚本。
 - **设计哲学**：图灵奖得主立传与数学家立传的核心差异在于——**图灵奖得主必须有「身份信息页」（Identity / Bio 速览页）**，且强调「研究领域」的结构化表达；与数学家不同，图灵奖得主的「贡献」常表现为**算法、语言、系统、理论**而非「定理」，立传应突出其**奠基性工程与思想**。这两点构成模板骨架，务必保留。
+- **版式双模板**：图灵奖得主 Beamer 版式 = **Wilson 骨架（气泡背景 + 身份信息页 + 卡片式）** + **高斯版式（表格语义化 + 公式框 + 时间线）**。封面、身份信息页、核心贡献概览沿用 Wilson 卡片骨架；**生平关键事件、核心贡献、荣誉传承等页面优先采用高斯模板的 `tabularx` 语义化表格 + `\fcolorbox` 公式框**（详见第四章 4.7 节）。
 
 ### 标准目录结构
 
@@ -153,7 +154,10 @@ NN  结尾
 
 - 编辑 `turing/turing_award_winners.md`，把该得主所在行的「立传」列由 `🔲` 改为 `✅`。
 - 两轮 Review 全部完成后，再把「Review」列由 `🔲` 改为 `✅`。
-- 校验：该得主行末尾应为 `| ✅ | ✅ |`；统计区（如有「已立传」计数）同步 +1。
+- 社会关系入库（第 4 步 + 第 4.5 步执行完毕）后，再把「社会关系入库」列由 `🔲` 改为 `✅`。
+- 校验：该得主行末尾应为 `| ✅ | ✅ | ✅ |`（立传 + Review + 社会关系入库三通过）。
+
+> **总名单列结构**（含三列标志位）：`| 年份 | 得主 | 生卒年 | 国籍/身份 | 获奖时机构 | 主要成果概括 | 备注 | 立传 | Review | 社会关系入库 |`
 
 ---
 
@@ -170,10 +174,12 @@ NN  结尾
 [3] 主题与模板设置    —— navigation symbols / footline（页码）
 [4] 字体包            —— fontspec + xeCJK（PingFang SC / Helvetica Neue）
 [5] 其他包            —— xcolor/tikz/graphicx/fix-cm/adjustbox/fontawesome5/amsmath/amssymb
+                       + booktabs/tabularx/array/colortbl（高斯版式表格所需，★ 见 4.7）
 [6] tikz 库           —— positioning,calc,arrows.meta,shadows
 [7] 配色定义          —— \definecolor（图灵紫/强调色/四分类色/面板色）
 [8] 核心宏定义        —— \plainbar / \deckbackground / \sectiontitle / \lab
-[9] 每页 slide 宏     —— \titleslide / \profileslide / \xxxslide / \closingslide
+[9] 每页 slide 宏     —— \titleslide / \profileslide / \timelineslide / \xxxslide / \closingslide
+                       （\timelineslide 时间线页 + 表格语义化页 + 公式框页，见 4.7）
 [10] document 主体    —— 按序 \openturingslide \titleslide ... \closingslide
 ```
 
@@ -196,7 +202,9 @@ NN  结尾
 \setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
 \usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
 \usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl} % ★ 高斯版式表格所需
 \usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
 ```
 
 ### 4.3 配色变量约定（OpenTuring 品牌色固定）
@@ -291,6 +299,119 @@ NN  结尾
 - 主题金句 + 分隔线 + 致敬行 + 生卒年行。
 - **底部品牌统一写 `OpenMathAI`**（不写 `OpenTuring`）。
 
+### 4.7 高斯模板版式设计模式（★ 生平/贡献/荣誉页首选）
+
+> 图灵奖得主 Beamer 的**生平关键事件、核心贡献、荣誉传承、算法/系统专题**等页面，优先采用高斯模板的表格语义化 + 成果框版式（而非 Wilson 的卡片式），以更清晰地结构化「概念 → 贡献 → 意义」。封面、身份信息页、核心贡献概览仍用 Wilson 卡片骨架。以下骨架源自 `mathematician/presentations/Gauss_Biography_Template.md` 第四章，色名按图灵品牌色变量替换（`prussiablue`→`coverprimary`、`mathgold`→`coveraccent`、`badgeX`→`badgeA~D`、`Xpanel`→`panelA~D`）。
+
+#### 4.7.1 表格语义化设计（核心贡献页通用）
+
+每页用 `tabularx` 三列表格，**列头按页面主题语义化**，第一列加粗、用强调色：
+
+| 页面主题 | 列头示例 |
+|---|---|
+| 早年 / 教育 | `时间 ｜ 事件 ｜ 影响` |
+| 核心贡献（通用） | `问题 ｜ 该得主的贡献 ｜ 意义` |
+| 算法 / 系统专题 | `问题 ｜ 方法/算法 ｜ 结果` |
+| 荣誉 / 传承 | `类别 ｜ 代表 ｜ 意义` |
+| 争议 / 历史事件 | `事件 ｜ 经过 ｜ 结果` |
+
+**通用模式**：`{时间/概念/问题} ｜ {该人物做了什么} ｜ {影响/结果/意义}`
+
+表格骨架（含配色）：
+
+```latex
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{列1}} &
+  \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{列2}} &
+  \multicolumn{1}{c}{\footnotesize\color{white}\textbf{列3}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{第一列内容} &
+  \cellcolor{panelA}\textcolor{badgeA!82!black}{第二列内容} &
+  \cellcolor{panelB}\textcolor{badgeB!82!black}{第三列内容} \\
+\midrule
+... （重复，每行间 \midrule）
+\bottomrule
+\end{tabularx}
+\end{center}
+```
+
+> **注意**：`\arrayrulecolor`、`\rowcolor`、`\cellcolor` 需 `colortbl` 包（已在 4.2 导言区补充）；`>{\bfseries\scriptsize}m{...}` 需 `array` 包。
+
+#### 4.7.2 核心成果框（★ 高斯版式的标志性元素，图灵适配）
+
+在表格下方展示该得主**最标志性的成果**——算法、复杂度记号、形式化定义或代码片段（图灵奖得主的「公式」常表现为算法与形式系统，而非物理公式）：
+
+```latex
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} {{成果标题（含年份）}}}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}${{成果内容}}$}
+  \end{minipage}%
+}
+\end{center}
+```
+
+**要点**：
+- 成果内容可以是：复杂度记号（如 Cook 的 `SAT ∈ NP-complete`、姚期智的通信复杂度下界）、核心算法伪代码、形式化定义（如 BNF 文法、Hoare 逻辑三元组 `{P} C {Q}`）
+- 长公式用 `\resizebox{11.4cm}{!}` 自动缩放单行；复杂多行用 `\begin{aligned}` / `\begin{cases}` / `\begin{vmatrix}`
+- 标题含年份与出处（如「快速排序（Hoare，1960）」）
+- 成果框通常**替换**页底金句（成果即是最好的具象化）
+
+#### 4.7.3 时间线页（`\timelineslide`）
+
+生平纵览页用竖线 + 节点的 TikZ 时间线（置于身份信息页之后、核心贡献之前）：
+
+```latex
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{<NAME_ZH> 的一生}{<生卒年>}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.6cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/{年份}/{事件1},
+    2.4/{年份}/{事件2},
+    ...（按生平顺序排列 10 个左右节点）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+```
+
+#### 4.7.4 年份标注模式
+
+| 场景 | 写法 | 示例 |
+|---|---|---|
+| 单年 | `（YYYY）` 或 `YYYY：` | `快速排序（1960）` |
+| 区间 | `YYYY–YYYY` | `1968–1974：TAOCP 前三卷` |
+| 约略 | `约 YYYY` | `约 1970：TeX 雏形` |
+| 年代 | `YYYYs` | `1970s` |
+| 发现 vs 发表 | 分开标注 | `1962 提出；1969 发表` |
+
+#### 4.7.5 溢出修复策略（★ 每写一页就 make，看到溢出就修）
+
+优先级从轻到重：
+1. 删装饰元素（`\plainbar` / `\deckbackground`）
+2. 缩 `inner sep` / `\arraystretch`
+3. 缩字号
+4. 减空行间距（`\\[3pt]` → `\\[1pt]`）
+5. 增大顶部负间距（`\vspace{-0.45cm}` → `-0.9cm`）或成果框前负间距
+6. 最后才调 TikZ 坐标
+
+**验收标准**：`Overfull \vbox > 10pt` 必须修复；`\hbox > 50pt` 必须修复；`< 5pt` 可忽略。
+
 ---
 
 ## 五、背景音乐选择（★ 与数学/物理/化学家共享同一音乐库）
@@ -356,10 +477,12 @@ NN  结尾
 | 文件 | 用途 |
 |------|------|
 | `turing/pages/{year}/{Name}/index.html` | 本地 Wikipedia 正文（infobox + 正文） |
-| `turing/presentations/Donald_Knuth/Donald_Knuth_zh.tex` | 标杆实例 Beamer 源码 |
+| `turing/presentations/Donald_Knuth/Donald_Knuth_zh.tex` | 标杆实例 Beamer 源码（Wilson 卡片骨架母本） |
 | `turing/presentations/Donald_Knuth/Donald_Knuth_zh.md` | 标杆实例人物专属提示词 |
 | `turing/presentations/cover/openturing_page.tex` | 项目首页模板（统一 `\input`） |
-| `turing/turing_award_winners.md` | 图灵奖得主总名单（含立传/Review 标志位） |
+| `turing/turing_award_winners.md` | 图灵奖得主总名单（含立传/Review/社会关系入库三列标志位） |
+| `mathematician/presentations/Gauss_Biography_Template.md` | ★ 高斯立传模板（第四章 4.7 版式设计模式母本） |
+| `physicist/presentations/20th_century/Werner_Heisenberg/Werner_Heisenberg_zh.tex` | ★ 高斯版式适配成品（表格语义化 + 公式框 + 时间线） |
 | `chemist/presentations/20th_century/Frederick_Sanger/Frederick_Sanger_zh.md` | 化学家标杆提示词参考 |
 | `physicist/presentations/20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.md` | 物理学家标杆提示词参考 |
 
