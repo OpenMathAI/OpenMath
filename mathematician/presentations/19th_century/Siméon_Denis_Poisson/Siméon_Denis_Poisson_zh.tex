@@ -1,0 +1,424 @@
+% =============================================================
+%  概率、势论与分析力学的继承者：泊松 (Siméon Denis Poisson)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Siméon_Denis_Poisson
+%  设计母题：概率分布 / 势场 —— 柔和气泡呼应分布与场的扩散
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法国深蓝 + 物理琥珀 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{poissonblue}{HTML}{1F3A93}     % 法国深蓝 — 法兰西理性
+\definecolor{amber}{HTML}{E07B30}           % 物理琥珀 — 电磁 / 物理
+\definecolor{badgeProb}{HTML}{4C5FD5}       % 概率统计 — 靛蓝
+\definecolor{badgePotential}{HTML}{0E7C7B}  % 势论/方程 — 青绿
+\definecolor{badgeMech}{HTML}{B76E79}       % 力学 — 玫红
+\definecolor{badgeLegacy}{HTML}{55606E}     % 生平/遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{probpanel}{RGB}{229,232,247}
+\definecolor{potentialpanel}{RGB}{220,240,238}
+\definecolor{mechpanel}{RGB}{246,233,235}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{amberpanel}{RGB}{253,241,228}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应概率分布 / 势场
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[amber!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeProb!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgePotential!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeMech!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[amber!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=poissonblue!85!black,
+    align=center, text width=12cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 概率、势论与分析力学的继承者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=poissonblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {泊松};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=poissonblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Siméon Denis Poisson\enspace·\enspace 1781 — 1840};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=amber!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {泊松分布 · 泊松方程 · 泊松括号 · 泊松斑};
+  \draw[amber!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeProb] at (-5.05,0)
+        {概率统计\\Probability\par\scriptsize 泊松分布};
+      \node[badge, fill=badgePotential] at (-1.68,0)
+        {势论方程\\Potential\par\scriptsize 泊松方程};
+      \node[badge, fill=badgeMech] at (1.68,0)
+        {分析力学\\Mechanics\par\scriptsize 泊松括号};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {物理\\Physics\par\scriptsize 电磁 · 弹性};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"人生只有两件事：做数学和教数学。"};
+  % 肖像（E. Marcellot 1804 绘）
+  \node[draw=amber!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Poisson_1804.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {E. Marcellot, 1804};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace École Polytechnique · 经度局\enspace|\enspace 概率 · 势论 · 力学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{amber!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{泊松 - 从皮蒂维耶到索镇}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（E. Marcellot 1804 绘）
+  \node[draw=amber!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.6,3.5);
+      \node[anchor=center] at (1.3,1.75) {\includegraphics[width=2.6cm,height=3.5cm,keepaspectratio]{Poisson_1804.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-1.85) {Siméon Denis Poisson (1781–1840)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=amberpanel, draw=amber!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1781-06-21 — 1840-04-25\\[2pt]\lab{本名}\quad Siméon Denis Poisson\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=probpanel, draw=badgeProb!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad École Polytechnique\\[2pt]
+     \quad 1800 年免试毕业\\[2pt]\lab{师承}\quad Lagrange · Laplace};
+  \node[infob, fill=potentialpanel, draw=badgePotential!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 皮蒂维耶（法国）\\[2pt]\lab{荣誉}\quad 科普利奖章 · 拉朗德奖\\[2pt]\lab{身后}\quad 索镇};
+  \node[infob, fill=mechpanel, draw=badgeMech!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 概率论 · 势论 · 分析力学\\[2pt]
+     \quad 电磁学 · 弹性力学\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 泊松的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{泊松的一生}{1781 — 1840 · 从皮蒂维耶到索镇的数学物理大师}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{amber!88!black}}
+]
+  \draw[amber!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1781/生于皮蒂维耶（法国）,
+    2.2/1798/第一名考入综合理工,
+    1.5/1800/免试毕业，
+    0.8/1809/引入泊松括号,
+    0.1/1817/预言泊松斑,
+    -0.6/1829/现代泊松分布问世,
+    -1.3/1837/成为法国贵族院议员,
+    -2.0/1840/逝于索镇，享年 58 岁
+  }{
+    \fill[amber!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1781–1800)}{皮蒂维耶出生 · 第一名入学 · 免试毕业}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{amber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{poissonblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{1781} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{生于皮蒂维耶，父 Siméon Poisson 为参加过七年战争的退伍军人} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{出身军人之家} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{1798} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{17 岁以第一名考入综合理工（入学考试竞争激烈）} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{崭露头角} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{1800} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{入学不足两年发表两篇论文，出色到免试毕业；第二篇获 Lacroix、Legendre 推荐发表} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{18 岁空前荣誉} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{师承} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{Lagrange 赏识其为友；Laplace 视其如子} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{拉普拉斯学派} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从第一名入学到免试毕业——他几乎是综合理工的传说。}
+\end{center}
+\end{frame}}
+
+% --- 5. 泊松斑（Arago spot） ---
+\newcommand{\spotslide}{\begin{frame}\plainbar\sectiontitle{泊松斑 (Arago Spot)}{想反驳波动说 · 反而证实了它}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{amber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{poissonblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{1817 评审} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{作为 Fresnel 衍射论文评审委员，为反驳波动说而计算} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{粒子说立场} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{预言亮斑} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{Fresnel 理论预言圆盘阴影中心出现亮斑，泊松认为荒谬} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{自认反证} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{Arago 实验} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{Arago 用 2mm 金属盘实验，竟真的观察到亮斑} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{证实波动说} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 想反驳却反而证实——科学史上最著名的"反证成真"。}
+\end{center}
+\end{frame}}
+
+% --- 6. 泊松分布与概率论（核心贡献页） ---
+\newcommand{\distslide}{\begin{frame}\plainbar\sectiontitle{泊松分布与概率论}{新生儿男女比例 · 判断的概率}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{amber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{poissonblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{泊松的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{泊松分布} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{1829 年论文首次出现现代形式，1830 发表} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{概率论基石} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{判断的概率} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{1837 年《论判断的概率》再次系统阐述} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{大数定律应用} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{早期实例} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{de Moivre《机会的学说》(1718) 已有雏形} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{现代系统化者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{amber!70}{amberpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{amber!85!black} 泊松分布（Poisson distribution）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{poissonblue!88!black}$P(X=k)=\dfrac{\lambda^{k}e^{-\lambda}}{k!},\qquad k=0,1,2,\dots$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 泊松方程与势论（核心贡献页） ---
+\newcommand{\eqslide}{\begin{frame}\plainbar\sectiontitle{泊松方程与势论}{$\nabla^2\varphi=-4\pi\rho$ · 启发 George Green}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{amber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{poissonblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{泊松的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{泊松方程} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{1813 年发表 $\nabla^2\varphi=-4\pi\rho$，拉普拉斯方程的推广} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{引力电磁核心} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{势论} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{1812 年将势函数应用于电学} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{继承 Laplace} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{启发后人} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{其势论工作启发 George Green 1828 年论文} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{格林函数先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{amber!70}{amberpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{amber!85!black} 泊松方程（Poisson's equation）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{poissonblue!88!black}$\nabla^{2}\varphi=-4\pi\rho$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 泊松括号与分析力学（核心贡献页） ---
+\newcommand{\bracketslide}{\begin{frame}\plainbar\sectiontitle{泊松括号与分析力学}{哈密顿力学核心工具 · 通向量子力学}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{amber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{poissonblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{泊松的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{泊松括号} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{1809 年引入，分析力学核心工具} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{哈密顿力学} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{Jacobi 恒等式} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{Jacobi 首先认识其价值并给出恒等式} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{李代数基础} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{量子力学} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{1925 年狄拉克借其理解海森堡反交换性} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{量子对应} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{amber!70}{amberpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{amber!85!black} 泊松括号（Poisson bracket）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{poissonblue!88!black}$\{u,v\}=\dfrac{\partial u}{\partial q}\dfrac{\partial v}{\partial p}-\dfrac{\partial u}{\partial p}\dfrac{\partial v}{\partial q}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 弹性与流体力学 ---
+\newcommand{\elasticslide}{\begin{frame}\plainbar\sectiontitle{弹性与流体力学}{Navier–Stokes 方程 · 泊松比 · 发散定理}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{amber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{poissonblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{泊松的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{粘性流体} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{1829 年独立于 Navier 得到粘性流体方程} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{Navier–Stokes} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{弹性理论} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{与 Cauchy、Germain 同为 19 世纪弹性理论主要贡献者} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{弹性理论} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{泊松比} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{引入泊松比，模型后证有误但概念仍广泛应用} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{工程应用} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从流体到弹性——他的物理直觉往往被后人修正，但数学永远成立。}
+\end{center}
+\end{frame}}
+
+% --- 10. 电磁学与热传导 ---
+\newcommand{\physslide}{\begin{frame}\plainbar\sectiontitle{电磁学与热传导}{势论 · 傅里叶级数 · 泊松核}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{amber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{poissonblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{泊松的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{静电学} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{1812 年给出电势与电荷密度关系} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{静电学成熟} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{磁学} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{1826 年两篇磁学论文，坚持电磁分离观} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{磁学贡献} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{热传导} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{采纳傅里叶级数，1813–1823 研究热扩散} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{泊松核先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他的物理诠释常有误，但留下的数学工具历久弥新。}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉、晚年与 Galois 互动 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉、晚年与 Galois 互动}{科普利奖章 · 贵族院议员 · 对 Galois 的评审}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{amber!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{poissonblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{荣誉} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{科普利奖章、拉朗德奖；1818 皇家学会会员；1822 美国艺术与科学院外籍会员} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{学界认可} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{贵族院} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{1837 年成为法国贵族院议员，作为法国科学代表} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{国家荣誉} \\
+\midrule
+\cellcolor{amberpanel}\textcolor{amber!88!black}{Galois 评审} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{1831 年认为 Galois 论文"难以理解"，但鼓励其完整发表} & \cellcolor{potentialpanel}\textcolor{badgePotential!82!black}{客观评审} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 300 余篇作品，横跨数学与物理——拉普拉斯学派最后的辉煌。}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=poissonblue!90!black] at ([yshift=1.5cm]current page.center) {人生只有两件事：};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=amber!85!black] at ([yshift=0.4cm]current page.center) {做数学，和教数学。};
+\draw[amber!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=poissonblue!70!black] at ([yshift=-1.2cm]current page.center) {概率 · 势论 · 分析力学——他的数学穿越了两个世纪。};
+\node[font=\fontsize{8}{10}\selectfont, text=poissonblue!60!black] at ([yshift=-2.0cm]current page.center) {泊松\quad Siméon Denis Poisson\quad 1781 — 1840};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 泊松分布 · 泊松方程 · 泊松括号\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\spotslide
+\distslide
+\eqslide
+\bracketslide
+\elasticslide
+\physslide
+\honorslide
+\closingslide
+\end{document}
