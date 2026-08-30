@@ -27,6 +27,7 @@ BIOGRAPHIES_DONE = {
     "Chen Ning Yang",
     "Tsung-Dao Lee",
     "Wolfgang Pauli",
+    "Werner Karl Heisenberg",
 }
 
 # 已完成 Review（两轮事实核查）的物理学家（姓名需与获奖者名单精确匹配）。
@@ -40,6 +41,21 @@ REVIEWS_DONE = {
     "Chen Ning Yang",
     "Tsung-Dao Lee",
     "Wolfgang Pauli",
+    "Werner Karl Heisenberg",
+}
+
+# 已完成社会关系入库（研究领域 + 社会关系写入 greatminds 库：
+# people / person_relation / person_field）的物理学家。
+RELATIONS_DONE = {
+    "Wilhelm Conrad Röntgen",
+    "Hendrik Antoon Lorentz",
+    "Pieter Zeeman",
+    "Eugene Paul Wigner",
+    "Kenneth G. Wilson",
+    "Chen Ning Yang",
+    "Tsung-Dao Lee",
+    "Wolfgang Pauli",
+    "Werner Karl Heisenberg",
 }
 
 # 获奖者英文名 → 中文名（诺贝尔物理学奖得主常用中译）。
@@ -466,9 +482,10 @@ def main() -> int:
     # 国籍分布
     country_counter = Counter(r["country"] for r in rows)
 
-    # 立传 / Review 状态
+    # 立传 / Review / 社会关系入库 状态
     done_count = sum(1 for r in rows if r["name"] in BIOGRAPHIES_DONE)
     review_count = sum(1 for r in rows if r["name"] in REVIEWS_DONE)
+    relations_count = sum(1 for r in rows if r["name"] in RELATIONS_DONE)
 
     lines: list[str] = []
     lines.append("# 20 世纪诺贝尔物理学奖得主 — OpenPhysicist 名录\n")
@@ -477,7 +494,7 @@ def main() -> int:
         ">\n"
         "> 从 Röntgen 的 X 射线到 Kilby 的集成电路：一百年间，物理学奖见证了现代物理从经典走向量子的全过程。\n"
         ">\n"
-        "> 获奖理由为诺贝尔奖官方获奖理由（中文翻译）；「立传」表示是否已生成立传 Beamer，「Review」表示是否已完成事实核查。\n"
+        "> 获奖理由为诺贝尔奖官方获奖理由（中文翻译）；「立传」表示是否已生成立传 Beamer，「Review」表示是否已完成事实核查，「社会关系入库」表示是否已将研究领域与社会关系写入 greatminds 数据库（people / person_relation / person_field）。\n"
         ">\n"
         "> 数据来源：英文维基百科「List of Nobel laureates in Physics」。\n"
         % (total_items, len(unique_people))
@@ -485,8 +502,8 @@ def main() -> int:
     lines.append("---\n")
 
     lines.append("\n## 一、完整名单（按年份）\n")
-    lines.append("\n| 年份 | 获奖者 | 国籍 | 获奖理由 | 立传 | Review |")
-    lines.append("|:--:|------|------|------|:--:|:--:|")
+    lines.append("\n| 年份 | 获奖者 | 国籍 | 获奖理由 | 立传 | Review | 社会关系入库 |")
+    lines.append("|:--:|------|------|------|:--:|:--:|:--:|")
     for r in rows:
         name = r["name"]
         zh = NAME_ZH.get(name)
@@ -496,7 +513,8 @@ def main() -> int:
         citation = CITATION_ZH.get(citation_en, citation_en).replace("|", "/")  # 转义表格竖线
         bio = "✅" if name in BIOGRAPHIES_DONE else "🔲"
         review = "✅" if name in REVIEWS_DONE else "🔲"
-        lines.append("| %d | %s | %s | %s | %s | %s |" % (r["year"], name_display, country, citation, bio, review))
+        relation = "✅" if name in RELATIONS_DONE else "🔲"
+        lines.append("| %d | %s | %s | %s | %s | %s | %s |" % (r["year"], name_display, country, citation, bio, review, relation))
 
     lines.append("\n---\n")
     lines.append("\n## 二、统计说明\n")
@@ -505,6 +523,7 @@ def main() -> int:
     lines.append("- **获奖总人数**：%d 位" % len(unique_people))
     lines.append("- **已立传**：%d 位（%s）" % (done_count, "、".join(sorted(BIOGRAPHIES_DONE)) if BIOGRAPHIES_DONE else "暂无"))
     lines.append("- **已 Review**：%d 位（%s）" % (review_count, "、".join(sorted(REVIEWS_DONE)) if REVIEWS_DONE else "暂无"))
+    lines.append("- **已社会关系入库**：%d 位（%s）" % (relations_count, "、".join(sorted(RELATIONS_DONE)) if RELATIONS_DONE else "暂无"))
     if double:
         lines.append("- **两度获奖者**：" + "、".join(sorted(double)) + "（唯一两度获诺贝尔物理学奖者）")
     if women:
@@ -526,7 +545,7 @@ def main() -> int:
     OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("wrote:", OUT)
     print("总项数:", total_items, "总人数:", len(unique_people), "两度获奖:", sorted(double))
-    print("已立传:", done_count, "位", "已 Review:", review_count, "位")
+    print("已立传:", done_count, "位", "已 Review:", review_count, "位", "已社会关系入库:", relations_count, "位")
     return 0
 
 
