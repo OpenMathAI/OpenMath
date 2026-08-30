@@ -14,13 +14,15 @@
 \setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
 \usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
 \usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
 \usetikzlibrary{positioning,calc,arrows.meta,shadows}
 \graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
 
-% ===== 配色：法国深蓝 + 玫瑰金 + 三分类色 =====
+% ===== 配色：皇家紫 + 玫瑰金 + 四分类色 =====
 \definecolor{bgmain}{RGB}{247,246,249}
-\definecolor{franceblue}{HTML}{1F3A93}      % 法国深蓝 — 法兰西理性
-\definecolor{rosegold}{HTML}{B76E79}        % 玫瑰金 — 女性先驱 / 打破偏见
+\definecolor{royalpurple}{HTML}{5B3A8C}     % 皇家紫 — 女性先驱 / 哲学 / 法兰西优雅
+\definecolor{rosegold}{HTML}{B76E79}        % 玫瑰金 — 打破性别偏见 / 韧性
 \definecolor{badgeNumber}{HTML}{4C5FD5}     % 数论 — 靛蓝
 \definecolor{badgeElastic}{HTML}{0E7C7B}    % 弹性理论 — 青绿
 \definecolor{badgePhilosophy}{HTML}{E07B30} % 哲学 — 琥珀
@@ -76,11 +78,11 @@
 \begin{frame}[plain]
 \deckbackground
 \begin{tikzpicture}[remember picture, overlay]
-  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=franceblue!85!black]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=royalpurple!85!black]
     at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 化名求学的先驱\enspace·\enspace 弹性理论与费马大定理};
-  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=franceblue!92!black]
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=royalpurple!92!black]
     at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {热尔曼};
-  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=franceblue!68!black]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=royalpurple!68!black]
     at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Sophie Germain\enspace·\enspace 1776 — 1831};
   \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=rosegold!70!black]
     at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {Sophie Germain 定理 · 弹性理论 · 平均曲率 · 费马大定理};
@@ -159,13 +161,58 @@
 \node[nodebox, fill=legacypanel, draw=badgeLegacy!50, text=badgeLegacy!85!black] (d) at (5.6,1.05) {化名求学\\Le Blanc\\[2pt]冲破性别偏见};
 \node[draw=rosegold!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 她用化名叩开数学之门，用才华赢得了高斯与拉格朗日的尊重。}};\end{tikzpicture}\end{center}\end{frame}}
 
+% --- 3.5 热尔曼的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{热尔曼的一生}{1776 — 1831 · 从大革命禁足到首位获奖女性}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{rosegold!88!black}}
+]
+  \draw[rosegold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1776/生于巴黎资产阶级家庭,
+    2.2/1789/巴士底狱陷落，爱上数学,
+    1.5/1794/化名 Le Blanc 投稿 Lagrange,
+    0.8/1804/以 Le Blanc 化名致信 Gauss,
+    0.1/1807/请求 Pernety 将军保护 Gauss,
+    -0.6/1816/获巴黎科学院奖（首位女性）,
+    -1.3/1821/自费出版弹性曲面论文,
+    -2.0/1829/确诊乳腺癌,
+    -2.7/1831/逝于巴黎，享年 55 岁
+  }{
+    \fill[rosegold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
 % --- 4. 早年与自学 ---
 \newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与自学 (1776–1794)}{资产阶级家庭 · 大革命禁足 · Montucla 与阿基米德}
-\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
-  \node[item, fill=rosepanel, draw=rosegold!55] at (0,2.55) {\textbf{1776 · 生于巴黎。}1776 年 4 月 1 日生于巴黎一个资产阶级家庭，父亲 Ambroise-François 是富有的丝绸商（一说金匠），1789 年当选三级会议代表。};
-\node[item, fill=elasticpanel, draw=badgeElastic!45] at (0,1.05) {\textbf{大革命与禁足。}13 岁时巴士底狱陷落，革命动荡迫使她禁足家中；在父亲书房读到 Montucla《数学史》，被阿基米德之死的故事深深吸引，从此爱上数学。};
-\node[item, fill=goldpanel, draw=rosegold!40] at (0,-0.25) {\textbf{深夜自学。}父母反对她学数学，夜里没收她的暖衣与炉火；她却偷偷点起蜡烛、裹着被子继续钻研，甚至自学拉丁语、希腊语以读牛顿与欧拉的著作。};
-\node[draw=rosegold!55, fill=graypanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个被禁止求学的女孩，在深夜的烛光里爱上了数学。}};\end{tikzpicture}\end{center}\end{frame}}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{rosegold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.4cm}}
+\toprule
+\rowcolor{royalpurple}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{rosegold!88!black}{1776} & \cellcolor{rosepanel}\textcolor{rosegold!85!black}{生于巴黎资产阶级家庭，父 Ambroise-François 为富有的丝绸商（一说金匠），1789 年当选三级会议代表} & \cellcolor{elasticpanel}\textcolor{badgeElastic!82!black}{出身优渥} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{rosegold!88!black}{1789} & \cellcolor{rosepanel}\textcolor{rosegold!85!black}{13 岁巴士底狱陷落，禁足家中读 Montucla《数学史》，受阿基米德之死故事吸引} & \cellcolor{elasticpanel}\textcolor{badgeElastic!82!black}{爱上数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{rosegold!88!black}{深夜自学} & \cellcolor{rosepanel}\textcolor{rosegold!85!black}{父母反对，夜里没收暖衣与炉火；她偷偷点蜡烛裹被钻研，自学拉丁、希腊语读牛顿欧拉} & \cellcolor{elasticpanel}\textcolor{badgeElastic!82!black}{自学成才} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个被禁止求学的女孩，在深夜的烛光里爱上了数学。}
+\end{center}
+\end{frame}}
 
 % --- 5. 化名 Le Blanc 与 Lagrange ---
 \newcommand{\leblancslide}{\begin{frame}\plainbar\sectiontitle{化名 Le Blanc：叩开数学之门}{École Polytechnique · 化名投稿 · 身份揭晓}
@@ -225,11 +272,11 @@
 
 % --- 12. 结束页 ---
 \newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
-\node[font=\fontsize{22}{28}\selectfont\bfseries, text=franceblue!90!black] at ([yshift=1.5cm]current page.center) {她用化名叩开数学之门，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=royalpurple!90!black] at ([yshift=1.5cm]current page.center) {她用化名叩开数学之门，};
 \node[font=\fontsize{22}{28}\selectfont\bfseries, text=rosegold!85!black] at ([yshift=0.4cm]current page.center) {用才华冲破了性别偏见。};
 \draw[rosegold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
-\node[font=\fontsize{9}{12}\selectfont, text=franceblue!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Sophie Germain};
-\node[font=\fontsize{8}{10}\selectfont, text=franceblue!60!black] at ([yshift=-2.0cm]current page.center) {热尔曼\quad Sophie Germain\quad 1776 — 1831};
+\node[font=\fontsize{9}{12}\selectfont, text=royalpurple!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Sophie Germain};
+\node[font=\fontsize{8}{10}\selectfont, text=royalpurple!60!black] at ([yshift=-2.0cm]current page.center) {热尔曼\quad Sophie Germain\quad 1776 — 1831};
 \node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 数论 · 弹性理论 · 平均曲率\enspace|\enspace OpenMathAI};
 \end{tikzpicture}\end{frame}}
 
