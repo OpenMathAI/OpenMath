@@ -1,0 +1,432 @@
+% =============================================================
+%  复分析的奠基者 · 分析严格化的先驱：柯西 (Augustin-Louis Cauchy)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Augustin-Louis_Cauchy
+%  设计母题：复平面 / 围道积分 —— 柔和气泡呼应解析性与围道的优雅
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法国蓝 + 法国红 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,245}
+\definecolor{frenchblue}{HTML}{0055A4}      % 法国蓝 — 法兰西理性 / 复分析
+\definecolor{frenchred}{HTML}{C0392B}       % 法国红 — 保皇派 / 宗教热情
+\definecolor{badgeComplex}{HTML}{3D5C9E}    % 复分析 — 靛蓝
+\definecolor{badgeReal}{HTML}{0E7C7B}       % 实分析 — 青绿
+\definecolor{badgeElastic}{HTML}{C97B2F}    % 弹性/代数 — 琥珀
+\definecolor{badgeLegacy}{HTML}{55606E}     % 生平/遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{complexpanel}{RGB}{229,234,247}
+\definecolor{realpanel}{RGB}{220,240,238}
+\definecolor{elasticpanel}{RGB}{248,236,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{redpanel}{RGB}{253,238,236}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应复平面 / 围道积分
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[frenchred!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeComplex!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeReal!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeElastic!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[frenchred!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont\bfseries, text=frenchblue!85!black,
+    align=center, text width=12cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 复分析的奠基者\enspace·\enspace 分析严格化的先驱};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=frenchblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {柯西};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=frenchblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Augustin-Louis Cauchy\enspace·\enspace 1789 — 1857};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=frenchred!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {柯西积分定理 · 留数定理 · 柯西序列 · 应力张量};
+  \draw[frenchred!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeComplex] at (-5.05,0)
+        {复分析\\Complex\par\scriptsize 积分 · 留数定理};
+      \node[badge, fill=badgeReal] at (-1.68,0)
+        {实分析\\Real\par\scriptsize 柯西序列 · 严格化};
+      \node[badge, fill=badgeElastic] at (1.68,0)
+        {弹性力学\\Elasticity\par\scriptsize 柯西应力张量};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {生平\\Legacy\par\scriptsize 流亡 · 高产};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他让分析从直觉走向严格——以 $\varepsilon$-$\delta$ 之名，重新定义了数学的严谨。};
+  % 肖像（Jean Roller 绘，约 1840）
+  \node[draw=frenchred!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Cauchy-Portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Augustin-Louis Cauchy (1789–1857)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace École Polytechnique · 索邦\enspace|\enspace 复分析 · 实分析};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{frenchred!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{柯西 - 从巴黎到索镇}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Jean Roller 绘）
+  \node[draw=frenchred!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.6,3.5);
+      \node[anchor=center] at (1.3,1.75) {\includegraphics[width=2.6cm,height=3.5cm,keepaspectratio]{Cauchy-Portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-1.85) {Augustin-Louis Cauchy (1789–1857)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=redpanel, draw=frenchred!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1789-08-21 — 1857-05-23\\[2pt]\lab{本名}\quad Augustin-Louis Cauchy\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=complexpanel, draw=badgeComplex!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad École Polytechnique\\[2pt]
+     \quad 桥梁道路学校（最高荣誉）\\[2pt]\lab{师承}\quad Lagrange · Laplace};
+  \node[infob, fill=realpanel, draw=badgeReal!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 巴黎（法国）\\[2pt]\lab{荣誉}\quad 科学院大奖 · Pour le Mérite\\[2pt]\lab{身后}\quad 索镇};
+  \node[infob, fill=elasticpanel, draw=badgeElastic!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 复分析 · 实分析\\[2pt]
+     \quad 弹性力学 · 抽象代数\\[2pt]
+     \lab{身份}\quad 数学家 · 工程师 · 物理学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 柯西的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{柯西的一生}{1789 — 1857 · 从巴黎到索镇的复分析大师}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{frenchred!88!black}}
+]
+  \draw[frenchred!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1789/生于巴黎，父为旧制度警察高官,
+    2.2/1805/考入综合理工（293 人第 2 名）,
+    1.5/1807/入桥梁道路学校，最高荣誉毕业,
+    0.8/1816/任综合理工教授,
+    0.1/1821/《分析教程》出版，引入严格化,
+    -0.6/1830/七月革命，拒誓流亡,
+    -1.3/1838/返回巴黎科学院,
+    -2.0/1857/逝于索镇，享年 67 岁
+  }{
+    \fill[frenchred!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1789–1810)}{巴黎出生 · 避难 Arcueil · 综合理工 · 桥梁道路学校}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{frenchred!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{1789} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{生于巴黎，父 Louis François Cauchy 为旧制度警察高官，大革命后失职} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{出身官宦之家} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{1793–1802} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{大革命期间全家避难 Arcueil，由父亲启蒙；1802 入中央先贤祠学校} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{父亲启蒙} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{1805} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{以 293 名考生中第 2 名考入综合理工（École Polytechnique）} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{崭露头角} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{1807–1810} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{入桥梁道路学校（Ponts et Chaussées），以最高荣誉毕业，赴瑟堡任工程师} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{工程师生涯} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从工程师到数学家——他最终选择了抽象的数学之美。}
+\end{center}
+\end{frame}}
+
+% --- 5. 分析严格化与《Cours d'analyse》（核心贡献页） ---
+\newcommand{\analysisslide}{\begin{frame}\plainbar\sectiontitle{分析严格化与《Cours d'analyse》}{$\varepsilon$-$\delta$ 论证 · 柯西序列 · 泰勒定理}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{frenchred!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{柯西的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{严格化（1821）} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{《分析教程》首次引入不等式与 $\varepsilon$-$\delta$ 论证，拒绝"代数的一般性"} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{把严格分析教给全欧洲} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{柯西序列} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{定义收敛的柯西判据，是实数完备性的基础} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{实数理论基础} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{泰勒定理} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{第一个严格证明泰勒定理及其余项形式} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{分析基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{frenchred!70}{redpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{frenchred!85!black} 极限的 $\varepsilon$-$\delta$ 定义（Cauchy，1821）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{frenchblue!88!black}$\forall\varepsilon>0,\ \exists\delta>0:\ |x-a|<\delta\implies|f(x)-f(a)|<\varepsilon$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 复分析的奠基（核心贡献页） ---
+\newcommand{\complexslide}{\begin{frame}\plainbar\sectiontitle{复分析的奠基}{柯西积分定理 · 柯西积分公式 · 留数定理}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{frenchred!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{柯西的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{积分定理} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{1814 雏形、1825 完整：全纯函数沿闭围道积分为零} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{复分析第一定理} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{积分公式} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{1831 提出柯西积分公式} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{解析性核心} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{留数定理} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{1826 定义留数，1831 提出留数定理} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{物理工程核心} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{frenchred!70}{redpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{frenchred!85!black} 柯西积分公式（Cauchy，1831）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{frenchblue!88!black}$f(a)=\dfrac{1}{2\pi i}\displaystyle\oint_C \dfrac{f(z)}{z-a}\,dz$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 柯西-黎曼方程与复变函数（核心贡献页） ---
+\newcommand{\crequationslide}{\begin{frame}\plainbar\sectiontitle{柯西-黎曼方程}{复可微的充要条件 · 解析函数}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{frenchred!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{柯西的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{复可微条件} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{复函数可微的充要条件，联系实部与虚部} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{复分析基石} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{复数定义} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{第一个把复数定义为实数对} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{复数的严格化} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{一度被忽视} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{理论一度被认为"太复杂"，1840 年代才获响应} & \cellcolor{realpanel}\textcolor{badgeReal!82!black}{Laurent 续其业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{frenchred!70}{redpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{frenchred!85!black} 柯西-黎曼方程（Cauchy–Riemann equations）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{frenchblue!88!black}$\dfrac{\partial u}{\partial x}=\dfrac{\partial v}{\partial y},\qquad \dfrac{\partial u}{\partial y}=-\dfrac{\partial v}{\partial x}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 弹性力学与柯西应力张量（核心贡献页） ---
+\newcommand{\elasticityslide}{\begin{frame}\plainbar\sectiontitle{弹性力学与柯西应力张量}{应力理论 · 3×3 对称矩阵 · 连续介质力学}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{frenchred!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{柯西的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{应力理论} & \cellcolor{elasticpanel}\textcolor{badgeElastic!82!black}{创立应力理论，引入柯西应力张量} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{连续介质力学基石} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{对称张量} & \cellcolor{elasticpanel}\textcolor{badgeElastic!82!black}{引入 3×3 对称矩阵描述应力状态} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{弹性理论核心} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{波动理论} & \cellcolor{elasticpanel}\textcolor{badgeElastic!82!black}{1816 年获科学院大奖，研究波动传播} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{数学物理贡献} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{frenchred!70}{redpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{frenchred!85!black} 柯西应力张量（Cauchy stress tensor）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{frenchblue!88!black}$\boldsymbol{\sigma}=\begin{pmatrix}\sigma_{11}&\sigma_{12}&\sigma_{13}\\\sigma_{21}&\sigma_{22}&\sigma_{23}\\\sigma_{31}&\sigma_{32}&\sigma_{33}\end{pmatrix},\quad \sigma_{ij}=\sigma_{ji}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 数论与群论 ---
+\newcommand{\numbergroupslide}{\begin{frame}\plainbar\sectiontitle{数论与群论}{费马多边形数定理 · 置换群 · 抽象代数先驱}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{frenchred!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{柯西的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{多边形数} & \cellcolor{elasticpanel}\textcolor{badgeElastic!82!black}{第一个证明费马多边形数定理} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{数论里程碑} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{置换群} & \cellcolor{elasticpanel}\textcolor{badgeElastic!82!black}{研究对称函数与置换群，抽象代数的先驱} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{群论奠基} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{柯西定理} & \cellcolor{elasticpanel}\textcolor{badgeElastic!82!black}{有限群中若素数 p 整除群的阶，则存在 p 阶元素} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{群论基本定理} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从数论到群论，他的足迹遍及抽象代数的最初版图。}
+\end{center}
+\end{frame}}
+
+% --- 10. 流亡与宗教立场 ---
+\newcommand{\exileslide}{\begin{frame}\plainbar\sectiontitle{流亡与宗教立场}{七月革命 · 拒誓 · 都灵与布拉格 · 宗教热情}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{frenchred!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{1830} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{七月革命后拒绝效忠宣誓，失去巴黎一切职位} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{因拒誓流亡} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{1832–1833} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{都灵任理论物理教授} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{继续学术} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{1833–1838} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{布拉格任波尔多公爵科学导师（出了名的差讲师）} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{五年无研究} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{1838} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{返回巴黎科学院，但拒绝宣誓无法恢复教职} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{坚守立场} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 虔诚的天主教徒——Abel 称其"偏执"，却也由衷赞叹其数学才华。}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉与高产 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与高产}{800 篇论文 · 科学院大奖 · 埃菲尔塔 72 名}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{frenchred!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{高产} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{约 800 篇论文、5 部教材，数量仅次于欧拉，全集 27 卷} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{超高产} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{荣誉} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{1816 科学院大奖；荣誉军团骑士；Pour le Mérite} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{学界认可} \\
+\midrule
+\cellcolor{redpanel}\textcolor{frenchred!88!black}{身后纪念} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{埃菲尔铁塔 72 位法国科学家刻名之一} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{国家纪念} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 以他命名的概念与定理，超过任何一位数学家。}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=frenchblue!90!black] at ([yshift=1.5cm]current page.center) {他以 $\varepsilon$-$\delta$ 之名，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=frenchred!85!black] at ([yshift=0.4cm]current page.center) {让分析从此走向严格。};
+\draw[frenchred!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=frenchblue!70!black] at ([yshift=-1.2cm]current page.center) {复分析的奠基者，实分析的创建者——严谨的化身。};
+\node[font=\fontsize{8}{10}\selectfont, text=frenchblue!60!black] at ([yshift=-2.0cm]current page.center) {柯西\quad Augustin-Louis Cauchy\quad 1789 — 1857};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 复分析 · 实分析 · 弹性力学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\analysisslide
+\complexslide
+\crequationslide
+\elasticityslide
+\numbergroupslide
+\exileslide
+\honorslide
+\closingslide
+\end{document}
