@@ -1,0 +1,486 @@
+% =============================================================
+%  AI 之父：马文·明斯基 (Marvin Minsky)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：心智社会 / 智能 —— 稀疏气泡呼应无智能部分的交互
+%  资料来源：turing/pages/1969/Marvin Minsky/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Minsky 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeAI}{HTML}{2E5A9E}     % 人工智能 — 蓝
+\definecolor{badgeNN}{HTML}{1E8E8E}     % 神经网络与感知机 — 青绿
+\definecolor{badgeKR}{HTML}{D9A441}     % 知识表示 — 琥珀
+\definecolor{badgeCog}{HTML}{C0395B}    % 认知与心智理论 — 玫瑰
+\definecolor{aipanel}{RGB}{228,233,246}
+\definecolor{nnpanel}{RGB}{222,240,238}
+\definecolor{krpanel}{RGB}{249,240,224}
+\definecolor{cogpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAI!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeNN!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeKR!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{brain}\enspace AI 之父\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {马文·明斯基};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Marvin Minsky\enspace·\enspace 1927 — 2016};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {人工智能奠基人 · 心智社会 · 1969 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAI] at (-5.05,0)
+        {人工智能\\Artificial Intelligence\par\scriptsize AI 之父};
+      \node[badge, fill=badgeNN] at (-1.68,0)
+        {神经网络\\Neural Networks\par\scriptsize SNARC · 感知机};
+      \node[badge, fill=badgeKR] at (1.68,0)
+        {知识表示\\Frames\par\scriptsize 框架理论};
+      \node[badge, fill=badgeCog] at (5.05,0)
+        {认知理论\\Society of Mind\par\scriptsize 心智社会};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"computer science's highest prize." —— 1969 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Minsky.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Minsky.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Marvin Minsky};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace MIT · Harvard · Princeton\enspace|\enspace Turing 1969 · Japan Prize 1990};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{明斯基 - 从纽约到 AI 之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Minsky.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Minsky.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Marvin Minsky};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1927-08-09 — 2016-01-24\\[2pt]\lab{本名}\quad Marvin Lee Minsky\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=nnpanel, draw=badgeNN!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Harvard 数学 A.B. 1950\\[2pt]
+     \quad Princeton 数学 PhD 1954\\[2pt]
+     \lab{师承}\quad Albert W. Tucker（导师）};
+  \node[infob, fill=aipanel, draw=badgeAI!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 纽约市 · 美国\\[2pt]\lab{去世地}\quad 波士顿 · 马萨诸塞\\[2pt]\lab{任职}\quad MIT · Harvard};
+  \node[infob, fill=krpanel, draw=badgeKR!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1969 · Japan Prize 1990\\[2pt]
+     \quad Franklin Medal 2001\\[2pt]
+     \lab{核心领域}\quad 人工智能 · 神经网络\\[2pt]
+     \quad 知识表示 · 认知科学};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{明斯基的一生}{1927 — 2016 · 从纽约少年到 AI 之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1927/生于纽约，眼科医生之子,
+    2.3/1950/获 Harvard 数学学士,
+    1.6/1951/建造 SNARC 学习机,
+    0.9/1954/Princeton 数学博士（Tucker）,
+    0.2/1956/Dartmouth 会议 · AI 之父之一,
+    -0.5/1959/与 McCarthy 共启 MIT AI Lab,
+    -1.2/1969/出版 Perceptrons，获图灵奖,
+    -1.9/1986/出版《心智社会》,
+    -2.6/2001/获 Franklin Medal,
+    -2.8/2016/逝于波士顿
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：纽约与海军 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：纽约的犹太少年 (1927–1950)}{眼科医生之子 · 海军岁月 · 哈佛数学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1927} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{生于纽约市；父为眼科医生、母为犹太复国主义活动家} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{犹太知识家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Fieldston School、Bronx Science、Phillips Academy} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{科学与人文并重} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1944–1945} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{服役于美国海军} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{战后退伍返校} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1950} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{获 Harvard 大学数学学士（A.B.）} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{数学根基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个纽约犹太少年，最终让机器拥有了"心智"的雏形。}
+\end{center}
+\end{frame}}
+
+% --- 5. Princeton 神经网络博士 ---
+\newcommand{\princetonslide}{\begin{frame}\plainbar\sectiontitle{Princeton 神经网络博士 (1950–1954)}{Tucker 门下 · 神经网络-模拟强化系统}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{师从 Albert W. Tucker（博弈论"囚徒困境"命名者）} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{数学与博弈的严谨} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{神经网络-模拟强化系统及其脑模型应用} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{1954 年获数学 PhD} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转向} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{由纯数学转向"让机器学习"的神经机制} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{连接主义的先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 数学博士的底色，奠定了他日后"心智社会"的理性根基。}
+\end{center}
+\end{frame}}
+
+% --- 6. SNARC：第一台神经网络学习机 ---
+\newcommand{\snarcslide}{\begin{frame}\plainbar\sectiontitle{SNARC：第一台神经网络学习机 (1951)}{随机连线 · 随机强化}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{特性}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{SNARC 的设计}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{随机连线} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{随机连接的神经网络，模拟突触的随机强化} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{最早的学习机之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{强化学习} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{模拟老鼠走迷宫的强化学习机制} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{强化学习的先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{首台随机连线神经网络学习机，早于 MIT 入职} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{连接主义 AI 源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} SNARC — Stochastic Neural Analog Reinforcement Calculator（1951）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{随机连线} $\xrightarrow{\text{强化}}$ \textit{学习：让无智能的元件在交互中产生行为}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Dartmouth 会议：AI 之父们 ---
+\newcommand{\dartmouthslide}{\begin{frame}\plainbar\sectiontitle{Dartmouth 会议：AI 之父们 (1956)}{与 Shannon/Rochester/McCarthy 共创 AI}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{会议} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{1956 年夏 Dartmouth workshop，AI 领域的开端} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{AI 作为独立学科诞生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同仁} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 Shannon、Rochester、McCarthy 并列 "fathers of AI"} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{AI 之父之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{角色} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{以神经网络与认知视角参与，贡献 AI 的早期蓝图} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{奠基性参与者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "artificial intelligence" —— 1956 年 Dartmouth 提案命名}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Artificial Intelligence} —— 明斯基是这一学科的奠基人之一。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 共启 MIT AI Lab ---
+\newcommand{\mitlabslide}{\begin{frame}\plainbar\sectiontitle{共启 MIT 人工智能实验室 (1959)}{与 McCarthy 的合作 · CSAIL 前身}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1958} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{加入 MIT Lincoln Laboratory} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{进入 MIT 体系} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1959} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 John McCarthy 共同发起 MIT AI Lab 前身} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{AI 研究重镇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2003} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{实验室定名为 CSAIL} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{MIT 计算机与 AI 旗舰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣休} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Toshiba Professor of Media Arts and Sciences} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{终身教职} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Lincoln Lab 到 CSAIL，MIT 的 AI 事业刻着他的名字。}
+\end{center}
+\end{frame}}
+
+% --- 9. Perceptrons 与感知机之争 ---
+\newcommand{\perceptronslide}{\begin{frame}\plainbar\sectiontitle{Perceptrons 与感知机之争 (1969)}{与 Papert · 批评 Rosenblatt · AI 寒冬}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合著} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{与 Seymour Papert 合著 *Perceptrons*（1969，MIT Press）} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{神经网络分析奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{批评} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{揭示单层感知机的局限（如 XOR 不可分）} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{引发争议} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{争议} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{被认为助长 1970 年代 AI 寒冬（AI winter）} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{"争议性"贡献} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 感知机的线性可分性（Perceptrons 的核心命题）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\hat{y}=\mathrm{sign}\big(\sum_{i} w_i x_i - \theta\big)\qquad$ 无法表达 XOR 等非线性问题}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 框架理论：知识表示 ---
+\newcommand{\framesslide}{\begin{frame}\plainbar\sectiontitle{框架理论：知识表示的新范式}{frames · A Framework for Representing Knowledge}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{Minsky 的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{框架} & \cellcolor{krpanel}\textcolor{badgeKR!82!black}{提出 frames 表示典型情境的结构化知识} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{知识表示新范式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{槽与默认值} & \cellcolor{krpanel}\textcolor{badgeKR!82!black}{slots + fillers + 默认值，捕获常识推理} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{常识推理的基础} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{应用} & \cellcolor{krpanel}\textcolor{badgeKR!82!black}{到 1975 年已广泛应用，影响后续知识系统} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{专家系统的思想源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 框架（frame）的结构：slots 与 fillers}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{Frame}=\{\text{slots}:\ \text{fillers},\ \text{默认值}\}\qquad$ 如「房间」框架含「墙壁、门窗、天花板」}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. Society of Mind：心智社会 ---
+\newcommand{\somslide}{\begin{frame}\plainbar\sectiontitle{Society of Mind：心智社会 (1986)}{智能来自无智能部分的交互}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{命题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{Minsky 的思想}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{核心洞见} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{智能是"无智能部分交互"的可能产物} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{反"单一智能中枢"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{灵感} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{来自试图造一台用机械臂+摄像机+计算机搭积木的机器} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{具身智能的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著作} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{1986 年出版《The Society of Mind》（大众向）} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{认知科学经典} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 心智社会：涌现的智能}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{智能}\ \Leftarrow\ \text{大量简单 "agents" 的交互与协作}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 发明家的一面 ---
+\newcommand{\inventorslide}{\begin{frame}\plainbar\sectiontitle{发明家的一面}{头戴显示器 · 共聚焦显微镜 · 乌龟机器人}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{发明}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1957} & \cellcolor{krpanel}\textcolor{badgeKR!82!black}{共聚焦显微镜（现代共聚焦激光扫描显微镜前身）} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{光学成像突破} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1963} & \cellcolor{krpanel}\textcolor{badgeKR!82!black}{世界上第一台头戴图形显示器} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{VR/AR 的雏形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Logo} & \cellcolor{krpanel}\textcolor{badgeKR!82!black}{与 Papert 开发首个 Logo 语言驱动的乌龟机器人} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{儿童编程教育先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1962} & \cellcolor{krpanel}\textcolor{badgeKR!82!black}{发表著名的 7 状态 4 符号图灵机} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{小型通用图灵机} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从显微镜到头戴显示器，他是把想法变成机器的发明家。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1969 · 门生遍天下}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1969）\item Japan Prize（1990）\item Franklin Medal（2001）\item IEEE AI Hall of Fame（2011）\end{itemize}} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{AI 奠基者的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Manuel Blum（1995 图灵奖）、Ivan Sutherland（1988 图灵奖）} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{学术谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术影响} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{AI、神经网络、知识表示、认知科学成为奠基性领域} & \cellcolor{nnpanel}\textcolor{badgeNN!82!black}{思想延续至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} AI 之父之名，因开创与哲思而愈发闪耀。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：智能的多元之路}{AI · 神经网络 · 知识表示 · 认知科学}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=aipanel, draw=badgeAI!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAI} 人工智能}\\[3pt]AI 之父\\[2pt]Dartmouth};
+\node[leg, fill=nnpanel, draw=badgeNN!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeNN} 神经网络}\\[3pt]SNARC\\[2pt]Perceptrons};
+\node[leg, fill=krpanel, draw=badgeKR!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeKR} 知识表示}\\[3pt]框架理论\\[2pt]frames};
+\node[leg, fill=cogpanel, draw=badgeCog!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCog} 认知科学}\\[3pt]心智社会\\[2pt]Society of Mind};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 智能，或许只是无智能部分的相互作用。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} AI 之父 $\rightarrow$ 神经网络 $\rightarrow$ 知识表示 $\rightarrow$ 认知科学\\[2pt]他的思想，仍在人工智能的血脉中流动。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {智能，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是许多微小部分合奏的交响。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Marvin Minsky};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {马文·明斯基\quad Marvin Minsky\quad 1927 — 2016};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{brain}\enspace Turing 1969 · Japan Prize 1990 · AI 之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\princetonslide
+\snarcslide
+\dartmouthslide
+\mitlabslide
+\perceptronslide
+\framesslide
+\somslide
+\inventorslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}
