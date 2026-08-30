@@ -78,19 +78,21 @@
 - **本地路径**: `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` → `presentations/19th_century/Ferdinand_Georg_Frobenius/Timeless.wav`
 - **时长**: 128 秒 > 12 页 × 7 秒 ≈ 84 秒 → ffmpeg `-shortest` 自动对齐
 
-## 4. Slide 规划（约 12 页，正文采用 Wilson 式结构）
+## 4. Slide 规划（约 12 页，正文采用 Wilson 式结构 + 表格 + 公式框）
+
+> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格；第 3 页为「时间线页」。
 
 1. **封面**（`\titleslide`）：大标题「群表示论的奠基人」+ 弗罗贝尼乌斯 1849–1917 + 右上头像 + 国籍行 + 底部三要素状态栏 + 分类 badge
 2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右信息网格（生卒 / 本名 / 国籍 / 出生地 / 师承 / 任职 / 荣誉 / 核心领域）
-3. **核心贡献概览**（`\hookslide`）：群表示论 / 群特征标 / Frobenius 自同构 / Frobenius 方法 四分类
-4. **早年与教育**（1849–1874）：夏洛滕堡出生、牧师之家、Joachimsthal Gymnasium、哥廷根一学期、柏林听 Kronecker/Kummer/Weierstrass、1870 博士
-5. **苏黎世岁月**（1875–1892）：ETH 17 年、成家、跨领域高产
-6. **群论与表示论**（核心贡献页）：Sylow 定理抽象群证明、特征标理论、Frobenius 互反律、Frobenius 群
-7. **数论：Frobenius 自同构**：素数到 Galois 群共轭类的典范映射、推广 Dirichlet 定理
-8. **微分方程：Frobenius 方法**：正则奇点幂级数法
-9. **以 Frobenius 命名的成果**：Frobenius 范数 / 内积、Perron–Frobenius、Frobenius 流形、Padé 逼近、Cayley–Hamilton 证明
-10. **学术传承**：Landau、Schur、Knopp 等门生
-11. **回柏林与科学院**（1893–1917）：接替 Kronecker、普鲁士科学院院士
+3. **弗罗贝尼乌斯的一生：时间线**（`\timelineslide`）：1849 出生 → 1870 博士 → 1875 苏黎世 → 1893 回柏林 → 1896 特征标 → 1917 去世
+4. **早年与教育**（1849–1874，表格）：夏洛滕堡出生、牧师之家、Joachimsthal Gymnasium、哥廷根一学期、柏林听 Kronecker/Kummer/Weierstrass、1870 博士
+5. **苏黎世岁月**（1875–1892，表格）：ETH 17 年、成家、跨领域高产
+6. **群论与表示论**（核心贡献页，表格 + Frobenius 互反律公式框）：Sylow 定理抽象群证明、特征标理论、Frobenius 互反律、Frobenius 群
+7. **数论：Frobenius 自同构**（核心贡献页，表格 + Frobenius 元素公式框）：素数到 Galois 群共轭类的典范映射、推广 Dirichlet 定理
+8. **微分方程：Frobenius 方法**（核心贡献页，表格 + 方法公式框）：正则奇点幂级数法
+9. **以 Frobenius 命名的成果**（表格）：Frobenius 范数 / 内积、Perron–Frobenius、Frobenius 流形、Padé 逼近、Cayley–Hamilton 证明
+10. **学术传承**（表格）：Landau、Schur、Knopp 等门生
+11. **回柏林与科学院**（1893–1917，表格）：接替 Kronecker、普鲁士科学院院士
 12. **终章**：67 岁、遗产与历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）

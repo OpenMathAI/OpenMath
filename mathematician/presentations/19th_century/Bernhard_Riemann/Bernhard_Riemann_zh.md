@@ -1,258 +1,180 @@
-# 黎曼 (Bernhard Riemann) 立传提示词
+# Bernhard Riemann（伯恩哈德·黎曼）立传提示词
 
-> 本提示词严格遵循 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md)，以 Grothendieck 成品为参考模板，为黎曼制作 Beamer 演示文稿。
-> 直接复制本文件内容到新对话中使用。
-
----
-
-## 背景信息
-
-- **目标数学家**: Bernhard Riemann (1826–1866)
-- **Wikipedia 页面已下载**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Bernhard_Riemann/`
-  - `page.md` — 正文 Markdown
-  - `metadata.json` — Wikidata 元数据
-  - `images.txt` — 图片 URL 清单
-- **参考模板**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/grothendieck/`
-  - `Alexander_Grothendieck_zh.tex` — 完整 Beamer 源码（约 712 行，可逐页参考结构和样式）
-  - `Makefile` — 构建脚本（直接复制即可，仅改 `MAIN` 变量）
-- **操作指南**: `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/Mathematician_Biography_Guide.md`
+> qid=Q42299 · 1826-09-17 – 1866-07-20 · 德国数学家、物理学家 · 19 世纪
+> 本地 Wikipedia 数据源：`mathematician/presentations/19th_century/pages/Bernhard_Riemann/`（page.md + metadata.json + images.txt）
 
 ---
 
-## 你的任务
+## 0. 正文形式说明（参考物理学家 Kenneth G. Wilson）
 
-按照 [Mathematician_Biography_Guide.md](./Mathematician_Biography_Guide.md) 第十一节「推荐制作流程」的 13 个步骤，依次完成。每个步骤完成后向我汇报进度，遇到歧义时先征求我的意见再继续。
+> 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**，而非纯数学家版式。这意味着在数学家立传基础上，增加以下**物理学家格式硬性要求**：
 
----
-
-## 第 0 步：确认 Wikipedia 页面已就绪
-
-- 读取 `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/pages/Bernhard_Riemann/page.md` 及 `metadata.json`
-- 输出以下信息供我校验：
-  - 生卒日期、国籍、研究领域
-  - 博士导师、主要任职机构
-  - 关键荣誉（如有）
-  - Wikipedia 正文中提取出的 **关键时间线**（按年份列出 10–15 个关键节点）
+1. **封面有头像**：右上角肖像 + `draw=riemannslate!50` 细边框 + 姓名小字注（采用 `images/Georg_Friedrich_Bernhard_Riemann.jpeg`，即黎曼 c.1863 肖像）。
+2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 德国`），底部状态栏给出 `国籍 | 机构 | 主要成就` 三要素。
+3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧信息网格，至少含：生卒、本名、国籍、出生地、师承、教育、主要荣誉、核心领域。事实取自 Wikipedia infobox，不得杜撰。
+4. **配色 + 气泡背景**：采用「主色 + 强调色 + 三~四分类色」配色；背景用柔和气泡（稀疏大块实心圆）呼应数学结构的「黎曼面 / 弯曲空间」母题。
+5. **品牌口径统一**：结尾页底部品牌标注统一写 `OpenMathAI`；引号用半角 `" "`。
 
 ---
 
-## 第 1 步：建立目录
+## 1. 背景信息（用于 Slide 1-3）
 
-- 在 `/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/` 下创建 `riemann/` 子目录
-- 创建 `riemann/images/` 子目录
+- **全名**：Georg Friedrich Bernhard Riemann（乔治·弗里德里希·伯恩哈德·黎曼，中文惯称：黎曼）
+- **生卒**：1826-09-17 生于 Breselenz（汉诺威王国，今德国）→ 1866-07-20 逝于 Selasca（今意大利韦尔巴尼亚，马焦雷湖畔），享年 39（肺结核）
+- **国籍**：Kingdom of Hanover（汉诺威王国），现代对应「德国」
+- **身份**：数学家、物理学家（微分几何、复分析、数论、实分析、数学物理）
+- **家庭**：父 Friedrich Bernhard Riemann（穷路德宗牧师，参加过拿破仑战争）；母 Charlotte Ebell（**1846 年去世，黎曼时年 19 岁**）；六个孩子中的老二；自幼羞涩、惧怕当众演讲、体弱多病；1862 年娶 Elise Koch，育有一女
+- **教育轨迹**：
+  - 1840 年赴汉诺威与祖母同住，就读 lyceum（中学）
+  - 1842 年祖母去世后转入 Johanneum Lüneburg（吕讷堡高级中学）
+  - 1846 年春（19 岁）入读哥廷根大学，**原计划学神学以当牧师帮补家用**，后经 Gauss 建议放弃神学、转入数学
+  - 1847 年转学柏林大学，师从 Jacobi、Dirichlet、Steiner、Eisenstein
+  - 1849 年返回哥廷根
+- **博士导师**：Carl Friedrich Gauss
+- **其他学术导师**：Gotthold Eisenstein、Moritz A. Stern、Carl W. B. Goldschmidt
+- **学生**：Gustav Roch、Eduard Selling、Carl Anton Bjerknes
+- **研究领域**：微分几何、复分析、数论、实分析、数学物理
 
----
+## 2. 核心叙事亮点（用于 Slide 4-9）
 
-## 第 2 步：复制 Makefile
+1. **牧师之子（最动人叙事）**：出身贫困路德宗牧师家庭，自幼羞涩、体弱多病、惧怕当众演讲，却拥有惊人数学天赋；母亲在他 19 岁那年去世。
+2. **从神学到数学**：为当牧师帮补家用而主修神学，Gauss 建议他放弃神学、专攻数学——由此走上数学家之路。
+3. **博士论文与黎曼面（1851）**：《单复变函数一般理论基础》，把多值函数（对数、平方根）几何化为多层曲面——黎曼面，开启复分析的拓扑化。
+4. **就职演讲与黎曼几何（1854）**：1854 年 6 月 10 日在哥廷根发表教授资格演讲《论作为几何基础的假设》，创立 n 维内蕴几何（黎曼几何），60 年后成为广义相对论的数学语言。
+5. **黎曼积分（1854 教授资格论文）**：首次给出积分的严格表述，明确可积性条件；后来发展出 Riemann–Stieltjes 积分。
+6. **黎曼映射定理**：任意单连通区域与单位圆盘共形等价，复分析的几何革命（证明依赖 Dirichlet 原理，当时不严格，后由 Hilbert 补全）。
+7. **黎曼 ζ 函数与黎曼猜想（1859）**：他**唯一一篇数论论文**《论小于给定值的素数个数》，仅约 9 页，却奠基了解析数论；提出黎曼猜想——所有非平凡零点实部均为 1/2，至今悬而未决。
+8. **阿贝尔函数理论与黎曼-罗赫定理**：1857 年《阿贝尔函数理论》统一周期函数；黎曼-罗赫定理（1857 黎曼核心不等式 + 1865 Roch 补项）是代数曲线理论基石。
+9. **39 岁早逝**：1866 年第三次赴意大利疗养途中，因肺结核逝于 Selasca；临终时正与妻子一起诵念主祷文。生前拒绝发表不完整作品，部分洞见随之散佚。
+10. **荣誉**：1866 年（生命的最后一年）当选英国皇家学会外籍会员。
 
-- 将 `grothendieck/Makefile` 复制到 `riemann/Makefile`
-- 将 `MAIN` 变量改为 `Bernhard_Riemann_zh`
-- 将 `VIDEO_NAME` 变量改为 `Bernhard_Riemann_zh`
+## 3. 配色方案（参考 Wilson 式「主色 + 强调 + 分类色」）
 
----
+| 用途 | 色值 | 说明 |
+|---|---|---|
+| 主色（黎曼墨绿） | `#1B4332` | 内蕴几何的深邃 / 克制天才 |
+| 强调色（黎曼银灰） | `#8B9DAF` | 黎曼面的优雅 / 猜想的神秘 |
+| 分类色 1（数论 — 深藏青） | `#1A3A5C` | ζ 函数 / 黎曼猜想 |
+| 分类色 2（几何 — 墨绿） | `#1B4332` | 黎曼几何 / 黎曼度量 |
+| 分类色 3（分析 — 暖铜） | `#C47E3A` | 黎曼积分 / 傅里叶级数 |
+| 分类色 4（复分析 — 紫罗兰） | `#5A3E85` | 黎曼面 / 映射定理 |
+| 背景 | `#F4F6F4` | 浅灰绿白 |
 
-## 第 3 步：收集图片
+- **背景母题**：柔和气泡（稀疏大块实心圆，四档大小错落），呼应「黎曼面 / 弯曲空间」的视觉语言。
 
-- 从 `pages/Bernhard_Riemann/images.txt` 中选出 4–6 张高质量图片
-- 优先选择：portrait（肖像）、出生地/故居、手稿、纪念物、墓碑等
-- 下载到 `riemann/images/`，统一命名为 `portrait.jpg`、`manuscript.jpg` 等
-
----
-
-## 第 4 步：建立时间线和叙事骨架
-
-- 基于 Wikipedia 正文，划分黎曼生平为以下阶段（可微调）：
-  1. **童年与求学** (1826–1846)：Breselenz 出生，Lüneburg 中学，Göttingen 大学
-  2. **柏林与 Göttingen 深造** (1847–1851)：师从 Dirichlet、Eisenstein、Jacobi；博士论文 (1851)
-  3. **Habilitation 与就职演讲** (1852–1854)："论作为几何基础的假设"（即黎曼几何的诞生）
-  4. **Göttingen 任教时期** (1854–1859)：1857 年副教授，1859 年接替 Dirichlet 任正教授
-  5. **晚年与遗产** (1859–1866)：1862 年健康状况恶化（肺结核），多次赴意大利疗养，1866 年病逝于 Selasca（39 岁）
-- 列出 **每个阶段的核心数学贡献**：
-  - 黎曼积分 (Riemann integral)
-  - 柯西-黎曼方程 (Cauchy–Riemann equations)
-  - 黎曼面 (Riemann surface)
-  - 黎曼映射定理 (Riemann mapping theorem)
-  - 黎曼几何 (Riemannian geometry) / 黎曼度量
-  - 黎曼ζ函数 (Riemann zeta function) / 黎曼猜想 (Riemann hypothesis)
-  - 黎曼-罗赫定理 (Riemann–Roch theorem)
-  - 阿贝尔函数理论 (theory of Abelian functions)
-
----
-
-## 第 5 步：设计配色方案
-
-- 黎曼的气质关键词：**深邃、神秘、优雅、悲剧性早逝**
-- 指南建议：**墨绿 + 银灰**
-- 请给出完整的 `\definecolor` 方案，包括：
-  - 主色 (coverprimary)、强调色 (coveraccent)
-  - 四个概念分类色（根据该数学家的核心领域命名，如黎曼的 badgenumber/badgegeo/badgeanaly/badgecomplex）
-  - 各面板色 (purplepanel/amberpanel/greenpanel/bluepanel/goldpanel/graypanel)
-- 四个分类色建议对应：数论 (ζ函数)、几何 (黎曼几何)、分析 (积分/面)、复分析 (映射定理)
-
----
-
-## 第 6 步：规划幻灯片序列
-
-为黎曼规划以下页面序列（约 18 页）：
-
-```
-00  OpenMath 项目首页（从 cover 模板 \input，见 §3.4）
-
-=== 人物篇 ===
-01  封面 — 《黎曼：猜想永恒》/ Bernhard Riemann 1826–1866 + 四色badge
-02  为什么黎曼如此重要 — 39年/十余篇奠基性工作/四个领域
-
-=== 生平线 ===
-03  童年与求学 (1826–1846) — Breselenz → Lüneburg → Göttingen
-04  Göttingen → 柏林 → 博士 (1847–1851)
-
-=== 数学革命 ===
-05  黎曼积分 — 教授资格论文，可积性条件
-06  黎曼面 — 多值函数的几何化
-07  黎曼映射定理 — 复分析的几何革命（标题不标年份！）
-08  就职演讲 (1854) — Habilitation，n维内蕴几何
-09  黎曼几何 — 度量张量，广义相对论数学语言
-
-=== 最深远的贡献 ===
-10  黎曼ζ函数 — 仅约9页，奠定解析数论
-11  黎曼猜想 — 大量低位零点已验证，但有限计算≠证明
-12  黎曼-罗赫定理 (1857/1865) — 代数曲线基石
-13  阿贝尔函数理论 — 继承Abel/Jacobi，为Jacobian簇奠定基础
-
-=== 人物终章 ===
-14  Göttingen 教授 (1857–1866) — 继承Dirichlet教席
-15  病痛与早逝 (1862–1866) — 多次意大利疗养，39岁离世
-16  永恒的猜想 — 160年后，进展与悬而未决
-
-=== 结尾 ===
-17  思想回响 — 把数变成函数，把函数变成空间，把空间变成几何
-18  猜想永恒（结束页 — 不要在此页放肖像！肖像在01页右上角）
-```
-
-> **历史教训**：以上序列是最终成品。实际制作中，有些页面的标题/内容可能在第一版中使用了不准确的表述（如"1851"标注、"第一次严格定义"），这些会在史实审查阶段修正。
-
----
-
-## 第 7 步：编写 Beamer 源码
-
-- 文件名：`/Users/ericksun/workspace/codebuddy/OpenMathAI/mathematician/presentations/riemann/Bernhard_Riemann_zh.tex`
-- 完全参照 `grothendieck/Alexander_Grothendieck_zh.tex` 的代码结构：
-  - 相同的前导区（`\documentclass`、字体、包、配色、辅助命令）
-  - 相同的 `\sectiontitle`、`\plainbar`、`\deckbackground` 格式
-  - 替换为你为黎曼设计的配色方案
-  - 每页用 `\newcommand{\xxxslide}{% ... }` 定义
-- **关键要求**：
-  - 每页编写完立即编译验证 (`make`)，不等待全部写完
-  - 编译失败立即修复，不要跳过
-  - 中文正文，英文术语和公式保留原文
-
----
-
-## 第 8–9 步：史实审查 + 术语审查
-
-完成后逐页自查，但**不要在写第一版时就给自己加太重的史实负担。** 第一版的目标是快速出成品，史实精修是后面的事。
-
-### 第一轮自检（写完后即刻执行）
-
-对照指南第十四节的进阶陷阱，逐页扫描：
-
-| 陷阱类型 | 检查点 | 黎曼案例参考 |
-|---------|--------|------------|
-| 论文计数 | 是否用了精确数字（"10篇"）？ | → 改为"十余篇奠基性工作" |
-| "第一"断言 | 是否声称"第一次/第一个"？ | → 改为"核心贡献""里程碑式" |
-| 标题年份 | 标题中是否有无法确认的年份？ | → 如"黎曼映射定理 (1851)"应去掉1851 |
-| 机构术语 | 德国大学制度(Habilitation等)是否正确？ | → 查原文术语 |
-| 伪引语 | 中文引号内是否声称是数学家原话？ | → 有原文才用引号，否则用间接引语 |
-| 人物时间线 | "后来被X发展"—X的生卒年是否晚于该数学家？ | → Abel比黎曼早，不能写"后来" |
-| 过度简化 | 是否把复杂理论写成了等式？ | → "素分布=ζ零点"太绝对 |
-| 伪精确数字 | 是否写了具体计算验证数字？ | → 不写$10^{13}$，用"大量低位零点" |
-| 现代术语包装 | 是否用21世纪术语描述19世纪数学家？ | → 加"今天我们称之为…" |
-| 传记轶事 | 是否把轶事当确定史实？ | → 加"据传"或改用间接叙述 |
-| 母亲去世时间 | 是否暗示童年丧母？ | ★ page.md 明确：母亲 1846 年去世，黎曼时年 19 岁，非"早逝" |
-| Schmalfuss / 中学轶闻 | 是否出现校长名字或伪造引语？ | ★ page.md 未提 "Schmalfuss"（仅在外部传记中出现）；黎曼中学轶闻不要在无可靠来源时使用引号 |
-| Moritz Stern 身份 | 是否出现"第一位犹太裔正教授"？ | ★ page.md 仅列出 Moritz A. Stern 为 Other academic advisors，犹太裔细节不在 page.md |
-| 1857 副教授 | 是否写成"1857 年被任命为副教授"？ | ★ **这是致命错误！** page.md 明确写 "attempt failed"——晋升未通过，仅获得固定薪水 |
-| Gauss 对就职演讲的反应 | 是否写"Gauss 激动不已/高度评价"？ | ★ page.md 明确写 "Its early reception appears to have been slow"(反响缓慢)，与此矛盾 |
-| 胸膜炎 | 是否出现"染上胸膜炎"？ | ★ page.md 仅写 tuberculosis，未提及 pleurisy |
-| Dedekind 整理出版 | 是否写 Riemann 积分论文由 Dedekind 出版？ | ★ Dedekind 出版的是几何演讲 (1868)；Fourier 级数论文发表于 1867 年 Abhandlungen |
-| 博士论文引语 | 是否伪造了 Gauss 对博士论文的赞美引语？ | ★ page.md 无 Gauss 对博士论文的直接引语评价 |
-
-### 第二轮外审（给数学史背景的人看）
-
-外审关注的不再是"事实错"，而是"专业上站不稳"。常见反馈：
-- 引号问题（最严重）→ 坚决改
-- 宣传化措辞（"每一篇都改变了数学"）→ 改为纪录片化的稳当表述
-- 历史意识（现代语言包装古代数学家）→ 加"为后来…奠定基础"
-
-### 术语清单（对照指南第五章）
-
-| 英文 | 正确中文译法 | 风险点 |
-|------|-------------|--------|
-| Riemann hypothesis | 黎曼猜想 | 不译成"黎曼假设" |
-| Riemann zeta function | 黎曼ζ函数 | ζ 保留希腊字母 |
-| Riemann surface | 黎曼面 | — |
-| Riemann integral | 黎曼积分 | — |
-| Riemannian geometry | 黎曼几何 | Riemannian ≠ Riemann |
-| Riemann–Roch theorem | 黎曼-罗赫定理 | 不翻成"黎曼-洛赫" |
-| conformal mapping | 共形映射 | — |
-| Abelian functions | 阿贝尔函数 | — |
-| meromorphic | 亚纯 | — |
-| Habilitation | 教授资格演讲 | 不译成"就职演讲" |
-| Privatdozent | 编外讲师 | 德国特有职称 |
-| pseudo-Riemannian | 拟黎曼 | 注意与正定黎曼几何的区分 |
-
-### 音乐选择
+### 3.5 背景音乐选择 ✅ 【人物专属】
 
 > **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
 
-黎曼的气质：**克制天才、内敛深度、猜想悬而未决、39岁静默离世** — 不是所有人都需要 epic 风格。
+- **风格定调**：**克制深邃 / 内敛纪录片风**（39 岁静默离世的克制天才、猜想悬而未决）
+- **匹配理由**：
+  - 黎曼不是史诗式天才，而是克制、内敛、深邃——需**沉稳纪录片风**而非 epic
+  - "猜想永恒" 匹配其 39 岁离世、猜想悬而未决 160+ 年的永恒感
+- **已选定曲目（✅ 定稿）**：Alex-Productions「Timeless」（沉稳纪录片风，猜想永恒 ↔ 39 岁离世）
+  - 本地源文件：`music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav`
+  - 复制到成品目录并重命名为：`Timeless.wav`
+  - 时长约 2 分钟，≥ 12 页 × 7 秒 ≈ 84 秒，ffmpeg `-shortest` 自动对齐
 
-**推荐曲目（精选自 music_audio/curated_tracks.md）：**
+## 4. Slide 规划（约 12 页，正文采用 Wilson 式结构）
 
-| 优先级 | 曲目 | 来源 | 本地路径 | 理由 |
-|:--:|------|------|------|------|
-| ★★★ | Timeless | alex-productions | `music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav` | 沉稳纪录片风，猜想永恒 ↔ 39岁离世 |
-| ★★★ | PAST | alex-productions | `music_audio/alex-productions/89-geyy8_WXDK0-PAST.wav` | 历史感深沉，黎曼几何为百年后的 GR 奠基 |
-| ★★ | Symphony No. 7 | beethoven-karajan | `music_audio/beethoven-karajan/07-W5NsPOgyALI-Beethoven "Symphony No 7" Karajan.wav` | 律动庄严，数学之舞 |
-| ★ | The Flow of Time | alex-productions | `music_audio/alex-productions/35-jqIDnltiDRI-The-Flow-of-Time.wav` | 时间感，黎曼 ζ 与素数穿越 165 年 |
+1. **封面**（`\titleslide`）：大标题「黎曼」+ 副题「从复分析到猜想永恒」+ 1826–1866 + 右上头像 + 国籍行 + 底部三要素状态栏 + 四分类 badge
+2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右信息网格（生卒 / 本名 / 国籍 / 出生地 / 师承 / 教育 / 荣誉 / 核心领域）
+3. **黎曼的一生：时间线**（`\timelineslide`）：1826 出生 → 1846 入哥廷根 → 1851 博士 → 1854 就职演讲 → 1859 ζ 函数 → 1866 病逝
+4. **早年与求学**（1826–1849，表格）：Breselenz 出生、牧师之家、吕讷堡中学、神学转向、Gauss 劝转数学、柏林深造
+5. **博士论文与黎曼面**（核心贡献页，表格 + 公式框）：1851 博士论文、黎曼面、多值函数几何化
+6. **黎曼积分**（核心贡献页，表格 + 公式框）：1854 教授资格论文、可积性条件、黎曼和
+7. **就职演讲与黎曼几何**（核心贡献页，表格 + 公式框）：1854 就职演讲、黎曼度量、广义相对论
+8. **黎曼映射定理**（核心贡献页，表格 + 公式框）：单连通区域共形等价、Dirichlet 原理
+9. **黎曼 ζ 函数与黎曼猜想**（核心贡献页，表格 + 公式框）：1859 唯一数论论文、ζ 函数、黎曼猜想
+10. **阿贝尔函数与黎曼-罗赫定理**（核心贡献页，表格 + 公式框）：1857 阿贝尔函数、黎曼-罗赫定理
+11. **教授生涯与身后**（表格）：1859 接替 Dirichlet、1866 皇家学会外籍会员、遗产与影响
+12. **终章**：39 岁、"猜想永恒"的历史地位与遗产
 
-**操作**：复制选定的 `.wav` 到 `Bernhard_Riemann/` 目录，`make video` 自动混入。
+## 5. 史实陷阱与敏感点（终审必须检查）
+
+- **【最重要】1857 副教授晋升**：黎曼 1857 年申请 Göttingen 大学副教授（außerordentlicher Professor），**"attempt failed"——晋升未获通过**，仅因此获得固定薪水。切勿写成"1857 年被任命为副教授"。1859 年 Dirichlet 去世后，黎曼才接替其**正教授**职位并主持数学系。
+- **【重要】Gauss 对就职演讲的反应**：page.md 明确写 "Its early reception appears to have been slow"（早期反响缓慢），且就职演讲直到 1868 年（黎曼去世两年后）才由 Dedekind 正式发表。切勿写"Gauss 激动不已 / 高度评价就职演讲"。
+- **【重要】母亲去世时间**：母亲 Charlotte Ebell **1846 年去世，黎曼时年 19 岁**，非"童年丧母 / 早逝"。
+- **论文计数**：勿用精确数字（"10 篇"），用"十余篇奠基性工作"。
+- **黎曼 ζ 函数论文**：是黎曼**唯一一篇数论论文**，仅约 9 页（"a single short paper"）；勿写成"多篇数论论文"。
+- **黎曼猜想**：大量低位零点已被计算验证位于临界线上，但**有限计算 ≠ 证明**，仍悬而未决。勿写"已验证证明"。
+- **黎曼映射定理年份**：标题中不标年份（无法确证精确年份），正文可提"黎曼的证明依赖 Dirichlet 原理，当时不严格，后由 Hilbert 建立严格基础"。
+- **就职演讲术语**：Habilitation 应译「教授资格演讲」（不译"就职演讲"的晋升语义）；Privatdozent 译「编外讲师」。
+- **黎曼几何 ≠ 黎曼**：Riemannian geometry（黎曼几何）与 Riemann 本人的用词需区分；广义相对论用的是**拟黎曼（Lorentz）几何**的推广，表述为"黎曼几何为广义相对论奠基"。
+- **Dedekind 整理出版**：Dedekind 出版的是**几何就职演讲（1868）**；Fourier 级数论文《Über die Darstellbarkeit einer Function durch eine trigonometrische Reihe》发表于 **1867 年** Abhandlungen——勿混淆。
+- **博士论文引语**：page.md 无 Gauss 对博士论文的直接引语评价，勿伪造。
+- **Schmalfuss / 中学轶闻**：page.md 未提校长 "Schmalfuss"（仅在外部传记出现）；吕讷堡中学轶闻（如"六天读完 Legendre《数论》"）在无可靠来源时勿用引号、或改用"据传"。
+- **Moritz Stern 身份**：page.md 仅列出 Moritz A. Stern 为 Other academic advisors；"第一位犹太裔正教授"细节不在 page.md，勿写。
+- **胸膜炎**：page.md 仅写 tuberculosis（肺结核），未提 pleurisy（胸膜炎）——勿写。
+- **死亡**：1866 年因汉诺威与普鲁士军队冲突逃离哥廷根；第三次赴意大利途中，因肺结核逝于 Selasca，葬于 Biganzolo 教堂墓地。临终时正与妻子诵念主祷文。
+- **生前拒绝发表未完成作品**：去世后哥廷根管家丢弃了办公室部分未发表手稿，部分洞见散佚。
+
+## 6. 数据库字段核对表（§21.5）
+
+| 字段 | 值 | 状态 |
+|---|---|---|
+| qid | Q42299 | 待写入 |
+| name_zh | 黎曼（或 伯恩哈德·黎曼） | 待写入 |
+| name_en | Bernhard Riemann | 待写入 |
+| birth_date | 1826-09-17 | 待写入 |
+| death_date | 1866-07-20 | 待写入 |
+| nationality | Germany（Kingdom of Hanover） | 待写入 |
+| primary_occupation | mathematician | 待写入 |
+| field_of_work | differential geometry / complex analysis / number theory / real analysis | 待写入 |
+| has_biography | 1 | 本次置 1 |
+
+## 7. 社会关系入库清单（§20）
+
+- **博士导师**：Carl Friedrich Gauss
+- **其他学术导师**：Gotthold Eisenstein、Moritz A. Stern、Carl W. B. Goldschmidt
+- **柏林求学老师**：Carl Gustav Jacob Jacobi、Peter Gustav Lejeune Dirichlet、Jakob Steiner
+- **学生**：Gustav Roch（黎曼-罗赫定理的"罗赫"）、Eduard Selling、Carl Anton Bjerknes
+- **竞争 / 学术**：Karl Weierstrass（阿贝尔函数竞争；发现 Dirichlet 原理的漏洞，但极欣赏黎曼）、Richard Dedekind（整理出版几何演讲、传记）
+- **家族**：父 Friedrich Bernhard Riemann、母 Charlotte Ebell、妻 Elise Koch、女
+
+## 8. 奖项清单
+
+- Foreign Member of the Royal Society（英国皇家学会外籍会员，1866 年，生命的最后一年）
+- （巴黎科学院 1861 年悬赏：黎曼曾提交 Commentatio mathematica 参赛，属竞赛投稿而非获奖）
+
+## 9. 机构清单
+
+- 教育：Johanneum Lüneburg、University of Göttingen、University of Berlin（Frederick William University）
+- 任职：University of Göttingen（1859 年起主持数学系，接替 Dirichlet 教席）
+
+## 10. 终审清单
+
+- [ ] 生卒 1826-09-17 / 1866-07-20，享年 39，出生地 Breselenz
+- [ ] 1857 副教授"attempt failed"（晋升未通过，仅获固定薪水），1859 接替 Dirichlet 正教授
+- [ ] Gauss 对就职演讲"早期反响缓慢"表述准确
+- [ ] 母亲 1846 年去世（黎曼 19 岁），非"早逝"
+- [ ] ζ 函数论文是"唯一一篇数论论文、约 9 页"
+- [ ] 黎曼猜想"有限计算 ≠ 证明、悬而未决"
+- [ ] 黎曼映射定理标题不标年份，正文提 Dirichlet 原理不严格、Hilbert 补全
+- [ ] 就职演讲"教授资格演讲"、1868 年 Dedekind 发表
+- [ ] Dedekind 出版几何演讲（1868）、Fourier 级数论文 1867 年发表
+- [ ] 无伪造引语（Gauss 对博士论文、Schmalfuss 等）
+- [ ] 国籍用「德国」现代对应
+- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
+- [ ] `make distclean && make` 编译通过，0 错误
+
+## 11. Review 流程规范（两轮 Review）
+
+### 第 1 轮（Review-1）：事实终审
+- [ ] **结合本地 Wikipedia**：读取 `pages/Bernhard_Riemann/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
+- [ ] **头像**：采用 `images/Georg_Friedrich_Bernhard_Riemann.jpeg`（黎曼 c.1863 肖像）
+- [ ] **国籍**：封面顶部徽章明示德国
+- [ ] **引语核对**：引语必须在 Wikipedia 原文找到，无原文则用间接引语
+- [ ] **编译验证**：`make distclean && make`
+- [ ] **更新提示词**：Review 修正写回本文件
+
+### 第 2 轮（Review-2）：结构优化
+- [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
+- [ ] 身份信息页布局与 Wilson 模板对齐
+- [ ] 中文标点 / 断行 / 间距统一
+- [ ] 与同世纪数学家（Gauss / Weierstrass / Abel）格式对齐
+
 ---
 
-## 第 10 步：布局微调
-
-- 逐页检查是否有底部溢出，按指南第六章 6.2 优先级处理
-- 检查序号圆圈是否与文字重叠
-- 每页间距是否均匀
-
----
-
-## 第 11 步：插入 OpenMath 项目首页
-
-- ★ **使用统一 cover 模板**：从 `../cover/OpenMath_Cover.tex` 复制 `\openmathslide` 命令定义（或直接 `\input`）
-- 在 `\begin{document}` 后调用 `\openmathslide`，然后再调用黎曼的封面 `\titleslide`
-
----
-
-## 第 12 步：最终编译
-
-- 确认 `make` 无错误，PDF 输出正常
-- 确认总页数在 18–20 页之间
-
----
-
-## 关键参考文件清单
-
-在执行上述步骤时，请随时参考以下文件获取细节：
-
-| 文件 | 用途 |
-|------|------|
-| `mathematician/presentations/Mathematician_Biography_Guide.md` | 完整操作手册 |
-| `mathematician/pages/Bernhard_Riemann/page.md` | 黎曼 Wikipedia 正文 |
-| `mathematician/pages/Bernhard_Riemann/metadata.json` | 黎曼 Wikidata 元数据 |
-| `mathematician/presentations/grothendieck/Alexander_Grothendieck_zh.tex` | Grothendieck 完整源码（模板）|
-| `mathematician/presentations/grothendieck/Makefile` | 构建脚本（直接复制）|
-
----
-
-> 开始执行。每完成一步向我汇报。
+> **开始执行。每完成一步向我汇报。**
+> **最重要的事：每写一页就 make，看到溢出就修。**
