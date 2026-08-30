@@ -12,6 +12,7 @@
 - **标杆实例**：`20th_century/Kenneth_G_Wilson/`（完整成品，可对照）。
 - **单一产物**：每个物理学家生成一份 Beamer deck（`.tex` → `.pdf`），外加一份人物专属提示词（`.md`）与必要的数据库脚本。
 - **设计哲学**：物理学家立传与数学家立传的核心差异在于——**物理学家必须有「身份信息页」（Identity / Bio 速览页）**，且强调「研究领域」的结构化表达。这两点构成物理学家模板的骨架，务必保留。
+- **版式双模板**：物理学家 Beamer 版式 = **Wilson 骨架（气泡背景 + 身份信息页 + 卡片式）** + **高斯版式（表格语义化 + 公式框 + 时间线）**。封面、身份信息页、核心贡献概览沿用 Wilson 卡片骨架；**生平关键事件、核心贡献、荣誉传承等页面优先采用高斯模板的 `tabularx` 语义化表格 + `\fcolorbox` 公式框**（详见第四章 4.9 节）。
 
 ### 标准目录结构
 
@@ -143,10 +144,12 @@ NN  结尾
 [3] 主题与模板设置    —— navigation symbols / footline（页码）
 [4] 字体包            —— fontspec + xeCJK（PingFang SC / Helvetica Neue）
 [5] 其他包            —— xcolor/tikz/graphicx/fix-cm/adjustbox/fontawesome5/amsmath/amssymb
+                       + booktabs/tabularx/array/colortbl（高斯版式表格所需，★ 见 4.9）
 [6] tikz 库           —— positioning,calc,arrows.meta,shadows
 [7] 配色定义          —— \definecolor（主色/强调色/四分类色/面板色）
 [8] 核心宏定义        —— \plainbar / \deckbackground / \sectiontitle / \lab
-[9] 每页 slide 宏     —— \titleslide / \profileslide / \xxxslide / \closingslide
+[9] 每页 slide 宏     —— \titleslide / \profileslide / \timelineslide / \xxxslide / \closingslide
+                       （\timelineslide 时间线页 + 表格语义化页 + 公式框页，见 4.9）
 [10] document 主体    —— 按序 \openphysicistslide \titleslide ... \closingslide
 ```
 
@@ -169,7 +172,9 @@ NN  结尾
 \setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
 \usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
 \usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl} % ★ 高斯版式表格所需
 \usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
 ```
 
 ### 4.3 配色变量约定
@@ -281,6 +286,118 @@ NN  结尾
 - 使用 `\deckbackground`（气泡背景）。
 - 主题金句 + 分隔线 + 致敬行 + 生卒年行。
 - **底部品牌统一写 `OpenMathAI`**（不写 `OpenPhysicist`）。
+
+### 4.9 高斯模板版式设计模式（★ 生平/贡献/荣誉页首选）
+
+> 物理学家 Beamer 的**生平关键事件、核心贡献、荣誉传承、核物理/量子专题**等页面，优先采用高斯模板的表格语义化 + 公式框版式（而非 Wilson 的卡片式），以更清晰地结构化「概念 → 贡献 → 意义」。封面、身份信息页、核心贡献概览仍用 Wilson 卡片骨架。以下骨架源自 `mathematician/presentations/Gauss_Biography_Template.md` 第四章，色名按物理学家配色变量替换（`prussiablue`→`coverprimary`、`mathgold`→`coveraccent`、`badgeX`→`badgeA~D`、`Xpanel`→`panelA~D`）。
+
+#### 4.9.1 表格语义化设计（核心贡献页通用）
+
+每页用 `tabularx` 三列表格，**列头按页面主题语义化**，第一列加粗、用强调色：
+
+| 页面主题 | 列头示例 |
+|---|---|
+| 早年 / 教育 | `时间 ｜ 事件 ｜ 影响` |
+| 核心贡献（通用） | `问题 ｜ 该物理学家的贡献 ｜ 意义` |
+| 量子 / 核物理专题 | `概念 ｜ 发现 ｜ 结果` |
+| 荣誉 / 传承 | `类别 ｜ 代表 ｜ 意义` |
+| 争议 / 历史事件 | `事件 ｜ 经过 ｜ 结果` |
+
+**通用模式**：`{时间/概念/问题} ｜ {该人物做了什么} ｜ {影响/结果/意义}`
+
+表格骨架（含配色）：
+
+```latex
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{列1}} &
+  \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{列2}} &
+  \multicolumn{1}{c}{\footnotesize\color{white}\textbf{列3}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{第一列内容} &
+  \cellcolor{panelA}\textcolor{badgeA!82!black}{第二列内容} &
+  \cellcolor{panelB}\textcolor{badgeB!82!black}{第三列内容} \\
+\midrule
+... （重复，每行间 \midrule）
+\bottomrule
+\end{tabularx}
+\end{center}
+```
+
+> **注意**：`\arrayrulecolor`、`\rowcolor`、`\cellcolor` 需 `colortbl` 包（已在 4.2 导言区补充）；`>{\bfseries\scriptsize}m{...}` 需 `array` 包。
+
+#### 4.9.2 公式展示框（★ 高斯版式的标志性元素）
+
+在表格下方展示核心物理公式，用金色边框 + 浅金底。**物理学家立传中，公式框应优先呈现该人物最标志性的公式**（如海森堡不确定性原理 `Δx·Δp ≥ ℏ/2`、狄拉克方程、薛定谔方程、德布罗意关系等）：
+
+```latex
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} {{公式标题（含年份）}}}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}${{公式内容}}$}
+  \end{minipage}%
+}
+\end{center}
+```
+
+**要点**：
+- 长公式用 `\resizebox{11.4cm}{!}` 自动缩放单行；复杂多行用 `\begin{aligned}` / `\begin{cases}` / `\begin{vmatrix}`
+- 标题含年份与出处（如「不确定性原理（Heisenberg，1927）」）
+- 公式框通常**替换**页底金句（公式即是最好的具象化）
+
+#### 4.9.3 时间线页（`\timelineslide`）
+
+生平纵览页用竖线 + 节点的 TikZ 时间线（置于身份信息页之后、核心贡献之前）：
+
+```latex
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{<NAME_ZH> 的一生}{<生卒年>}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.6cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/{年份}/{事件1},
+    2.4/{年份}/{事件2},
+    ...（按生平顺序排列 10 个左右节点）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+```
+
+#### 4.9.4 年份标注模式
+
+| 场景 | 写法 | 示例 |
+|---|---|---|
+| 单年 | `（YYYY）` 或 `YYYY：` | `不确定性原理（1927）` |
+| 区间 | `YYYY–YYYY` | `1925–1926：矩阵力学` |
+| 约略 | `约 YYYY` | `约 1942：S-矩阵思想` |
+| 年代 | `YYYYs` | `1930s` |
+| 发现 vs 发表 | 分开标注 | `1927 提出；1928 发表` |
+
+#### 4.9.5 溢出修复策略（★ 每写一页就 make，看到溢出就修）
+
+优先级从轻到重：
+1. 删装饰元素（`\plainbar` / `\deckbackground`）
+2. 缩 `inner sep` / `\arraystretch`
+3. 缩字号
+4. 减空行间距（`\\[3pt]` → `\\[1pt]`）
+5. 增大顶部负间距（`\vspace{-0.45cm}` → `-0.9cm`）或公式框前负间距
+6. 最后才调 TikZ 坐标
+
+**验收标准**：`Overfull \vbox > 10pt` 必须修复；`\hbox > 50pt` 必须修复；`< 5pt` 可忽略。
 
 ---
 
@@ -486,11 +603,13 @@ xelatex -interaction=nonstopmode {Name}_zh.tex 2>&1 | grep "Overfull"
 
 | 文件 | 用途 |
 |------|------|
-| `20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.tex` | 标杆实例 Beamer 源码 |
+| `20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.tex` | 标杆实例 Beamer 源码（Wilson 卡片骨架母本） |
 | `20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.md` | 标杆实例人物专属提示词 |
 | `20th_century/Kenneth_G_Wilson/Makefile` | 编译/出图/视频 Makefile 模板 |
+| `20th_century/Werner_Heisenberg/Werner_Heisenberg_zh.tex` | ★ 高斯版式物理学家适配成品（表格语义化 + 公式框 + 时间线） |
 | `cover/openphysicist_page.tex` | 项目首页模板（统一 `\input`） |
 | `20th_century/Eugene_Wigner/Eugene_Wigner_zh.tex` | 物理学家首例成品参考 |
+| `../../mathematician/presentations/Gauss_Biography_Template.md` | ★ 高斯立传模板（第四章 4.9 版式设计模式母本） |
 | `../../mathematician/presentations/Mathematician_Biography_Guide.md` | 数学家立传指南（背景音乐/Review/告警检测的完整母本） |
 
 > **开始执行。每完成一步向我汇报。**
