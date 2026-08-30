@@ -1,0 +1,500 @@
+% =============================================================
+%  量子力学的奠基者：维尔纳·海森堡 (Werner Karl Heisenberg)
+%  Beamer 演示 —— 参照高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  资料来源：physicist/presentations/20th_century/20th_century/Werner_Karl_Heisenberg
+%  设计母题：不确定性 / 量子涨落 —— 柔和气泡呼应测不准与概率波
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：深靛蓝（理论深度）+ 诺奖金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{deepindigo}{HTML}{1A237E}    % 深靛蓝 — 量子力学的深邃
+\definecolor{nobelgold}{HTML}{C9A227}     % 诺奖金 — 1932 诺贝尔奖
+\definecolor{badgeQM}{HTML}{4C5FD5}       % 量子力学 — 靛蓝
+\definecolor{badgeUncert}{HTML}{0E7C7B}   % 不确定性 — 青绿
+\definecolor{badgeNuclear}{HTML}{E07B30}  % 核物理与同位旋 — 琥珀
+\definecolor{badgeLegacy}{HTML}{C4204F}   % 哲学与传承 — 玫瑰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{qmpanel}{RGB}{228,232,250}
+\definecolor{uncertpanel}{RGB}{220,240,238}
+\definecolor{nuclepanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{246,228,236}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应不确定性 / 量子涨落
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[nobelgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeUncert!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeQM!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeNuclear!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[nobelgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openphysicist_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=deepindigo!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 德国\enspace·\enspace 量子力学的奠基者\enspace·\enspace 不确定性原理之父};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=deepindigo!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {维尔纳·海森堡};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=deepindigo!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Werner Heisenberg\enspace·\enspace 1901 — 1976};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=nobelgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {矩阵力学 · 不确定性原理 · 同位旋 · 量子场论};
+  \draw[nobelgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeQM] at (-5.05,0)
+        {量子力学\\Matrix Mechanics\par\scriptsize 矩阵力学};
+      \node[badge, fill=badgeUncert] at (-1.68,0)
+        {不确定性\\Uncertainty\par\scriptsize 测不准原理};
+      \node[badge, fill=badgeNuclear] at (1.68,0)
+        {核物理\\Isospin\par\scriptsize 质子-中子模型};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {哲学与传承\\Philosophy\par\scriptsize 哥本哈根诠释};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"因创立量子力学，其应用尤其导致氢的同素异形体的发现。" —— 1932 诺贝尔物理学奖获奖理由};
+  % 头像（1924 年哥廷根肖像）
+  \node[draw=nobelgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Heisenberg.jpeg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Heisenberg.jpeg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Werner Heisenberg (1924)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国\enspace|\enspace \faIcon{university}\enspace Leipzig · Göttingen · München\enspace|\enspace Nobel 1932};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 物理学家硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{nobelgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{海森堡 - 从维尔茨堡到诺贝尔奖}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[draw=nobelgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\IfFileExists{images/Heisenberg.jpeg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Heisenberg.jpeg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Werner Heisenberg (1924)};
+  \node[infob, fill=goldpanel, draw=nobelgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1901-12-05 — 1976-02-01\\[2pt]\lab{本名}\quad Werner Karl Heisenberg\\[2pt]\lab{国籍}\quad 德国};
+  \node[infob, fill=qmpanel, draw=badgeQM!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 慕尼黑大学（博士 1923）\\[2pt]
+     \lab{师承}\quad Arnold Sommerfeld（导师）\\[2pt]\quad\enspace Max Born（学术导师）};
+  \node[infob, fill=uncertpanel, draw=badgeUncert!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 维尔茨堡（德国）\\[2pt]\lab{去世地}\quad 慕尼黑（西德）\\[2pt]\lab{任职}\quad 莱比锡 · 柏林 · 马普所};
+  \node[infob, fill=nuclepanel, draw=badgeNuclear!45, anchor=south] at (3.5,-1.85)
+    {\lab{主要荣誉}\quad Nobel 1932 · Planck Medal 1933\\[2pt]
+     \quad Matteucci 1929 · Bohr Medal 1970\\[2pt]
+     \lab{核心领域}\quad 量子力学 · 不确定性\\[2pt]
+     \quad 核物理 · 量子场论};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 海森堡的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{海森堡的一生}{1901 — 1976 · 从神童到量子力学之父}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.6cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{nobelgold!88!black}}
+]
+  \draw[nobelgold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1901/生于维尔茨堡，古典语言学家之子,
+    2.4/1923/获慕尼黑大学博士（湍流论文）,
+    1.7/1925/Helgoland 岛完成 Umdeutung 论文,
+    1.0/1927/提出不确定性原理（哥本哈根）,
+    0.3/1927/25 岁任莱比锡大学正教授,
+    -0.4/1932/提出质子-中子模型与同位旋,
+    -1.1/1933/获 1932 年度诺贝尔物理学奖,
+    -1.8/1942/任 Kaiser Wilhelm 物理研究所所长,
+    -2.5/1958/迁慕尼黑，重建德国科学,
+    -3.1/1976/于慕尼黑去世
+  }{
+    \fill[nobelgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：慕尼黑与 Sommerfeld ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：慕尼黑与 Sommerfeld (1901–1923)}{古典语言学家之子 · 湍流博士论文}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1901} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{生于维尔茨堡，父为德国唯一的中世纪与现代希腊语 ordinarius 教授} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{家学深厚，语言与古典修养并重} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1920–1923} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{慕尼黑大学师从 Sommerfeld 与 Wien；哥廷根随 Born、Franck，数学受教于 Hilbert} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{量子物理与数学双修} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1923} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{博士论文研究湍流（流体稳定性与湍流性质，Orr–Sommerfeld 方程）} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{获慕尼黑大学博士} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1924} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{哥廷根随 Born 完成任教资格（habilitation），主题反常塞曼效应} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{正式取得任教资格} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个古典语言学家之子，最终用数学语言重写了物理世界。}
+\end{center}
+\end{frame}}
+
+% --- 5. Helgoland 与 Umdeutung 论文 ---
+\newcommand{\umdeutungslide}{\begin{frame}\plainbar\sectiontitle{Helgoland 与 Umdeutung 论文 (1925)}{北海孤岛 · 量子理论的重新诠释}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{背景}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{海森堡的突破}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1925 年春，花粉热发作} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{躲到无花粉的 Helgoland 岛，静心研究量子问题} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{孤岛成了革命的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{旧量子论解释反常塞曼效应失败} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{提出"只用可观测量"的原则，以矩阵替换傅里叶级数} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{拒绝不可观测的电子轨道} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{需要数学形式化} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{论文《量子理论重释》（Umdeutung 论文）1925 年 9 月发表} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{矩阵力学的奠基之作} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 正则对易关系（矩阵力学的核心，Heisenberg–Born–Jordan）}\\[1pt]
+  {\fontsize{12}{16}\selectfont\color{deepindigo!88!black}$\hat{q}\,\hat{p}-\hat{p}\,\hat{q}=i\hbar$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 矩阵力学：与 Born、Jordan ---
+\newcommand{\matrixslide}{\begin{frame}\plainbar\sectiontitle{矩阵力学：与 Born、Jordan (1925–1926)}{非对易矩阵 · 可观测量 · 三人协作}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Heisenberg（1925）} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{以非对易矩阵重释运动学与力学关系} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{Umdeutung 论文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Born（1925）} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{识别出这是矩阵代数，系统转写为矩阵语言} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{矩阵形式化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Born–Jordan（1925）} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{60 天内完成系统转写与推广} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{《Zur Quantenmechanik》} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{三人合著（1926）} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{完整表述矩阵力学（Dreimännerarbeit）} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{量子力学的完整形式} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 海森堡运动方程}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{deepindigo!88!black}$\dfrac{d\hat{A}}{dt}=\dfrac{\partial\hat{A}}{\partial t}+\dfrac{1}{i\hbar}[\hat{A},\hat{H}]$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 不确定性原理 ---
+\newcommand{\uncertaintyslide}{\begin{frame}\plainbar\sectiontitle{不确定性原理 (1927)}{Ungenauigkeit · 哥本哈根诠释}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{海森堡的回答}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{位置与动量能同时精确吗？} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{不可能同时精确测定，二者不确定度之积有下限} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{量子世界的根本界限} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{观察会改变系统吗？} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{测量行为本身必然扰动被测系统} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{观测的不可回避性} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{术语出处} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{论文用词 "Ungenauigkeit"（不精确性），非 "uncertainty"} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{1927-02-23 致 Pauli 信中首述} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 不确定性原理（Heisenberg，1927）}\\[1pt]
+  {\fontsize{13}{17}\selectfont\color{deepindigo!88!black}$\Delta x\cdot\Delta p\ \geq\ \dfrac{\hbar}{2}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 莱比锡：最年轻的德国正教授 ---
+\newcommand{\leipzigslide}{\begin{frame}\plainbar\sectiontitle{莱比锡：最年轻的德国正教授 (1927–1942)}{25 岁任正教授 · 铁磁性 · 量子场论}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成就}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1927} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{任莱比锡大学理论物理正教授兼系主任} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{德国最年轻正教授} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1928} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{用 Pauli 不相容原理解释铁磁性之谜} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{交换相互作用的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1929} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{与 Pauli 合著奠定相对论量子场论基础} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{QFT 的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1932} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{提出原子核的质子-中子模型与同位旋} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{现代核物理基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 25 岁执掌一个研究所，他的学生后来遍及世界。}
+\end{center}
+\end{frame}}
+
+% --- 9. 核物理与同位旋 ---
+\newcommand{\isospinslide}{\begin{frame}\plainbar\sectiontitle{核物理与同位旋 (1932)}{质子-中子模型 · isospin}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{海森堡的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Chadwick 发现中子后，核由什么组成？} & \cellcolor{nuclepanel}\textcolor{badgeNuclear!82!black}{提出原子核由质子与中子组成} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{取代质子-电子核模型} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{质子与中子本质相同吗？} & \cellcolor{nuclepanel}\textcolor{badgeNuclear!82!black}{引入同位旋（isospin）概念，视二者为同粒子的两态} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{强相互作用对称性} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{核力如何描述？} & \cellcolor{nuclepanel}\textcolor{badgeNuclear!82!black}{用交换相互作用描述核子间作用力} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{核力理论的先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 同位旋：质子与中子作为核子双重态}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{deepindigo!88!black}$N=\begin{pmatrix}p\\n\end{pmatrix},\qquad \tau_3\ N=\begin{pmatrix}+\frac{1}{2}\,p\\[2pt]-\frac{1}{2}\,n\end{pmatrix}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 纳粹时期与铀计划 ---
+\newcommand{\nazislide}{\begin{frame}\plainbar\sectiontitle{纳粹时期与铀计划 (1933–1945)}{"白犹太人"风波 · Uranverein}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经过}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{"德国物理学"攻击} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{因坚持爱因斯坦理论被 Lenard、Stark 派攻击为"白犹太人"} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{遭 SS 调查} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1938 · 调查平息} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{母亲与 Himmler 母亲相识，Himmler 亲笔写信平息} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{免于迫害} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1939–1945 · 铀计划} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{任德国核计划首席理论物理学家，主持反应堆研究} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{Uranverein 核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1942 · 对 Speer 陈述} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{称 1945 年前无法造出原子弹} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{德国核计划转向} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他是否"故意拖延"，至今仍是历史学的未解之问。}
+\end{center}
+\end{frame}}
+
+% --- 11. Farm Hall 与被俘 ---
+\newcommand{\farmhallslide}{\begin{frame}\plainbar\sectiontitle{Farm Hall 与被俘 (1945)}{Operation Epsilon · 广岛消息 · 道德困境}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{被俘} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{与 Hahn、von Weizsäcker 等 10 人囚于英国 Farm Hall} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{Operation Epsilon} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{广岛消息} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{听闻广岛原子弹后震惊，坦言未认真计算临界质量} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{录音记录其困惑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{自述} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{"我们没有道德勇气在 1942 年春天建议政府雇佣 12 万人去造那东西"} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{道德困境的剖白} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 天才与时代的纠葛，在这一刻凝固成历史的追问。}
+\end{center}
+\end{frame}}
+
+% --- 12. 战后重建与 CERN ---
+\newcommand{\rebuildslide}{\begin{frame}\plainbar\sectiontitle{战后重建与 CERN}{Max Planck 研究所 · 哥廷根宣言}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{所长} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{战后任 Kaiser Wilhelm 物理研究所所长（更名 Max Planck 物理研究所）} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{重建德国物理学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1953 · CERN} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{代表西德签署 CERN 创建公约} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{欧洲高能物理起步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1957 · 哥廷根宣言} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{签署《哥廷根宣言》，公开反对西德拥核} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{科学家反核武} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1960–1970} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{任慕尼黑 Max Planck 物理与天体物理研究所（MPIFA）所长} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{德国科学的旗帜} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从战争的废墟中，他亲手重建了德国的科学。}
+\end{center}
+\end{frame}}
+
+% --- 13. 哲学与世界观 ---
+\newcommand{\philosophyslide}{\begin{frame}\plainbar\sectiontitle{哲学与世界观}{反实在论 · 《物理学与哲学》 · 东方哲学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{立场}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{反实在论} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{认为物理理论描述的是观测而非客观实在，与 Einstein 针锋相对} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{哥本哈根诠释核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{柏拉图影响} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{"现代物理明确站在柏拉图一边"——基本粒子是形式，而非寻常物体} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{数学实在观} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{著作} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{《物理学与哲学》（Gifford 讲座）、《物理学及其他》（自传）} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{科学哲学的经典} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他不仅是量子力学的缔造者，也是它的诠释者。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{诺贝尔奖 · 门生遍天下}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{国际荣誉} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 诺贝尔物理学奖（1932 年度）\item Max Planck 奖章（1933）\item Matteucci 奖章（1929）\item Bohr 国际金质奖章（1970）\end{itemize}} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{量子力学奠基者的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{著名门生} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{Edward Teller、Felix Bloch、von Weizsäcker、Peierls、Oppenheimer（听众）} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{学派遍及世界} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{学术影响} & \cellcolor{qmpanel}\textcolor{badgeQM!82!black}{矩阵力学、不确定性原理、同位旋成为现代物理基石} & \cellcolor{uncertpanel}\textcolor{badgeUncert!82!black}{思想延续至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 量子力学之父之名，因深邃与勇气而愈发闪耀。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=deepindigo!90!black] at ([yshift=1.5cm]current page.center) {他用 74 年的一生，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=nobelgold!85!black] at ([yshift=0.4cm]current page.center) {把确定性从物理世界的王座上请了下来。};
+\draw[nobelgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=deepindigo!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是方程，而是一种看待实在的全新方式。};
+\node[font=\fontsize{8}{10}\selectfont, text=deepindigo!60!black] at ([yshift=-2.0cm]current page.center) {海森堡\quad Werner Heisenberg\quad 1901 — 1976};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 量子力学 · 不确定性 · 核物理 · 哲学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\umdeutungslide
+\matrixslide
+\uncertaintyslide
+\leipzigslide
+\isospinslide
+\nazislide
+\farmhallslide
+\rebuildslide
+\philosophyslide
+\honorslide
+\closingslide
+\end{document}

@@ -52,7 +52,7 @@
 | 1928 | Owen Willans Richardson (欧文·威廉斯·理查森) | United Kingdom | 表彰他在热电子现象方面的研究，尤其是发现以他名字命名的定律 | 🔲 | 🔲 |
 | 1929 | Louis-Victor Pierre Raymond de Broglie (路易·维克多·德布罗意) | France | 表彰他发现电子的波动性 | 🔲 | 🔲 |
 | 1930 | Chandrasekhara Venkata Raman (钱德拉塞卡拉·文卡塔·拉曼) | India | 表彰他在光的散射方面的研究，以及发现以他名字命名的效应 | 🔲 | 🔲 |
-| 1932 | Werner Karl Heisenberg (维尔纳·海森堡) | Germany | 表彰他创立量子力学，其应用尤其促成了氢的同素异形体的发现 | 🔲 | 🔲 |
+| 1932 | Werner Karl Heisenberg (维尔纳·海森堡) | Germany | 表彰他创立量子力学，其应用尤其促成了氢的同素异形体的发现 | ✅ | 🔲 |
 | 1933 | Erwin Schrödinger (埃尔温·薛定谔) | Germany | 表彰他发现原子理论的新颖且富有成效的形式 | 🔲 | 🔲 |
 | 1933 | Paul Adrien Maurice Dirac (保罗·狄拉克) | United Kingdom | 表彰他发现原子理论的新颖且富有成效的形式 | 🔲 | 🔲 |
 | 1935 | James Chadwick (詹姆斯·查德威克) | United Kingdom | 表彰他发现中子 | 🔲 | 🔲 |
