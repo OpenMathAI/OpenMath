@@ -1,0 +1,468 @@
+% =============================================================
+%  AI 之父：约翰·麦卡锡 (John McCarthy)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：符号 / 递归 / 智能 —— 稀疏气泡呼应递归与符号计算
+%  资料来源：turing/pages/1971/John McCarthy (computer scientist)/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== McCarthy 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeAI}{HTML}{2E5A9E}     % 人工智能 — 蓝
+\definecolor{badgeLisp}{HTML}{1E8E8E}   % Lisp 语言 — 青绿
+\definecolor{badgeTime}{HTML}{D9A441}   % 分时系统 — 琥珀
+\definecolor{badgeLogic}{HTML}{C0395B}  % 逻辑与知识 — 玫瑰
+\definecolor{aipanel}{RGB}{228,233,246}
+\definecolor{lisppanel}{RGB}{222,240,238}
+\definecolor{timepanel}{RGB}{249,240,224}
+\definecolor{logicpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAI!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeLisp!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeTime!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{brain}\enspace AI 之父\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {约翰·麦卡锡};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {John McCarthy\enspace·\enspace 1927 — 2011};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {创造「人工智能」一词 · Lisp 之父 · 1971 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAI] at (-5.05,0)
+        {人工智能\\Artificial Intelligence\par\scriptsize AI 之父};
+      \node[badge, fill=badgeLisp] at (-1.68,0)
+        {Lisp 语言\\Lisp\par\scriptsize 函数式编程};
+      \node[badge, fill=badgeTime] at (1.68,0)
+        {分时系统\\Time-sharing\par\scriptsize 云计算先驱};
+      \node[badge, fill=badgeLogic] at (5.05,0)
+        {逻辑与知识\\Logic\par\scriptsize 非单调推理};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his major contributions to the field of Artificial Intelligence." —— 1971 图灵奖获奖理由};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/McCarthy.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{McCarthy.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {John McCarthy (2006)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace MIT · Stanford\enspace|\enspace Turing 1971 · National Medal 1990};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{麦卡锡 - 从波士顿到 AI 之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/McCarthy.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{McCarthy.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {John McCarthy (2006)};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1927-09-04 — 2011-10-24\\[2pt]\lab{本名}\quad John McCarthy\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=lisppanel, draw=badgeLisp!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Caltech BS 数学 1948\\[2pt]
+     \quad Princeton PhD 数学 1951\\[2pt]
+     \lab{师承}\quad Donald C. Spencer（导师）};
+  \node[infob, fill=aipanel, draw=badgeAI!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 波士顿 · 马萨诸塞\\[2pt]\lab{去世地}\quad 斯坦福 · 加州\\[2pt]\lab{任职}\quad MIT · Stanford};
+  \node[infob, fill=timepanel, draw=badgeTime!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1971 · Kyoto 1988\\[2pt]
+     \quad National Medal 1990\\[2pt]
+     \lab{核心领域}\quad 人工智能 · Lisp 语言\\[2pt]
+     \quad 分时系统 · 逻辑与知识表示};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{麦卡锡的一生}{1927 — 2011 · 从数学神童到 AI 之父}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1927/生于波士顿，移民家庭,
+    2.4/1948/获 Caltech 数学学士,
+    1.7/1951/获 Princeton 数学博士（导师 Spencer）,
+    1.0/1956/Dartmouth 会议命名「人工智能」,
+    0.3/1958/创造 Lisp 语言与 Advice Taker,
+    -0.4/1959/发明垃圾回收，参与 ALGOL,
+    -1.1/1962/任斯坦福正教授,
+    -1.8/1971/获图灵奖,
+    -2.5/1990/获美国国家科学奖章,
+    -3.1/2011/逝于斯坦福
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：波士顿与 Caltech ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：波士顿与 Caltech (1927–1948)}{移民家庭 · von Neumann 讲座 · 数学神童}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1927} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{生于波士顿；父为爱尔兰移民、母为立陶宛犹太移民} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{移民家庭的批判性思维} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1930s} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{父母为美共积极分子，鼓励学习与独立思考} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{思想的自由底色} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{少年} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{读《十万个为什么》对科学开窍；自学 Caltech 大学数学} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{跳过 Caltech 前两年数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Caltech} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{听 von Neumann 讲座激发学术志向；因缺体育课被停学后入伍} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{1948 年获数学 BS} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个移民少年，最终用数学语言重写了机器的智能。}
+\end{center}
+\end{frame}}
+
+% --- 5. Princeton 博士 ---
+\newcommand{\princetonslide}{\begin{frame}\plainbar\sectiontitle{Princeton 博士：AI 的召唤 (1948–1951)}{Spencer 门下 · 数学博士论文}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{师从 Donald C. Spencer（Princeton 数学家）} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{数学的严谨训练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{《Projection operators and partial differential equations》} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{1951 年获数学 PhD} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转向} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{由纯粹数学转向「让机器思考」的远大问题} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{AI 之路的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 数学博士的底色，奠定了他日后「逻辑派 AI」的立场。}
+\end{center}
+\end{frame}}
+
+% --- 6. Dartmouth 会议：命名人工智能 ---
+\newcommand{\dartmouthslide}{\begin{frame}\plainbar\sectiontitle{Dartmouth 会议：命名「人工智能」 (1956)}{与 Minsky/Rochester/Shannon 共创 AI 一词}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{提案} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{McCarthy 与 Minsky、Rochester、Shannon 共同撰写会议提案} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{首次使用 "artificial intelligence"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{会议} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{1956 年夏 Dartmouth 会议，AI 领域的开端} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{AI 作为独立学科诞生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 Turing、Minsky、Newell、Simon 并称 "founding fathers"} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{AI 之父之一} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "artificial intelligence"（人工智能）——1956 年 Dartmuouth 提案命名}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Artificial Intelligence} —— 一个学科的名字，由此诞生。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Lisp 的诞生 ---
+\newcommand{\lispslide}{\begin{frame}\plainbar\sectiontitle{Lisp 的诞生 (1958)}{符号表达式 · 函数式编程 · lambda 记号}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{特性}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{Lisp 的设计}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{符号计算} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{发现原始递归函数可扩展以计算符号表达式} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{S-表达式成为核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{函数式} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{引入 lambda 记号（借自 λ 演算），后启发 Scheme} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{函数式编程先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{第二个高级编程语言（Fortran 之后），1960 年发表} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{AI 应用的首选语言} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 条件表达式（McCarthy 条件，1959）与 S-表达式}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$(p_1 \to e_1,\ p_2 \to e_2,\ \ldots,\ T \to e_n)\qquad \texttt{(CAR (CONS A B))} \Rightarrow A$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 垃圾回收与 ALGOL ---
+\newcommand{\gcslide}{\begin{frame}\plainbar\sectiontitle{垃圾回收与 ALGOL (1959)}{自动内存管理 · 递归与条件表达式}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方案}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{内存泄漏} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{为解决 Lisp 内存问题发明垃圾回收（自动内存管理）} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{现代语言标配} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{ALGOL 语言} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{1959 年提议递归与条件表达式，成为 ALGOL 60 的一部分} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{IFIP WG 2.1 标准制定} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 递归与垃圾回收，如今已成为几乎所有编程语言的基石。}
+\end{center}
+\end{frame}}
+
+% --- 9. 分时系统与效用计算 ---
+\newcommand{\timesharingslide}{\begin{frame}\plainbar\sectiontitle{分时系统与效用计算 (1959–1961)}{CTSS/BBN/Dartmouth · 云计算的思想先驱}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{分时系统} & \cellcolor{timepanel}\textcolor{badgeTime!82!black}{参与最早三个分时系统（CTSS、BBN、Dartmouth）的创建} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{多用户共享计算的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{效用计算} & \cellcolor{timepanel}\textcolor{badgeTime!82!black}{1961 年 MIT 百年校庆演讲首次公开提议「效用计算」} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{云计算思想的雏形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{评价} & \cellcolor{timepanel}\textcolor{badgeTime!82!black}{Lester Earnest：没有分时，互联网不会那么早到来} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{服务器/云计算的源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 今天的一切云服务，都可以追溯到「分时」这一思想。}
+\end{center}
+\end{frame}}
+
+% --- 10. MIT 与斯坦福 ---
+\newcommand{\mitslide}{\begin{frame}\plainbar\sectiontitle{MIT 与斯坦福：两座 AI 重镇}{Project MAC · Stanford AI Lab}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{MIT} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{1956 年任研究 fellow，推动 Project MAC 创立} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{计算系统研究重镇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{斯坦福} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{1962 年任正教授，建立 Stanford AI Lab（SAIL）} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{与 Project MAC 良性竞争} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{任教} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{在斯坦福任教至 2000 年退休，被学生昵称 "Uncle John"} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{指导 30 名博士生} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 东西海岸两座 AI 重镇，都刻着他的名字。}
+\end{center}
+\end{frame}}
+
+% --- 11. 逻辑 AI：Circumscription 与情境演算 ---
+\newcommand{\logicslide}{\begin{frame}\plainbar\sectiontitle{逻辑 AI：Circumscription 与情境演算}{非单调推理 · 形式化常识}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{McCarthy 的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{情境演算} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{提出 situation calculus，形式化动作与变化的推理} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{常识推理的形式基础} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{限定法} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{1978–1986 发展 circumscription（非单调推理）} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{处理常识的例外} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Advice Taker} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{1958 年构想，启发问答系统与逻辑编程} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Prolog 的思想源头之一} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 递归定义（Lisp 风格，体现函数式与逻辑的结合）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{fact}(n)=\mathrm{if}\ n=0\ \mathrm{then}\ 1\ \mathrm{else}\ n\cdot\mathrm{fact}(n-1)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 哲学与论战 ---
+\newcommand{\philosophyslide}{\begin{frame}\plainbar\sectiontitle{哲学与论战}{逻辑派 AI · 中文屋争论 · 与 Dreyfus 论战}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{立场}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{乐观派} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{坚信人类智能的每一方面都可被充分形式化并编程} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{逻辑派 AI 代表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中文屋} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{1979 年论文引发 John Searle 1980 年「中文屋」反驳} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{关于机器心智的经典争论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论战} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{与 Hubert Dreyfus 毕生论战，坚持逻辑 AI 可行} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{AI 哲学的两极} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} "拒绝做算术的人，注定胡言乱语。" —— 麦卡锡的名言}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1971 · 门生遍天下}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1971）\item Kyoto Prize（1988）\item National Medal of Science（1990）\item Benjamin Franklin Medal（2003）\end{itemize}} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{AI 奠基者的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Barbara Liskov（2008 图灵奖）、Raj Reddy（1994 图灵奖）、Hans Moravec、Ruzena Bajcsy} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{指导 30 名博士生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术影响} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{AI、Lisp、分时、逻辑推理成为计算机科学基石} & \cellcolor{lisppanel}\textcolor{badgeLisp!82!black}{思想延续至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} AI 之父之名，因深邃与远见而愈发闪耀。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：智能的符号之路}{AI · Lisp · 分时 · 逻辑}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=aipanel, draw=badgeAI!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAI} 人工智能}\\[3pt]AI 之父\\[2pt]命名 AI};
+\node[leg, fill=lisppanel, draw=badgeLisp!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLisp} Lisp 语言}\\[3pt]函数式\\[2pt]垃圾回收};
+\node[leg, fill=timepanel, draw=badgeTime!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeTime} 分时系统}\\[3pt]效用计算\\[2pt]云计算先驱};
+\node[leg, fill=logicpanel, draw=badgeLogic!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLogic} 逻辑与知识}\\[3pt]circumscription\\[2pt]情境演算};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 智能，可以是符号与逻辑的舞蹈。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 命名 AI $\rightarrow$ Lisp $\rightarrow$ 分时系统 $\rightarrow$ 云计算\\[2pt]他的思想，仍在计算机科学的血脉中流动。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {智能，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {始于给机器一个名字。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 John McCarthy};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {约翰·麦卡锡\quad John McCarthy\quad 1927 — 2011};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{brain}\enspace Turing 1971 · National Medal 1990 · AI 之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\princetonslide
+\dartmouthslide
+\lispslide
+\gcslide
+\timesharingslide
+\mitslide
+\logicslide
+\philosophyslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}
