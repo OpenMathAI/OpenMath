@@ -1,0 +1,488 @@
+% =============================================================
+%  生命字母表的读者：弗雷德里克·桑格 (Frederick Sanger)
+%  Beamer 演示 —— 参照数学家 Carl Friedrich Gauss 立传版式
+%  （表格语义化 tabularx + 公式展示框 + 时间线页）
+%  资料来源：chemist/presentations/20th_century/pages/Frederick_Sanger
+%  设计母题：序列 (Sequence) —— 把生命读成字母
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenChemist 项目首页（定义 coverprimary/coveraccent/coverdark/covermuted/goldpanel + \openchemistslide）
+\input{../../cover/openchemist_page.tex}
+
+% ===== Sanger 专属配色：深藏青（分子生物学深度）+ 香槟金（诺奖）+ 序列四色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{deepnavy}{HTML}{1E3A5F}      % 深藏青 — 主色（表头 / 公式文本）
+\definecolor{badgeProt}{HTML}{2E5A9E}     % 蛋白质测序 — 蓝
+\definecolor{badgeDNA}{HTML}{1B7A43}      % DNA 测序 — 绿
+\definecolor{badgeRNA}{HTML}{D97B29}      % RNA 测序 — 琥珀
+\definecolor{badgeCentral}{HTML}{C0395B}  % 分子生物学 — 玫瑰
+\definecolor{titlecolor}{RGB}{18,26,52}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{protpanel}{RGB}{228,233,246}
+\definecolor{dnapanel}{RGB}{222,240,230}
+\definecolor{rnapanel}{RGB}{249,236,222}
+\definecolor{centralpanel}{RGB}{246,228,234}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，以离散圆点呼应「序列 / 字母」的线性排列
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeProt!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeDNA!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeRNA!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% ========================= SLIDES =========================
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=deepnavy!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{book-open}\enspace 生命字母表的读者\enspace·\enspace 英国};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=deepnavy!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {弗雷德里克·桑格};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=deepnavy!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Frederick Sanger\enspace·\enspace 1918 — 2013};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {蛋白质测序与 DNA 测序的奠基人 · 两度诺贝尔化学奖得主};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeProt] at (-5.05,0)
+        {蛋白质测序\\Protein Seq.\par\scriptsize 1958 诺奖};
+      \node[badge, fill=badgeDNA] at (-1.68,0)
+        {DNA 测序\\DNA Seq.\par\scriptsize 1980 诺奖};
+      \node[badge, fill=badgeRNA] at (1.68,0)
+        {RNA 测序\\RNA Seq.\par\scriptsize 5S rRNA · tRNA};
+      \node[badge, fill=badgeCentral] at (5.05,0)
+        {分子生物学\\Mol. Biology\par\scriptsize 中心法则基石};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his work on the structure of proteins, especially that of insulin." —— 1958 诺贝尔化学奖获奖理由};
+  % 肖像（Wikipedia 1960 年照片）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Frederick_Sanger.jpeg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Frederick Sanger (1918–2013)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国\enspace|\enspace \faIcon{university}\enspace Cambridge · LMB\enspace|\enspace Nobel 1958 · 1980};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 高斯模板硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{弗雷德里克·桑格 - 从贵格会到两次诺奖}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Frederick_Sanger.jpeg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Frederick Sanger (1918–2013)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1918-08-13 — 2013-11-19\\[2pt]\lab{本名}\quad Frederick Sanger\\[2pt]\lab{国籍}\quad 英国};
+  \node[infob, fill=protpanel, draw=badgeProt!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad The Downs · Bryanston · St John's College, Cambridge\\[2pt]
+     \lab{博士}\quad 1943 · Cambridge\\[2pt]\lab{师承}\quad Neuberger（Pirie 旋即离职）};
+  \node[infob, fill=dnapanel, draw=badgeDNA!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 格洛斯特郡 · Rendcomb\\[2pt]\lab{去世地}\quad 剑桥 · Addenbrooke's Hospital\\[2pt]\lab{享年}\quad 95 岁};
+  \node[infob, fill=centralpanel, draw=badgeCentral!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 蛋白质 · RNA · DNA 测序\\[2pt]
+     \lab{身份}\quad 生物化学家\\[2pt]
+     \lab{荣誉}\quad Nobel 1958 · 1980 · OM 1986};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 桑格的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{桑格的一生}{1918 — 2013 · 从乡村医生之子到两度诺奖}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1918/生于格洛斯特郡 Rendcomb，贵格会家庭,
+    2.41/1936/入剑桥 St John's College 读自然科学,
+    1.72/1943/获博士；加入 Chibnall 组研究胰岛素,
+    1.03/1951/测得胰岛素 B 链序列；任 MRC 研究员,
+    0.34/1955/确定胰岛素三个二硫键,
+    -0.35/1958/首次获诺贝尔化学奖,
+    -1.04/1962/迁入 LMB，任蛋白质化学部主任,
+    -1.73/1977/发表双脱氧链终止法,
+    -2.42/1980/第二次获诺贝尔化学奖,
+    -3.11/2013/于剑桥去世，享年 95 岁
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：贵格会医生之子 (1918–1935)}{Rendcomb · The Downs · Bryanston · Salem}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1918} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{生于格洛斯特郡 Rendcomb；父亲是全科医生，曾任圣公会驻华医疗传教士，两个儿子出生后改信贵格会} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{贵格会家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1927 / 1932} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{9 岁入贵格会预备学校 The Downs；14 岁入道尔顿制 Bryanston School，在化学老师 Ordish 影响下立志科学} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{科学志向觉醒} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1935} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{赴德国 Schule Schloss Salem 交换；每天以诵读希特勒《我的奋斗》开始} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{终生难忘的见闻} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 谦逊、和平主义与对真理的执着，都源于这个贵格会家庭。}
+\end{center}
+\end{frame}}
+
+% --- 5. 剑桥 ---
+\newcommand{\cambridgeslide}{\begin{frame}\plainbar\sectiontitle{剑桥：从物理转向生物化学 (1936–1943)}{父母双亡 · 良心拒服兵役 · 博士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1936} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{入 St John's College 读自然科学；物理与数学吃力，二年级以生理学替代物理} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{Part II 生物化学一等荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1936–1938} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{父母在两年内先后因癌去世（父 60 岁、母 58 岁）} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{更早独立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1939–1940} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{良心拒服兵役，获无条件豁免；在贵格中心受社会救济训练、任医院勤务} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{和平主义者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1940–1943} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{博士先随 Pirie（约一月）后转 Neuberger，研究赖氨酸代谢} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{1943 获博士学位} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在战火中，他选择了一条安静而坚定的科学之路。}
+\end{center}
+\end{frame}}
+
+% --- 6. 胰岛素测序 ---
+\newcommand{\insulinslide}{\begin{frame}\plainbar\sectiontitle{胰岛素测序：证明蛋白质有序列 (1943–1955)}{桑格试剂 · 指纹图谱 · 二硫键 · 1958 诺奖}
+\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{N 端如何标记？(1943–1945)} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{FDNB（桑格试剂）标记多肽链 N 端氨基} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{端基氨基酸可鉴定} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{肽段如何分离？} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{部分水解（盐酸 / 胰蛋白酶）+ 二维纸层析（电泳 $\times$ 层析）} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{"指纹图谱"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{序列如何拼合？(1951–1952)} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{不同水解方式所得肽段交叉拼合} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{B 链（1951）· A 链（1952）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{链间如何相连？(1955)} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{与 Ryle、Smith、Kitai 定位二硫键} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{3 个二硫键（2 链间 · 1 链内）} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 牛胰岛素的一级序列（Sanger 等，1951–1955）}\\[2pt]
+  {\color{deepnavy!88!black}\resizebox{11.4cm}{!}{$\underbrace{\mathrm{GIVEQCCTSICSLYQLENYCN}}_{\text{A 链 · 21 残基}}\quad\underbrace{\mathrm{FVNQHLCGSHLVEALYLVCGERGFFYTPKT}}_{\text{B 链 · 30 残基}}$}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. RNA 测序 ---
+\newcommand{\rnaseqslide}{\begin{frame}\plainbar\sectiontitle{RNA 测序：向核酸进军 (1951–1967)}{甲酰甲硫氨酸 tRNA · 5S rRNA · Holley}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{挑战}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{纯 RNA 从哪来？} & \cellcolor{rnapanel}\textcolor{badgeRNA!82!black}{寻找适合测序的纯 RNA 样品} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{关键瓶颈} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{片段如何分离？(1965)} & \cellcolor{rnapanel}\textcolor{badgeRNA!82!black}{与 Brownlee、Barrell 建立放射性标记二维分离法} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{核苷酸片段分离标准化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{翻译如何启动？(1964)} & \cellcolor{rnapanel}\textcolor{badgeRNA!82!black}{与 Marcker 发现甲酰甲硫氨酸 tRNA} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{细菌翻译起始的关键一环} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{tRNA 竞赛} & \cellcolor{rnapanel}\textcolor{badgeRNA!82!black}{输给 Holley（1965 测定 77 核苷酸丙氨酸 tRNA）；1967 年测定 $E.\,coli$ 5S rRNA} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{120 核苷酸的小 RNA} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 蛋白质之后是 RNA，而真正的大目标——DNA——已近在眼前。}
+\end{center}
+\end{frame}}
+
+% --- 8. DNA 测序：加减法与 φX174 ---
+\newcommand{\dnaseqslide}{\begin{frame}\plainbar\sectiontitle{DNA 测序：加减法与 $\phi$X174 (1971–1977)}{Plus/Minus 法 · 第一个 DNA 基因组 · 基因重叠}
+\vspace{-0.85cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{全新思路} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{用大肠杆菌 DNA 聚合酶 I 以引物复制单链 DNA，放射性标记} & \cellcolor{centralpanel}\textcolor{badgeCentral!82!black}{测序对象转向 DNA} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{如何提速？(1975)} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{与 Coulson 发表 "Plus and Minus" 法} & \cellcolor{centralpanel}\textcolor{badgeCentral!82!black}{一次可测约 80 核苷酸} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首个基因组 (1977)} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{测定噬菌体 $\phi$X174 的单链 DNA} & \cellcolor{centralpanel}\textcolor{badgeCentral!82!black}{第一个完整测序的 DNA 基因组} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{意外发现} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{部分基因的编码区相互重叠} & \cellcolor{centralpanel}\textcolor{badgeCentral!82!black}{重叠基因} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 噬菌体 $\phi$X174 —— 第一个被完整测序的 DNA 基因组（1977）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{deepnavy!88!black}$\left|\phi\mathrm{X174}\ \text{基因组}\right| = 5{,}386\ \mathrm{nt}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 双脱氧法 ---
+\newcommand{\dideoxyslide}{\begin{frame}\plainbar\sectiontitle{双脱氧法：把 DNA 变成可读的字母 (1977–1980)}{链终止抑制剂 · 人类基因组的地基 · 1980 诺奖}
+\vspace{-0.85cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{链如何终止？(1977)} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{双脱氧核苷酸（ddNTP，缺 $3'$-OH）随机掺入延伸中的链} & \cellcolor{centralpanel}\textcolor{badgeCentral!82!black}{以特定碱基结尾的阶梯状片段} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{序列如何读出？} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{四管平行反应 + 凝胶电泳 + 放射自显影} & \cellcolor{centralpanel}\textcolor{badgeCentral!82!black}{按片段长短读出序列} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响有多大？} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{快速、准确、可规模化；测人线粒体 DNA（16,569 bp）与噬菌体 $\lambda$（48,502 bp）} & \cellcolor{centralpanel}\textcolor{badgeCentral!82!black}{现代测序技术的基础} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{认可 (1980)} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{与 Walter Gilbert、Paul Berg 共享诺贝尔化学奖} & \cellcolor{centralpanel}\textcolor{badgeCentral!82!black}{第二次诺奖} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 双脱氧链终止原理（Sanger 法，1977）}\\[2pt]
+  {\color{deepnavy!88!black}\resizebox{11.4cm}{!}{$\text{模板}+\text{引物}+\mathrm{dNTP}\ \xrightarrow{\text{DNA 聚合酶}}\ \text{链延伸};\qquad \mathrm{ddNTP}\,(3'\text{-H})\ \Rightarrow\ \text{链终止}$}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 门生与传承 ---
+\newcommand{\studentsslide}{\begin{frame}\plainbar\sectiontitle{门生与传承}{Rodney Porter · Elizabeth Blackburn · George Brownlee}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方向}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Rodney Porter（1947 加入，首位研究生）} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{抗体的化学结构} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{1972 诺贝尔生理学或医学奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Elizabeth Blackburn（1971–1974 博士）} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{端粒与端粒酶} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{2009 诺贝尔生理学或医学奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{George Brownlee} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{共同测定 5S rRNA} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{分子生物学中坚力量} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{十余名博士生} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{两人随后获诺贝尔奖} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{培养独立研究者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从抗体到端粒，他的学生在各自领域继续破解生命的密码。}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉与谦逊 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与谦逊}{两度诺奖 · 拒绝爵位 · Order of Merit}\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{两度诺奖} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 1958 独享（蛋白质结构 · 胰岛素）\item 1980 与 Gilbert · Berg 共享（核酸碱基序列测定）\end{itemize}} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{同类别两度获奖仅三人之一（另有 Bardeen · Sharpless）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要荣誉} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item FRS（1954）· Royal Medal（1969）\item Copley Medal（1977）· Lasker（1979）\item CH（1981）· OM（1986）\end{itemize}} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{国际学界高度认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{谦逊} & \cellcolor{protpanel}\textcolor{badgeProt!82!black}{拒绝爵位——"A knighthood makes you different, doesn't it, and I don't want to be different."} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{自述 "just a chap who messed about in a lab"} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 谦逊与成就，在桑格身上罕见地统一。}
+\end{center}
+\end{frame}}
+
+% --- 12. Sanger Institute ---
+\newcommand{\institutesslide}{\begin{frame}\plainbar\sectiontitle{Sanger Institute：名字的遗产}{"It had better be good." · 人类基因组计划}
+\vspace{-0.15cm}
+\begin{center}
+\begin{tikzpicture}[
+  nd/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, font=\fontsize{8.5}{10.5}\selectfont, align=center}
+]
+\node[nd, fill=goldpanel, draw=coveraccent!60, text width=11.8cm] (a) at (0,2.55)
+  {{\bfseries\color{coveraccent!85!black} 1992 · Wellcome Trust 与 MRC 联合创办 Sanger Centre}\\[1pt]
+   创始主任 John Sulston 请求以他命名，他半开玩笑地警告："It had better be good."};
+\node[nd, fill=dnapanel, draw=badgeDNA!50] (b) at (0,1.35) {1993-10-04 · 桑格亲自揭幕，初始员工不足 50 人};
+\node[nd, fill=protpanel, draw=badgeProt!50] (c) at (0,0.45) {在人类基因组计划中发挥主导测序作用};
+\node[nd, fill=centralpanel, draw=badgeCentral!50] (d) at (0,-0.45) {今日 · 全球最大的基因组研究中心之一（2020 年约 900 人）};
+\draw[-{Stealth[length=2.5mm]}, coveraccent!70, line width=1.2pt] (a) -- (b);
+\draw[-{Stealth[length=2.5mm]}, coveraccent!70, line width=1.2pt] (b) -- (c);
+\draw[-{Stealth[length=2.5mm]}, coveraccent!70, line width=1.2pt] (c) -- (d);
+\end{tikzpicture}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个谦逊的人，把名字留给了人类基因组时代的地标。}
+\end{center}
+\end{frame}}
+
+% --- 13. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：测序改变世界}{桑格测序法 $\rightarrow$ 人类基因组计划 $\rightarrow$ 现代基因组学}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=2.85cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=protpanel, draw=badgeProt!50, line width=0.7pt] (a) at (-5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeProt} 蛋白质测序}\\[3pt]胰岛素序列\\[2pt]1958 诺奖};
+\node[leg, fill=rnapanel, draw=badgeRNA!50, line width=0.7pt] (b) at (-1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeRNA} RNA 测序}\\[3pt]5S rRNA · 120 nt\\[2pt]起始 tRNA};
+\node[leg, fill=dnapanel, draw=badgeDNA!50, line width=0.7pt] (c) at (1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDNA} DNA 测序}\\[3pt]双脱氧法\\[2pt]1980 诺奖};
+\node[leg, fill=centralpanel, draw=badgeCentral!50, line width=0.7pt] (d) at (5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCentral} 分子生物学}\\[3pt]序列假说的实证\\[2pt]中心法则基石};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 桑格规则（Sanger's rule）}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{deepnavy!88!black}$\text{技术效率提升 } 2\text{--}3\times\ \Rightarrow\ \text{一整类全新的实验被打开}$}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.08cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1977 年那篇双脱氧法论文，到 2010 年 10 月已被引用超过 64,000 次（ISI）。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {生命之书，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {从此可以被一页页读出。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是序列，而是一种读懂生命的方法。};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {弗雷德里克·桑格\quad Frederick Sanger\quad 1918 — 2013};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{book-open}\enspace Nobel 1958 · 1980 · 蛋白质测序与 DNA 测序\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openchemistslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\cambridgeslide
+\insulinslide
+\rnaseqslide
+\dnaseqslide
+\dideoxyslide
+\studentsslide
+\honorsslide
+\institutesslide
+\legacyslide
+\closingslide
+\end{document}
