@@ -1,0 +1,513 @@
+% =============================================================
+%  启蒙时代的理性之光 · 18 世纪法国数学物理学家：达朗贝尔 (Jean le Rond d'Alembert)
+%  Beamer 演示 —— 参照 Leonhard Euler 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Jean_le_Rond_d'Alembert
+%  设计母题：波动方程 / 虚功原理 —— 柔和气泡呼应弦振动的涟漪与理性的秩序
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法国蓝 + 启蒙金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{frenchblue}{HTML}{1E4E79}      % 法国蓝 — 巴黎 / 启蒙理性
+\definecolor{mathgold}{HTML}{C9A227}        % 启蒙金 — 18 世纪知识的光辉
+\definecolor{badgeAnalysis}{HTML}{4C5FD5}   % 分析 — 靛蓝
+\definecolor{badgeMech}{HTML}{0E7C7B}       % 力学 — 青绿
+\definecolor{badgePhil}{HTML}{E07B30}       % 哲学/百科全书 — 琥珀
+\definecolor{badgeMusic}{HTML}{B76E79}      % 音乐理论 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{analysispanel}{RGB}{228,232,250}
+\definecolor{mechpanel}{RGB}{220,240,238}
+\definecolor{philpanel}{RGB}{248,233,220}
+\definecolor{musicpanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应弦振动涟漪 / 理性秩序
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAnalysis!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeMech!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePhil!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeMusic!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=frenchblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 启蒙时代的理性之光\enspace·\enspace 百科全书的主编};
+  \node[anchor=center, font=\fontsize{24}{28}\selectfont\bfseries, text=frenchblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {达朗贝尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=frenchblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Jean le Rond d'Alembert\enspace·\enspace 1717 — 1783};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {波动方程 · 达朗贝尔原理 · 比值审敛法 · 百科全书};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAnalysis] at (-5.05,0)
+        {分析\\Analysis\par\scriptsize 波动方程};
+      \node[badge, fill=badgeMech] at (-1.68,0)
+        {力学\\Mechanics\par\scriptsize 达朗贝尔原理};
+      \node[badge, fill=badgePhil] at (1.68,0)
+        {哲学\\Philosophy\par\scriptsize 百科全书};
+      \node[badge, fill=badgeMusic] at (5.05,0)
+        {音乐理论\\Music Theory\par\scriptsize 拉莫之争};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他用波动方程刻画振动的弦，用理性之光组织整个时代的知识。};
+  % 肖像（Catherine Lusurier 1777）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{dalembert_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {J. le Rond d'Alembert (1717–1783)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace 巴黎科学院 · 法兰西学院\enspace|\enspace 分析 · 力学 · 哲学 · 音乐理论};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{达朗贝尔 - 从弃婴到百科全书主编}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Catherine Lusurier 1777）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{dalembert_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {J. le Rond d'Alembert (1717–1783)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1717-11-16 — 1783-10-29\\[2pt]\lab{本名}\quad Jean Le Rond d'Alembert\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=analysispanel, draw=badgeAnalysis!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 马萨林学院（Collège des Quatre-Nations）\\[2pt]
+     \quad 1735 年获学士\\[2pt]\lab{师承}\quad 以自学为主，受牛顿与笛卡尔影响};
+  \node[infob, fill=philpanel, draw=badgePhil!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 巴黎（弃婴，圣让勒隆教堂）\\[2pt]\lab{荣誉}\quad 法兰西学院常任秘书（1772）\\[2pt]\lab{身后}\quad 巴黎，无标记普通墓};
+  \node[infob, fill=mechpanel, draw=badgeMech!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 分析 · 力学 · 天体力学\\[2pt]
+     \quad 哲学 · 音乐理论\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家 · 哲学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 达朗贝尔的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{达朗贝尔的一生}{1717 — 1783 · 从巴黎弃婴到百科全书主编}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1717/生于巴黎，私生子，数日后被遗弃于圣让勒隆教堂台阶,
+    2.2/1729/12 岁入马萨林学院（Collège des Quatre-Nations）,
+    1.5/1738/获律师资格，但对数学更感兴趣,
+    0.8/1741/当选巴黎科学院院士,
+    0.1/1743/发表《动力学论》，提出达朗贝尔原理,
+    -0.6/1747/发表弦振动论文，建立波动方程,
+    -1.3/1754/当选法兰西学院院士,
+    -2.0/1783/于巴黎去世，享年 65
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与弃婴身世 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与弃婴身世 (1717–1738)}{巴黎弃婴 · 玻璃匠之妻的抚养 · 隐秘的生父资助}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1717} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{生于巴黎，是作家 Tencin 与炮兵军官 Destouches 的私生子；数日后被遗弃在圣让勒隆教堂台阶，按主保圣人命名} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{弃婴身世} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1717-26} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{生父暗中寻回，安置于玻璃匠之妻 Madame Rousseau 家，居住近 50 年；1726 生父去世留下年金} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{隐秘资助} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1729} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{12 岁入詹森派马萨林学院，学哲学、法律与艺术；1735 年获学士} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{早年教育} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1738} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{获律师资格；原名 Jean-Baptiste Daremberg，后改名 d'Alembert；同时钻研数学与医学} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{转向数学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 养母曾说："你将永远只是一个哲学家——而哲学家是什么呢，无非是一头折磨自己一辈子以求死后被人谈论的蠢驴。"}
+\end{center}
+\end{frame}}
+
+% --- 5. 波动方程（核心贡献页） ---
+\newcommand{\waveslide}{\begin{frame}\plainbar\sectiontitle{波动方程}{1747 弦振动 · 达朗贝尔公式 · 达朗贝尔算子}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{达朗贝尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{波动方程} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{1747 年用偏微分方程刻画振动弦的位移 $u(x,t)$} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{数学物理里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{达朗贝尔公式} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{给出波动方程的通解 $u=f(x-ct)+g(x+ct)$} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{行波解} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{达朗贝尔算子} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{$\Box=\frac{1}{c^2}\frac{\partial^2}{\partial t^2}-\nabla^2$ 最早见于弦振动分析} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{现代物理核心} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 波动方程（Wave equation，1747）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{frenchblue!88!black}$\dfrac{\partial^{2}u}{\partial t^{2}}=c^{2}\dfrac{\partial^{2}u}{\partial x^{2}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 达朗贝尔原理（核心贡献页） ---
+\newcommand{\principleslide}{\begin{frame}\plainbar\sectiontitle{达朗贝尔原理}{1743《动力学论》 · 虚功思想 · 动力学静力学化}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{达朗贝尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{动力学论} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{1743 年出版《Traité de dynamique》，建立自己的运动定律} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{分析力学先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{达朗贝尔原理} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{把动力学问题化为平衡问题：$\sum_i(\boldsymbol{F}_i-m_i\boldsymbol{a}_i)\cdot\delta\boldsymbol{r}_i=0$} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{虚功原理先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{达朗贝尔力} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{引入惯性力概念，把运动系统视作静平衡} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{经典力学框架} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 达朗贝尔原理（d'Alembert's principle，1743）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{frenchblue!88!black}$\displaystyle\sum_i\bigl(\boldsymbol{F}_i-m_i\boldsymbol{a}_i\bigr)\cdot\delta\boldsymbol{r}_i=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 比值审敛法与代数基本定理 ---
+\newcommand{\analysisslide}{\begin{frame}\plainbar\sectiontitle{分析与级数}{比值审敛法 · 达朗贝尔-高斯定理}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{达朗贝尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{比值审敛法} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{以比值 $\lim |a_{n+1}/a_n|$ 判定正项级数敛散} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{级数理论基本工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{代数基本定理} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{1746 年给出证明（有缺陷，Gauss 1799 纠正）} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{法国称达朗贝尔-高斯定理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{柯西-黎曼方程} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{d'Alembert 与 Euler 的先驱工作后被系统化} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{复分析基础} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 比值审敛法（Ratio test）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{frenchblue!88!black}$\displaystyle\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|<1\ \Rightarrow\ \sum a_n\ \text{收敛}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 流体力学：达朗贝尔佯谬（核心贡献页） ---
+\newcommand{\paradoxslide}{\begin{frame}\plainbar\sectiontitle{流体力学：达朗贝尔佯谬}{1752 · 无粘流阻力为零 · 流体动力学的经典悖论}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{达朗贝尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{佯谬} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{1752 年证明：浸在无粘、不可压流体中的物体，阻力为零} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{流体力学经典悖论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{流体方程} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{1740 年起研究流体折射、固体折射等流体问题} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{推动流体理论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{影响} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{佯谬揭示理想流体模型与现实的差距，催生边界层理论} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{20 世纪流体力学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 达朗贝尔佯谬（d'Alembert's paradox，1752）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}理想无粘不可压流中，物体所受阻力为零——与实验矛盾}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 天体力学：三体问题与岁差 ---
+\newcommand{\celestialslide}{\begin{frame}\plainbar\sectiontitle{天体力学：三体问题与岁差}{三体问题 · 行星岁差 · 牛顿引力理论}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{达朗贝尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{三体问题} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{研究三体引力问题，为天体力学提供分析框架} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{天体力学难题} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{岁差理论} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{1749 年研究地球轴岁差与章动（牛顿体系）} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{经典天体力学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{风的理论} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{1746 年《风的普遍成因的思考》研究大气环流} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{气象动力学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 三体问题（Three-body problem）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}达朗贝尔与欧拉、克莱罗共同推进牛顿引力下多体运动的分析}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 百科全书（特色页） ---
+\newcommand{\encyclopediaslide}{\begin{frame}\plainbar\sectiontitle{百科全书：启蒙时代的理性组织}{与狄德罗合编 · 1000+ 条目 · 《绪论》}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{角色}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{达朗贝尔的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{联合主编} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{1740s 后期与狄德罗合编《百科全书》，负责数学与科学部分} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{启蒙工程} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{《绪论》} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{撰写著名的《绪论》（Discours préliminaire），规划知识之树} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{知识体系蓝图} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1000+ 条目} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{撰写千余条目；1757 年日内瓦文章引发争议后退出} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{百科全书式通才} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他与狄德罗共同主编《百科全书》——启蒙时代的理性组织者。}
+\end{center}
+\end{frame}}
+
+% --- 11. 音乐理论：拉莫之争（特色页） ---
+\newcommand{\musicslide}{\begin{frame}\plainbar\sectiontitle{音乐理论：拉莫之争}{1749 评拉莫 · 《音乐理论与实践要素》 · 科学与艺术}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{达朗贝尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1749} & \cellcolor{musicpanel}\textcolor{badgeMusic!82!black}{评论拉莫（Rameau）提交给科学院的音乐论文，盛赞其演绎性} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{科学模型} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1752} & \cellcolor{musicpanel}\textcolor{badgeMusic!82!black}{出版《音乐理论与实践要素》，系统阐发拉莫的音乐原理} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{普及拉莫学说} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{争论} & \cellcolor{musicpanel}\textcolor{badgeMusic!82!black}{与拉莫发生争论，友谊破裂——音乐中的数学化之争} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{艺术与理性} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他把音乐视为可演绎的数学科学——科学与艺术的桥梁。}
+\end{center}
+\end{frame}}
+
+% --- 12. 哲学转向（特色页） ---
+\newcommand{\philosophyslide}{\begin{frame}\plainbar\sectiontitle{哲学转向}{从唯物主义到怀疑主义 · 贝克莱 · 康德先声}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{达朗贝尔的思想}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{怀疑外部} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{怀疑外部世界是否与我们的感知对应，放弃唯物主义的根基} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{唯心转向} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{贝克莱} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{与贝克莱的唯心主义一致，怀疑物质存在的独立性} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{观念论共鸣} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{康德先声} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{预示康德的先验唯心主义（理性为世界立法）} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{德国观念论先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 数学家的严谨，让他对一切未经证明的实体保持怀疑。}
+\end{center}
+\end{frame}}
+
+% --- 13. 更多贡献 ---
+\newcommand{\miscslide}{\begin{frame}\plainbar\sectiontitle{更多贡献}{拉丁学养 · 塔西佗翻译 · 沙龙与思想史}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{达朗贝尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{拉丁学养} & \cellcolor{graypanel}\textcolor{badgeAnalysis!82!black}{出色的拉丁文学者，晚年翻译塔西佗，获狄德罗盛赞} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{古典学养} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{沙龙生活} & \cellcolor{graypanel}\textcolor{badgeAnalysis!82!black}{参加乔芙兰、杜德芳、莱斯皮纳斯等巴黎沙龙，与莱斯皮纳斯同住} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{启蒙社交圈} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{命名趣闻} & \cellcolor{graypanel}\textcolor{badgeAnalysis!82!black}{腓特烈大帝提议以他命名金星的一颗"卫星"，他婉拒} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{时代敬重} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 通才之名，绝非虚言——数学、哲学、音乐、古典学兼通。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{法兰西学院 · 皇家学会 · 达朗贝尔-高斯定理}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{科学院} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 巴黎科学院院士（1741）\item 柏林科学院院士（1746）\item 皇家学会外籍院士（1748）\end{itemize}} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{法兰西学院} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 1754 年当选院士\item 1772 年任常任秘书（4 月 9 日）\end{itemize}} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{法兰西荣耀} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{传承} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{法国称代数基本定理为达朗贝尔-高斯定理；达朗贝尔算子、达朗贝尔体系以他命名；学生拉普拉斯} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{影响深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} "在法国，代数基本定理被称为达朗贝尔-高斯定理。"}
+\end{center}
+\end{frame}}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=frenchblue!90!black] at ([yshift=1.5cm]current page.center) {从巴黎弃婴到百科全书主编，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {他用理性之光照亮整个启蒙时代。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=frenchblue!70!black] at ([yshift=-1.2cm]current page.center) {波动方程、达朗贝尔原理与《百科全书》——科学、哲学与理性的完整交响。};
+\node[font=\fontsize{8}{10}\selectfont, text=frenchblue!60!black] at ([yshift=-2.0cm]current page.center) {达朗贝尔\quad Jean le Rond d'Alembert\quad 1717 — 1783};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 分析 · 力学 · 哲学 · 音乐理论\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\waveslide
+\principleslide
+\analysisslide
+\paradoxslide
+\celestialslide
+\encyclopediaslide
+\musicslide
+\philosophyslide
+\miscslide
+\honorslide
+\closingslide
+\end{document}
