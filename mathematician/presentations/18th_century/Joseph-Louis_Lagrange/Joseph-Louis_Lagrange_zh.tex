@@ -1,0 +1,507 @@
+% =============================================================
+%  分析力学的奠基者 · 变分法与力学的统一：拉格朗日 (Joseph-Louis Lagrange)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Joseph-Louis_Lagrange
+%  设计母题：分析力学 / 变分法 —— 柔和气泡呼应力学的圆满与变分的极值
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：都灵青蓝 + 数学金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{lagrangeteal}{HTML}{0F6B6B}        % 都灵青蓝 — 意大利 / 分析理性
+\definecolor{mathgold}{HTML}{C9A227}            % 数学金 — 分析力学的尊崇
+\definecolor{badgeMechanics}{HTML}{4C5FD5}      % 分析力学 — 靛蓝
+\definecolor{badgeVariations}{HTML}{0E7C7B}     % 变分法 — 青绿
+\definecolor{badgeNumberTheory}{HTML}{E07B30}   % 数论 — 琥珀
+\definecolor{badgeCelestial}{HTML}{B76E79}      % 天体力学 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{12,44,46}
+\definecolor{muteddark}{RGB}{60,78,80}
+\definecolor{mechanicspanel}{RGB}{228,232,250}
+\definecolor{variationspanel}{RGB}{220,240,238}
+\definecolor{numberpanel}{RGB}{248,233,220}
+\definecolor{celestialpanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应分析力学 / 变分法
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeVariations!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeMechanics!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeNumberTheory!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeCelestial!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=lagrangeteal!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 意大利 → 法国\enspace·\enspace 分析力学的奠基者\enspace·\enspace 变分法与力学的统一};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=lagrangeteal!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {拉格朗日};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=lagrangeteal!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Joseph-Louis Lagrange\enspace·\enspace 1736 — 1813};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {欧拉–拉格朗日方程 · 拉格朗日乘子法 · 分析力学 · 拉格朗日点};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeMechanics] at (-5.05,0)
+        {分析力学\\Mechanics\par\scriptsize 拉格朗日方程};
+      \node[badge, fill=badgeVariations] at (-1.68,0)
+        {变分法\\Variations\par\scriptsize 欧拉–拉格朗日};
+      \node[badge, fill=badgeNumberTheory] at (1.68,0)
+        {数论\\Number Theory\par\scriptsize 四平方定理};
+      \node[badge, fill=badgeCelestial] at (5.05,0)
+        {天体力学\\Celestial\par\scriptsize 拉格朗日点};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把牛顿力学化为纯粹的分析，让宇宙的运行服从于一个极值原理。};
+  % 肖像（标准肖像）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{lagrange_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Joseph-Louis Lagrange (1736–1813)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 意大利 → 法国\enspace|\enspace \faIcon{university}\enspace 柏林科学院 · 巴黎综合理工学院\enspace|\enspace 分析力学 · 变分法 · 数论};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{拉格朗日 - 从都灵到巴黎}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{lagrange_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Joseph-Louis Lagrange (1736–1813)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1736-01-25 — 1813-04-10\\[2pt]\lab{本名}\quad Giuseppe Lodovico\\[2pt]\quad\enspace Lagrangia\\[2pt]\lab{国籍}\quad 意大利 → 法国};
+  \node[infob, fill=mechanicspanel, draw=badgeMechanics!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 都灵大学\\[2pt]
+     \lab{师承}\quad Euler（书信指导）\\[2pt]\quad Beccaria（博士导师）};
+  \node[infob, fill=variationspanel, draw=badgeVariations!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Turin（都灵）\\[2pt]\lab{荣誉}\quad 皇家学会会员\\[2pt]\lab{身后}\quad 巴黎先贤祠};
+  \node[infob, fill=celestialpanel, draw=badgeCelestial!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 分析力学 · 变分法\\[2pt]
+     \quad 数论 · 天体力学\\[2pt]
+     \lab{身份}\quad 数学家 · 天文学家 · 物理学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 拉格朗日的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{拉格朗日的一生}{1736 — 1813 · 从都灵到巴黎}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1736/生于都灵（撒丁王国）,
+    2.2/1755/19 岁任都灵炮兵学院教授,
+    1.5/1757/参与创立都灵科学院,
+    0.8/1766/接替欧拉任柏林科学院数学主任,
+    0.1/1788/出版《分析力学》,
+    -0.6/1787/移居巴黎，入法国科学院,
+    -1.3/1799/任参议员,
+    -2.0/1813/于巴黎去世，享年 77
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1736–1755)}{都灵出生 · 17 岁偶读 Halley 论文 · 19 岁任教授}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{lagrangeteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1736} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{生于都灵，11 个孩子中的长子，父为法学博士、国王军需官} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{家境尚可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{约 1753} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{17 岁偶读 Halley 1693 年论文，对数学产生兴趣，自学一年} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{转投数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1755} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{19 岁任都灵炮兵学院数学助理教授} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{才华初显} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1757} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{参与创立都灵科学院（Miscellanea Taurinensia）} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{学术平台} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一封偶然读到的论文，唤醒了这位都灵少年沉睡的数学天赋。}
+\end{center}
+\end{frame}}
+
+% --- 5. 变分法与欧拉–拉格朗日方程（核心贡献页） ---
+\newcommand{\variationslide}{\begin{frame}\plainbar\sectiontitle{变分法与欧拉–拉格朗日方程}{$\delta$-算法 · 与欧拉共同创立变分法}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{lagrangeteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉格朗日的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{等时曲线} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{1754 年起研究，发展 $\delta$-算法} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{变分法起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{变分法} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{与欧拉共同创立，推导 E-L 方程} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{数学基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{最小作用量} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{推广欧拉与莫佩尔蒂的结果} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{力学原理} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 欧拉–拉格朗日方程（Euler–Lagrange equation）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{lagrangeteal!88!black}$\dfrac{\partial L}{\partial q}-\dfrac{d}{dt}\left(\dfrac{\partial L}{\partial \dot{q}}\right)=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 拉格朗日乘子法（核心贡献页） ---
+\newcommand{\multiplierslide}{\begin{frame}\plainbar\sectiontitle{拉格朗日乘子法}{约束优化 · $\nabla f=\lambda\nabla g$}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{lagrangeteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉格朗日的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{约束优化} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{把变分法推广到含约束情形} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{优化经典方法} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{乘子法} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{引入拉格朗日乘子 $\lambda$} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{约束极值} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{应用} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{力学、经济学、工程广泛使用} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{跨学科工具} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 拉格朗日乘子法（Lagrange multipliers）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{lagrangeteal!88!black}$\nabla f=\lambda\,\nabla g$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 《分析力学》与拉格朗日力学（核心贡献页） ---
+\newcommand{\mechanicslide}{\begin{frame}\plainbar\sectiontitle{《分析力学》与拉格朗日力学}{Mécanique analytique · 最小作用量原理}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{lagrangeteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉格朗日的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{《分析力学》} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{1788 年出版，柏林写成，牛顿以来最全面的力学处理} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{力学集大成} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{拉格朗日力学} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{把牛顿力学化为纯分析，以变分原理表述} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{分析力学奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{广义坐标} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{引入广义坐标与广义动量} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{现代力学语言} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 拉格朗日方程（Lagrange's equation）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{lagrangeteal!88!black}$\dfrac{d}{dt}\left(\dfrac{\partial T}{\partial \dot{q}_i}\right)-\dfrac{\partial T}{\partial q_i}=Q_i$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 拉格朗日点与三体问题（核心贡献页） ---
+\newcommand{\pointslide}{\begin{frame}\plainbar\sectiontitle{拉格朗日点与三体问题}{L1–L5 · 1772 特解}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{lagrangeteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉格朗日的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{三体问题} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{1764 年研究地日月三体问题} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{天体力学核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{拉格朗日点} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{1772 年发现三体问题的特解 L1–L5} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{航天器驻点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{月球天平动} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{1764 年解释月球为何始终同一面朝地球} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{月球动力学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 拉格朗日点（Lagrangian points）}\\[2pt]
+  {\fontsize{11.5}{15}\selectfont\color{lagrangeteal!88!black}五个平衡点 L1–L5，为航天器提供稳定的驻留位置}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 数论：四平方定理（核心贡献页） ---
+\newcommand{\numbertheoryslide}{\begin{frame}\plainbar\sectiontitle{数论：四平方定理}{每个自然数是四个平方数之和}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{lagrangeteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉格朗日的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{四平方定理} & \cellcolor{numberpanel}\textcolor{badgeNumberTheory!82!black}{1770 年完整证明每个自然数是四平方数之和} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{数论里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{佩尔方程} & \cellcolor{numberpanel}\textcolor{badgeNumberTheory!82!black}{研究 $nx^2+1$ 为平方数的问题} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{丢番图分析} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{方程理论} & \cellcolor{numberpanel}\textcolor{badgeNumberTheory!82!black}{为代数方程与群论奠基} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{代数先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 四平方定理（Lagrange's four-square theorem）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{lagrangeteal!88!black}$\forall n\in\mathbb{N},\ \exists\,a,b,c,d\in\mathbb{Z}:\ n=a^{2}+b^{2}+c^{2}+d^{2}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 拉格朗日插值与泰勒定理（核心贡献页） ---
+\newcommand{\interpolationslide}{\begin{frame}\plainbar\sectiontitle{拉格朗日插值与泰勒定理}{数值分析 · 函数逼近}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{lagrangeteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉格朗日的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{拉格朗日插值} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{发展拉格朗日插值多项式} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{数值分析基础} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{泰勒定理} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{给出泰勒定理的新处理与余项} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{分析严格化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{常数变易法} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{发明解微分方程的常数变易法} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{微分方程工具} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 拉格朗日插值（Lagrange interpolation）}\\[2pt]
+  {\fontsize{11.5}{15}\selectfont\color{lagrangeteal!88!black}$L(x)=\displaystyle\sum_{i=0}^{n}y_i\prod_{j\neq i}\dfrac{x-x_j}{x_i-x_j}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 群论先声（特色页） ---
+\newcommand{\groupslide}{\begin{frame}\plainbar\sectiontitle{群论先声}{《解析函数论》 · 预见 Galois}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{lagrangeteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉格朗日的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{方程理论} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{研究代数方程根与置换的关系} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{置换思想} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{群论先声} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{《解析函数论》为群论奠基} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{代数里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{预见 Galois} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{其思想预见到伽罗瓦的群论工作} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{代数传承} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.45cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 拉格朗日预解式（Lagrange resolvent）}\\[2pt]
+  {\fontsize{13}{17}\selectfont\color{lagrangeteal!88!black}$\boxed{\,r=x_1+\omega x_2+\omega^2 x_3\,}$}\\[4pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{coverdark!75}$\omega$：三次本原单位根；$x_1,x_2,x_3$：三次方程全部根}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{coverdark!75}置换根 $x_1,x_2,x_3$，$r$ 发生改变；$r^3$ 取值变少，实现方程降次}
+  \end{minipage}%
+}
+\end{center}
+\vspace{-0.2cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他窥见了方程的根与置换之间的深刻联系，为群论的诞生埋下伏笔。}
+\end{center}
+\end{frame}}
+
+% --- 12. 柏林与巴黎 ---
+\newcommand{\careerslide}{\begin{frame}\plainbar\sectiontitle{柏林与巴黎}{柏林 20 年 · 综合理工学院 · 参议员}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{lagrangeteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时期}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1766–1787} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{柏林：接替欧拉任普鲁士科学院数学主任，写成《分析力学》} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{学术巅峰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1787} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{移居巴黎，入法国科学院} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{新阶段} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1794} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{任巴黎综合理工学院首任分析教授} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{教育奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1799} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{任参议员，推动公制化} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{政治参与} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从柏林的学术巅峰，到巴黎的启蒙余晖，他始终站在欧洲数学的中心。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{分析力学的奠基者 · 先贤祠 · 埃菲尔铁塔}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{lagrangeteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{称号} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 分析力学的奠基者\item 法意两国皆称其为本国数学家\end{itemize}} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{历史地位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 荣誉军团大军官\item 皇家学会会员（FRS）\item 团聚勋章大十字骑士\end{itemize}} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{葬于巴黎先贤祠；埃菲尔铁塔 72 名字之一} & \cellcolor{variationspanel}\textcolor{badgeVariations!82!black}{民族记忆} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他长眠于先贤祠，与伏尔泰、卢梭、雨果同享法兰西的荣光。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=lagrangeteal!90!black] at ([yshift=1.5cm]current page.center) {他把牛顿力学化为纯粹的分析，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {让宇宙服从于极值原理。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=lagrangeteal!70!black] at ([yshift=-1.2cm]current page.center) {从都灵到巴黎，从变分法到分析力学。};
+\node[font=\fontsize{8}{10}\selectfont, text=lagrangeteal!60!black] at ([yshift=-2.0cm]current page.center) {拉格朗日\quad Joseph-Louis Lagrange\quad 1736 — 1813};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 分析力学 · 变分法 · 数论 · 天体力学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\variationslide
+\multiplierslide
+\mechanicslide
+\pointslide
+\numbertheoryslide
+\interpolationslide
+\groupslide
+\careerslide
+\honorslide
+\closingslide
+\end{document}
