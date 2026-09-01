@@ -26,7 +26,7 @@
 | 4 | [Daniel Bernoulli](https://en.wikipedia.org/wiki/Daniel_Bernoulli) | 丹尼尔·伯努利 | 瑞士 | 1700–1782 | 伯努利原理、流体力学、弦振动 | 🔲 | 🔲 | 🔲 |
 | 5 | [Leonhard Euler](https://en.wikipedia.org/wiki/Leonhard_Euler) | 欧拉 | 瑞士 | 1707–1783 | 数学分析、图论、数论、欧拉公式 | ✅ | ✅ | ✅ |
 | 6 | [Alexis Clairaut](https://en.wikipedia.org/wiki/Alexis_Clairaut) | 克莱罗 | 法国 | 1713–1765 | 克莱罗微分方程、克莱罗定理、哈雷彗星预测 | 🔲 | 🔲 | 🔲 |
-| 7 | [Jean le Rond d'Alembert](https://en.wikipedia.org/wiki/Jean_le_Rond_d%27Alembert) | 达朗贝尔 | 法国 | 1717–1783 | 达朗贝尔原理、极限概念、波动方程 | 🔲 | 🔲 | 🔲 |
+| 7 | [Jean le Rond d'Alembert](https://en.wikipedia.org/wiki/Jean_le_Rond_d%27Alembert) | 达朗贝尔 | 法国 | 1717–1783 | 达朗贝尔原理、极限概念、波动方程 | ✅ | 🔲 | ✅ |
 | 8 | [Johann Heinrich Lambert](https://en.wikipedia.org/wiki/Johann_Heinrich_Lambert) | 兰伯特 | 瑞士 | 1728–1777 | π 的无理性证明、双曲函数 | 🔲 | 🔲 | 🔲 |
 | 9 | [Étienne Bézout](https://en.wikipedia.org/wiki/%C3%89tienne_B%C3%A9zout) | 贝祖 | 法国 | 1730–1783 | 贝祖定理、消元法 | 🔲 | 🔲 | 🔲 |
 | 10 | [Edward Waring](https://en.wikipedia.org/wiki/Edward_Waring) | 华林 | 英国 | 1736–1798 | 华林问题、拉格朗日插值公式 | 🔲 | 🔲 | 🔲 |
