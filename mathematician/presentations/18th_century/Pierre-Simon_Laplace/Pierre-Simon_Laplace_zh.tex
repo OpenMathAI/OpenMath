@@ -1,0 +1,515 @@
+% =============================================================
+%  法国牛顿 · 天体力学与概率论的奠基者：拉普拉斯 (Pierre-Simon Laplace)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Pierre-Simon_Laplace
+%  设计母题：拉普拉斯算子 / 天体力学 —— 柔和气泡呼应场论的圆满与天体的秩序
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法国蓝 + 数学金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{laplaceblue}{HTML}{1B3F8F}        % 法国蓝 — 法兰西 / 理性
+\definecolor{mathgold}{HTML}{C9A227}           % 数学金 — 法国牛顿的尊崇
+\definecolor{badgeCelestial}{HTML}{4C5FD5}     % 天体力学 — 靛蓝
+\definecolor{badgeProbability}{HTML}{0E7C7B}   % 概率论 — 青绿
+\definecolor{badgeAnalysis}{HTML}{E07B30}      % 分析/算子 — 琥珀
+\definecolor{badgePhysics}{HTML}{B76E79}       % 物理/决定论 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{20,30,70}
+\definecolor{muteddark}{RGB}{70,72,96}
+\definecolor{celestialpanel}{RGB}{228,232,250}
+\definecolor{probabilitypanel}{RGB}{220,240,238}
+\definecolor{analysispanel}{RGB}{248,233,220}
+\definecolor{physicspanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应拉普拉斯算子 / 天体力学
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCelestial!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeProbability!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeAnalysis!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgePhysics!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=laplaceblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 法国牛顿\enspace·\enspace 天体力学与概率论的奠基者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=laplaceblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {拉普拉斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=laplaceblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Pierre-Simon Laplace\enspace·\enspace 1749 — 1827};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {拉普拉斯方程 · 拉普拉斯变换 · 天体力学 · 概率论};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeCelestial] at (-5.05,0)
+        {天体力学\\Celestial\par\scriptsize 拉普拉斯方程};
+      \node[badge, fill=badgeProbability] at (-1.68,0)
+        {概率论\\Probability\par\scriptsize 贝叶斯推断};
+      \node[badge, fill=badgeAnalysis] at (1.68,0)
+        {数学分析\\Analysis\par\scriptsize 拉普拉斯变换};
+      \node[badge, fill=badgePhysics] at (5.05,0)
+        {物理\\Physics\par\scriptsize 拉普拉斯妖};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他用微分方程描绘宇宙的运行，用概率修补人类知识的缺陷。};
+  % 肖像（标准肖像）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{laplace_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Pierre-Simon Laplace (1749–1827)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace 法国科学院 · 巴黎军事学院\enspace|\enspace 天体力学 · 概率论 · 分析};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{拉普拉斯 - 从诺曼底到巴黎}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{laplace_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Pierre-Simon Laplace (1749–1827)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1749-03-23 — 1827-03-05\\[2pt]\lab{本名}\quad Pierre-Simon Laplace\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=celestialpanel, draw=badgeCelestial!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 卡昂大学（16 岁入学）\\[2pt]
+     \quad 后赴巴黎受赏识\\[2pt]\lab{师承}\quad d'Alembert};
+  \node[infob, fill=probabilitypanel, draw=badgeProbability!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Beaumont-en-Auge（诺曼底）\\[2pt]\lab{荣誉}\quad 皇家学会会员\\[2pt]\lab{身后}\quad 巴黎};
+  \node[infob, fill=physicspanel, draw=badgePhysics!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 天体力学 · 概率论\\[2pt]
+     \quad 数学分析 · 力学\\[2pt]
+     \lab{身份}\quad 数学家 · 天文学家 · 物理学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 拉普拉斯的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{拉普拉斯的一生}{1749 — 1827 · 从诺曼底到巴黎}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1749/生于诺曼底 Beaumont-en-Auge,
+    2.2/1765/16 岁入卡昂大学读神学,
+    1.5/1771/赴巴黎，受达朗贝尔赏识,
+    0.8/1773/24 岁当选法国科学院,
+    0.1/1799/《天体力学》首卷；任内政部长,
+    -0.6/1806/封帝国伯爵,
+    -1.3/1817/波旁复辟后封侯爵,
+    -2.0/1827/于巴黎去世，享年 77
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1749–1773)}{诺曼底出生 · 16 岁入学 · 达朗贝尔引路}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{laplaceblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1749} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{生于诺曼底 Beaumont-en-Auge，父为苹果酒商兼镇长，家境殷实} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{家庭有产业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1765} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{16 岁入卡昂大学，本拟读神学，受 Gadbled、Le Canu 启蒙转数学} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{弃神学从数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1771} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{携推荐信赴巴黎，达朗贝尔测试其才华后收为门生} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{命运转折} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1773} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{24 岁当选法国科学院院士（associate member）} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{跻身学界} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 达朗贝尔的赏识，让这位诺曼底少年得以施展非凡的数学天赋。}
+\end{center}
+\end{frame}}
+
+% --- 5. 《天体力学》与天体力学（核心贡献页） ---
+\newcommand{\celestialslide}{\begin{frame}\plainbar\sectiontitle{《天体力学》与天体力学}{五卷巨著 · 从几何方法到微积分方法}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{laplaceblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉普拉斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{《天体力学》} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{1799–1825 五卷，总结推广牛顿以来的天体力学} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{经典力学集大成} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{方法论} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{把几何方法转为基于微积分的方法} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{开辟更广问题} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{《宇宙体系论》} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{面向大众阐述太阳系与星云假说} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{科普经典} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 拉普拉斯-龙格-楞次矢量（守恒量）}\\[2pt]
+  {\fontsize{11.5}{15}\selectfont\color{laplaceblue!88!black}$\boldsymbol{A}=\boldsymbol{p}\times\boldsymbol{L}-m\hat{k}\,\hat{\boldsymbol{r}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 拉普拉斯方程与算子（核心贡献页） ---
+\newcommand{\equationslide}{\begin{frame}\plainbar\sectiontitle{拉普拉斯方程与算子}{$\nabla^2\varphi=0$ · 拉普拉斯算子 $\Delta$}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{laplaceblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉普拉斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{拉普拉斯方程} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{提出 $\nabla^2\varphi=0$，描述无源势场} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{势论基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{拉普拉斯算子} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{$\Delta=\partial_x^2+\partial_y^2+\partial_z^2$} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{数学物理核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{拉普拉斯-贝尔特拉米算子} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{推广到黎曼流形} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{几何分析} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 拉普拉斯方程（Laplace's equation）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{laplaceblue!88!black}$\nabla^{2}\varphi=\dfrac{\partial^{2}\varphi}{\partial x^{2}}+\dfrac{\partial^{2}\varphi}{\partial y^{2}}+\dfrac{\partial^{2}\varphi}{\partial z^{2}}=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 拉普拉斯变换（核心贡献页） ---
+\newcommand{\transformslide}{\begin{frame}\plainbar\sectiontitle{拉普拉斯变换}{$F(s)=\int_0^{\infty}f(t)e^{-st}dt$ · 数学物理的核心工具}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{laplaceblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉普拉斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{拉普拉斯变换} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{把微分方程化为代数方程} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{解方程利器} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{逆变换} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{建立逆拉普拉斯变换} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{信号与系统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{应用} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{电路、控制论、概率论广泛使用} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{工程基础} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 拉普拉斯变换（Laplace transform）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{laplaceblue!88!black}$F(s)=\displaystyle\int_{0}^{\infty}f(t)\,e^{-st}\,dt$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 概率论与贝叶斯推断（核心贡献页） ---
+\newcommand{\probabilityslide}{\begin{frame}\plainbar\sectiontitle{概率论与贝叶斯推断}{贝叶斯解释 · "概率是修补知识缺陷的工具"}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{laplaceblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉普拉斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{贝叶斯推断} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{发展贝叶斯概率解释} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{统计推断基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{分析概率论} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{《分析概率论》(1812)} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{概率经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{误差理论} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{最小二乘法与正态分布的早期研究} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{统计方法} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 拉普拉斯分布（Laplace distribution）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{laplaceblue!88!black}$f(x)=\dfrac{1}{2b}\,e^{-\frac{|x-\mu|}{b}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 太阳系稳定性（核心贡献页） ---
+\newcommand{\stabilityslide}{\begin{frame}\plainbar\sectiontitle{太阳系稳定性}{木星-土星轨道问题 · "自牛顿以来最重要的进展"}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{laplaceblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉普拉斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{木星-土星轨道} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{1776 年通过高阶项分析证明长周期稳定} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{物理天文学里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{扰动理论} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{纳入立方项等高阶项} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{超越牛顿近似} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{摆脱神学干预} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{无需"神圣干预"解释太阳系稳定} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{理性宇宙观} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 太阳系稳定性（stability of the Solar System）}\\[2pt]
+  {\fontsize{11.5}{15}\selectfont\color{laplaceblue!88!black}木星与土星的轨道扰动，在长周期上保持均衡}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 星云假说与黑洞预言（特色页） ---
+\newcommand{\nebulaslide}{\begin{frame}\plainbar\sectiontitle{星云假说与黑洞预言}{太阳系起源 · 暗星}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{laplaceblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉普拉斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{星云假说} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{重新阐述太阳系起源的星云假说} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{宇宙演化观} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{暗星} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{最早提出类似黑洞的设想（暗星）} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{黑洞先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{后世评价} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{霍金："拉普拉斯实质上预言了黑洞的存在"} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{跨世纪回响} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在广义相对论诞生一个多世纪前，他已瞥见引力坍缩的终局。}
+\end{center}
+\end{frame}}
+
+% --- 11. 拉普拉斯妖与决定论（特色页） ---
+\newcommand{\demonslide}{\begin{frame}\plainbar\sectiontitle{拉普拉斯妖与决定论}{全知智能体 · 因果律}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{laplaceblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉普拉斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{拉普拉斯妖} & \cellcolor{physicspanel}\textcolor{badgePhysics!82!black}{提出假设性全知智能体，若知全部初始条件可预测未来} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{决定论经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{因果律} & \cellcolor{physicspanel}\textcolor{badgePhysics!82!black}{阐述物理决定论的哲学含义} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{哲学影响深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{现代回响} & \cellcolor{physicspanel}\textcolor{badgePhysics!82!black}{混沌理论对严格决定论提出修正} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{思想实验延续} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 这个"妖"不是怪物，而是对人类理性极限的一次哲学追问。}
+\end{center}
+\end{frame}}
+
+% --- 12. 潮汐与热学 ---
+\newcommand{\tideslide}{\begin{frame}\plainbar\sectiontitle{潮汐与热学}{动态潮汐理论 · 与拉瓦锡合作}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{laplaceblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{拉普拉斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{潮汐} & \cellcolor{physicspanel}\textcolor{badgePhysics!82!black}{1775 年发展动态潮汐理论，提出潮汐方程} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{海洋学基础} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{热学} & \cellcolor{physicspanel}\textcolor{badgePhysics!82!black}{与拉瓦锡合作，设计量热计测量比热} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{热学奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{声速} & \cellcolor{physicspanel}\textcolor{badgePhysics!82!black}{改进牛顿的声速计算} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{更精确测量} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从海洋的潮汐到金属的比热，他的数学无处不在。}
+\end{center}
+\end{frame}}
+
+% --- 13. 政治生涯 ---
+\newcommand{\politicslide}{\begin{frame}\plainbar\sectiontitle{政治生涯}{内政部长 · 帝国伯爵 · 侯爵 · 拿破仑的考官}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{laplaceblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1785} & \cellcolor{graypanel}\textcolor{badgeCelestial!82!black}{拿破仑从巴黎军事学院毕业时的考官} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{与拿破仑结缘} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1799} & \cellcolor{graypanel}\textcolor{badgeCelestial!82!black}{任内政部长，仅六周即被拿破仑解职} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{政治短命} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1806} & \cellcolor{graypanel}\textcolor{badgeCelestial!82!black}{拿破仑封其为帝国伯爵（Count of the Empire）} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{帝国贵族} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1817} & \cellcolor{graypanel}\textcolor{badgeCelestial!82!black}{波旁复辟后封侯爵（marquis）} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{复辟贵族} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他游刃于革命、帝国与复辟之间，始终屹立于科学之巅。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{法国牛顿 · 荣誉军团 · 埃菲尔铁塔 72 名字}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{laplaceblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{称号} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 法国牛顿（French Newton）\item 牛顿之后最重要的物理天文学家\end{itemize}} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{历史地位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 荣誉军团大十字\item 皇家学会会员（FRS）\item 美国艺术与科学院院士\end{itemize}} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后} & \cellcolor{celestialpanel}\textcolor{badgeCelestial!82!black}{埃菲尔铁塔 72 位法国科学家名字之一} & \cellcolor{probabilitypanel}\textcolor{badgeProbability!82!black}{民族记忆} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他的名字，被铭刻在巴黎铁塔之上，与法兰西科学的荣光同在。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=laplaceblue!90!black] at ([yshift=1.5cm]current page.center) {他用微分方程描绘宇宙，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {用概率修补知识的缺陷。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=laplaceblue!70!black] at ([yshift=-1.2cm]current page.center) {从诺曼底到巴黎，从《天体力学》到拉普拉斯妖。};
+\node[font=\fontsize{8}{10}\selectfont, text=laplaceblue!60!black] at ([yshift=-2.0cm]current page.center) {拉普拉斯\quad Pierre-Simon Laplace\quad 1749 — 1827};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 天体力学 · 概率论 · 分析 · 物理\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\celestialslide
+\equationslide
+\transformslide
+\probabilityslide
+\stabilityslide
+\nebulaslide
+\demonslide
+\tideslide
+\politicslide
+\honorslide
+\closingslide
+\end{document}

@@ -32,7 +32,7 @@
 | 10 | [Edward Waring](https://en.wikipedia.org/wiki/Edward_Waring) | 华林 | 英国 | 1736–1798 | 华林问题、拉格朗日插值公式 | 🔲 | 🔲 | 🔲 |
 | 11 | [Joseph-Louis Lagrange](https://en.wikipedia.org/wiki/Joseph-Louis_Lagrange) | 拉格朗日 | 法国 | 1736–1813 | 分析力学、变分法、拉格朗日乘子法 | 🔲 | 🔲 | 🔲 |
 | 12 | [Gaspard Monge](https://en.wikipedia.org/wiki/Gaspard_Monge) | 蒙日 | 法国 | 1746–1818 | 画法几何、微分几何 | 🔲 | 🔲 | 🔲 |
-| 13 | [Pierre-Simon Laplace](https://en.wikipedia.org/wiki/Pierre-Simon_Laplace) | 拉普拉斯 | 法国 | 1749–1827 | 概率论、天体力学、拉普拉斯变换 | 🔲 | 🔲 | 🔲 |
+| 13 | [Pierre-Simon Laplace](https://en.wikipedia.org/wiki/Pierre-Simon_Laplace) | 拉普拉斯 | 法国 | 1749–1827 | 概率论、天体力学、拉普拉斯变换 | ✅ | 🔲 | ✅ |
 
 ## 三、目录对应关系
 
