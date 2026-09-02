@@ -1,0 +1,509 @@
+% =============================================================
+%  泰勒级数之父 · 有限差分法的奠基者：泰勒 (Brook Taylor)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Brook_Taylor
+%  设计母题：泰勒级数 / 函数逼近 —— 柔和气泡呼应级数展开的层层逼近
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：英格兰红 + 数学金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{taylorred}{HTML}{9E1B32}       % 英格兰红 — 英格兰 / 剑桥
+\definecolor{mathgold}{HTML}{C9A227}        % 数学金 — 18 世纪数学的尊崇
+\definecolor{badgeAnalysis}{HTML}{4C5FD5}   % 分析 — 靛蓝
+\definecolor{badgeDiff}{HTML}{0E7C7B}       % 有限差分 — 青绿
+\definecolor{badgePersp}{HTML}{E07B30}      % 透视/几何 — 琥珀
+\definecolor{badgePhys}{HTML}{B76E79}       % 振动弦/物理 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{analysispanel}{RGB}{228,232,250}
+\definecolor{diffpanel}{RGB}{220,240,238}
+\definecolor{persppanel}{RGB}{248,233,220}
+\definecolor{physpanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应泰勒级数 / 函数逼近
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAnalysis!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeDiff!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePersp!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgePhys!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=taylorred!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 英格兰\enspace·\enspace 泰勒级数之父\enspace·\enspace 有限差分法的奠基者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=taylorred!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {泰勒};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=taylorred!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Brook Taylor\enspace·\enspace 1685 — 1731};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {泰勒定理 · 泰勒级数 · 有限差分 · 分部积分};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAnalysis] at (-5.05,0)
+        {分析\\Analysis\par\scriptsize 泰勒定理};
+      \node[badge, fill=badgeDiff] at (-1.68,0)
+        {有限差分\\Finite Diff.\par\scriptsize 增量法};
+      \node[badge, fill=badgePersp] at (1.68,0)
+        {透视学\\Perspective\par\scriptsize 线性透视};
+      \node[badge, fill=badgePhys] at (5.05,0)
+        {振动弦\\Vibration\par\scriptsize 天文折射};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他用一个级数，让函数在一点处层层展开，逼近了整个分析学的核心。};
+  % 肖像（Goupy 所作）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{taylor_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Brook Taylor (1685–1731)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英格兰\enspace|\enspace \faIcon{university}\enspace 剑桥大学圣约翰学院 · 皇家学会\enspace|\enspace 分析 · 有限差分 · 透视学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{泰勒 - 从埃德蒙顿到伦敦}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Goupy 所作）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{taylor_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Brook Taylor (1685–1731)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1685-08-18 — 1731-12-29\\[2pt]\lab{本名}\quad Brook Taylor\\[2pt]\lab{国籍}\quad 英格兰};
+  \node[infob, fill=analysispanel, draw=badgeAnalysis!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 剑桥大学圣约翰学院\\[2pt]
+     \quad 1709 LL.B. · 1714 LL.D.\\[2pt]\lab{师承}\quad Machin · Keill};
+  \node[infob, fill=diffpanel, draw=badgeDiff!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Edmonton（英格兰）\\[2pt]\lab{荣誉}\quad 皇家学会会员（1712）\\[2pt]\lab{身后}\quad 伦敦 Somerset House};
+  \node[infob, fill=physpanel, draw=badgePhys!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 分析 · 有限差分\\[2pt]
+     \quad 透视学 · 振动弦\\[2pt]
+     \lab{身份}\quad 数学家 · 律师};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 泰勒的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{泰勒的一生}{1685 — 1731 · 从埃德蒙顿到伦敦}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1685/生于英格兰 Edmonton,
+    2.2/1701/入剑桥大学圣约翰学院,
+    1.5/1712/当选皇家学会院士,
+    0.8/1715/发表《Methodus Incrementorum》,
+    0.1/1714–1718/任皇家学会秘书,
+    -0.6/1721/娶 Miss Brydges,
+    -1.3/1729/父亡，继承 Bifrons 庄园,
+    -2.0/1731/于伦敦去世，享年 46
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1685–1714)}{埃德蒙顿出生 · 剑桥圣约翰学院 · Machin 与 Keill 引路}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{taylorred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1685} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{生于 Edmonton，父 John Taylor 为肯特郡议员} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{殷实士绅家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1701} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{入剑桥圣约翰学院（fellow-commoner）} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{法学与数学并修} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1709} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{获法学士 LL.B.，师从 Machin 与 Keill 学数学} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{习得分析技巧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1714} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{获法学博士 LL.D.；中心振荡问题解发表} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{初露锋芒} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在 Machin 与 Keill 的指导下，泰勒踏上分析学之路——一位剑桥才俊的数学起点。}
+\end{center}
+\end{frame}}
+
+% --- 5. 泰勒定理（核心贡献页） ---
+\newcommand{\taylortheoremslide}{\begin{frame}\plainbar\sectiontitle{泰勒定理 (1715)}{函数在一点的局部多项式逼近}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{taylorred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{泰勒的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{提出} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{1715 年《Methodus Incrementorum》中给出} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{微分学基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{内容} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{用多项式逼近光滑函数在某点附近的值} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{局部线性化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{迟来的认可} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{1772 年 Lagrange 称其为"微分学的主要基础"} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{57 年后方被重视} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 泰勒定理（Taylor's theorem）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{taylorred!88!black}$f(x)=f(a)+f'(a)(x-a)+\dfrac{f''(a)}{2!}(x-a)^{2}+\cdots$}\\[3pt]
+  {\fontsize{8.5}{11}\selectfont\itshape\color{muteddark} 函数在一点的局部多项式逼近}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 泰勒级数（核心贡献页） ---
+\newcommand{\taylorseriesslide}{\begin{frame}\plainbar\sectiontitle{泰勒级数}{幂级数展开 · 麦克劳林级数}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{taylorred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{泰勒的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{泰勒级数} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{把函数展开为无穷幂级数} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{分析学核心工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{无穷小方法} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{用级数逼近函数在特定点的值} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{逼近思想} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{麦克劳林级数} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{$x=0$ 处的特殊情形（后世命名）} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{特例传承} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 麦克劳林级数（Maclaurin series, $a=0$）}\\[2pt]
+  {\fontsize{11.5}{15}\selectfont\color{taylorred!88!black}$f(x)=\displaystyle\sum_{n=0}^{\infty}\dfrac{f^{(n)}(0)}{n!}\,x^{n}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 有限差分法（核心贡献页） ---
+\newcommand{\finitediffslide}{\begin{frame}\plainbar\sectiontitle{有限差分法 (1715)}{增量法 · 有限差分 $\Delta$}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{taylorred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{泰勒的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{新分支} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{创立"有限差分"这一高等数学分支} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{数值分析先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{增量法} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{《Methodus Incrementorum》正反增量法} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{离散化思想} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{差分算子} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{用 $\Delta$ 表示差分运算} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{差分记号} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 一阶向前差分（forward difference）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{taylorred!88!black}$\Delta f(x)=f(x+1)-f(x)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 振动弦与天文折射（核心贡献页） ---
+\newcommand{\stringrefractionslide}{\begin{frame}\plainbar
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} 振动弦与天文折射}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} 有限差分的应用 · 天文折射研究}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{taylorred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{泰勒的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{振动弦} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{用有限差分确定振动弦的运动形式} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{弦振动分析} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{天文折射} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{首次给出令人满意的天文折射研究} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{大气光学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{应用数学} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{把差分方法用于物理问题} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{物理数学结合} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.9cm}
+  \centering
+  {\fontsize{8}{11}\selectfont\bfseries\color{mathgold!85!black} 默森--泰勒弦振动公式（Mersenne--Taylor law）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{taylorred!88!black}$\displaystyle f=\frac{1}{2L}\sqrt{\frac{T}{\mu}}$}\\[2pt]
+  {\fontsize{6.5}{8}\selectfont\itshape\color{muteddark} $f$：基频\quad $L$：弦长\quad $T$：弦张力\quad $\mu$：单位长度质量（线密度）}\\[4pt]
+  {\fontsize{8}{11}\selectfont\bfseries\color{mathgold!85!black} 二阶中心差分（second central difference）}\\[1pt]
+  {\fontsize{9}{12}\selectfont\color{badgeDiff!88!black}$\Delta^{2}f(x)=f(x+\Delta x)-2f(x)+f(x-\Delta x)$}\\[2pt]
+  {\fontsize{6.5}{8}\selectfont\itshape\color{muteddark} 弦的曲率与二阶差分相对应，离散逼近弦的弯曲形态}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 分部积分法（核心贡献页） ---
+\newcommand{\ibpslide}{\begin{frame}\plainbar\sectiontitle{分部积分法}{系统化 $\int u\,dv$ 技巧}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{taylorred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{泰勒的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{分部积分} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{系统化 integration by parts 技巧} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{积分基本工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{无穷小分析} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{纳入其无穷小方法体系} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{微积分技巧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{应用} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{求解各类积分与级数问题} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{解题利器} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 分部积分公式（integration by parts）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{taylorred!88!black}$\displaystyle\int u\,dv=uv-\int v\,du$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 透视学（特色页） ---
+\newcommand{\perspectiveslide}{\begin{frame}\plainbar\sectiontitle{透视学}{《Linear Perspective》 · 透视原理}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{taylorred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{泰勒的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{线性透视} & \cellcolor{persppanel}\textcolor{badgePersp!82!black}{1715 年《Linear Perspective》更清晰阐述透视原理} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{投影几何} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{修订版} & \cellcolor{persppanel}\textcolor{badgePersp!82!black}{1719 年出改进版，1749 年 Colson 修订} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{后世传播} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{补充} & \cellcolor{persppanel}\textcolor{badgePersp!82!black}{经 Kirby（1754）、Fournier（1761）补充} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{体系完善} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+\fcolorbox{badgePersp!70}{persppanel}{%
+  \begin{minipage}{11.9cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{badgePersp!85!black} 线性透视 · 中心投影（Perspective Projection）}\\[3pt]
+  {\fontsize{12.5}{16}\selectfont\color{badgePersp!88!black}$\displaystyle x'=d\cdot\frac{x}{z},\qquad y'=d\cdot\frac{y}{z}$}\\[4pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{coverdark!75}
+  $d$：视点到画布的距离\quad $z$：物体深度\\[2pt]
+  注：此为后世代数整理，泰勒原著以几何公理推演，未用代数符号公式}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 皇家学会与微积分之争（特色页） ---
+\newcommand{\royalsocietyslide}{\begin{frame}\plainbar\sectiontitle{皇家学会与微积分之争}{FRS 院士 · 牛顿 vs 莱布尼茨裁定 · 学会秘书}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{taylorred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{角色}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1712} & \cellcolor{graypanel}\textcolor{badgeAnalysis!82!black}{当选皇家学会院士（FRS）} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{学界认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1712} & \cellcolor{graypanel}\textcolor{badgeAnalysis!82!black}{参与牛顿 vs 莱布尼茨优先权之争裁定委员会} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{历史见证} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1714–18} & \cellcolor{graypanel}\textcolor{badgeAnalysis!82!black}{任皇家学会秘书（secretary）} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{学术行政} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 作为少数能与伯努利家族抗衡的英国数学家，泰勒身处微积分之争的中心。}
+\end{center}
+\end{frame}}
+
+% --- 12. 悲剧人生与传承（特色页） ---
+\newcommand{\tragedyslide}{\begin{frame}\plainbar\sectiontitle{悲剧人生与传承}{两度丧妻 · 早逝 · 遗著 Contemplatio Philosophica}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{taylorred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1721} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{违父命娶 Miss Brydges，父子和解后妻子难产去世} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{子亦夭折} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1725} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{娶 Sabetta Sawbridge，1730 年难产去世} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{仅女儿幸存} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1729} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{父亡，继承 Bifrons 庄园} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{继承家业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1731} & \cellcolor{physpanel}\textcolor{badgePhys!82!black}{于伦敦 Somerset House 去世，享年 46} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{英年早逝} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 健康自 1717 年恶化——在接连的丧亲之痛中，这位天才走完了短暂的一生。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与后世纪念（特色页） ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与后世纪念}{皇家学会会员 · 月球环形山 Taylor}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{taylorred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{皇家学会会员（FRS，1712）} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{学界认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{后世} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{1772 年 Lagrange 称泰勒定理为"微分学的主要基础"} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{大师敬仰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{纪念} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{月球环形山 Taylor（1935 年命名）} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{永留星图} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 泰勒级数，已成为每个理工科学生的必修——他的名字与公式一同不朽。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=taylorred!90!black] at ([yshift=1.5cm]current page.center) {他用一个泰勒级数，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {让函数在一处层层展开。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=taylorred!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是公式，而是分析学最深刻的逼近思想。};
+\node[font=\fontsize{8}{10}\selectfont, text=taylorred!60!black] at ([yshift=-2.0cm]current page.center) {泰勒\quad Brook Taylor\quad 1685 — 1731};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 分析 · 有限差分 · 透视学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\taylortheoremslide
+\taylorseriesslide
+\finitediffslide
+\stringrefractionslide
+\ibpslide
+\perspectiveslide
+\royalsocietyslide
+\tragedyslide
+\honorslide
+\closingslide
+\end{document}
