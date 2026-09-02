@@ -20,7 +20,7 @@
 
 | # | 英文名 | 中文名 | 国籍 | 生卒 | 核心贡献 | 立传 | Review | 社会关系入库 |
 |:--:|------|:--:|------|:--:|------|:--:|:--:|:--:|
-| 1 | [Abraham de Moivre](https://en.wikipedia.org/wiki/Abraham_de_Moivre) | 棣莫弗 | 法国 | 1667–1754 | 棣莫弗公式、正态分布近似 | 🔲 | 🔲 | ✅ |
+| 1 | [Abraham de Moivre](https://en.wikipedia.org/wiki/Abraham_de_Moivre) | 棣莫弗 | 法国 | 1667–1754 | 棣莫弗公式、正态分布近似 | ✅ | 🔲 | ✅ |
 | 2 | [Brook Taylor](https://en.wikipedia.org/wiki/Brook_Taylor) | 泰勒 | 英国 | 1685–1731 | 泰勒级数、泰勒公式 | ✅ | 🔲 | ✅ |
 | 3 | [Colin Maclaurin](https://en.wikipedia.org/wiki/Colin_Maclaurin) | 麦克劳林 | 英国 | 1698–1746 | 麦克劳林级数、麦克劳林不等式 | 🔲 | 🔲 | ✅ |
 | 4 | [Daniel Bernoulli](https://en.wikipedia.org/wiki/Daniel_Bernoulli) | 丹尼尔·伯努利 | 瑞士 | 1700–1782 | 伯努利原理、流体力学、弦振动 | 🔲 | 🔲 | ✅ |

@@ -1,0 +1,469 @@
+% =============================================================
+%  概率论的先驱 · 正态分布的先声：棣莫弗 (Abraham de Moivre)
+%  Beamer 演示 —— 参照 Leonhard Euler 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Abraham_de_Moivre
+%  设计母题：正态分布 / 概率 —— 柔和气泡呼应概率的离散与连续
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法国蓝 + 概率金 + 分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{frenchblue}{HTML}{1F4E79}      % 法国蓝 — 法国 / 香槟
+\definecolor{mathgold}{HTML}{C9A227}        % 概率金 — 概率论的尊崇
+\definecolor{badgeProb}{HTML}{4C5FD5}       % 概率 — 靛蓝
+\definecolor{badgeComplex}{HTML}{0E7C7B}    % 复数/三角 — 青绿
+\definecolor{badgeStats}{HTML}{E07B30}      % 统计 — 琥珀
+\definecolor{badgeAstro}{HTML}{B76E79}      % 天文学/遗产 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{probpanel}{RGB}{228,232,250}
+\definecolor{complexpanel}{RGB}{220,240,238}
+\definecolor{statspanel}{RGB}{248,233,220}
+\definecolor{astropanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应概率的离散与连续的视觉语言
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeProb!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeComplex!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeStats!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeAstro!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=frenchblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国 → 英格兰\enspace·\enspace 胡格诺流亡者\enspace·\enspace 概率论的先驱};
+  \node[anchor=center, font=\fontsize{24}{28}\selectfont\bfseries, text=frenchblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {棣莫弗};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=frenchblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Abraham de Moivre\enspace·\enspace 1667 — 1754};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {棣莫弗公式 · 正态分布的先声 · 中心极限定理};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeProb] at (-5.05,0)
+        {概率论\\Probability\par\scriptsize 正态分布};
+      \node[badge, fill=badgeComplex] at (-1.68,0)
+        {复数与三角\\Complex \& Trig\par\scriptsize 棣莫弗公式};
+      \node[badge, fill=badgeStats] at (1.68,0)
+        {统计学\\Statistics\par\scriptsize Stirling 近似};
+      \node[badge, fill=badgeAstro] at (5.05,0)
+        {天文学\\Astronomy\par\scriptsize 引力理论};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他用复数的幂联结三角，用正态曲线预演了整个概率论。};
+  % 肖像（Joseph Highmore 1736）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{de_moivre_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {A. de Moivre (1667–1754)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国 → 英格兰\enspace|\enspace \faIcon{university}\enspace 英国皇家学会\enspace|\enspace 概率 · 统计 · 复数三角};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{棣莫弗 - 从胡格诺流亡者到概率论奠基人}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Joseph Highmore 1736）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{de_moivre_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {A. de Moivre (1667–1754)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1667-05-26 — 1754-11-27\\[2pt]\lab{本名}\quad Abraham de Moivre\\[2pt]\lab{国籍}\quad 法国 → 英格兰（胡格诺流亡）};
+  \node[infob, fill=probpanel, draw=badgeProb!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Sedan 新教学院 · Saumur 学院\\[2pt]
+     \quad 1684 年赴巴黎习物理\\[2pt]\lab{师承}\quad Jacques Ozanam（私人辅导）};
+  \node[infob, fill=statspanel, draw=badgeStats!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Vitry-le-François（香槟省）\\[2pt]\lab{荣誉}\quad 皇家学会院士（1697）\\[2pt]\lab{身后}\quad 伦敦，葬于圣马丁教堂};
+  \node[infob, fill=complexpanel, draw=badgeComplex!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 概率论 · 统计学\\[2pt]
+     \quad 数学分析 · 天文学\\[2pt]
+     \lab{身份}\quad 数学家 · 统计学家 · 天文学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 棣莫弗的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{棣莫弗的一生}{1667 — 1754 · 从香槟的胡格诺少年到伦敦的概率论奠基人}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1667/生于香槟省 Vitry-le-François，父为外科医生,
+    2.2/1678/11 岁入 Sedan 新教学院，学希腊文,
+    1.5/1685/《枫丹白露敕令》颁布，胡格诺遭迫害,
+    0.8/1687/抵伦敦，受洗于 Savoy 教堂,
+    0.1/1697/当选英国皇家学会院士（11 月 30 日）,
+    -0.6/1707/导出棣莫弗公式（1722 年定今形）,
+    -1.3/1733/二项分布的正态近似（中心极限定理特例）,
+    -2.0/1754/逝于伦敦，享年 87
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与胡格诺流亡 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与胡格诺流亡 (1667–1687)}{香槟出身 · 新教教育 · 宗教迫害 · 远赴伦敦}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1667} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{生于香槟省 Vitry-le-François；父 Daniel de Moivre 为外科医生；新教家庭，先入宽容的天主教学校} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{香槟出身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1678-82} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{11 岁入 Sedan 新教学院，师从 Jacques du Rondel 学希腊文；1682 年学院被镇压} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{古典学养} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1682-84} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{入 Saumur 学院学逻辑；自学 Prestet《数学基础》与惠更斯《论赌博中的推理》} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{自学数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1684-87} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{赴巴黎习物理，首次正式数学训练——师从 Jacques Ozanam；1685 年枫丹白露敕令后流亡英格兰} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{数学引路} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1685 年《枫丹白露敕令》让他的祖国关上了门——他转身走向伦敦。}
+\end{center}
+\end{frame}}
+
+% --- 5. 棣莫弗公式（核心贡献页） ---
+\newcommand{\formulaslide}{\begin{frame}\plainbar\sectiontitle{棣莫弗公式}{1707 导出 · 1722 定今形 · 复数与三角的桥梁}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{棣莫弗的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1707} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{由解高次方程导出 $\cos x=\tfrac{1}{2}(\cos(nx)+i\sin(nx))^{1/n}+\tfrac{1}{2}(\cos(nx)-i\sin(nx))^{1/n}$} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{复数与三角联结} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1722} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{给出今形 $(\cos x+i\sin x)^n=\cos(nx)+i\sin(nx)$} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{标准形式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1749} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{欧拉用欧拉公式证明对任意整数 $n$ 成立} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{一般化} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 棣莫弗公式（De Moivre's formula）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{frenchblue!88!black}$(\cos x+i\sin x)^{n}=\cos(nx)+i\sin(nx)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 正态分布的先声（核心贡献页） ---
+\newcommand{\normalslide}{\begin{frame}\plainbar\sectiontitle{正态分布的先声}{1733 二项近似 · 概率误差 · 高斯曲线的第一道曙光}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{棣莫弗的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1733} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{未发表的《Approximatio》中，首次以正态曲线近似二项分布} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{中心极限定理特例} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{概率误差} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{首次以分布变异性为单位计算误差发生概率（probable error）} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{统计推断先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{经典文献} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{1738、1756 年《机会学说》英文版收入该结果} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{正态分布之源} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 正态曲线（Gaussian curve）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{frenchblue!88!black}$f(x)=\dfrac{1}{\sqrt{2\pi}}\,e^{-x^{2}/2}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 中心极限定理（核心贡献页） ---
+\newcommand{\cltslide}{\begin{frame}\plainbar\sectiontitle{中心极限定理}{概率论基石 · De Moivre–Laplace 定理 · 现代统计的源头}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{棣莫弗的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{最早提出} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{首位提出中心极限定理思想，并证明二项分布的特例} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{概率论基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{经典命名} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{后世将其推广命名为 De Moivre–Laplace 定理} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{承前启后} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{深远影响} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{高斯与 19 世纪概率论在此基础之上系统发展正态理论} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{现代统计} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} De Moivre–Laplace 定理（二项分布的正态近似）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}$\displaystyle\binom{n}{k}p^{k}q^{n-k}\approx\frac{1}{\sqrt{2\pi npq}}\,e^{-\frac{(k-np)^{2}}{2npq}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. Stirling 近似（核心贡献页） ---
+\newcommand{\stirlingslide}{\begin{frame}\plainbar\sectiontitle{Stirling 近似}{1733 阶乘估计 · 常数由 Stirling 确定 · 分析的工具箱}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{棣莫弗的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1733} & \cellcolor{statspanel}\textcolor{badgeStats!82!black}{提出 $n!\approx c\cdot n^{n+\frac{1}{2}}e^{-n}$，逼近二项展开中间项的系数} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{阶乘近似} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{常数} & \cellcolor{statspanel}\textcolor{badgeStats!82!black}{1729 年 Stirling 来信；常数 $c=\sqrt{2\pi}$ 由 Stirling 确定} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{珠联璧合} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1730} & \cellcolor{statspanel}\textcolor{badgeStats!82!black}{《Miscellanea Analytica》含 $\log(n!)$ 数值表} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{分析工具} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 斯特林近似（Stirling's approximation）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{frenchblue!88!black}$n!\approx\sqrt{2\pi n}\left(\dfrac{n}{e}\right)^{n}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 《机会学说》（特色页） ---
+\newcommand{\doctrineslide}{\begin{frame}\plainbar\sectiontitle{《机会学说》}{概率论第二部教科书 · 四版流传 · 赌徒的案头书}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{版本}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{棣莫弗的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1711} & \cellcolor{statspanel}\textcolor{badgeStats!82!black}{拉丁文首版（De Mensura Sortis），概率论第二部教科书（首部为卡尔达诺）} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{概率论奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1718/1738} & \cellcolor{statspanel}\textcolor{badgeStats!82!black}{英文版两度增订，据传为赌徒所珍爱；1738 版收入 1733 正态近似} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{广受欢迎} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1756} & \cellcolor{statspanel}\textcolor{badgeStats!82!black}{身后第三版英文版出版} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{遗泽后世} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 《机会学说》——据说为赌徒们所珍爱的概率论教科书。}
+\end{center}
+\end{frame}}
+
+% --- 10. 更多贡献 ---
+\newcommand{\miscslide}{\begin{frame}\plainbar\sectiontitle{更多贡献}{斐波那契闭式 · 多项式定理 · 保险精算 · 牛顿体系}
+\vspace{-0.48cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.68}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{棣莫弗的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Binet 公式} & \cellcolor{graypanel}\textcolor{badgeProb!82!black}{首次发现斐波那契数的闭式表达式（黄金比 $\varphi$ 的幂）} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{数论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{组合工具} & \cellcolor{graypanel}\textcolor{badgeProb!82!black}{把牛顿二项定理推广为多项式定理；奠定容斥原理与生成函数} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{组合学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{保险精算} & \cellcolor{graypanel}\textcolor{badgeProb!82!black}{《Annuities upon Lives》揭示死亡率的分布，给出年金公式} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{精算学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{天体与史事} & \cellcolor{graypanel}\textcolor{badgeProb!82!black}{1705 年发现中心力与距离关系（J. Bernoulli 1710 证明）；1712 年参与微积分优先权委员会} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{牛顿体系} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  \vspace{1pt}
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{mathgold!85!black} 斐波那契通项（Binet 公式，棣莫弗最先推导）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{frenchblue!88!black}$F_n=\dfrac{\varphi^n-\psi^n}{\varphi-\psi},\quad \varphi=\dfrac{1+\sqrt5}{2},\ \psi=\dfrac{1-\sqrt5}{2}$}
+  \end{minipage}%
+}
+\end{center}
+\vspace{-0.2cm}
+\begin{center}
+{\fontsize{7}{9}\selectfont\color{muteddark}$\varphi$ 黄金分割，$\psi$ 共轭根；$F_n$ 为第 $n$ 项斐波那契数}
+\end{center}
+\end{frame}}
+
+% --- 11. 伦敦清贫一生（特色页） ---
+\newcommand{\exileslide}{\begin{frame}\plainbar\sectiontitle{伦敦清贫一生}{私人授课 · 咖啡馆下棋 · 撕书攻读《原理》}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{伦敦岁月}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{流亡} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{1687 年抵伦敦，受洗于 Savoy 教堂；与 Newton、Halley、Stirling 交游} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{胡格诺圈} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{谋生} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{靠私人授课维生，常出入 Old Slaughter's 咖啡馆下棋挣钱} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{清贫治学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{治学} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{撕下牛顿《自然哲学的数学原理》书页随身研读；因法国出身终身未获大学教席} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{学术热忱} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 牛顿晚年常对人说（据称）：}\\[2pt]
+{\fontsize{8}{10.5}\selectfont\itshape\color{mathgold!80!black} "He knows all these things better than I do."}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{皇家学会 · De Moivre–Laplace 定理 · 预知死亡传说}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{皇家学会} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 1697-11-30 当选院士（FRS）\item 1712 年微积分优先权委员会成员\end{itemize}} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{学术遗产} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item De Moivre–Laplace 定理\item De Moivre 公式 · De Moivre 数 · 五次方程\end{itemize}} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{影响深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{传奇} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{据传每日多睡 15 分钟，算出 1754-11-27 为自己死期（缺乏当时文献佐证）} & \cellcolor{complexpanel}\textcolor{badgeComplex!82!black}{预知死亡} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他用一个公式联结复数与三角，用一条曲线预演现代概率论。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=frenchblue!90!black] at ([yshift=1.5cm]current page.center) {从香槟的胡格诺少年，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {到伦敦概率论的奠基人。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=frenchblue!70!black] at ([yshift=-1.2cm]current page.center) {棣莫弗公式与正态曲线——复数、概率与理性的交响。};
+\node[font=\fontsize{8}{10}\selectfont, text=frenchblue!60!black] at ([yshift=-2.0cm]current page.center) {棣莫弗\quad Abraham de Moivre\quad 1667 — 1754};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 概率论 · 统计学 · 复数三角 · 天文学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\formulaslide
+\normalslide
+\cltslide
+\stirlingslide
+\doctrineslide
+\miscslide
+\exileslide
+\honorslide
+\closingslide
+\end{document}
