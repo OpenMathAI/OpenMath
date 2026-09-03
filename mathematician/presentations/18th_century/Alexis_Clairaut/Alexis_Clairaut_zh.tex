@@ -1,0 +1,523 @@
+% =============================================================
+%  神童数学家 · 牛顿体系的奠基者：克莱罗 (Alexis Clairaut)
+%  Beamer 演示 —— 参照 Leonhard Euler 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Alexis_Clairaut
+%  设计母题：地球椭球 / 天体轨道 —— 柔和气泡的视觉语言
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法国蓝 + 天文金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{frenchblue}{HTML}{1F4E79}      % 法国蓝 — 法国 / 巴黎
+\definecolor{mathgold}{HTML}{C9A227}        % 天文金 — 天体力学的尊崇
+\definecolor{badgeDiff}{HTML}{4C5FD5}       % 微分 — 靛蓝
+\definecolor{badgeGeo}{HTML}{0E7C7B}        % 大地测量 — 青绿
+\definecolor{badgeAstro}{HTML}{E07B30}      % 天文 — 琥珀
+\definecolor{badgeLife}{HTML}{B76E79}       % 人生/教育 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{diffpanel}{RGB}{228,232,250}
+\definecolor{geopanel}{RGB}{220,240,238}
+\definecolor{astropanel}{RGB}{248,233,220}
+\definecolor{lifepanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应地球椭球 / 天体轨道的视觉语言
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeDiff!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeGeo!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeAstro!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeLife!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7}{9}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+}
+
+% 装饰圆头像（无清晰肖像，沿用先例）
+\newcommand{\avatarcircle}[2]{%
+\begin{tikzpicture}
+  \pgfmathsetmacro{\avfs}{#2*26}
+  \fill[#1!8] (0,0) circle (#2);
+  \fill[#1!15] (0,0) circle (#2*0.88);
+  \node at (0,0) {\textcolor{#1!55!black}{\fontsize{\avfs}{\avfs}\selectfont\faIcon{user}}};
+\end{tikzpicture}%
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=frenchblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 神童数学家\enspace·\enspace 牛顿体系的奠基者之一};
+  \node[anchor=center, font=\fontsize{24}{28}\selectfont\bfseries, text=frenchblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {克莱罗};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=frenchblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Alexis Claude Clairaut\enspace·\enspace 1713 — 1765};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {克莱罗定理 · 月球远地点 · 哈雷彗星回归};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeDiff] at (-5.05,0)
+        {微分方程\\ODE\par\scriptsize 克莱罗方程};
+      \node[badge, fill=badgeGeo] at (-1.68,0)
+        {大地测量\\Geodesy\par\scriptsize 拉普兰};
+      \node[badge, fill=badgeAstro] at (1.68,0)
+        {天体力学\\Celestial\par\scriptsize 三体问题};
+      \node[badge, fill=badgeLife] at (5.05,0)
+        {教育人生\\Education\par\scriptsize 几何教材};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {十八岁执掌科学院席位，他把牛顿的宇宙算到了月亮与彗星。};
+  % 肖像（Alexis Clairaut 肖像）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Alexis_Clairaut.jpeg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {A.~C. Clairaut (1713–1765)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace 法国科学院\enspace|\enspace 微分 · 大地 · 天体};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{克莱罗 - 巴黎数学教师之家的神童}{生卒 · 本名 · 国籍 · 家庭 · 荣誉 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Alexis_Clairaut.jpeg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {A.~C. Clairaut (1713–1765)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1713-05-13（另说 05-07）— 1765-05-17\\[2pt]\lab{本名}\quad Alexis Claude Clairaut\\[2pt]\lab{国籍}\quad 法国（巴黎）};
+  \node[infob, fill=diffpanel, draw=badgeDiff!45, anchor=north] at (3.5,2.3)
+    {\lab{家庭}\quad 父为数学教师；20 子仅少数存活\\[2pt]
+     \quad 终身未婚，社交活跃\\[2pt]\lab{教育}\quad 父授数学；9 岁通几何代数};
+  \node[infob, fill=astropanel, draw=badgeAstro!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 巴黎\\[2pt]\lab{荣誉}\quad FRS（1737）· 圣彼得堡奖（1750）\\[2pt]\lab{身后}\quad 月球环形山 Clairaut（1935）};
+  \node[infob, fill=geopanel, draw=badgeGeo!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数学 · 力学 · 天文学\\[2pt]
+     \quad 大地测量学\\[2pt]
+     \lab{身份}\quad 数学家 · 天文学家 · 地球物理学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 克莱罗的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{克莱罗的一生}{1713 — 1765 · 神童的五十二年}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1713/生于巴黎，父 Jean-Baptiste 为数学教师,
+    2.2/1725/9 岁通欧氏几何与代数；10 岁借洛必达学微积分,
+    1.5/1731/《双重曲率曲线研究》出版，18 岁破格入法国科学院,
+    0.8/1736/随 Maupertuis 赴拉普兰测子午线弧,
+    0.1/1743/《地球形状理论》：克莱罗重力定理,
+    -0.6/1750/《月球理论》获圣彼得堡科学院奖,
+    -1.3/1759/与 Lalande、Lepaute 预测哈雷彗星回归,
+    -2.0/1765/5 月 17 日逝于巴黎，享年 52
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与神童 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与神童 (1713–1731)}{数学教师之家 · 十二三岁的论文 · 十八岁的院士}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年龄}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事迹}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{9--10 岁} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{父 Jean-Baptiste 亲授数学；九岁精通欧氏几何与代数，十岁借洛必达《无穷小分析》（1696）学圆锥曲线与微积分} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{家学启蒙} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{12--13 岁} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{十二岁写出四条几何曲线的论文；十三岁在法兰西学院当众宣读其发现的曲线性质} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{少年成名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{16 岁} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{完成《双重曲率曲线研究》（Recherches sur les courbes à double courbure）} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{空间曲线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{18 岁} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{1731 年该书面世，助他破格入选法国科学院——低于法定年龄的特例} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{史上最年轻} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 十八岁的科学院院士——法兰西学术史上罕见的破格。}
+\end{center}
+\end{frame}}
+
+% --- 5. 混合偏导与克莱罗方程（核心贡献页） ---
+\newcommand{\odediffslide}{\begin{frame}\plainbar\sectiontitle{混合偏导与克莱罗方程}{精确微分条件 · 一阶方程解法 · 积分因子}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{克莱罗的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{混合偏导} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{给出 $M_y=N_x$ 精确微分条件（Fatio 1687、Bernoulli 曾先行——他给出的是系统条件）} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{多元微分基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{克莱罗方程} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{$y=xy'+f(y')$ 型方程：代换 $p=y'$ 后两边求导即得通解与奇解} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{一阶方程经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{积分因子} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{建立一阶线性微分方程积分因子的存在性} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{解法完备} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 克莱罗定理（混合偏导）与克莱罗方程}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}$M_{y}=N_{x}\ \text{（精确微分）}；\qquad y=x\,y'+f(y')$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 拉普兰远征（核心贡献页） ---
+\newcommand{\laplandslide}{\begin{frame}\plainbar\sectiontitle{拉普兰远征}{1736 · 子午线弧测量 · 扁球与长球之争}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{远征始末}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{世纪之争} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{地球是牛顿主张的扁球（oblate），还是 Cassini 主张的长球（oblong）？——测子午线弧一锤定音} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{科学裁决} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{极地测量} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{1736 年与 Maupertuis 赴拉普兰；返程前把计算寄给皇家学会，刊于 1736–37《Philosophical Transactions》} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{极地实证} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{先疑后证} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{他起初不同意牛顿的结论，文章中指出牛顿计算的若干问题并给出部分方案——最终证实地球为扁球} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{批判性验证} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 拉普兰远征（1736）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}子午线弧度测量证实牛顿的扁球地球——牛顿体系的胜利}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 克莱罗定理（重力）（核心贡献页） ---
+\newcommand{\gravityslide}{\begin{frame}\plainbar\sectiontitle{克莱罗定理（重力）}{1743 · 旋转椭球的重力 · Stokes 推广}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{理论内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{定理} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{联系旋转椭球面各点的重力与扁率、赤道离心力——给出重力场强随纬度变化的公式} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{大地测量基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Maclaurin 基础} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{流体静力学模型建立在 Maclaurin 扁球（均匀流体自转平衡）之上；假定地球为等密度同心椭球壳} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{承前启后} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Stokes 推广} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{1849 年 Stokes 证明：只要表面是近球形的平衡椭球面，结论与地球内部结构无关} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{百年强化} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 克莱罗定理（Clairaut's theorem, 1743）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}椭球面重力 = $f$(纬度)——扁率与离心力的联系}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 三体问题与月球远地点（核心贡献页） ---
+\newcommand{\threebodyslide}{\begin{frame}\plainbar\sectiontitle{三体问题与月球远地点}{三人竞速 · 三阶近似 · 1750 圣彼得堡奖}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{突破}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{世纪难题} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{地-月-日三体引力；牛顿只能解释月球远地点运动的一半——百年悬案} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{牛顿之困} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{三人竞速} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{与 Euler、d'Alembert 竞争；后两位主张修正平方反比律，克莱罗坚持牛顿框架} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{路线之争} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{三阶近似} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{以四个微分方程 + 微调的平方反比律求解，把近似推到三阶后与观测吻合——首个满意解（近似解），获 1750 圣彼得堡奖} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{牛顿的平反} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 月球远地点进动（Apsidal precession）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}三阶近似与观测吻合——牛顿引力理论的严格检验}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 哈雷彗星与月球表（核心贡献页） ---
+\newcommand{\cometslide}{\begin{frame}\plainbar\sectiontitle{哈雷彗星与月球表}{1759 回归预测 · DFT 的早期应用}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{计算}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{哈雷彗星} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{与 Lalande、Nicole-Reine Lepaute 三人团队成功计算 1759 年回归日期——人类首次预报彗星回归} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{科学预言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{月球表 1754} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{用离散傅里叶变换的一种形式计算月球运行表} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{DFT 早期应用} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{航海实用} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{月球理论使航海者可定经度——不仅是理论胜利，更有经济与航海实用价值} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{经度之战} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 哈雷彗星 1759 年回归（Halley's comet return）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}Clairaut · Lalande · Lepaute——首次彗星回归预报}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 位势理论与金星（特色页） ---
+\newcommand{\potentialslide}{\begin{frame}\plainbar\sectiontitle{位势理论与金星测量}{首引位势概念 · 金星的首次精确测算}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{位势理论} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{在月球理论同一工作中首次引入位势理论——名称始于 Green 1828 年论文} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{数学物理先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{金星测量} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{以应用数学精确测量金星的大小与地距——金星尺寸的首次精确测算} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{行星观测} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{彗星摄动} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{多篇论文研究行星摄动下的月球轨道与彗星运动} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{摄动理论} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从位势函数到行星尺度——他把引力数学推向整个太阳系。}
+\end{center}
+\end{frame}}
+
+% --- 11. 教育专著（特色页） ---
+\newcommand{\eduslide}{\begin{frame}\plainbar\sectiontitle{教育专著}{体验式几何 · 六版流行 · 沿用至今}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{特色}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{《几何基础》} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{《Éléments de Géométrie》（1741）：面向初学者，以土地测量引入，主张学生在主动发现中学习（体验式学习）} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{教学革命} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{六版流行} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{全书把几何与数学各支、物理、天文相联——六版重印，部分教学法沿用至今} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{经典教材} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{《代数基础》} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{《Éléments d'Algèbre》（1740/1741）：欧陆广受欢迎，第六版 1801 年刊行} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{代数普及} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} "让学生自己发现"——十八世纪已有体验式学习的实践者。}
+\end{center}
+\end{frame}}
+
+% --- 12. 微分几何与夏特莱（特色页） ---
+\newcommand{\diffgeoslide}{\begin{frame}\plainbar\sectiontitle{微分几何与夏特莱侯爵夫人}{Clairaut relation · 高斯曲率先声 · 《原理》翻译}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Clairaut relation} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{微分几何中以他命名的曲面测地线关系（Clairaut's relation）} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{曲面论经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{高斯承接} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{十八世纪高斯扩展克莱罗与惠更斯的几何贡献，引入高斯曲率} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{通向微分几何} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{夏特莱侯爵夫人} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{以自己的天体力学造诣，协助 Émilie du Châtelet 翻译与评注牛顿《原理》} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{牛顿在法传播} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从曲面测地线到《原理》法译——牛顿体系因他而在法兰西扎根。}
+\end{center}
+\end{frame}}
+
+% --- 13. 社交人生（特色页） ---
+\newcommand{\socialslide}{\begin{frame}\plainbar\sectiontitle{社交人生}{终身未婚 · 沙龙宠儿 · 年轻人的伯乐}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人生}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{终身未婚} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{克莱罗终身未婚，以活跃的社交生活著称——沙龙与晚宴的常客} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{沙龙数学家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Bossut 评语} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{Bossut 言：他"沉溺于晚宴与夜晚，热衷女色，把享乐当作日常工作，耗尽了休息与健康，终在五十二岁丧命"} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{盛名之累} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{扶植后学} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{尽管社交繁忙，他对年轻数学家的成长推动十分显著} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{伯乐之风} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 社交夺走了他的健康，却也让牛顿的名字传遍巴黎的沙龙。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{皇家学会 · 圣彼得堡奖 · 月球环形山}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.0cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.4cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 皇家学会会员（1737-10-27）\item 圣彼得堡科学院奖（1750，《月球理论》）\end{itemize}} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{命名} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 两个克莱罗定理 · 克莱罗方程\item Clairaut relation · 月球环形山 Clairaut（1935）\end{itemize}} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{多重纪念} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{遗产} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 位势理论之源 · 大地测量学奠基\item 牛顿体系在法兰西的确立者之一\end{itemize}} & \cellcolor{geopanel}\textcolor{badgeGeo!82!black}{影响深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 十八岁入院士，五十二岁辞世——他把短暂的一生算成了整个宇宙。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=frenchblue!90!black] at ([yshift=1.5cm]current page.center) {十八岁的院士，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {把牛顿的宇宙算到了月亮与彗星。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=frenchblue!70!black] at ([yshift=-1.2cm]current page.center) {克莱罗定理与月球理论——大地、苍穹与理性的交响。};
+\node[font=\fontsize{8}{10}\selectfont, text=frenchblue!60!black] at ([yshift=-2.0cm]current page.center) {克莱罗\quad Alexis Claude Clairaut\quad 1713 — 1765};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 微分方程 · 大地测量 · 天体力学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\odediffslide
+\laplandslide
+\gravityslide
+\threebodyslide
+\cometslide
+\potentialslide
+\eduslide
+\diffgeoslide
+\socialslide
+\honorslide
+\closingslide
+\end{document}

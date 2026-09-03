@@ -1,0 +1,491 @@
+% =============================================================
+%  画法几何之父 · 微分几何之父：蒙日 (Gaspard Monge)
+%  Beamer 演示 —— 参照 Leonhard Euler 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Gaspard_Monge
+%  设计母题：画法几何投影 / 曲面曲率 —— 柔和气泡的视觉语言
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法国蓝 + 几何金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{frenchblue}{HTML}{1F4E79}      % 法国蓝 — 法国 / 巴黎
+\definecolor{mathgold}{HTML}{C9A227}        % 几何金 — 画法几何的尊崇
+\definecolor{badgeDes}{HTML}{4C5FD5}        % 画法几何 — 靛蓝
+\definecolor{badgeDiff}{HTML}{0E7C7B}       % 微分几何 — 青绿
+\definecolor{badgeEng}{HTML}{E07B30}        % 工程/教育 — 琥珀
+\definecolor{badgePol}{HTML}{B76E79}        % 政治/远征 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{despanel}{RGB}{228,232,250}
+\definecolor{diffpanel}{RGB}{220,240,238}
+\definecolor{engpanel}{RGB}{248,233,220}
+\definecolor{polpanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应几何投影 / 曲面曲率的视觉语言
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeDes!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeDiff!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeEng!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgePol!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7}{9}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+}
+
+% 装饰圆头像（无清晰肖像，沿用先例）
+\newcommand{\avatarcircle}[2]{%
+\begin{tikzpicture}
+  \pgfmathsetmacro{\avfs}{#2*26}
+  \fill[#1!8] (0,0) circle (#2);
+  \fill[#1!15] (0,0) circle (#2*0.88);
+  \node at (0,0) {\textcolor{#1!55!black}{\fontsize{\avfs}{\avfs}\selectfont\faIcon{user}}};
+\end{tikzpicture}%
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=frenchblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 画法几何之父\enspace·\enspace 巴黎综合理工创办人};
+  \node[anchor=center, font=\fontsize{24}{28}\selectfont\bfseries, text=frenchblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {蒙日};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=frenchblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Gaspard Monge\enspace·\enspace 1746 — 1818};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {画法几何 · 曲率线理论 · 最优传输先声};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeDes] at (-5.05,0)
+        {画法几何\\Descriptive\par\scriptsize 工程制图之基};
+      \node[badge, fill=badgeDiff] at (-1.68,0)
+        {微分几何\\Differential\par\scriptsize 曲率线理论};
+      \node[badge, fill=badgeEng] at (1.68,0)
+        {工程教育\\Engineering\par\scriptsize 综合理工};
+      \node[badge, fill=badgePol] at (5.05,0)
+        {政治远征\\Politics\par\scriptsize 埃及远征};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把几何变成工程的语言，把数学带进了战争、教育与国家。};
+  % 肖像（Gaspard Monge 肖像）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Gaspard_monge.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {G. Monge (1746–1818)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace 巴黎综合理工学院\enspace|\enspace 画法几何 · 微分几何 · 运输理论};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{蒙日 - 从勃艮第商人之子到法兰西伯爵}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Gaspard_monge.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {G. Monge (1746–1818)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1746-05-09 — 1818-07-28\\[2pt]\lab{本名}\quad Gaspard Monge（Péluse 伯爵）\\[2pt]\lab{国籍}\quad 法国（勃艮第 Beaune）};
+  \node[infob, fill=despanel, draw=badgeDes!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 博纳奥拉托利会学院\\[2pt]
+     \quad 里昂 La Trinité（17 岁任物理教师）\\[2pt]\lab{早年职业}\quad 制图员（梅济耶尔工程学校）};
+  \node[infob, fill=engpanel, draw=badgeEng!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Beaune（Côte-d'Or）\\[2pt]\lab{荣誉}\quad 荣誉军团大军官 · 埃菲尔铁塔 72 名字\\[2pt]\lab{身后}\quad 先葬拉雪兹，后迁先贤祠};
+  \node[infob, fill=diffpanel, draw=badgeDiff!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 画法几何 · 微分几何\\[2pt]
+     \quad 运输理论 · 冶金 · 教育\\[2pt]
+     \lab{身份}\quad 数学家 · 工程师 · 政治家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 蒙日的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{蒙日的一生}{1746 — 1818 · 从勃艮第到先贤祠的七十二年}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1746/生于 Beaune（勃艮第），商人之子,
+    2.2/1764/绘制 Beaune 大比例地图，被举荐入梅济耶尔工程学校,
+    1.5/1769/接替 Bossut 任数学教授；画法几何诞生（军事机密）,
+    0.8/1780/当选法国科学院院士，与 Berthollet 结谊,
+    0.1/1792/任海军部长（至 1793-04）；投身共和国防御,
+    -0.6/1794/参与创办巴黎综合理工学院，任画法几何教授,
+    -1.3/1798/随拿破仑远征埃及，任埃及委员会主席,
+    -2.0/1818/7 月 28 日逝于巴黎；先葬拉雪兹，后迁先贤祠
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1746–1765)}{商人之子 · 十七岁执教 · 一图入仕}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1746-62} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{生于 Beaune 商人家庭；就读博纳奥拉托利会学院；1762 赴里昂 Collège de la Trinité} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{学院教育} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1762} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{入学一年后，年仅十七岁被指定为物理学教师——天赋早显} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{少年执教} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1764} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{学成返 Beaune，自制观测仪器绘制全城大比例平面图（今藏市图书馆）；一位工程师军官见后致信梅济耶尔工程学校校长举荐} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{一图入仕} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{门槛} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{工程学校仅收贵族子弟——他以制图员（draftsman）身份入校，数学才能起初不受重视} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{平民之限} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一张手绘城市地图，把商人之子送进了皇家工程学校。}
+\end{center}
+\end{frame}}
+
+% --- 5. 画法几何的诞生（核心贡献页） ---
+\newcommand{\descriptivegeoslide}{\begin{frame}\plainbar\sectiontitle{画法几何的诞生}{défilement 难题 · 图形法两日破题 · 军事机密三十年}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{蒙日的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{难题} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{要塞 défilement（掩蔽）设计：使敌方无法直视工事内部——星形要塞几何日趋复杂，传统算法需一周} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{军事刚需} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{图形法} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{蒙日以图形构造能见度锥求解，两天完成——初遭质疑，验证后惊为天人} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{两天破题} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{保密三十年} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{由此开创的画法几何被视为军事机密多年，直至 1795 年才公开讲授} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{技术绘图之基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 画法几何（Descriptive geometry）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}三维形体在平面上的多视投影——工程制图的数学基础}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 微分几何与曲率线（核心贡献页） ---
+\newcommand{\curvatureslide}{\begin{frame}\plainbar\sectiontitle{微分几何与曲率线}{1781 · 曲率线常微分方程 · 超越欧拉 1760}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{蒙日的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{曲率线理论} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{1781 年论文中确立曲面曲率线的常微分方程与一般理论——"资本性发现"} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{奠基之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{超越欧拉} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{欧拉 1760 年只考虑过特定法线的平面截线，未及相继法线的交点问题；蒙日给出完整解答} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{后来居上} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{椭球应用} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{1795 年把理论应用于椭球这一重要特例；后世称他"微分几何之父"} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{尊称由来} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 曲面曲率线（Lines of curvature，1781）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}曲率线的常微分方程——曲面论的一般理论}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 运输理论与最优传输（核心贡献页） ---
+\newcommand{\transportslide}{\begin{frame}\plainbar\sectiontitle{运输理论与最优传输}{1781 déblais et remblais · earth-mover 问题 · 两个世纪后复兴}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{蒙日的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{土方问题} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{《论挖方与填方之理论》（1781）：把土方从挖方区运往填方区，求总运费最小的方案} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{最早线性优化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{弱拓扑距离} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{由土方问题引出的分布间距离定义，两百年间被 Kantorovich、Paul Lévy、Vaseršteĭn 等多次再发现} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{Wasserstein 度量} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{现代复兴} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{最优传输理论成为当代分析、经济与机器学习（Wasserstein 距离）的基石之一} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{两个世纪后} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 最优传输（Optimal transport，Monge 1781）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}$\min_{T}\ \int c\bigl(x,T(x)\bigr)\,d\mu(x)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 《画法几何》与教育遗产（核心贡献页） ---
+\newcommand{\educationalslide}{\begin{frame}\plainbar\sectiontitle{《画法几何》与教育遗产}{1795 讲座 · 1799 成书 · 综合理工传统}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{蒙日的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{讲座成书} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{《画法几何讲座》据 1795 年高等师范课程记录整理，1799 年出版；后扩展为《分析在几何中的应用》} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{保密终结} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{综合理工} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{与 Lamblardie、Lazare Carnot 共同创办巴黎综合理工学院，亲授画法几何——法兰西最高工程学府} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{办学之父} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{学派养成} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{培养 Poncelet、Biot、Dupin、Lacroix、Gergonne 一代几何学派；与 Berthollet、Chaptal、Laplace 共建 Arts et Métiers} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{桃李天下} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Géométrie descriptive（画法几何，1799）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}从军事机密到工程教科书——一门学科的重生}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 化学与物理贡献（特色页） ---
+\newcommand{\chemslide}{\begin{frame}\plainbar\sectiontitle{化学与物理贡献}{首次液化纯气体 · 色觉恒常性 · 静力学教程}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{气体液化} & \cellcolor{engpanel}\textcolor{badgeEng!82!black}{1783–84 与 Clouet 以冰盐冷剂 U 型管液化二氧化硫——史上首次液化纯气体} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{低温化学先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{色觉研究} & \cellcolor{engpanel}\textcolor{badgeEng!82!black}{《关于若干视觉现象的备忘录》（1789）提出色彩恒常性的早期隐式解释} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{色觉科学先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{静力学} & \cellcolor{engpanel}\textcolor{badgeEng!82!black}{1786 年《静力学初等论》；1783 年任海军候选人主考官，因不愿夺 Bézout 遗孀生计而拒写替代教材} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{仁者之风} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从气体液化到色觉理论——他的好奇心从不止步于几何。}
+\end{center}
+\end{frame}}
+
+% --- 10. 法国大革命与海军部长（特色页） ---
+\newcommand{\revolutionslide}{\begin{frame}\plainbar\sectiontitle{法国大革命与海军部长}{1792 海军部长 · 共和国防御 · 火炮制造}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{海军部长} & \cellcolor{polpanel}\textcolor{badgePol!82!black}{1792-08-10 至 1793-04-10 任海军部长（Ministre de la Marine），投身革命政府} & \cellcolor{engpanel}\textcolor{badgeEng!82!black}{学者从政} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{国防动员} & \cellcolor{polpanel}\textcolor{badgePol!82!black}{公共安全委员会号召学者助防共和国，他以能源著称：著《火炮制造术》《告钢铁工人书》（与 Vandermonde、Berthollet 合作炼钢册）} & \cellcolor{engpanel}\textcolor{badgeEng!82!black}{科技支前} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{教育重建} & \cellcolor{polpanel}\textcolor{badgePol!82!black}{深度参与法国教育体系改革：高等师范学校（1795）与公共工程学校（后综合理工）的建立者之一} & \cellcolor{engpanel}\textcolor{badgeEng!82!black}{制度奠基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 大革命彻底改写了他的人生轨迹——学者执掌海军部。}
+\end{center}
+\end{frame}}
+
+% --- 11. 随拿破仑：意大利与埃及（特色页） ---
+\newcommand{\egyptslide}{\begin{frame}\plainbar\sectiontitle{随拿破仑：意大利与埃及}{选画使节 · 埃及远征 · 委员会主席}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{意大利使节} & \cellcolor{polpanel}\textcolor{badgePol!82!black}{1796-05 至 1797-10 与 Berthollet 赴意大利遴选征收的绘画雕塑，其间与拿破仑结谊} & \cellcolor{engpanel}\textcolor{badgeEng!82!black}{结识统帅} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{罗马任务} & \cellcolor{polpanel}\textcolor{badgePol!82!black}{1798 年初再赴意大利，任务终以短命罗马共和国的建立告终} & \cellcolor{engpanel}\textcolor{badgeEng!82!black}{共和国幕后} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{埃及远征} & \cellcolor{polpanel}\textcolor{badgePol!82!black}{随拿破仑远征埃及，与 Berthollet 参与 Institut d'Égypte 科学工作，任埃及委员会主席，1799 同返法国} & \cellcolor{engpanel}\textcolor{badgeEng!82!black}{科学远征} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 与拿破仑同船去埃及的，还有一支科学家的舰队。}
+\end{center}
+\end{frame}}
+
+% --- 12. 帝国岁月与晚年（特色页） ---
+\newcommand{\empireslide}{\begin{frame}\plainbar\sectiontitle{帝国岁月与晚年}{Péluse 伯爵 · 元老院主席 · 荣誉尽夺}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{岁月}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{帝国高位} & \cellcolor{polpanel}\textcolor{badgePol!82!black}{元老院终身成员，受封 Péluse 伯爵；1806–07 年任元老院主席} & \cellcolor{engpanel}\textcolor{badgeEng!82!black}{位极人臣} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉尽夺} & \cellcolor{polpanel}\textcolor{badgePol!82!black}{拿破仑倒台后，复辟政权剥夺他的一切荣誉，甚至将他从重建的研究院名单中除名} & \cellcolor{engpanel}\textcolor{badgeEng!82!black}{晚景凄凉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后哀荣} & \cellcolor{polpanel}\textcolor{badgePol!82!black}{1818-07-28 逝于巴黎；先葬拉雪兹公墓陵墓，后迁先贤祠——法国给他的最终平反} & \cellcolor{engpanel}\textcolor{badgeEng!82!black}{先贤之列} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 荣誉可以被剥夺，先贤祠的位置却抹不去。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{埃菲尔铁塔 · 先贤祠 · 两个世纪的纪念}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.0cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.4cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{勋章} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 荣誉军团大军官\item 团聚勋章大十字骑士 · 铁王冠勋章\end{itemize}} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{纪念} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 埃菲尔铁塔 72 名字之一 · Beaune 雕像（1849）\item 法国海军 Monge 号测量船（1992 至今）\end{itemize}} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{多重纪念} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{遗产} & \cellcolor{despanel}\textcolor{badgeDes!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 蒙日-安培方程 · 蒙日锥 · 蒙日圆 · 蒙日点\item 最优传输 / Wasserstein 距离的源头\end{itemize}} & \cellcolor{diffpanel}\textcolor{badgeDiff!82!black}{影响深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从军事机密到机器学习的距离函数——蒙日的几何活了两个多世纪。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=frenchblue!90!black] at ([yshift=1.5cm]current page.center) {他把几何变成工程的语言，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {把数学带进了战争、教育与国家。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=frenchblue!70!black] at ([yshift=-1.2cm]current page.center) {画法几何与最优传输——几何、工程与理性的交响。};
+\node[font=\fontsize{8}{10}\selectfont, text=frenchblue!60!black] at ([yshift=-2.0cm]current page.center) {蒙日\quad Gaspard Monge\quad 1746 — 1818};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 画法几何 · 微分几何 · 运输理论\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\descriptivegeoslide
+\curvatureslide
+\transportslide
+\educationalslide
+\chemslide
+\revolutionslide
+\egyptslide
+\empireslide
+\honorslide
+\closingslide
+\end{document}

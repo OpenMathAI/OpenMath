@@ -22,16 +22,16 @@
 |:--:|------|:--:|------|:--:|------|:--:|:--:|:--:|
 | 1 | [Abraham de Moivre](https://en.wikipedia.org/wiki/Abraham_de_Moivre) | 棣莫弗 | 法国 | 1667–1754 | 棣莫弗公式、正态分布近似 | ✅ | 🔲 | ✅ |
 | 2 | [Brook Taylor](https://en.wikipedia.org/wiki/Brook_Taylor) | 泰勒 | 英国 | 1685–1731 | 泰勒级数、泰勒公式 | ✅ | 🔲 | ✅ |
-| 3 | [Colin Maclaurin](https://en.wikipedia.org/wiki/Colin_Maclaurin) | 麦克劳林 | 英国 | 1698–1746 | 麦克劳林级数、麦克劳林不等式 | 🔲 | 🔲 | ✅ |
-| 4 | [Daniel Bernoulli](https://en.wikipedia.org/wiki/Daniel_Bernoulli) | 丹尼尔·伯努利 | 瑞士 | 1700–1782 | 伯努利原理、流体力学、弦振动 | 🔲 | 🔲 | ✅ |
+| 3 | [Colin Maclaurin](https://en.wikipedia.org/wiki/Colin_Maclaurin) | 麦克劳林 | 英国 | 1698–1746 | 麦克劳林级数、麦克劳林不等式 | ✅ | 🔲 | ✅ |
+| 4 | [Daniel Bernoulli](https://en.wikipedia.org/wiki/Daniel_Bernoulli) | 丹尼尔·伯努利 | 瑞士 | 1700–1782 | 伯努利原理、流体力学、弦振动 | ✅ | 🔲 | ✅ |
 | 5 | [Leonhard Euler](https://en.wikipedia.org/wiki/Leonhard_Euler) | 欧拉 | 瑞士 | 1707–1783 | 数学分析、图论、数论、欧拉公式 | ✅ | ✅ | ✅ |
-| 6 | [Alexis Clairaut](https://en.wikipedia.org/wiki/Alexis_Clairaut) | 克莱罗 | 法国 | 1713–1765 | 克莱罗微分方程、克莱罗定理、哈雷彗星预测 | 🔲 | 🔲 | ✅ |
+| 6 | [Alexis Clairaut](https://en.wikipedia.org/wiki/Alexis_Clairaut) | 克莱罗 | 法国 | 1713–1765 | 克莱罗微分方程、克莱罗定理、哈雷彗星预测 | ✅ | 🔲 | ✅ |
 | 7 | [Jean le Rond d'Alembert](https://en.wikipedia.org/wiki/Jean_le_Rond_d%27Alembert) | 达朗贝尔 | 法国 | 1717–1783 | 达朗贝尔原理、极限概念、波动方程 | ✅ | 🔲 | ✅ |
-| 8 | [Johann Heinrich Lambert](https://en.wikipedia.org/wiki/Johann_Heinrich_Lambert) | 兰伯特 | 瑞士 | 1728–1777 | π 的无理性证明、双曲函数 | 🔲 | 🔲 | ✅ |
-| 9 | [Étienne Bézout](https://en.wikipedia.org/wiki/%C3%89tienne_B%C3%A9zout) | 贝祖 | 法国 | 1730–1783 | 贝祖定理、消元法 | 🔲 | 🔲 | ✅ |
-| 10 | [Edward Waring](https://en.wikipedia.org/wiki/Edward_Waring) | 华林 | 英国 | 1736–1798 | 华林问题、拉格朗日插值公式 | 🔲 | 🔲 | ✅ |
+| 8 | [Johann Heinrich Lambert](https://en.wikipedia.org/wiki/Johann_Heinrich_Lambert) | 兰伯特 | 瑞士 | 1728–1777 | π 的无理性证明、双曲函数 | ✅ | 🔲 | ✅ |
+| 9 | [Étienne Bézout](https://en.wikipedia.org/wiki/%C3%89tienne_B%C3%A9zout) | 贝祖 | 法国 | 1730–1783 | 贝祖定理、消元法 | ✅ | 🔲 | ✅ |
+| 10 | [Edward Waring](https://en.wikipedia.org/wiki/Edward_Waring) | 华林 | 英国 | 1736–1798 | 华林问题、拉格朗日插值公式 | ✅ | 🔲 | ✅ |
 | 11 | [Joseph-Louis Lagrange](https://en.wikipedia.org/wiki/Joseph-Louis_Lagrange) | 拉格朗日 | 法国 | 1736–1813 | 分析力学、变分法、拉格朗日乘子法 | ✅ | ✅ | ✅ |
-| 12 | [Gaspard Monge](https://en.wikipedia.org/wiki/Gaspard_Monge) | 蒙日 | 法国 | 1746–1818 | 画法几何、微分几何 | 🔲 | 🔲 | ✅ |
+| 12 | [Gaspard Monge](https://en.wikipedia.org/wiki/Gaspard_Monge) | 蒙日 | 法国 | 1746–1818 | 画法几何、微分几何 | ✅ | 🔲 | ✅ |
 | 13 | [Pierre-Simon Laplace](https://en.wikipedia.org/wiki/Pierre-Simon_Laplace) | 拉普拉斯 | 法国 | 1749–1827 | 概率论、天体力学、拉普拉斯变换 | ✅ | 🔲 | ✅ |
 
 ## 三、目录对应关系

@@ -1,0 +1,455 @@
+% =============================================================
+%  消元理论之父 · 海军数学教育家：贝祖 (Étienne Bézout)
+%  Beamer 演示 —— 参照 Leonhard Euler 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Étienne_Bézout
+%  设计母题：曲线交点 / 消元法 —— 柔和气泡呼应代数几何的视觉语言
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法国蓝 + 代数金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{frenchblue}{HTML}{1F4E79}      % 法国蓝 — 法国 / 枫丹白露
+\definecolor{mathgold}{HTML}{C9A227}        % 代数金 — 代数与消元尊崇
+\definecolor{badgeAlg}{HTML}{4C5FD5}        % 代数几何 — 靛蓝
+\definecolor{badgeNum}{HTML}{0E7C7B}        % 数论 — 青绿
+\definecolor{badgeEdu}{HTML}{E07B30}        % 教育 — 琥珀
+\definecolor{badgeLife}{HTML}{B76E79}       % 人生/纪念 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{algpanel}{RGB}{228,232,250}
+\definecolor{numpanel}{RGB}{220,240,238}
+\definecolor{edupanel}{RGB}{248,233,220}
+\definecolor{lifepanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应曲线交点 / 代数方程的视觉语言
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAlg!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeNum!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeEdu!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeLife!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7}{9}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=frenchblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 消元理论之父\enspace·\enspace 海军炮兵数学教育家};
+  \node[anchor=center, font=\fontsize{24}{28}\selectfont\bfseries, text=frenchblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {贝祖};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=frenchblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Étienne Bézout\enspace·\enspace 1730 — 1783};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {贝祖定理 · 贝祖恒等式 · 消元理论};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAlg] at (-5.05,0)
+        {代数几何\\Algebraic Geo.\par\scriptsize 贝祖定理};
+      \node[badge, fill=badgeNum] at (-1.68,0)
+        {数论\\Number Theory\par\scriptsize 贝祖恒等式};
+      \node[badge, fill=badgeEdu] at (1.68,0)
+        {教育\\Education\par\scriptsize 海军炮兵教材};
+      \node[badge, fill=badgeLife] at (5.05,0)
+        {方程理论\\Elimination\par\scriptsize 消元法};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他用消元法化繁为简，用十卷教材武装了法兰西的海军与炮兵。};
+  % 肖像（Commons Etienne Bezout2）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{bezout_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {É. Bézout (1730–1783)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace 法国科学院\enspace|\enspace 代数几何 · 数论 · 消元理论};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{贝祖 - 从 Nemours 到海军炮兵的数学人生}{生卒 · 本名 · 国籍 · 家庭 · 职务 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{bezout_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {É. Bézout (1730–1783)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1730-03-31 — 1783-09-27\\[2pt]\lab{本名}\quad Étienne Bézout\\[2pt]\lab{国籍}\quad 法国（法兰西王国）};
+  \node[infob, fill=algpanel, draw=badgeAlg!45, anchor=north] at (3.5,2.3)
+    {\lab{家庭}\quad 次子；父祖两代任地方行政官\\[2pt]
+     \quad 24 岁结婚\\[2pt]\lab{启蒙}\quad 早年深受 Euler 影响择业};
+  \node[infob, fill=edupanel, draw=badgeEdu!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Nemours（塞纳-马恩省）\\[2pt]\lab{职务}\quad 海军卫队教师 · 炮兵考官\\[2pt]\lab{身后}\quad Nemours 立像 · 小行星 17285};
+  \node[infob, fill=numpanel, draw=badgeNum!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 代数方程 · 消元理论\\[2pt]
+     \quad 数论 · 数学教育\\[2pt]
+     \lab{身份}\quad 数学家 · 教育家 · 考官};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 贝祖的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{贝祖的一生}{1730 — 1783 · 从 Nemours 到海军炮兵考官}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1730/生于 Nemours（塞纳-马恩省），行政官家次子,
+    2.2/1758/28 岁当选法国科学院力学 adjoint,
+    1.5/1763/经 Choiseul 公爵授职，任海军卫队数学教师与考官,
+    0.8/1764/四卷《Cours de mathématiques》开编（至 1767）,
+    0.1/1768/继 Camus 任炮兵考官；升科学院 associé,
+    -0.6/1770/升 pensionnaire；六卷教科书开编（至 1782）,
+    -1.3/1779/《代数方程的一般理论》出版,
+    -2.0/1783/9 月 27 日逝于 Avon（枫丹白露附近），享年 53
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与择业 (1730–1763)}{行政官之家 · Euler 的召唤 · 二十四岁的抉择}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{家世} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{生于 Nemours 行政官之家：父 Pierre 与祖父皆任地方行政官（magistrate），政治背景显赫——他是次子} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{书香门第} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Euler 影响} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{早年深受欧拉著作影响，毅然选择数学为业——背离家族从政传统} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{择定数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1758} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{28 岁当选法国科学院力学 adjoint——以方程研究跻身学界} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{跻身科学院} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{婚姻} & \cellcolor{algpanel}\textcolor{badgeNum!82!black}{24 岁结婚；正是这次成家，促使他 1763 年接受 Choiseul 公爵提供的海军卫队教职} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{人生转折} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一部欧拉的著作，把行政官之子引上了数学之路。}
+\end{center}
+\end{frame}}
+
+% --- 5. 贝祖定理（核心贡献页） ---
+\newcommand{\theoremsslide}{\begin{frame}\plainbar\sectiontitle{贝祖定理}{代数曲线的交点数 · 计重数与无穷远点}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{定理内涵} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{平面代数曲线论基本定理：两条代数曲线的交点数（计入重数与无穷远点）等于其次数之积} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{代数几何基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{严格化} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{"计重数 + 射影闭化"缺一不可——现代代数几何的先声} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Little Bézout} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{同名异义：多项式余数定理 $f(x)\equiv f(a)\pmod{x-a}$，两者是不同命题} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{勿混同} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 贝祖定理（Bézout's theorem）}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{frenchblue!88!black}$\deg C_{1}\cdot\deg C_{2}=\#\bigl(C_{1}\cap C_{2}\bigr)$\quad（计重数与无穷远点）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 贝祖恒等式（核心贡献页） ---
+\newcommand{\identityslide}{\begin{frame}\plainbar\sectiontitle{贝祖恒等式}{$ax+by=\gcd(a,b)$ · 数论基本结论}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{恒等式} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{整数 $a,b$ 的最大公约数可表示为 $a,b$ 的整系数线性组合} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{数论基本结论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{裴蜀系数} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{满足恒等式的 $(x,y)$ 称裴蜀系数——辗转相除法的理论结晶} & \cellcolor{algpanel}\textcolor{badgeNum!82!black}{算法之魂} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{推广} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{在主理想整环与贝祖整环中，该性质由理想语言推广至任意多元素} & \cellcolor{algpanel}\textcolor{badgeNum!82!black}{抽象代数} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 贝祖恒等式（Bézout's identity）}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{frenchblue!88!black}$ax+by=\gcd(a,b),\quad x,y\in\mathbb{Z}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 贝祖矩阵与贝祖整环（核心贡献页） ---
+\newcommand{\matrixslide}{\begin{frame}\plainbar\sectiontitle{贝祖矩阵与贝祖整环}{结式矩阵 · 主理想环的推广}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{贝祖矩阵} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{以他命名的结式矩阵——两个多项式最大公因式的结构化工具，行列式即结式} & \cellcolor{algpanel}\textcolor{badgeNum!82!black}{消元代数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{贝祖整环} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{Bézout domain：每两个元素生成的理想都是主理想的整环——主理想环的自然推广} & \cellcolor{algpanel}\textcolor{badgeNum!82!black}{环论命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{命名家族} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{定理 · 恒等式 · 矩阵 · 整环——四个领域的命名同出一人，跨代数几何、数论、矩阵论与环论} & \cellcolor{algpanel}\textcolor{badgeNum!82!black}{罕见荣誉} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 贝祖整环（Bézout domain）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}$\forall a,b:\ \langle a,b\rangle=\langle d\rangle\ \text{（主理想）}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 《代数方程的一般理论》（核心贡献页） ---
+\newcommand{\eliminationslide}{\begin{frame}\plainbar\sectiontitle{《代数方程的一般理论》}{1779 · 消元理论 · 根的对称函数}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{汇大成书} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{1779 年巴黎出版——方程理论诸论文的集大成，或为其最著名著作} & \cellcolor{algpanel}\textcolor{badgeNum!82!black}{代表作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{消元理论} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{含消元理论与方程根的对称函数大量新颖而有价值的内容} & \cellcolor{algpanel}\textcolor{badgeNum!82!black}{消元之父} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{可解类研究} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{《论各次多项式类方程的代数可解性》：把一元方程"化"为两个二元方程求解} & \cellcolor{algpanel}\textcolor{badgeNum!82!black}{降维妙手} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Théorie générale des équations algébriques（1779）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{frenchblue!88!black}消元理论 + 根的对称函数——方程理论的集大成}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 海军卫队与四卷教材（特色页） ---
+\newcommand{\navyslide}{\begin{frame}\plainbar\sectiontitle{海军卫队与四卷教材}{Choiseul 授职 · 海军学员专用数学书}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{授职} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{1763 年经 Choiseul 公爵授职，任 Gardes de la Marine（海军卫队）数学教师与考官} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{学者入军旅} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{受命编书} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{重要使命：为海军学员专门编写数学教材——四卷《Cours de mathématiques à l'usage des Gardes du Pavillon et de la Marine》（1764–1767）} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{四卷教材} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{教育影响} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{为法国海军输送系统数学训练——此后六卷炮兵教材延续同一事业} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{军种教育之父} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 教材即军备——他给法兰西海军配上了数学的罗盘。}
+\end{center}
+\end{frame}}
+
+% --- 10. 炮兵考官与六卷教科书（特色页） ---
+\newcommand{\artilleryslide}{\begin{frame}\plainbar\sectiontitle{炮兵考官与六卷教科书}{1768 继 Camus · 生命最后二十年的考官生涯}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{继任考官} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{1768 年炮兵考官 Camus 去世，贝祖受任继任 Corps d'Artillerie 考官} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{双重军职} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{六卷成书} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{为炮兵再编《Cours complet de mathématiques à l'usage de la marine et de l'artillerie》六卷（1770–1782）——伴随他生命最后的十二年} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{十卷总集} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{科研取舍} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{教学与考官职务繁重，代数研究时间有限——学界仍公认其代数贡献} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{忙而不废} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 十卷教材横跨海军与炮兵——一己之力撑起法兰西军种数学教育。}
+\end{center}
+\end{frame}}
+
+% --- 11. 行列式与对称函数（特色页） ---
+\newcommand{\detonslide}{\begin{frame}\plainbar\sectiontitle{行列式与对称函数}{1764 早期使用 · 未及一般理论}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{行列式} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{1764 年在《Histoire de l'académie royale》论文中使用行列式——但未处理一般理论} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{早期采用者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{对称函数} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{1779 年著作含方程根的对称函数大量新成果} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{方程理论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{历史定位} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{线性代数成形前夜的关键人物——使用结式与行列式工具，理论体系留给后人完成} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{承前启后} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他用行列式解题，却把"理论"二字留给了下个世纪。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{科学院三级晋升 · Nemours 立像 · 小行星}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.0cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.4cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{科学院} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 1758 力学 adjoint（28 岁）\item 1768 associé · 1770 pensionnaire\end{itemize}} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{三级晋升} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{纪念} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Nemours 故里立像\item 2000 年小行星 17285 Bezout 以他命名\end{itemize}} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{身后哀荣} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{命名家族} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 贝祖定理 · 恒等式 · 矩阵 · 整环\item 跨代数几何、数论、矩阵论与环论四领域\end{itemize}} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{四域同辉} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个名字横跨四个代数分支——贝祖把简洁留给了整个数学。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=frenchblue!90!black] at ([yshift=1.5cm]current page.center) {他用消元法化繁为简，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {用十卷教材武装了法兰西的海军与炮兵。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=frenchblue!70!black] at ([yshift=-1.2cm]current page.center) {贝祖定理与消元理论——代数、数论与教育的交响。};
+\node[font=\fontsize{8}{10}\selectfont, text=frenchblue!60!black] at ([yshift=-2.0cm]current page.center) {贝祖\quad Étienne Bézout\quad 1730 — 1783};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 代数几何 · 数论 · 消元理论 · 教育\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\theoremsslide
+\identityslide
+\matrixslide
+\eliminationslide
+\navyslide
+\artilleryslide
+\detonslide
+\honorslide
+\closingslide
+\end{document}

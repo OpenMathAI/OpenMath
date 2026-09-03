@@ -1,0 +1,489 @@
+% =============================================================
+%  神童数学家 · 麦克劳林级数之名：麦克劳林 (Colin Maclaurin)
+%  Beamer 演示 —— 参照 Leonhard Euler 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Colin_Maclaurin
+%  设计母题：麦克劳林级数 / 幂级数 —— 柔和气泡呼应级数展开的层次
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：苏格兰蓝 + 数学金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{scotblue}{HTML}{1F5E8E}        % 苏格兰蓝 — 苏格兰 / 爱丁堡
+\definecolor{mathgold}{HTML}{C9A227}        % 数学金 — 神童的尊崇
+\definecolor{badgeSeries}{HTML}{4C5FD5}     % 级数 — 靛蓝
+\definecolor{badgeSum}{HTML}{0E7C7B}        % 求和 — 青绿
+\definecolor{badgeGeom}{HTML}{E07B30}       % 几何 — 琥珀
+\definecolor{badgeGrav}{HTML}{B76E79}       % 引力 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{seriespanel}{RGB}{228,232,250}
+\definecolor{sumpanel}{RGB}{220,240,238}
+\definecolor{geompanel}{RGB}{248,233,220}
+\definecolor{gravpanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应幂级数展开 / 椭球的视觉语言
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeSeries!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeSum!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeGeom!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeGrav!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7}{9}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=scotblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 苏格兰\enspace·\enspace 神童数学家\enspace·\enspace 史上最年轻教授};
+  \node[anchor=center, font=\fontsize{24}{28}\selectfont\bfseries, text=scotblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {麦克劳林};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=scotblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Colin Maclaurin\enspace·\enspace 1698 — 1746};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {麦克劳林级数 · 欧拉–麦克劳林公式 · 麦克劳林椭球};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeSeries] at (-5.05,0)
+        {级数\\Series\par\scriptsize 麦克劳林级数};
+      \node[badge, fill=badgeSum] at (-1.68,0)
+        {求和\\Summation\par\scriptsize 欧拉–麦克劳林};
+      \node[badge, fill=badgeGeom] at (1.68,0)
+        {几何\\Geometry\par\scriptsize 流数论};
+      \node[badge, fill=badgeGrav] at (5.05,0)
+        {引力\\Gravity\par\scriptsize 麦克劳林椭球};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {十九岁执掌教席，他把牛顿的方法写成一个时代最系统的教科书。};
+  % 肖像（彩色肖像，据 James Ferguson 画像）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{maclaurin_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {C. Maclaurin (1698–1746)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 苏格兰\enspace|\enspace \faIcon{university}\enspace 格拉斯哥 · 爱丁堡大学\enspace|\enspace 级数 · 求和 · 几何 · 引力};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{麦克劳林 - 从神童到爱丁堡之光}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{maclaurin_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {C. Maclaurin (1698–1746)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1698 年 2 月 — 1746-06-14\\[2pt]\lab{本名}\quad Colin Maclaurin（原作 M'Laurine）\\[2pt]\lab{国籍}\quad 苏格兰（→ 大不列颠王国）};
+  \node[infob, fill=seriespanel, draw=badgeSeries!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 格拉斯哥大学（11 岁入学）\\[2pt]
+     \quad 14 岁获文学硕士\\[2pt]\lab{师承}\quad Robert Simson};
+  \node[infob, fill=geompanel, draw=badgeGeom!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Kilmodan（阿盖尔，苏格兰）\\[2pt]\lab{荣誉}\quad 法国科学院大奖（1724）\\[2pt]\lab{身后}\quad 葬于爱丁堡 Greyfriars Kirkyard};
+  \node[infob, fill=sumpanel, draw=badgeSum!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 级数 · 求和 · 几何 · 代数\\[2pt]
+     \quad 椭球引力 · 数值积分\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家 · 天文学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 麦克劳林的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{麦克劳林的一生}{1698 — 1746 · 从阿盖尔孤儿到爱丁堡数学教授}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1698/生于 Kilmodan（阿盖尔），幼年父母双亡，由叔父抚养,
+    2.2/1709/11 岁入格拉斯哥大学，14 岁获文学硕士,
+    1.5/1717/19 岁当选马里斯哈尔学院数学教授（最年轻教授纪录）,
+    0.8/1719/赴伦敦结识牛顿，当选皇家学会会员,
+    0.1/1724/碰撞论文获法国科学院大奖；1725 经牛顿力荐任爱丁堡教授,
+    -0.6/1742/出版《流数论》，系统阐述牛顿方法,
+    -1.3/1745/组织爱丁堡防御詹姆斯党起义,
+    -2.0/1746/坠马致病，6 月 14 日逝于爱丁堡，享年 48
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与神童 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与神童 (1698–1717)}{幼年孤苦 · 十一岁入学 · 十九岁教授}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{scotblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1698} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{生于阿盖尔 Kilmodan，父 John Maclaurin 为牧师，于其婴儿期去世；九岁丧母，由叔父 Daniel MacLaurin 抚养} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{孤儿童年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1709} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{十一岁以神童之姿入格拉斯哥大学；十四岁以论文《重力的力量》获文学硕士（MA），后留校研修神学至十九岁} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{神童入学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1717} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{十九岁在为期十天的竞选中当选马里斯哈尔学院（阿伯丁）数学教授} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{最年轻教授} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{纪录} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{史上最年轻教授的纪录保持到 2008 年 2 月，才被 Alia Sabur 打破——三项世纪之最} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{三百年纪录} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 十一岁入学，十九岁执掌教席——神童之名，三百年未被超越。}
+\end{center}
+\end{frame}}
+
+% --- 5. 麦克劳林级数（核心贡献页） ---
+\newcommand{\serieslide}{\begin{frame}\plainbar\sectiontitle{麦克劳林级数}{泰勒级数的特例 · 归功 Taylor · 因系统使用而得名}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{scotblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{麦克劳林的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{级数归属} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{该级数在牛顿与 James Gregory 时代已知，麦克劳林本人将其归功于 Brook Taylor} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{严谨学风} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{系统使用} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{《流数论》中用级数刻画极大值、极小值与拐点，因广泛使用而以他命名} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{流数论核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{后世地位} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{成为分析学最常用的幂级数展开工具之一} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{分析学基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 麦克劳林级数（Maclaurin series）}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{scotblue!88!black}$f(x)=\displaystyle\sum_{n=0}^{\infty}\frac{f^{(n)}(0)}{n!}\,x^{n}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 欧拉–麦克劳林公式（核心贡献页） ---
+\newcommand{\emslide}{\begin{frame}\plainbar\sectiontitle{欧拉–麦克劳林公式}{独立发现 · 级数求和 · 数值积分}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{scotblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{麦克劳林的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{独立发现} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{独立于欧拉、用相同方法发现该公式} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{双雄并立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{幂和与 Stirling} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{用它求算术级数的幂和，并推导斯特林公式} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{分析工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{数值积分} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{导出 Newton–Cotes 求积公式，Simpson 法则是其特例} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{数值分析源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 欧拉–麦克劳林公式（Euler–Maclaurin formula）}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{scotblue!88!black}$\displaystyle\sum_{k=a}^{b}f(k)=\int_a^b\! f(x)\,dx+\frac{f(a)+f(b)}{2}+\sum_{k\ge1}\frac{B_{2k}}{(2k)!}\bigl(f^{(2k-1)}(b)-f^{(2k-1)}(a)\bigr)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 麦克劳林椭球（核心贡献页） ---
+\newcommand{\spheroidslide}{\begin{frame}\plainbar\sectiontitle{麦克劳林椭球}{1742 · 扁球平衡形态 · 两百年引力研究的起点}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{scotblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{麦克劳林的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{平衡形态} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{证明旋转扁球体是牛顿引力理论下自引力流体的可能平衡形态} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{天体力学先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{群星接力} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{椭球引力吸引 d'Alembert、Clairaut、Euler、Laplace、Legendre、Poisson、Gauss 相继研究} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{百年谱系} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{现代回响} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{诺奖得主 Chandrasekhar《椭球平衡图形》专章论述麦克劳林椭球} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{20 世纪遗产} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 麦克劳林椭球（Maclaurin spheroid）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{scotblue!88!black}旋转扁球体——牛顿引力下自引力流体的平衡形态}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 《流数论》（核心贡献页） ---
+\newcommand{\fluxionslide}{\begin{frame}\plainbar\sectiontitle{《流数论》}{1742 · 763 页两卷 · 牛顿方法的首部系统阐述}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{scotblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{宏篇巨制} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{1742 年出版，两卷 763 页——牛顿流数法的第一部系统阐述} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{为牛顿辩护} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{级数判别} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{用泰勒级数刻画无穷可微函数的极大值、极小值与拐点} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{分析严格化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{几何传统} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{以几何语言严格化牛顿方法，回应贝克莱对无穷小的攻击} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{理性防线} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Treatise of Fluxions（流数论，1742）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{scotblue!88!black}牛顿方法的首部系统阐述——两卷 763 页的宏篇巨制}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 代数贡献（核心贡献页） ---
+\newcommand{\algebraslide}{\begin{frame}\plainbar\sectiontitle{代数贡献}{麦克劳林不等式 · 线性方程组 · Cramer 法则先声}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{scotblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{麦克劳林的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{不等式} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{麦克劳林不等式：正数初等对称平均的不等式链} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{经典不等式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{线性方程组} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{《代数论》（1748 身后出版）给出 2、3 元线性方程组的行列式解法} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{行列式应用} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Cramer 先声} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{早于 Cramer 两年；Cramer 随后推广至 $n$ 元并以此闻名} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{先声非证明} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 麦克劳林不等式（Maclaurin's inequality）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{scotblue!88!black}$\dfrac{S_1}{n}\ \ge\ \sqrt{\dfrac{S_2}{\binom{n}{2}}}\ \ge\ \cdots\ \ge\ \sqrt[n]{S_n}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 几何与更多贡献（特色页） ---
+\newcommand{\miscslide}{\begin{frame}\plainbar\sectiontitle{几何与更多贡献}{圆锥曲线 · 三等分角线 · 椭圆积分 · 碰撞论文}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{scotblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{麦克劳林的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{圆锥曲线} & \cellcolor{graypanel}\textcolor{badgeSeries!82!black}{Braikenridge–Maclaurin 定理：内接于圆锥曲线的四边形的性质} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{射影几何} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{高次曲线} & \cellcolor{graypanel}\textcolor{badgeSeries!82!black}{麦克劳林三等分角线（Trisectrix）等曲线的研究} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{几何作图} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{椭圆积分} & \cellcolor{graypanel}\textcolor{badgeSeries!82!black}{把许多难解积分化归为求双曲线弧长的问题} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{先于 Euler} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{碰撞论文} & \cellcolor{graypanel}\textcolor{badgeSeries!82!black}{1722 年在洛兰写《物体重撞定律的演示》，获 1724 年法国科学院大奖} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{国际声誉} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从圆锥曲线到物体碰撞——几何与分析在他手中互为表里。}
+\end{center}
+\end{frame}}
+
+% --- 11. 与牛顿的渊源（特色页） ---
+\newcommand{\newtonslide}{\begin{frame}\plainbar\sectiontitle{与牛顿的渊源}{伦敦相识 · 力荐教职 · 愿自付其薪}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{scotblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{渊源}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{伦敦相识} & \cellcolor{gravpanel}\textcolor{badgeGrav!82!black}{1719 与 1721 年假期赴伦敦，结识牛顿、Hoadly、Clarke、Folkes 等哲人，并入选皇家学会} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{步入主流} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{力荐教职} & \cellcolor{gravpanel}\textcolor{badgeGrav!82!black}{1725 年经牛顿推荐，出任爱丁堡大学数学教授 James Gregory 的副手，同年接任} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{执掌爱丁堡} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{自付其薪} & \cellcolor{gravpanel}\textcolor{badgeGrav!82!black}{牛顿对麦克劳林印象至深，甚至提出愿意自掏腰包支付他的薪水} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{忘年之谊} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 牛顿愿自付其薪——这是巨头对后辈最直接的背书。}
+\end{center}
+\end{frame}}
+
+% --- 12. 1745 起义与晚年（特色页） ---
+\newcommand{\jacobiteslide}{\begin{frame}\plainbar\sectiontitle{1745 起义与晚年}{保卫爱丁堡 · 坠马致病 · 早逝与纪念}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{scotblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{组织防御} & \cellcolor{gravpanel}\textcolor{badgeGrav!82!black}{1745 年詹姆斯党起义，他积极反对并主持爱丁堡城防事务，记有防御日记} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{学者担当} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{出逃约克} & \cellcolor{gravpanel}\textcolor{badgeGrav!82!black}{高地军队入城后逃往约克，受约克大主教款待；南下途中坠马，疲劳、焦虑与受寒埋下水肿病根} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{积劳成疾} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后纪念} & \cellcolor{gravpanel}\textcolor{badgeGrav!82!black}{1746-06-14 逝世，葬于 Greyfriars Kirkyard，墓石仅刻 "C. M. Nat MDCXCVIII Ob MDCCXLVI"} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{朴素墓碑} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} "C. M. Nat MDCXCVIII Ob MDCCXLVI"——最简洁的墓志，属于最传奇的一生。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{法国科学院大奖 · 皇家学会 · 最年轻教授纪录}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{scotblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 法国科学院大奖（1724，碰撞论文）\item 英国皇家学会会员（1719）\end{itemize}} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{传承} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 麦克劳林级数、椭球、不等式以他命名\item 儿子 John Maclaurin 为爱丁堡皇家学会联合创始人\end{itemize}} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{影响深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{纪念} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{格拉斯哥大学 MacSoc 数理学会与爱丁堡 Colin Maclaurin Road 以他命名；MIT 前校长 R. C. Maclaurin 出自同族} & \cellcolor{sumpanel}\textcolor{badgeSum!82!black}{后世景仰} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他把牛顿的方法写成体系，把神童的传奇写进三百年纪录。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=scotblue!90!black] at ([yshift=1.5cm]current page.center) {十一岁入学，十九岁执掌教席，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {他把牛顿的方法写成一个体系。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=scotblue!70!black] at ([yshift=-1.2cm]current page.center) {麦克劳林级数与麦克劳林椭球——分析、几何与引力的交响。};
+\node[font=\fontsize{8}{10}\selectfont, text=scotblue!60!black] at ([yshift=-2.0cm]current page.center) {麦克劳林\quad Colin Maclaurin\quad 1698 — 1746};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 级数 · 求和 · 几何 · 引力\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\serieslide
+\emslide
+\spheroidslide
+\fluxionslide
+\algebraslide
+\miscslide
+\newtonslide
+\jacobiteslide
+\honorslide
+\closingslide
+\end{document}

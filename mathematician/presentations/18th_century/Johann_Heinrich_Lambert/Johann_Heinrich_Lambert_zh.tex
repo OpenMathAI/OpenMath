@@ -1,0 +1,530 @@
+% =============================================================
+%  多面手通才 · π 无理性的证明者：兰伯特 (Johann Heinrich Lambert)
+%  Beamer 演示 —— 参照 Leonhard Euler 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Johann_Heinrich_Lambert
+%  设计母题：π 的无理性 / 双曲函数 / 光的传播 —— 柔和气泡的视觉语言
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：普鲁士蓝 + 启蒙金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{prussianblue}{HTML}{1F3A5F}    % 普鲁士蓝 — 柏林 / 普鲁士
+\definecolor{mathgold}{HTML}{C9A227}        % 启蒙金 — 通才的广博
+\definecolor{badgeNum}{HTML}{4C5FD5}        % 数论 — 靛蓝
+\definecolor{badgeOpt}{HTML}{0E7C7B}        % 光学 — 青绿
+\definecolor{badgeProj}{HTML}{E07B30}       % 几何/投影 — 琥珀
+\definecolor{badgeAstro}{HTML}{B76E79}      % 天文/宇宙 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{numpanel}{RGB}{228,232,250}
+\definecolor{optpanel}{RGB}{220,240,238}
+\definecolor{projpanel}{RGB}{248,233,220}
+\definecolor{astropanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应 π / 双曲函数 / 光传播的视觉语言
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeNum!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeOpt!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeProj!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeAstro!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7}{9}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+}
+
+% 装饰圆头像（无清晰肖像，沿用先例）
+\newcommand{\avatarcircle}[2]{%
+\begin{tikzpicture}
+  \pgfmathsetmacro{\avfs}{#2*26}
+  \fill[#1!8] (0,0) circle (#2);
+  \fill[#1!15] (0,0) circle (#2*0.88);
+  \node at (0,0) {\textcolor{#1!55!black}{\fontsize{\avfs}{\avfs}\selectfont\faIcon{user}}};
+\end{tikzpicture}%
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=prussianblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 阿尔萨斯 / 米卢斯共和国\enspace·\enspace 自学成才\enspace·\enspace 柏林科学院};
+  \node[anchor=center, font=\fontsize{24}{28}\selectfont\bfseries, text=prussianblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {兰伯特};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=prussianblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Johann Heinrich Lambert\enspace·\enspace 1728 — 1777};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {π 的无理性 · 双曲函数 · Lambert W · 地图投影};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeNum] at (-5.05,0)
+        {数论\\Number Theory\par\scriptsize π 无理性};
+      \node[badge, fill=badgeOpt] at (-1.68,0)
+        {光学\\Optics\par\scriptsize 光度学};
+      \node[badge, fill=badgeProj] at (1.68,0)
+        {几何投影\\Projection\par\scriptsize 七种投影};
+      \node[badge, fill=badgeAstro] at (5.05,0)
+        {天文宇宙\\Cosmology\par\scriptsize Lambert's problem};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {裁缝之子自学成才，把数学、光学与星空织进同一张理性之网。};
+  % 肖像（Johann Heinrich Lambert 肖像）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Johann_Heinrich_Lambert.jpeg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {J. H. Lambert (1728–1777)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 阿尔萨斯\enspace|\enspace \faIcon{university}\enspace 普鲁士科学院\enspace|\enspace 数论 · 光学 · 投影 · 宇宙};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{兰伯特 - 从裁缝学徒到柏林院士}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Johann_Heinrich_Lambert.jpeg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {J. H. Lambert (1728–1777)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1728-08-26（或 28）— 1777-09-25\\[2pt]\lab{本名}\quad Johann Heinrich Lambert（法名 Jean-Henri）\\[2pt]\lab{国籍}\quad 米卢斯共和国（今法国阿尔萨斯）};
+  \node[infob, fill=numpanel, draw=badgeNum!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 完全自学成才\\[2pt]
+     \quad 12 岁辍学，工作之余自修\\[2pt]\lab{早年职业}\quad 裁缝助手 · 铁厂文书 · 家庭教师};
+  \node[infob, fill=projpanel, draw=badgeProj!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Mulhouse（米卢斯共和国）\\[2pt]\lab{任职}\quad 普鲁士科学院（1763 起）\\[2pt]\lab{身后}\quad 葬于柏林，享年 49};
+  \node[infob, fill=optpanel, draw=badgeOpt!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数论 · 光学 · 天文学\\[2pt]
+     \quad 地图投影 · 哲学 · 气象学\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家 · 哲学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 兰伯特的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{兰伯特的一生}{1728 — 1777 · 从米卢斯裁缝铺到柏林科学院}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1728/生于 Mulhouse；胡格诺家庭，三十年战争后自洛林逃难而来,
+    2.2/1740/12 岁因家贫辍学，做工之余自学成才,
+    1.5/1748/20 岁任 Salis 伯爵之子的家庭教师（瑞士 Chur）,
+    0.8/1756/携学生游历欧洲：德意志、荷兰、法国、意大利,
+    0.1/1760/《光度学》出版；1761 年《宇宙论书简》,
+    -0.6/1763/应邀加入普鲁士科学院（腓特烈大帝支持，与 Euler 同院）,
+    -1.3/1764/《新工具》出版；1765 年起与康德通信,
+    -2.0/1777/9 月 25 日逝于柏林，享年 49
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与自学 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与自学 (1728–1763)}{家贫辍学 · 做工自学 · 家庭教师 · 欧洲游历}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1728-40} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{生于米卢斯胡格诺家庭，父为裁缝；12 岁因家贫被迫辍学——此后再未进入任何学校} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{辍学之始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{做工自学} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{先后当裁缝助手、铁厂文书、《Basler Zeitung》编辑秘书；用一切业余时间自修，终以渊博学识著称} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{自学成才} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1748} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{20 岁受聘为 Chur 的 Salis 伯爵之子家庭教师；利用雇主图书馆潜心研读数学与科学} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{贵人相助} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1756-58} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{携学生游历德意志、荷兰、法国、意大利，结识各地学者；返程后发表光学与宇宙学首批论著} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{步入学林} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 没有任何学位，没有任何导师——学问全凭一盏孤灯。}
+\end{center}
+\end{frame}}
+
+% --- 5. π 的无理性（核心贡献页） ---
+\newcommand{\pirslide}{\begin{frame}\plainbar\sectiontitle{π 的无理性证明}{1761 · tan x 连分数 · 欧拉猜想之解}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.7}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{兰伯特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{首次证明} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{用 $\tan x$ 的广义连分数展开，证明若 $x$ 为非零有理数则 $\tan x$ 必为无理数} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{数论里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{推论} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{由 $x=\pi/4$ 时 $\tan x=1$（有理）反推：$\pi$ 必为无理数} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{反证之巧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{前史} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{欧拉相信该猜想但未能证明；公元 500 年 Aryabhata 或已有此信念} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{千年之问} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.42cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  \vspace{1pt}
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{mathgold!85!black} $\tan x$ 的广义连分数（Lambert, 1761）}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussianblue!88!black}$\tan x=\cfrac{x}{1-\cfrac{x^{2}}{3-\cfrac{x^{2}}{5-\cfrac{x^{2}}{7-\ddots}}}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 双曲函数（核心贡献页） ---
+\newcommand{\hyperbolicslide}{\begin{frame}\plainbar\sectiontitle{双曲函数}{系统化推广 · 现代记号 · 三角学的另一半}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{兰伯特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{系统化} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{首位把双曲函数系统化并推广进三角学的人；发展指数表达式与恒等式} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{三角学扩张} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{现代记号} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{引入沿用至今的 $\sinh$、$\cosh$、$\tanh$ 记号体系} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{记号定型} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{承前启后} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{自承承袭 Riccati 与 Foncenex 的工作；双曲几何与大角度运算由此获得语言} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{后续几何} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 双曲函数基本恒等式}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{prussianblue!88!black}$e^{x}=\cosh x+\sinh x,\qquad \cosh^{2}x-\sinh^{2}x=1$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Lambert W 函数与兰伯特级数（核心贡献页） ---
+\newcommand{\wslide}{\begin{frame}\plainbar\sectiontitle{Lambert W 函数与兰伯特级数}{反函数思想 · 现代广泛应用 · 众多命名纪念}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{兰伯特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Lambert W} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{以反函数形式引入 $w=w(u)$（$u=we^w$ 的反函数），今称 Lambert W 函数} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{超越函数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{现代应用} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{广泛应用于组合学、物理与工程（解 $we^w$ 型方程）} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{现代复兴} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{兰伯特级数} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{$\sum_{n\ge1}\frac{a^{n}x^{n}}{1-a^{n}x^{n}}$ 型级数以其命名，与分拆、除数函数相关} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{级数家族} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Lambert W 函数}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{prussianblue!88!black}$w=W(u)\quad\Longleftrightarrow\quad u=w\,e^{w}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 双曲三角形与非欧猜想（核心贡献页） ---
+\newcommand{\hypertriangleslide}{\begin{frame}\plainbar\sectiontitle{双曲三角形与非欧猜想}{角亏与面积 · 不存在相似形 · 非欧空间猜想}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{兰伯特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{角和小于 $\pi$} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{研究鞍面（负曲率）上的三角形：内角和小于 $\pi$，且角亏随面积增大} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{负曲率几何} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{面积公式} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{双曲三角形面积由角度决定：不存在两个相似而不全等的双曲三角形} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{颠覆欧氏直觉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{非欧猜想} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{对非欧空间提出猜想；系统化由后世的 Bolyai、Lobachevsky 完成} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{思想先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 双曲三角形角亏公式}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{prussianblue!88!black}$C_{\triangle}=\pi-(\alpha+\beta+\gamma)\ \propto\ S_{\triangle}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 地图投影（核心贡献页） ---
+\newcommand{\projectionslide}{\begin{frame}\plainbar\sectiontitle{地图投影}{1772 七种投影 · 等角与等积互斥 · 制图学科学化}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{兰伯特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{理论奠基} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{首位系统讨论地图投影一般性质的数学家：首次阐明等角性与等积性，并指出二者不可兼得} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{制图学科学化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1772 七投影} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{《大地与天球图绘制札记》给出七种新投影，均未命名，后以他命名} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{投影家族} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{三大遗产} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{Lambert 等角圆锥、横轴墨卡托、Lambert 等积方位至今仍是制图与 GIS 的支柱投影} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{沿用至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 1772 年七种投影（前三种最重要）}\\[2pt]
+  {\fontsize{8.5}{11}\selectfont\color{prussianblue!88!black}等角圆锥\ ·\ 横轴墨卡托\ ·\ 等积方位\ ·\ 拉格朗日\ ·\ 等积圆柱\ ·\ 横轴等积圆柱\ ·\ 等积圆锥}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 《光度学》与 Beer–Lambert 定律（核心贡献页） ---
+\newcommand{\photometriaslide}{\begin{frame}\plainbar\sectiontitle{《光度学》与光吸收}{1760 光度学奠基 · albedo 之源 · Bouguer 先行}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{兰伯特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{光度学奠基} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{《Photometria》（1760）：光照度正比于光源强度、反比于距离平方、正比于入射角正弦} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{余弦定律} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{albedo} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{引入"反照率"（albedo）术语；亮度非 SI 单位 lambert 以他命名；发明第一台实用湿度计} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{术语遗产} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Beer–Lambert} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{引用了 Bouguer 早先表述的光吸收定律而误被记名——定律的优先权属 Bouguer} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{优先权澄清} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 光吸收定律（Bouguer 先行表述，今称 Beer–Lambert 定律）}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{prussianblue!88!black}$I=I_{0}\,e^{-\mu d}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 天文学与宇宙学（特色页） ---
+\newcommand{\astroslide}{\begin{frame}\plainbar\sectiontitle{天文学与宇宙学}{Lambert's problem · 星云假说 · 星团预言}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{轨道力学} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{解出沿轨道段的飞行时间确定问题（今称 Lambert's problem）；圆锥曲线定理使彗星轨道计算简化} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{航天动力学基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{星云假说} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{《宇宙论书简》（1761）独立提出与 Wright、Kant 类似的宇宙起源理论} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{三贤独立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{星团预言} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{提出太阳附近恒星组成星群穿越银河、银河中星群众多——后被 William Herschel 证实} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{预言成真} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从彗星轨道到银河星团——他的天文学写在两百年后的星空里。}
+\end{center}
+\end{frame}}
+
+% --- 12. 哲学与康德（特色页） ---
+\newcommand{\philosophyslide}{\begin{frame}\plainbar\sectiontitle{哲学与康德}{《新工具》· 现象学一词 · 与康德通信}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{新工具} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{《Neues Organon》（1764，命名承亚里士多德《工具论》）：区分主观与客观现象的规则，与其光学工作相通} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{认识论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{现象学一词} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{书中最早出现"现象学"（Phänomenologie）一词——"关于现象的学说"；并系统罗列三段论诸类型} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{术语首创} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{康德通信} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{1765 年起与康德通信；康德本欲将《纯粹理性批判》献给他——书面世时兰伯特已去世} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{哲人相惜} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{7.5}{10}\selectfont\itshape\color{muteddark}\raggedright Mill 评语：《新工具》"包含三段论学说最精详完备的阐述之一……其研究以极大的独创性与思想的清晰性著称。"（J.~S.~Mill, \textit{A System of Logic}, 1843）}
+\end{center}
+\end{frame}}
+
+% --- 13. 气象学与色彩（特色页） ---
+\newcommand{\meteoslide}{\begin{frame}\plainbar\sectiontitle{气象学与色彩}{气象站网络 · 湿度计 · 色彩金字塔}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{气象方法论} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{主张先观测周期现象、再推导规律、逐步扩展理论——气象学要效法天文学先立通则} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{方法先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{气象站网络} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{提议建立全球气象站网络记录雨、云、干湿等状态；改进测量仪器；1769/1771 年发表湿度学著作} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{沿用至今} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{色彩金字塔} & \cellcolor{astropanel}\textcolor{badgeAstro!82!black}{《Farbenpyramide》（1772）：六层 107 色的三维色彩模型，扩展 Tobias Mayer 的理论，与宫廷画家 Calau 合作} & \cellcolor{projpanel}\textcolor{badgeProj!82!black}{色彩学先驱} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从天气预报到颜色度量——他把"量化"带进了每一个感性领域。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{柏林科学院 · 命名纪念 · 通才典范}\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.6}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.0cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.4cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 普鲁士科学院院士（1763，腓特烈大帝支持）\item 巴伐利亚科学院通讯合作\end{itemize}} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{学术认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{命名纪念} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 小行星 187 Lamberta · 火星环形山 Lambert\item Lambert W 函数 · 兰伯特级数 · lambert 亮度单位\end{itemize}} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{多重纪念} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{通才典范} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 数论、光学、天文学、制图学、哲学、气象学全覆盖\item 米卢斯立柱纪念（Colonne Lambert）\end{itemize}} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{polymath 标杆} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 裁缝铺里走出的通才——他把整个启蒙时代的理性织成了一张网。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=prussianblue!90!black] at ([yshift=1.5cm]current page.center) {裁缝铺里走出的少年，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {证明了 π，也称量了光与星空。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=prussianblue!70!black] at ([yshift=-1.2cm]current page.center) {π 的无理性与 Lambert W——数论、光学与宇宙的交响。};
+\node[font=\fontsize{8}{10}\selectfont, text=prussianblue!60!black] at ([yshift=-2.0cm]current page.center) {兰伯特\quad Johann Heinrich Lambert\quad 1728 — 1777};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 数论 · 光学 · 投影 · 宇宙\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\pirslide
+\hyperbolicslide
+\wslide
+\hypertriangleslide
+\projectionslide
+\photometriaslide
+\astroslide
+\philosophyslide
+\meteoslide
+\honorslide
+\closingslide
+\end{document}

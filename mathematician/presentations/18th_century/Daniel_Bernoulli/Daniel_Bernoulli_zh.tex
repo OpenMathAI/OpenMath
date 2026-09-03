@@ -1,0 +1,493 @@
+% =============================================================
+%  流体力学之父 · 伯努利原理：丹尼尔·伯努利 (Daniel Bernoulli)
+%  Beamer 演示 —— 参照 Leonhard Euler 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Daniel_Bernoulli
+%  设计母题：流体流动 / 伯努利原理 —— 柔和气泡呼应流线的起伏
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：瑞士红 + 流体金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{swissred}{HTML}{A6192E}        % 瑞士红 — 瑞士 / 巴塞尔
+\definecolor{mathgold}{HTML}{C9A227}        % 流体金 — 流体力学的尊崇
+\definecolor{badgeFluid}{HTML}{4C5FD5}      % 流体 — 靛蓝
+\definecolor{badgeProb}{HTML}{0E7C7B}       % 概率 — 青绿
+\definecolor{badgeBeam}{HTML}{E07B30}       % 弹性/振动 — 琥珀
+\definecolor{badgeMed}{HTML}{B76E79}        % 统计/医学 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{fluidpanel}{RGB}{228,232,250}
+\definecolor{probpanel}{RGB}{220,240,238}
+\definecolor{beampanel}{RGB}{248,233,220}
+\definecolor{medpanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应流体流动 / 伯努利原理的视觉语言
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeFluid!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeProb!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeBeam!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeMed!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7}{9}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=swissred!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 瑞士 · 巴塞尔\enspace·\enspace 伯努利家族\enspace·\enspace 流体力学之父};
+  \node[anchor=center, font=\fontsize{24}{28}\selectfont\bfseries, text=swissred!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {丹尼尔·伯努利};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=swissred!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Daniel Bernoulli\enspace·\enspace 1700 — 1782};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {伯努利原理 · 《流体动力学》· 圣彼得堡悖论};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeFluid] at (-5.05,0)
+        {流体力学\\Fluid Dynamics\par\scriptsize 伯努利原理};
+      \node[badge, fill=badgeProb] at (-1.68,0)
+        {概率统计\\Probability\par\scriptsize 圣彼得堡悖论};
+      \node[badge, fill=badgeBeam] at (1.68,0)
+        {弹性振动\\Elasticity\par\scriptsize 欧拉–伯努利梁};
+      \node[badge, fill=badgeMed] at (5.05,0)
+        {统计医学\\Medicine\par\scriptsize 天花接种};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {一条原理贯穿流体、气体与概率——他把数学写进了流动的世界。};
+  % 肖像（ETH-BIB 藏 Daniel Bernoulli 肖像）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{bernoulli_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {D. Bernoulli (1700–1782)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 瑞士\enspace|\enspace \faIcon{university}\enspace 巴塞尔大学\enspace|\enspace 流体 · 概率 · 弹性 · 医学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{丹尼尔·伯努利 - 伯努利家族的流星}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{bernoulli_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {D. Bernoulli (1700–1782)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1700-02-08 — 1782-03-27\\[2pt]\lab{本名}\quad Daniel Bernoulli\\[2pt]\lab{国籍}\quad 瑞士（生于荷兰 Groningen）};
+  \node[infob, fill=fluidpanel, draw=badgeFluid!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 巴塞尔大学（1721 医学博士）\\[2pt]
+     \quad 海德堡 · 斯特拉斯堡\\[2pt]\lab{师承}\quad 父 Johann Bernoulli（私授数学）};
+  \node[infob, fill=beampanel, draw=badgeBeam!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Groningen（荷兰共和国）\\[2pt]\lab{荣誉}\quad 法国科学院奖（与 Euler、Maclaurin 共获）\\[2pt]\lab{身后}\quad 逝于巴塞尔，享年 82};
+  \node[infob, fill=probpanel, draw=badgeProb!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 流体力学 · 气体动理论\\[2pt]
+     \quad 概率统计 · 弹性 · 医学生理\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家 · 医生};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 丹尼尔·伯努利的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{丹尼尔·伯努利的一生}{1700 — 1782 · 从 Groningen 到巴塞尔的八十二年}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{8.6}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8}{10}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1700/生于 Groningen（荷兰），父 Johann 任当地数学教授；1716 年 16 岁获巴塞尔哲学学士,
+    2.2/1721/获医学博士（论文《呼吸的医学物理》）,
+    1.5/1724/《数学练习》出版；受邀赴圣彼得堡,
+    0.8/1725/任圣彼得堡数学教授，与 Euler 同事,
+    0.1/1733/返巴塞尔任医学（植物学、生理学）教授,
+    -0.6/1738/《流体动力学》出版，提出圣彼得堡悖论,
+    -1.3/1750/转任实验哲学（物理）教授直至退休,
+    -2.0/1782/3 月 27 日逝于巴塞尔，享年 82
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.1pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1700–1725)}{数学世家 · 弃商学医 · 父授数学 · 圣彼得堡}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{swissred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{家世} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{伯努利家族三代八位数学家——祖父辈 Jacob 与父 Johann 皆大家；他出生时父在 Groningen 任教，故生于荷兰} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{名门之后} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1704-16} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{返巴塞尔。父要求他先习商学后学医学，条件是父亲私下教他数学——他 16 岁获哲学学士} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{弃商从理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1718-21} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{海德堡、斯特拉斯堡游学，返巴塞尔获医学博士（论文论呼吸）；后以《肌肉收缩的力学》再论医理} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{医学博士} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1724-25} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{《数学练习》问世，同年获巴黎学院奖；赴圣彼得堡任数学教授，并邀同学 Euler 同往任助手} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{崭露头角} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 医学学位是父命，数学是天性——两把钥匙最终打开了同一扇门。}
+\end{center}
+\end{frame}}
+
+% --- 5. 伯努利原理（核心贡献页） ---
+\newcommand{\principleslide}{\begin{frame}\plainbar\sectiontitle{伯努利原理}{《流体动力学》核心 · 能量守恒的特例 · 现代应用}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{swissred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{伯努利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{原理内涵} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{流体速度增大处压强减小——动能、势能与压强能沿流线守恒} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{能量守恒特例} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{表述边界} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{并非"压力与速度简单反比"——严格成立于沿流线、不可压缩、无粘性条件} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{表述须严谨} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{现代应用} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{化油器、机翼升力、文丘里管——从管道到航空无处不在} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{无处不在} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 伯努利原理（Bernoulli's principle）}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{swissred!88!black}$p+\tfrac{1}{2}\rho v^{2}+\rho g h=\text{const}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 《流体动力学》（核心贡献页） ---
+\newcommand{\hydroslide}{\begin{frame}\plainbar\sectiontitle{《流体动力学》}{1738 · 单一原理统摄全书 · 与《分析力学》相类}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{swissred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{写作} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{1733 年返回巴塞尔后写作，1738 年出版——"Hydrodynamica"一词由他创造} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{学科命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{单一原理} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{一切结果源自单一原理（活力守恒）——与拉格朗日《分析力学》的统一方法论相类} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{方法论典范} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{父子纠葛} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{父 Johann 据传将书中关键思想搬入自己的《Hydraulica》并倒填日期冒先——学界终还其公道} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{公道人心} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Hydrodynamica（流体动力学，1738）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{swissred!88!black}一切结果源自单一原理——活力守恒}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 气体动理论（核心贡献页） ---
+\newcommand{\kineticslide}{\begin{frame}\plainbar\sectiontitle{气体动理论}{分子碰撞 · 玻意耳定律 · 早于分子论一百年}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{swissred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{伯努利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{分子图像} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{《流体动力学》第十章：气体由无数高速运动粒子组成，压强源于粒子对器壁的碰撞} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{分子论先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{玻意耳定律} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{以此图像定量解释玻意耳定律（$pV=$ 定值）} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{定量解释} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{超前百年} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{早于克劳修斯、麦克斯韦的分子运动论一个多世纪} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{思想超前} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 气体压强的分子解释（Kinetic theory）}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{swissred!88!black}$pV=\tfrac{1}{3}Nm\overline{v^{2}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 欧拉–伯努利梁方程（核心贡献页） ---
+\newcommand{\beamslide}{\begin{frame}\plainbar\sectiontitle{欧拉–伯努利梁方程}{与欧拉合作 · 弹性与梁理论 · 工程力学基石}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{swissred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{伯努利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{弹性研究} & \cellcolor{beampanel}\textcolor{badgeBeam!82!black}{与 Euler 长期通信合作，研究弹性杆与梁的弯曲振动} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{双雄合作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{梁方程} & \cellcolor{beampanel}\textcolor{badgeBeam!82!black}{导出细梁小挠度弯曲的微分方程，后称欧拉–伯努利梁理论} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{工程基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{振动谱系} & \cellcolor{beampanel}\textcolor{badgeBeam!82!black}{大量弦振动与杆振动论文，与 Taylor、d'Alembert 的解答相互激发} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{波动前奏} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 欧拉–伯努利梁方程（Euler–Bernoulli beam equation）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{swissred!88!black}$EI\,\dfrac{d^{4}w}{dx^{4}}=q(x)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 圣彼得堡悖论（核心贡献页） ---
+\newcommand{\petersburgslide}{\begin{frame}\plainbar\sectiontitle{圣彼得堡悖论}{1738 · 期望效用 · 风险厌恶 · 经济学的源头}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{swissred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{伯努利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{悖论} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{掷硬币游戏数学期望无穷大，理性人却只愿付有限赌金——期望值理论失效} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{经典悖论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{解答} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{《新度量风险理论》提出效用以对数递减，边际效用递减化解悖论} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{期望效用} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{深远影响} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{奠定风险厌恶与风险溢价概念，成为经济学与决策论的源头之一} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{经济源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 圣彼得堡悖论（St.~Petersburg paradox）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{swissred!88!black}$E=\displaystyle\sum_{n=1}^{\infty}\frac{1}{2^{n}}\cdot 2^{n-1}=\infty\quad\text{而}\quad U(w)=\log w$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 弦振动与叠加原理（核心贡献页） ---
+\newcommand{\waveslide}{\begin{frame}\plainbar\sectiontitle{弦振动与叠加原理}{1753 叠加原理 · 波动方程论战 · 本征振动}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{swissred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{伯努利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{复合运动} & \cellcolor{beampanel}\textcolor{badgeBeam!82!black}{1726 年最早指出复合运动可分解为平动与转动的叠加} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{运动分解} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{本征振动} & \cellcolor{beampanel}\textcolor{badgeBeam!82!black}{研究弦与杆的本征振动模式，与 Taylor、d'Alembert 论战互动} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{波动前夜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{叠加原理} & \cellcolor{beampanel}\textcolor{badgeBeam!82!black}{1753 年最早陈述叠加原理：一般振动是诸本征振动的叠加} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{谱分析之源} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 叠加原理（Superposition principle，1753）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{swissred!88!black}一般振动 = 诸本征振动的叠加}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 父子恩怨（特色页） ---
+\newcommand{\familyslide}{\begin{frame}\plainbar\sectiontitle{父子恩怨}{同赛并列 · 被逐出家门 · 剽窃倒填 · 公道人心}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{swissred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{恩怨}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{并列第一} & \cellcolor{medpanel}\textcolor{badgeMed!82!black}{巴黎科学院竞赛中与父 Johann 以同一解并列一等奖——父勃然"羞于"与其齐名} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{因妒生隙} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{逐出家门} & \cellcolor{medpanel}\textcolor{badgeMed!82!black}{父亲将丹尼尔逐出家门，父子终生不和} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{家庭悲剧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{倒填日期} & \cellcolor{medpanel}\textcolor{badgeMed!82!black}{父据传将《Hydrodynamica》思想搬入《Hydraulica》（1732 完成）倒填为 1728 出版抢注——学界终还其公道} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{学术公案} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 与父同赛夺冠之日，即是父子决裂之时——天才的代价。}
+\end{center}
+\end{frame}}
+
+% --- 12. 统计与医学（特色页） ---
+\newcommand{\medslide}{\begin{frame}\plainbar\sectiontitle{统计与医学}{1766 天花接种 · 删失数据 · 流行病学先驱}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{swissred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{医学底色} & \cellcolor{medpanel}\textcolor{badgeMed!82!black}{医学博士出身；1733 年返巴塞尔先后任植物学、生理学（解剖学）与实验哲学教授} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{医理兼修} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{天花接种} & \cellcolor{medpanel}\textcolor{badgeMed!82!black}{1766 年以数学分析天花接种的利弊，量化比较接种者与未接种者的寿命期望} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{定量公共卫生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{删失数据} & \cellcolor{medpanel}\textcolor{badgeMed!82!black}{首次对删失数据（censored data）作统计分析——最早以统计回答"接种是否有效"的论文} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{统计学先驱} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 医学学位与数学天赋，在统计学史上第一次合流。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{法国科学院奖 · 皇家学会 · 流体力学之父}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{swissred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 法国科学院奖（潮汐论文，与 Euler、Maclaurin 共获）\item 英国皇家学会会员（1750-05）\item 国际航空航天名人堂（2002）\end{itemize}} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{传承} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 伯努利原理、伯努利试验、欧拉–伯努利梁以他命名\item 圣彼得堡悖论开启期望效用理论\end{itemize}} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{影响深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{评价} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item W. W. Rouse Ball："年轻一辈伯努利中远为最杰出者"\item 1734 年巴黎竞赛 10 项获奖中父子各半\end{itemize}} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{青史留名} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他用一条原理解释了风、水与命运——流体力学之父，当之无愧。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=swissred!90!black] at ([yshift=1.5cm]current page.center) {一条原理，解释风与水；};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {一个悖论，开启经济学之门。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=swissred!70!black] at ([yshift=-1.2cm]current page.center) {伯努利原理与圣彼得堡悖论——流体、概率与理性的交响。};
+\node[font=\fontsize{8}{10}\selectfont, text=swissred!60!black] at ([yshift=-2.0cm]current page.center) {丹尼尔·伯努利\quad Daniel Bernoulli\quad 1700 — 1782};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 流体 · 概率 · 弹性 · 医学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\principleslide
+\hydroslide
+\kineticslide
+\beamslide
+\petersburgslide
+\waveslide
+\familyslide
+\medslide
+\honorslide
+\closingslide
+\end{document}

@@ -1,0 +1,491 @@
+% =============================================================
+%  华林问题提出者 · 剑桥卢卡斯教授：华林 (Edward Waring)
+%  Beamer 演示 —— 参照 Leonhard Euler 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/18th_century/pages/Edward_Waring
+%  设计母题：华林问题 / 幂和 —— 柔和气泡呼应数论的视觉语言
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：英格兰红 + 数论金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{englishred}{HTML}{9E1B32}     % 英格兰红 — 英格兰 / 剑桥
+\definecolor{mathgold}{HTML}{C9A227}        % 数论金 — 数论的尊崇
+\definecolor{badgeNum}{HTML}{4C5FD5}        % 数论 — 靛蓝
+\definecolor{badgeAlg}{HTML}{0E7C7B}        % 代数 — 青绿
+\definecolor{badgeSer}{HTML}{E07B30}        % 级数 — 琥珀
+\definecolor{badgeCam}{HTML}{B76E79}        % 剑桥/人生 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{numpanel}{RGB}{228,232,250}
+\definecolor{algpanel}{RGB}{220,240,238}
+\definecolor{serpanel}{RGB}{248,233,220}
+\definecolor{campanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应数论幂和的视觉语言
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeNum!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeAlg!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeSer!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeCam!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7}{9}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+}
+
+% 装饰圆头像（无清晰肖像，沿用先例）
+\newcommand{\avatarcircle}[2]{%
+\begin{tikzpicture}
+  \pgfmathsetmacro{\avfs}{#2*26}
+  \fill[#1!8] (0,0) circle (#2);
+  \fill[#1!15] (0,0) circle (#2*0.88);
+  \node at (0,0) {\textcolor{#1!55!black}{\fontsize{\avfs}{\avfs}\selectfont\faIcon{user}}};
+\end{tikzpicture}%
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=englishred!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 英格兰\enspace·\enspace 华林问题提出者\enspace·\enspace 剑桥卢卡斯教授};
+  \node[anchor=center, font=\fontsize{24}{28}\selectfont\bfseries, text=englishred!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {华林};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=englishred!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Edward Waring\enspace·\enspace 约 1736 — 1798};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {华林问题 · 华林素数猜想 · 比值审敛法};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeNum] at (-5.05,0)
+        {数论\\Number Theory\par\scriptsize 华林问题};
+      \node[badge, fill=badgeAlg] at (-1.68,0)
+        {代数\\Algebra\par\scriptsize 代数方程};
+      \node[badge, fill=badgeSer] at (1.68,0)
+        {级数\\Series\par\scriptsize 比值审敛};
+      \node[badge, fill=badgeCam] at (5.05,0)
+        {剑桥\\Cambridge\par\scriptsize 卢卡斯教授};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {羞怯的卢卡斯教授，以一条未证明的断言引领了两个世纪的数论。};
+  % 肖像（Edward Waring 肖像）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Edward_Waring.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {E. Waring (c.~1736–1798)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英格兰\enspace|\enspace \faIcon{university}\enspace 剑桥大学\enspace|\enspace 数论 · 代数 · 级数};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{华林 - 什罗普郡走出的卢卡斯教授}{生卒 · 本名 · 国籍 · 教育 · 荣誉 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Edward_Waring.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {E. Waring (c.~1736–1798)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 约 1736 — 1798-08-15\\[2pt]\lab{本名}\quad Edward Waring\\[2pt]\lab{国籍}\quad 英格兰（大不列颠王国）};
+  \node[infob, fill=numpanel, draw=badgeNum!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 什鲁斯伯里学校\\[2pt]
+     \quad 剑桥 Magdalene 学院（sizar）\\[2pt]\lab{早年}\quad 1757 senior wrangler};
+  \node[infob, fill=serpanel, draw=badgeSer!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Old Heath（什罗普郡）\\[2pt]\lab{荣誉}\quad Copley 奖章（1784）· FRS（1763）\\[2pt]\lab{身后}\quad 葬于 Fitz, Shropshire};
+  \node[infob, fill=algpanel, draw=badgeAlg!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数论 · 代数方程\\[2pt]
+     \quad 级数收敛 · 高次曲线\\[2pt]
+     \lab{身份}\quad 数学家 · 卢卡斯教授 · 医师};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 华林的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{华林的一生}{约 1736 — 1798 · 从什罗普郡农场到卢卡斯教席}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1736/约生于 Old Heath（什鲁斯伯里），富裕农家长子,
+    2.2/1753/以 sizar 入剑桥 Magdalene 学院,
+    1.5/1757/毕业为 senior wrangler（第一名）,
+    0.8/1760/经皇室特许任卢卡斯数学教授（时无 MA）,
+    0.1/1763/当选皇家学会会员,
+    -0.6/1770/《Meditationes Algebraicae》：华林问题问世,
+    -1.3/1784/获皇家学会 Copley 奖章,
+    -2.0/1798/8 月 15 日逝于 Plealey，葬于 Fitz 教堂墓地
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1736–1760)}{农家子弟 · sizar 贫寒入学 · 一鸣惊人}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englishred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{家世} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{什罗普郡富裕农民 John 与 Elizabeth Waring 的长子；什鲁斯伯里学校师从 Mr Hotchkin} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{农家才子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1753} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{3 月 24 日以 sizar（贫寒工读）身份入剑桥 Magdalene 学院，兼 Millington 展资生；入 Hyson Club（同会有后来名家 Paley）} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{工读入学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1757-58} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{1757 年毕业即 senior wrangler（数学榜首）；次年 4 月当选 Magdalene fellow——数学天赋早获公认} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{榜首毕业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1759-60} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{1759 年底刊出《Miscellanea Analytica》首章——次年 1 月即凭此入选卢卡斯教授（详见后页风波）} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{著作开路} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从工读生到卢卡斯教授，他只用了七年。}
+\end{center}
+\end{frame}}
+
+% --- 5. 华林问题（核心贡献页） ---
+\newcommand{\waringslide}{\begin{frame}\plainbar\sectiontitle{华林问题}{1770 无证明断言 · 希尔伯特 1909 · 加性数论之源}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englishred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{华林的断言}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{立方断言} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{每个正整数本身是立方数，或是至多 9 个立方数之和} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{$g(3)=9$} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{四次幂断言} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{每个正整数本身是四次幂，或是至多 19 个四次幂之和} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{$g(4)=19$} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{后世接力} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{希尔伯特 1909 年证明一般情形；"每 $k$ 次幂至多 $g(k)$ 个之和"遂成加性数论核心问题} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{希尔伯特证明} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 华林问题（Waring's problem，1770）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{englishred!88!black}$\forall n\in\mathbb{Z}^{+}:\ n=\underbrace{x_{1}^{k}+\cdots+x_{g(k)}^{k}}_{\text{至多 } g(k) \text{ 项}},\quad g(3)=9,\ g(4)=19$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 华林素数猜想（核心贡献页） ---
+\newcommand{\primeslide}{\begin{frame}\plainbar\sectiontitle{华林素数猜想}{Goldbach 弱猜想 · 奇数三素数 · 同书问世}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englishred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{华林的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{收录 Goldbach} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{《Meditationes Algebraicae》收录哥德巴赫猜想：每偶数是两素数之和} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{经典传播} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{奇数猜想} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{提出"每奇数是素数或三个素数之和"——今称 Goldbach 弱猜想（华林素数猜想）} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{弱猜想之源} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{现代进展} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{弱猜想 2013 年由 Helfgott 证明；两猜想同为《Meditationes》数论核心} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{两个半世纪} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 华林素数猜想（Waring's prime number conjecture）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{englishred!88!black}奇数 $n\ \Rightarrow\ n=p\ \text{或}\ n=p_{1}+p_{2}+p_{3}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 《Meditationes Algebraicae》（核心贡献页） ---
+\newcommand{\meditationesslide}{\begin{frame}\plainbar\sectiontitle{《Meditationes Algebraicae》}{1770 · 拉格朗日盛誉 · 数论的巅峰}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englishred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{拉格朗日盛誉} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{"a work full of excellent researches"（充满卓越研究之作）} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{欧陆公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{代数方程} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{大量方程求解定理引发欧陆关注；代数方程部分 1770 年由 V.~Riccati 译为意大利文} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{跨国传播} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Wilson 定理} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{书中发表友人 John Wilson 的素数定理，后由拉格朗日严格证明} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{友人定理} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Wilson 定理（1770 年由华林发表）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{englishred!88!black}$(n-1)!\equiv-1\ (\mathrm{mod}\ n)\iff n\ \text{为素数}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 比值审敛法与偏微分方程（核心贡献页） ---
+\newcommand{\analyticaeslide}{\begin{frame}\plainbar\sectiontitle{比值审敛法与偏微分方程}{《Meditationes Analyticae》· 英国分析的先声}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englishred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{华林的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{比值审敛法} & \cellcolor{serpanel}\textcolor{badgeSer!82!black}{《Meditationes Analyticae》中最有趣的结果之一——级数收敛检验，通常归功于 d'Alembert} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{分析工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{偏微分方程} & \cellcolor{serpanel}\textcolor{badgeSer!82!black}{第三章末给出部分流数方程（PDE）——该工具在英国此前几乎被完全忽视} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{英国先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{欧陆视野} & \cellcolor{serpanel}\textcolor{badgeSer!82!black}{序言展示对 Clairaut、d'Alembert、Euler 的精深了解——18 世纪英国无人企及的欧陆文献阅读深度} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{孤明先发} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 比值审敛法（Ratio test）}\\[2pt]
+  {\fontsize{11}{15}\selectfont\color{englishred!88!black}$\displaystyle\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_{n}}\right|<1\ \Rightarrow\ \sum a_{n}\ \text{收敛}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 曲线分类与哲学小册（特色页） ---
+\newcommand{\curvesslide}{\begin{frame}\plainbar\sectiontitle{曲线分类与哲学小册}{超越牛顿的清单 · 少量刊行的《人类知识论》}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englishred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{高次曲线} & \cellcolor{campanel}\textcolor{badgeCam!82!black}{《Proprietates Algebraicarum Curvarum》（1772）大幅修订再版，改进 Newton、Stirling、Euler、Cramer 的高次平面曲线分类} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{曲线论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{分析立场} & \cellcolor{campanel}\textcolor{badgeCam!82!black}{批评拘泥几何的英国同行；订阅批判流数术传统的 Landen《Residual Analysis》（1764）} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{分析派旗手} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{哲学小册} & \cellcolor{campanel}\textcolor{badgeCam!82!black}{1794 年刊行少量《An Essay on the Principles of Human Knowledge》，仅在友人间流传} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{哲思余绪} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从曲线分类到人类知识——分析风格贯穿他的一切著述。}
+\end{center}
+\end{frame}}
+
+% --- 10. 卢卡斯教授风波（特色页） ---
+\newcommand{\lucasslide}{\begin{frame}\plainbar\sectiontitle{卢卡斯教授风波}{1760 · 无 MA 的当选 · 皇室特许}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englishred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{风波}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{反对之声} & \cellcolor{campanel}\textcolor{badgeCam!82!black}{1760 年 1 月 28 日入选卢卡斯教授——St John's 导师 Powell 反对，支持 Ludlam 出任} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{资历之辩} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{友人声援} & \cellcolor{campanel}\textcolor{badgeCam!82!black}{论战中 John Wilson 撰文力挺华林——Wilson 正是日后以其命名素数定理的友人} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{挚友相挺} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{皇室特许} & \cellcolor{campanel}\textcolor{badgeCam!82!black}{华林当时尚无任职所需的 MA 学位——由皇室特许于 1760 年授予，争议平息；他执掌教席直至去世} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{御批定局} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 二十三岁、无 MA、遭权贵反对——皇室一纸特许成就了剑桥史上最年轻的卢卡斯教授之一。}
+\end{center}
+\end{frame}}
+
+% --- 11. 医学人生（特色页） ---
+\newcommand{\medslide}{\begin{frame}\plainbar\sectiontitle{医学人生}{MD 学位 · Addenbrooke's 医师 · 近视与羞怯}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englishred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{医学学位} & \cellcolor{campanel}\textcolor{badgeCam!82!black}{1767 年获 MD 学位；与化学教授（后 Llandaff 主教）Richard Watson 合作解剖} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{医理兼修} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{行医岁月} & \cellcolor{campanel}\textcolor{badgeCam!82!black}{约 1770 年起任剑桥 Addenbrooke's 医院医师，并在 St Ives 行医多年} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{悬壶乡里} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{性格之困} & \cellcolor{campanel}\textcolor{badgeCam!82!black}{严重近视、极度羞怯——医术生涯并不成功；似乎从未讲课、不常与其他数学家通信} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{孤高学者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 羞怯让诊所冷清，却让书房里的数论格外明亮。}
+\end{center}
+\end{frame}}
+
+% --- 12. 晚年与身后（特色页） ---
+\newcommand{\lateslide}{\begin{frame}\plainbar\sectiontitle{晚年与身后}{退会 · 论战 · 宗教忧郁 · Fitz 葬地}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englishred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{岁月}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{退会} & \cellcolor{campanel}\textcolor{badgeCam!82!black}{1795 年满六十后"因年事"退出皇家学会；1776 年娶 Mary Oswell，晚年退居 Plealey 庄园（215 英亩）} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{乡居岁月} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Lalande 论战} & \cellcolor{campanel}\textcolor{badgeCam!82!black}{Lalande 1796 年称 1764 年英国无一流分析家；华林死后刊出的回信自陈给出过"三到四百个新命题"} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{身后自辩} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{逝世} & \cellcolor{campanel}\textcolor{badgeCam!82!black}{晚年陷于深的宗教忧郁；1798-08-15 一场重感冒致逝，葬于 Fitz, Shropshire 教堂墓地} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{溘然长逝} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} "三到四百个新命题"——沉静一生，只留下一句迟到的自辩。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{Copley 奖章 · 三院会员 · 华林问题之名}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.0cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.4cm}}
+\toprule
+\rowcolor{englishred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Copley 奖章（1784）· FRS（1763）\item 哥廷根 · 博洛尼亚科学院成员\end{itemize}} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{传承} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 华林问题 · 华林素数猜想以他命名\item 比值审敛法与英国 PDE 研究的先声\end{itemize}} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{影响深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{人物} & \cellcolor{numpanel}\textcolor{badgeNum!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 学生：John Wilson（Wilson 定理）· John Dawson\item 拉格朗日誉其作为"充满卓越研究之作"\end{itemize}} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{桃李与知音} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一条未证明的断言，让他的名字在数论里活过两个半世纪。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=englishred!90!black] at ([yshift=1.5cm]current page.center) {羞怯的教授，孤独的书房，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {一条断言照亮了两个世纪的数论。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=englishred!70!black] at ([yshift=-1.2cm]current page.center) {华林问题与华林素数猜想——幂和与素数的交响。};
+\node[font=\fontsize{8}{10}\selectfont, text=englishred!60!black] at ([yshift=-2.0cm]current page.center) {华林\quad Edward Waring\quad c.~1736 — 1798};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 数论 · 代数 · 级数\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\waringslide
+\primeslide
+\meditationesslide
+\analyticaeslide
+\curvesslide
+\lucasslide
+\medslide
+\lateslide
+\honorslide
+\closingslide
+\end{document}
