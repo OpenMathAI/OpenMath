@@ -105,36 +105,46 @@
 
 | 字段 | 值 | 状态 |
 |---|---|---|
-| qid | Q11887 | 待写入 |
-| name_zh | 哈密顿（或 威廉·罗恩·哈密顿） | 待写入 |
-| name_en | William Rowan Hamilton | 待写入 |
-| birth_date | 1805-08-04 | 待写入 |
-| death_date | 1865-09-02 | 待写入 |
-| nationality | United Kingdom（今爱尔兰） | 待写入 |
-| primary_occupation | mathematician | 待写入 |
-| field_of_work | quaternion / mechanics / optics | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| qid | Q11887 | ✅ 已写入（id=1164） |
+| name_zh | 哈密顿（或 威廉·罗恩·哈密顿） | ✅ 已写入（哈密顿） |
+| name_en | William Rowan Hamilton | ✅ 已写入 |
+| birth_date | 1805-08-04 | ✅ 已写入 |
+| death_date | 1865-09-02 | ✅ 已写入 |
+| nationality | United Kingdom（今爱尔兰） | ✅ 已写入（United Kingdom） |
+| primary_occupation | mathematician | ✅ 已写入 |
+| field_of_work | quaternion / mechanics / optics | ✅ 已写入（7 领域） |
+| has_biography | 1 | ✅ 本次置 1 |
+
+> 补充已入库维度：职业 5 条（mathematician / physicist / astronomer / university teacher / theoretical physicist）、领域 7 条（mathematics / quaternion / mechanics / optics / mathematical physics / astronomy / physics）、奖项 6 条、机构 3 条、社会关系 10 条。详见 §7–§9。
 
 ## 7. 社会关系入库清单（§20）
 
-- **导师**：John Brinkley（爱尔兰皇家天文学家）
-- **学术相关**：Carl Gustav Jacob Jacobi（Hamilton–Jacobi 方程）、Joseph Liouville（扩展其工作）、Augustus De Morgan（通信）、Niels Henrik Abel（五次方程研究）
-- **诗人交往**：William Wordsworth、Samuel Taylor Coleridge、Felicia Hemans（听其天文讲座后作诗）
-- **家族**：妻 Helen Bayly、子 William Edwin Hamilton（出版《四元数原理》）、姐/妹 Eliza Mary Hamilton（诗人）
-- **早期交往**：Maria Edgeworth（小说家）、Catherine Disney（爱慕对象）
+> ✅ 已入库 10 条关系（`person_relation`，source=`hamilton`）。relation_types 不支持的亲属/私交类型（配偶、姐妹、爱慕对象）未入库，保留备查。
+
+- **导师** ✅：John Brinkley（爱尔兰皇家天文学家）— `advisor-student`
+- **学术相关** ✅：Carl Gustav Jacob Jacobi（Hamilton–Jacobi 方程）— `collaborator`；Joseph Liouville（扩展其工作）、Augustus De Morgan（通信）、Niels Henrik Abel（五次方程研究）— `colleague`；Arthur Cayley（Cayley–Hamilton 定理）— `collaborator`
+- **诗人交往** ✅：William Wordsworth、Samuel Taylor Coleridge、Felicia Hemans（听其天文讲座后作诗）— `colleague`（占位职业标记为 `poet`）
+- **家族** ✅ 部分：子 William Edwin Hamilton（出版《四元数原理》）— `parent-child`；妻 Helen Bayly、姐/妹 Eliza Mary Hamilton（诗人）⚠️ relation_types 无配偶/姐妹类型，未入库
+- **早期交往** ⚠️：Maria Edgeworth（小说家）、Catherine Disney（爱慕对象）— 私交，未入库（无对应关系类型）
 
 ## 8. 奖项清单
 
-- Royal Medal（皇家奖章，1835，锥形折射）
-- Cunningham Medal（坎宁安奖章，1834、1848，两次）
-- Knight Bachelor（爵士，1835）
-- Fellow of the American Academy of Arts and Sciences
-- 1864 年美国国家科学院首批外籍院士（名单居首）
+> ✅ 已入库 6 条（`award_laureate`，source=`hamilton`，share_type=`独享`）
+
+- Royal Medal（皇家奖章，1835）✅
+- Cunningham Medal（坎宁安奖章，1834、1848，两次）✅
+- Knight Bachelor（爵士，1835）✅
+- Fellow of the American Academy of Arts and Sciences（美国艺术与科学院院士，年份待查 year=0）✅
+- Foreign Associate of the National Academy of Sciences（1864 美国国家科学院首批外籍院士，名单居首）✅
 
 ## 9. 机构清单
 
-- 教育：Trinity College Dublin（BA 1827、MA 1837）、Westminster School
-- 任职：Trinity College Dublin（Andrews 天文学教授，1827–1865）、Dunsink Observatory（邓辛克天文台第三任台长，1827–1865）
+> ✅ 已入库 3 条（`person_institution`）
+
+- 教育 ✅：Trinity College Dublin（BA 1827、MA 1837，1823–1837）
+- 任职 ✅：Trinity College Dublin（Andrews 天文学教授，1827–1865）
+- 任职 ✅：Dunsink Observatory（邓辛克天文台第三任台长，1827–1865）
+- ⚠️ Westminster School：metadata `educated_at` 含此项，但 page.md infobox 无记载（疑 Wikidata 噪声），未入库
 
 ## 10. 终审清单
 

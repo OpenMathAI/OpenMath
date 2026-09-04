@@ -116,12 +116,14 @@
 | field_of_work | algebra / matrix theory / combinatorics | 待写入 |
 | has_biography | 1 | 本次置 1 |
 
-## 7. 社会关系入库清单（§20）
+## 7. 社会关系入库清单（§20，2026-09-04 已入库 13 条）
 
-- **导师**：John Hymers、Augustus De Morgan
-- **合作者**：Arthur Cayley（长期合作，不变量理论、矩阵理论）
-- **美国友人**：Benjamin Peirce（哈佛数学家）、Joseph Henry（普林斯顿物理学家）
-- **学生**：William Pitt Durfee、George B. Halsted、Washington Irving Stringham、Thomas Craig、Fabian Franklin 等（metadata doctoral_student）；Christine Ladd-Franklin 为"其他著名学生"（1878 年他力排众议支持其入学）
+- **父**：Abraham Joseph（伦敦犹太商人；本名 James Joseph，随兄移民美国改姓 Sylvester）——已入库
+- **导师**：John Hymers（剑桥 tutor）、Augustus De Morgan（UCL，14 岁时）——已入库
+- **合作者**：Arthur Cayley（挚友，研读法律时相识，共同奠定不变量理论与矩阵理论）——已入库
+- **美国友人**：Benjamin Peirce（哈佛数学家，C. S. Peirce 之父）、Joseph Henry（普林斯顿物理学家）——已入库
+- **学生**：William Pitt Durfee、George B. Halsted、Washington Irving Stringham（infobox doctoral students）；Isaac Todhunter、William Roberts McDaniel、Harry Fielding Reid、Christine Ladd-Franklin（infobox other notable students；Ladd-Franklin 1878 年由他力排众议收录入学，女性入学先驱）——7 人均已入库
+- 注：metadata doctoral_student 中 Thomas Craig、Fabian Franklin 不在 page.md infobox 内，未入库（以 page.md 为准）
 
 ## 8. 奖项清单
 
