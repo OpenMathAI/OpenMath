@@ -1,0 +1,433 @@
+% =============================================================
+%  四元数与哈密顿力学的奠基者：威廉·罗恩·哈密顿 (William Rowan Hamilton)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/William_Rowan_Hamilton
+%  设计母题：四元数 / 相空间 —— 柔和气泡呼应四元数与相空间的庄重
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：爱尔兰深绿 + 数学金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{irishgreen}{HTML}{1B5E20}     % 爱尔兰深绿 — 都柏林 / 爱尔兰
+\definecolor{mathgold}{HTML}{C9A227}       % 数学金 — 四元数 / 爵士
+\definecolor{badgeQuat}{HTML}{4C5FD5}      % 四元数 — 靛蓝
+\definecolor{badgeMech}{HTML}{0E7C7B}      % 力学 — 青绿
+\definecolor{badgeOptic}{HTML}{E07B30}     % 光学 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}    % 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{quatpanel}{RGB}{228,232,250}
+\definecolor{mechpanel}{RGB}{220,240,238}
+\definecolor{opticpanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应四元数 / 相空间
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeMech!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeQuat!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeOptic!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[mathgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=irishgreen!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 爱尔兰\enspace·\enspace 数学家 · 物理学家 · 天文学家\enspace·\enspace 四元数与哈密顿力学的奠基者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=irishgreen!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {哈密顿};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=irishgreen!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {William Rowan Hamilton\enspace·\enspace 1805 — 1865};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {《四元数》 · 哈密顿力学 · 锥形折射 · Icosian Game};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeQuat] at (-5.05,0)
+        {四元数\\Quaternions\par\scriptsize $i^2=j^2=k^2=ijk=-1$};
+      \node[badge, fill=badgeMech] at (-1.68,0)
+        {力学\\Mechanics\par\scriptsize 哈密顿量};
+      \node[badge, fill=badgeOptic] at (1.68,0)
+        {光学\\Optics\par\scriptsize 锥形折射};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {图论\\Graph Theory\par\scriptsize Icosian Game};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {在皇家运河的散步中，他让虚数走进了物理。};
+  % 肖像（椭圆组合肖像，来自 Wikipedia infobox）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{hamilton_portrait.png}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {William Rowan Hamilton (1805–1865)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 爱尔兰\enspace|\enspace \faIcon{university}\enspace Trinity College Dublin · Dunsink Observatory\enspace|\enspace 四元数 · 力学 · 光学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{哈密顿 - 从都柏林到邓辛克}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{hamilton_portrait.png}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {William Rowan Hamilton (1805–1865)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1805-08-04 — 1865-09-02\\[2pt]\lab{本名}\quad Sir William Rowan\\[2pt]\quad\enspace Hamilton\\[2pt]\lab{国籍}\quad 爱尔兰};
+  \node[infob, fill=quatpanel, draw=badgeQuat!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Trinity College Dublin\\[2pt]
+     \lab{学位}\quad BA 1827 · MA 1837\\[2pt]\lab{师承}\quad John Brinkley};
+  \node[infob, fill=mechpanel, draw=badgeMech!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 都柏林（爱尔兰）\\[2pt]\lab{荣誉}\quad 坎宁安奖章 ×2 · 皇家奖章 · 爵士\\[2pt]\lab{身后}\quad 都柏林 Mount Jerome 公墓};
+  \node[infob, fill=opticpanel, draw=badgeOptic!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 四元数 · 力学 · 光学\\[2pt]
+     \quad 代数 · 图论\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家 · 天文学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 哈密顿的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{哈密顿的一生}{1805 — 1865 · 从神童到四元数}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1805/生于都柏林，3 岁起由叔父抚养,
+    2.4/1813/与心算神童 Zerah Colburn 比赛败北,
+    1.7/1823/考入都柏林三一学院,
+    1.0/1827/任 Andrews 天文学教授 / 皇家天文学家,
+    0.3/1834/预言锥形折射；获坎宁安奖章,
+    -0.4/1835/获皇家奖章并封爵,
+    -1.1/1843/发现四元数，刻于布鲁姆桥,
+    -1.8/1856/发明 Icosian Game,
+    -2.5/1865/于都柏林去世
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 神童与早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{神童与早年 (1805–1823)}{语言天赋 · 心算败北 · 三一学院 · Brinkley 评价}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{irishgreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1805} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{生于都柏林，父亲是律师；3 岁起由叔父 James Hamilton 在 Trim 抚养} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{早慧的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{语言天赋} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{据称 13 岁前掌握约 12 种语言（含希伯来语、波斯语、阿拉伯语、梵语），部分史学家存疑} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{惊人的学习能力} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1813} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{与 9 岁美国心算神童 Zerah Colburn 比赛心算，Colburn 明显胜出} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{从此转向数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1823} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{17 岁以考试入学都柏林三一学院；Brinkley 称其"现在就是同龄人中第一数学家"} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{各科名列第一} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从语言神童，到数学天才。}
+\end{center}
+\end{frame}}
+
+% --- 5. 四元数的发现 ---
+\newcommand{\quaternionslide}{\begin{frame}\plainbar\sectiontitle{1843 · 四元数的发现}{皇家运河散步 · 布鲁姆桥 · 放弃交换律}
+\begin{center}
+\begin{tikzpicture}[
+  box/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=3pt, font=\fontsize{8}{10.5}\selectfont, align=center}
+]
+\node[box, fill=goldpanel, draw=mathgold!50, text width=11.5cm] at (0,2.7)
+  {{\color{mathgold!85!black}\bfseries 1843 年 10 月 16 日，与妻子在皇家运河散步时灵光一现：}\\[2pt]
+  找到了满足 $i^2=j^2=k^2=ijk=-1$ 的数系，随即用小刀刻在布鲁姆桥上};
+\node[box, fill=quatpanel, draw=badgeQuat!50, text width=11.5cm] at (0,1.35)
+  {四元数\textbf{放弃了乘法交换律}（$ij \neq ji$），这是当时激进而深刻的一步，\\[2pt]
+  使哈密顿成为现代线性代数的奠基者之一};
+\node[box, fill=mechpanel, draw=badgeMech!50, text width=11.5cm] at (0,0.05)
+  {\color{coverdark!88}\bfseries 他并创造了 "tensor"、"scalar"、"vector" 等术语，\\[2pt]
+  深刻地重塑了向量与线性代数的语言。};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.55cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 四元数的基本乘法规则（Hamilton，1843）}\\[2pt]
+  {\fontsize{13}{17}\selectfont\color{irishgreen!88!black}$i^{2}=j^{2}=k^{2}=ijk=-1$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 向量代数的开创 ---
+\newcommand{\vectorslide}{\begin{frame}\plainbar\sectiontitle{向量代数的开创}{tensor · scalar · vector}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{irishgreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{哈密顿的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{突破}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{四元数（1843）} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{引入形如 $a+bi+cj+dk$ 的数系} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{三维空间旋转的代数工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{术语创造} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{创造 tensor、scalar、vector 等词} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{向量分析的语言基础} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{标量与向量分离} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{把四元数拆为标量部分与向量部分} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{为 Gibbs 向量分析奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{放弃交换律} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{接受 $ij=-ji$，突破传统代数} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{开启非交换代数} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 四元数的一般形式}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{irishgreen!88!black}$q = a + bi + cj + dk,\qquad a,b,c,d\in\mathbb{R}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 哈密顿力学 ---
+\newcommand{\mechanicsslide}{\begin{frame}\plainbar\sectiontitle{哈密顿力学}{哈密顿量 · 正则方程 · 动量位置对称}
+\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{irishgreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{哈密顿的方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{运动如何重新表述？} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{引入哈密顿量 $H$ 重写拉格朗日力学} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{更对称、更深刻的框架} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{动量与位置的关系？} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{揭示动量与位置的对称性} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{相空间的几何语言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{如何推广到量子理论？} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{哈密顿形式体系同样适用于量子理论} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{量子力学的核心起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 哈密顿正则方程（Hamilton's equations）}\\[1pt]
+  {\fontsize{12}{16}\selectfont\color{irishgreen!88!black}$\dot{q}_{i}=\dfrac{\partial H}{\partial p_{i}},\qquad \dot{p}_{i}=-\dfrac{\partial H}{\partial q_{i}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 哈密顿原理与 Hamilton–Jacobi 方程 ---
+\newcommand{\principleslide}{\begin{frame}\plainbar\sectiontitle{哈密顿原理与 Hamilton–Jacobi 方程}{变作用 · 最小作用量 · 分析力学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{irishgreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{哈密顿的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{今天}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{变作用原理（1834–35）} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{基于变分法提出"Varying Action"原理} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{分析力学的基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{哈密顿原理} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{把运动归结为作用量的驻值} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{最小作用量原理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Hamilton–Jacobi 方程} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{与 Jacobi 共同发展} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{理论力学与量子理论的重要工具} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{mathgold!85!black} 哈密顿原理（最小作用量原理）与 Hamilton–Jacobi 方程}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{irishgreen!88!black}$\delta S = \delta\int_{t_1}^{t_2} L\,dt = 0,\qquad \dfrac{\partial S}{\partial t}+H\!\left(q,\dfrac{\partial S}{\partial q},t\right)=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 光学与锥形折射 ---
+\newcommand{\opticsslide}{\begin{frame}\plainbar\sectiontitle{光学与锥形折射}{光学-力学类比 · Fresnel 波面 · 1834 坎宁安奖章}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{irishgreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法 / 预言}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{力学与光学如何统一？（1827）} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{提出哈密顿主函数，统一力学与光学} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{奠定光的波动说的数学基础} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{双轴晶体中的光路？（1832）} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{从 Fresnel 波面几何预言锥形折射} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{光以空心锥射出，后被实验证实} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{贡献如何被认可？} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{锥形折射的预言} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{1834 年获坎宁安奖章} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他在纸面上预言了光线的锥形，实验随后予以证实。}
+\end{center}
+\end{frame}}
+
+% --- 10. Icosian Game 与哈密顿路径 ---
+\newcommand{\icosianslide}{\begin{frame}\plainbar\sectiontitle{Icosian Game 与哈密顿路径}{1856 · 图论的先声}
+\vspace{-0.08cm}
+\begin{center}
+\begin{tikzpicture}[
+  nd/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, font=\fontsize{8.5}{10.5}\selectfont\bfseries, align=center}
+]
+\node[nd, fill=goldpanel, draw=mathgold!60, text=mathgold!85!black] (a) at (0,2.0) {1856 · Hamilton};
+\node[nd, fill=quatpanel, draw=badgeQuat!50, text=badgeQuat!85!black] (b) at (0,1.1) {发明 Icosian Game};
+\node[nd, fill=quatpanel, draw=badgeQuat!50, text=badgeQuat!85!black] (c) at (0,0.2) {正十二面体上的路径问题};
+\node[nd, fill=mechpanel, draw=badgeMech!50, text=badgeMech!85!black] (d) at (0,-0.7) {哈密顿路径 · 图论的先声};
+\draw[-{Stealth[length=2.5mm]}, mathgold!70, line width=1.2pt] (a) -- (b);
+\draw[-{Stealth[length=2.5mm]}, mathgold!70, line width=1.2pt] (b) -- (c);
+\draw[-{Stealth[length=2.5mm]}, mathgold!70, line width=1.2pt, dashed] (c) -- (d);
+\end{tikzpicture}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{mathgold!85!black} 哈密顿路径：经过图中每个顶点恰好一次的路径}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{irishgreen!88!black}$\text{给定图 } G=(V,E),\ \exists\ v_1\to v_2\to\cdots\to v_n,\ \text{经过每个顶点恰好一次}$}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.06cm}
+\begin{center}
+{\fontsize{9}{12}\selectfont\bfseries\color{coverdark!88} 一场游戏，埋下了现代图论的种子。}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉与个人生活 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与个人生活}{爵士 · 皇家奖章 · 诗人气质}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{irishgreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 坎宁安奖章（1834、1848）\item 皇家奖章（1835）\item Knight Bachelor（1835）\item 1864 年美国国家科学院首批外籍院士\end{itemize}} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{国际学界高度认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{诗人气质} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{与华兹华斯、柯勒律治交往，自称"诗意门徒"} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{科学与诗的交汇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后} & \cellcolor{quatpanel}\textcolor{badgeQuat!82!black}{《四元数原理》由儿子 William Edwin 于 1866 年出版} & \cellcolor{mechpanel}\textcolor{badgeMech!82!black}{思想延续至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一位诗人心灵的数学家，把美带进了代数。}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=irishgreen!90!black] at ([yshift=1.5cm]current page.center) {他用 60 年的一生，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {让虚数走进了物理。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=irishgreen!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是四元数，而是一种让代数与物理彼此照亮的眼光。};
+\node[font=\fontsize{8}{10}\selectfont, text=irishgreen!60!black] at ([yshift=-2.0cm]current page.center) {哈密顿\quad William Rowan Hamilton\quad 1805 — 1865};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 四元数 · 力学 · 光学 · 图论\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\quaternionslide
+\vectorslide
+\mechanicsslide
+\principleslide
+\opticsslide
+\icosianslide
+\honorslide
+\closingslide
+\end{document}

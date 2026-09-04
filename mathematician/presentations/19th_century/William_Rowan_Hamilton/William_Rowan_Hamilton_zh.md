@@ -98,7 +98,7 @@
 - **锥形折射**：Hamilton 从 Fresnel 波面几何**预言**，后被实验证实——是"预言后被证实"，勿写 Hamilton 做了实验。
 - **心算败北**：1813 年与 Zerah Colburn 比赛败北，Colburn 明确胜出——是"败北"轶事，体现其转向数学的契机。
 - **语言天赋存疑**：部分史学家对 Hamilton "掌握 12 种语言"的说法存疑（认为只是基础理解）——表述时可用"据称"。
-- **无肖像**：`images.txt` 中无 Hamilton 本人肖像（多为铭牌、硬币、雕塑），封面头像需确认可用肖像，否则用装饰圆占位。
+- **肖像来源**：`images.txt` 中无 Hamilton 本人肖像（多为铭牌、硬币、雕塑），但 Wikipedia infobox 确有肖像 `William Rowan Hamilton portrait oval combined.png`（椭圆组合肖像），已下载为 `images/hamilton_portrait.png`（500×686，PNG 灰度+透明）。封面与身份信息页均使用该肖像。
 - **死亡**：1865-09-02 逝于都柏林，享年 60，痛风发作，葬于 Mount Jerome 公墓；去世时仍在完成《四元数原理》（Elements of Quaternions，762 页，其子 William Edwin 1866 年出版）。
 
 ## 6. 数据库字段核对表（§21.5）
@@ -145,7 +145,7 @@
 - [ ] 锥形折射"预言后被证实"表述准确
 - [ ] 心算败北"轶事"表述准确
 - [ ] 语言天赋"据称 12 种"表述准确
-- [ ] 头像确认（无肖像则装饰圆占位）
+- [x] 头像确认（`images/hamilton_portrait.png`，来自 Wikipedia infobox 椭圆组合肖像）
 - [ ] 国籍用「爱尔兰」现代对应
 - [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
 - [ ] `make distclean && make` 编译通过，0 错误

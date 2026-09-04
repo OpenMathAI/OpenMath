@@ -1,0 +1,420 @@
+% =============================================================
+%  矩阵理论的奠基者 · 美国数学的奠基者：西尔维斯特 (James Joseph Sylvester)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/James_Joseph_Sylvester
+%  设计母题：矩阵 / 不变量 —— 柔和气泡呼应代数结构的对称与凝聚
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+% 字体：优先 PingFang SC + Helvetica Neue（与全套立传一致）；缺失环境自动回退
+\IfFontExistsTF{PingFang SC}{%
+  \setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+  \setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+}{%
+  \setCJKmainfont{Heiti SC}[AutoFakeBold=2.5, AutoFakeSlant=0.2]
+  \setCJKsansfont{Heiti SC}[AutoFakeBold=2.5, AutoFakeSlant=0.2]
+}
+\IfFontExistsTF{Helvetica Neue}{%
+  \setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+}{%
+  \setmainfont{Avenir Next}[BoldFont=Avenir Next Bold]
+}
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：英国深蓝 + 数学金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{ukblue}{HTML}{1F3A93}        % 英国深蓝 — 英伦理性
+\definecolor{mathgold}{HTML}{C9A227}      % 数学金 — 矩阵 / 尊崇
+\definecolor{badgeMatrix}{HTML}{4C5FD5}   % 矩阵 / 不变量 — 靛蓝
+\definecolor{badgeCombin}{HTML}{0E7C7B}   % 组合 / 配分 — 青绿
+\definecolor{badgeTerms}{HTML}{E07B30}    % 术语创造 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}   % 美国数学 / 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{matrixpanel}{RGB}{228,232,250}
+\definecolor{combinpanel}{RGB}{220,240,238}
+\definecolor{termpanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应矩阵 / 不变量的对称与凝聚
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeMatrix!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeCombin!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeTerms!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[mathgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=ukblue!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 英国\enspace·\enspace 矩阵理论的奠基者 · 美国数学的奠基者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=ukblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {西尔维斯特};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=ukblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {James Joseph Sylvester\enspace·\enspace 1814 — 1897};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {"matrix" 一词的创造者 · Sylvester 惯性定律 · 《美国数学杂志》创办人};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeMatrix] at (-5.05,0)
+        {矩阵理论\\Matrix Theory\par\scriptsize 1850 年命名矩阵};
+      \node[badge, fill=badgeCombin] at (-1.68,0)
+        {不变量理论\\Invariants\par\scriptsize 与 Cayley 并肩};
+      \node[badge, fill=badgeTerms] at (1.68,0)
+        {组合与配分\\Combinatorics\par\scriptsize Sylvester--Gallai};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {美国数学\\American Math\par\scriptsize 《美国数学杂志》};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他因犹太身份屡遭闭门羹，却以 82 年的一生为大西洋两岸的数学奠基。};
+  % 肖像（真实图片）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{sylvester_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Sylvester (1814--1897)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国\enspace|\enspace \faIcon{university}\enspace Cambridge · Johns Hopkins · Oxford\enspace|\enspace 矩阵 · 不变量 · 组合};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{西尔维斯特 - 从伦敦到巴尔的摩}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（真实图片，竖版）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.6,3.5);
+      \node[anchor=center] at (1.3,1.75) {\includegraphics[width=2.6cm,height=3.5cm,keepaspectratio]{sylvester_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-1.85) {James Joseph Sylvester (1814--1897)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1814-09-03 — 1897-03-15\\[2pt]\lab{本名}\quad James Joseph（后改姓 Sylvester）\\[2pt]\lab{国籍}\quad 英国};
+  \node[infob, fill=matrixpanel, draw=badgeMatrix!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 剑桥圣约翰学院\\[2pt]
+     \quad 都柏林三一学院\\[2pt]
+     \lab{师承}\quad John Hymers · Augustus De Morgan};
+  \node[infob, fill=combinpanel, draw=badgeCombin!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 伦敦\\[2pt]\lab{荣誉}\quad Copley Medal（1880）\\[2pt]\lab{身后}\quad Sylvester Medal（1901 设立）};
+  \node[infob, fill=termpanel, draw=badgeTerms!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 矩阵 · 不变量\\[2pt]
+     \quad 组合 · 配分 · 数论\\[2pt]
+     \lab{身份}\quad 数学家 · 诗人};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{为大西洋两岸奠基的代数学家}{矩阵 · 不变量 · 组合与配分 · 美国数学}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=11pt, inner ysep=9pt, font=\fontsize{7.0}{9.0}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=matrixpanel, draw=badgeMatrix!50, text=badgeMatrix!85!black] (a) at (-5.7,1.05) {矩阵理论\\Matrix\\[2pt]1850 年命名矩阵};
+\node[nodebox, fill=combinpanel, draw=badgeCombin!50, text=badgeCombin!85!black] (b) at (-1.9,1.05) {不变量理论\\Invariant\\[2pt]与 Cayley 并肩};
+\node[nodebox, fill=termpanel, draw=badgeTerms!50, text=badgeTerms!85!black] (c) at (1.9,1.05) {组合与配分\\Combinatorics\\[2pt]Sylvester--Gallai};
+\node[nodebox, fill=legacypanel, draw=badgeLegacy!50, text=badgeLegacy!85!black] (d) at (5.7,1.05) {美国数学\\American Math\\[2pt]首任数学教授};
+\node[draw=mathgold!60, fill=graypanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他为矩阵命名——现代数学的语言里，处处是他的印记。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 4. 早年与犹太身份 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与犹太身份 (1814--1841)}{伦敦 · De Morgan · 剑桥 tripos 第二 · 都柏林三一学院}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{ukblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1814} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{生于伦敦，犹太商人 Abraham Joseph 之子；后随兄改姓 Sylvester} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{犹太移民家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1828} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{14 岁师从 Augustus De Morgan（伦敦大学）；因刺伤同学指控被家属带离，转入利物浦皇家学院} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{早年的波折} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1831--1837} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{入剑桥圣约翰学院（导师 John Hymers）；1837 年 tripos 第二，因犹太身份不能宣誓三十九条信纲，未获学位} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{才华遭遇偏见} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1838--1841} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{任伦敦大学学院自然哲学教授；1839 年当选 FRS；1841 年获都柏林三一学院 BA 与 MA} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{荣誉初至} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} tripos 第二却拿不到学位——宗教偏见第一次挡在他的天才面前。}
+\end{center}
+\end{frame}}
+
+% --- 5. 矩阵理论与不变量理论（核心贡献页） ---
+\newcommand{\matrixslide}{\begin{frame}\plainbar\sectiontitle{矩阵理论与不变量理论}{1850 年命名 matrix · 惯性定律 · 行列式恒等式}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{ukblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{西尔维斯特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{命名 "matrix"} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{1850 年创造 "matrix"（矩阵）一词} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{矩阵理论的奠基者之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Sylvester 惯性定律} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{合同变换下，实二次型的正、负惯性指数不变} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{线性代数基本结果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{行列式恒等式} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{Sylvester 行列式恒等式\newline 推广 Desnanot--Jacobi 恒等式} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{经典行列式结果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{不变量理论} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{与 Cayley 长期合作，做出重大贡献} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{19 世纪代数的中心} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Sylvester 惯性定律}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{ukblue!88!black}$P^{\mathsf{T}}AP$ 与 $A$ 有相同的正、负惯性指数\quad（$P$ 可逆）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 与 Cayley 的合作（核心叙事页） ---
+\newcommand{\cayleyslide}{\begin{frame}\plainbar\sectiontitle{与 Cayley 的合作}{保险精算 · 攻读法律 · 一生的合作}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{ukblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1844} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{受聘 Equity and Law 生命保险协会，开发精算模型，实为 CEO——职位需要法律学位，遂备考律师资格} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{精算师与法学生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{备考律师} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{结识同样在攻读法律的数学家 Arthur Cayley} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{一生合作之始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{长期合作} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{在不变量理论与矩阵理论上做出重大贡献} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{现代代数的双星} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一段在法律课堂旁结下的友谊，成了现代代数的引擎。}
+\end{center}
+\end{frame}}
+
+% --- 7. Sylvester--Gallai 与组合学（核心贡献页） ---
+\newcommand{\combinslide}{\begin{frame}\plainbar\sectiontitle{Sylvester--Gallai 定理与组合学}{离散几何 · 配分理论 · Sylvester 序列}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{ukblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Sylvester--Gallai} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{离散几何经典结果（Sylvester 问题）} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{以他命名的定理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{配分理论} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{对整数配分（partition）理论的重要贡献} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{组合学的基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Sylvester 序列} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{$2,3,7,43,1807,\dots$——每项为前面所有项之积加一} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{以他命名的数列} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Sylvester--Gallai 定理}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{ukblue!88!black}平面上不全共线的有限点集，必有一条直线恰好通过其中两点}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 创造数学术语（核心贡献页） ---
+\newcommand{\termsslide}{\begin{frame}\plainbar\sectiontitle{创造数学术语}{matrix · graph · discriminant · totient}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.88}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{ukblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{术语}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{含义}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{今天}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{matrix（1850）} & \cellcolor{termpanel}\textcolor{badgeTerms!82!black}{矩阵} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{线性代数的核心语言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{graph} & \cellcolor{termpanel}\textcolor{badgeTerms!82!black}{图（网络意义）} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{图论的通用术语} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{discriminant} & \cellcolor{termpanel}\textcolor{badgeTerms!82!black}{判别式} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{代数学标准术语} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{totient} & \cellcolor{termpanel}\textcolor{badgeTerms!82!black}{欧拉 $\varphi$ 函数} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{数论标准术语} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 他还留下四卷本文集}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{ukblue!88!black}《Collected Mathematical Papers》——全集四卷，19 世纪代数的缩影}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 美国数学的奠基（核心叙事页） ---
+\newcommand{\americaslide}{\begin{frame}\plainbar\sectiontitle{美国数学的奠基 (1876--1883)}{约翰霍普金斯 · 《美国数学杂志》 · Ladd-Franklin}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{ukblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1876} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{受聘新建的约翰霍普金斯大学，任首任数学教授；年薪 \$5,000（时为巨款，他一度要求以黄金支付）} & \cellcolor{termpanel}\textcolor{badgeTerms!82!black}{美国研究型数学的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1878} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{创办《美国数学杂志》（American Journal of Mathematics）——当时美国仅有的另一份数学期刊是 The Analyst} & \cellcolor{termpanel}\textcolor{badgeTerms!82!black}{美国数学的旗帜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1878} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{力挺 Christine Ladd-Franklin：校方发现其为女性欲撤回奖学金，他坚持收为学生} & \cellcolor{termpanel}\textcolor{badgeTerms!82!black}{破除成见的支持} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他把欧洲的数学传统移植到新大陆，并领导了 19 世纪下半叶的美国数学。}
+\end{center}
+\end{frame}}
+
+% --- 10. 学术生涯 ---
+\newcommand{\careerslide}{\begin{frame}\plainbar\sectiontitle{学术生涯：从弗吉尼亚到牛津}{弗吉尼亚 · 伍尔维奇 · 约翰霍普金斯 · 牛津}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{ukblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年代}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{注脚}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1841--1843} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{任弗吉尼亚大学数学教授——美国大学第一位犹太教授；课堂冲突（学生持棍袭击，他以剑杖还击，误以为已杀死学生）后仅 4 个月即辞职；1843 年又被哥伦比亚学院以犹太身份拒聘} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{新大陆同样坎坷} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1855--1869} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{任伍尔维奇皇家军事学院数学教授；1869 年因 55 岁强制退休，为养老金把官司打到《泰晤士报》读者来信版并获胜} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{争议中从不退让} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1883--1897} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{任牛津大学 Savilian 几何教授直至去世（1892 年校方任命代理教授）；1897-03-15 逝于伦敦} & \cellcolor{combinpanel}\textcolor{badgeCombin!82!black}{晚年荣光} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从弗吉尼亚到牛津——82 年的旅程，跨越了偏见的重洋。}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉与诗意人生 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与诗意人生}{三大奖章 · 学位补授 · 《诗律》}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{ukblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{生前荣誉} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{FRS（1839）、Royal Medal（1861）、Copley Medal（1880，皇家学会最高奖）、De Morgan Medal（1887）；1872 年剑桥补授 BA 与 MA} & \cellcolor{termpanel}\textcolor{badgeTerms!82!black}{迟到 35 年的承认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后纪念} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{1901 年皇家学会设立 Sylvester Medal；约翰霍普金斯大学以他命名 Sylvester House 与多个讲席} & \cellcolor{termpanel}\textcolor{badgeTerms!82!black}{以另一种方式不朽} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{诗意人生} & \cellcolor{legacypanel}\textcolor{badgeLegacy!82!black}{出版《诗律》（The Laws of Verse, 1870）；通晓法、德、意、拉丁、希腊原文，论文常引古典诗歌；终身未婚} & \cellcolor{termpanel}\textcolor{badgeTerms!82!black}{数学家与诗人} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 数学之外，他是一位认真的诗人——他给数学也定了韵律。}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=ukblue!90!black] at ([yshift=1.5cm]current page.center) {他为矩阵命名，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {也为新大陆的数学奠基。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=ukblue!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 James Joseph Sylvester};
+\node[font=\fontsize{8}{10}\selectfont, text=ukblue!60!black] at ([yshift=-2.0cm]current page.center) {西尔维斯特\quad James Joseph Sylvester\quad 1814 — 1897};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 矩阵 · 不变量 · 组合与配分 · 美国数学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\matrixslide
+\cayleyslide
+\combinslide
+\termsslide
+\americaslide
+\careerslide
+\honorslide
+\closingslide
+\end{document}

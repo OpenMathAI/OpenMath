@@ -29,6 +29,7 @@
   - 1831 年入剑桥圣约翰学院（导师 John Hymers）
   - 1837 年剑桥 tripos 考试第二（因犹太身份不能宣誓三十九条信纲，**未获学位**）
   - 1841 年获都柏林三一学院 BA 与 MA
+  - 1872 年剑桥补授 BA 与 MA（1837 tripos 第二 35 年后的承认）
 - **导师**：John Hymers、Augustus De Morgan
 - **研究领域**：代数、矩阵理论、不变量理论、组合学、数论
 
@@ -60,17 +61,17 @@
 
 ### 3.5 背景音乐选择 ✅ 【人物专属】
 
-> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
-> （本次执行无法直接读取音乐库目录，具体 wav 文件名与本地路径需在执行立传时从 `curated_tracks.md` 选定，以下给出风格定调与候选方向。）
+> **音乐库**：`/Users/ericksun/workspace/OpenMath/music_audio/`（本仓库内）— 详见 `curated_tracks.md`；wav 音频被 `.gitignore` 排除，需按 `download_guide.md` 用 yt-dlp 现场下载
 
 - **风格定调**：**古典庄重 / 诗意坚韧**（犹太身份受挫却成就斐然的坚韧与诗人气质）
 - **匹配理由**：
   - 西尔维斯特因犹太身份屡屡受挫，却成为矩阵理论奠基者、美国数学奠基者——需**庄重、坚韧、有诗意**的配乐
   - "诗意" 匹配其热爱诗歌（出版《诗律》The Laws of Verse）
   - "坚韧" 匹配其跨越宗教歧视的奋斗
-- **候选方向**（执行时从音乐库核对具体曲目，优先古典/庄重/诗意风格）：
-  - 首选：古典 / 庄重 / 诗意风格曲目（呼应诗人气质）
-  - 备选：历史感深沉 / 坚韧曲目（呼应宗教歧视下的奋斗）
+- **候选曲目**（从 `curated_tracks.md` 选定）：
+  - 首选：`Winds Of Freedom`（`inspiring-electronic/25-l3Fsk4R6eys-…`，管弦/英雄/史诗，2:58）——庄重管弦呼应跨越宗教歧视、铸就美国数学的坚韧一生
+  - 备选 1：`Timeless`（`alex-productions/42-SyPUvzEkPyc-Timeless.wav`，沉稳/纪录片）——项目统一风格（高斯/魏尔斯特拉斯/伽罗瓦同款）
+  - 备选 2：Beethoven《第三交响曲"英雄"》（`beethoven-karajan/03-BgIjGSPmk7I-…`，古典/英雄/壮丽）——呼应诗人气质与"苦难中成就伟业"
   - 时长需 ≥ 12 页 × 7 秒 ≈ 84 秒，ffmpeg `-shortest` 自动对齐
 
 ## 4. Slide 规划（约 12 页，正文采用 Wilson 式结构）
@@ -97,7 +98,8 @@
 - **与 Cayley 合作**：是在攻读律师资格时结识 Cayley（Sylvester 为精算工作需法律学位）——是"学法律时结识"，勿写两人同门。
 - **终身未婚**：Sylvester 终身未婚，无子女，无恋爱记录——如实写。
 - **诗人身份**：热爱诗歌，出版《诗律》（The Laws of Verse），数学论文常引用古典诗歌——可作叙事点。
-- **无肖像**：`images.txt` 仅含 Speaker Icon，无 Sylvester 本人肖像，封面头像需用装饰圆占位。
+- **肖像**：页面 infobox 实有真实肖像（`page.html` 内 `commons/2/29/James_Joseph_Sylvester.jpg`，287×400）——已下载至 `images/sylvester_portrait.jpg`，封面与身份信息页用真实肖像（`images.txt` 仅含 Speaker Icon，勿被其误导）。
+- **学位补授**：1872 年剑桥最终补授 BA 与 MA——勿写"终身未获剑桥学位"。
 - **国籍**：United Kingdom of Great Britain and Ireland，今英国——封面用「英国」。
 
 ## 6. 数据库字段核对表（§21.5）
@@ -119,7 +121,7 @@
 - **导师**：John Hymers、Augustus De Morgan
 - **合作者**：Arthur Cayley（长期合作，不变量理论、矩阵理论）
 - **美国友人**：Benjamin Peirce（哈佛数学家）、Joseph Henry（普林斯顿物理学家）
-- **学生**：William Pitt Durfee、George B. Halsted、Washington Irving Stringham、Christine Ladd-Franklin（支持其成为学生）
+- **学生**：William Pitt Durfee、George B. Halsted、Washington Irving Stringham、Thomas Craig、Fabian Franklin 等（metadata doctoral_student）；Christine Ladd-Franklin 为"其他著名学生"（1878 年他力排众议支持其入学）
 
 ## 8. 奖项清单
 
@@ -141,9 +143,10 @@
 - [ ] graph/discriminant"术语创造"表述准确
 - [ ] 犹太身份"宗教歧视"客观表述
 - [ ] 美国第一位犹太教授"1841 弗吉尼亚、4 个月离职"表述准确
+- [ ] 1872 年剑桥补授 BA/MA 表述准确（勿写"终身未获学位"）
 - [ ] 与 Cayley"学法律时结识"表述准确
 - [ ] 终身未婚、诗人身份表述准确
-- [ ] 头像确认（无肖像则装饰圆占位）
+- [ ] 头像确认（真实肖像 `images/sylvester_portrait.jpg` 已就位）
 - [ ] 国籍用「英国」现代对应
 - [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
 - [ ] `make distclean && make` 编译通过，0 错误
@@ -152,7 +155,7 @@
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/James_Joseph_Sylvester/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：无肖像，用装饰圆占位
+- [ ] **头像**：真实肖像 `images/sylvester_portrait.jpg`（封面 + 身份信息页两处）
 - [ ] **国籍**：封面顶部徽章明示英国
 - [ ] **引语核对**：引语必须在 Wikipedia 原文找到
 - [ ] **编译验证**：`make distclean && make`
@@ -168,3 +171,34 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+---
+
+## Review-1 记录 (2026-09-03)
+
+> 立传完成，结合本地 Wikipedia (`pages/James_Joseph_Sylvester/page.md` + `metadata.json` + `page.html`) 逐页比对。
+
+- **编译**：`make distclean && make` → ✅ 13 页（含 OpenMath 项目首页），0 错误、0 Overfull/Underfull。
+- **头像** ✅：`page.html` 内实有真实肖像（`commons/2/29/James_Joseph_Sylvester.jpg`，287×400 黑白照），已下载至 `images/sylvester_portrait.jpg`；封面与身份信息页两处均用 `\includegraphics`（竖版圆角裁剪）。提示词原判"无肖像"系 `images.txt` 仅含 Speaker Icon 所致，已更正。
+- **国籍** ✅：封面顶部 `\faIcon{globe}\enspace 英国`，底部状态栏 `英国 | Cambridge · Johns Hopkins · Oxford | 矩阵 · 不变量 · 组合`。
+- **身份信息页** ✅：`\profileslide` 已实现（左肖像 + 右 2×2 信息网格），涵盖生卒/本名/国籍/教育/师承/出生地/荣誉/身后/核心领域/身份。
+- **事实复核**：生卒(1814-09-03~1897-03-15，82 岁，伦敦)/父 Abraham Joseph(犹太商人)/后随兄改姓 Sylvester/14 岁师从 De Morgan/刺伤同学指控后转入利物浦皇家学院/1831 入剑桥圣约翰学院(导师 John Hymers)/1837 tripos 第二因犹太身份未获学位(三十九条信纲)/1838 任伦敦大学学院自然哲学教授/1839 FRS/1841 都柏林三一学院 BA 与 MA/1872 剑桥补授 BA 与 MA/1841 UVA 美国大学第一位犹太教授仅 4 个月(学生持棍袭击、剑杖还击、误以为杀死学生)/1843 哥伦比亚学院因犹太身份拒聘/1844 Equity and Law 精算建模实为 CEO/备考律师时结识 Cayley/1855–1869 Woolwich(55 岁强制退休、养老金诉诸《泰晤士报》读者来信)/1876 JHU 首任数学教授(年薪 $5,000、一度要求黄金支付)/1878 创办《美国数学杂志》(当时另一份数学期刊 The Analyst 即后来的 Annals)/1878 力挺 Christine Ladd-Franklin/1883 Savilian 几何教授至去世(1892 任命代理)/术语 matrix(1850)、graph(网络意义)、discriminant、totient/Sylvester–Gallai 定理/配分理论/Sylvester 序列(2,3,7,43,1807,…)/惯性定律/行列式恒等式(推广 Desnanot–Jacobi)/四卷本文集/《诗律》1870/通晓法德意拉丁希腊/终身未婚/1901 皇家学会设立 Sylvester Medal/JHU 的 Sylvester House 与讲席——全部与 Wikipedia 一致，无杜撰。
+- **引语核对**：本 deck 未设名言页，无引语风险。
+- **字体**：为执行环境增加 `\IfFontExistsTF` 回退——无 PingFang SC / Helvetica Neue 的环境自动回退 Heiti SC + Avenir Next；用户正常环境仍为模板字体（与全套立传渲染一致）。
+- **视频**：`make video` → ✅ `James_Joseph_Sylvester_zh.mp4`（5.2 MB，13 页 × 7s）。
+- **背景音乐** ⚠️：本执行环境无法通过 YouTube 反爬认证（"Sign in to confirm you're not a bot"，需按 `music_audio/download_guide.md` 使用 `--cookies-from-browser chrome`），首选曲目 `Winds Of Freedom` 未能下载，当前视频无 BGM。待 wav 就位后放入本目录重新 `make video`，Makefile 会自动混音（`$(wildcard *.wav)` + `-shortest`）。
+- **遗留**：仅 BGM 一项（需用户浏览器 Cookie 下载音频）；另 `MySQL/data/James_Joseph_Sylvester.yaml` 已补全（补学生关系/获奖/机构、`has_biography: true`），DB 可用后执行 `python3 MySQL/seed_person.py data/James_Joseph_Sylvester.yaml` 幂等更新。
+
+## Review-2 记录 (2026-09-03)
+
+> 结构优化轮：告警清零、封面细节修复、布局对齐。
+
+- **Overfull/Underfull** ✅：全文档 **0 处**。修复过程：hookslide 四个 nodebox 文案裁短（消除 12.68pt Overfull）；matrixslide 行列式单元格 `\\` 改 `\newline`（表格内断行语法，消除 Underfull 并修复连带编译错误）。
+- **中文标点** ✅：中文语境全角标点统一；引号用半角 `" "`（品牌口径）。
+- **身份信息页布局** ✅：与 Wilson 模板对齐（左竖版肖像 2.6×3.5cm 圆角裁剪 + 右 2×2 信息网格）。
+- **配色与背景母题** ✅：英国深蓝 `#1F3A93` + 数学金 `#C9A227` 主副色，四分类色（矩阵靛蓝 / 组合青绿 / 术语琥珀 / 遗产石版灰），气泡背景呼应「矩阵 / 不变量」母题。
+- **封面细节修复** ✅：顶部行裁短避开右上肖像；肖像小字注缩为 `Sylvester (1814–1897)` 防右缘裁切；badge 英文名改 `Invariants` 防折行。
+- **格式对齐** ✅：封面（头像 + 国籍行 + 四 badge + 底部三要素状态栏）、`\sectiontitle`、`\plainbar`、`\deckbackground`、结束页（品牌 `OpenMathAI`）均与 Abel / Galois / Frobenius 模板一致。
+- **编译复验** ✅：`make distclean && make` 0 错误 0 告警，13 页；`make video` 已重新生成 `James_Joseph_Sylvester_zh.mp4`。
+
+> **Review 结论**：两轮 Review 完成，立传定稿（BGM 待音频文件就位后一条 `make video` 补齐）。
