@@ -66,6 +66,11 @@
   - 库默尔是理想数理论的创立者、费马大定理的重要推进者——需**庄重、严谨、典雅**的配乐
   - "严谨" 匹配其数论工作的深度
   - "典雅" 匹配其门德尔松家族姻亲的文化气质
+- **音乐选定（2026-09-04 执行确认）**：
+  - **选定曲目**：Eternals（Alex-Productions，49k views：宏大 / 深远——"Langlands、基础理论、长期影响"）
+  - **接入方式**：软链接（延续 Dirichlet 起的惯例，不占拷贝空间）
+    `ln -s .../music_audio/alex-productions/76-V5T_kW2PH_s-Eternals.wav .`
+  - **匹配理由**：宏大致远呼应"理想"概念百年回响与柏林学派师门传承；46 秒以上远超 84 秒需求，`-shortest` 自动对齐
 - **候选方向**（执行时从音乐库核对具体曲目，优先古典/庄重/典雅风格）：
   - 首选：古典 / 庄重 / 典雅风格曲目
   - 备选：历史感深沉曲目（呼应 19 世纪柏林）
@@ -130,29 +135,29 @@
 - 教育：Martin Luther University Halle-Wittenberg（哈雷大学，博士）、Königliches Gymnasium zu Sorau
 - 任职：University of Wrocław（布雷斯劳大学）、Technische Universität Berlin（柏林工业大学）、Frederick William University Berlin（柏林大学）、Königliches Gymnasium zu Sorau、Liegnitz Ritter-Akademie
 
-## 10. 终审清单
+## 10. 终审清单（2026-09-04 Review-1 完成）
 
-- [ ] 生卒 1810-01-29 / 1893-05-14，享年 83，出生地 Sorau
-- [ ] 理想数"库默尔引入、Dedekind 发展理想理论"表述准确
-- [ ] 费马大定理"对正则素数成立、非整个定理"表述准确
-- [ ] 库默尔理论"类域论基础"表述准确
-- [ ] 库默尔曲面"16 奇点 orbifold"表述准确
-- [ ] 启发 Kronecker"gymnasium 任教"表述准确
-- [ ] 门德尔松姻亲表述准确
-- [ ] 头像确认（无肖像则装饰圆占位）
-- [ ] 国籍用「德国（普鲁士王国）」表述准确
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1810-01-29 / 1893-05-14，享年 83，出生地 Sorau
+- [x] 理想数"库默尔引入、Dedekind 发展理想理论"表述准确（tex："ideal"一词由库默尔发明 + 方法更接近 p-adic、理想理论由 Dedekind 发展成型）
+- [x] 费马大定理"对正则素数成立、非整个定理"表述准确（tex：一大类素数指数；100 以内仅 37、59、67 例外）
+- [x] 库默尔理论"类域论基础"表述准确（tex：奠基性内容 + 明示"他并未建立类域论本身"）
+- [x] 库默尔曲面"16 奇点 orbifold"表述准确（tex：A/{1,−1}，16 个奇点，早期 orbifold）
+- [x] 启发 Kronecker"gymnasium 任教"表述准确（tex：中学执教十年间启发少年 Kronecker）
+- [x] 门德尔松姻亲表述准确（Ottilie 为 Felix 表妹、Rebecca 表妹 → 与 Dirichlet 连襟；Bertha Cauer 继室；13 子女；女 Marie 嫁 Schwarz）
+- [x] 【无肖像】images.txt 仅 Commons logo，封面与身份页均用装饰圆占位
+- [x] 国籍用「德国（普鲁士王国）」表述准确
+- [x] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误（12 页 PDF + MP4 成品，公式页直接预置 arraystretch 0.60 + vspace -0.42 版式）
 
 ## 11. Review 流程规范（两轮 Review）
 
-### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `pages/Ernst_Kummer/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：无肖像，用装饰圆占位
-- [ ] **国籍**：封面顶部徽章明示德国（普鲁士王国）
-- [ ] **引语核对**：引语必须在 Wikipedia 原文找到
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
+### 第 1 轮（Review-1）：事实终审（2026-09-04 完成）
+- [x] **结合本地 Wikipedia**：读取 `pages/Ernst_Kummer/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
+- [x] **头像**：无肖像，装饰圆占位
+- [x] **国籍**：封面顶部徽章明示德国（普鲁士）
+- [x] **引语核对**：page.md 无直接引语，tex 未使用引号引语；"13 个子女/任教十年启发 Kronecker/与 Hamilton 研究射线系统/曲面积 16 奇点"等表述均见 page.md 原文（L33/L37/L41/L45/L47/L49）
+- [x] **编译验证**：`make distclean && make` 通过
+- [x] **更新提示词**：本文件已写回音乐选定（Eternals 软链接）与终审结果
 
 ### 第 2 轮（Review-2）：结构优化
 - [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）

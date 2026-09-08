@@ -68,6 +68,11 @@
   - 狄利克雷是解析数论创建者，又是门德尔松家族姻亲，身处柏林文化沙龙——需**典雅、庄重、有文化气息**的配乐
   - "典雅" 匹配其与门德尔松家族的联系（可选室内乐/沙龙音乐风格）
   - "庄重" 匹配其接替高斯的学术地位
+- **音乐选定（2026-09-04 执行确认，用户指定）**：
+  - **选定曲目**：Timeless（Alex-Productions，优先级 2：高受众 / 沉稳 / 纪录片——"代数几何、数论、长期纲领"）
+  - **接入方式**：软链接（用户指定，不占拷贝空间）
+    `ln -s .../music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav .`
+  - **备注**：Makefile 的 `$(wildcard *.wav)` 按字典序取 `firstword`；目录内若同时存在 `Beethoven_Symphony_No6.wav`（已弃用）与 `42-...` 软链接，数字开头文件排前，Timeless 生效。同曲目此前已用于 Riemann / Frobenius（硬拷贝）
 - **候选方向**（执行时从音乐库核对具体曲目，优先古典/庄重/典雅风格）：
   - 首选：古典 / 庄重 / 典雅风格曲目（呼应门德尔松沙龙）
   - 备选：历史感深沉曲目（呼应 19 世纪柏林）
@@ -134,29 +139,29 @@
 - 教育：University of Bonn（荣誉博士）、Beethoven-Gymnasium Bonn、Dreikönigsgymnasium、University of Paris
 - 任职：University of Wrocław（布雷斯劳大学）、University of Göttingen（1855 起接替高斯）、Frederick William University Berlin（柏林大学）、Prussian Military Academy（普鲁士军事学院）
 
-## 10. 终审清单
+## 10. 终审清单（2026-09-04 Review-1 完成）
 
-- [ ] 生卒 1805-02-13 / 1859-05-05，享年 54，出生地 Düren
-- [ ] 解析数论"1837 用分析解数论问题"表述准确
-- [ ] 傅里叶级数"给出收敛条件、指出 Cauchy 错误"表述准确
-- [ ] 现代函数概念"被归功为、Lakatos 质疑"表述准确
-- [ ] 费马大定理 n=5"与 Legendre 先后完成"表述准确
-- [ ] 狄利克雷原理"Gauss/Kelvin 亦用、Riemann 命名"表述准确
-- [ ] 荣誉博士"破例授予"表述准确
-- [ ] 头像确认（无肖像则装饰圆占位）
-- [ ] 国籍用「德国」现代对应
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1805-02-13 / 1859-05-05，享年 54，出生地 Düren
+- [x] 解析数论"1837 用分析解数论问题"表述准确（tex：创建解析数论分支）
+- [x] 傅里叶级数"给出收敛条件、指出 Cauchy 错误"表述准确（tex 未写"完全解决"，仅写收敛条件）
+- [x] 现代函数概念"被归功为、Lakatos 质疑"表述准确（tex：被归功为 + Lakatos 争议括注）
+- [x] 费马大定理 n=5"与 Legendre 先后完成"表述准确（tex：评审人 Legendre 补全、Dirichlet 稍后完成自己的证明）
+- [x] 狄利克雷原理"Gauss/Kelvin 亦用、Riemann 命名"表述准确（tex：他本人知道 Gauss 与 Kelvin 也用过此法）
+- [x] 荣誉博士"破例授予"表述准确（tex：波恩大学破例授予荣誉博士；时间线"破例授予"）
+- [x] 【无肖像】Wikipedia 存档无本人肖像（images.txt 仅妻 Rebecka 画像/公式图/傅里叶级数图），封面与身份页均用装饰圆占位
+- [x] 国籍用「德国」现代对应（出生地注明"时属法兰西第一帝国，1815 年后归普鲁士"）
+- [x] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误；5 张公式页首版副标题被表头压住 → 收紧 arraystretch（0.72→0.60）+ 负间距回调（-0.58→-0.42）+ 精简 3 处长单元格后复检通过（14 页 PDF + MP4 成品）
 
 ## 11. Review 流程规范（两轮 Review）
 
-### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `pages/Peter_Gustav_Lejeune_Dirichlet/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：确认有无可用肖像（本地 images.txt 无本人肖像，需用装饰圆占位或另寻）
-- [ ] **国籍**：封面顶部徽章明示德国
-- [ ] **引语核对**：引语必须在 Wikipedia 原文找到（如 Jacobi"触及人类才智极限"、Dedekind"成为全新的人"）
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
+### 第 1 轮（Review-1）：事实终审（2026-09-04 完成）
+- [x] **结合本地 Wikipedia**：读取 `pages/Peter_Gustav_Lejeune_Dirichlet/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
+- [x] **头像**：无本人肖像，装饰圆占位（妻 Rebecka 画像不入正片）
+- [x] **国籍**：封面顶部徽章明示德国
+- [x] **引语核对**：Jacobi "touching the utmost of human acumen"（触及人类才智极限）见 page.md L107；Dedekind "a new human being"（成为全新的人）见 page.md L90；Gauss "Dirichlet showed excellent talent" 见 page.md L54——均在 tex 中忠实引用
+- [x] **编译验证**：`make distclean && make` 通过
+- [x] **更新提示词**：本文件已写回音乐选定（用户指定 Timeless 软链接）与终审结果
 
 ### 第 2 轮（Review-2）：结构优化
 - [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）

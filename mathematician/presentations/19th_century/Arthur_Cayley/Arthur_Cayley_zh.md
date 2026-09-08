@@ -2,6 +2,8 @@
 
 > qid=Q159430 · 1821-08-16 – 1895-01-26 · 英国数学家 · 19 世纪
 > 本地 Wikipedia 数据源：`mathematician/presentations/19th_century/pages/Arthur_Cayley/`（page.md + metadata.json + images.txt）
+>
+> **立传状态：✅ 已完成（参考高斯基准模板）**——tex（13 页正文）+ Makefile + 头像就位，`make distclean && make` 编译通过、Overfull = 0；头像采用 Wikipedia Commons 标准照片（`images/cayley_portrait.jpg`，经 API 查询条目主图获得）；BGM 已选 `Timeless`（alex-productions，沉稳/纪录片，契合"长期纲领"），视频 `make video` 已生成。
 
 ---
 
@@ -57,35 +59,27 @@
 
 - **背景母题**：柔和气泡（稀疏大块实心圆，四档大小错落），呼应「群 / 矩阵」的视觉语言。
 
-### 3.5 背景音乐选择 ✅ 【人物专属】
+### 3.5 背景音乐选择 ✅ 【已选定】
 
-> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
-> （本次执行无法直接读取音乐库目录，具体 wav 文件名与本地路径需在执行立传时从 `curated_tracks.md` 选定，以下给出风格定调与候选方向。）
+- **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+- **选定曲目**：**Timeless**（Alex-Productions，优先级 2，`music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav`，已软链为 `bgm.wav`）
+- **匹配理由**：标签"沉稳 / 纪录片"，适用场景"代数几何、数论、长期纲领"——契合凯莱 967 篇论文、13 卷全集的长期结构化遗产与维多利亚学者的从容
+- （Poncelet 已用 The Flow of Time，Cayley 改用 Timeless 避免重复）
 
-- **风格定调**：**古典典雅 / 维多利亚学者风范**（剑桥 Sadleirian 教授的典雅）
-- **匹配理由**：
-  - 凯莱是维多利亚时代的英国数学巨匠，剑桥三一学院教授——需**典雅、庄重、有维多利亚学者风范**的配乐
-  - "典雅" 匹配其放弃高薪法律职业而选择学术的从容
-  - "庄重" 匹配其 967 篇论文的高产与学术地位
-- **候选方向**（执行时从音乐库核对具体曲目，优先古典/典雅/庄重风格）：
-  - 首选：古典 / 典雅 / 庄重风格曲目（呼应维多利亚学者）
-  - 备选：历史感深沉曲目（呼应 19 世纪剑桥）
-  - 时长需 ≥ 12 页 × 7 秒 ≈ 84 秒，ffmpeg `-shortest` 自动对齐
-
-## 4. Slide 规划（约 12 页，正文采用 Wilson 式结构）
+## 4. Slide 规划（实际 13 页正文 + OpenMath 封面，正文采用 Wilson 式结构）
 
 1. **封面**（`\titleslide`）：大标题「抽象群与矩阵理论的奠基者」+ 凯莱 1821–1895 + 右上头像 + 国籍行 + 底部三要素状态栏 + 分类 badge
 2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右信息网格（生卒 / 本名 / 国籍 / 出生地 / 师承 / 教育 / 荣誉 / 核心领域）
-3. **核心贡献概览**（`\hookslide`）：群论 / 矩阵 / 代数几何与组合 / 生平 四分类
-4. **早年与剑桥求学**（1821–1842）：圣彼得堡、King's College School、Senior Wrangler、Smith's Prize
-5. **抽象群概念**（核心贡献页）：第一个定义抽象群、Cayley 定理、Cayley 表
-6. **Cayley–Hamilton 定理与矩阵**（核心贡献页）
-7. **与 Sylvester 的合作**（核心叙事页）：Lincoln's Inn 散步、不变量理论
-8. **代数几何**（核心贡献页）：27 条直线、直纹曲面
-9. **组合学与 Cayley 公式**（核心贡献页）：n^(n−2) 树、生成函数
-10. **律师与 Sadleirian 教授**（核心叙事页）：14 年律师、放弃高薪、剑桥 35 年
-11. **荣誉与高产**：Copley Medal、全集 13 卷 967 篇论文
-12. **终章**：73 岁、从抽象群到现代代数的历史地位与遗产
+3. **时间线**（`\timelineslide`）：1821 圣彼得堡童年 → 1842 Senior Wrangler → 1846 Lincoln's Inn → 1854–59 抽象群/矩阵论文 → 1863 Sadleirian 教授 → 1882 Copley → 1883 BAAS 主席 → 1889 全集 → 1895 逝世
+4. **早年与剑桥求学**（1821–1842）：圣彼得堡、KCS、Senior Wrangler、Smith's Prize（4 行表格）
+5. **抽象群：第一个定义**（核心贡献页）：抽象群定义、与 Galois 的关系、Cayley 定理、Cayley 表/图（表格 + 公式框）
+6. **Cayley–Hamilton 与矩阵代数**（核心贡献页）：1858《矩阵论专论》、2/3 阶验证、一般证明归后人、1841 行列式（表格 + 公式框 $p_A(A)=O$）
+7. **律师楼里的数学家**（核心叙事页）：1846 Lincoln's Inn、都柏林听 Hamilton 四元数讲座、与 Sylvester 散步讨论不变量、14 年两三百篇论文（表格）
+8. **代数几何**（核心贡献页）：27 条直线（与 Salmon）、直纹曲面、曲线参数化（Chow 先声）、不变量学派（表格 + 公式框）
+9. **组合学与 Cayley 公式**（核心贡献页）：$n^{n-2}$ 棵树、生成函数开创性使用、化学应用（表格 + 公式框 $T_n=n^{n-2}$）
+10. **从律师楼到剑桥讲席**（核心叙事页）：1863 首任 Sadleirian、放弃高薪、JHU 讲学、女性教育 Girton/Newnham（表格）
+11. **荣誉与高产**（`\honorslide`）：奖项 / 全集 / 身后影响（itemize 表格）
+12. **终章**（`\closingslide`）：「他把"运算的对象"，变成了现代数学的骨架。」
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -96,22 +90,22 @@
 - **27 条直线**：Cayley 与 Salmon **共同发现**三次曲面上的 27 条直线——勿写 Cayley 独发现。
 - **律师生涯**：Cayley 曾当律师 14 年（conveyancing 专业），是"先律师后教授"的轨迹——与 Sylvester（也是先律师）相似。
 - **Sadleirian 教授**：1863 年任剑桥 Sadleirian 纯数学教授（首任），**放弃高薪法律职业选择微薄薪水**——是"放弃高薪"，体现其纯粹学术追求。
-- **无肖像**：`images.txt` 中无 Cayley 本人肖像（第一张为数学公式），封面头像需用装饰圆占位（Wikipedia 有 Dickinson 1874 年肖像、Longmaid 1884 年肖像）。
+- **无肖像**：✅ 已解决——本地 `images.txt` 首张为数学公式，但经 Wikipedia API（`prop=pageimages`）查得条目主图 `Arthur_Cayley.jpg`（Commons a/a9，892×1352 竖版照片，EXIF 注明 "Portrait of Arthur Cayley"），下载至 `images/cayley_portrait.jpg`，封面与身份页均采用（相框按 0.66:1 竖版比例定制）。
 - **国籍**：United Kingdom of Great Britain and Ireland，今英国——封面用「英国」。
 
 ## 6. 数据库字段核对表（§21.5）
 
 | 字段 | 值 | 状态 |
 |---|---|---|
-| qid | Q159430 | 待写入 |
-| name_zh | 凯莱（或 阿瑟·凯莱） | 待写入 |
-| name_en | Arthur Cayley | 待写入 |
-| birth_date | 1821-08-16 | 待写入 |
-| death_date | 1895-01-26 | 待写入 |
-| nationality | United Kingdom | 待写入 |
-| primary_occupation | mathematician | 待写入 |
-| field_of_work | group theory / matrix theory / algebraic geometry | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| qid | Q159430 | ✅ 已入库（MySQL/data/Arthur_Cayley.yaml） |
+| name_zh | 凯莱（或 阿瑟·凯莱） | ✅ 已入库 |
+| name_en | Arthur Cayley | ✅ 已入库 |
+| birth_date | 1821-08-16 | ✅ 已入库 |
+| death_date | 1895-01-26 | ✅ 已入库 |
+| nationality | United Kingdom | ✅ 已入库 |
+| primary_occupation | mathematician | ✅ 已入库 |
+| field_of_work | algebra / group theory / graph theory / matrix theory | ✅ 已入库 |
+| has_biography | true | ✅ 本次置 true |
 
 ## 7. 社会关系入库清单（§20）
 
@@ -139,27 +133,27 @@
 
 ## 10. 终审清单
 
-- [ ] 生卒 1821-08-16 / 1895-01-26，享年 73，出生地里士满
-- [ ] 抽象群"第一个定义、Galois 置换群先行"表述准确
-- [ ] Cayley–Hamilton"提出并验证 2/3 阶、一般证明后人"表述准确
-- [ ] Cayley 公式"生成函数计数"表述准确
-- [ ] 八元数"与 Graves 优先权"表述准确（若提及）
-- [ ] 27 直线"与 Salmon 共同发现"表述准确
-- [ ] 律师→Sadleirian 教授"放弃高薪"表述准确
-- [ ] 头像确认（无肖像则装饰圆占位）
-- [ ] 国籍用「英国」现代对应
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1821-08-16 / 1895-01-26，享年 73，出生地里士满
+- [x] 抽象群"第一个定义、Galois 置换群先行"表述准确（Slide 5：明确"Galois 研究置换群，凯莱的贡献是抽象化"）
+- [x] Cayley–Hamilton"提出并验证 2/3 阶、一般证明后人"表述准确（Slide 6 表格 + 公式框注明"提出于 1858；2、3 阶已验证"）
+- [x] Cayley 公式"生成函数计数"表述准确（Slide 9；并注明"图论概念本身更早"，勿写凯莱发明图论）
+- [x] 八元数优先权：本次 tex 未展开 Cayley–Dickson（避免与 Graves 优先权纠缠），列入 Slide 1 badge 之外的遗产页不涉及
+- [x] 27 直线"与 Salmon 共同发现"表述准确（Slide 8 表格 + 公式框标注 Cayley & Salmon）
+- [x] 律师→Sadleirian 教授"放弃高薪"表述准确（Slide 7 / 10）
+- [x] 头像确认（✅ Wikipedia Commons 竖版照片，`images/cayley_portrait.jpg`）
+- [x] 国籍用「英国」现代对应
+- [x] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误，Overfull = 0；`make images && make video` 完成（BGM: Timeless）
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `pages/Arthur_Cayley/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：无肖像，用装饰圆占位
-- [ ] **国籍**：封面顶部徽章明示英国
-- [ ] **引语核对**：引语必须在 Wikipedia 原文找到
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
+- [x] **结合本地 Wikipedia**：逐页对照 Beamer tex 全部事实（生卒、Senior Wrangler、1846 入 Lincoln's Inn、1863 首任 Sadleirian、35 年教授、967 篇/13 卷、奖项年份均与 page.md 一致）
+- [x] **头像**：✅ 经 Wikipedia API 查得条目主图并下载（`images/cayley_portrait.jpg`）
+- [x] **国籍**：封面顶部徽章明示英国
+- [x] **引语核对**：Sadleirian 职责引文（"to explain and teach..."）以间接表述呈现，未使用中文引号内伪引语
+- [x] **编译验证**：`make distclean && make` 通过，13 页正文 PDF，Overfull = 0；封面小字注左移修复（xshift 6.86→6.5cm）
+- [x] **更新提示词**：Review 修正已写回本文件
 
 ### 第 2 轮（Review-2）：结构优化
 - [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）

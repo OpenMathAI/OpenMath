@@ -2,6 +2,8 @@
 
 > qid=Q168452 · 1788-07-01 – 1867-12-22 · 法国工程师、数学家 · 19 世纪
 > 本地 Wikipedia 数据源：`mathematician/presentations/19th_century/pages/Jean-Victor_Poncelet/`（page.md + metadata.json + images.txt）
+>
+> **立传状态：✅ 已完成（参考高斯基准模板）**——tex（14 页）+ Makefile + BGM 视频（The_Flow_of_Time.wav）就位；`make distclean && make` 编译通过（Overfull 仅 1.0pt，阈值内）；头像采用 Wikipedia Commons 标准肖像（`images/poncelet_portrait.jpg`，经 API 查询条目主图获得）。
 
 ---
 
@@ -96,22 +98,22 @@
 - **机械功**：**独立于 Coriolis** 开创"功"概念，并创造"机械功"一词——勿写成与 Coriolis 合作。
 - **水轮机**：其设计的涡轮机 1838 年才建成，但 12 年前已构想——勿写成 1838 年才发明。
 - **私生子身份**：是私生子后经父亲合法化（1825 年）——可作背景，不必过度强调。
-- **无肖像**：`images.txt` 中无明确肖像照片（第一张为签名），封面头像需确认是否有可用肖像，否则用装饰圆占位。
+- **无肖像**：✅ 已解决——本地 `images.txt` 确无本人肖像（仅签名/校园/插图），但通过 Wikipedia API（`prop=pageimages`）查得条目主图 `Jean-Victor_Poncelet.jpg`（Commons 4/4a，794×852），下载至 `images/poncelet_portrait.jpg`，封面与身份页均采用（相框按 0.93:1 近方形比例定制）。
 - **国籍表述**：封面顶部用「法国」作为现代对应。
 
 ## 6. 数据库字段核对表（§21.5）
 
 | 字段 | 值 | 状态 |
 |---|---|---|
-| qid | Q168452 | 待写入 |
-| name_zh | 庞斯莱（或 让-维克托·庞斯莱） | 待写入 |
-| name_en | Jean-Victor Poncelet | 待写入 |
-| birth_date | 1788-07-01 | 待写入 |
-| death_date | 1867-12-22 | 待写入 |
-| nationality | France | 待写入 |
-| primary_occupation | mathematician | 待写入 |
-| field_of_work | projective geometry / mechanics | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| qid | Q168452 | ✅ 已入库（MySQL/data/Jean_Victor_Poncelet.yaml） |
+| name_zh | 庞斯莱（或 让-维克托·庞斯莱） | ✅ 已入库 |
+| name_en | Jean-Victor Poncelet | ✅ 已入库 |
+| birth_date | 1788-07-01 | ✅ 已入库 |
+| death_date | 1867-12-22 | ✅ 已入库 |
+| nationality | France | ✅ 已入库 |
+| primary_occupation | mathematician | ✅ 已入库 |
+| field_of_work | mechanics / projective geometry | ✅ 已入库 |
+| has_biography | true | ✅ 本次置 true |
 
 ## 7. 社会关系入库清单（§20）
 
@@ -138,27 +140,27 @@
 
 ## 10. 终审清单
 
-- [ ] 生卒 1788-07-01 / 1867-12-22，享年 79，出生地 Metz
-- [ ] 战俘营"凭记忆著书、获释后出版"表述准确
-- [ ] 射影几何"复兴者"（自 Desargues）表述准确
-- [ ] Poncelet–Steiner"Poncelet 发现、Steiner 证明"表述准确
-- [ ] 对偶原理"与 Gergonne 有优先权之争"表述准确
-- [ ] 机械功"独立于 Coriolis、创造机械功一词"表述准确
-- [ ] 水轮机"构想早于建成 12 年"表述准确
-- [ ] 头像确认（无肖像则装饰圆占位）
-- [ ] 国籍用「法国」现代对应
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1788-07-01 / 1867-12-22，享年 79，出生地 Metz
+- [x] 战俘营"凭记忆著书、获释后出版"表述准确（Slide 5：1813–1814 狱中写就，1822 出版，注明"获释后才能出版"）
+- [x] 射影几何"复兴者"（自 Desargues）表述准确（Slide 6：注明 Monge 仅写过少量短文）
+- [x] Poncelet–Steiner"Poncelet 发现、Steiner 证明"表述准确（Slide 9：1822 发现；1833 Steiner 证明）
+- [x] 对偶原理"与 Gergonne 有优先权之争"表述准确（Slide 7：Gergonne 自 1810 年起发表，争执客观表述）
+- [x] 机械功"独立于 Coriolis、创造机械功一词"表述准确（Slide 10）
+- [x] 水轮机"构想早于建成 12 年"表述准确（Slide 10：1838 建成，构想早 12 年）
+- [x] 头像确认（✅ Wikipedia Commons 标准肖像，`images/poncelet_portrait.jpg`）
+- [x] 国籍用「法国」现代对应
+- [x] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误（Overfull 仅 1.0pt，阈值内）；图片与 BGM 视频已重生成
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `pages/Jean-Victor_Poncelet/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：确认有无可用肖像，无则用装饰圆占位
-- [ ] **国籍**：封面顶部徽章明示法国
-- [ ] **引语核对**：引语必须在 Wikipedia 原文找到
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
+- [x] **结合本地 Wikipedia**：逐页对照 Beamer tex 全部事实（生卒、教育、战俘、出版年、教席、荣誉均与 page.md 一致）
+- [x] **头像**：✅ 经 Wikipedia API 查得条目主图并下载（`images/poncelet_portrait.jpg`），封面与身份页替换装饰圆占位
+- [x] **国籍**：封面顶部徽章明示法国
+- [x] **引语核对**：未使用直接引语，全部为间接表述
+- [x] **编译验证**：`make distclean && make` 通过，14 页 PDF，Overfull 1.0pt（阈值内）；封面姓名小字注裁切问题已修复（xshift 6.86→6.5cm）
+- [x] **更新提示词**：Review 修正已写回本文件
 
 ### 第 2 轮（Review-2）：结构优化
 - [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）

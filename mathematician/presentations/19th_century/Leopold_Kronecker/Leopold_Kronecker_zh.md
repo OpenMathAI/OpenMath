@@ -2,6 +2,8 @@
 
 > qid=Q76410 · 1823-12-07 – 1891-12-29 · 德国数学家 · 19 世纪
 > 本地 Wikipedia 数据源：`mathematician/presentations/19th_century/pages/Leopold_Kronecker/`（page.md + metadata.json + images.txt）
+>
+> **立传状态：✅ 已完成（参考高斯基准模板）**——tex（13 页正文）+ Makefile + 头像就位，`make distclean && make` 编译通过、Overfull 仅 0.8pt（阈值内）；头像经 Wikipedia API 查得 1865 年照片（`images/kronecker_portrait.jpg`，343×450，EXIF "ikronec001p1"）；BGM 已选 **Symphony No. 5**（Beethoven/Karajan，"命运"的庄重力量，契合哲学斗士形象），视频 `make video` 已生成。
 
 ---
 
@@ -58,35 +60,28 @@
 
 - **背景母题**：柔和气泡（稀疏大块实心圆，四档大小错落），呼应「整数 / 有限」的视觉语言。
 
-### 3.5 背景音乐选择 ✅ 【人物专属】
+### 3.5 背景音乐选择 ✅ 【已选定】
 
-> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
-> （本次执行无法直接读取音乐库目录，具体 wav 文件名与本地路径需在执行立传时从 `curated_tracks.md` 选定，以下给出风格定调与候选方向。）
+- **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+- **选定曲目**：**Symphony No. 5**（Beethoven / Karajan，`music_audio/beethoven-karajan/05-OV6Lp7cnX7s-Beethoven ＂Symphony No 5＂ Karajan.wav`，已软链为 `bgm.wav`）
+- **匹配理由**："命运"交响曲的庄重力量，契合克罗内克在数学基础论战中寸步不让的斗士形象与"上帝造整数"的坚定立场
+- （避免与他片重复：Poncelet 用 The Flow of Time，Cayley 用 Timeless，Hermite 用 Eroica（No.3），Eisenstein 用 Lonesome）
 
-- **风格定调**：**古典庄重 / 哲学沉思**（有限主义哲学家的理性沉思）
-- **匹配理由**：
-  - 克罗内克是有限主义哲学家、数论大家，以"上帝造整数"名言闻名——需**庄重、沉思、有哲学深度**的配乐
-  - "沉思" 匹配其数学哲学立场
-  - "庄重" 匹配其柏林科学院、哥廷根教席的学术地位
-- **候选方向**（执行时从音乐库核对具体曲目，优先古典/庄重/沉思风格）：
-  - 首选：古典 / 庄重 / 沉思风格曲目（呼应哲学深度）
-  - 备选：历史感深沉曲目（呼应 19 世纪柏林）
-  - 时长需 ≥ 12 页 × 7 秒 ≈ 84 秒，ffmpeg `-shortest` 自动对齐
+## 4. Slide 规划（实际 13 页正文 + OpenMath 封面，正文采用 Wilson 式结构）
 
-## 4. Slide 规划（约 12 页，正文采用 Wilson 式结构）
-
-1. **封面**（`\titleslide`）：大标题「上帝造整数 · 有限主义的先驱」+ 克罗内克 1823–1891 + 右上头像 + 国籍行 + 底部三要素状态栏 + 分类 badge
+1. **封面**（`\titleslide`）：大标题「克罗内克」+ 副题「柏林大学教授 · 科学院院士 · 有限主义的先驱」+ 右上头像 + 国籍行 + 底部三要素状态栏 + 4 分类 badge
 2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右信息网格（生卒 / 本名 / 国籍 / 出生地 / 师承 / 教育 / 荣誉 / 核心领域）
-3. **核心贡献概览**（`\hookslide`）：δ 与积 / 代数数论 / 有限主义 / 生平 四分类
-4. **早年与 Kummer 的启蒙**（1823–1845）：Liegnitz、Kummer、柏林大学、Dirichlet、博士
-5. **"上帝造整数"与有限主义**（核心叙事页）：名言、反对康托尔、直觉主义先驱
-6. **克罗内克 δ 与克罗内克积**（核心贡献页）
-7. **Kronecker–Weber 定理**（核心贡献页）：1853 表述、Hilbert 完全证明
-8. **有限生成阿贝尔群与五次方程**（核心贡献页）：结构定理、群论解五次方程
-9. **代数数论与除子理论**（核心贡献页）：与 Dedekind 理想理论之辨
-10. **私人学者与学术生涯**（核心叙事页）：管理农场、回柏林、拒绝哥廷根教席
-11. **与 Weierstrass 的冲突与荣誉**（核心叙事页）：哲学冲突、ForMemRS、柏林科学院
-12. **终章**：68 岁、从整数到数学哲学的历史地位与遗产
+3. **时间线**（`\timelineslide`）：1823 利格尼茨 → 1841 柏林大学 → 1845 博士 → 1848 婚+农场十年 → 1855 回柏林 → 1861 科学院 → 1866 拒哥廷根 → 1883 接任 Kummer → 1891 逝世
+4. **早年与 Kummer 的启蒙**（1823–1845）：富裕犹太家庭、Kummer 中学教导、柏林大学广泛兴趣、Dirichlet 博士（4 行表格）
+5. **"上帝造整数"与有限主义**（核心叙事页）：德文原句 + 中译 + Weber 转述注释（金框）、算术化分析/反对实无穷/有限主义（表格；哲学立场之争客观表述）
+6. **克罗内克 δ 与克罗内克积**（核心贡献页）：δ 定义、张量积、其他命名（表格 + 公式框 $\delta_{ij}$ 与 $A\otimes B$）
+7. **K--W 定理与阿贝尔群结构定理**（核心贡献页）：K-W 1853 表述（注明 Hilbert 完全证明）、结构定理、1853 memoir 扩展 Galois（表格 + 公式框 $K\subseteq\mathbb{Q}(\zeta_n)$）
+8. **五次方程与青春之梦**（核心贡献页）：1850 群论解五次方程（注明非根式解）、椭圆函数、Jugendtraum → Hilbert 第十二问题（表格）
+9. **除子理论 vs 理想理论**（核心贡献页）：克罗内克/Dedekind 对比表（哲学不接受理想；20 世纪除子复兴）
+10. **私人学者与学术生涯**（核心叙事页）：经商十年、回柏林、科学院+大学开课、拒哥廷根/接任 Kummer（4 行表格）
+11. **与 Weierstrass 的冲突**（核心叙事页）：挚友→论敌、处处不可微函数之争、1888 几乎离校（客观表述）、晚年皈依与去世（表格）
+12. **荣誉与遗产**（`\honorslide`）：三院院士 / 以他命名 / 身后影响（itemize 表格）
+13. **终章**（`\closingslide`）：「上帝造整数，人书写其余的一切。」
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -97,22 +92,22 @@
 - **除子理论 vs 理想理论**：Kronecker 引入除子理论作为 Dedekind 理想理论的**替代**（哲学上不接受理想）——是"理论分歧"，勿写两者相同。
 - **与 Weierstrass 冲突**：哲学观点分歧导致关系紧张，几乎使 Weierstrass 1888 年离开大学——客观表述。
 - **皈依基督教**：1891 年去世前一年皈依基督教——可作背景，不必过度强调。
-- **无肖像**：`images.txt` 中无 Kronecker 本人肖像（第一张为墓地照片），封面头像需用装饰圆占位。
+- **无肖像**：✅ 已解决——本地 `images.txt` 首张虽为墓地照片，但经 Wikipedia API（`prop=pageimages`）查得条目主图 `Leopold_Kronecker_1865.jpg`（Commons c/cc，343×450 竖版，EXIF "ikronec001p1" 确认身份），下载至 `images/kronecker_portrait.jpg`，封面与身份页均采用。
 - **国籍**：Kingdom of Prussia（普鲁士王国），今属德国（生于今波兰 Legnica）——封面用「德国（普鲁士王国）」。
 
 ## 6. 数据库字段核对表（§21.5）
 
 | 字段 | 值 | 状态 |
 |---|---|---|
-| qid | Q76410 | 待写入 |
-| name_zh | 克罗内克（或 利奥波德·克罗内克） | 待写入 |
-| name_en | Leopold Kronecker | 待写入 |
-| birth_date | 1823-12-07 | 待写入 |
-| death_date | 1891-12-29 | 待写入 |
-| nationality | Germany（普鲁士王国） | 待写入 |
-| primary_occupation | mathematician | 待写入 |
-| field_of_work | number theory / algebra / logic | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| qid | Q76410 | ✅ 已入库（MySQL/data/Leopold_Kronecker.yaml） |
+| name_zh | 克罗内克（或 利奥波德·克罗内克） | ✅ 已入库 |
+| name_en | Leopold Kronecker | ✅ 已入库 |
+| birth_date | 1823-12-07 | ✅ 已入库 |
+| death_date | 1891-12-29 | ✅ 已入库 |
+| nationality | Germany（普鲁士王国） | ✅ 已入库 |
+| primary_occupation | mathematician | ✅ 已入库 |
+| field_of_work | number theory / algebra / logic | ✅ 已入库 |
+| has_biography | true | ✅ 本次置 true；另修正 relations 中 Dedekind 备注（"Cantor 争议中的对立方"→"除子理论 vs 理想理论"） |
 
 ## 7. 社会关系入库清单（§20）
 
@@ -135,33 +130,33 @@
 
 ## 10. 终审清单
 
-- [ ] 生卒 1823-12-07 / 1891-12-29，享年 68，出生地 Liegnitz
-- [ ] 名言"上帝造整数"注明是 Weber 转述
-- [ ] 有限主义"反对康托尔集合论、直觉主义先驱"表述准确
-- [ ] Kronecker–Weber"1853 表述、Hilbert 完全证明"表述准确
-- [ ] 五次方程"群论非根式解"表述准确
-- [ ] 除子理论"替代 Dedekind 理想理论"表述准确
-- [ ] 与 Weierstrass 冲突客观表述
-- [ ] 头像确认（无肖像则装饰圆占位）
-- [ ] 国籍用「德国（普鲁士王国）」表述准确
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1823-12-07 / 1891-12-29，享年 68，出生地 Liegnitz
+- [x] 名言"上帝造整数"注明是 Weber 转述（Slide 5 金框：德文原句 + 中译 + "Heinrich Weber 转述的克罗内克名言（1893 讣闻）"）
+- [x] 有限主义"反对康托尔集合论、直觉主义先驱"表述准确（Slide 5：明确"哲学立场之争，而非私人恩怨"）
+- [x] Kronecker–Weber"1853 表述、Hilbert 完全证明"表述准确（Slide 7 表格 + 公式框 + badge 均注明）
+- [x] 五次方程"群论非根式解"表述准确（Slide 8：明确"非根式解（Abel–Ruffini 已排除根式）"）
+- [x] 除子理论"替代 Dedekind 理想理论"表述准确（Slide 9 专页对比：哲学不接受理想、20 世纪复兴）
+- [x] 与 Weierstrass 冲突客观表述（Slide 11：挚友→论敌、处处不可微函数之争、1888 几乎离校，均客观）
+- [x] 头像确认（✅ Wikipedia API 查得 1865 年照片，`images/kronecker_portrait.jpg`）
+- [x] 国籍用「德国（普鲁士王国）」表述准确
+- [x] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误，Overfull 仅 0.8pt（阈值内）；`make images && make video` 完成（BGM: Beethoven No. 5）
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `pages/Leopold_Kronecker/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：无肖像，用装饰圆占位
-- [ ] **国籍**：封面顶部徽章明示德国（普鲁士王国）
-- [ ] **引语核对**：引语必须在 Wikipedia 原文找到（如"上帝造整数"）
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
+- [x] **结合本地 Wikipedia**：逐页对照 Beamer tex 全部事实（生卒、Liegnitz、Kummer 中学、1845 博士、农场十年、1855 回柏林、1861 科学院、1866 拒哥廷根、1883 接任、学生名单、三院院士年份均与 page.md 一致）
+- [x] **头像**：✅ 经 Wikipedia API 查得 1865 年照片并下载（`images/kronecker_portrait.jpg`）
+- [x] **国籍**：封面顶部徽章明示德国（普鲁士王国）
+- [x] **引语核对**："上帝造整数"名言严格采用 Wikipedia 原文（德文原句 + Weber 转述注释），未杜撰其他引语
+- [x] **编译验证**：`make distclean && make` 通过，14 页 PDF，Overfull 仅 0.8pt（阈值内）；`make images && make video` 完成（BGM: Beethoven No. 5）
+- [x] **更新提示词**：Review 修正已写回本文件
 
 ### 第 2 轮（Review-2）：结构优化
-- [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
-- [ ] 身份信息页布局与 Wilson 模板对齐
-- [ ] 中文标点 / 断行 / 间距统一
-- [ ] 与同世纪数学家（Eisenstein / Hermite / Cayley）格式对齐
+- [x] 检查 Overfull/Underfull 告警：仅 0.8pt（阈值内）
+- [x] 身份信息页布局与 Wilson 模板对齐（左肖像 2.95×3.9 + 右 2×2 网格）
+- [x] 中文标点 / 断行 / 间距统一（引语用半角 " "）
+- [x] 与同世纪数学家（Eisenstein / Hermite / Cayley / Boole / Poncelet）格式对齐（同模板、同结构、同收尾页式样）
 
 ---
 

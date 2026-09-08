@@ -1,0 +1,462 @@
+% =============================================================
+%  椭圆函数理论的奠基者 · 总是反转的天才：雅可比 (Carl Gustav Jacob Jacobi)
+%  Beamer 演示 —— 参照 Bernhard Bolzano / Jean-Victor Poncelet 模板样式
+%  资料来源：mathematician/presentations/19th_century/pages/Carl_Gustav_Jacob_Jacobi
+%  设计母题：椭圆函数 / 周期格 / theta 函数 —— 柔和气泡呼应双周期格点
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：普鲁士深蓝 + 数学金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{jacobiblue}{HTML}{1F3A93}      % 普鲁士深蓝 — 德意志理性
+\definecolor{mathgold}{HTML}{C9A227}        % 数学金 — 高产 / 天才
+\definecolor{badgeElliptic}{HTML}{0E7C7B}   % 椭圆函数 — 青绿
+\definecolor{badgeMechanics}{HTML}{4C5FD5}  % 力学 — 靛蓝
+\definecolor{badgeNumber}{HTML}{E07B30}     % 数论/行列式 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 生平 / 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{15,26,64}
+\definecolor{muteddark}{RGB}{66,74,88}
+\definecolor{ellipticpanel}{RGB}{220,240,238}
+\definecolor{mechanicspanel}{RGB}{228,232,250}
+\definecolor{numberpanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应椭圆函数的周期格 / theta 函数
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeElliptic!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeMechanics!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeNumber!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[mathgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=jacobiblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 德国（普鲁士）\enspace·\enspace 数学家\enspace·\enspace 椭圆函数理论的奠基者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=jacobiblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {雅可比};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=jacobiblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Carl Gustav Jacob Jacobi\enspace·\enspace 1804 — 1851};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {椭圆函数 · Hamilton–Jacobi · Jacobian · 雅可比符号};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeElliptic] at (-5.05,0)
+        {椭圆函数\\Elliptic Functions\par\scriptsize theta 函数 · 三重积};
+      \node[badge, fill=badgeMechanics] at (-1.68,0)
+        {力学\\Mechanics\par\scriptsize Hamilton–Jacobi};
+      \node[badge, fill=badgeNumber] at (1.68,0)
+        {代数与数论\\Algebra\par\scriptsize Jacobian · 雅可比符号};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {生平荣誉\\Legacy\par\scriptsize 柯尼斯堡 · 天才早逝};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"总是反转"——他把反转已知结果变成开辟新领域的方法。};
+  % 肖像（Wikipedia 肖像 Carl_Jacobi2.jpg）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \fill[white] (0,0) rectangle (2.0,2.9);
+      \node at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Carl_Jacobi2.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north east, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=7.9cm, yshift=1.42cm]current page.center) {Carl Gustav Jacob Jacobi (1804–1851)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国（普鲁士）\enspace|\enspace \faIcon{university}\enspace Universität Königsberg\enspace|\enspace 椭圆函数 · 力学 · 数论};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{雅可比 - 从波茨坦到柏林}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Wikipedia Carl_Jacobi2.jpg）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \fill[white] (0,0) rectangle (3.0,3.9);
+      \node at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Carl_Jacobi2.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Carl Gustav Jacob Jacobi (1804–1851)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1804-12-10 — 1851-02-18\\[2pt]\lab{本名}\quad Jacques Simon Jacobi\\[2pt]\quad\enspace （后德化 Carl Gustav Jacob）\\[2pt]\lab{国籍}\quad 普鲁士（今德国）};
+  \node[infob, fill=mechanicspanel, draw=badgeMechanics!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 波茨坦文科中学 · 柏林大学\\[2pt]
+     \lab{博士}\quad 柏林大学（1825）\\[2pt]\lab{师承}\quad Enno Dirksen};
+  \node[infob, fill=ellipticpanel, draw=badgeElliptic!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 波茨坦（Potsdam，普鲁士）\\[2pt]\lab{身份}\quad 数学家\\[2pt]\lab{任职}\quad 柯尼斯堡大学教授（1829–1842）};
+  \node[infob, fill=numberpanel, draw=badgeNumber!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 椭圆函数 · 力学 · 数论 · 行列式\\[2pt]
+     \lab{代表}\quad 《椭圆函数理论新基础》\\[1pt]\quad\enspace （Fundamenta nova，1829）\\[2pt]
+     \lab{家族}\quad 兄 Moritz von Jacobi（工程师）};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 雅可比的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{雅可比的一生}{1804 — 1851 · 十六岁前读完大学的神童}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1804/生于波茨坦（普鲁士王国），阿什肯纳兹犹太家庭,
+    2.4/1816/十二岁入波茨坦文科中学；不到半年跳入毕业班,
+    1.7/1821/入柏林大学；嫌课程太浅；私研 Euler、Lagrange、Laplace,
+    1.0/1825/获博士学位并 habilitation；同年皈依基督教,
+    0.3/1826/任教柯尼斯堡大学；1829 年升正教授（至 1842）,
+    -0.4/1829/《椭圆函数理论新基础》（Fundamenta nova）出版,
+    -1.1/1843/因过劳精神崩溃；赴意大利休养后迁居柏林,
+    -1.8/1848/革命中参与自由派政治；津贴被砍后经 Humboldt 干预恢复,
+    -2.5/1851/因天花在柏林去世；享年 46
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1804–1826)}{波茨坦 · 神童 · 柏林大学 · 皈依}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{jacobiblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1804} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{生于波茨坦，银行家 Simon Jacobi 之子，四子女中排行第二；兄 Moritz 后成为著名工程师、物理学家；由伯父 Lehman 家教启蒙} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{神童的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1816} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{十二岁入波茨坦文科中学，不到半年跳级进入毕业班；因大学要求年满 16 岁，在毕业班待到 1821；期间自学各科，还尝试用根式求解五次方程} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{少年初试研究} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1821} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{入柏林大学，兼顾语文学（Böckh 研讨班）与数学；嫌大学数学太浅，转而私研 Euler、Lagrange、Laplace 的高深著作} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{自学的巨人传统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1825} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{获博士学位（有理分式的部分分式分解，Dirksen 主持答辩）；随即 habilitation 并皈依基督教；21 岁在柏林讲授曲线与曲面论} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{大学讲坛在望} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 十六岁还没到，他的书目已经是 Euler、Lagrange 与 Laplace。}
+\end{center}
+\end{frame}}
+
+% --- 5. 椭圆函数革命 ---
+\newcommand{\ellipticslide}{\begin{frame}\plainbar\sectiontitle{椭圆函数革命}{《椭圆函数理论新基础》（1829）· theta 函数}
+\vspace{-0.58cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{4.6cm}|>{\scriptsize\centering\arraybackslash}p{1.4cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{jacobiblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作 / 成果}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{内容}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Fundamenta nova theoriae functionum ellipticarum} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{1829} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{系统发展椭圆函数理论及其与椭圆 theta 函数的关系，另有大量后续论文刊于 Crelle's Journal} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{theta 函数的基本性质} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{1820s} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{泛函方程、雅可比三重积公式，以及 q 级数与超几何级数的诸多结果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{多周期函数分类定理} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{1835} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{单值单变量的多周期函数至多两个周期，且周期之比不能为实数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{可积力学系统} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{—} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{单摆、Euler 陀螺、对称 Lagrange 陀螺、Kepler 问题都可用雅可比椭圆函数积出} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 雅可比三重积公式}\\[1pt]
+  {\fontsize{9.5}{12.5}\selectfont\color{jacobiblue!88!black}$\displaystyle\sum_{n=-\infty}^{\infty} q^{n^2}z^{n}=\prod_{m=1}^{\infty}(1-q^{2m})(1+zq^{2m-1})(1+z^{-1}q^{2m-1})$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 与 Abel 的竞争 · "总是反转" ---
+\newcommand{\abelslide}{\begin{frame}\plainbar\sectiontitle{与 Abel 的竞争 · "总是反转"}{椭圆积分的反转 · 研究方法的格言}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{jacobiblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{与 Abel 并驾竞逐} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{与阿贝尔在椭圆函数领域激烈竞争、竞相发表，共同推动椭圆函数取代椭圆积分成为研究的中心} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{双子星的时代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Abel 早逝之后} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{Abel 于 1829 年早逝；雅可比继续系统发展椭圆函数与 theta 函数理论} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{理论的集大成者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{反转的威力} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{反转椭圆积分得到椭圆函数本身；这一反演问题后来经 Weierstrass（1854）与 Riemann 推广到任意代数曲线，通向 Jacobian 簇} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{代数几何的源头之一} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 雅可比给学生的选题格言（Wikipedia 原文）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{jacobiblue!88!black}"Invert, always invert" \enspace (\textit{man muss immer umkehren})}\\[1pt]
+  {\fontsize{8}{10}\selectfont\color{muteddark}反转已知结果，可以开辟新的研究领域}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Hamilton–Jacobi 与动力学 ---
+\newcommand{\mechanicslide}{\begin{frame}\plainbar\sectiontitle{Hamilton–Jacobi 与动力学}{经典力学的分析化 · 雅可比恒等式}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{jacobiblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Hamilton–Jacobi 理论} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{对微分方程与经典力学的奠基性贡献；讲义由 Clebsch 整理为《动力学讲义》（1866）} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{分析力学的支柱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Jacobi 积分} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{1836 年为恒星坐标系引入，用于行星理论与天体力学} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{限制性三体问题关键量} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Jacobi 恒等式} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{李括号运算的"结合律类比"；研究向量场、李理论、哈密顿力学与算子代数的必经之地} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{李代数的核心公理} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Hamilton–Jacobi 方程 与 Jacobi 恒等式}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{jacobiblue!88!black}$H\!\left(q,\dfrac{\partial S}{\partial q},t\right)+\dfrac{\partial S}{\partial t}=0\qquad [X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 行列式与雅可比矩阵 ---
+\newcommand{\determinantslide}{\begin{frame}\plainbar\sectiontitle{行列式与雅可比矩阵}{Jacobian · $\partial$ 符号 · 多项式的先行者}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{jacobiblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{雅可比行列式} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{由 $n$ 个函数对 $n$ 个变量的 $n^2$ 个偏导构成的行列式，在多重积分换元与分析研究中至关重要；行列式理论的早期奠基者之一} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{分析的通用工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{$\partial$ 偏导符号} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{1841 年重新引入 Legendre 的偏导记号 $\partial$，自此成为标准} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{通行至今的记号} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{对称多项式} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{最早引入并研究今天的 Schur 多项式（bialternant 公式，Weyl 特征公式的特例）；给出 Jacobi–Trudi 恒等式与 Desnanot–Jacobi 行列式公式} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{组合与表示论的先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 雅可比行列式（Jacobian）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{jacobiblue!88!black}$J=\det\!\left[\dfrac{\partial f_i}{\partial x_j}\right]_{i,j=1}^{n}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 数论 ---
+\newcommand{\numtheoryslide}{\begin{frame}\plainbar\sectiontitle{数论：椭圆函数的意外远方}{二平方与四平方 · 雅可比符号}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{jacobiblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{椭圆函数证数论定理} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{第一个把椭圆函数应用于数论：证明费马二平方定理与拉格朗日四平方定理，并给出 6、8 个平方数情形的类似结果} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{分析进入数论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{继续 Gauss 的工作} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{二次互反律的新证明；引入雅可比符号；高次互反律、连分数研究与雅可比和（Jacobi sums）} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{互反律的推广} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Canon arithmeticus} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{1839 年出版，1000 以内素数幂的指标表；柯尼斯堡还留有 1836/37 数论讲义} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{计算的工具书} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 雅可比符号：Legendre 符号对合数模的推广}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{jacobiblue!88!black}$\left(\dfrac{a}{n}\right)=\displaystyle\prod_{i}\left(\dfrac{a}{p_i}\right)^{e_i},\qquad n=\prod_i p_i^{e_i}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 生平与晚年 ---
+\newcommand{\lifeslide}{\begin{frame}\plainbar\sectiontitle{生平与晚年 (1826–1851)}{柯尼斯堡 · 过劳崩溃 · 1848 · 天花}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{jacobiblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1826–1842} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{柯尼斯堡大学：1826 私讲师、次年副教授、1829 正教授；培养 Borchardt、Gordan、Hesse、Richelot、Scheibner，Kirchhoff 亦受其教} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{教学与研究并盛} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1843} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{因过度劳累精神崩溃；赴意大利休养数月恢复健康} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{天才的透支} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1844–1851} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{迁居柏林，靠皇家年金生活；1848 年革命中代表自由派竞选议会席位失败——革命被镇压后年金一度被停，经 Alexander von Humboldt 亲自干预很快恢复} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{声誉即护身符} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1851} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{感染天花去世，享年 46；葬于柏林 Kreuzberg 的三一教堂墓园，与天文学家 Encke 之墓相邻} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{早逝的天才} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他把一生烧成了数学——直到 46 岁那年的天花。}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉与身后 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与身后}{功勋勋章 · 大奖 · 月球环形山}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{jacobiblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{生前荣誉} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{Pour le Mérite for Sciences and Arts（科学与艺术功勋勋章）· 法国科学院 Grand prix des sciences mathématiques · 英国皇家学会外籍会员（ForMemRS）} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{跨国界的认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后出版} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{大量手稿陆续刊于 Crelle's Journal；《全集》（Gesammelte Werke，八卷，1881–1891）由柏林科学院出版} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{遗产的系统整理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{命名纪念} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{月球环形山 Jacobi 以其命名；Jacobi 方法、Jacobi 多项式、Jacobi 椭球、Jacobi 变换、Jacobi 算子等命名不胜枚举} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{名字遍布数学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 46 年的生命，换来以他命名的定理、方法与环形山。}
+\end{center}
+\end{frame}}
+
+% --- 12. 身后影响 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{身后影响}{代数几何 · 分析力学 · 数论}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{jacobiblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{椭圆函数与代数几何} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Abel–Jacobi 定理\item 雅可比反演问题\item Weierstrass 与 Riemann 的推广\end{itemize}} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{通向 Jacobian 簇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{分析与力学} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{Hamilton–Jacobi 理论、雅可比行列式与 $\partial$ 记号、Jacobi 恒等式} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{分析力学与多变量分析} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{数论与计算} & \cellcolor{ellipticpanel}\textcolor{badgeElliptic!82!black}{雅可比符号、椭圆函数法证平方和定理、Jacobi 特征值算法与 Jacobi 迭代法} & \cellcolor{mechanicspanel}\textcolor{badgeMechanics!82!black}{从纯数论到数值计算} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从椭圆函数到 Jacobian 簇——他为后来者铺了一个世纪的路。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=jacobiblue!90!black] at ([yshift=1.5cm]current page.center) {他用 46 年的一生，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {让"反转"成为开辟新世界的方法。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=jacobiblue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是椭圆函数，而是一种化旧为新、无处不在的研究精神。};
+\node[font=\fontsize{8}{10}\selectfont, text=jacobiblue!60!black] at ([yshift=-2.0cm]current page.center) {雅可比\quad Carl Gustav Jacob Jacobi\quad 1804 — 1851};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 椭圆函数 · Hamilton–Jacobi · Jacobian\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\ellipticslide
+\abelslide
+\mechanicslide
+\determinantslide
+\numtheoryslide
+\lifeslide
+\honorslide
+\legacyslide
+\closingslide
+\end{document}

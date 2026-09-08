@@ -68,6 +68,10 @@
   - 雅可比是椭圆函数奠基者、天才数学家，46 岁死于天花——需**庄重、典雅、略带怅惘**的配乐，呼应天才早逝
   - "典雅" 匹配其椭圆函数、theta 函数的优美理论
   - "怅惘" 匹配其精神崩溃、政治挫折与早逝
+- **音乐选定（2026-09-04 执行确认）**：
+  - **选定曲目**：Beethoven Symphony No. 7（Karajan / Berliner Philharmoniker）—— 古典 / 律动 / 庄严（"数学之舞、节奏与结构"）
+  - **本地文件**：`Carl_Gustav_Jacob_Jacobi/Beethoven_Symphony_No7.wav`（由 `music_audio/beethoven-karajan/07-W5NsPOgyALI-Beethoven ＂Symphony No 7＂ Karajan.wav` 复制重命名，原文件名含全角引号，Makefile 通配符需避开）
+  - **匹配理由**：庄重典雅呼应椭圆函数的优美结构；律动庄严呼应其"算法与计算"的宏大风格；37:40 时长远超 84 秒需求，`-shortest` 自动对齐
 - **候选方向**（执行时从音乐库核对具体曲目，优先古典/庄重/典雅风格）：
   - 首选：古典 / 庄重 / 典雅风格曲目
   - 备选：历史感深沉 / 怀旧曲目（呼应天才早逝）
@@ -133,29 +137,30 @@
 - 教育：Frederick William University Berlin（柏林大学，博士）、University of Königsberg、Hermann-von-Helmholtz-Gymnasium
 - 任职：University of Königsberg（1829–1842 数学教授）、Frederick William University Berlin、Joachimsthalsches Gymnasium
 
-## 10. 终审清单
+## 10. 终审清单（2026-09-04 Review-1 完成）
 
-- [ ] 生卒 1804-12-10 / 1851-02-18，享年 46，出生地波茨坦
-- [ ] 椭圆函数"与 Abel 竞争"表述准确
-- [ ] "总是反转"注明是教学格言
-- [ ] Hamilton–Jacobi"与 Hamilton 共同发展"表述准确
-- [ ] ∂ 符号"Legendre 引入、Jacobi 重引入推广"表述准确
-- [ ] 皈依基督教客观表述
-- [ ] 精神崩溃"过劳"表述准确
-- [ ] 死亡"天花"表述准确
-- [ ] 国籍用「德国（普鲁士王国）」表述准确
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1804-12-10 / 1851-02-18，享年 46，出生地波茨坦
+- [x] 椭圆函数"与 Abel 竞争"表述准确（tex：并驾竞逐、竞相发表；Abel 早逝后雅可比继续系统发展）
+- [x] "总是反转"注明是教学格言（tex 引语盒标注"Wikipedia 原文"+ 德文原句）
+- [x] Hamilton–Jacobi"与 Hamilton 共同发展"表述准确（tex 只写"奠基性贡献"，未声称独占）
+- [x] ∂ 符号"Legendre 引入、Jacobi 重引入推广"表述准确（tex：1841 年重新引入）
+- [x] 皈依基督教客观表述（tex：1825 获博 / habilitation / 皈依并列陈述）
+- [x] 精神崩溃"过劳"表述准确（tex：因过度劳累精神崩溃）
+- [x] 死亡"天花"表述准确（tex：感染天花去世，享年 46）
+- [x] 国籍用「德国（普鲁士）」表述准确
+- [x] 【头像】Wikipedia 有肖像 `Carl_Jacobi2.jpg`（300×443，已下载 `images/`），封面与身份页均用真肖像，无需装饰圆
+- [x] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误 0 溢出（14 页 PDF + MP4 成品）
 
 ## 11. Review 流程规范（两轮 Review）
 
-### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `pages/Carl_Gustav_Jacob_Jacobi/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：优先 Wikipedia infobox 肖像（`images.txt` 第三张 Carl_Jacobi2.jpg）
-- [ ] **国籍**：封面顶部徽章明示德国（普鲁士王国）
-- [ ] **引语核对**：引语必须在 Wikipedia 原文找到（如 "man muss immer umkehren"）
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
+### 第 1 轮（Review-1）：事实终审（2026-09-04 完成）
+- [x] **结合本地 Wikipedia**：读取 `pages/Carl_Gustav_Jacob_Jacobi/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
+- [x] **头像**：Wikipedia infobox 肖像 `Carl_Jacobi2.jpg` 已使用
+- [x] **国籍**：封面顶部徽章明示德国（普鲁士）
+- [x] **引语核对**："man muss immer umkehren"（'Invert, always invert'）在 page.md 原文核实（L56），作为教学格言引用
+- [x] **编译验证**：`make distclean && make` 通过
+- [x] **更新提示词**：本文件已写回音乐选定与终审结果
 
 ### 第 2 轮（Review-2）：结构优化
 - [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）

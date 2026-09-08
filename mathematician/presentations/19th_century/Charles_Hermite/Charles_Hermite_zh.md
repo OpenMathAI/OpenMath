@@ -2,6 +2,8 @@
 
 > qid=Q168401 · 1822-12-24 – 1901-01-14 · 法国数学家 · 19 世纪
 > 本地 Wikipedia 数据源：`mathematician/presentations/19th_century/pages/Charles_Hermite/`（page.md + metadata.json + images.txt）
+>
+> **立传状态：✅ 已完成（参考高斯基准模板）**——tex（12 页正文）+ Makefile + 头像就位，`make distclean && make` 编译通过、Overfull = 0；头像采用 Wikipedia Commons 1887 年晚年照片（`images/hermite_portrait.jpg`，本地 images.txt 已含肖像）；BGM 已选 **Symphony No. 3 "Eroica"**（Karajan，英雄/壮丽，契合身残志坚与里程碑成就），视频 `make video` 已生成。
 
 ---
 
@@ -56,35 +58,27 @@
 
 - **背景母题**：柔和气泡（稀疏大块实心圆，四档大小错落），呼应「正交 / 超越」的视觉语言。
 
-### 3.5 背景音乐选择 ✅ 【人物专属】
+### 3.5 背景音乐选择 ✅ 【已选定】
 
-> **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
-> （本次执行无法直接读取音乐库目录，具体 wav 文件名与本地路径需在执行立传时从 `curated_tracks.md` 选定，以下给出风格定调与候选方向。）
+- **音乐库**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/` — 详见 `curated_tracks.md`
+- **选定曲目**：**Symphony No. 3 "Eroica"**（Beethoven / Karajan，优先级 2，`music_audio/beethoven-karajan/03-BgIjGSPmk7I-Beethoven ＂Symphony No 3＂ Karajan.wav`，48:52，已软链为 `bgm.wav`）
+- **匹配理由**：标签"古典 / 英雄 / 壮丽"，适用"伟大成就、里程碑、片尾升华"——契合埃尔米特证明 e 超越性的里程碑成就与身残志坚的坚毅气质
+- （避免与他片重复：Poncelet 用 The Flow of Time，Cayley 用 Timeless）
 
-- **风格定调**：**古典庄重 / 身残志坚的坚毅**（右脚畸形却成就斐然的坚毅）
-- **匹配理由**：
-  - 埃尔米特右脚畸形终身跛行、被学校劝退，却证明 e 超越、发展 Hermitian 矩阵——需**庄重、坚毅、典雅**的配乐
-  - "坚毅" 匹配其身残志坚的奋斗
-  - "典雅" 匹配其法国学者的气质
-- **候选方向**（执行时从音乐库核对具体曲目，优先古典/庄重/坚毅风格）：
-  - 首选：古典 / 庄重 / 坚毅风格曲目（呼应身残志坚）
-  - 备选：历史感深沉曲目（呼应 19 世纪法国）
-  - 时长需 ≥ 12 页 × 7 秒 ≈ 84 秒，ffmpeg `-shortest` 自动对齐
+## 4. Slide 规划（实际 12 页正文 + OpenMath 封面，正文采用 Wilson 式结构）
 
-## 4. Slide 规划（约 12 页，正文采用 Wilson 式结构）
-
-1. **封面**（`\titleslide`）：大标题「超越数 e 的证明者 · Hermitian 矩阵的创立者」+ 埃尔米特 1822–1901 + 右上头像 + 国籍行 + 底部三要素状态栏 + 分类 badge
+1. **封面**（`\titleslide`）：大标题「埃尔米特」+ 副题「法兰西科学院院士 · 索邦教授 · 超越数的证明者」+ 右上头像 + 国籍行 + 底部三要素状态栏 + 4 分类 badge
 2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右信息网格（生卒 / 本名 / 国籍 / 出生地 / 师承 / 教育 / 荣誉 / 核心领域）
-3. **核心贡献概览**（`\hookslide`）：超越数 / 矩阵与多项式 / 椭圆函数 / 生平 四分类
-4. **早年与残疾**（1822–1848）：Dieuze、脚畸形、École Polytechnique 未毕业、私下攻读
-5. **证明 e 是超越数**（核心贡献页）：1873、两种方法、基于 Liouville
-6. **π 的无理性**（核心贡献页）：π² 无理、Lindemann 后续证明 π 超越
-7. **Hermitian 矩阵与正交矩阵**（核心贡献页）：特征值实数、量子力学基础
-8. **Hermite 多项式**（核心贡献页）：1864、量子谐振子
-9. **五次方程与椭圆积分**（核心贡献页）：椭圆积分求解五次方程根
-10. **不变量理论**（核心贡献页）：与 Cayley、Sylvester 同时发展
-11. **荣誉与学术生涯**：巴黎大学教授、荣誉军团大官、Pour le Mérite
-12. **终章**：78 岁、从超越数到量子力学的历史地位与遗产
+3. **时间线**（`\timelineslide`）：1822 出生（右脚畸形）→ 1842 入综合理工 → 1843 被退学 → 1847 获学位 → 1848 回母校任教+当选科学院 → 1869 索邦教授 → 1873 证明 e 超越 → 1901 逝世
+4. **早年与残疾**（1822–1847）：Dieuze、脚畸形、Catalan 辅导、综合理工退学、私下攻读五年（4 行表格）
+5. **1873 · 证明 e 是超越数**（核心贡献页）：超越数定义、Liouville 思想两种方法、1873《论指数函数》、Hilbert 简化（表格 + 公式框）
+6. **从 e 到 π**（核心贡献页）：π² 无理 → π 无理、未证 π 超越、Lindemann 1882（表格 + 里程碑公式框）
+7. **Hermitian 矩阵与正交矩阵**（核心贡献页）：1854 正交（Frobenius 1878 现代定义）、1855 Hermitian 特征值实数（推广 Cauchy 1829）、量子力学（表格 + 公式框 $A=A^\dagger\Rightarrow\lambda\in\mathbb{R}$）
+8. **Hermite 多项式**（核心贡献页）：1864、正交性、量子谐振子（表格 + 薛定谔方程解公式框）
+9. **椭圆积分解五次方程**（核心贡献页）：1842 首篇论文、1858/1865/1866 椭圆积分求解、与 Jacobi 通信（表格）
+10. **不变量理论与教学生涯**（核心叙事页）：与 Cayley/Sylvester 并肩互反律、ENS/索邦/综合理工教职、学生 Poincaré/Stieltjes/Padé、1848 当选科学院（表格；不变量理论与生涯合并为一页）
+11. **荣誉与遗产**（`\honorslide`）：生前荣誉 / 身后纪念 / 以他命名（itemize 表格）
+12. **终章**（`\closingslide`）：「被校园拒绝的身体，证明了最纯粹的数。」
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -101,15 +95,15 @@
 
 | 字段 | 值 | 状态 |
 |---|---|---|
-| qid | Q168401 | 待写入 |
-| name_zh | 埃尔米特（或 夏尔·埃尔米特） | 待写入 |
-| name_en | Charles Hermite | 待写入 |
-| birth_date | 1822-12-24 | 待写入 |
-| death_date | 1901-01-14 | 待写入 |
-| nationality | France | 待写入 |
-| primary_occupation | mathematician | 待写入 |
-| field_of_work | number theory / algebra / orthogonal polynomials | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| qid | Q168401 | ✅ 已入库（MySQL/data/Charles_Hermite.yaml） |
+| name_zh | 埃尔米特（或 夏尔·埃尔米特） | ✅ 已入库 |
+| name_en | Charles Hermite | ✅ 已入库 |
+| birth_date | 1822-12-24 | ✅ 已入库 |
+| death_date | 1901-01-14 | ✅ 已入库 |
+| nationality | France | ✅ 已入库 |
+| primary_occupation | mathematician | ✅ 已入库 |
+| field_of_work | number theory / algebra / orthogonal polynomials | ✅ 已入库 |
+| has_biography | true | ✅ 本次置 true；另修正 relations 中 Picard 备注（"岳父"→"女婿"，Picard 娶 Hermite 之女） |
 
 ## 7. 社会关系入库清单（§20）
 
@@ -134,26 +128,26 @@
 
 ## 10. 终审清单
 
-- [ ] 生卒 1822-12-24 / 1901-01-14，享年 78，出生地 Dieuze
-- [ ] e 超越"基于 Liouville 先行工作"表述准确
-- [ ] π"证明无理、未证超越、Lindemann 后续"表述准确
-- [ ] Hermitian 矩阵"推广 Cauchy 1829 结果"表述准确
-- [ ] 正交矩阵"概念引入、Frobenius 现代定义"表述准确
-- [ ] 五次方程"椭圆积分求解、与 Abel–Ruffini 不矛盾"表述准确
-- [ ] 脚畸形"学校劝退、未毕业"表述准确
-- [ ] 国籍用「法国」现代对应
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1822-12-24 / 1901-01-14，享年 78，出生地 Dieuze
+- [x] e 超越"基于 Liouville 先行工作"表述准确（Slide 5：方法来源行明确"基于 Liouville 的思想"）
+- [x] π"证明无理、未证超越、Lindemann 后续"表述准确（Slide 6：专页呈现，"他的方法未能直接证明 π 超越——这是他未跨过的最后一步"）
+- [x] Hermitian 矩阵"推广 Cauchy 1829 结果"表述准确（Slide 7 表格 + 公式框均注明）
+- [x] 正交矩阵"概念引入、Frobenius 现代定义"表述准确（Slide 7：1854 提出，Frobenius 1878 现代定义）
+- [x] 五次方程"椭圆积分求解、与 Abel–Ruffini 不矛盾"表述准确（Slide 9：从"不可根式解"走向"椭圆积分构造"）
+- [x] 脚畸形"学校劝退、未毕业"表述准确（Slide 3 / 4：因脚畸形被要求退学，未毕业；身份页教育栏注明）
+- [x] 国籍用「法国」现代对应
+- [x] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误，Overfull = 0；e 超越页公式框溢出已修复（拆两行）
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `pages/Charles_Hermite/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：优先 Wikipedia infobox 肖像（`images.txt` 第一张 Charles_Hermite_circa_1887.jpg）
-- [ ] **国籍**：封面顶部徽章明示法国
-- [ ] **引语核对**：引语必须在 Wikipedia 原文找到
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
+- [x] **结合本地 Wikipedia**：逐页对照 Beamer tex 全部事实（生卒、退学原因与年份、1847 学位、1848 科学院、教职年份、奖项均与 page.md 一致）
+- [x] **头像**：✅ 采用本地 images.txt 首张 `Charles_Hermite_circa_1887.jpg`（Commons 6/65，500×788），下载至 `images/hermite_portrait.jpg`，封面与身份页均采用
+- [x] **国籍**：封面顶部徽章明示法国
+- [x] **引语核对**：未使用直接引语，全部为间接表述
+- [x] **编译验证**：`make distclean && make` 通过，13 页 PDF，Overfull = 0；e 超越页公式框溢出修复（拆两行）；`make images && make video` 完成（BGM: Eroica）
+- [x] **更新提示词**：Review 修正已写回本文件
 
 ### 第 2 轮（Review-2）：结构优化
 - [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
