@@ -1,0 +1,459 @@
+% =============================================================
+%  射影几何的复兴者 · 机械功的开创者：庞斯莱 (Jean-Victor Poncelet)
+%  Beamer 演示 —— 参照 Bernhard Bolzano 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Jean-Victor_Poncelet
+%  设计母题：射影 / 对偶 / 圆锥曲线 —— 柔和气泡呼应投影与无穷远
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法国深蓝 + 工程金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{frenchblue}{HTML}{1F3A93}      % 法国深蓝 — 法兰西理性
+\definecolor{engineergold}{HTML}{C9A227}    % 工程金 — 工程师 / 军事工程
+\definecolor{badgeProjective}{HTML}{4C5FD5} % 射影几何 — 靛蓝
+\definecolor{badgeWork}{HTML}{0E7C7B}       % 机械功 — 青绿
+\definecolor{badgeInfinity}{HTML}{E07B30}   % 无穷远/定理 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 生平 / 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{15,26,64}
+\definecolor{muteddark}{RGB}{66,74,88}
+\definecolor{projectivepanel}{RGB}{228,232,250}
+\definecolor{workpanel}{RGB}{220,240,238}
+\definecolor{infinitypanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应射影 / 圆锥曲线 / 无穷远
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[engineergold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeWork!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeProjective!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeInfinity!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[engineergold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=frenchblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 军事工程师\enspace·\enspace 射影几何的复兴者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=frenchblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {庞斯莱};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=frenchblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Jean-Victor Poncelet\enspace·\enspace 1788 — 1867};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=engineergold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {对偶原理 · 连续性原理 · 庞斯莱闭形定理 · 机械功};
+  \draw[engineergold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeProjective] at (-5.05,0)
+        {射影几何\\Projective Geometry\par\scriptsize 对偶 · 连续性};
+      \node[badge, fill=badgeInfinity] at (-1.68,0)
+        {定理\\Theorems\par\scriptsize 闭形定理 · 尺规作图};
+      \node[badge, fill=badgeWork] at (1.68,0)
+        {机械功\\Work\par\scriptsize 功–能定理 · 水轮机};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {生平荣誉\\Legacy\par\scriptsize 战俘营 · 综合理工};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他在俄国战俘营中凭记忆写就的著作，复兴了一门几何。};
+  % 肖像（Wikipedia Commons 标准肖像）
+  \node[draw=engineergold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.2,2.4);
+      \node[anchor=center] at (1.1,1.2) {\includegraphics[width=2.2cm,height=2.4cm,keepaspectratio]{poncelet_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.5cm, yshift=1.66cm]current page.center) {Jean-Victor Poncelet (1788–1867)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace École Polytechnique\enspace|\enspace 射影几何 · 力学 · 机械功};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{engineergold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{庞斯莱 - 从梅斯到巴黎}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Wikipedia Commons 标准肖像）
+  \node[draw=engineergold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.2,3.45);
+      \node[anchor=center] at (1.6,1.725) {\includegraphics[width=3.2cm,height=3.45cm,keepaspectratio]{poncelet_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.0) {Jean-Victor Poncelet (1788–1867)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=engineergold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1788-07-01 — 1867-12-22\\[2pt]\lab{本名}\quad Jean-Victor Poncelet\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=projectivepanel, draw=badgeProjective!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Lycée Fabert · École Polytechnique\\[2pt]
+     \lab{服役}\quad 军事工程兵（陆军中尉）\\[2pt]\lab{师承}\quad Gaspard Monge};
+  \node[infob, fill=workpanel, draw=badgeWork!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 梅斯（Metz，法国）\\[2pt]\lab{身份}\quad 数学家 · 军事工程师\\[2pt]\lab{任职}\quad 索邦教授（1837）};
+  \node[infob, fill=infinitypanel, draw=badgeInfinity!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 射影几何 · 力学 · 机械功\\[2pt]
+     \quad\enspace 工业力学 · 水力学\\[2pt]
+     \lab{代表}\quad 《图形的射影性质论》\\[1pt]\quad\enspace 《工业力学导论》};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 庞斯莱的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{庞斯莱的一生}{1788 — 1867 · 从战俘营到综合理工校长}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{engineergold!88!black}}
+]
+  \draw[engineergold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1788/生于梅斯（Metz，法兰西王国）,
+    2.4/1808/入巴黎综合理工（1808–1810），毕业后入军事工程兵任中尉,
+    1.7/1812/远征俄国，克拉斯诺伊战役被俘，囚于萨拉托夫,
+    1.0/1813/战俘营中凭记忆写就《图形的射影性质论》（1813–1814）,
+    0.3/1822/获释后出版此书，复兴自 Desargues 以来沉寂的射影几何,
+    -0.4/1825/任梅斯应用学校力学教授（至 1835），改进水轮机,
+    -1.1/1837/索邦专设"物理与实验力学"教席,
+    -1.8/1848/出任母校综合理工校长（至 1850 退休）,
+    -2.5/1867/于巴黎去世，享年 79
+  }{
+    \fill[engineergold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1788–1812)}{梅斯 · 综合理工 · 军事工程兵}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{engineergold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{1788} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{生于梅斯，梅斯议会律师 Claude Poncelet 之子，幼年曾寄养于 Saint-Avold 的 Olier 家} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{工程师之路的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{1808–1810} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{就读巴黎 École Polytechnique；三年级时因病学业落后} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{严格的科学训练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{1810} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{毕业加入军事工程兵团，就读家乡梅斯的应用学校，同年获陆军中尉军衔} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{军事工程师的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{1812} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{随拿破仑大军远征俄国} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{命运的转折点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个穿军装的年轻人，即将在异国的牢狱里改写几何学史。}
+\end{center}
+\end{frame}}
+
+% --- 5. 战俘营中的创造 ---
+\newcommand{\powslide}{\begin{frame}\plainbar\sectiontitle{战俘营中的创造 (1812–1822)}{克拉斯诺伊 · 萨拉托夫 · 无书凭记忆}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{engineergold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{1812} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{克拉斯诺伊战役中与大部队失散被迫投降（一说被弃于死地）；受 Miloradovich 将军审讯，未泄露任何信息} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{沦为战俘} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{1813–1814} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{囚于萨拉托夫，无书无资料，凭记忆写出《图形的射影性质论》，勾勒射影几何基础并给出新结果} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{绝境中的创造} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{1814–1815} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{获释回国（此书获释后才能出版）；1815 年回故乡梅斯任军事工程师} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{手稿带回法国} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{1822} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{出版《图形的射影性质论》（Traité des propriétés projectives des figures）} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{奠基之作面世} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 两年战俘生涯，没有磨灭一个工程师的几何直觉。}
+\end{center}
+\end{frame}}
+
+% --- 6. 射影几何的复兴 ---
+\newcommand{\traiteslide}{\begin{frame}\plainbar\sectiontitle{射影几何的复兴}{《图形的射影性质论》· 自 Desargues 以来第一部系统著作}
+\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{engineergold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{4.6cm}|>{\scriptsize\centering\arraybackslash}p{1.4cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{内容}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{Traité des propriétés projectives des figures} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{1822} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{现代射影几何的奠基之作：自 Desargues（17 世纪）以来第一部系统论述（Monge 仅写过少量短文）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{Cours de mécanique appliqué aux machines} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{1826} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{应用力学课程讲义} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{Introduction à la mécanique industrielle} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{1829} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{工业力学名著，令其声名远播} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{Applications d'analyse et de géométrie} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{1862/64} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{两卷，作为《Traité》的导论} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{engineergold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{engineergold!85!black} 射影几何的研究纲领}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{frenchblue!88!black}研究图形在中心投影与截影之下保持不变的性质}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 对偶原理与连续性原理 ---
+\newcommand{\dualslide}{\begin{frame}\plainbar\sectiontitle{对偶原理与连续性原理}{点与线的互换 · 与 Gergonne 的优先权之争}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{engineergold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{对偶原理 (duality)} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{由射影调和共轭、极点与极线的发现引出：点与线互换，结论成对成立} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{现代射影几何的支柱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{连续性原理 (continuity)} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{图形连续变形（含退化情形）中性质保持} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{助力复数概念的发展} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{优先权之争} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{Gergonne 自 1810 年起发表同类工作，庞斯莱亦在其 Annales 上刊文；两人就"对偶原理"爆发激烈争执} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{史料并存，客观表述} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{engineergold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{engineergold!85!black} 对偶原理（点 $\leftrightarrow$ 线）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{frenchblue!88!black}点 $P$ 在直线 $\ell$ 上 \quad $\Leftrightarrow$ \quad 直线 $p$ 过点 $P$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 无穷远点与圆无穷远点 ---
+\newcommand{\infinitslide}{\begin{frame}\plainbar\sectiontitle{无穷远点与圆无穷远点}{平行线交于无穷远 · 所有圆共有的点}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{engineergold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{无穷远点} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{发展"平行线相交于无穷远点"的概念} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{平行与相交的统一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{圆无穷远点} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{定义平面上所有圆共有的无穷远点（circular points at infinity）} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{圆的射影刻画} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{射影调和共轭} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{关于圆锥曲线的极点与极线的系统研究；与 Brianchon 的早期合作对 Feuerbach 定理有重要贡献} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{对偶原理的来源} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{engineergold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{engineergold!85!black} 圆无穷远点：平面上每个圆都经过这两个（虚）无穷远点}\\[1pt]
+  {\fontsize{11.5}{14.5}\selectfont\color{frenchblue!88!black}$I=(1:i:0),\qquad J=(1:-i:0)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 庞斯莱闭形定理与 Poncelet–Steiner 定理 ---
+\newcommand{\porismlide}{\begin{frame}\plainbar\sectiontitle{两大定理：闭形定理与单直尺作图}{Poncelet's porism · Poncelet–Steiner 定理}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{engineergold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{定理}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{备注}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{庞斯莱闭形定理 (porism)} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{多边形内接于一圆锥曲线且外切于另一圆锥曲线时，必属于一个无穷多边形族} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{又称 closure theorem} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{Poncelet–Steiner 定理} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{给定一个圆及其圆心，所有欧几里得尺规作图可仅用直尺完成} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{1822 发现；1833 Steiner 证明} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{engineergold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{engineergold!85!black} 庞斯莱闭形定理（Poncelet's porism）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{frenchblue!88!black}$\text{内接于 } C_1\ \wedge\ \text{外切于 } C_2 \implies \text{无穷多边形族}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 机械功与工程 ---
+\newcommand{\workslide}{\begin{frame}\plainbar\sectiontitle{机械功与工程}{功–能定理 · "机械功"一词 · 水轮机}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{engineergold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{机械功概念} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{任力学教授期间，独立于 Coriolis 开创力学中"功"的运用与功–能定理，并创造"机械功"（mechanical work）一词} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{术语沿用至今} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{水轮机与水车} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{改进水轮机与水车设计（取法法国南部普罗旺斯磨坊的力学）；其设计的涡轮机 1838 年建成，而构想早于 12 年} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{Poncelet wheel} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{工业力学教育} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{著《工业力学导论》（1829）、《工业力学论》（1844，三卷），把力学带给工程师} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{工程与力学的桥梁} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{engineergold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{engineergold!85!black} 功–能定理（work–energy theorem）}\\[1pt]
+  {\fontsize{11.5}{14.5}\selectfont\color{frenchblue!88!black}$W=\Delta E_k=\tfrac{1}{2}mv^{2}-\tfrac{1}{2}mv_0^{2}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉与地位 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与地位 (1837–1867)}{索邦教席 · 综合理工校长 · 埃菲尔铁塔}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{engineergold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{1837} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{索邦（巴黎大学）专设"物理与实验力学"讲席教授（Thénard 支持），12 月就任} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{量身定制的教席} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{1848–1850} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{出任母校 École Polytechnique 校长（Commanding General），1850 年退休} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{军、学双栖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{1842–1865} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{英国皇家学会外籍会员（1842）· Pour le Mérite（1863）· 美国艺术与科学院外籍荣誉院士（1865）· 荣誉军团各级勋章 · 蒙蒂永科学奖} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{身后} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{名列埃菲尔铁塔 72 位科学家；1868 年设立庞斯莱奖；功率单位"庞斯莱"以其命名} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{永久纪念} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从战俘到校长，从几何到工程——他的一生横跨两个世界。}
+\end{center}
+\end{frame}}
+
+% --- 12. 身后影响 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{身后影响}{射影几何 · 力学与工程 · 纪念}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{engineergold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{射影几何} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 对偶原理 · 连续性原理\item 无穷远点与圆无穷远点\item 庞斯莱闭形定理\end{itemize}} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{一门几何的复兴} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{力学与工程} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{机械功与功–能定理、Poncelet wheel、工业力学教育} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{工程科学的先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{engineergold!88!black}{定理与纪念} & \cellcolor{projectivepanel}\textcolor{badgeProjective!82!black}{Poncelet–Steiner 定理；埃菲尔铁塔 72 名、庞斯莱奖（1868）} & \cellcolor{workpanel}\textcolor{badgeWork!82!black}{身后殊荣} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他把战争、牢狱与工程的全部经验，都变成了几何的语言。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=frenchblue!90!black] at ([yshift=1.5cm]current page.center) {他用 79 年的一生，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=engineergold!85!black] at ([yshift=0.4cm]current page.center) {把绝境写成了几何的黄金篇章。};
+\draw[engineergold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=frenchblue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是定理，而是一门复兴的几何与一代工程师的严谨。};
+\node[font=\fontsize{8}{10}\selectfont, text=frenchblue!60!black] at ([yshift=-2.0cm]current page.center) {庞斯莱\quad Jean-Victor Poncelet\quad 1788 — 1867};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 射影几何 · 机械功 · 庞斯莱闭形定理\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\powslide
+\traiteslide
+\dualslide
+\infinitslide
+\porismlide
+\workslide
+\honorslide
+\legacyslide
+\closingslide
+\end{document}
