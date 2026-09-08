@@ -1,0 +1,475 @@
+% =============================================================
+%  解析数论的创建者 · 现代函数概念的引路人：狄利克雷 (Peter Gustav Lejeune Dirichlet)
+%  Beamer 演示 —— 参照 Bolzano / Poncelet / Jacobi 模板样式
+%  资料来源：mathematician/presentations/19th_century/pages/Peter_Gustav_Lejeune_Dirichlet
+%  设计母题：素数分布 / 级数 —— 柔和气泡呼应算术级数中的素数之河
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：普鲁士深蓝 + 数学金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{prussianblue}{HTML}{1F3A93}    % 普鲁士深蓝 — 德意志理性
+\definecolor{mathgold}{HTML}{C9A227}        % 数学金 — 解析数论 / 尊崇
+\definecolor{badgeAnalytic}{HTML}{4C5FD5}   % 解析数论 — 靛蓝
+\definecolor{badgeAnalysis}{HTML}{0E7C7B}   % 分析 — 青绿
+\definecolor{badgeAlgebraic}{HTML}{E07B30}  % 代数数论 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 生平 / 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{15,26,64}
+\definecolor{muteddark}{RGB}{66,74,88}
+\definecolor{analyticpanel}{RGB}{228,232,250}
+\definecolor{analysispanel}{RGB}{220,240,238}
+\definecolor{algebraicpanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应素数分布 / 级数
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAnalysis!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeAnalytic!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeAlgebraic!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[mathgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=prussianblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 德国\enspace·\enspace 数学家\enspace·\enspace 解析数论的创建者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=prussianblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {狄利克雷};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=prussianblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Peter Gustav Lejeune Dirichlet\enspace·\enspace 1805 — 1859};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {算术级数定理 · 狄利克雷 L 函数 · 傅里叶级数 · 现代函数概念};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAnalytic] at (-5.05,0)
+        {解析数论\\Number Theory\par\scriptsize 算术级数 · L 函数};
+      \node[badge, fill=badgeAnalysis] at (-1.68,0)
+        {分析\\Analysis\par\scriptsize 傅里叶级数 · 函数概念};
+      \node[badge, fill=badgeAlgebraic] at (1.68,0)
+        {代数数论\\Algebraic\par\scriptsize 单位定理 · 类数公式};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {生平荣誉\\Legacy\par\scriptsize 门德尔松 · 接替高斯};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把分析带进了数论，让素数的分布第一次成为定理。};
+  % 肖像（Wikipedia 存档无本人肖像，装饰圆占位）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \fill[prussianblue!8] (0,0) rectangle (2.0,2.9);
+      \fill[prussianblue!12] (1.0,1.45) circle (1.05cm);
+      \node[text=prussianblue!50] at (1.0,1.45) {\fontsize{40}{44}\selectfont\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north east, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=7.9cm, yshift=1.42cm]current page.center) {Peter Gustav Lejeune Dirichlet (1805–1859)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国\enspace|\enspace \faIcon{university}\enspace Universität Göttingen\enspace|\enspace 解析数论 · 分析 · 数论};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{狄利克雷 - 从迪伦到哥廷根}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧装饰圆（Wikipedia 存档无本人肖像）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \fill[prussianblue!8] (0,0) rectangle (3.0,3.9);
+      \fill[prussianblue!12] (1.5,1.95) circle (1.4cm);
+      \node[text=prussianblue!50] at (1.5,1.95) {\fontsize{54}{58}\selectfont\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Peter Gustav Lejeune Dirichlet (1805–1859)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1805-02-13 — 1859-05-05\\[2pt]\lab{本名}\quad Johann Peter Gustav\\[2pt]\quad\enspace Lejeune Dirichlet\\[2pt]\lab{国籍}\quad 德国};
+  \node[infob, fill=analyticpanel, draw=badgeAnalytic!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 波恩 · 科隆耶稣会中学 · 巴黎\\[2pt]
+     \lab{博士}\quad 波恩大学荣誉博士（1827）\\[2pt]\lab{师承}\quad Fourier · Poisson · Gauss};
+  \node[infob, fill=analysispanel, draw=badgeAnalysis!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 迪伦（Düren，莱茵左岸）\\[2pt]\lab{身份}\quad 数学家\\[2pt]\lab{任职}\quad 柏林大学 · 哥廷根大学};
+  \node[infob, fill=algebraicpanel, draw=badgeAlgebraic!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数论 · 分析 · 位势论\\[2pt]
+     \lab{代表}\quad 《数论讲义》（Dedekind 整理，1863）\\[2pt]
+     \lab{姻亲}\quad 妻 Rebecka Mendelssohn};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 狄利克雷的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{狄利克雷的一生}{1805 — 1859 · 从法兰西帝国的边镇到高斯的席位}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1805/生于迪伦（Düren，时属法兰西第一帝国；1815 年后归普鲁士）,
+    2.4/1822/赴巴黎求学；私研高斯《算术研究》，终生不离手,
+    1.7/1825/20 岁无学位在法国科学院宣讲费马大定理 n=5 部分证明,
+    1.0/1827/波恩大学破例授予荣誉博士；任教布雷斯劳,
+    0.3/1831/定居柏林；柏林大学教职，兼军事学院讲师（至 1855）,
+    -0.4/1832/娶 Rebecka Mendelssohn；27 岁成普鲁士科学院最年轻成员,
+    -1.1/1837/证明算术级数定理，创建解析数论,
+    -1.8/1855/接替高斯出任哥廷根数学教授,
+    -2.5/1859/于哥廷根去世，享年 54
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与巴黎求学 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与巴黎求学 (1805–1826)}{迪伦 · 科隆 · 巴黎 · 20 岁登上科学院讲坛}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1805} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{生于莱茵左岸的迪伦，七子中最幼；十二岁前已痴迷数学，说服父母放弃商人道路} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{数学少年的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1817–1821} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{波恩文科中学；1820 转科隆耶稣会中学，受 Georg Ohm 指导；因拉丁语不流利拿不到毕业文凭，只带一纸证书离校} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{偏科的代价与天赋} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1822} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{德国高等数学教育匮乏（唯 Gauss 深居哥廷根且厌恶授课），赴巴黎；在法兰西学院与巴黎大学听课，私研高斯《算术研究》；1823 任 Foy 将军子女的德语教师，实现经济独立} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{巴黎求学的时代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1825} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{20 岁、无学位，在法国科学院宣讲费马大定理 n=5 的部分证明——自 Fermat（n=4）、Euler（n=3）以来首度进展；由此结识 Fourier 与 Poisson} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{一战成名} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 拿不到文凭的少年，登上了巴黎科学院的讲坛。}
+\end{center}
+\end{frame}}
+
+% --- 5. 解析数论的创建 ---
+\newcommand{\analyticslide}{\begin{frame}\plainbar\sectiontitle{解析数论的创建}{1837 算术级数定理 · 狄利克雷特征与 L 函数}
+\vspace{-0.42cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成果}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{算术级数定理 (1837)} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{首项与公差互素的算术级数中含无穷多素数——用数学分析工具解决代数问题，由此创建解析数论分支} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{一门新学科的诞生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{特征与 L 函数} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{证明中引入狄利克雷特征（Dirichlet characters）与狄利克雷 L 函数——后世解析数论的基石} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{工具的原创} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{级数收敛的洞见} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{同一篇文章中辨明绝对收敛与条件收敛之别（即后来的 Riemann 级数定理之源）} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{分析的严谨先行} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{高斯整数推广 (1841)} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{把算术级数定理从整数推广到高斯整数环 $\mathbb{Z}[i]$} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{走向代数数域} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.28cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 狄利克雷 L 函数与算术级数定理}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussianblue!88!black}$L(s,\chi)=\displaystyle\sum_{n=1}^{\infty}\frac{\chi(n)}{n^{s}},\qquad L(1,\chi)\neq 0 \implies \text{素数 } p\equiv a \pmod{q}\ \text{有无穷多}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 傅里叶级数的严格化 ---
+\newcommand{\fourierslide}{\begin{frame}\plainbar\sectiontitle{傅里叶级数的严格化}{1829 名文 · 收敛条件 · 狄利克雷函数}
+\vspace{-0.42cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{收敛条件 (1829)} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{受导师 Fourier 启发，给出傅里叶级数收敛的条件（后称狄利克雷条件）——此前 Fourier、Poisson、Cauchy 的尝试皆未成功} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{众里寻他} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{指出 Cauchy 的错误} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{名文明确指出 Cauchy 证明的缺陷，并引入级数收敛的狄利克雷判别法} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{以严谨服人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{狄利克雷函数} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{作为不可积函数的反例引入——动摇"函数即解析式"的旧观念} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{现代函数的试金石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{狄利克雷核与积分} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{傅里叶收敛证明中引入狄利克雷核（Dirichlet kernel）与狄利克雷积分（Dirichlet integral）} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{调和分析的工具} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.28cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 狄利克雷函数：处处不连续、不可积}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussianblue!88!black}$D(x)=\begin{cases}1, & x\in\mathbb{Q}\\[2pt] 0, & x\notin\mathbb{Q}\end{cases}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 现代函数概念与位势理论 ---
+\newcommand{\functionslide}{\begin{frame}\plainbar\sectiontitle{现代函数概念与位势理论}{"对每个 x 对应唯一有限的 y" · 狄利克雷问题}
+\vspace{-0.42cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{现代函数概念} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{定义函数为"对每个 $x$ 对应唯一有限的 $y$"——他被归功为引入现代函数概念者（Lakatos 对此归属有所争议）} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{分析语言的重塑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{狄利克雷问题} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{研究拉普拉斯方程的第一类边值问题并证明解的唯一性——此类问题后以他命名} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{PDE 边值问题的范式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{狄利克雷原理} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{证明中使用"解使狄利克雷能量最小"的思想；Riemann 命名其为狄利克雷原理——他本人知道 Gauss 与 Kelvin 也用过此法} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{黎曼几何的支点之一} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.28cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 狄利克雷问题（第一边值问题）}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussianblue!88!black}$\Delta u=0\ \text{于}\ \Omega,\qquad u\big|_{\partial\Omega}=f\quad \text{（解唯一）}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 类数公式与单位定理 ---
+\newcommand{\classnumberslide}{\begin{frame}\plainbar\sectiontitle{类数公式与单位定理}{代数数论的基石 · 鸽笼原理的首次登场}
+\vspace{-0.42cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成果}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{类数公式 (1838–39)} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{两篇论文证明二次型的第一个类数公式（后经其学生 Kronecker 改进）——Jacobi 称之为"触及人类才智极限"的成果} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{通向一般数域} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{狄利克雷单位定理} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{基于二次域单位群结构的研究，证明代数数论的基本结果——单位定理} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{代数数论的支柱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{双二次互反律} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{布雷斯劳时期对双二次互反律作出重要贡献——当时 Gauss 研究的焦点} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{接续高斯的事业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{鸽笼原理} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{首次在丢番图逼近中使用鸽笼原理，证明狄利克雷逼近定理} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{组合论证的典范} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.28cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 狄利克雷单位定理（单位群的结构）}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussianblue!88!black}$\mathcal{O}_{K}^{\times}\cong \mu(K)\times\mathbb{Z}^{\,r},\qquad r=r_1+r_2-1$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 费马大定理 n=5 与 n=14 ---
+\newcommand{\fltslide}{\begin{frame}\plainbar\sectiontitle{费马大定理 n=5 与 n=14}{20 岁的惊雷 · 与 Legendre 先后完成}
+\vspace{-0.42cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1825 · 部分证明} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{首项研究即费马大定理 n=5 的部分证明——自 Fermat（n=4）、Euler（n=3）以来该定理的首次进展} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{少年成名之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Legendre 与狄利克雷} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{评审人 Legendre 很快补全 n=5 情形；狄利克雷稍后完成自己的证明——两人先后完成，各有其功} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{学术史上佳话} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{n=14 · 完整证明} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{数年之后给出 n=14 情形的完整证明} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{推向更远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{高斯的赞语} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{高斯读其费马论文后罕见盛赞"Dirichlet showed excellent talent"——经 Humboldt 转呈，助其获布雷斯劳教职} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{高斯的认可} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.28cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 费马大定理 n=5（Dirichlet 与 Legendre 先后完成，1825）}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussianblue!88!black}$x^{5}+y^{5}=z^{5}\quad \text{无正整数解}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 门德尔松姻亲与柏林沙龙 ---
+\newcommand{\salonslide}{\begin{frame}\plainbar\sectiontitle{门德尔松姻亲与柏林沙龙}{Rebecka · 音乐与数学的联姻 · 挚友网络}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1832 · 婚礼} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{经 Humboldt 引荐进入银行家 Abraham Mendelssohn 家的著名沙龙，与其女 Rebecka 结婚；育有 Walter 与 Flora} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{数学与音乐的联姻} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{柏林文化圈} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{沙龙聚集 Felix 与 Fanny Mendelssohn 等艺术家与科学家——德国思想生活黄金时代的每周聚会} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{科学艺术的交汇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{挚友与扶助} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{与 Jacobi（1829 相识）结为挚友；1839 与 Liouville 定交；两人读到中学教师 Kummer 的论文后助其进入柏林科学院——Kummer 后成其柏林继任者} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{提携后进的链条} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1848 · 革命} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{持自由派立场，全家支持 1848 革命，甚至持枪守卫亲王宫殿；革命失败后军学院一度停办、环境敌视，被反对派报纸称作"教员中的红色分子"} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{科学家的风骨} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他的沙龙里有门德尔松的音乐，也有素数与级数的低语。}
+\end{center}
+\end{frame}}
+
+% --- 11. 接替高斯与哥廷根岁月 ---
+\newcommand{\gottingenslide}{\begin{frame}\plainbar\sectiontitle{接替高斯与哥廷根岁月 (1855–1859)}{高斯的席位 · Dedekind 与 Riemann · 落幕}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1855} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{高斯去世，哥廷根大学邀狄利克雷继任其席位；他欣然前往，Kummer 接替其在柏林的教职} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{王座交替} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{新一代} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{已获博士学位的 Dedekind、Riemann、Moritz Cantor、Enneper 都来重听他的课；他为 Riemann 争取到小额年金；Dedekind 说跟随他学习让自己"成为全新的人"} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{师泽绵长} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1858–1859} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{1858 年夏在蒙特勒旅行时心脏病发作；1859-05-05 逝于哥廷根，时在妻子 Rebecka 去世数月之后} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{54 岁谢幕} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{Dedekind 整理出版其《数论讲义》（1863）；Kummer 1860 年致悼词；全集由 Kronecker 与 Fuchs 编辑出版} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{讲义垂后世} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从柏林的三尺讲台，到哥廷根那把属于高斯的椅子。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与身后 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与身后}{七大学院 · 功勋勋章 · 月球环形山}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{生前荣誉} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{普鲁士科学院（1832，最年轻成员 27 岁）· 圣彼得堡（1833 通讯）· 哥廷根（1846）· 法国科学院（1854 外籍）· 瑞典（1854）· 比利时（1855）· 英国皇家学会（1855 外籍）；Pour le Mérite（1855，Humboldt 推荐）· 巴伐利亚马克西米利安勋章} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{跨国界的认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后出版} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{《数论讲义》（Vorlesungen über Zahlentheorie，Dedekind 编，1863）影响高斯之后整整一代数论学家；《全集》由 Kronecker 与 Fuchs 编辑} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{讲义即丰碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{命名纪念} & \cellcolor{analyticpanel}\textcolor{badgeAnalytic!82!black}{月球环形山 Dirichlet 与小行星 11665 Dirichlet 以其命名；狄利克雷分布、狄利克雷过程（统计）等名字遍布数学} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{名字遍布数学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 54 年的一生，换来以他命名的定理、函数与环形山。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=prussianblue!90!black] at ([yshift=1.5cm]current page.center) {他用 54 年的一生，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {让素数第一次听懂了分析的语言。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=prussianblue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是 L 函数，还有现代函数的概念与一门新建的数论。};
+\node[font=\fontsize{8}{10}\selectfont, text=prussianblue!60!black] at ([yshift=-2.0cm]current page.center) {狄利克雷\quad Peter Gustav Lejeune Dirichlet\quad 1805 — 1859};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 解析数论 · 傅里叶级数 · 狄利克雷问题\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\analyticslide
+\fourierslide
+\functionslide
+\classnumberslide
+\fltslide
+\salonslide
+\gottingenslide
+\honorslide
+\closingslide
+\end{document}
