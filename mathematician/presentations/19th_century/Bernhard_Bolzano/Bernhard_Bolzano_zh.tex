@@ -1,0 +1,469 @@
+% =============================================================
+%  分析严格化的先驱 · 逻辑实在论的奠基者：波尔查诺 (Bernhard Bolzano)
+%  Beamer 演示 —— 参照 Carl Friedrich Gauss 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Bernhard_Bolzano
+%  设计母题：实轴 / 极限 / 集合 —— 柔和气泡呼应极限与无穷
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：波西米亚深绿 + 理性金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{bohemiangreen}{HTML}{1B5E20}   % 波西米亚深绿 — 布拉格 / 虔诚
+\definecolor{ratiogold}{HTML}{C9A227}       % 理性金 — 逻辑严格 / 尊崇
+\definecolor{badgeAnalysis}{HTML}{4C5FD5}   % 数学分析 — 靛蓝
+\definecolor{badgeLogic}{HTML}{0E7C7B}      % 逻辑哲学 — 青绿
+\definecolor{badgeInfinity}{HTML}{E07B30}   % 无穷/集合 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 生平 / 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{14,44,18}
+\definecolor{muteddark}{RGB}{66,76,68}
+\definecolor{analysispanel}{RGB}{228,232,250}
+\definecolor{logicpanel}{RGB}{220,240,238}
+\definecolor{infinitypanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应实轴 / 极限 / 集合
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[ratiogold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeLogic!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeAnalysis!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeInfinity!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[ratiogold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=bohemiangreen!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 波西米亚\enspace·\enspace 天主教神父\enspace·\enspace 分析严格化的先驱};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=bohemiangreen!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {波尔查诺};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=bohemiangreen!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Bernard Bolzano\enspace·\enspace 1781 — 1848};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=ratiogold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {介值定理 · Bolzano–Weierstrass 定理 · $\varepsilon$–$\delta$ · 无穷悖论};
+  \draw[ratiogold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAnalysis] at (-5.05,0)
+        {分析严格化\\Analysis\par\scriptsize $\varepsilon$–$\delta$ 极限};
+      \node[badge, fill=badgeLogic] at (-1.68,0)
+        {定理\\Theorems\par\scriptsize 介值 · B–W 定理};
+      \node[badge, fill=badgeInfinity] at (1.68,0)
+        {无穷与集合\\Infinity\par\scriptsize 无穷的悖论};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {逻辑哲学\\Logic\par\scriptsize 科学理论};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {生前默默无闻，身后被追认为现代分析的奠基人。};
+  % 肖像（Wikipedia 存档无肖像，装饰圆占位）
+  \node[draw=ratiogold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \fill[bohemiangreen!8] (0,0) rectangle (2.0,2.9);
+      \fill[bohemiangreen!12] (1.0,1.45) circle (1.05cm);
+      \node[text=bohemiangreen!50] at (1.0,1.45) {\fontsize{40}{44}\selectfont\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Bernard Bolzano (1781–1848)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 波西米亚（今捷克）\enspace|\enspace \faIcon{university}\enspace University of Prague\enspace|\enspace 分析严格化 · 逻辑 · 无穷};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{ratiogold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{波尔查诺 - 从布拉格到布拉格}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧装饰圆（Wikipedia 存档无肖像）
+  \node[draw=ratiogold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \fill[bohemiangreen!8] (0,0) rectangle (3.0,3.9);
+      \fill[bohemiangreen!12] (1.5,1.95) circle (1.4cm);
+      \node[text=bohemiangreen!50] at (1.5,1.95) {\fontsize{54}{58}\selectfont\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Bernard Bolzano (1781–1848)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=ratiogold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1781-10-05 — 1848-12-18\\[2pt]\lab{本名}\quad Bernardus Placidus\\[2pt]\quad\enspace Johann Nepomuk Bolzano\\[2pt]\lab{国籍}\quad 波西米亚（今捷克）};
+  \node[infob, fill=analysispanel, draw=badgeAnalysis!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Piarist 文科中学 · 布拉格大学\\[2pt]
+     \lab{博士}\quad 布拉格大学（1804）\\[2pt]\lab{师承}\quad Franz Josef Gerstner};
+  \node[infob, fill=logicpanel, draw=badgeLogic!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 布拉格（波西米亚）\\[2pt]\lab{身份}\quad 数学家 · 逻辑学家 · 神父\\[2pt]\lab{任职}\quad 宗教哲学教授（1805）};
+  \node[infob, fill=infinitypanel, draw=badgeInfinity!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 分析严格化 · 逻辑 · 无穷\\[2pt]
+     \quad\enspace 科学哲学 · 认识论\\[2pt]
+     \lab{代表}\quad 《科学理论》《无穷的悖论》};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 波尔查诺的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{波尔查诺的一生}{1781 — 1848 · 一生困守布拉格的学者}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{ratiogold!88!black}}
+]
+  \draw[ratiogold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1781/生于布拉格（波西米亚，神圣罗马帝国）,
+    2.4/1796/入布拉格大学攻读数学、哲学、物理,
+    1.7/1804/获博士学位；受戒成为天主教神父,
+    1.0/1805/任布拉格大学宗教哲学教授,
+    0.3/1817/《Rein analytischer Beweis》：介值定理纯解析证明,
+    -0.4/1819/因自由观点被免职，流放乡间,
+    -1.1/1837/《科学理论》（Wissenschaftslehre，四卷）,
+    -1.8/1848/于布拉格去世,
+    -2.5/1851/《无穷的悖论》身后出版
+  }{
+    \fill[ratiogold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1781–1805)}{布拉格 · 神父 · 博士 · 双重身份}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{ratiogold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{bohemiangreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{1781} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{生于布拉格，意大利移民之子；12 个子女中仅 2 人活到成年} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{神父学者之路的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{1791–1796} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{就读布拉格 Piarist 文科中学} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{系统的古典教育} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{1796} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{入布拉格大学，攻读数学、哲学、物理；1800 年起兼修神学} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{数学与哲学的交汇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{1804} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{获博士学位（几何论文，导师 Gerstner）；同年受戒成为天主教神父} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{学者与神父的双重身份} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一位穿着神父长袍的数学家，把严格性带回了分析。}
+\end{center}
+\end{frame}}
+
+% --- 5. ε–δ 与极限的严格化 ---
+\newcommand{\rigorslide}{\begin{frame}\plainbar\sectiontitle{极限的严格化：拒绝直观}{不借助时间与运动 · $\varepsilon$–$\delta$ 思路}
+\vspace{-1.0cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{ratiogold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{bohemiangreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{波尔查诺的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{后来影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{极限是什么？} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{主张不把时间、运动等直观引入数学，极限须用"因变量如何逼近确定量"刻画} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{现代极限概念的雏形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{如何严格化？} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{引入完全严格的 $\varepsilon$–$\delta$ 式极限定义（1810/1816/1817 三部著作）} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{约 50 年后由 Weierstrass 系统化实现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{无穷小可信吗？} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{质疑 Leibniz 无穷小的基础地位} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{分析严格化的方向之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{目标} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{"一种发展分析的新方式"} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{现代实分析的先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{ratiogold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{ratiogold!85!black} $\varepsilon$–$\delta$ 极限定义（波尔查诺 1817 年思想的严格化表达；Weierstrass 系统化）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{bohemiangreen!88!black}$\lim_{x\to a}f(x)=L \iff \forall\,\varepsilon>0\ \exists\,\delta>0:\ 0<|x-a|<\delta \implies |f(x)-L|<\varepsilon$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 介值定理：Rein analytischer Beweis ---
+\newcommand{\ivtslide}{\begin{frame}\plainbar\sectiontitle{1817 · 介值定理的纯解析证明}{三大数学著作 · Rein analytischer Beweis}
+\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{ratiogold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{4.6cm}|>{\scriptsize\centering\arraybackslash}p{1.4cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{bohemiangreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{内容}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{Beyträge zu einer begründeteren Darstellung der Mathematik} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{1810} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{数学的新基础} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{Der binomische Lehrsatz} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{1816} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{二项定理的严格证明} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{Rein analytischer Beweis} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{1817} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{介值定理的第一个纯解析证明} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{ratiogold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{ratiogold!85!black} Bolzano 定理（介值定理）· 第一个纯解析证明（1817）}\\[1pt]
+  {\fontsize{12}{16}\selectfont\color{bohemiangreen!88!black}$f\in C[a,b],\ f(a)\,f(b)<0 \implies \exists\,c\in(a,b):\ f(c)=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Bolzano–Weierstrass 定理与最小上界 ---
+\newcommand{\bwslide}{\begin{frame}\plainbar\sectiontitle{Bolzano–Weierstrass 定理与实数完备性}{聚点 · 最小上界性质}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{ratiogold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{bohemiangreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{定理}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{Bolzano–Weierstrass 定理} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{有界无穷点集必有聚点（有界数列必有收敛子列）} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{实分析的核心工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{命名由来} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{Weierstrass 独立发展并先行发表，一度称 Weierstrass 定理；Bolzano 更早的工作被重新发现后改名} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{优先权的经典案例} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{最小上界性质} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{最早认识到实数的最小上界（上确界）性质} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{实数完备性的关键刻画} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{ratiogold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{ratiogold!85!black} Bolzano–Weierstrass 定理 与 实数的最小上界性质}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{bohemiangreen!88!black}$\text{有界无穷点集必有聚点}\qquad \emptyset\ne S\subset\mathbb{R}\ \text{有上界} \implies \sup S\in\mathbb{R}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 代数基本定理的纯解析证明 ---
+\newcommand{\ftaslide}{\begin{frame}\plainbar\sectiontitle{代数基本定理：解析与几何之争}{Bolzano 的纯解析证明 · Gauss 的几何式证明}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{ratiogold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{bohemiangreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{证明}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{特点}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{Gauss（1799）} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{博士论文给出证明（几何式考虑）} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{时间更早} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{Bolzano} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{给出第一个纯解析证明} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{不依赖几何直观} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.05cm}
+\begin{center}
+\fcolorbox{ratiogold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{ratiogold!85!black} 代数基本定理}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{bohemiangreen!88!black}$\forall\, p(x)\in\mathbb{C}[x],\ \deg p=n\ge 1 \implies p(x)=a\prod_{k=1}^{n}(x-z_k),\quad z_k\in\mathbb{C}$}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 同一个定理，两条道路：他选择了一条没有几何拐杖的路。}
+\end{center}
+\end{frame}}
+
+% --- 9. 无穷的悖论：集合论先驱 ---
+\newcommand{\infinityslide}{\begin{frame}\plainbar\sectiontitle{《无穷的悖论》（1851，身后出版）}{真子集等势 · 影响 Cantor 与 Dedekind}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{ratiogold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{bohemiangreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{思想}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{真子集等势} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{认真处理无限集与其真子集的一一对应} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{无穷研究的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{无穷的多层结构} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{对无穷量进行系统分析，直面"悖论"而非回避} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{集合论的先驱工作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{后世评价} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{受 Peirce、Cantor、Dedekind 等逻辑学家高度赞赏} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{通往现代集合论} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.05cm}
+\begin{center}
+\fcolorbox{ratiogold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{ratiogold!85!black} 真子集等势：无限集可与自身的真子集一一对应}\\[2pt]
+  {\fontsize{11.5}{14.5}\selectfont\color{bohemiangreen!88!black}$\varphi(n)=2n:\quad \{1,2,3,\dots\}\ \overset{\mathrm{1\!-\!1}}{\longleftrightarrow}\ \{2,4,6,\dots\}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 科学理论与逻辑实在论 ---
+\newcommand{\scienceslide}{\begin{frame}\plainbar\sectiontitle{《科学理论》（Wissenschaftslehre，1837）}{命题自身 · 逻辑实在论 · 四卷巨著}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{ratiogold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{bohemiangreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{命题自身 (Satz an sich)} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{独立于任何人是否思考它的真值载体；由主项观念、系词、谓项观念构成} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{逻辑实在论的核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{变项法 (variations)} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{用替换变项后真值的变化定义可推导性等逻辑关系} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{现代逻辑语义的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{科学即真理之集} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{为所有科学提供逻辑基础：逻辑、认识论、科学教学} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{四卷系统性巨著} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{哲学传承} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{经 Brentano 弟子 Husserl 与 Twardowski 被重新发现} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{现象学与分析哲学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他在数学之外，还为逻辑学开辟了一条新路。}
+\end{center}
+\end{frame}}
+
+% --- 11. 流放与身后 ---
+\newcommand{\exileslide}{\begin{frame}\plainbar\sectiontitle{流放与身后 (1819–1881)}{因信仰被免职 · 手稿埋没 · 重被发现}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{ratiogold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{bohemiangreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{1805} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{任布拉格大学宗教哲学教授，讲演备受欢迎；1818 年当选哲学系主任} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{学术生涯的顶点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{1819} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{宣扬反战与教育改革，观点过于自由；拒绝收回信念，12 月 24 日被免职并流放乡间} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{禁止在主流期刊发表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{1842–1848} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{迁回布拉格，专注于社会、宗教、哲学与数学著述，直至去世} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{著述不辍的晚年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{1881} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{Otto Stolz 重新发现其遗失的期刊论文并重印} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{数学贡献广为人知} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 大多数作品生前只是手稿——他的名声，是身后追认的。}
+\end{center}
+\end{frame}}
+
+% --- 12. 身后影响 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{身后影响}{实分析 · 逻辑 · 集合论的先声}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{ratiogold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{bohemiangreen}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{实分析} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item $\varepsilon$–$\delta$ 极限定义\item 介值定理纯解析证明\item Bolzano–Weierstrass 定理\item 最小上界性质\end{itemize}} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{分析严格化的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{逻辑与哲学} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{《科学理论》、命题自身、逻辑实在论；影响 Husserl（现象学）与分析哲学传统} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{两个哲学流派的源头之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{ratiogold!88!black}{集合论} & \cellcolor{analysispanel}\textcolor{badgeAnalysis!82!black}{《无穷的悖论》受 Cantor、Dedekind、Peirce 赞赏} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{无穷数学的先驱} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 生前沉默的手稿，最终成为三个学科的共同源头。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=bohemiangreen!90!black] at ([yshift=1.5cm]current page.center) {他用 67 年的一生，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=ratiogold!85!black] at ([yshift=0.4cm]current page.center) {证明了严谨本身就是一种信仰。};
+\draw[ratiogold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=bohemiangreen!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是定理，而是一种对待真理的态度。};
+\node[font=\fontsize{8}{10}\selectfont, text=bohemiangreen!60!black] at ([yshift=-2.0cm]current page.center) {波尔查诺\quad Bernard Bolzano\quad 1781 — 1848};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 分析严格化 · 逻辑实在论 · 无穷悖论\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\rigorslide
+\ivtslide
+\bwslide
+\ftaslide
+\infinityslide
+\scienceslide
+\exileslide
+\legacyslide
+\closingslide
+\end{document}
