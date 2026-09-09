@@ -1,0 +1,455 @@
+% =============================================================
+%  艾森斯坦 · 数论天才与艾森斯坦判别法 (Gotthold Eisenstein)
+%  Beamer 演示 —— 参照高斯基准模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Gotthold_Eisenstein
+%  设计母题：三次单位根 / 格点 —— 柔和气泡呼应艾森斯坦整数的三角格
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：普鲁士深蓝 + 数学金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{prussiablue}{HTML}{1F3A93}     % 普鲁士深蓝 — 德意志理性
+\definecolor{mathgold}{HTML}{C9A227}        % 数学金 — 天才 / 尊崇
+\definecolor{badgeCrit}{HTML}{4C5FD5}       % 判别法/整数 — 靛蓝
+\definecolor{badgeRecip}{HTML}{0E7C7B}      % 互反律 — 青绿
+\definecolor{badgeSeries}{HTML}{E07B30}     % 级数/椭圆函数 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{critpanel}{RGB}{228,232,250}
+\definecolor{recippanel}{RGB}{220,240,238}
+\definecolor{seriespanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应三次单位根 / 格点
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeRecip!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeCrit!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeSeries!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[mathgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=prussiablue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 德国（普鲁士王国）\enspace·\enspace 柏林大学讲师\enspace·\enspace 29 岁陨落的数论天才};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=prussiablue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {艾森斯坦};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=prussiablue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Gotthold Eisenstein\enspace·\enspace 1823 — 1852};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {艾森斯坦判别法 · 艾森斯坦整数 · 三次/四次互反律 · 艾森斯坦级数};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeCrit] at (-5.05,0)
+        {判别法与整数\\Criterion\par\scriptsize 不可约性 · $\mathbb{Z}[\omega]$};
+      \node[badge, fill=badgeRecip] at (-1.68,0)
+        {互反律\\Reciprocity\par\scriptsize 三次 / 四次};
+      \node[badge, fill=badgeSeries] at (1.68,0)
+        {艾森斯坦级数\\Eisenstein Series\par\scriptsize 模形式的基石};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {天才传奇\\Prodigy\par\scriptsize 29 岁 · 洪堡扶灵};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {获 Gauss 赏识、受洪堡庇护——29 年的璀璨光华。};
+  % 肖像（Wikipedia Commons 标准肖像）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.2,2.9);
+      \node[anchor=center] at (1.1,1.45) {\includegraphics[width=2.2cm,height=2.9cm,keepaspectratio]{eisenstein_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.5cm, yshift=1.42cm]current page.center) {Gotthold Eisenstein (1823–1852)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国（普鲁士王国）\enspace|\enspace \faIcon{university}\enspace University of Berlin\enspace|\enspace 数论 · 互反律 · 椭圆函数};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{艾森斯坦 - 从柏林到柏林}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Wikipedia Commons 标准肖像）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.95,3.9);
+      \node[anchor=center] at (1.475,1.95) {\includegraphics[width=2.95cm,height=3.9cm,keepaspectratio]{eisenstein_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Gotthold Eisenstein (1823–1852)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1823-04-16 — 1852-10-11\\[2pt]\lab{本名}\quad Ferdinand Gotthold Max Eisenstein\\[2pt]\lab{国籍}\quad 德国（普鲁士王国）};
+  \node[infob, fill=critpanel, draw=badgeCrit!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Friedrich Werder Gymnasium\\[2pt]
+     \quad\enspace 柏林大学\\[2pt]\lab{师承}\quad Kummer · Fischer（博士导师）};
+  \node[infob, fill=recippanel, draw=badgeRecip!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 柏林\\[2pt]\lab{荣誉}\quad 布雷斯劳荣誉博士 · 两院院士\\[2pt]\lab{身后}\quad 葬于柏林（洪堡扶灵）};
+  \node[infob, fill=seriespanel, draw=badgeSeries!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数论 · 互反律 · 椭圆函数\\[2pt]
+     \quad\enspace 多项式不可约性\\[2pt]
+     \lab{身份}\quad 数学家 · 柏林大学讲师};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 艾森斯坦的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{艾森斯坦的一生}{1823 — 1852 · 29 年的璀璨}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1823/生于柏林，犹太裔父母在他出生前皈依新教,
+    2.4/1837/14 岁入 Friedrich Werder Gymnasium，15 岁掌握全部中学数学,
+    1.7/1843/都柏林见 Hamilton，得知 Abel 五次方程不可解证明,
+    1.0/1844/一年内向柏林科学院提交三次型论文，Crelle 刊文爆发,
+    0.3/1847/柏林大学任教（habilitation）,
+    -0.4/1848/参加革命被捕，短期入狱,
+    -1.1/1851--1852/当选哥廷根、柏林两院院士,
+    -1.8/1852/肺结核恶化，10 月 11 日逝世，年仅 29,
+    -2.5/1852/洪堡亲自护送灵柩到墓地
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 神童早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{神童早年 (1823–1843)}{体弱多病 · 15 岁掌握中学数学}
+\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1823} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{生于柏林；犹太裔父母在他出生前皈依新教；幼年患脑膜炎，终身体弱多病} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{病弱之躯的天才起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1837（14 岁）} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{入 Friedrich Werder Gymnasium；15 岁已掌握全部中学数学课程，自学 Euler 与 Lagrange 的微分学} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{自学走向前沿} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{老师评价} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{"他的数学知识远超中学课程范围……有朝一日将为科学的发展与扩展做出重要贡献"} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{老师的预言成真} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{学生时代} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{旁听 Dirichlet 等人在柏林大学的讲座；1843 年赴都柏林见 Hamilton} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{闯入大学数学圈} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个多病的少年，在中学课堂上读完了 Euler 与 Lagrange。}
+\end{center}
+\end{frame}}
+
+% --- 5. 艾森斯坦判别法 ---
+\newcommand{\criterionslide}{\begin{frame}\plainbar\sectiontitle{艾森斯坦判别法}{多项式不可约性的经典判据}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{判什么？} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{判断整系数多项式在有理数域上是否不可约} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{抽象代数基本工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{怎么判？} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{找一个素数 $p$：整除除首项外的全部系数，且 $p^2\nmid a_0$} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{一条素数性质定乾坤} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{为什么常用？} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{验证方便，是分圆多项式不可约性等经典结论的标准工具} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{教科书必收} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 艾森斯坦判别法（Eisenstein's criterion）}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussiablue!88!black}$p\mid a_0,\dots,a_{n-1},\quad p\nmid a_n,\quad p^2\nmid a_0\ \Longrightarrow\ f\ \text{在}\ \mathbb{Q}\ \text{上不可约}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 艾森斯坦整数与素数 ---
+\newcommand{\integersslide}{\begin{frame}\plainbar\sectiontitle{艾森斯坦整数与素数}{三次单位根的整环}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{艾森斯坦整数} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{$a+b\omega$，其中 $\omega=e^{2\pi i/3}$ 是三次单位根，$a,b\in\mathbb{Z}$} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{三角格点上的整数世界} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{艾森斯坦素数} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{该整环中的素元——普通素数在此处可能分解} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{代数数论的实验场} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{几何直观} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{在复平面上铺成三角形格点——正是本片气泡背景的母题} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{对称与算术的交汇} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 艾森斯坦整数（Eisenstein integers）}\\[1pt]
+  {\fontsize{11.5}{14.5}\selectfont\color{prussiablue!88!black}$\mathbb{Z}[\omega]=\{\,a+b\omega\ :\ \omega=e^{2\pi i/3},\ a,b\in\mathbb{Z}\,\}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 三次与四次互反律 ---
+\newcommand{\reciprocityslide}{\begin{frame}\plainbar\sectiontitle{三次与四次互反律}{续写 Gauss 的《算术研究》}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{艾森斯坦的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{高斯的遗产} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{Gauss 已研究过三次与四次互反定律；证明散见于其未刊遗稿} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{站在巨人的肩膀上} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{发表证明} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{在 Crelle's Journal 发表四次互反律的\textbf{两个}证明，及三次、四次互反律的类似定律} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{定律的首次系统发表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{艾森斯坦互反律} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{在艾森斯坦整数框架下的互反律，以他命名} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{类域论的先声之一} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 从二次到高次：互反律的谱系}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussiablue!88!black}$\text{二次（Gauss 1796）}\ \longrightarrow\ \text{三次 / 四次（Gauss 研究 · Eisenstein 证明发表）}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 艾森斯坦级数 ---
+\newcommand{\seriesslide}{\begin{frame}\plainbar\sectiontitle{艾森斯坦级数}{模形式理论的基石}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{后世}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{定义} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{对格 $\Lambda$ 的幂和：$\ G_{2k}(\tau)=\sum_{(m,n)\neq(0,0)}(m\tau+n)^{-2k}$} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{模形式的标准例子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{来源} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{椭圆函数论研究的自然产物——与 $\wp$ 函数理论紧密相连} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{Weierstrass 理论的构件} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{现代地位} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{模形式空间的"最容易懂"的一类，张成 Eisenstein 子空间} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{Langlands 纲领的入门砖} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 艾森斯坦级数（Eisenstein series）}\\[1pt]
+  {\fontsize{11.5}{14.5}\selectfont\color{prussiablue!88!black}$G_{2k}(\tau)=\sum_{(m,n)\in\mathbb{Z}^2\setminus\{(0,0)\}}\frac{1}{(m\tau+n)^{2k}}\qquad(k\ge 2)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 都柏林与格廷根：Hamilton 与 Gauss ---
+\newcommand{\meetingslide}{\begin{frame}\plainbar\sectiontitle{都柏林与格廷根}{Hamilton 点火 · Gauss 赏识}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1843 · 都柏林} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{在都柏林见到 Hamilton，被介绍 Abel 的五次方程不可解证明——点燃了他投入数学研究的火花} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{回柏林一年} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{通过毕业考试并入读柏林大学；一年内向柏林科学院提交二元三次型的首篇工作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{拜访 Gauss} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{赴格廷根拜访 Gauss 并获赏识；Gauss 盛赞其为划时代数学家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉博士} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{布雷斯劳大学授予荣誉博士学位} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从都柏林到格廷根，他的天赋得到了两位巨人的背书。}
+\end{center}
+\end{frame}}
+
+% --- 10. 洪堡的资助与 1848 革命 ---
+\newcommand{\humboldtslide}{\begin{frame}\plainbar\sectiontitle{洪堡的资助与 1848 革命}{学术庇护人 · 短暂入狱}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{洪堡的资助} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{Alexander von Humboldt 为其争取补助金，资助他的生活与研究的财务需求——一对终生的学术庇护关系} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1847 · 执教} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{在柏林大学通过教授资格认证（habilitation）并开始任教} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1848 · 革命} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{参加柏林革命活动，曾被短暂逮捕入狱——铁窗并未中断他的数学研究} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{两院院士} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{1851 年当选哥廷根科学院院士，1852 年当选柏林科学院院士} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 洪堡护他周全，革命挡他一年——数学从未停下。}
+\end{center}
+\end{frame}}
+
+% --- 11. 天才早逝 ---
+\newcommand{\deathslide}{\begin{frame}\plainbar\sectiontitle{1852 · 天才早逝}{肺结核 · 29 岁 · 洪堡扶灵}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{肺结核恶化} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{体弱多病由来已久；1852 年肺结核病势转重} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1852-10-11} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{逝于柏林，年仅 29 岁——与 Abel（26 岁）、Galois（20 岁）并列数学史上最令人痛惜的早逝天才} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{洪堡扶灵} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{85 岁的 Alexander von Humboldt 亲自护送灵柩到墓地——他资助的年轻人走在了自己前面} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{遗下的工作} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{判别法、艾森斯坦整数与级数、互反律——1975 年 AMS 重印其全集，Weil 撰文评述} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 29 年的生命，留下了一个学科的几块基石。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与遗产 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与遗产}{以他命名的概念 · 身后影响}\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{生前荣誉} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 布雷斯劳大学荣誉博士\item 哥廷根科学院院士（1851）\item 柏林科学院院士（1852）\item Gauss 与洪堡的双重赏识\end{itemize}} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{29 年走完别人一生的路} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{以他命名} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{判别法 · 艾森斯坦整数 / 素数 · 互反律 · 级数 · 和 · 理想 · 三元组 · Eisenstein--Kronecker 数……} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{数论词典的高频姓氏} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后影响} & \cellcolor{critpanel}\textcolor{badgeCrit!82!black}{互反律通向类域论；级数成为模形式与 Langlands 纲领的基本对象；判别法至今是代数第一课} & \cellcolor{recippanel}\textcolor{badgeRecip!82!black}{现代数论的伏笔} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他活到 29 岁，他的数学活到了今天。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=prussiablue!90!black] at ([yshift=1.5cm]current page.center) {29 年的寿命，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {不朽的数论基石。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=prussiablue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是判别法，而是通往现代数论的一整条路。};
+\node[font=\fontsize{8}{10}\selectfont, text=prussiablue!60!black] at ([yshift=-2.0cm]current page.center) {艾森斯坦\quad Gotthold Eisenstein\quad 1823 — 1852};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 数论 · 互反律 · 椭圆函数\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\criterionslide
+\integersslide
+\reciprocityslide
+\seriesslide
+\meetingslide
+\humboldtslide
+\deathslide
+\honorslide
+\closingslide
+\end{document}
