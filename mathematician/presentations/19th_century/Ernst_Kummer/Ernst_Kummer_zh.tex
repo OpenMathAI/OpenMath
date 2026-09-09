@@ -1,0 +1,403 @@
+% =============================================================
+%  理想数的创立者 · 费马大定理的推进者：库默尔 (Ernst Eduard Kummer)
+%  Beamer 演示 —— 参照 Bolzano / Poncelet / Jacobi / Dirichlet 模板样式
+%  资料来源：mathematician/presentations/19th_century/pages/Ernst_Kummer
+%  设计母题：理想数 / 分圆域 —— 柔和气泡呼应单位根的圆环
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：普鲁士深蓝 + 数学金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{prussianblue}{HTML}{1F3A93}    % 普鲁士深蓝 — 德意志理性
+\definecolor{mathgold}{HTML}{C9A227}        % 数学金 — 理想数 / 尊崇
+\definecolor{badgeIdeal}{HTML}{4C5FD5}      % 理想数/费马 — 靛蓝
+\definecolor{badgeKummer}{HTML}{0E7C7B}     % 库默尔理论 — 青绿
+\definecolor{badgeSurface}{HTML}{E07B30}    % 曲面/函数 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 生平 / 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{15,26,64}
+\definecolor{muteddark}{RGB}{66,74,88}
+\definecolor{idealpanel}{RGB}{228,232,250}
+\definecolor{kummerpanel}{RGB}{220,240,238}
+\definecolor{surfacepanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应理想数 / 分圆域
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeKummer!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeIdeal!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeSurface!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[mathgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=prussianblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 德国（普鲁士）\enspace·\enspace 数学家\enspace·\enspace 理想数的创立者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=prussianblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {库默尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=prussianblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Ernst Eduard Kummer\enspace·\enspace 1810 — 1893};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {理想数 · 正则素数 · 库默尔理论 · 库默尔曲面};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeIdeal] at (-5.05,0)
+        {理想数\\Ideal Numbers\par\scriptsize 正则素数 · 费马};
+      \node[badge, fill=badgeKummer] at (-1.68,0)
+        {库默尔理论\\Kummer Theory\par\scriptsize 类域论的基石};
+      \node[badge, fill=badgeSurface] at (1.68,0)
+        {曲面与函数\\Geometry\par\scriptsize 库默尔曲面 · 16 奇点};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {师门传承\\Legacy\par\scriptsize 柏林学派 · 一代宗师};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {为攻克费马大定理，他发明了"理想"——一个概念打开了代数数论的大门。};
+  % 肖像（Wikipedia 肖像）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{kummer_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north east, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=7.9cm, yshift=1.42cm]current page.center) {Ernst Eduard Kummer (1810–1893)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国（普鲁士）\enspace|\enspace \faIcon{university}\enspace Universität Berlin\enspace|\enspace 数论 · 理想数 · 应用数学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{库默尔 - 从索劳到柏林}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Wikipedia 肖像）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{kummer_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Ernst Eduard Kummer (1810–1893)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1810-01-29 — 1893-05-14\\[2pt]\lab{本名}\quad Ernst Eduard Kummer\\[2pt]\lab{国籍}\quad 德国（普鲁士王国）};
+  \node[infob, fill=idealpanel, draw=badgeIdeal!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 索劳王家文科中学 · 哈雷大学\\[2pt]
+     \lab{博士}\quad 哈雷大学（1831，获奖论文）\\[2pt]\lab{师承}\quad Heinrich Scherk};
+  \node[infob, fill=kummerpanel, draw=badgeKummer!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 索劳（Sorau，勃兰登堡）\\[2pt]\lab{身份}\quad 数学家\\[2pt]\lab{任职}\quad 布雷斯劳 · 柏林大学教授};
+  \node[infob, fill=surfacepanel, draw=badgeSurface!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数论 · 应用数学 · 几何\\[2pt]
+     \lab{代表}\quad 理想数 · 库默尔理论 · 库默尔曲面\\[2pt]
+     \lab{姻亲}\quad 妻 Ottilie Mendelssohn};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 库默尔的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{库默尔的一生}{1810 — 1893 · 从神学生到柏林宗师}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1810/生于索劳（Sorau，勃兰登堡，普鲁士）；三岁丧父,
+    2.4/1831/哈雷大学博士：获奖数学论文（初习新教神学，后转数学）,
+    1.7/1832/起在文科中学任教十年；启发 Kronecker 的数学人生,
+    1.0/1840/娶 Ottilie Mendelssohn，与狄利克雷成连襟,
+    0.3/1842/经狄利克雷等相助，出任布雷斯劳大学教授,
+    -0.4/1855/接替狄利克雷，任柏林大学教授,
+    -1.1/1867/指导 Cantor 完成博士论文（柏林）,
+    -1.8/1890/从教学与数学研究退休,
+    -2.5/1893/于柏林去世，享年 83
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1810–1842)}{索劳 · 神学转数学 · 中学讲台 · 布雷斯劳}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1810} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{生于索劳（勃兰登堡，普鲁士）；父亲是医生，1813 年去世} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{清寒的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1820s} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{最初修习新教神学，后转攻数学} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{从讲道到定理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1831} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{以获奖数学论文（关于余弦与正弦多重弧幂级数展开）获哈雷大学博士学位（导师 Scherk），论文次年出版} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{一鸣惊人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1832–1842} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{在文科中学（gymnasium）执教十年，学生中有少年 Kronecker；同时精于应用数学，为德军军官讲授弹道学} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{中学里的教授} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他在中学讲台上教出了一个数论大家，也练出了一支军队的炮术。}
+\end{center}
+\end{frame}}
+
+% --- 5. 理想数与费马大定理 ---
+\newcommand{\idealslide}{\begin{frame}\plainbar\sectiontitle{理想数与费马大定理}{"ideal" 一词的诞生 · 正则素数}
+\vspace{-0.42cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{理想数} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{为攻克费马大定理引入"理想数"——"ideal"一词由库默尔发明} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{代数数论的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{方法的归属} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{其方法更接近后来的 $p$-adic 方法，而非后来的理想理论——后者由 Dedekind 发展成型} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{承前启后的分水岭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{正则素数} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{引入正则素数概念，结合理想类群证明费马大定理对一大类素数指数成立（100 以内仅 37、59、67 例外）} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{FLT 的里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{分圆整数} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{对分圆域整数环的系统研究，成为代数数论的核心舞台} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{新天地的开垦} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.24cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 费马大定理与正则素数}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussianblue!88!black}$x^{p}+y^{p}=z^{p}\ \text{对正则素数 } p\ \text{无正整数解}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 库默尔理论与类域论 ---
+\newcommand{\kummerslide}{\begin{frame}\plainbar\sectiontitle{库默尔理论与类域论}{库默尔扩张 · 二次扩张理论的推广}
+\vspace{-0.42cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{库默尔扩张} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{研究在已含 $n$ 次本原单位根的域上，添加一个 $n$ 次根生成的域扩张（库默尔扩张）} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{阿贝尔扩张的原型} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{理论的推广} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{显著推广了二次扩张理论，以及与类群 2-挠相联的二次型种理论（genus theory）} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{结构理论的深化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{类域论的基石} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{库默尔扩张至今仍是类域论的奠基性内容——但他并未建立类域论本身（那是后世的理论）} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{通向现代数论} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.24cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 库默尔扩张}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussianblue!88!black}$L=K(\alpha),\quad \alpha^{n}=a\in K,\qquad \mu_{n}\subset K$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 库默尔曲面与超几何级数 ---
+\newcommand{\surfaceslide}{\begin{frame}\plainbar\sectiontitle{库默尔曲面与超几何级数}{16 个奇点的 orbifold · 邻接关系 · Bessel 函数}
+\vspace{-0.42cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{库默尔曲面} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{二维阿贝尔簇对循环群 $\{1,-1\}$ 作商得到的曲面：16 个奇点，是早期的 orbifold；其几何在 19 世纪被深入研究} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{几何学的经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{超几何级数} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{整理不同超几何级数之间的关系——著名的邻接关系（contiguity relations）} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{特殊函数的系统化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{库默尔函数} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{合流超几何函数（库默尔函数）以其命名；Bessel 函数亦在其知名贡献之列} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{从数论到物理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{弹道学与射线系统} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{研究弹道学；与哈密顿共同研究射线系统（ray systems）} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{应用数学高手} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.24cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 库默尔曲面：一个早期的 orbifold}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussianblue!88!black}$A/\{1,-1\}\quad \text{（16 个奇点）}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 师门与家族 ---
+\newcommand{\familyslide}{\begin{frame}\plainbar\sectiontitle{门德尔松姻亲与师门传承}{Ottilie · 13 个子女 · 一代德国数学家的摇篮}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1840 · 婚礼} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{娶 Ottilie Mendelssohn（Nathan Mendelssohn 之女）——Felix Mendelssohn 的表妹，也是狄利克雷之妻 Rebecca 的表妹，两人因此成连襟} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{数学与音乐的联姻} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{家族} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{Ottilie 1848 年去世后，再娶其母系表妹 Bertha Cauer；共 13 个子女；女儿 Marie 后嫁数学家 Hermann Schwarz} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{大家族的家长} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{伯乐} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{中学执教十年间启发了少年 Kronecker 的数学事业——日后与他同执教柏林的大家} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{慧眼识珠} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{门下群星} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{博士生：Eisenstein、Frobenius、Fuchs、Killing、Kneser、Mertens、Schwarz、Cantor（1867 柏林）等——一代德国数学家皆出其门} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{柏林学派的源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他家里有 13 个孩子，数学界有他一整代学生。}
+\end{center}
+\end{frame}}
+
+% --- 9. 荣誉与晚年 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与晚年 (1855–1893)}{柏林讲坛 · 功勋与纪念 · 83 岁谢幕}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{柏林岁月} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{1855 年接替狄利克雷出任柏林大学教授（此前 1842 年经狄利克雷相助赴布雷斯劳）；1867 年指导 Cantor 完成博士论文} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{德国数学的中心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{荣誉} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{巴伐利亚马克西米利安科学与艺术勋章；英国皇家学会外籍会员（ForMemRS）} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{跨国界的认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后出版} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{《全集》（Collected papers，两卷）由 André Weil 编辑出版（1975）；小行星 25628 Kummer 以其命名} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{大师致敬大师} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{谢幕} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{1890 年从教学与数学研究退休，1893-05-14 于柏林去世，享年 83} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{高寿的宗师} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从神学生到柏林宗师，他把 83 年活成了一座学院。}
+\end{center}
+\end{frame}}
+
+% --- 10. 身后影响 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{身后影响}{代数数论 · 费马之路 · 几何与函数}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{代数数论} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 理想数与理想类群\item 库默尔扩张与类域论\item 经 Dedekind 发扬为理想理论\end{itemize}} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{一个概念的百年回响} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{费马之路} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{正则素数的证明是 Wiles（1994）之前费马大定理最伟大的推进} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{350 年长链的中坚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{几何与函数} & \cellcolor{idealpanel}\textcolor{badgeIdeal!82!black}{库默尔曲面与 Kummer variety、超几何邻接关系、库默尔函数与 Bessel 函数} & \cellcolor{kummerpanel}\textcolor{badgeKummer!82!black}{几何与物理的遗产} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} "理想"本是为救一场证明而生的假设，最终长成了数论的骨架。}
+\end{center}
+\end{frame}}
+
+% --- 11. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=prussianblue!90!black] at ([yshift=1.5cm]current page.center) {他用 83 年的一生，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {为费马大定理铺下了最长的阶梯。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=prussianblue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是理想数，还有一整代德国数学家的师门。};
+\node[font=\fontsize{8}{10}\selectfont, text=prussianblue!60!black] at ([yshift=-2.0cm]current page.center) {库默尔\quad Ernst Eduard Kummer\quad 1810 — 1893};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 理想数 · 库默尔理论 · 库默尔曲面\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\idealslide
+\kummerslide
+\surfaceslide
+\familyslide
+\honorslide
+\legacyslide
+\closingslide
+\end{document}
