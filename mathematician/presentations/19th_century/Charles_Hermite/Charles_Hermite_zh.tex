@@ -1,0 +1,434 @@
+% =============================================================
+%  埃尔米特 · 超越数的证明者与 Hermitian 世界的命名者 (Charles Hermite)
+%  Beamer 演示 —— 参照高斯基准模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Charles_Hermite
+%  设计母题：e 的超越 / Hermitian 对称 —— 柔和气泡呼应分析与代数的交融
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法国蓝 + 数学金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{frenchblue}{HTML}{1F3A93}      % 法国蓝 — 理性 / 巴黎
+\definecolor{mathgold}{HTML}{C9A227}        % 数学金 — 超越数 / 尊崇
+\definecolor{badgeTrans}{HTML}{4C5FD5}      % 超越数 — 靛蓝
+\definecolor{badgeOrtho}{HTML}{0E7C7B}      % 正交/矩阵 — 青绿
+\definecolor{badgePoly}{HTML}{E07B30}       % 多项式/椭圆 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{transpanel}{RGB}{228,232,250}
+\definecolor{orthopanel}{RGB}{220,240,238}
+\definecolor{polypanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应 e 的超越 / Hermitian 对称
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeOrtho!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeTrans!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePoly!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[mathgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=frenchblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 法兰西科学院院士 · 索邦教授\enspace·\enspace 超越数的证明者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=frenchblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {埃尔米特};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=frenchblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Charles Hermite\enspace·\enspace 1822 — 1901};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {e 的超越性 · Hermitian 矩阵 · Hermite 多项式 · 椭圆积分解五次方程};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeTrans] at (-5.05,0)
+        {超越数\\Transcendence\par\scriptsize 1873 · 证明 e 超越};
+      \node[badge, fill=badgeOrtho] at (-1.68,0)
+        {Hermitian\\矩阵理论\par\scriptsize 特征值为实};
+      \node[badge, fill=badgePoly] at (1.68,0)
+        {多项式与椭圆\\Hermite Polys.\par\scriptsize 五次方程求解};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {传承\\Legacy\par\scriptsize Poincaré 之师};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {先天跛足、被巴黎综合理工拒之门外的青年，证明了最难证明的数。};
+  % 肖像（1887 年晚年照片，Wikipedia Commons）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (1.85,2.9);
+      \node[anchor=center] at (0.925,1.45) {\includegraphics[width=1.85cm,height=2.9cm,keepaspectratio]{hermite_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.5cm, yshift=1.42cm]current page.center) {Charles Hermite (1822–1901)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace École Polytechnique · Sorbonne\enspace|\enspace 超越数 · Hermitian · 椭圆函数};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{埃尔米特 - 从迪厄兹到索邦}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（1887 年晚年照片）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.45,3.9);
+      \node[anchor=center] at (1.225,1.95) {\includegraphics[width=2.45cm,height=3.9cm,keepaspectratio]{hermite_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Charles Hermite (1822–1901)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1822-12-24 — 1901-01-14\\[2pt]\lab{本名}\quad Charles Hermite\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=transpanel, draw=badgeTrans!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad École Polytechnique（未毕业）\\[2pt]
+     \quad\enspace 私下攻读五年获学位\\[2pt]\lab{师承}\quad Catalan 辅导 · 与 Jacobi 通信};
+  \node[infob, fill=orthopanel, draw=badgeOrtho!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 迪厄兹（洛林）\\[2pt]\lab{荣誉}\quad 荣誉军团大官 · Pour le Mérite\\[2pt]\lab{身后}\quad 葬于巴黎 Montparnasse};
+  \node[infob, fill=polypanel, draw=badgePoly!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 超越数 · Hermitian 矩阵\\[2pt]
+     \quad\enspace 椭圆函数 · 不变量理论\\[2pt]
+     \lab{身份}\quad 数学家 · 索邦教授};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 埃尔米特的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{埃尔米特的一生}{1822 — 1901 · 从跛足少年到索邦讲席}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1822/生于洛林迪厄兹，右脚先天畸形，终身跛行,
+    2.4/1842/20 岁前已发表首篇论文，入巴黎综合理工,
+    1.7/1843/因脚畸形被校方要求退学,
+    1.0/1847/私下攻读五年后获学士学位,
+    0.3/1848/回母校任教；当选法兰西科学院,
+    -0.4/1869/任索邦教授（至去世）,
+    -1.1/1873/证明 e 是超越数,
+    -1.8/1892/70 岁生日获荣誉军团大官,
+    -2.5/1901/于巴黎去世，享年 78
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与残疾 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与残疾 (1822–1847)}{先天跛足 · 被拒于综合理工之外}
+\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1822} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{生于洛林迪厄兹；右脚先天畸形，终身行动不便} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{一生与跛行共处} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1840s 初} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{在 Nancy 读中学后赴巴黎；Catalan 晚间辅导其数学；1842 年发表首篇论文（Abel 定理的简化证明）} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{20 岁前已发论文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1842} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{入巴黎综合理工；一年后因脚畸形被校方要求退学（未毕业）} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{被拒于体制之外} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1842--1847} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{私下苦读五年；期间结识 Jacobi 并与之通信，1847 年获学士学位} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{体制外完成学业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 学校拒绝了他的身体，历史记住了他的数学。}
+\end{center}
+\end{frame}}
+
+% --- 5. 1873 · 证明 e 是超越数 ---
+\newcommand{\etransslide}{\begin{frame}\plainbar\sectiontitle{1873 · 证明 e 是超越数}{实分析中的一座高峰}
+\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{埃尔米特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{什么是超越数？} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{不是任何整系数多项式方程之根的数——证明某个具体数超越，极其困难} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{当时几乎无从下手} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{方法来源} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{基于 Liouville 的思想，埃尔米特给出两种不同方法} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{方法本身成为经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1873 论文} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{《论指数函数》证明 e 是超越数——史上第一个被证明超越的具体数之外的里程碑} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{实分析经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{简化} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{方法艰深，后由 Hilbert 简化；原两种方法均可简化为一种通用技术} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{进入现代教科书} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 超越数（transcendental number）}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{frenchblue!88!black}$\alpha\ \text{超越}\iff \nexists\ \text{整系数多项式}\ p:\ p(\alpha)=0$}\\[2pt]
+  {\fontsize{8.5}{11}\selectfont\color{frenchblue!75!black}首个被证明超越的具体数：$e$（Hermite, 1873）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 从 e 到 π ---
+\newcommand{\pislide}{\begin{frame}\plainbar\sectiontitle{从 e 到 $\pi$}{$\pi$ 的无理性 · Lindemann 的最后一步}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{埃尔米特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{$\pi^2$ 无理} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{同年（1873）证明 $\pi^2$ 是无理数，从而 $\pi$ 无理} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{化圆为方问题推进} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{$\pi$ 的超越性？} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{他的方法未能直接证明 $\pi$ 超越——这是他未跨过的最后一步} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{留给后人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Lindemann（1882）} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{Lindemann 用类似的技巧证明 $\pi$ 超越，彻底解决化圆为方问题} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{两千五百年悬案终结} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{历史地位} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{从 e 到 $\pi$：超越数理论由埃尔米特奠基，Lindemann 完成} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{一条清晰的传承线} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 超越数里程碑}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{frenchblue!88!black}$e$ 超越（Hermite 1873）$\ \longrightarrow\ \pi$ 超越（Lindemann 1882）$\ \Longrightarrow\ $化圆为方不可能}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Hermitian 矩阵与正交矩阵 ---
+\newcommand{\matrixslide}{\begin{frame}\plainbar\sectiontitle{Hermitian 矩阵与正交矩阵}{以他名字命名的矩阵世界}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{埃尔米特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{后世}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{正交矩阵（1854）} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{提出并运用正交矩阵；"现代"定义由 Frobenius（1878）给出} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{线性代数标准概念} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Hermitian 矩阵（1855）} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{证明 Hermitian 矩阵的特征值为实数——推广 Cauchy（1829）的对称矩阵结果} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{谱定理的起点之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{物理学的语言} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{Hermitian 形式在 Hilbert、Wiener、Born 与 von Neumann 手中成为量子力学的数学基础} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{QM 可观测量的数学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Hermitian 矩阵的特征值必为实数（Hermite，1855）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{frenchblue!88!black}$A=A^{\dagger}\ \Longrightarrow\ \lambda\in\mathbb{R}\quad(\text{推广 Cauchy 1829 对称矩阵结果})$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. Hermite 多项式与量子谐振子 ---
+\newcommand{\polyslide}{\begin{frame}\plainbar\sectiontitle{Hermite 多项式}{从19 世纪分析到量子力学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Hermite 多项式} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{1864 年系统研究；标准形式有概率论与物理学两种约定} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{特殊函数论支柱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{正交性} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{关于高斯权 $e^{-x^2}$ 正交，是正交多项式家族的核心成员} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{逼近论与数值分析} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{量子谐振子} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{薛定谔方程的一维谐振子解正是 Hermite 多项式乘以高斯函数} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{QM 教科书必备} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 量子谐振子的解（Schrödinger 方程）}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{frenchblue!88!black}$\psi_n(x)=\dfrac{1}{\sqrt{2^n n!}}\left(\dfrac{m\omega}{\pi\hbar}\right)^{1/4}H_n\!\left(\sqrt{\dfrac{m\omega}{\hbar}}\,x\right)e^{-\frac{m\omega x^2}{2\hbar}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 椭圆积分解五次方程 ---
+\newcommand{\quinticslide}{\begin{frame}\plainbar\sectiontitle{椭圆积分解五次方程}{连 Jacobi 都未能想到的答案}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{埃尔米特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{无根式解之后} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{Abel 证明五次方程无一般根式解；那么还能"解"吗？} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{从否定走向构造} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{首篇论文（1842）} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{20 岁前发表 Abel--Ruffini 定理的简化证明} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{少年成名之始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1858 / 1865 / 1866} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{给出用椭圆积分（模函数）表示一般五次方程根的方法} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{超越函数解代数方程} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{与 Jacobi 的通信} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{学生时代即与椭圆函数大师 Jacobi 通信；Jacobi 曾以为该问题无法解决} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{"超乎 Jacobi 期待"} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 根不能开方出来，却可以写在椭圆积分里——这是法国数学的优雅。}
+\end{center}
+\end{frame}}
+
+% --- 10. 不变量理论与教学生涯 ---
+\newcommand{\careerslide}{\begin{frame}\plainbar\sectiontitle{不变量理论与教学生涯}{与 Cayley、Sylvester 并肩 · 桃李满门}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{不变量理论} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{与 Cayley、Sylvester 同时发展不变量与协变量理论；建立"互反律"联系两种代数形式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{教学生涯} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{1862--1873 年在巴黎高师任讲师；1869 年起任索邦教授直至去世；并任巴黎综合理工教授至 1876 年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{桃李满门} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{学生包括 Poincaré、Stieltjes、Padé、Tannery、Floquet、Petrović——20 世纪法国数学的谱系由此展开} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{科学院院士} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{1848 年（26 岁）即当选法兰西科学院成员；被公认为当时在世最伟大的代数学家之一} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他研究数学，也培育了整个时代的数学。}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉与遗产 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与遗产}{国际荣誉 · 身后纪念 · 以他命名}\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{frenchblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{生前荣誉} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 法兰西科学院成员（1848，26 岁）\item 荣誉军团大官（70 岁生日，1892）\item Pour le Mérite（科学与艺术版）\item 皇家学会外籍院士 ForMemRS\end{itemize}} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{法国数学的旗帜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后纪念} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{月球北极的 Hermite 环形山以他命名；巴黎 Montparnasse 墓地安息；曼彻斯特等机构荣誉加身} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{名字写上月球} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{以他命名} & \cellcolor{transpanel}\textcolor{badgeTrans!82!black}{Hermitian 矩阵 / 算子 · Hermite 多项式 · Hermite 插值 · Hermite 标准形 · Hermite 度量……} & \cellcolor{orthopanel}\textcolor{badgeOrtho!82!black}{数学词典的高频姓氏} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从超越数到量子力学——他的名字无处不在。}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=frenchblue!90!black] at ([yshift=1.5cm]current page.center) {被校园拒绝的身体，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {证明了最纯粹的数。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=frenchblue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是 e 的超越性，而是 Hermitian 的整个世界。};
+\node[font=\fontsize{8}{10}\selectfont, text=frenchblue!60!black] at ([yshift=-2.0cm]current page.center) {埃尔米特\quad Charles Hermite\quad 1822 — 1901};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 超越数 · Hermitian · 椭圆函数\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\etransslide
+\pislide
+\matrixslide
+\polyslide
+\quinticslide
+\careerslide
+\honorslide
+\closingslide
+\end{document}
