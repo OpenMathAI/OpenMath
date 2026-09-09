@@ -1,0 +1,436 @@
+% =============================================================
+%  凯莱 · 抽象群与矩阵理论的奠基者 (Arthur Cayley)
+%  Beamer 演示 —— 参照高斯基准模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Arthur_Cayley
+%  设计母题：群 / 矩阵 —— 柔和气泡呼应结构代数的秩序
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：英伦深蓝 + 数学金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{englandblue}{HTML}{1F3A93}     % 英伦深蓝 — 理性 / 剑桥
+\definecolor{mathgold}{HTML}{C9A227}        % 数学金 — 抽象群 / 尊崇
+\definecolor{badgeGroup}{HTML}{4C5FD5}      % 群论 — 靛蓝
+\definecolor{badgeMatrix}{HTML}{0E7C7B}     % 矩阵/线性代数 — 青绿
+\definecolor{badgeGeometry}{HTML}{E07B30}   % 代数几何/组合 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{grouppanel}{RGB}{228,232,250}
+\definecolor{matrixpanel}{RGB}{220,240,238}
+\definecolor{geometrypanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应群 / 矩阵
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeMatrix!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeGroup!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeGeometry!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[mathgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=englandblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 英国\enspace·\enspace 剑桥 Sadleirian 教授\enspace·\enspace 抽象群与矩阵理论的奠基者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=englandblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {凯莱};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=englandblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Arthur Cayley\enspace·\enspace 1821 — 1895};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {Cayley 定理 · Cayley–Hamilton · 27 条直线 · Cayley 公式};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeGroup] at (-5.05,0)
+        {群论\\Group Theory\par\scriptsize 抽象群 · Cayley 定理};
+      \node[badge, fill=badgeMatrix] at (-1.68,0)
+        {矩阵代数\\Matrix Algebra\par\scriptsize Cayley–Hamilton};
+      \node[badge, fill=badgeGeometry] at (1.68,0)
+        {代数几何\\Alg. Geometry\par\scriptsize 27 条直线};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {组合与遗产\\Combinatorics\par\scriptsize Cayley 公式 · 967 篇};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {从律师楼到剑桥讲席，他为纯数学奠定了现代形态。};
+  % 肖像（Wikipedia Commons 标准照片）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (1.9,2.9);
+      \node[anchor=center] at (0.95,1.45) {\includegraphics[width=1.9cm,height=2.9cm,keepaspectratio]{cayley_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.5cm, yshift=1.42cm]current page.center) {Arthur Cayley (1821–1895)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国\enspace|\enspace \faIcon{university}\enspace Trinity College, Cambridge\enspace|\enspace 群论 · 矩阵 · 代数几何};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{凯莱 - 从里士满到剑桥}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Wikipedia Commons 标准照片）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.6,3.9);
+      \node[anchor=center] at (1.3,1.95) {\includegraphics[width=2.6cm,height=3.9cm,keepaspectratio]{cayley_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Arthur Cayley (1821–1895)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1821-08-16 — 1895-01-26\\[2pt]\lab{本名}\quad Arthur Cayley\\[2pt]\lab{国籍}\quad 英国};
+  \node[infob, fill=grouppanel, draw=badgeGroup!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad King's College School\\[2pt]
+     \quad\enspace Trinity College, Cambridge\\[2pt]\lab{师承}\quad Peacock · Hopkins};
+  \node[infob, fill=matrixpanel, draw=badgeMatrix!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 里士满（萨里，英格兰）\\[2pt]\lab{荣誉}\quad 科普利奖章 · Royal · De Morgan\\[2pt]\lab{身后}\quad 葬于剑桥 Mill Road};
+  \node[infob, fill=geometrypanel, draw=badgeGeometry!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 群论 · 矩阵 · 代数几何\\[2pt]
+     \quad\enspace 组合学 · 不变量理论\\[2pt]
+     \lab{身份}\quad 数学家 · 律师（14 年）};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 凯莱的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{凯莱的一生}{1821 — 1895 · 从 Senior Wrangler 到 967 篇论文}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1821/生于里士满，童年在圣彼得堡度过,
+    2.4/1842/剑桥 Senior Wrangler 与第一名 Smith's Prize,
+    1.7/1846/入 Lincoln's Inn 当律师，专精不动产转让,
+    1.0/1854--1859/发表抽象群定义与矩阵代数奠基论文,
+    0.3/1863/42 岁出任首任 Sadleirian 纯数学教授,
+    -0.4/1882/获皇家学会科普利奖章,
+    -1.1/1883/任英国科学促进会主席,
+    -1.8/1889/剑桥大学出版社启动 13 卷全集出版,
+    -2.5/1895/于剑桥去世，享年 73
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与剑桥求学 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与剑桥求学 (1821–1842)}{圣彼得堡 · King's College School · Senior Wrangler}
+\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1821} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{生于萨里郡里士满；父亲 Henry 是定居圣彼得堡的商人，前 8 年在俄国度过} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{商人家庭的异国童年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1835（14 岁）} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{入 King's College School；校长察觉其数学天才，劝其父送他进剑桥而非经商} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{天才被伯乐发现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1838（17 岁）} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{入剑桥三一学院；导师 Peacock，私人教练 Hopkins；20 岁起向《剑桥数学杂志》投稿} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{大学时代已多产} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1842} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{获 Senior Wrangler（数学荣誉考试第一名）与第一名 Smith's Prize；当选三一学院院士} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{剑桥数学之巅} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 学业巅峰之后，等着他的却不是教席，而是十四年律师楼。}
+\end{center}
+\end{frame}}
+
+% --- 5. 抽象群：第一个定义 ---
+\newcommand{\groupslide}{\begin{frame}\plainbar\sectiontitle{抽象群：第一个定义}{超越 Galois 的置换群}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{凯莱的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{群是什么？} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{第一个定义抽象群：带满足一定律的二元运算的集合，不依赖具体对象} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{现代群论的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{与 Galois 的关系} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{Galois 研究的是置换群；凯莱的贡献是把群概念从置换中抽象出来} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{从具体到抽象的飞跃} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Cayley 定理} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{每个群都同构于某个置换群} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{群论基本定理之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{以他命名的工具} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{Cayley 表（群乘法表）、Cayley 图（群的生成图）沿用至今} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{群论的日常语言} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 抽象群的定义与 Cayley 定理（Cayley，1854）}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{englandblue!88!black}$(G,\cdot)$：结合律 $\cdot$ 单位元 $\cdot$ 逆元 $\quad\Longrightarrow\quad$ Cayley 定理：$G\cong$ 某置换群}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Cayley–Hamilton 与矩阵代数 ---
+\newcommand{\matrixslide}{\begin{frame}\plainbar\sectiontitle{Cayley–Hamilton 与矩阵代数}{矩阵的运算法则由他建立}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{凯莱的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{今天}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{矩阵代数（1858）} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{《矩阵论专论》建立矩阵的加法、乘法、逆等运算法则，把矩阵当作独立对象} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{线性代数的基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Cayley–Hamilton} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{提出"每个方阵都满足自己的特征多项式"，并对 2 阶、3 阶矩阵验证} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{线性代数基本定理之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{一般证明} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{凯莱未给出一般证明，一般情形由后人完成} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{教科书标准定理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{行列式（1841）} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{发表行列式理论的系统论文，引入现代记号} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{记号沿用至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Cayley–Hamilton 定理（提出于 1858；2、3 阶已验证）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{englandblue!88!black}$p_A(\lambda)=\det(\lambda I-A)\ \Longrightarrow\ p_A(A)=O$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 与 Sylvester 的合作 ---
+\newcommand{\sylvesterslide}{\begin{frame}\plainbar\sectiontitle{律师楼里的数学家}{与 Sylvester 的长期合作}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1846 · 律师} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{院士任期有限，须择业谋生：24 岁入 Lincoln's Inn，专精不动产转让法律（conveyancing），与 De Morgan 的选择相似} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{都柏林讲座} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{执业见习期间专程赴都柏林，听 Hamilton 的四元数讲座} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Lincoln's Inn 散步} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{友人 Sylvester（当年剑桥比他高五级，时为伦敦精算师）常与他绕法院庭院散步，讨论不变量与协变量理论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{14 年的产出} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{律师生涯的十四年间，凯莱写出两三百篇论文——本职是律师，副业改写了数学史} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 白天起草法律文书，业余时间奠基不变量理论。}
+\end{center}
+\end{frame}}
+
+% --- 8. 代数几何 ---
+\newcommand{\geometryslide}{\begin{frame}\plainbar\sectiontitle{代数几何}{27 条直线 · 直纹曲面}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{凯莱的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{27 条直线} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{与 Salmon 共同发现：一般三次曲面上恰有 27 条直线} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{经典代数几何的明珠} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{直纹曲面} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{创立直纹曲面（含二次曲面与三次 scroll）的代数几何理论} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{曲面分类的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{曲线的参数化} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{构造射影 3 空间中全部曲线的参数空间（后世 Chow 域思想的先声）} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{现代模空间思想的雏形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{不变量理论} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{与 Sylvester 共同奠基英国不变量学派，引入超行列式等工具} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{19 世纪英国代数的旗帜} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 三次曲面上的 27 条直线（Cayley \& Salmon）}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{englandblue!88!black}一般复三次曲面恰好包含 27 条复直线}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 组合学与 Cayley 公式 ---
+\newcommand{\combinaticslide}{\begin{frame}\plainbar\sectiontitle{组合学与 Cayley 公式}{树的计数 · 生成函数}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{凯莱的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{树有多少棵？} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{计算 $n$ 个标号顶点上树的数目} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{Cayley 公式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{怎么数？} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{开创性地使用生成函数进行计数} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{组合计数的方法论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{延伸应用} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{树计数等工作与化学中同分异构体（树状分子结构）计数相连} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{组合化学的数学工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{图论位置} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{树计数是图论早期的里程碑之一（图论概念本身更早）} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{Cayley 公式写入教科书} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Cayley 公式}\\[1pt]
+  {\fontsize{12}{15.5}\selectfont\color{englandblue!88!black}$T_n=n^{\,n-2}\qquad(n\ \text{个标号顶点上的树数})$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. Sadleirian 教授：1863 ---
+\newcommand{\professorslide}{\begin{frame}\plainbar\sectiontitle{从律师楼到剑桥讲席 (1863)}{放弃高薪 · 35 年教授}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1863 · 新教席} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{剑桥以 Lady Sadleir 遗赠基金新设 Sadleirian 纯数学教授讲席，42 岁的凯莱为首任，任职至去世共 35 年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{放弃高薪} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{放弃丰厚的律师执业换取微薄教薪，却从不后悔——得以全力投入他最热爱的事业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{讲课与研究} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{课程常讲其当前研究课题；长期担任国内外学术机构的数学论文审稿人；1881–1882 年赴约翰斯·霍普金斯大学讲学（Abelian 与 Theta 函数）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{家庭与女性教育} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{就任后成婚，家庭美满（Sylvester 曾表艳羡）；热心女性高等教育，多年任 Newnham 学院理事会主席，并直接支援 Girton 教学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 薪水少了，时间多了——他换来了完整的数学人生。}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉与高产 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与高产}{奖项 · 全集 · 身后影响}\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{生前荣誉} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Smith's Prize（1842，第一名）· Royal Medal（1859）\item Copley Medal（1882）· De Morgan Medal（1884）\item FRS · 英国科学促进会主席（1883）\item 海德堡、爱丁堡、牛津、博洛尼亚、莱顿荣誉博士\end{itemize}} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{英国数学的旗手} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{全集} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{1889 年起剑桥大学出版社出版其全集：生前自编 7 卷，身后由学生 Forsyth 续编，共 13 卷、967 篇论文} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{一人的论文构成一座图书馆} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后影响} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{21 世纪仍有 200 余篇数学论文引用其工作；月球环形山 Cayley 与数十个数学名词以他命名} & \cellcolor{matrixpanel}\textcolor{badgeMatrix!82!black}{名字写进现代数学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 967 篇论文、13 卷全集——维多利亚时代最丰产的数学家之一。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=englandblue!90!black] at ([yshift=1.5cm]current page.center) {他把"运算的对象"，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {变成了现代数学的骨架。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=englandblue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是定理，而是让群与矩阵成为数学家日常语言的结构观。};
+\node[font=\fontsize{8}{10}\selectfont, text=englandblue!60!black] at ([yshift=-2.0cm]current page.center) {凯莱\quad Arthur Cayley\quad 1821 — 1895};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 群论 · 矩阵 · 代数几何 · 组合学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\groupslide
+\matrixslide
+\sylvesterslide
+\geometryslide
+\combinaticslide
+\professorslide
+\honorslide
+\closingslide
+\end{document}
