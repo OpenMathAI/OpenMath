@@ -1,0 +1,448 @@
+% =============================================================
+%  克罗内克 · "上帝造整数"的有限主义哲学家 (Leopold Kronecker)
+%  Beamer 演示 —— 参照高斯基准模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Leopold_Kronecker
+%  设计母题：整数 / 有限 —— 柔和气泡呼应有限主义的秩序
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：普鲁士深蓝 + 数学金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{prussiablue}{HTML}{1F3A93}     % 普鲁士深蓝 — 德意志理性
+\definecolor{mathgold}{HTML}{C9A227}        % 数学金 — 整数 / 尊崇
+\definecolor{badgeDelta}{HTML}{4C5FD5}      % δ/积 — 靛蓝
+\definecolor{badgeAlg}{HTML}{0E7C7B}        % 代数数论 — 青绿
+\definecolor{badgeFinit}{HTML}{E07B30}      % 有限主义 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{deltapanel}{RGB}{228,232,250}
+\definecolor{algpanel}{RGB}{220,240,238}
+\definecolor{finitpanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应整数 / 有限
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAlg!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeDelta!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeFinit!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[mathgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=prussiablue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 德国（普鲁士王国）\enspace·\enspace 柏林大学教授 · 科学院院士\enspace·\enspace 有限主义的先驱};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=prussiablue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {克罗内克};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=prussiablue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Leopold Kronecker\enspace·\enspace 1823 — 1891};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {"上帝造整数" · 克罗内克 $\delta$ · 克罗内克积 · Kronecker--Weber 定理};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeDelta] at (-5.05,0)
+        {符号与积\\Delta \& Product\par\scriptsize 线性代数日常};
+      \node[badge, fill=badgeAlg] at (-1.68,0)
+        {代数数论\\Alg. Number Theory\par\scriptsize K--W 定理 · 除子};
+      \node[badge, fill=badgeFinit] at (1.68,0)
+        {有限主义\\Finitism\par\scriptsize 直觉主义先驱};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {传奇人生\\Legacy\par\scriptsize 商人→私人学者→教授};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {从银行家式的农场主到柏林讲席——他要求数学建立在整数之上。};
+  % 肖像（1865 年照片，Wikipedia Commons）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.2,2.9);
+      \node[anchor=center] at (1.1,1.45) {\includegraphics[width=2.2cm,height=2.9cm,keepaspectratio]{kronecker_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.5cm, yshift=1.42cm]current page.center) {Leopold Kronecker (1823–1891)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国（普鲁士王国）\enspace|\enspace \faIcon{university}\enspace University of Berlin\enspace|\enspace 数论 · 抽象代数 · 逻辑};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{克罗内克 - 从利格尼茨到柏林}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（1865 年照片）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.95,3.9);
+      \node[anchor=center] at (1.475,1.95) {\includegraphics[width=2.95cm,height=3.9cm,keepaspectratio]{kronecker_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Leopold Kronecker (1823–1891)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1823-12-07 — 1891-12-29\\[2pt]\lab{本名}\quad Leopold Kronecker\\[2pt]\lab{国籍}\quad 德国（普鲁士王国）};
+  \node[infob, fill=deltapanel, draw=badgeDelta!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 利格尼茨文科中学\\[2pt]
+     \quad\enspace 柏林大学（1845 博士）\\[2pt]\lab{师承}\quad Kummer（中学）· Dirichlet};
+  \node[infob, fill=algpanel, draw=badgeAlg!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 利格尼茨（西里西亚，今波兰）\\[2pt]\lab{荣誉}\quad 三院院士 · 小行星 25624\\[2pt]\lab{身后}\quad 葬于柏林 St Matthäus};
+  \node[infob, fill=finitpanel, draw=badgeFinit!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数论 · 抽象代数 · 逻辑\\[2pt]
+     \quad\enspace 行列式 · 数学基础\\[2pt]
+     \lab{身份}\quad 数学家 · 银行家式商人};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 克罗内克的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{克罗内克的一生}{1823 — 1891 · 从农场主到柏林讲席}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1823/生于利格尼茨（西里西亚）富裕犹太家庭,
+    2.4/1841/入柏林大学，兴趣遍及天文与哲学,
+    1.7/1845/师从 Dirichlet 完成代数数论博士论文,
+    1.0/1848/娶表妹 Fanny，回乡经营农场十年,
+    0.3/1855/财务自由后回柏林做私人学者,
+    -0.4/1861/当选柏林科学院院士，1862 起在大学开课,
+    -1.1/1866/拒绝哥廷根数学教席（Gauss、Dirichlet 曾任）,
+    -1.8/1883/接替恩师 Kummer 出任柏林大学教授,
+    -2.5/1891/于柏林去世，享年 68
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与 Kummer 的启蒙 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与 Kummer 的启蒙 (1823–1845)}{富裕家庭 · 恩师 Kummer · Dirichlet}
+\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1823} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{生于利格尼茨（西里西亚，今波兰 Legnica）富裕犹太家庭；父母请家庭教师，弟 Hugo 后成生理学家} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{优渥家境的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{文科中学} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{受教于 Ernst Kummer——他注意到并鼓励少年克罗内克的数学兴趣；两人结为终生挚友} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{恩师与挚友兼得} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1841--1843} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{入柏林大学，兴趣遍及天文、哲学；1843 夏波恩学天文，1843--44 布雷斯劳追随 Kummer} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{广泛兴趣后聚焦数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1845} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{回柏林师从 Dirichlet，答辩代数数论博士论文} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{名师之下的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} Kummer 唤起他的兴趣，Dirichlet 领他入门，一生与两位老师同行。}
+\end{center}
+\end{frame}}
+
+% --- 5. "上帝造整数"与有限主义 ---
+\newcommand{\finitismslide}{\begin{frame}\plainbar\sectiontitle{"上帝造整数"与有限主义}{一场关于数学基础的哲学立场}
+\vspace{-0.45cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{10}{13}\selectfont\bfseries\color{mathgold!85!black} "Die ganzen Zahlen hat der liebe Gott gemacht, alles andere ist Menschenwerk"}\\[2pt]
+  {\fontsize{11.5}{14.5}\selectfont\color{prussiablue!88!black}"上帝造整数，其余都是人的工作"}\\[1pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark}——Heinrich Weber 转述的克罗内克名言（1893 讣闻）}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主张}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{后世}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{算术化分析} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{重建无理数在实数中的形式，将分析建立在整数算术之上} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{arithmeticization 术语} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{反对实无穷} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{拒绝康托尔的集合论与实无穷——哲学立场之争，而非私人恩怨} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{数学基础大论战} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{有限主义} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{只承认有限可构造的对象——使克罗内克成为直觉主义的先驱} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{Brouwer 学派的先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 6. 克罗内克 δ 与克罗内克积 ---
+\newcommand{\deltaslide}{\begin{frame}\plainbar\sectiontitle{克罗内克 $\delta$ 与克罗内克积}{以他命名的线性代数日常工具}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{符号}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{定义}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{用途}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{克罗内克 $\delta$} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{$\delta_{ij}=1$（当 $i=j$），$=0$（当 $i\neq j$）} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{线性代数与数学物理最常用符号之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{克罗内克积} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{矩阵的张量积 $A\otimes B$} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{线性代数与量子信息的重要工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{其他命名} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{克罗内克符号、极限公式、引理、定理、代换法、Kronecker--Capelli 定理……} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{名字写满线性代数教材} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 克罗内克 $\delta$ 与克罗内克积}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussiablue!88!black}$\delta_{ij}=\begin{cases}1 & i=j\\ 0 & i\neq j\end{cases}\qquad (A\otimes B)_{i k,j l}=a_{ij}\,b_{kl}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. K--W 定理与阿贝尔群结构定理 ---
+\newcommand{\algebraslide}{\begin{frame}\plainbar\sectiontitle{K--W 定理与阿贝尔群结构定理}{代数中的两座丰碑}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{定理}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{注意}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Kronecker--Weber} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{每个阿贝尔数域都含于某个分圆域——克罗内克 1853 年\textbf{表述}了该定理} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{未给完整证明，Hilbert 后来完全证明} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{有限生成阿贝尔群} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{引入有限生成阿贝尔群的结构定理} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{抽象代数的基本定理之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{代数可解性} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{1853 年 memoir 扩展 Galois 的方程理论} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{Galois 理论的早期推手} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Kronecker--Weber 定理（1853 表述；Hilbert 完全证明）}\\[1pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{prussiablue!88!black}$K/\mathbb{Q}\ \text{阿贝尔}\ \Longrightarrow\ K\subseteq\mathbb{Q}(\zeta_n)\ \text{某个分圆域}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 五次方程与青春之梦 ---
+\newcommand{\quinticslide}{\begin{frame}\plainbar\sectiontitle{五次方程与青春之梦}{群论求解 · Jugendtraum}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{克罗内克的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1850 · 五次方程} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{《论五次一般方程的求解》用群论方法给出解} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{注意：非根式解（Abel--Ruffini 已排除根式）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{椭圆函数} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{研究椭圆函数，与 Hermite 的椭圆积分解法同属一脉} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{Hermite--Kronecker--Brioschi 刻画} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{青春之梦} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{猜想 "liebster Jugendtraum"（最珍贵的青春之梦）：分圆域的推广} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{后被 Hilbert 修改列为第十二问题} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个猜想，穿越半个世纪，成为 Hilbert 二十三个问题之一。}
+\end{center}
+\end{frame}}
+
+% --- 9. 除子理论 vs 理想理论 ---
+\newcommand{\divisorslide}{\begin{frame}\plainbar\sectiontitle{除子理论 vs 理想理论}{两种代数数论的世界观}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对比}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{克罗内克}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{Dedekind}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{理论} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{除子（divisor）理论} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{理想（ideal）理论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{哲学立场} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{认为理想在哲学上不可接受，坚持以除子替代} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{理想论成为主流范式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{历史命运} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{长期被忽视；20 世纪被多位数学家重新发掘并复兴} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{现代代数的基石语言} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 输掉了当时的学术主流，赢回了 20 世纪的历史评价。}
+\end{center}
+\end{frame}}
+
+% --- 10. 私人学者与学术生涯 ---
+\newcommand{\careerslide}{\begin{frame}\plainbar\sectiontitle{私人学者与学术生涯}{农场十年 · 拒绝哥廷根 · 接任 Kummer}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1848--1855 · 经商} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{博士毕业后不进学界，回乡经营母系叔父（前银行家）留下的大农场；1848 年娶表妹 Fanny Prausnitzer，育 6 子女；业余研究数学并与 Kummer 通信} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1855 · 回柏林} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{财务自由后回柏林做\textbf{私人学者}；Dirichlet（其妻出自 Mendelssohn 家族）引他进入柏林精英圈，与 Weierstrass、Kummer 结下情谊} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1861--1862 · 科学院} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{凭发表成果当选柏林科学院院士；依托院士资格自 1862 年起在柏林大学开课} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1866 / 1883} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{Riemann 去世后受邀哥廷根数学教席（Gauss、Dirichlet 曾任），他拒绝并留守科学院；1883 年接替退休的 Kummer 出任柏林大学正教授，指导 Hensel、Kneser、Lerch、Mertens 等学生} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他用十年经商换来的自由，买下了纯粹研究的一生。}
+\end{center}
+\end{frame}}
+
+% --- 11. 与 Weierstrass 的冲突 ---
+\newcommand{\conflictslide}{\begin{frame}\plainbar\sectiontitle{与 Weierstrass 的冲突}{好友 → 论敌 · 数学基础之争}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{从挚友到论敌} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{两人曾为好友；但克罗内克的有限主义哲学与 Weierstrass 的分析学立场冲突日深} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{处处不可微函数} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{他拒绝接受 Weierstrass 构造的处处连续、处处不可微函数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1888 · 几乎离校} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{关系紧张到 Weierstrass 几乎决定离开大学——哲学分歧客观视之，非个人恩怨} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{晚年} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{妻子先他数月离世；去世前一年皈依基督教；1891-12-29 逝于柏林，葬于 St Matthäus 墓地（近 Kirchhoff）} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 友谊可以破裂，数学的立场却从未动摇。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与遗产 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与遗产}{三院院士 · 以他命名 · 身后影响}\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{prussiablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{生前荣誉} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 普鲁士科学院（1861）\item 法国科学院外籍院士（1868）\item 英国皇家学会外籍会士（1884）\item 小行星 25624 Kronecker 以他命名\end{itemize}} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{柏林数学的领袖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{以他命名} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{$\delta$ · 积 · 符号 · 极限公式 · 引理 · 代换 · Jugendtraum · foliation · quiver · Eisenstein--Kronecker 数……} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{数学词典最高频姓氏之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{身后影响} & \cellcolor{deltapanel}\textcolor{badgeDelta!82!black}{有限主义通向直觉主义与构造主义；K--W 定理成为类域论第一定理；除子理论在 20 世纪复兴} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{数学基础的长期伏笔} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他说"其余都是人的工作"——而他的名字写满了人的工作。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=prussiablue!90!black] at ([yshift=1.5cm]current page.center) {上帝造整数，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {人书写其余的一切。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=prussiablue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是定理，而是"数学必须建立在整数之上"的哲学立场。};
+\node[font=\fontsize{8}{10}\selectfont, text=prussiablue!60!black] at ([yshift=-2.0cm]current page.center) {克罗内克\quad Leopold Kronecker\quad 1823 — 1891};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 数论 · 抽象代数 · 逻辑\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\finitismslide
+\deltaslide
+\algebraslide
+\quinticslide
+\divisorslide
+\careerslide
+\conflictslide
+\honorslide
+\closingslide
+\end{document}
