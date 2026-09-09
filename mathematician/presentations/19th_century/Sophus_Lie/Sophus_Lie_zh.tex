@@ -1,0 +1,454 @@
+% =============================================================
+%  索菲斯·李 · 连续对称理论的缔造者 (Sophus Lie)
+%  Beamer 演示 —— 参照高斯基准模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/Sophus_Lie
+%  设计母题：连续变换 / 峡湾曲线 —— 柔和气泡呼应连续对称
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：北欧峡湾蓝 + 数学金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{nordicblue}{HTML}{1F3A93}     % 北欧深蓝 — 峡湾 / 理性
+\definecolor{mathgold}{HTML}{C9A227}        % 数学金 — 尊崇
+\definecolor{badgeGroup}{HTML}{4C5FD5}      % 李群 — 靛蓝
+\definecolor{badgeAlg}{HTML}{0E7C7B}        % 李代数 — 青绿
+\definecolor{badgeDE}{HTML}{E07B30}         % 微分方程/切触 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{grouppanel}{RGB}{228,232,250}
+\definecolor{algpanel}{RGB}{220,240,238}
+\definecolor{depanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应连续变换 / 峡湾曲线
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAlg!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeGroup!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeDE!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[mathgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=nordicblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 挪威\enspace·\enspace 奥斯陆与莱比锡教授\enspace·\enspace 连续对称理论的缔造者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=nordicblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {索菲斯·李};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=nordicblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Marius Sophus Lie\enspace·\enspace 1842 — 1899};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {李群 · 李代数 · 李括号 · 切触变换 · 《变换群理论》三卷};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeGroup] at (-5.05,0)
+        {李群\\Lie Group\par\scriptsize 连续对称};
+      \node[badge, fill=badgeAlg] at (-1.68,0)
+        {李代数\\Lie Algebra\par\scriptsize 线性化 · 括号};
+      \node[badge, fill=badgeDE] at (1.68,0)
+        {微分方程\\Diff. Equations\par\scriptsize 对称方法};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {传承\\Legacy\par\scriptsize Cartan 之师 · Abel 奖};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {从峡湾小镇到莱比锡讲席——他把"连续"变成了群。};
+  % 肖像（挪威国家图书馆藏肖像）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.15,2.9);
+      \node[anchor=center] at (1.075,1.45) {\includegraphics[width=2.15cm,height=2.9cm,keepaspectratio]{lie_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.5cm, yshift=1.42cm]current page.center) {Sophus Lie (1842–1899)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 挪威\enspace|\enspace \faIcon{university}\enspace Oslo · Leipzig\enspace|\enspace 李群 · 李代数 · 微分方程};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{索菲斯·李 - 从峡湾到莱比锡}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（挪威国家图书馆藏肖像）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.9,3.9);
+      \node[anchor=center] at (1.45,1.95) {\includegraphics[width=2.9cm,height=3.9cm,keepaspectratio]{lie_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Sophus Lie (1842–1899)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1842-12-17 — 1899-02-18\\[2pt]\lab{本名}\quad Marius Sophus Lie\\[2pt]\lab{国籍}\quad 挪威};
+  \node[infob, fill=grouppanel, draw=badgeGroup!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Hartvig Nissen School\\[2pt]
+     \quad\enspace 皇家腓特烈大学（今奥斯陆大学）\\[2pt]\lab{师承}\quad Bjerknes · Guldberg};
+  \node[infob, fill=algpanel, draw=badgeAlg!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Nordfjordeid（挪威）\\[2pt]\lab{荣誉}\quad Lobachevsky 奖章 · ForMemRS\\[2pt]\lab{身后}\quad 全集 7 卷（1922–1960）};
+  \node[infob, fill=depanel, draw=badgeDE!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 李群 · 李代数 · 微分方程\\[2pt]
+     \quad\enspace 几何 · 连续对称\\[2pt]
+     \lab{身份}\quad 数学家 · 奥斯陆/莱比锡教授};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 索菲斯·李的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{索菲斯·李的一生}{1842 — 1899 · 从峡湾小镇到莱比锡讲席}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1842/生于 Nordfjordeid，路德宗牧师的幼子,
+    2.4/1859/从军梦碎（视力被拒），入皇家腓特烈大学,
+    1.7/1869/首篇论文刊于 Crelle；赴柏林，遇 Klein,
+    1.0/1870/巴黎遇 Jordan 与 Darboux；普法战争中误捕入狱,
+    0.3/1871/获博士学位；1872 议会特设教授席,
+    -0.4/1872/与 Sylow 编辑出版 Abel 数学著作,
+    -1.1/1874/与 Anna Birch 成婚，育三子女,
+    -1.8/1884--1893/Engel 协助著《变换群理论》三卷,
+    -2.5/1886/任莱比锡教授；1898 归国，1899 逝世
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与从军梦碎 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与从军梦碎 (1842–1869)}{牧师幼子 · 视力挡住的军旅 · 峡湾走出的学子}
+\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{nordicblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1842} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{生于西挪威峡湾小镇 Nordfjordeid；路德宗牧师 Johann Herman Lie 六个孩子中最幼；母亲出自 Trondheim 名门} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{牧师家庭的幼子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{求学} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{小学就读于东南海岸的 Moss，后赴 Christiania（今奥斯陆）读中学（Hartvig Nissen School）} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{从峡湾走向首都} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{从军梦碎} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{中学毕业后志在军旅，却因视力不佳被军队拒收——转向皇家腓特烈大学} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{一扇门关上，另一扇打开} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{大学时代} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{入皇家腓特烈大学（今奥斯陆大学）；师从 Bjerknes 与 Guldberg} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{数学之路的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 视力挡住了他的军装，却挡不住他的几何之眼。}
+\end{center}
+\end{frame}}
+
+% --- 5. 柏林与巴黎：友谊与牢狱 ---
+\newcommand{\parisslide}{\begin{frame}\plainbar\sectiontitle{柏林与巴黎：友谊与牢狱 (1869–1870)}{Klein 挚友 · Jordan 与 Darboux · 间谍疑云}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{nordicblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1869 · 首篇论文} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{《平面几何中虚量的表示》同年发表于 Christiania 科学院与 Crelle's Journal；获奖学金，1869 年 9 月—1870 年 2 月旅居柏林} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{柏林遇 Klein} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{与 Felix Klein 结为挚友；离开柏林后赴巴黎，Klein 两个月后前来会合} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{巴黎群星} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{二人同遇 Camille Jordan 与 Gaston Darboux——未来变换群理论的两位知音} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1870-07-19 · 战争} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{普法战争爆发，Klein（普鲁士人）被迫速离法国；李独自赴 Fontainebleau，因说德语、带地图证件被当作德国间谍逮捕入狱——靠 Darboux 干预，月余后获释；因祸得福，此事让他在挪威声名鹊起} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一场误会把他送进监狱，也把他的名字送回了挪威。}
+\end{center}
+\end{frame}}
+
+% --- 6. 博士、特设教席与 Abel 全集 ---
+\newcommand{\phdslide}{\begin{frame}\plainbar\sectiontitle{博士、特设教席与 Abel 全集 (1871–1876)}{祖国的礼遇 · 为同胞立传}
+\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{nordicblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1871 · 博士} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{以《论一类几何变换》获皇家腓特烈大学博士学位} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{Darboux 誉为"现代几何最美的发现之一"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1872 · 特设教席} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{挪威议会专门为他设立特聘教授席；同年赴 Erlangen 拜访 Klein（正酝酿 Erlangen 纲领）} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{国家的礼遇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1872 · Abel 全集} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{与同胞 Sylow 花八个月编辑出版阿贝尔的数学著作} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{为挪威数学立传} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1874 · 家庭} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{与 Anna Birch 成婚（1872 年底求婚时她 18 岁）；育三子女 Marie、Dagny、Herman；1876 年起共同主编《数学与自然科学档案》} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{成家立业双丰收} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 祖国给了他讲席，他为祖国守住了 Abel 的遗产。}
+\end{center}
+\end{frame}}
+
+% --- 7. 连续群与线性化 ---
+\newcommand{\linearizeslide}{\begin{frame}\plainbar\sectiontitle{连续群与线性化}{李最重要的工具与最伟大的成就}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{nordicblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{思想}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{后世}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{连续变换群} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{研究连续对称——今天以他命名的"李群"} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{现代数学核心结构} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{线性化} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{把连续群"线性化"：研究对应的生成向量场（无穷小生成元）} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{李理论的核心方法} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{交换子括号} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{生成元满足群律的线性化版本——今日所谓"李代数"的结构} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{李代数由此得名} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 从连续群到李代数（"李群 / 李代数"为后人命名）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{nordicblue!88!black}$[X,Y]=XY-YX\qquad$ 无穷小生成元的"乘法"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 《变换群理论》与莱比锡 ---
+\newcommand{\bookslide}{\begin{frame}\plainbar\sectiontitle{《变换群理论》与莱比锡岁月}{Engel 合作 · 三卷巨著 · 接任 Klein}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{nordicblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1884 · Engel 来援} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{李写作过苦，Klein 与 Adolph Mayer（均已在莱比锡任教）促成 Friedrich Engel 远赴 Christiania 协助——师徒式合作由此开始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{三卷巨著} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{《变换群理论》（Theorie der Transformationsgruppen）莱比锡 Teubner 出版，三卷 1888 / 1890 / 1893——李最重要著作；数十年后 Engel 又是其全集两编辑之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1886 · 莱比锡} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{出任莱比锡大学教授，接替转赴哥廷根的 Klein；讲坛从挪威移到德国数学腹地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{讲义与助手} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{在莱比锡与 Scheffers 合作写成微分方程与连续群两部讲义（1891 / 1893）} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个人的独白变成两个人的合著，一个学派由此成形。}
+\end{center}
+\end{frame}}
+
+% --- 9. 以他命名的世界 ---
+\newcommand{\namedslide}{\begin{frame}\plainbar\sectiontitle{以他命名的世界}{从李群到 Lie--Kolchin 定理}
+\vspace{-0.9cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.6cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.2cm}}
+\toprule
+\rowcolor{nordicblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{以李命名}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{今日地位}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{核心结构} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{李群 · 李代数 · 李括号 · 李子群 · 李型单群} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{现代数学的骨架语言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{几何} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{切触变换 · 李球几何 · W 曲线 · 李变换} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{切触几何的源头} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{定理} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{李定理 · 李第三定理 · Lie--Kolchin 定理 · Carathéodory--Jacobi--Lie 定理 · 乘积公式} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{教科书的常客} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.2cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 数学史上以一人姓氏命名概念最多的姓氏之一}\\[1pt]
+  {\fontsize{9.5}{12}\selectfont\color{nordicblue!88!black}维基百科专设页面：《以 Sophus Lie 命名的事物清单》}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 学生与传承 ---
+\newcommand{\studentslide}{\begin{frame}\plainbar\sectiontitle{学生与传承}{莱比锡讲坛走出的一代}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{nordicblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Élie Cartan} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{李的博士生，后被广泛视为 20 世纪最伟大的数学家之一——外微分与对称空间的缔造者，把李理论推向新高度} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{群星闪耀} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{Scheffers（合著者）· Tresse · Bouton · Blichfeldt（群论）· Kowalewski · Żorawski（工作惠及多领域）· Lovett（后任莱斯大学首任校长）· Böttcher · Holst} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{全集} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{《数学文集》（Gesammelte Abhandlungen）7 卷，1922--1960 年间由 Engel 与 Heegaard 先后主持出版} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他教出的学生，把"李"写进了 20 世纪的数学。}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉与晚年 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与晚年}{国际荣誉 · 疾病与归乡}
+\vspace{-1.15cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{nordicblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{生前荣誉} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 伦敦数学会荣誉会员（1878）· 法国科学院通讯院士（1892）\item 曼彻斯特文哲会荣誉会员（1894）\item 英国皇家学会外籍院士 ForMemRS（1895）· 美国 NAS 外籍院士（1895）\item 罗巴切夫斯基奖章（1897）· 圣奥拉夫骑士勋章\end{itemize}} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{欧洲数学界的贵宾} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{疾病} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{1889 年 11 月精神崩溃住院至 1890 年 6 月；此后贫血逐年加重——1889 年为精神之危，晚年为血液之疾} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{巨人被疾病侵蚀} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{归乡与落幕} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{1898 年 5 月辞去莱比锡教席，9 月回国；1899-02-18 因恶性贫血（维生素 B12 吸收障碍）在 Kristiania 去世，享年 56} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{叶落归根} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他把最后的岁月还给了峡湾与祖国。}
+\end{center}
+\end{frame}}
+
+% --- 12. 遗产：从 Weyl 到 Abel 奖 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：从 Weyl 到 Abel 奖}{物理的语言 · 数学的桂冠}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  nd/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, font=\fontsize{8.5}{10.5}\selectfont\bfseries, align=center}
+]
+\node[nd, fill=goldpanel, draw=mathgold!60, text=mathgold!85!black] (a) at (0,2.0) {1899 · 李逝世};
+\node[nd, fill=grouppanel, draw=badgeGroup!50, text=badgeGroup!85!black] (b) at (0,1.1) {1922--1923 · Hermann Weyl 将李的群论用于物理学};
+\node[nd, fill=grouppanel, draw=badgeGroup!50, text=badgeGroup!85!black] (c) at (0,0.2) {李群成为量子力学的数学语言};
+\node[nd, fill=algpanel, draw=badgeAlg!50, text=badgeAlg!82!black] (d) at (0,-0.7) {规范场论 · 粒子物理 · 现代几何的核心};
+\draw[-{Stealth[length=2.5mm]}, mathgold!70, line width=1.2pt] (a) -- (b);
+\draw[-{Stealth[length=2.5mm]}, mathgold!70, line width=1.2pt] (b) -- (c);
+\draw[-{Stealth[length=2.5mm]}, mathgold!70, line width=1.2pt] (c) -- (d);
+\end{tikzpicture}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{3.0cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{nordicblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{遗产}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{历史评价} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{后世学者指出："在 19 世纪大师中，李的工作就细节而言是当今最不为人所知的"——其原文远比今日教科书丰富} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{Abel 奖推动者} & \cellcolor{grouppanel}\textcolor{badgeGroup!82!black}{受 Nansen 基金与诺贝尔奖无数学奖的触动，李积极倡议设立纯数学大奖——2003 年颁发的 Abel 奖实现了他的夙愿} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=nordicblue!90!black] at ([yshift=1.5cm]current page.center) {他把"连续"变成了群，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {让对称成为物理的语言。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=nordicblue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是李群与李代数，而是一整门"对称的微积分"。};
+\node[font=\fontsize{8}{10}\selectfont, text=nordicblue!60!black] at ([yshift=-2.0cm]current page.center) {索菲斯·李\quad Sophus Lie\quad 1842 — 1899};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 李群 · 李代数 · 微分方程\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\parisslide
+\phdslide
+\linearizeslide
+\bookslide
+\namedslide
+\studentslide
+\honorslide
+\legacyslide
+\closingslide
+\end{document}
