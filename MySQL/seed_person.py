@@ -258,6 +258,11 @@ def process_one(cur, d, by_en, by_zh, dry_run=False):
     pid, created = upsert_person(cur, d)
     if dry_run:
         return pid, created
+    # 新建/更新后回写姓名索引，避免后续 yaml 的 relations 为同一人再建 stub
+    if d.get("name_en"):
+        by_en[norm(d["name_en"])] = pid
+    if d.get("name_zh"):
+        by_zh[norm(d["name_zh"])] = pid
 
     if d.get("occupations"):
         link_occupations(cur, pid, d["occupations"])
