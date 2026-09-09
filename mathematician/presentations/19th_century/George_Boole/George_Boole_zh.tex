@@ -1,0 +1,470 @@
+% =============================================================
+%  布尔 · 布尔代数与信息时代的奠基者 (George Boole)
+%  Beamer 演示 —— 参照高斯基准模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/19th_century/pages/George_Boole
+%  设计母题：二进制 / 布尔格 —— 柔和气泡呼应 0 与 1 的逻辑世界
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：英伦深蓝 + 逻辑金 + 三分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{englandblue}{HTML}{1F3A93}     % 英伦深蓝 — 理性 / 学者气质
+\definecolor{logicgold}{HTML}{C9A227}       % 逻辑金 — 布尔代数 / 尊崇
+\definecolor{badgeBoolean}{HTML}{4C5FD5}    % 布尔代数 — 靛蓝
+\definecolor{badgeLogic}{HTML}{0E7C7B}      % 数理逻辑 — 青绿
+\definecolor{badgeProb}{HTML}{E07B30}       % 概率 / 分析 — 琥珀
+\definecolor{badgeLegacy}{HTML}{4A5568}     % 遗产 — 石版灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{booleanpanel}{RGB}{228,232,250}
+\definecolor{logicpanel}{RGB}{220,240,238}
+\definecolor{probpanel}{RGB}{248,233,220}
+\definecolor{legacypanel}{RGB}{238,240,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应二进制 / 布尔格
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[logicgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeLogic!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeBoolean!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeProb!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[logicgold!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=englandblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 英国\enspace·\enspace 自学成才的逻辑学家\enspace·\enspace 布尔代数与信息时代的奠基者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=englandblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {布尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=englandblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {George Boole\enspace·\enspace 1815 — 1864};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=logicgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {《思维的规律》 · 布尔代数 · 符号逻辑 · 布尔不等式};
+  \draw[logicgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeBoolean] at (-5.05,0)
+        {布尔代数\\Boolean Algebra\par\scriptsize 逻辑的代数化};
+      \node[badge, fill=badgeLogic] at (-1.68,0)
+        {数理逻辑\\Symbolic Logic\par\scriptsize《思维的规律》};
+      \node[badge, fill=badgeProb] at (1.68,0)
+        {概率与代数\\Probability\par\scriptsize 布尔不等式};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {信息时代\\Information Age\par\scriptsize Shannon 1937};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {从一个鞋匠之子的自学，到数字时代的理论源头。};
+  % 肖像（Illustrated London News 1865）
+  \node[draw=logicgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{boole_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {George Boole (1815–1864)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国\enspace|\enspace \faIcon{university}\enspace Queen's College Cork · Lincoln\enspace|\enspace 布尔代数 · 数理逻辑 · 概率论};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{logicgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{布尔 - 从林肯到科克}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Illustrated London News 1865）
+  \node[draw=logicgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{boole_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {George Boole (1815–1864)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=logicgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1815-11-02 — 1864-12-08\\[2pt]\lab{本名}\quad George Boole\\[2pt]\lab{国籍}\quad 英国（生于英格兰，逝于爱尔兰）};
+  \node[infob, fill=booleanpanel, draw=badgeBoolean!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Bainbridge 商业学院（早期）\\[2pt]
+     \quad 几乎完全自学\\[2pt]\lab{师承}\quad 无正式导师（Bromhead 赠书自学）};
+  \node[infob, fill=logicpanel, draw=badgeLogic!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 林肯（英格兰）\\[2pt]\lab{荣誉}\quad 皇家奖章 · Keith 奖章 · FRS\\[2pt]\lab{身后}\quad 葬于科克 Blackrock};
+  \node[infob, fill=probpanel, draw=badgeProb!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 布尔代数 · 数理逻辑\\[2pt]
+     \quad 微分方程 · 概率论\\[2pt]
+     \lab{身份}\quad 数学家 · 哲学家 · 逻辑学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 布尔的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{布尔的一生}{1815 — 1864 · 从鞋匠之子到科克教授}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{logicgold!88!black}}
+]
+  \draw[logicgold!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1815/生于林肯，鞋匠之子,
+    2.4/1831/16 岁起执教养家，赡养父母与弟妹,
+    1.7/1834/19 岁在林肯自办学校,
+    1.0/1840/首篇论文刊于《剑桥数学杂志》,
+    0.3/1844/获皇家学会第一个数学金奖,
+    -0.4/1847/《逻辑的数学分析》出版,
+    -1.1/1849/任科克皇后学院首任数学教授,
+    -1.8/1854/《思维的规律》出版,
+    -2.5/1864/于科克病逝，享年 49 岁
+  }{
+    \fill[logicgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 自学成才的早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{自学成才的早年 (1815–1849)}{鞋匠之子 · 16 岁执教 · 19 岁办学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{logicgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1815} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{生于林肯，父亲 John Boole 是鞋匠；仅受小学教育，此后几乎全靠自学} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{贫寒中自学成才的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{少年} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{自学拉丁语与现代语言；翻译的拉丁诗发表后，曾被学者质疑"抄袭"} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{语言天赋的自证} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1831（16 岁）} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{在 Doncaster 的 Heigham's School 开始执教，成为全家的经济支柱} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{16 岁养家，赡养父母与三个弟妹} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1834（19 岁）} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{在林肯 Free School Lane 自办学校；后接手 Waddington 的 Hall's Academy，1840 年回林肯办寄宿学校} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{边教书边研究数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1830s} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{活跃于林肯机械师学院；Bromhead 赠数学书，Dickson 赠 Lacroix 微积分教材} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{无师自通，多年苦读微积分} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 没有导师、没有学位，他靠书本来到了数学前沿。}
+\end{center}
+\end{frame}}
+
+% --- 5. 1847《逻辑的数学分析》：符号逻辑的诞生 ---
+\newcommand{\analysisslide}{\begin{frame}\plainbar\sectiontitle{1847 ·《逻辑的数学分析》}{逻辑如何变成代数}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{logicgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{布尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{逻辑如何数学化？} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{把"与 / 或 / 非"变成代数运算 $x\cdot y$ / $x+y$ / $1-x$，用方程表达推理} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{逻辑研究从语言哲学转向代数系统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{与亚里士多德的关系} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{布尔无意批判三段论，而是将其系统化、奠基并扩展适用范围} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{开创"逻辑代数"传统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{争论背景（1840s）} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{Hamilton 与 De Morgan 就"谓词量化"争论，布尔的进路超越了争论双方} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{比争论双方走得更远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{论域（1854 定义）} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{提出 universe of discourse：任何论述都预设了讨论范围的界限} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{后为 Frege 等逻辑学家采用} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{logicgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{logicgold!85!black} 逻辑的代数化（Boole，1847；1854 年系统阐述）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{englandblue!88!black}$\text{NOT }x=1-x,\quad \text{AND}=x\cdot y,\quad \text{OR}=x+y\ (x,y\ \text{不相交})$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 1854《思维的规律》---
+\newcommand{\lawsofthoughtslide}{\begin{frame}\plainbar\sectiontitle{1854 ·《思维的规律》}{布尔代数的成熟表述}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{logicgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{布尔的系统}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{后世}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{二元取值} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{将类与命题统一为取值 0 与 1 的代数对象，推理即方程变换} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{数字电路 0 / 1 语言的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{加法的"部分性"} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{原系统中 $+$ 仅对应不相交子集的并——是奠基，而非完整的现代布尔代数} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{后人解读为异或或析取} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{与 Jevons 之争（1863）} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{Jevons 主张 $x+x=x$，布尔坚持不定义该式；争论延续到 20 世纪} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{布尔环与布尔代数两支传统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{概率的一般方法} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{第二部分：从给定事件的概率，确定逻辑相关事件的概率} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{概率逻辑的早期尝试} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{logicgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{logicgold!85!black} 布尔代数的核心恒等式（现代形式；布尔原系统中 $+$ 为部分运算）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{englandblue!88!black}$x\cdot x=x,\quad x\cdot(1-x)=0,\quad x+\bar x=1,\quad \overline{x\cdot y}=\bar x+\bar y$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 信息时代的奠基 ---
+\newcommand{\informationslide}{\begin{frame}\plainbar\sectiontitle{信息时代的奠基}{从布尔代数到数字电路}
+\vspace{-0.08cm}
+\begin{center}
+\begin{tikzpicture}[
+  nd/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=4pt, font=\fontsize{8.5}{10.5}\selectfont\bfseries, align=center}
+]
+\node[nd, fill=goldpanel, draw=logicgold!60, text=logicgold!85!black] (a) at (0,2.0) {1847 / 1854 · Boole};
+\node[nd, fill=booleanpanel, draw=badgeBoolean!50, text=badgeBoolean!85!black] (b) at (0,1.1) {逻辑变成代数系统};
+\node[nd, fill=booleanpanel, draw=badgeBoolean!50, text=badgeBoolean!85!black] (c) at (0,0.2) {1935 / 1937 · Shestakov / Shannon：继电器电路优化};
+\node[nd, fill=logicpanel, draw=badgeLogic!50, text=badgeLogic!85!black] (d) at (0,-0.7) {现代电子数字计算机};
+\draw[-{Stealth[length=2.5mm]}, logicgold!70, line width=1.2pt] (a) -- (b);
+\draw[-{Stealth[length=2.5mm]}, logicgold!70, line width=1.2pt] (b) -- (c);
+\draw[-{Stealth[length=2.5mm]}, logicgold!70, line width=1.2pt] (c) -- (d);
+\end{tikzpicture}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+\fcolorbox{logicgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{logicgold!85!black} 逻辑与电路的同构（Shannon，1937 硕士论文）}\\[2pt]
+  {\fontsize{9}{11.5}\selectfont\color{englandblue!88!black}$\text{开关串联} = \text{AND}\;(x\cdot y),\quad \text{开关并联} = \text{OR},\quad \text{反相器} = \text{NOT}\;(\bar x)$}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.06cm}
+\begin{center}
+{\fontsize{9}{12}\selectfont\bfseries\color{coverdark!88} 布尔提供了理论基础，Shannon 让它变成了电路。}
+\end{center}
+\end{frame}}
+
+% --- 8. 布尔不等式与概率论 ---
+\newcommand{\probabilityslide}{\begin{frame}\plainbar\sectiontitle{布尔不等式与概率论}{逻辑相关的概率推断}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{logicgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{布尔的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{今天}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{布尔不等式} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{事件并的概率不超过各事件概率之和} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{概率论与测度论的基本工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{概率的一般方法（1854）} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{目标算法化：从事件系统的已知概率，推出逻辑相关事件的概率} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{概率逻辑的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{独立性之争} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{Keynes（1921）批评其独立性定义；Hailperin 后来证明布尔所用定义在数学上是正确的} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{争议终获平反} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.05cm}
+\begin{center}
+\fcolorbox{logicgold!70}{goldpanel}{%
+  \begin{minipage}{11.6cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{logicgold!85!black} 布尔不等式（Boole's inequality）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{englandblue!88!black}$\Pr\!\left(\bigcup_{i=1}^{n}A_i\right)\;\le\;\sum_{i=1}^{n}\Pr(A_i)$}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 逻辑与概率，在布尔手中共用同一套代数。}
+\end{center}
+\end{frame}}
+
+% --- 9. 微分方程与不变量理论 ---
+\newcommand{\analysisvariantsslide}{\begin{frame}\plainbar\sectiontitle{微分方程与不变量理论}{分析学中的布尔}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{logicgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1840} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{首篇论文：解析变换理论，刊于《剑桥数学杂志》} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{与编辑 Gregory 结为好友} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1841} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{发表早期不变量理论的有影响力论文} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{不变量理论的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1844} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{《On a General Method in Analysis》：线性微分方程的算子方法，允许运算不可交换} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{皇家学会第一个数学金奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1859 / 1860} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{《微分方程专论》与《有限差分微积分专论》两部系统专著} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{身后由 Todhunter 增补再版} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1857} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{研究有理函数残数之和，证明布尔恒等式} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{其推广在 Hilbert 变换理论中重要} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 逻辑之外的布尔：一位严谨而多产的分析学家。}
+\end{center}
+\end{frame}}
+
+% --- 10. 科克教授与家庭 ---
+\newcommand{\corkslide}{\begin{frame}\plainbar\sectiontitle{科克教授与家庭 (1849–1864)}{Queen's College Cork · Mary Everest · 五个女儿}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{logicgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{内容}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1849 · 首任教授} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{受聘为爱尔兰科克皇后学院（今 University College Cork）首任数学教授，在此工作直至去世，以微分方程与代数逻辑为主要领域} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1855 · 婚姻} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{1850 年结识 Mary Everest（George Everest 之侄女），1855 年成婚；她后来依布尔的思想撰写多部教育著作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{五个女儿} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{Mary Ellen（嫁数学家 C. H. Hinton）· Margaret（其子 G. I. Taylor 为皇家学会会士）· Alicia（四维几何的重要贡献）· Lucy（英国第一位女性化学教授）· Ethel Lilian（小说《牛虻》作者）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{社会关怀} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{保持与林肯的联系，参与早关店运动、组建房屋互助会等社会事务} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一位教授的客厅，走出了一整门家族的科学传奇。}
+\end{center}
+\end{frame}}
+
+% --- 11. 悲剧性死亡与非凡后代 ---
+\newcommand{\deathslide}{\begin{frame}\plainbar\sectiontitle{1864 · 悲剧性死亡与非凡后代}{湿毯子悲剧 · 玄孙 Hinton}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{logicgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1864-11 · 患病} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{冒大雨从 Ballintemple 步行三英里到学院讲课，着湿衣授课后患上肺炎} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{顺势疗法} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{妻子相信"疗法应与病因相似"，用湿毯子包裹病中的布尔，病情随之恶化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{1864-12-08} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{死于发热引起的胸膜积液，享年 49 岁，葬于科克 Blackrock 的 St Michael's 墓地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{非凡的后代} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{玄孙 Geoffrey Hinton（经长女 Mary Ellen 一系）是人工神经网络先驱、2024 年诺贝尔物理学奖得主} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 49 岁的生命止于一场可避免的误治，他的逻辑却活在每个处理器里。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{国际荣誉 · 身后纪念 · 学术影响}\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{logicgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{englandblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{生前荣誉} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 皇家奖章（Royal Medal，1844，皇家学会第一个数学金奖）\item Keith 奖章（爱丁堡皇家学会，1855）\item 皇家学会会士 FRS（1857）\item 都柏林大学、牛津大学荣誉学位\end{itemize}} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{自学者的学术巅峰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{身后纪念} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{UCC 以其命名图书馆与信息学研究中心；月球环形山 Boole；编程语言的 \texttt{bool} 类型；2015 年诞辰 200 周年 Google Doodle；林肯火车站雕像（2022）} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{名字写入数字时代的日常} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{logicgold!88!black}{学术影响} & \cellcolor{booleanpanel}\textcolor{badgeBoolean!82!black}{Jevons、Peirce、Schröder 扩展其逻辑系统；Shannon（1937）将其应用于电路设计} & \cellcolor{logicpanel}\textcolor{badgeLogic!82!black}{逻辑代数传统的源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他是自学者的传奇，也是信息时代最深的伏笔。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=englandblue!90!black] at ([yshift=1.5cm]current page.center) {他把思维变成了代数，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=logicgold!85!black] at ([yshift=0.4cm]current page.center) {后世把代数变成了计算机。};
+\draw[logicgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=englandblue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是代数，而是一种可以被机器执行的思想。};
+\node[font=\fontsize{8}{10}\selectfont, text=englandblue!60!black] at ([yshift=-2.0cm]current page.center) {布尔\quad George Boole\quad 1815 — 1864};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 布尔代数 · 数理逻辑 · 概率论\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\analysisslide
+\lawsofthoughtslide
+\informationslide
+\probabilityslide
+\analysisvariantsslide
+\corkslide
+\deathslide
+\honorslide
+\closingslide
+\end{document}
