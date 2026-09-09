@@ -1,0 +1,497 @@
+% =============================================================
+%  声学之父 · 欧洲的学术邮局：马兰·梅森 (Marin Mersenne)
+%  Beamer 演示 —— 参照 Johann Bernoulli 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/17th_century/pages/Marin_Mersenne
+%  设计母题：弦振动 / 声波 —— 柔和气泡呼应谐波的涟漪之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法兰西蓝 + 音乐金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{1E4E79}        % 主色（法兰西蓝）— 法国 / 巴黎学术圈
+\definecolor{accentclr}{HTML}{C9A227}      % 强调色（音乐金）— 声学之父 / Harmonie universelle
+\definecolor{badgeA}{HTML}{4C5FD5}         % 数论 — 靛蓝（梅森素数）
+\definecolor{badgeB}{HTML}{0E7C7B}         % 声学 — 青绿（梅森定律 / 弦振动）
+\definecolor{badgeC}{HTML}{E07B30}         % 实验物理 — 琥珀（摆 / 望远镜 / 落体）
+\definecolor{badgeD}{HTML}{B76E79}         % 学术网络 — 玫红（巴黎学院 / 欧洲邮局）
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{228,232,250}     % badgeA 浅底
+\definecolor{panelB}{RGB}{220,240,238}     % badgeB 浅底
+\definecolor{panelC}{RGB}{248,233,220}     % badgeC 浅底
+\definecolor{panelD}{RGB}{246,233,235}     % badgeD 浅底
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应弦振动谐波 / 声波
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 声学之父\enspace·\enspace 欧洲的学术邮局};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {马兰·梅森};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Marin Mersenne\enspace·\enspace 1588 — 1648};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {梅森素数 · 梅森定律 · Harmonie universelle};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {数论\\Number Theory\par\scriptsize 梅森素数};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {声学\\Acoustics\par\scriptsize 梅森定律};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {实验物理\\Experiments\par\scriptsize 摆 · 望远镜};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {学术网络\\Network\par\scriptsize 欧洲的邮局};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {科学期刊尚未诞生的年代，他用一张拉丁文通信网，把全欧洲的学者连在一起。};
+  % 肖像（Wikimedia Commons 标准肖像）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{mersenne_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Marin Mersenne (1588–1648)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace 拉弗莱什耶稣会学院 · 巴黎大学\enspace|\enspace 数论 · 声学 · 音乐理论};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{马兰·梅森 - 从瓦兹到巴黎}{生卒 · 别称 · 国籍 · 修会 · 教育 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{mersenne_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Marin Mersenne (1588–1648)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1588-09-08 — 1648-09-01\\[2pt]\lab{别称}\quad Marinus Mersennus\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{出生地}\quad 瓦兹（Oizé，曼恩伯国）\\[2pt]
+     \lab{逝世地}\quad 巴黎（肺脓肿并发症）\\[2pt]\lab{享年}\quad 59 岁};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{修会}\quad 最小兄弟会（Minim）\\[2pt]\lab{教育}\quad 拉弗莱什耶稣会学院\\[2pt]\quad 巴黎大学};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数论 · 声学 · 音乐理论\\[2pt]
+     \quad 光学 · 力学 · 神学哲学\\[2pt]
+     \lab{身份}\quad 数学家 · 神学家 · 博学者};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 马兰·梅森的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{马兰·梅森的一生}{1588 — 1648 · 从瓦兹到巴黎}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1588/生于瓦兹（Oizé，曼恩伯国），农家出身,
+    2.24/1600s/勒芒与拉弗莱什耶稣会学院求学（与笛卡尔同期）,
+    1.58/1611/入最小兄弟会（Minim）；1613 年于巴黎晋铎,
+    0.92/1620/回巴黎定居 L'Annonciade 修道院，钻研数学与音乐,
+    0.26/1623/《创世纪问题》：系统批判占星术与卡巴拉魔法,
+    -0.4/1635/创立巴黎学院（近 140 位通信学者）,
+    -1.06/1636/《Harmonie universelle》：弦振动定律与绝对频率测定,
+    -1.72/1644/《Cogitata physico-mathematica》：梅森素数与摆实验,
+    -2.38/1648/于巴黎去世，享年 59
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1588–1620)}{农家出身 · 耶稣会学院求学 · 入最小兄弟会}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1588} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于瓦兹（Oizé），父 Julien、母 Jeanne 均为农民} & \cellcolor{panelB}\textcolor{badgeB!82!black}{农家出身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{少年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{勒芒求学，后入拉弗莱什耶稣会学院（与笛卡尔同期校友）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{耶稣会教育} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1611} & \cellcolor{panelA}\textcolor{badgeA!82!black}{入最小兄弟会；1613 年研习神学与希伯来语后于巴黎晋铎} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Minim 修士} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1614–20} & \cellcolor{panelA}\textcolor{badgeA!82!black}{讷韦尔教授神学与哲学；1620 年回巴黎定居修道院} & \cellcolor{panelB}\textcolor{badgeB!82!black}{转向数学与音乐} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他受过耶稣会教育，但从未加入耶稣会——他是最小兄弟会（Minim）修士。}
+\end{center}
+\end{frame}}
+
+% --- 5. 梅森素数（核心贡献页） ---
+\newcommand{\primeslide}{\begin{frame}\plainbar\sectiontitle{梅森素数}{形如 2$^p$ − 1 的素数 · GIMPS 的源头}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{梅森的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{素数形式} & \cellcolor{panelA}\textcolor{badgeA!82!black}{系统研究形如 $2^p-1$（$p$ 为素数）的素数} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以他命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1644 清单} & \cellcolor{panelA}\textcolor{badgeA!82!black}{《Cogitata》提出猜想清单；后世验证发现有错有漏，逐一厘清} & \cellcolor{panelB}\textcolor{badgeB!82!black}{猜想而非定论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{现代回响} & \cellcolor{panelA}\textcolor{badgeA!82!black}{GIMPS 分布式搜索；Mersenne Twister 随机数算法以其命名} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算数学遗产} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 梅森素数（Mersenne primes）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$M_p=2^{p}-1\qquad (p\ \text{为素数})$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 梅森定律（核心贡献页） ---
+\newcommand{\lawslide}{\begin{frame}\plainbar\sectiontitle{梅森定律}{张紧弦振动的三条比例律}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{梅森的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{三条比例律} & \cellcolor{panelB}\textcolor{badgeB!82!black}{弦频率与弦长成反比、与张力平方根成正比、与线密度平方根成反比} & \cellcolor{panelA}\textcolor{badgeA!82!black}{完整定量表述} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{古已有之} & \cellcolor{panelB}\textcolor{badgeB!82!black}{弦长反比关系古希腊已知（常归于毕达哥拉斯）——他的贡献是完整三条律} & \cellcolor{panelA}\textcolor{badgeA!82!black}{严谨归属} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{频率测定} & \cellcolor{panelB}\textcolor{badgeB!82!black}{首次对可听音频率作绝对测定（84 Hz）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{声学定量基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 梅森定律（Mersenne's laws）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$f=\dfrac{1}{2L}\sqrt{\dfrac{F}{\mu}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 《Harmonie universelle》与声学之父（核心贡献页） ---
+\newcommand{\harmonyslide}{\begin{frame}\plainbar\sectiontitle{《Harmonie universelle》与声学之父}{1636 · 最早的音乐理论综合著作之一}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{梅森的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1636 巨著} & \cellcolor{panelB}\textcolor{badgeB!82!black}{最早的音乐理论综合著作之一，论及乐器与音乐的数学关系} & \cellcolor{panelA}\textcolor{badgeA!82!black}{17 世纪音乐史料} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{84 Hz} & \cellcolor{panelB}\textcolor{badgeB!82!black}{首次绝对测定可听音频率，并证明八度音频率比为 1 : 2} & \cellcolor{panelA}\textcolor{badgeA!82!black}{声学之父之由} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{等程半音} & \cellcolor{panelB}\textcolor{badgeB!82!black}{给出可尺规作图的等程半音比，仅偏高 0.44 音分} & \cellcolor{panelA}\textcolor{badgeA!82!black}{律学贡献} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 等程半音比（Mersenne 建议 vs 精确值）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}
+  $\sqrt[4]{\dfrac{2}{3-\sqrt{2}}}\;(\text{偏高 }0.44\text{ 音分})\qquad\text{vs}\qquad 2^{1/12}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 巴黎学院：科学院的前身（核心贡献页） ---
+\newcommand{\academyslide}{\begin{frame}\plainbar\sectiontitle{巴黎学院：科学院的前身}{1635 Académie Parisienne}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{梅森的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1635 创立} & \cellcolor{panelD}\textcolor{badgeD!82!black}{创办非正式学术圈 Académie Parisienne} & \cellcolor{panelB}\textcolor{badgeB!82!black}{科学院前身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{近 140 人} & \cellcolor{panelD}\textcolor{badgeD!82!black}{通信学者近 140 位：天文学家、哲学家、数学家} & \cellcolor{panelB}\textcolor{badgeB!82!black}{跨国学术圈} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{居中论辩} & \cellcolor{panelD}\textcolor{badgeD!82!black}{不惧在学者间挑起争论以比较观点（笛卡尔、费马、博格兰德之争）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以辩促知} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} Peter L. Bernstein《Against the Gods》}\\[2pt]
+  {\fontsize{9.5}{13}\selectfont\color{mainclr!88!black}
+  "巴黎科学院与伦敦皇家学会（成立于梅森去世约二十年后），是他活动的直系后裔。"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 欧洲的学术邮局（核心贡献页） ---
+\newcommand{\mailboxslide}{\begin{frame}\plainbar\sectiontitle{欧洲的学术邮局}{the post-box of Europe · 拉丁文通信网}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{梅森的角色}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{通信网络} & \cellcolor{panelD}\textcolor{badgeD!82!black}{以拉丁文通信连接全欧学者：笛卡尔、伽利略、帕斯卡、费马、霍布斯、惠更斯、伽桑狄、罗贝瓦尔等} & \cellcolor{panelB}\textcolor{badgeB!82!black}{信息交换中枢} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{历史定位} & \cellcolor{panelD}\textcolor{badgeD!82!black}{科学期刊尚未诞生，他是信息交换网络的中心，被称为"欧洲的邮局"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{17 世纪上半叶科学世界的中心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{远方通信} & \cellcolor{panelD}\textcolor{badgeD!82!black}{与意大利、英格兰、荷兰共和国的学者保持通信（多尼、老惠更斯、贝克曼等）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{跨越国界} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个人，就是一张覆盖全欧的学术网络。}
+\end{center}
+\end{frame}}
+
+% --- 10. 伽利略与笛卡尔的守护人（核心贡献页） ---
+\newcommand{\defenderslide}{\begin{frame}\plainbar\sectiontitle{伽利略与笛卡尔的守护人}{翻译传播 · 巴黎代理人}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{梅森的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{捍卫伽利略} & \cellcolor{panelC}\textcolor{badgeC!82!black}{坚定捍卫伽利略，协助翻译其力学著作} & \cellcolor{panelB}\textcolor{badgeB!82!black}{《Les Mécaniques de Galilée》(1634)} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{弦振动溯源} & \cellcolor{panelC}\textcolor{badgeC!82!black}{将弦振动研究扩展自老伽利略（Vincenzo Galilei）的工作} & \cellcolor{panelB}\textcolor{badgeB!82!black}{两代伽利略之承} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{守护笛卡尔} & \cellcolor{panelC}\textcolor{badgeC!82!black}{为《第一哲学沉思集》征求巴黎学者意见，抵御教士批评——笛卡尔在巴黎的代理人} & \cellcolor{panelB}\textcolor{badgeB!82!black}{挚友与中介} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 他对哲学的最大贡献（Wikipedia 评述）}\\[2pt]
+  {\fontsize{9.5}{13}\selectfont\color{mainclr!88!black}
+  他最伟大的贡献，是对笛卡尔的热情辩护：代为在巴黎传阅《沉思集》，并为其正统性辩护。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 光学与摆的实验（核心贡献页） ---
+\newcommand{\opticsslide}{\begin{frame}\plainbar\sectiontitle{光学与摆的实验}{双镜望远镜构想 · 秒摆首测}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{梅森的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{反射望远镜} & \cellcolor{panelC}\textcolor{badgeC!82!black}{早于卡塞格林提出凹主镜 + 凸副镜组合、远程效应、无焦望远镜与光束压缩器构想} & \cellcolor{panelB}\textcolor{badgeB!82!black}{因笛卡尔批评未亲手建造} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{像差校正} & \cellcolor{panelC}\textcolor{badgeC!82!black}{提出用抛物面镜校正球面像差} & \cellcolor{panelB}\textcolor{badgeB!82!black}{现代反射望远镜雏形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{摆的实验} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1644《Cogitata》：第一个测出秒摆长度；第一个发现大摆动周期长于小摆动（纠正伽利略"等时"之说）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{实验物理学先驱} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 秒摆（seconds pendulum）：一个摆动恰为一秒}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$T=2\pi\sqrt{\dfrac{L}{g}}\approx 1\,\text{s}\;\Rightarrow\;L\approx 0.994\,\text{m}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 反神秘主义之战（核心贡献页） ---
+\newcommand{\occultslide}{\begin{frame}\plainbar\sectiontitle{反神秘主义之战}{1623《创世纪问题》· 为新物理学扫清道路}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{梅森的立场}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1623 论战} & \cellcolor{panelC}\textcolor{badgeC!82!black}{《Quaestiones celeberrimae in Genesim》系统批判占星术、卡巴拉魔法与玫瑰十字会} & \cellcolor{panelB}\textcolor{badgeB!82!black}{主要靶子：Robert Fludd} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{阵营对垒} & \cellcolor{panelC}\textcolor{badgeC!82!black}{卡巴拉学者 Gaffarel 加入 Fludd 一方，伽桑狄为梅森辩护} & \cellcolor{panelB}\textcolor{badgeB!82!black}{理性与神秘之争} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{转向运动之学} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1630s 放弃亚里士多德式"本质"探求，主张真正的物理学只能是"可描述的运动之学"（Mécanisme）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{承接伽利略方向} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 为"科学应当是可描述的运动之学"扫清了道路。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{以他命名的素数 · 科学院的前身 · 声学之父}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{以他命名} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 梅森素数（Mersenne primes）\item Mersenne Twister 随机数算法\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数论纪念} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{学术建制} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 巴黎学院（1635）——1666 年法国科学院的直系前身\item 整理欧几里得、阿波罗尼奥斯、阿基米德等希腊数学家著作\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{建制与整理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{称号与传承} & \cellcolor{panelD}\textcolor{badgeD!82!black}{"声学之父"；通信网络连接笛卡尔、伽利略、帕斯卡、费马等一代学者} & \cellcolor{panelB}\textcolor{badgeB!82!black}{薪火相传} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他一生未设教席，却让整个欧洲的学术界以他为枢纽。}
+\end{center}
+\end{frame}}
+
+% --- 14. 终章 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {科学期刊诞生之前，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {他就是欧洲的学术邮局。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是梅森素数的谜题，与一根弦上量化的和声。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {马兰·梅森\quad Marin Mersenne\quad 1588 — 1648};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 数论 · 声学 · 音乐理论\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\primeslide
+\lawslide
+\harmonyslide
+\academyslide
+\mailboxslide
+\defenderslide
+\opticsslide
+\occultslide
+\honorslide
+\closingslide
+\end{document}

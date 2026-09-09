@@ -1,0 +1,499 @@
+% =============================================================
+%  业余数学家之王 · 现代数论之父：皮埃尔·德·费马 (Pierre de Fermat)
+%  Beamer 演示 —— 参照 Johann Bernoulli 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/17th_century/pages/Pierre_de_Fermat
+%  设计母题：页边批注 / 数论深渊 —— 柔和气泡呼应书页与谜语之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：加斯科涅红 + 数论金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{8B1A1A}        % 主色（加斯科涅红）— 法国南部 / 图卢兹高等法院
+\definecolor{accentclr}{HTML}{C9A227}      % 强调色（数论金）— 现代数论之父 / 页边批注
+\definecolor{badgeA}{HTML}{4C5FD5}         % 数论 — 靛蓝
+\definecolor{badgeB}{HTML}{0E7C7B}         % 概率论 — 青绿
+\definecolor{badgeC}{HTML}{E07B30}         % 微积分前史 — 琥珀
+\definecolor{badgeD}{HTML}{B76E79}         % 光学与几何 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{228,232,250}     % 数论浅底
+\definecolor{panelB}{RGB}{220,240,238}     % 概率浅底
+\definecolor{panelC}{RGB}{248,233,220}     % 微积分前史浅底
+\definecolor{panelD}{RGB}{246,233,235}     % 光学几何浅底
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应页边批注 / 数论深渊
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 业余数学家之王\enspace·\enspace 现代数论之父};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {皮埃尔·德·费马};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Pierre de Fermat\enspace·\enspace 1601 — 1665};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {费马大定理 · 费马小定理 · 拟等式法 · 费马原理};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {数论\\Number Theory\par\scriptsize 费马大定理};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {概率论\\Probability\par\scriptsize 分赌注问题};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {微积分前史\\Pre-Calculus\par\scriptsize 拟等式法};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {光学与几何\\Optics · Geometry\par\scriptsize 费马原理};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他在页边写下谜语，让后世数学家追逐了三个半世纪。};
+  % 肖像（by Roland Lefebvre）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{fermat_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Pierre de Fermat (1601–1665)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace 图卢兹高等法院\enspace|\enspace 数论 · 概率论 · 解析几何 · 光学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{皮埃尔·德·费马 - 从加斯科涅到图卢兹}{生卒 · 本名 · 国籍 · 出生地 · 职业 · 教育 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（by Roland Lefebvre）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{fermat_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Pierre de Fermat (1601–1665)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1601-08-17 — 1665-01-12\\[2pt]\lab{本名}\quad Pierre Fermat\\[2pt]\lab{国籍}\quad 法国（法兰西王国）};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 奥尔良大学\\[2pt]
+     \quad 1626 年获民法学士 BCL\\[2pt]\lab{影响}\quad Viète · 古希腊数学};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Beaumont-de-Lomagne（法国）\\[2pt]\lab{职业}\quad 图卢兹高等法院参事\\[2pt]\lab{身后}\quad Castres};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数论 · 概率论\\[2pt]
+     \quad 解析几何 · 光学\\[2pt]
+     \lab{身份}\quad 数学家 · 法官 · 语言学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 费马的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{费马的一生}{1601 — 1665 · 从加斯科涅到图卢兹}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1601/生于 Beaumont-de-Lomagne（加斯科涅）,
+    2.2/1620s/波尔多时期研习数学，深受 Viète 影响,
+    1.5/1626/奥尔良大学民法学士（BCL）,
+    0.8/1631/购官图卢兹高等法院，同年成婚,
+    0.1/1636/《求极大极小与切线的方法》手稿流通,
+    -0.6/1654/与帕斯卡通信，共同奠基概率论,
+    -1.3/1665/于 Castres 去世，享年 63,
+    -2.0/1670/其子刊出页边批注；1994 年 Wiles 证明大定理
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1601–1631)}{加斯科涅出生 · 法学教育 · 波尔多起步}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1601} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于 Beaumont-de-Lomagne，父为富裕皮革商} & \cellcolor{panelB}\textcolor{badgeB!82!black}{加斯科涅} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1620s} & \cellcolor{panelA}\textcolor{badgeA!82!black}{移居波尔多，受 Viète 代数著作影响开始严肃数学研究} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数学起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1623–26} & \cellcolor{panelA}\textcolor{badgeA!82!black}{奥尔良大学攻读民法，1626 年获民法学士（BCL）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{法学士} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1631} & \cellcolor{panelA}\textcolor{badgeA!82!black}{购官图卢兹高等法院参事，姓氏自此作 "de Fermat"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{法官生涯} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 白天断案，夜晚做数学——数学于他，更像一种高贵的业余。}
+\end{center}
+\end{frame}}
+
+% --- 5. 费马大定理（核心贡献页） ---
+\newcommand{\fltslide}{\begin{frame}\plainbar\sectiontitle{费马大定理}{页边批注 · 三个半世纪的追逐}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{费马的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{页边断言} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1630s 在丢番图《算术》页边写下断言，称页边太窄写不下证明} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数学史最著名谜语} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{身后刊出} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1670 年其子 Samuel 将页边批注刊印出版} & \cellcolor{panelB}\textcolor{badgeB!82!black}{传世之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{最终证明} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1994 年 Andrew Wiles 证明，用的是费马时代没有的技术} & \cellcolor{panelB}\textcolor{badgeB!82!black}{358 年悬案告破} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 费马大定理（Fermat's Last Theorem）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$x^{n}+y^{n}=z^{n}\quad\text{无正整数解}\ (n>2)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 费马小定理与费马数（核心贡献页） ---
+\newcommand{\fltsmall}{\begin{frame}\plainbar\sectiontitle{费马小定理与费马数}{完全数研究 · 一个美丽的错误}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{费马的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{费马小定理} & \cellcolor{panelA}\textcolor{badgeA!82!black}{研究完全数时发现：素数模下的幂同余规律} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数论基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{费马数} & \cellcolor{panelA}\textcolor{badgeA!82!black}{致 Carcavi 信中断言所有费马数皆为素数} & \cellcolor{panelB}\textcolor{badgeB!82!black}{著名的错误断言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{欧拉反例} & \cellcolor{panelA}\textcolor{badgeA!82!black}{欧拉指出 $F_5$ 可分解：$641\times 6{,}700{,}417$} & \cellcolor{panelB}\textcolor{badgeB!82!black}{如实呈现} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 费马小定理（Fermat's little theorem）与费马数}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$a^{p-1}\equiv 1\pmod{p}\qquad F_{n}=2^{2^{n}}+1$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 拟等式法与极值切线（核心贡献页） ---
+\newcommand{\adequalityslide}{\begin{frame}\plainbar\sectiontitle{拟等式法与极值切线}{adequality · 微积分前史核心}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{费马的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{拟等式法} & \cellcolor{panelC}\textcolor{badgeC!82!black}{求极值与切线的方法，"was equivalent to differential calculus"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{微积分前史核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{手稿先声} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1636 年《求极大极小与切线的方法》早于笛卡尔《La Géométrie》} & \cellcolor{panelA}\textcolor{badgeA!82!black}{独立发明解析几何} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{牛顿的证词} & \cellcolor{panelC}\textcolor{badgeC!82!black}{牛顿自述微积分早期想法直接来自费马作切线的方法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{直接源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 拟等式法（adequality）求极值}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$f(x+E)\approx f(x)\ \Longrightarrow\ f'(x)=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 幂函数积分（核心贡献页） ---
+\newcommand{\integralslide}{\begin{frame}\plainbar\sectiontitle{一般幂函数的积分}{为微积分基本定理铺路}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{费马的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{首算积分} & \cellcolor{panelC}\textcolor{badgeC!82!black}{第一个已知求出一般幂函数积分的人} & \cellcolor{panelA}\textcolor{badgeA!82!black}{积分学先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{求积公式} & \cellcolor{panelC}\textcolor{badgeC!82!black}{曲线 $y=x^{n}$ 下的面积有简洁的封闭表达式} & \cellcolor{panelA}\textcolor{badgeA!82!black}{幂法则雏形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{历史作用} & \cellcolor{panelC}\textcolor{badgeC!82!black}{帮助牛顿与莱布尼茨建立微积分基本定理} & \cellcolor{panelA}\textcolor{badgeA!82!black}{承前启后} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 幂函数的积分}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\displaystyle\int_{0}^{b}x^{n}\,dx=\frac{b^{\,n+1}}{n+1}\qquad(n\neq-1)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 无穷递降法与平方和（核心贡献页） ---
+\newcommand{\descentslide}{\begin{frame}\plainbar\sectiontitle{无穷递降法与平方和}{费马独有的证明武器}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{费马的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{无穷递降法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{用以证明费马直角三角形定理（含 $n=4$ 情形）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{独创证明方法} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{平方和定理} & \cellcolor{panelA}\textcolor{badgeA!82!black}{素数何时能写成两平方数之和} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数论经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{多边形数定理} & \cellcolor{panelA}\textcolor{badgeA!82!black}{每数皆三三角形数、四平方数之和} & \cellcolor{panelB}\textcolor{badgeB!82!black}{后世逐一证实} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 两平方定理（Fermat's theorem on sums of two squares）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$p=x^{2}+y^{2}\iff p\equiv 1\pmod{4}\quad(p\ \text{为奇素数})$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 概率论：与帕斯卡的通信（核心贡献页） ---
+\newcommand{\probabilityslide}{\begin{frame}\plainbar\sectiontitle{概率论：与帕斯卡的通信}{1654 分赌注问题 · 共同奠基人}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{费马的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{分赌注问题} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1654 年与帕斯卡就赌局中断后的公平分配通信} & \cellcolor{panelA}\textcolor{badgeA!82!black}{概率论开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{严格计算} & \cellcolor{panelB}\textcolor{badgeB!82!black}{费马完成了史上第一个严格的概率计算} & \cellcolor{panelA}\textcolor{badgeA!82!black}{方法奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{历史地位} & \cellcolor{panelB}\textcolor{badgeB!82!black}{两人并称 "joint founders of probability theory"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{共同奠基人} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 期望值（expected value）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$E(X)=\sum_{i}p_{i}\,x_{i},\qquad \sum_{i}p_{i}=1$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 费马原理（核心贡献页） ---
+\newcommand{\fermatprincipleslide}{\begin{frame}\plainbar\sectiontitle{费马原理}{最短时间原理 · 光的传播法则}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{费马的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{最短时间原理} & \cellcolor{panelD}\textcolor{badgeD!82!black}{光沿用时最短的路径传播} & \cellcolor{panelC}\textcolor{badgeC!82!black}{几何光学基本原理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{折射的解释} & \cellcolor{panelD}\textcolor{badgeD!82!black}{自然地解释光的折射定律} & \cellcolor{panelC}\textcolor{badgeC!82!black}{统一反射与折射} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{思想遗产} & \cellcolor{panelD}\textcolor{badgeD!82!black}{最小作用量原理史上的关键一步} & \cellcolor{panelC}\textcolor{badgeC!82!black}{通往分析力学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 费马原理（Fermat's principle）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\delta\displaystyle\int_{A}^{B}\mathrm{d}t=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 职业与通信网络 ---
+\newcommand{\networkslide}{\begin{frame}\plainbar\sectiontitle{职业与通信网络}{法官生涯 · 书信中的数学}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{费马}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{法官生涯} & \cellcolor{panelA}\textcolor{badgeA!82!black}{图卢兹高等法院参事（1631 年就任，终身）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{业余之王} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{通信网络} & \cellcolor{panelA}\textcolor{badgeA!82!black}{经 Mersenne、Carcavi 与全欧数学家交换成果} & \cellcolor{panelB}\textcolor{badgeB!82!black}{书信即发表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{优先权之争} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与笛卡尔、沃利斯存在优先权争议} & \cellcolor{panelB}\textcolor{badgeB!82!black}{时代的常态} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 生前几乎全以书信发表，且常常少证明甚至不证明。}
+\end{center}
+\end{frame}}
+
+% --- 13. 身后与遗产 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{身后与遗产}{页边批注刊出 · 现代数论之父}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{身后传播} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 1670 年其子刊出《算术》页边批注\item 1679 年《Ad Locos Planos et Solidos Isagoge》遗世出版\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{遗作传世} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{历史评价} & \cellcolor{panelA}\textcolor{badgeA!82!black}{André Weil 评："Fermat essentially created the modern theory of numbers"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{现代数论之父} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{纪念} & \cellcolor{panelD}\textcolor{badgeD!82!black}{图卢兹 Lycée Pierre-de-Fermat、Capitole 雕像、Beaumont-de-Lomagne 纪念碑} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以他为荣的土地} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他声称已证而少存证明，高斯等亦曾质疑——但历史几乎都站在了他一边。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {数学于他是业余，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {成就在于他是王者。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是页边那句谜语，与现代数论的整座大厦。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {皮埃尔·德·费马\quad Pierre de Fermat\quad 1601 — 1665};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 数论 · 概率 · 光学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\fltslide
+\fltsmall
+\adequalityslide
+\integralslide
+\descentslide
+\probabilityslide
+\fermatprincipleslide
+\networkslide
+\honorslide
+\closingslide
+\end{document}

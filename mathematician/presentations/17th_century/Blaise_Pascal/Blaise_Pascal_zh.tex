@@ -1,0 +1,501 @@
+% =============================================================
+%  概率与真空 · 会思想的芦苇：布莱兹·帕斯卡 (Blaise Pascal)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/17th_century/pages/Blaise_Pascal
+%  设计母题：帕斯卡三角 / 递归数塔 —— 柔和气泡呼应递归之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：冉森灰蓝 + 思想金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{465B7A}        % 冉森灰蓝 — 信仰与理性的张力 / 法国
+\definecolor{accentclr}{HTML}{C9A227}      % 思想金 — 《思想录》/ 帕斯卡三角
+\definecolor{badgeA}{HTML}{4C5FD5}         % 概率 — 靛蓝
+\definecolor{badgeB}{HTML}{0E7C7B}         % 流体与真空 — 青绿
+\definecolor{badgeC}{HTML}{E07B30}         % 计算与几何 — 琥珀
+\definecolor{badgeD}{HTML}{B76E79}         % 信仰与文学 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{228,232,250}
+\definecolor{panelB}{RGB}{220,240,238}
+\definecolor{panelC}{RGB}{248,233,220}
+\definecolor{panelD}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应帕斯卡三角 / 递归数塔
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 数学家\enspace·\enspace 物理学家\enspace·\enspace 哲学家};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {布莱兹·帕斯卡};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Blaise Pascal\enspace·\enspace 1623 — 1662};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {概率与真空 · 会思想的芦苇};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {概率\\Probability\par\scriptsize 与费马通信};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {流体与真空\\Hydrostatics\par\scriptsize 帕斯卡定律};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {计算与几何\\Computing\par\scriptsize Pascaline};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {信仰与文学\\Faith \& Letters\par\scriptsize 《省书信》};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把理性推到极限，也把信仰写进《思想录》——人是会思想的芦苇。};
+  % 肖像（约 1691 死后绘像）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{pascal_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Blaise Pascal (1623–1662)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{home}\enspace 家庭教育 · 巴黎\enspace|\enspace 概率 · 流体 · 几何};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{布莱兹·帕斯卡 - 从克莱蒙到巴黎}{生卒 · 本名 · 国籍 · 教育 · 信仰 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（约 1691 死后绘像）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{pascal_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Blaise Pascal (1623–1662)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1623-06-19 — 1662-08-19\\[2pt]\lab{本名}\quad Blaise Pascal\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 无学校——父 Étienne 在家教育\\[2pt]
+     \quad 12 岁自证欧氏前 32 命题\\[2pt]\lab{信仰}\quad 天主教 · 倾向冉森派};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Clermont-Ferrand（奥弗涅）\\[2pt]\lab{父亲}\quad 收税官 · 业余数学家\\[2pt]\lab{身后}\quad 巴黎 Saint-Étienne-du-Mont};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 概率 · 流体静力学\\[2pt]
+     \quad 射影几何 · 哲学\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家 · 哲学家 · 作家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 帕斯卡的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{帕斯卡的一生}{1623 — 1662 · 从克莱蒙到巴黎}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1623/生于奥弗涅 Clermont-Ferrand，3 岁丧母,
+    2.2/1631/父卖官迁居巴黎，亲自在家教育,
+    1.5/1639/16 岁发表圆锥曲线"神秘六边形"定理,
+    0.8/1642/为父亲造出机械计算器 Pascaline,
+    0.1/1648/姐夫执行 Puy de Dôme 高山实验,
+    -0.6/1654/与费马通信奠基概率论；深夜神秘体验,
+    -1.3/1656/化名发表《省书信》，
+    -2.0/1662/逝于巴黎，享年 39
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1623–1639)}{克莱蒙出生 · 家庭教育 · 瓷砖上的几何}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1623} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于 Clermont-Ferrand，3 岁丧母，父 Étienne 未再娶} & \cellcolor{panelB}\textcolor{badgeB!82!black}{奥弗涅世家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1631} & \cellcolor{panelA}\textcolor{badgeA!82!black}{父卖官得巨资迁居巴黎，决意亲自教育子女} & \cellcolor{panelB}\textcolor{badgeB!82!black}{迁居巴黎} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{少年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{父"先学语言后学几何"；他以炭条在瓷砖地板上独立重推欧几里得前 32 命题} & \cellcolor{panelB}\textcolor{badgeB!82!black}{几何神童} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1639} & \cellcolor{panelA}\textcolor{badgeA!82!black}{16 岁写成《圆锥曲线论》短文，经梅森传阅} & \cellcolor{panelB}\textcolor{badgeB!82!black}{少年成名} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他没有上过一天学校，父亲是他唯一的老师。}
+\end{center}
+\end{frame}}
+
+% --- 5. 帕斯卡定理与少年成名（核心贡献页） ---
+\newcommand{\theoremtriangleslide}{\begin{frame}\plainbar\sectiontitle{帕斯卡定理与少年成名}{神秘六边形 · 1639 · 射影几何开端}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{帕斯卡的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{神秘六边形} & \cellcolor{panelC}\textcolor{badgeC!82!black}{16 岁发表：内接于圆锥曲线的六边形，三组对边交点共线} & \cellcolor{panelB}\textcolor{badgeB!82!black}{射影几何开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{帕斯卡线} & \cellcolor{panelC}\textcolor{badgeC!82!black}{该共线直线上后世称 Pascal line} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以他命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{笛卡尔的质疑} & \cellcolor{panelC}\textcolor{badgeC!82!black}{笛卡尔不肯相信出自少年之手，认定是其父代笔} & \cellcolor{panelB}\textcolor{badgeB!82!black}{梅森等传阅担保} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 帕斯卡定理（mystic hexagon，1639）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$X=AB\cap DE,\;\; Y=BC\cap EF,\;\; Z=CD\cap FA\;\Rightarrow\; X,\,Y,\,Z \text{ 共线}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Pascaline（核心贡献页） ---
+\newcommand{\pascalineslide}{\begin{frame}\plainbar\sectiontitle{Pascaline：机械计算器}{1642 · 为父亲的税务计算而造}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{帕斯卡的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{发明动因} & \cellcolor{panelC}\textcolor{badgeC!82!black}{为减轻任鲁昂收税官的父亲的计算负担} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1642 年造出} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{历史地位} & \cellcolor{panelC}\textcolor{badgeC!82!black}{史上最早的两台机械计算器发明者之一} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算器先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{产出与市场} & \cellcolor{panelC}\textcolor{badgeC!82!black}{十年约 20 台成品（设计约 50 台）；商业上失败，沦为玩具与身份象征} & \cellcolor{panelB}\textcolor{badgeB!82!black}{如实记录} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} Pascaline（1642，机械十进制齿轮进位）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black} 加法、减法直接运算；乘法、除法化归为加减}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 帕斯卡三角与数学归纳法（核心贡献页） ---
+\newcommand{\triangleslide}{\begin{frame}\plainbar\sectiontitle{帕斯卡三角与数学归纳法}{《算术三角形》· 递归与归纳}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{帕斯卡的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{递归定义} & \cellcolor{panelA}\textcolor{badgeA!82!black}{《算术三角形》给出递归定义与显式公式} & \cellcolor{panelC}\textcolor{badgeC!82!black}{数塔之美} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{数学归纳法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{同一论著给出归纳原理的明确表述} & \cellcolor{panelC}\textcolor{badgeC!82!black}{归纳法奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{组合对应} & \cellcolor{panelA}\textcolor{badgeA!82!black}{三角对应二项式系数与组合计数} & \cellcolor{panelC}\textcolor{badgeC!82!black}{组合分析源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 算术三角形的递归定义（Traité du triangle arithmétique）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$t_{m,n}=t_{m-1,\,n}+t_{m,\,n-1}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 概率论：与费马的通信（核心贡献页） ---
+\newcommand{\probabilityslide}{\begin{frame}\plainbar\sectiontitle{概率论：与费马的通信}{1654 分赌注问题 · 期望值诞生}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{帕斯卡的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{分赌注问题} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1654 年与费马就赌金分配问题通信求解} & \cellcolor{panelD}\textcolor{badgeD!82!black}{概率论奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{期望值} & \cellcolor{panelA}\textcolor{badgeA!82!black}{数学期望的概念由这次合作诞生} & \cellcolor{panelD}\textcolor{badgeD!82!black}{共同奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{传承链} & \cellcolor{panelA}\textcolor{badgeA!82!black}{惠更斯承其思想写成首部概率论著作；再启雅各布·伯努利} & \cellcolor{panelD}\textcolor{badgeD!82!black}{帕斯卡$\to$惠更斯} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 期望值（expected value）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\mathbb{E}[X]=\sum_{i} p_{i}\,x_{i}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 真空与 Puy de Dôme（核心贡献页） ---
+\newcommand{\vacuumslide}{\begin{frame}\plainbar\sectiontitle{真空与 Puy de Dôme 实验}{反驳"自然厌恶真空"}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{帕斯卡的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{新真空实验} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1647 年发表《新真空实验》} & \cellcolor{panelC}\textcolor{badgeC!82!black}{实验物理学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{高山实验} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1648-09-19 姐夫 Florin Périer 自山脚至山顶测水银柱下降} & \cellcolor{panelC}\textcolor{badgeC!82!black}{大气压随高度变化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{可证伪先声} & \cellcolor{panelB}\textcolor{badgeB!82!black}{致 Noël：假说若与任一现象相悖，即足以证伪} & \cellcolor{panelC}\textcolor{badgeC!82!black}{方法论先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 气压随高度变化（Puy de Dôme，1648）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\Delta P=\rho g\,\Delta h$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 帕斯卡定律与水压机（核心贡献页） ---
+\newcommand{\hydrostaticslide}{\begin{frame}\plainbar\sectiontitle{帕斯卡定律与水压机}{静水压强 · 液压技术之父}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{帕斯卡的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{静水压强} & \cellcolor{panelB}\textcolor{badgeB!82!black}{密闭流体压强只取决于高度差，而非液柱重量} & \cellcolor{panelC}\textcolor{badgeC!82!black}{帕斯卡定律} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{发明} & \cellcolor{panelB}\textcolor{badgeB!82!black}{发明水压机（hydraulic press）与注射器} & \cellcolor{panelC}\textcolor{badgeC!82!black}{液压技术} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{单位纪念} & \cellcolor{panelB}\textcolor{badgeB!82!black}{压强 SI 单位以他命名为 pascal (Pa)} & \cellcolor{panelC}\textcolor{badgeC!82!black}{国际承认} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 帕斯卡定律与水压机（Pascal's principle）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\dfrac{F_{1}}{A_{1}}=\dfrac{F_{2}}{A_{2}}$\qquad 小力撬动大重}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 摆线的八日奇迹（核心贡献页） ---
+\newcommand{\cycloidslide}{\begin{frame}\plainbar\sectiontitle{摆线的八日奇迹}{1658 · 牙痛之兆 · 无胜者的竞赛}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{帕斯卡的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{八日奇迹} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1658 年剧烈牙痛，视消失为上天之兆，八日完成摆线论文} & \cellcolor{panelB}\textcolor{badgeB!82!black}{积分先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{摆线竞赛} & \cellcolor{panelC}\textcolor{badgeC!82!black}{悬赏征解；沃利斯与 Lalouvère 的投稿均未获评通过} & \cellcolor{panelB}\textcolor{badgeB!82!black}{无胜者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Roberval 之争} & \cellcolor{panelC}\textcolor{badgeC!82!black}{Roberval 声称自己早知解法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{优先权纷争} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 摆线（cycloid）一拱之下的面积}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$x=r(\theta-\sin\theta),\;\; y=r(1-\cos\theta)\;\Rightarrow\; A=3\pi r^{2}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 《省书信》与帕斯卡赌注 ---
+\newcommand{\lettersslide}{\begin{frame}\plainbar\sectiontitle{《省书信》与帕斯卡赌注}{信仰与文学的另一面}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{《省书信》} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1656–57 以笔名 Louis de Montalte 抨击耶稣会道德神学} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1660 被路易十四下令焚书} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Memorial} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1654-11-23 深夜神秘体验，记录缝入衣襟随身携带} & \cellcolor{panelB}\textcolor{badgeB!82!black}{信仰之夜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{《思想录》} & \cellcolor{panelD}\textcolor{badgeD!82!black}{身后出版的宗教与哲思札记（Pensées）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{帕斯卡赌注} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{公共政策} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1662 年 carrosses à cinq sols 固定线路马车} & \cellcolor{panelB}\textcolor{badgeB!82!black}{现代公交之父} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 半生数学与物理，半生信仰与文字。}
+\end{center}
+\end{frame}}
+
+% --- 13. 身后与纪念 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{身后与纪念}{生前无一纸院士 · 身后千处以他为名}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{生前荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{无任何奖项或院士身份记载——法兰西科学院 1666 年才成立，他逝于 1662} & \cellcolor{panelD}\textcolor{badgeD!82!black}{时代错位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{科学纪念} & \cellcolor{panelA}\textcolor{badgeA!82!black}{压强单位 pascal (Pa)；小行星 4500 Pascal；500 法郎纸币} & \cellcolor{panelD}\textcolor{badgeD!82!black}{国际命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{现代回响} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 编程语言 Pascal\item Nvidia Pascal 微架构\item Université Blaise Pascal\end{itemize}} & \cellcolor{panelD}\textcolor{badgeD!82!black}{影响至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 生前的时代没有为他设奖，身后的世界处处以他为名。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {人是会思想的芦苇，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {却因思想而握有全部尊严。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他 39 年的生命，同时点亮了概率、流体与信仰。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {布莱兹·帕斯卡\quad Blaise Pascal\quad 1623 — 1662};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 概率 · 流体 · 几何\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\theoremtriangleslide
+\pascalineslide
+\triangleslide
+\probabilityslide
+\vacuumslide
+\hydrostaticslide
+\cycloidslide
+\lettersslide
+\honorslide
+\closingslide
+\end{document}

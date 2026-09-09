@@ -1,0 +1,507 @@
+% =============================================================
+%  微积分符号之父 · 最后的通才：戈特弗里德·威廉·莱布尼茨 (Gottfried Wilhelm Leibniz)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/17th_century/pages/Gottfried_Wilhelm_Leibniz
+%  设计母题：二进制 0/1 / ∫ 积分号 —— 柔和气泡呼应曲线下面积与通才的浩瀚
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：普鲁士蓝 + 通才金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{prussianblue}{HTML}{1F3A5F}   % 普鲁士蓝 — 德意志 / 普鲁士学术传统
+\definecolor{mathgold}{HTML}{C9A227}       % 通才金 — 最后的通才 / ∫ 符号
+\definecolor{badgeCalc}{HTML}{4C5FD5}      % 微积分 — 靛蓝
+\definecolor{badgeBin}{HTML}{0E7C7B}       % 二进制与计算 — 青绿
+\definecolor{badgePhil}{HTML}{E07B30}      % 哲学 — 琥珀
+\definecolor{badgeAcad}{HTML}{B76E79}      % 科学院与外交 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{20,32,52}
+\definecolor{muteddark}{RGB}{72,76,96}
+\definecolor{calcpanel}{RGB}{228,232,250}
+\definecolor{binpanel}{RGB}{220,240,238}
+\definecolor{philpanel}{RGB}{248,233,220}
+\definecolor{acadpanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应二进制 0/1 / 曲线下面积
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCalc!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeBin!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePhil!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeAcad!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=prussianblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 德国\enspace·\enspace 微积分符号之父\enspace·\enspace 最后的通才};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=prussianblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {莱布尼茨};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=prussianblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Gottfried Wilhelm Leibniz\enspace·\enspace 1646 — 1716};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {$\int$ 与 $dx$ · 二进制 · 单子论 · 柏林科学院};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeCalc] at (-5.05,0)
+        {微积分\\Calculus\par\scriptsize $\int$ 与 $dx$};
+      \node[badge, fill=badgeBin] at (-1.68,0)
+        {二进制与计算\\Computing\par\scriptsize 0/1 · 计算器};
+      \node[badge, fill=badgePhil] at (1.68,0)
+        {哲学\\Philosophy\par\scriptsize 单子论};
+      \node[badge, fill=badgeAcad] at (5.05,0)
+        {科学院与外交\\Academies\par\scriptsize 柏林科学院};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他与牛顿各自独立发明微积分，用 $\int$ 与 $dx$ 写下数学的通用语言，被誉为"最后的通才"。};
+  % 肖像（c. 1700 油画）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{leibniz_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Gottfried Wilhelm Leibniz (1646–1716)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国\enspace|\enspace \faIcon{university}\enspace 莱比锡大学 · 阿尔特多夫大学 · 汉诺威宫廷\enspace|\enspace 微积分 · 二进制 · 哲学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{莱布尼茨 - 从莱比锡到汉诺威}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（c. 1700）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{leibniz_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Gottfried Wilhelm Leibniz (1646–1716)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1646-07-01（旧历 06-21）\\[2pt]\quad\quad — 1716-11-14\\[2pt]\lab{本名}\quad Gottfried Wilhelm Leibniz\\[2pt]\lab{国籍}\quad 德国（萨克森选侯国）};
+  \node[infob, fill=calcpanel, draw=badgeCalc!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 莱比锡大学（BA · MA · LLB）\\[2pt]
+     \quad 阿尔特多夫大学（法学博士 1666）\\[2pt]\lab{师承}\quad Christiaan Huygens（巴黎）};
+  \node[infob, fill=binpanel, draw=badgeBin!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 莱比锡（萨克森选侯国）\\[2pt]\lab{荣誉}\quad 皇家学会会员（1673）\\[2pt]\lab{身后}\quad 汉诺威 Neustädter Kirche};
+  \node[infob, fill=acadpanel, draw=badgeAcad!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 微积分 · 二进制 · 哲学\\[2pt]
+     \quad 逻辑 · 外交 · 计算\\[2pt]
+     \lab{身份}\quad 数学家 · 哲学家 · 外交官};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 莱布尼茨的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{莱布尼茨的一生}{1646 — 1716 · 从莱比锡到汉诺威}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1646/生于莱比锡，父为道德哲学教授,
+    2.2/1661/14 岁入莱比锡大学,
+    1.5/1666/著《论组合术》；获阿尔特多夫法学博士,
+    0.8/1672/赴巴黎，随惠更斯研习数学,
+    0.1/1676/定居汉诺威，效力宫廷四十年,
+    -0.6/1684/发表微积分论文《Nova methodus》,
+    -1.3/1700/创立柏林科学院并任首任院长,
+    -2.0/1716/逝于汉诺威，享年 70
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1646–1676)}{莱比锡出生 · 父亲的书房 · 少年入大学}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1646} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{生于莱比锡，父 Friedrich Leibniz 为道德哲学教授，莱布尼茨 6 岁时父亲去世} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{书香门第} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{少年} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{7 岁起自由使用父亲遗留的私人图书馆；12 岁通拉丁文，13 岁写出 300 行拉丁六音步诗} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{神童自修} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1661} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{14 岁入莱比锡大学：BA 1662、MA 1664、LLB 1665} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{哲学与法学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1666} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{莱比锡因他年轻拒绝授博士，转阿尔特多夫大学获法学博士，随后拒绝该校教职} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{法学博士} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 父亲的书房，是他一生浩瀚学识的起点。}
+\end{center}
+\end{frame}}
+
+% --- 5. 微积分的独立发明（核心贡献页） ---
+\newcommand{\calculusslide}{\begin{frame}\plainbar\sectiontitle{微积分的独立发明}{1675 笔记 · 1684 先于牛顿发表}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{莱布尼茨的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{独立发明} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{与牛顿各自独立创立微积分，互不依赖} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{双子星成就} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1675 笔记} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{11 月 11 日首次用积分求曲线下面积} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{早期证据} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1684 发表} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{《Nova methodus pro maximis et minimis》正式发表} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{先于牛顿刊行} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 微积分基本定理（1693 图示，Newton--Leibniz axiom）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{prussianblue!88!black}$\dfrac{d}{dx}\int_{a}^{x}f(t)\,dt=f(x)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 莱布尼茨记号（核心贡献页） ---
+\newcommand{\notationslide}{\begin{frame}\plainbar\sectiontitle{莱布尼茨记号}{$\int$ 与 $dx$ · 至今通用的数学语言}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{记号}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{含义}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{积分号 $\int$} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{summa（和）的拉长字母 S} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{求和的几何直观} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{微分 $dx$} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{$x$ 的无穷小增量} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{微分学基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{导数 $dy/dx$} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{商的形式直示变化率} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{沿用至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 乘积法则（至今称 Leibniz's law）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{prussianblue!88!black}$(uv)'=u'v+uv'$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 二进制与《易经》（核心贡献页） ---
+\newcommand{\binaryslide}{\begin{frame}\plainbar\sectiontitle{二进制与《易经》}{0 与 1 · 六爻卦图 · 1703 发表}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{莱布尼茨的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{二进制系统} & \cellcolor{calcpanel}\textcolor{badgeBin!82!black}{1679《De progressione dyadica》；1703 年发表；系统化并阐明其逻辑性质} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{现代计算之基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{《易经》卦图} & \cellcolor{calcpanel}\textcolor{badgeBin!82!black}{1701 年耶稣会士白晋寄来六爻卦图，与 0/1 二进制一一对应} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{东西呼应} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{优先权限定} & \cellcolor{calcpanel}\textcolor{badgeBin!82!black}{英国天文学家 Harriot 数十年前已设计同一系统} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{表述需限定} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 二进制记数（binary notation）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{prussianblue!88!black}$(1011)_2=2^{3}+2^{1}+2^{0}=(11)_{10}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 单子论与最好的可能世界（核心贡献页） ---
+\newcommand{\monadslide}{\begin{frame}\plainbar\sectiontitle{单子论与最好的可能世界}{前定和谐 · 《神正论》· 伏尔泰的讽刺}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{莱布尼茨的哲学}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{单子论 1714} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{宇宙由无部分的简单实体"单子"构成，90 条格言，身后出版} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{形而上学体系} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{前定和谐} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{单子之间依"前定和谐"彼此呼应运行} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{秩序的来源} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{最好的世界} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{《神正论》1710；后被伏尔泰《老实人》化名 Pangloss 讽刺} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{声名受损主因} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 《神正论》(Th\'eodic\'ee, 1710)}\\[2pt]
+  {\fontsize{11}{14}\selectfont\itshape\color{prussianblue!88!black}"God assuredly always chooses the best."}\\[2pt]
+  {\fontsize{8.5}{11}\selectfont\color{muteddark}（上帝必定总是选择最好的可能世界）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 形式逻辑与普遍文字（核心贡献页） ---
+\newcommand{\logicslide}{\begin{frame}\plainbar\sectiontitle{形式逻辑与普遍文字}{characteristica universalis · "Let us calculate"}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{莱布尼茨的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{《论组合术》} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{1666 年 19 岁著成，提出"普遍文字"与"人类思想字母表"的设想} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{符号逻辑源头} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{理性演算} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{calculus ratiocinator——把推理化为可计算的演算} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{数理逻辑先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{历史地位} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{亚里士多德与弗雷格之间最重要的逻辑学家之一} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{逻辑史丰碑} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Calculus ratiocinator（理性演算）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\itshape\color{prussianblue!88!black}"Let us calculate."}\\[2pt]
+  {\fontsize{8.5}{11}\selectfont\color{muteddark}（让我们来计算——争论双方拿出纸笔算一算即可）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 行列式与 vis viva（核心贡献页） ---
+\newcommand{\determinantslide}{\begin{frame}\plainbar\sectiontitle{行列式与 vis viva}{余因子展开 · 活力之争 · 时空关系论}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{莱布尼茨的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{行列式} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{Leibniz 行列式公式（按余因子展开）；1684 年已用行列式解线性方程组，早于 Cramer（1750）} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{线性代数先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{vis viva} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{主张活力 $mv^2$，与动量守恒派论战} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{能量守恒先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{时空关系论} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{"I hold space to be something merely relative, as time is..."（Leibniz--Clarke 通信）} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{爱因斯坦自称 Leibnizian} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} vis viva（活力，动能的两倍）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{prussianblue!88!black}$E_{\text{vis viva}}=mv^{2}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 计算器与科学院（核心贡献页） ---
+\newcommand{\reckonerslide}{\begin{frame}\plainbar\sectiontitle{计算器与科学院}{stepped reckoner · 柏林科学院首任院长}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{莱布尼茨的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{机械计算器} & \cellcolor{calcpanel}\textcolor{badgeBin!82!black}{stepped reckoner 可做四则运算，核心部件称 Leibniz wheel} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{计算机先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1673 FRS} & \cellcolor{calcpanel}\textcolor{badgeBin!82!black}{凭计算器演示当选皇家学会会员} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{柏林科学院} & \cellcolor{calcpanel}\textcolor{badgeBin!82!black}{1700 年起草章程并任首任院长（终身）；晚年倡议德累斯顿、维也纳、圣彼得堡科学院} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{科学建制者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} Stepped reckoner（步进计算器）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{prussianblue!88!black}$+\enspace-\enspace\times\enspace\div$\quad 四则运算}\\[2pt]
+  {\fontsize{8.5}{11}\selectfont\color{muteddark}"may have been the first computer scientist"（或可算第一位计算机科学家）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 优先权之争 ---
+\newcommand{\controversyslide}{\begin{frame}\plainbar\sectiontitle{微积分优先权之争}{牛顿更早 · 莱布尼茨先发表 · 双陈述缺一不可}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{史实}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{牛顿一方} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{1665--66 手稿在先，1668 起已在数学家间流传} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{更早发明} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{莱布尼茨一方} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{1684 年才正式发表，刊行在先} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{更早发表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1711 裁决} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{皇家学会调查认定牛顿优先——而牛顿是"未署名的参与者"，结论由其自写} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{有失公允} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{后世评价} & \cellcolor{calcpanel}\textcolor{badgeCalc!82!black}{1900 年后史学界趋于还其清白；他多次倒填、修改手稿日期，亦授人以柄} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{双面审视} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 牛顿更早，莱布尼茨先发表——只说一半即失实。}
+\end{center}
+\end{frame}}
+
+% --- 13. 身后与冷清的葬礼 ---
+\newcommand{\funeralslide}{\begin{frame}\plainbar\sectiontitle{身后与冷清的葬礼}{墓无标记逾 50 年 · 迟来的致敬}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{prussianblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{史实}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{冷清葬礼} & \cellcolor{acadpanel}\textcolor{badgeAcad!82!black}{1716 年葬礼上，乔治一世与满朝同僚均未出席，仅其私人秘书一人到场；皇家学会与柏林科学院均未致哀} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{身后萧条} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{无碑之墓} & \cellcolor{acadpanel}\textcolor{badgeAcad!82!black}{葬于汉诺威 Neust\"adter Kirche，墓无标记逾 50 年} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{被遗忘} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{巴黎科学院} & \cellcolor{acadpanel}\textcolor{badgeAcad!82!black}{1675 年申请被拒（"外国人已够多"），1700 年才当选外籍院士} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{两个年份} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{迟来致敬} & \cellcolor{acadpanel}\textcolor{badgeAcad!82!black}{莱布尼茨大学汉诺威、莱布尼茨奖（1985）、手稿入选 UNESCO 世界记忆名录（2007）} & \cellcolor{binpanel}\textcolor{badgeBin!82!black}{历史正名} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} "最后的通才"，身后却几乎没有送行的人。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=prussianblue!90!black] at ([yshift=1.5cm]current page.center) {他与牛顿各自独立发明微积分，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {也是"最后的通才"。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=prussianblue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是 $\int$ 与 $dx$ 的通用语言，与 0/1 的未来。};
+\node[font=\fontsize{8}{10}\selectfont, text=prussianblue!60!black] at ([yshift=-2.0cm]current page.center) {莱布尼茨\quad Gottfried Wilhelm Leibniz\quad 1646 — 1716};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 微积分 · 二进制 · 哲学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\calculusslide
+\notationslide
+\binaryslide
+\monadslide
+\logicslide
+\determinantslide
+\reckonerslide
+\controversyslide
+\funeralslide
+\closingslide
+\end{document}

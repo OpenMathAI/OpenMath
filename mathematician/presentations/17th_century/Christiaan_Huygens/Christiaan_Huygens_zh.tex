@@ -1,0 +1,501 @@
+% =============================================================
+%  摆钟之父 · 光的波动说：克里斯蒂安·惠更斯 (Christiaan Huygens)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/17th_century/pages/Christiaan_Huygens
+%  设计母题：摆的弧线 / 光的波前 —— 柔和气泡呼应摆动与涟漪之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：海牙蓝 + 奥兰治橙金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{33628C}        % 海牙蓝 — 荷兰共和国 / 黄金时代
+\definecolor{accentclr}{HTML}{D08428}      % 奥兰治橙金 — 荷兰王室色 / 摆钟黄铜
+\definecolor{badgeA}{HTML}{4C5FD5}         % 钟表与力学 — 靛蓝
+\definecolor{badgeB}{HTML}{0E7C7B}         % 光学 — 青绿
+\definecolor{badgeC}{HTML}{E07B30}         % 天文 — 琥珀
+\definecolor{badgeD}{HTML}{B76E79}         % 概率 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{228,232,250}
+\definecolor{panelB}{RGB}{220,240,238}
+\definecolor{panelC}{RGB}{248,233,220}
+\definecolor{panelD}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应摆的弧线 / 光的波前涟漪
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 荷兰\enspace·\enspace 数学家\enspace·\enspace 物理学家\enspace·\enspace 天文学家};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {克里斯蒂安·惠更斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Christiaan Huygens\enspace·\enspace 1629 — 1695};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {摆钟之父 · 光的波动说};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {钟表与力学\\Clockwork\par\scriptsize 摆钟 · 摆钟论};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {光学\\Optics\par\scriptsize 惠更斯原理};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {天文\\Astronomy\par\scriptsize 泰坦 · 土星环};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {概率\\Probability\par\scriptsize 期望值};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他让时间精确到秒，让光第一次有了波动的形状，让概率第一次成书。};
+  % 肖像（Vaillant 粉彩，1686）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{huygens_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Christiaan Huygens (1629–1695)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 荷兰\enspace|\enspace \faIcon{university}\enspace 莱顿大学 · 法国科学院\enspace|\enspace 钟表 · 光学 · 天文};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{克里斯蒂安·惠更斯 - 从海牙到巴黎}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Vaillant 粉彩，1686）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{huygens_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Christiaan Huygens (1629–1695)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1629-04-14 — 1695-07-08\\[2pt]\lab{本名}\quad Christiaan Huygens\\[2pt]\lab{国籍}\quad 荷兰共和国};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 莱顿大学（法律与数学）\\[2pt]
+     \quad Breda 橙亲王学院\\[2pt]\lab{师承}\quad Frans van Schooten Jr.};
+  \node[infob, fill=panelC, draw=badgeC!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 海牙（The Hague）\\[2pt]\lab{荣誉}\quad 皇家学会首位外籍会员\\[2pt]\lab{身后}\quad Grote Kerk 无标记的墓};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 钟表与力学 · 光学\\[2pt]
+     \quad 天文 · 概率\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家 · 天文学家 · 发明家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 惠更斯的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{惠更斯的一生}{1629 — 1695 · 从海牙到巴黎}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1629/生于海牙，父为诗人外交官 Constantijn Huygens,
+    2.2/1645/入莱顿大学学法律与数学，van Schooten 指导,
+    1.5/1655/发现土星最大卫星泰坦（Titan）,
+    0.8/1657/发明摆钟并获专利；出版概率论著作,
+    0.1/1663/当选皇家学会首位外籍会员,
+    -0.6/1666/受 Colbert 之邀赴巴黎，任法国科学院领导职位,
+    -1.3/1673/《摆钟论》出版；1690《光论》出版,
+    -2.0/1695/逝于海牙，享年 66
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1629–1650)}{海牙出生 · 莱顿求学 · "new Archimedes"}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1629} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于海牙；父 Constantijn 为 Orange 王朝外交顾问、诗人与音乐家} & \cellcolor{panelC}\textcolor{badgeC!82!black}{书香世家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{少年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{16 岁前家庭教育；1644 年随数学教师 Jan Jansz Stampioen 学数学} & \cellcolor{panelC}\textcolor{badgeC!82!black}{数学启蒙} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1645–47} & \cellcolor{panelA}\textcolor{badgeA!82!black}{莱顿大学学法律与数学；van Schooten 应笛卡尔建议任其私人导师} & \cellcolor{panelC}\textcolor{badgeC!82!black}{近代化数学教育} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1647–49} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Breda 橙亲王学院；随英国讲师 John Pell 学数学} & \cellcolor{panelC}\textcolor{badgeC!82!black}{游学布雷达} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 梅森早在通信中称这位少年为 "new Archimedes"。}
+\end{center}
+\end{frame}}
+
+% --- 5. 摆钟与《摆钟论》（核心贡献页） ---
+\newcommand{\pendulumslide}{\begin{frame}\plainbar\sectiontitle{摆钟与《摆钟论》}{1657 专利 · 1673 "第一部现代力学著作"}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{惠更斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{摆钟} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1656 发明、1657 获专利；荷兰制表人 Coster 承造，各国竞相仿制} & \cellcolor{panelC}\textcolor{badgeC!82!black}{计时革命} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{《摆钟论》} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1673 出版：证明摆线为等时曲线，发展渐屈线理论，献给路易十四} & \cellcolor{panelC}\textcolor{badgeC!82!black}{第一部现代力学著作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{精度} & \cellcolor{panelA}\textcolor{badgeA!82!black}{成为近 300 年间最精确的计时器，直到 1930 年代石英钟} & \cellcolor{panelC}\textcolor{badgeC!82!black}{计时精度巅峰} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 摆线的等时性（tautochrone，《摆钟论》1673）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black} 沿摆线滑落的质点，到达最低点所用时间与起点无关}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 单摆周期与离心力（核心贡献页） ---
+\newcommand{\centrifugeslide}{\begin{frame}\plainbar\sectiontitle{单摆周期与离心力}{早于牛顿十年的定量力学}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{惠更斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{单摆周期} & \cellcolor{panelA}\textcolor{badgeA!82!black}{第一个导出理想数学摆的周期公式} & \cellcolor{panelC}\textcolor{badgeC!82!black}{定量力学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{离心力} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1659《De Vi Centrifuga》给出离心力公式，早于牛顿十年} & \cellcolor{panelC}\textcolor{badgeC!82!black}{通向万有引力} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{方法论} & \cellcolor{panelA}\textcolor{badgeA!82!black}{物理问题先理想化为参数，再作数学分析} & \cellcolor{panelC}\textcolor{badgeC!82!black}{现代力学范式} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 单摆周期与离心力}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$T=2\pi\sqrt{\dfrac{l}{g}}$\qquad\qquad $F_{c}=m\omega^{2}r$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 弹性碰撞（核心贡献页） ---
+\newcommand{\collisionslide}{\begin{frame}\plainbar\sectiontitle{弹性碰撞定律}{第一个给出正确规律的人}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{惠更斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{碰撞定律} & \cellcolor{panelA}\textcolor{badgeA!82!black}{《De Motu Corporum ex Percussione》（1656 完稿，1703 出版）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{首个正确规律} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{纠正笛卡尔} & \cellcolor{panelA}\textcolor{badgeA!82!black}{证明笛卡尔碰撞定律大错（largely wrong）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{取代旧说} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{守恒思想} & \cellcolor{panelA}\textcolor{badgeA!82!black}{碰撞前后动量与"活力"总量不变的观念} & \cellcolor{panelC}\textcolor{badgeC!82!black}{守恒律先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 弹性碰撞（elastic collision）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$m_{1}v_{1}+m_{2}v_{2}=m_{1}v_{1}'+m_{2}v_{2}'$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 概率论与期望值（核心贡献页） ---
+\newcommand{\probabilityslide}{\begin{frame}\plainbar\sectiontitle{概率论与期望值}{1657《论赌博中的计算》}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{惠更斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{成书出版} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1657《论赌博中的计算》（De Ratiociniis in Ludo Aleae）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{首部成书} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{承帕斯卡} & \cellcolor{panelD}\textcolor{badgeD!82!black}{承接帕斯卡"公平博弈"概念，扩展出系统的期望值理论} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1655 访巴黎} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{启伯努利} & \cellcolor{panelD}\textcolor{badgeD!82!black}{其期望值思想启发雅各布·伯努利的《猜度术》} & \cellcolor{panelB}\textcolor{badgeB!82!black}{传承中继} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 期望值（expected value，1657）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\mathbb{E}[X]=\sum_{i} p_{i}\,x_{i}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 土星环与泰坦（核心贡献页） ---
+\newcommand{\saturnslide}{\begin{frame}\plainbar\sectiontitle{土星环与泰坦}{1655 发现泰坦 · 1659《Systema Saturnium》}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{惠更斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{发现泰坦} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1655-03-25 用自制望远镜发现土星最大卫星 Titan} & \cellcolor{panelB}\textcolor{badgeB!82!black}{首颗土星卫星} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{土星环} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1659《Systema Saturnium》："一层薄而平的环，任何处不相接触，与黄道倾斜"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{解开土星之谜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{火星自转} & \cellcolor{panelC}\textcolor{badgeC!82!black}{测得火星自转约 24$\tfrac{1}{2}$ 小时} & \cellcolor{panelB}\textcolor{badgeB!82!black}{行星观测} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} "a thin, flat ring, nowhere touching, and inclined to the ecliptic"}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$T_{\text{Mars}}\approx 24\tfrac{1}{2}$ h\qquad Titan：1655-03-25}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 光的波动说（核心贡献页） ---
+\newcommand{\lightwave}{\begin{frame}\plainbar\sectiontitle{光的波动说}{《Traité de la Lumière》1690 · 惠更斯原理}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{惠更斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{波动说} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1678 年宣读、1690 年出版《光论》} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首个完整数学化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{惠更斯原理} & \cellcolor{panelB}\textcolor{badgeB!82!black}{波前上每一点都是次级子波源，包络构成新波前} & \cellcolor{panelA}\textcolor{badgeA!82!black}{今 Huygens–Fresnel} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{时代局限} & \cellcolor{panelB}\textcolor{badgeB!82!black}{当时不敌牛顿微粒说；直到 19 世纪 Young / Fresnel 才翻案} & \cellcolor{panelA}\textcolor{badgeA!82!black}{超越时代} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 惠更斯原理（Huygens' principle）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black} 子波半径 $\overline{PQ}=c\,\Delta t$\qquad 新波前 $=$ 子波包络}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 光学仪器（核心贡献页） ---
+\newcommand{\opticsslide}{\begin{frame}\plainbar\sectiontitle{光学仪器}{惠更斯目镜 · 空中望远镜}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{惠更斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{惠更斯目镜} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1662 年设计两片平凸透镜组合的目镜，显著减小色散} & \cellcolor{panelA}\textcolor{badgeA!82!black}{沿用至今} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{磨镜工艺} & \cellcolor{panelB}\textcolor{badgeB!82!black}{与兄 Constantijn 亲手研磨高精度透镜} & \cellcolor{panelA}\textcolor{badgeA!82!black}{自制望远镜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{空中望远镜} & \cellcolor{panelB}\textcolor{badgeB!82!black}{弃镜筒、以长焦物镜与目镜悬接的"无筒望远镜"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{超大焦距方案} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 好仪器先于好观测}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black} 泰坦与土星环，皆出自他亲手磨制的镜头}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 学者网络 ---
+\newcommand{\networkslide}{\begin{frame}\plainbar\sectiontitle{学者网络}{梅森 · 帕斯卡 · 莱布尼茨 · 牛顿 · 胡克}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{关系}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{梅森} & \cellcolor{panelA}\textcolor{badgeA!82!black}{通信网络中的引路人，称其为 "new Archimedes"} & \cellcolor{panelC}\textcolor{badgeC!82!black}{少年成名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{莱布尼茨} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1672–76 在巴黎受其数学指导} & \cellcolor{panelC}\textcolor{badgeC!82!black}{莱布尼茨之师} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{牛顿} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1689 年会面并长期通信，切磋引力与光学} & \cellcolor{panelC}\textcolor{badgeC!82!black}{巅峰对话} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{胡克} & \cellcolor{panelD}\textcolor{badgeD!82!black}{游丝发明权各自独立，争议数百年；2006 年新档案似有利于胡克} & \cellcolor{panelC}\textcolor{badgeC!82!black}{优先权之争} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他站在梅森网络的末端，又站在牛顿时代的前夜。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{首位外籍会员 · 探测器以他为名}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{皇家学会} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1663 年当选 Fellow，时年 34 岁——史上首位外籍会员} & \cellcolor{panelC}\textcolor{badgeC!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{法国科学院} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1666 年受 Colbert 之邀出任领导职位，居巴黎天文台；1681 因病返荷} & \cellcolor{panelC}\textcolor{badgeC!82!black}{科学院元老} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{命名纪念} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 月球环形山与火星区域 Huygens\item 惠更斯目镜 · 惠更斯原理\item Cassini--Huygens 探测器（2005 着陆泰坦）\end{itemize}} & \cellcolor{panelC}\textcolor{badgeC!82!black}{星际致敬} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 350 年后，人类把他的名字送回了泰坦。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他让时间不再混沌，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {让光第一次拥有了波动的形状。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {洞察之深、成果之丰，当时唯牛顿可与之比肩。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {克里斯蒂安·惠更斯\quad Christiaan Huygens\quad 1629 — 1695};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 钟表 · 光学 · 天文\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\pendulumslide
+\centrifugeslide
+\collisionslide
+\probabilityslide
+\saturnslide
+\lightwave
+\opticsslide
+\networkslide
+\honorslide
+\closingslide
+\end{document}

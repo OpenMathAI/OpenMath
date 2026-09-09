@@ -1,0 +1,497 @@
+% =============================================================
+%  解析几何之父 · 我思故我在：勒内·笛卡尔 (René Descartes)
+%  Beamer 演示 —— 参照 Johann Bernoulli 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/17th_century/pages/René_Descartes
+%  设计母题：笛卡尔坐标系 / 坐标网格 —— 柔和气泡呼应解析几何的理性之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：笛卡尔蓝 + 理性金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{2B4C7E}        % 主色（笛卡尔蓝）— 理性主义 / 坐标系
+\definecolor{accentclr}{HTML}{C9A227}      % 强调色（理性金）— 近代哲学之父 / 解析几何
+\definecolor{badgeA}{HTML}{4C5FD5}         % 解析几何 — 靛蓝（坐标系 / La Géométrie）
+\definecolor{badgeB}{HTML}{0E7C7B}         % 方法论 — 青绿（怀疑 / 我思故我在）
+\definecolor{badgeC}{HTML}{E07B30}         % 光学与物理 — 琥珀（折射定律 / 运动定律）
+\definecolor{badgeD}{HTML}{B76E79}         % 哲学思辨 — 玫红（心身二元论 / 旋涡说）
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{228,232,250}     % badgeA 浅底
+\definecolor{panelB}{RGB}{220,240,238}     % badgeB 浅底
+\definecolor{panelC}{RGB}{248,233,220}     % badgeC 浅底
+\definecolor{panelD}{RGB}{246,233,235}     % badgeD 浅底
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应坐标网格 / 解析几何的理性秩序
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法国\enspace·\enspace 解析几何之父\enspace·\enspace 我思故我在};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {勒内·笛卡尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {René Descartes\enspace·\enspace 1596 — 1650};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {解析几何 · 方法论怀疑 · 运动定律};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {解析几何\\Analytic Geometry\par\scriptsize 笛卡尔坐标系};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {方法论\\Method\par\scriptsize 我思故我在};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {光学与物理\\Physics\par\scriptsize 折射定律};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {哲学思辨\\Philosophy\par\scriptsize 心身二元论};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把几何与代数连成一体，又用一次彻底的怀疑，为近代哲学奠基。};
+  % 肖像（Jan Baptist Weenix 绘，归属明确）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{descartes_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {René Descartes (1596–1650)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace 拉弗莱什耶稣会学院 · 普瓦捷大学\enspace|\enspace 解析几何 · 哲学 · 光学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{勒内·笛卡尔 - 从拉艾到斯德哥尔摩}{生卒 · 国籍 · 出生地 · 家庭 · 教育 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Weenix 绘）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{descartes_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {René Descartes (1596–1650)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1596-03-31 — 1650-02-11\\[2pt]\lab{国籍}\quad 法国（逝于瑞典）\\[2pt]\lab{享年}\quad 53 岁};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{出生地}\quad 拉艾-图赖讷（今笛卡尔镇）\\[2pt]
+     \lab{父亲}\quad 雷恩高等法院成员\\[2pt]\lab{逝世地}\quad 斯德哥尔摩};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{教育}\quad 拉弗莱什耶稣会学院\\[2pt]\quad (1607–1614)；普瓦捷大学 LL.B.\\[2pt]\lab{师承}\quad Beeckman · Golius · Metius};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 解析几何 · 哲学 · 光学\\[2pt]
+     \quad 物理 · 生理学 · 音乐理论\\[2pt]
+     \lab{身份}\quad 哲学家 · 数学家 · 科学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 勒内·笛卡尔的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{勒内·笛卡尔的一生}{1596 — 1650 · 从图赖讷到斯德哥尔摩}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{6.8}{8.8}\selectfont, align=left, text width=8.2cm},
+  yr/.style={font=\fontsize{8}{10}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.72/1596/生于拉艾-图赖讷（今笛卡尔镇），母早逝，由外祖母抚养,
+    2.13/1607/因体弱入学偏晚，入拉弗莱什耶稣会学院,
+    1.54/1616/普瓦捷大学获教会法与民法 LL.B.,
+    0.95/1618/从军荷兰联省军，在布雷达结识 Beeckman,
+    0.36/1628/移居荷兰，隐居著述约二十年,
+    -0.23/1637/《方法谈》出版，附录《La Géométrie》创立解析几何,
+    -0.82/1641/《第一哲学沉思集》：我思故我在的体系化,
+    -1.41/1644/《哲学原理》：运动定律与旋涡宇宙,
+    -2.0/1649/应瑞典女王 Christina 之邀赴斯德哥尔摩,
+    -2.59/1650/2 月 11 日因肺炎去世，享年 53
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1596–1620)}{耶稣会学院 · 法学学位 · 弃笔从军}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1596} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于拉艾-图赖讷；1597 年母亲产死胎后去世，由外祖母抚养长大} & \cellcolor{panelB}\textcolor{badgeB!82!black}{体弱孤儿} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1607–14} & \cellcolor{panelA}\textcolor{badgeA!82!black}{拉弗莱什耶稣会学院，因体弱入学晚，在那里接触数学与物理} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数理启蒙} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1616} & \cellcolor{panelA}\textcolor{badgeA!82!black}{遵父意入普瓦捷大学，获教会法与民法 Baccalauréat 与 Licence} & \cellcolor{panelB}\textcolor{badgeB!82!black}{LL.B.} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1618–20} & \cellcolor{panelA}\textcolor{badgeA!82!black}{从军（荷兰联省军、后巴伐利亚军），1620 年白山战役在场；1618 年结识 Beeckman} & \cellcolor{panelB}\textcolor{badgeB!82!black}{物理兴趣起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1619 年"炉中三梦"出自 Baillet 的记载，属传说性质。}
+\end{center}
+\end{frame}}
+
+% --- 5. 解析几何与笛卡尔坐标系（核心贡献页） ---
+\newcommand{\geometrieslide}{\begin{frame}\plainbar\sectiontitle{解析几何与笛卡尔坐标系}{连接代数与几何 ·《La Géométrie》1637}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{笛卡尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{连接两界} & \cellcolor{panelA}\textcolor{badgeA!82!black}{把此前分离的几何与代数连接为解析几何} & \cellcolor{panelB}\textcolor{badgeB!82!black}{解析几何之父} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1637 出版} & \cellcolor{panelA}\textcolor{badgeA!82!black}{《La Géométrie》：《方法谈》三篇附录之一，数学代表作} & \cellcolor{panelB}\textcolor{badgeB!82!black}{微积分的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{坐标系} & \cellcolor{panelA}\textcolor{badgeA!82!black}{坐标思想古已有之，笛卡尔是系统化者——坐标系以他命名} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Cartesian 命名} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 解析几何（analytic geometry）：曲线与方程的对应}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\text{曲线}\;\Longleftrightarrow\;\text{方程}\qquad P=(x,\,y)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 方法论怀疑与我思故我在（核心贡献页） ---
+\newcommand{\cogitoslide}{\begin{frame}\plainbar\sectiontitle{方法论怀疑与我思故我在}{Cogito, ergo sum · 近代哲学的第一原理}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{笛卡尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{普遍怀疑} & \cellcolor{panelB}\textcolor{badgeB!82!black}{拒绝先哲权威，以系统的方法论怀疑重建知识根基} & \cellcolor{panelA}\textcolor{badgeA!82!black}{方法革命} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{第一原理} & \cellcolor{panelB}\textcolor{badgeB!82!black}{怀疑到底，唯一不可动摇者：我思，故我在} & \cellcolor{panelA}\textcolor{badgeA!82!black}{哲学支点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{生前寂寞} & \cellcolor{panelB}\textcolor{badgeB!82!black}{法文《沉思集》到他去世都没卖完一版——并未"一经问世轰动欧洲"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{身后方显} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 我思故我在}\\[2pt]
+  {\fontsize{13}{17}\selectfont\color{mainclr!88!black}\textit{Cogito, ergo sum}}\\[2pt]
+  {\fontsize{9.5}{12}\selectfont\color{mainclr!70!black}Je pense, donc je suis}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 笛卡尔符号法则与叶形线（核心贡献页） ---
+\newcommand{\foliumslide}{\begin{frame}\plainbar\sectiontitle{笛卡尔符号法则与叶形线}{符号法则 · 叶形线 · 法线法}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{笛卡尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{符号法则} & \cellcolor{panelA}\textcolor{badgeA!82!black}{由系数变号次数判断正负根的个数上限} & \cellcolor{panelB}\textcolor{badgeB!82!black}{多项式经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{叶形线} & \cellcolor{panelA}\textcolor{badgeA!82!black}{研究三次曲线 folium of Descartes} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以他命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{法线法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{method of normals：求曲线法线以定切线} & \cellcolor{panelB}\textcolor{badgeB!82!black}{切线求法先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 笛卡尔叶形线（folium of Descartes）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$x^{3}+y^{3}=3axy$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 运动定律与运动量守恒（核心贡献页） ---
+\newcommand{\motionslide}{\begin{frame}\plainbar\sectiontitle{运动定律与运动量守恒}{《哲学原理》· 牛顿的先驱}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{笛卡尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{三条运动定律} & \cellcolor{panelC}\textcolor{badgeC!82!black}{《哲学原理》(1644) 给出体系化阐述} & \cellcolor{panelB}\textcolor{badgeB!82!black}{牛顿的范本} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{运动量守恒} & \cellcolor{panelC}\textcolor{badgeC!82!black}{守恒的是 size $\times$ speed（速率而非矢量速度）——非现代动量守恒} & \cellcolor{panelB}\textcolor{badgeB!82!black}{quantitas motus} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{功的先声} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1637：举 100 磅 2 次 1 英尺 = 举 200 磅 1 英尺 = 举 100 磅 2 英尺} & \cellcolor{panelB}\textcolor{badgeB!82!black}{功的概念萌芽} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 运动量守恒（笛卡尔版：非现代动量）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\text{运动量}=\text{大小}\times\text{速率}\quad(\text{quantitas motus})$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 光学与折射定律（核心贡献页） ---
+\newcommand{\opticsslide}{\begin{frame}\plainbar\sectiontitle{光学与折射定律}{彩虹 42° · 笛卡尔定律 · 反射定律首发}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{笛卡尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{彩虹解释} & \cellcolor{panelC}\textcolor{badgeC!82!black}{用折射定律推出彩虹角半径为 42°} & \cellcolor{panelB}\textcolor{badgeB!82!black}{气象光学经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{折射定律} & \cellcolor{panelC}\textcolor{badgeC!82!black}{在法国称"笛卡尔定律"，其他地方多称 Snell 定律} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Snell–Descartes} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{反射定律} & \cellcolor{panelC}\textcolor{badgeC!82!black}{独立发现反射定律；其光学论文是反射定律的首次发表} & \cellcolor{panelB}\textcolor{badgeB!82!black}{出版里程碑} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 折射定律（法国称"笛卡尔定律"）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$n_{1}\sin\theta_{1}=n_{2}\sin\theta_{2}\qquad \theta_{\text{彩虹}}\approx 42^{\circ}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 旋涡说与磁素说（核心贡献页） ---
+\newcommand{\vortexslide}{\begin{frame}\plainbar\sectiontitle{旋涡说与磁素说}{以太旋涡宇宙 ·《Le Monde》的搁浅}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{笛卡尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{充实主义} & \cellcolor{panelD}\textcolor{badgeD!82!black}{不存在真空，空间必被物质充满——每一运动都是圆的} & \cellcolor{panelB}\textcolor{badgeB!82!black}{plenism} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{以太旋涡} & \cellcolor{panelD}\textcolor{badgeD!82!black}{以太阳周围以太旋涡的携带解释行星运动与重力} & \cellcolor{panelB}\textcolor{badgeB!82!black}{宇宙力学化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{磁素说} & \cellcolor{panelD}\textcolor{badgeD!82!black}{以流出物（effluvia）解释磁性——"磁场概念的前身"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{场论先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black}《Le Monde》（1633 搁浅）}\\[2pt]
+  {\fontsize{9.5}{13}\selectfont\color{mainclr!88!black}
+  闻伽利略受审，坚持哥白尼立场的《Le Monde》不敢出版——这也是《方法谈》1637 年才问世的原因之一。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 心身二元论（核心贡献页） ---
+\newcommand{\dualismslide}{\begin{frame}\plainbar\sectiontitle{心身二元论}{《沉思集》1641 · 思维与广延}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{笛卡尔的主张}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{两种实体} & \cellcolor{panelD}\textcolor{badgeD!82!black}{res cogitans（思维物）与 res extensa（广延物）截然二分} & \cellcolor{panelB}\textcolor{badgeB!82!black}{心身问题经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{蜡块论证} & \cellcolor{panelD}\textcolor{badgeD!82!black}{蜡块形态可变而仍认其为同一块蜡——认识靠心智而非感官} & \cellcolor{panelB}\textcolor{badgeB!82!black}{理性主义示范} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{近代哲学起点} & \cellcolor{panelD}\textcolor{badgeD!82!black}{《沉思集》《方法谈》《哲学原理》构成近代哲学的开端} & \cellcolor{panelB}\textcolor{badgeB!82!black}{近代哲学之父} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 思维与广延的分立，把哲学带入了此后三百年的争论。}
+\end{center}
+\end{frame}}
+
+% --- 12. 学者网络与论战（核心贡献页） ---
+\newcommand{\networkslide}{\begin{frame}\plainbar\sectiontitle{学者网络与论战}{梅森 · 伊丽莎白公主 · 乌得勒支之争}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{关系}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{梅森} & \cellcolor{panelD}\textcolor{badgeD!82!black}{挚友与学术中介：梅森代为传阅《沉思集》、抵御教士批评} & \cellcolor{panelB}\textcolor{badgeB!82!black}{巴黎代理人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{伊丽莎白公主} & \cellcolor{panelD}\textcolor{badgeD!82!black}{波希米亚的伊丽莎白公主，六年通信，《论灵魂激情》(1649) 题献} & \cellcolor{panelB}\textcolor{badgeB!82!black}{情感论之源} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Voetius 之争} & \cellcolor{panelD}\textcolor{badgeD!82!black}{乌得勒支大学神学家 Voetius 攻击其哲学；1643 年被迫出逃；Schoock 指控无神论} & \cellcolor{panelB}\textcolor{badgeB!82!black}{被逐与自辩} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 隐居荷兰二十年，论战却从未离开过他。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与身后 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与身后}{瑞典宫廷 · 禁书目录 · 圣日耳曼德佩}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{瑞典之邀} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 1649 年受女王 Christina 延请赴瑞典讲授哲学\item 1650-02-01 患肺炎、11 日去世（冬大部分时间温和，"冻死"是简化叙事）\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{迟来的宫廷} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{身后争议} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 1663 年著作被列入禁书目录\item 1671 年路易十四禁止讲授笛卡尔主义\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{教会与王权} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{归葬与地位} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1819 年改葬圣日耳曼德佩；"近代哲学之父""解析几何之父"；无任何奖项记载} & \cellcolor{panelB}\textcolor{badgeB!82!black}{历史定位} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 生前三度隐居避祸，身后却成为近代思想的地标。}
+\end{center}
+\end{frame}}
+
+% --- 14. 终章 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他怀疑了一切，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {只留下"我思"不可动摇。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是坐标系里的每一条曲线，与近代哲学的起点。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {勒内·笛卡尔\quad René Descartes\quad 1596 — 1650};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 解析几何 · 近代哲学 · 光学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\geometrieslide
+\cogitoslide
+\foliumslide
+\motionslide
+\opticsslide
+\vortexslide
+\dualismslide
+\networkslide
+\honorslide
+\closingslide
+\end{document}

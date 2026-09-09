@@ -1,0 +1,499 @@
+% =============================================================
+%  不可分法 · 积分学的先声：博纳文图拉·卡瓦列里 (Bonaventura Cavalieri)
+%  Beamer 演示 —— 参照 Johann Bernoulli 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/17th_century/pages/Bonaventura_Cavalieri
+%  设计母题：不可分线束 / 无穷细分 —— 柔和气泡呼应层叠之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：米兰深红 + 几何金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{8B1A1A}        % 主色（米兰深红）— 米兰公国 / 意大利文艺复兴余晖
+\definecolor{accentclr}{HTML}{C9A227}      % 强调色（几何金）— 不可分法 / 积分先声
+\definecolor{badgeA}{HTML}{4C5FD5}         % 不可分法 — 靛蓝（Geometria indivisibilibus）
+\definecolor{badgeB}{HTML}{0E7C7B}         % 积分先驱 — 青绿（求积公式 / 卡瓦列里原理）
+\definecolor{badgeC}{HTML}{E07B30}         % 光学 — 琥珀（反射望远镜构想 / 镜面反射）
+\definecolor{badgeD}{HTML}{B76E79}         % 修会与传承 — 玫红（Jesuate 修会 / 伽利略学派）
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{228,232,250}     % badgeA 浅底
+\definecolor{panelB}{RGB}{220,240,238}     % badgeB 浅底
+\definecolor{panelC}{RGB}{248,233,220}     % badgeC 浅底
+\definecolor{panelD}{RGB}{246,233,235}     % badgeD 浅底
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应不可分线束 / 无穷层叠
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 意大利\enspace·\enspace 不可分法\enspace·\enspace 积分学的先声};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {博纳文图拉·卡瓦列里};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Bonaventura Cavalieri\enspace·\enspace 1598 — 1647};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {不可分法 · 卡瓦列里原理 · 求积公式};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {不可分法\\Indivisibles\par\scriptsize 所有线的几何};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {积分先驱\\Quadrature\par\scriptsize $\int_0^1 x^n\,dx=\frac{1}{n+1}$};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {光学\\Optics\par\scriptsize 反射望远镜};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {修会与传承\\Jesuate\par\scriptsize 伽利略学派};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {在牛顿与莱布尼茨之前三十年，他已经把面积拆成了无数的线。};
+  % 肖像（米兰布雷拉宫纪念雕像，Labus 作，1844）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{cavalieri_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Bonaventura Cavalieri (1598–1647)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 意大利\enspace|\enspace \faIcon{university}\enspace 博洛尼亚大学 · 比萨大学\enspace|\enspace 几何 · 光学 · 天文学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{博纳文图拉·卡瓦列里 - 从米兰到博洛尼亚}{生卒 · 国籍 · 出生地 · 修会 · 导师 · 教育 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（布雷拉纪念雕像）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{cavalieri_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {纪念雕像（米兰布雷拉宫，1844）};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1598 — 1647-11-30\\[2pt]\lab{国籍}\quad 意大利（米兰公国）\\[2pt]\lab{享年}\quad 48–49 岁};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{出生地}\quad 米兰（时属哈布斯堡西班牙）\\[2pt]
+     \lab{逝世地}\quad 博洛尼亚（教皇国）\\[2pt]\lab{家庭}\quad 史料无载};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{修会}\quad 垫佐会（Jesuate，非耶稣会）\\[2pt]\lab{导师}\quad Benedetto Castelli\\[2pt]\lab{教育}\quad 比萨大学（几何）};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 几何 · 光学 · 天文学\\[2pt]
+     \quad 神学 · 对数应用\\[2pt]
+     \lab{身份}\quad 数学家 · 天文学家 · 神学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 卡瓦列里的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{卡瓦列里的一生}{1598 — 1647 · 从米兰到博洛尼亚}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1598/生于米兰（米兰公国，时属哈布斯堡西班牙）,
+    2.24/1615/17 岁正式宣誓入垫佐会（Jesuate）,
+    1.58/1616/入比萨大学学几何，师从 Castelli,
+    0.92/1620/回米兰任助祭，在 San Gerolamo 修道院学神学,
+    0.26/1626/起患痛风，行动受限终生,
+    -0.4/1629/经伽利略推荐，获博洛尼亚大学数学讲席,
+    -1.06/1632/《燃烧镜》：曲线反射性质与反射镜望远镜构想,
+    -1.72/1635/《Geometria indivisibilibus》出版（1627 写成）,
+    -2.38/1647/《六篇几何练习》出版；11 月 30 日于博洛尼亚去世
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1598–1629)}{入垫佐会 · 比萨师从 Castelli · 屡聘屡挫}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{15 岁} & \cellcolor{panelA}\textcolor{badgeA!82!black}{入垫佐会（Jesuate）为初学生并取名 Bonaventura；1615 年 17 岁正式宣誓} & \cellcolor{panelB}\textcolor{badgeB!82!black}{非耶稣会！} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1616} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在比萨大学学几何，师从 Castelli——经他（可能）引荐认识伽利略} & \cellcolor{panelB}\textcolor{badgeB!82!black}{伽利略学派} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1617–18} & \cellcolor{panelA}\textcolor{badgeA!82!black}{短暂供职佛罗伦萨美第奇宫廷（Borromeo 枢机赞助）；次年代 Castelli 授数学课} & \cellcolor{panelB}\textcolor{badgeB!82!black}{崭露头角} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1620s} & \cellcolor{panelA}\textcolor{badgeA!82!black}{求职屡屡被拒（博洛尼亚、罗马 Sapienza、帕尔马）；1626 年起痛风缠身} & \cellcolor{panelB}\textcolor{badgeB!82!black}{困顿与病痛} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他是垫佐会（Jesuate）修士——Wikipedia 特别提醒："勿与耶稣会混淆"。}
+\end{center}
+\end{frame}}
+
+% --- 5. 不可分法（核心贡献页） ---
+\newcommand{\indivisibleslide}{\begin{frame}\plainbar\sectiontitle{不可分法}{"所有线"与"所有面" · 积分学的先声}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{卡瓦列里的方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{所有线 / 所有面} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以图形内无穷多条平行线（面）来比较面积与体积，受伽利略早期思想启发} & \cellcolor{panelB}\textcolor{badgeB!82!black}{积分学先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{可比而不可等} & \cellcolor{panelA}\textcolor{badgeA!82!black}{为回避连续统组成问题，坚持"所有线"只与面积可比、不相等} & \cellcolor{panelB}\textcolor{badgeB!82!black}{哲学谨慎} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{后世改进} & \cellcolor{panelA}\textcolor{badgeA!82!black}{后继者把"所有线"直接当作面积——方法最终汇入无穷小微积分} & \cellcolor{panelB}\textcolor{badgeB!82!black}{通向积分} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 不可分法（method of indivisibles）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black}图形的面积 $\leftrightarrow$ "所有线"（omnes lineae）：可比、而非相等}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 卡瓦列里原理与祖暅（核心贡献页） ---
+\newcommand{\principleslide}{\begin{frame}\plainbar\sectiontitle{卡瓦列里原理与祖暅}{等距截面相等则体积相等 · 中国早有先例}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{原理内容} & \cellcolor{panelB}\textcolor{badgeB!82!black}{两立体若在距同一基准面等远处截面面积处处相等，则体积相等} & \cellcolor{panelA}\textcolor{badgeA!82!black}{求积利器} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{中国的先例} & \cellcolor{panelB}\textcolor{badgeB!82!black}{祖暅（480–525）早于他近千年，已在球体积特例上使用同一原理} & \cellcolor{panelA}\textcolor{badgeA!82!black}{"祖暅原理"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{经典应用} & \cellcolor{panelB}\textcolor{badgeB!82!black}{证明圆锥体积为外接圆柱的三分之一} & \cellcolor{panelA}\textcolor{badgeA!82!black}{古典结论新证} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 卡瓦列里原理（Cavalieri's principle）}\\[2pt]
+  {\fontsize{11.5}{15}\selectfont\color{mainclr!88!black}
+  若 $S_A(h)=S_B(h)$ 对一切 $h$ 成立，则 $V_A=V_B$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 积分的先声（核心贡献页） ---
+\newcommand{\integralslide}{\begin{frame}\plainbar\sectiontitle{积分的先声}{从 $\int_0^1 x^2\,dx=\frac{1}{3}$ 到求积公式}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{卡瓦列里的结果}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{首次求积} & \cellcolor{panelB}\textcolor{badgeB!82!black}{在阿基米德螺线求积中得到 $\int_0^1 x^2\,dx=1/3$} & \cellcolor{panelA}\textcolor{badgeA!82!black}{先于微积分} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{推广成公式} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1647《六篇几何练习》：对 $n=3,\dots,9$ 推广幂函数求积} & \cellcolor{panelA}\textcolor{badgeA!82!black}{卡瓦列里求积公式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{立体求积} & \cellcolor{panelB}\textcolor{badgeB!82!black}{圆锥体积 = 外接圆柱的三分之一} & \cellcolor{panelA}\textcolor{badgeA!82!black}{不可分法应用} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 卡瓦列里求积公式（Cavalieri's quadrature formula，1647）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\displaystyle\int_{0}^{1}x^{n}\,dx=\frac{1}{n+1}\qquad (n=3,\dots,9)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 《Geometria indivisibilibus》（核心贡献页） ---
+\newcommand{\geometriaslide}{\begin{frame}\plainbar\sectiontitle{《Geometria indivisibilibus》}{1627 写成 · 1635 出版 · 评价两极}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{为求职而写} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1627 年在帕尔马写成，作为博洛尼亚大学的求职材料} & \cellcolor{panelB}\textcolor{badgeB!82!black}{8 年后方出版} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1635 出版} & \cellcolor{panelA}\textcolor{badgeA!82!black}{系统阐述不可分法；1653 年再版} & \cellcolor{panelB}\textcolor{badgeB!82!black}{方法定型} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{毁誉参半} & \cellcolor{panelA}\textcolor{badgeA!82!black}{证明直观而不严谨、行文艰深——Tacquet 与 Guldin 均撰文回应} & \cellcolor{panelB}\textcolor{badgeB!82!black}{争议之书} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 全书标题}\\[2pt]
+  {\fontsize{10}{13.5}\selectfont\color{mainclr!88!black}
+  \textit{Geometria indivisibilibus continuorum nova quadam ratione promota}\\[2pt]
+  {\fontsize{8.5}{11}\selectfont 以不可分法新推进的连续体几何（1635）}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 光学与反射望远镜构想（核心贡献页） ---
+\newcommand{\opticsslide}{\begin{frame}\plainbar\sectiontitle{光学与反射望远镜构想}{《燃烧镜》1632 · 三种反射镜方案}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{卡瓦列里的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{《燃烧镜》} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1632《Lo Specchio Ustorio》：从阿基米德火镜传说到圆锥截线与光的反射} & \cellcolor{panelB}\textcolor{badgeB!82!black}{反射性质} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{第一个证明} & \cellcolor{panelC}\textcolor{badgeC!82!black}{抛物线、双曲线、椭圆镜面众多反射性质的第一个证明} & \cellcolor{panelB}\textcolor{badgeB!82!black}{几何光学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{望远镜方案} & \cellcolor{panelC}\textcolor{badgeC!82!black}{给出三种反射镜望远镜设计（远早于牛顿的实践）；论证若光速有限，焦点成像干涉极小} & \cellcolor{panelB}\textcolor{badgeB!82!black}{超前的理论} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 抛物镜的焦点性质}\\[2pt]
+  {\fontsize{11.5}{15}\selectfont\color{mainclr!88!black}
+  $y^{2}=4px$：平行于轴的光线反射后汇聚于焦点 $F(p,0)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 对数引入意大利（核心贡献页） ---
+\newcommand{\logslide}{\begin{frame}\plainbar\sectiontitle{对数引入意大利}{化乘为加 · 天文地理的实用工具}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{卡瓦列里的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{对数表} & \cellcolor{panelB}\textcolor{badgeB!82!black}{在博洛尼亚出版对数表及其用法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{引入意大利} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{实用导向} & \cellcolor{panelB}\textcolor{badgeB!82!black}{强调对数在天文学与地理学中的实用价值} & \cellcolor{panelA}\textcolor{badgeA!82!black}{大三角时代的工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{工程一面} & \cellcolor{panelB}\textcolor{badgeB!82!black}{为所辖修道院建造水力泵，曼图亚公爵也订购了一台} & \cellcolor{panelA}\textcolor{badgeA!82!black}{实践者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 对数：化乘为加}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}
+  $\log(xy)=\log x+\log y$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 与 Guldin 的论战（核心贡献页） ---
+\newcommand{\guldinslide}{\begin{frame}\plainbar\sectiontitle{与 Guldin 的论战}{剽窃指控"无实据" · 自辩亦不孚众}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{交锋}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结局}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Guldin 的攻击} & \cellcolor{panelD}\textcolor{badgeD!82!black}{指控其方法源自 Kepler 与 Sovero；批其不严谨；主张无穷之间"无可比性"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{严厉批评} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{指控定性} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Wikipedia 原文明言：剽窃指控"without substance"（无实据）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{不成立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{卡瓦列里的回击} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1647《六篇几何练习》逐条回应；但其自辩略显言不由衷，未说服同代人——方法却因此显著改进} & \cellcolor{panelB}\textcolor{badgeB!82!black}{辩而愈精} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一场没有赢家的论战，却把不可分法推向了更严谨的未来。}
+\end{center}
+\end{frame}}
+
+% --- 12. 伽利略学派网络（核心贡献页） ---
+\newcommand{\networkslide}{\begin{frame}\plainbar\sectiontitle{伽利略学派网络}{112 封信 · 博洛尼亚讲席 · 学生传承}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{关系}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{伽利略} & \cellcolor{panelD}\textcolor{badgeD!82!black}{通信至少 112 封；1629 年经其向博洛尼亚元老院推荐获数学讲席} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学派核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{通信网络} & \cellcolor{panelD}\textcolor{badgeD!82!black}{与梅森、托里拆利、维维亚尼通信；托里拆利改进并推广不可分法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{跨国交流} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{学生传承} & \cellcolor{panelD}\textcolor{badgeD!82!black}{晚年关节炎无法执笔，书信由学生 Angeli（同会修士）代笔；Angeli 继续发展其方法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{薪火相传} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 赞助人 Borromeo 枢机与 Marsili，撑起了他病痛缠身的后半生。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{博洛尼亚讲席 · 月球环形山 · "重新定义数学对象"}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.66}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{讲席与命名} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 博洛尼亚大学数学讲席（1629–1647，经伽利略推荐）\item 月球环形山 Cavalerius 以他命名\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{身后声名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{伽利略评语} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item "自阿基米德以来，若还有人在几何学中钻研得如此之深，也寥寥无几。"\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{同代之誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{历史地位} & \cellcolor{panelA}\textcolor{badgeA!82!black}{据 Granger：与牛顿、莱布尼茨、帕斯卡、沃利斯、麦克劳林并列，17--18 世纪"重新定义数学对象"之人；无奖项/院士记录} & \cellcolor{panelB}\textcolor{badgeB!82!black}{积分学前驱} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他没有等到微积分的诞生，但微积分处处有他的影子。}
+\end{center}
+\end{frame}}
+
+% --- 14. 终章 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他把面积拆成所有的线，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {为积分学留下了先声。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是不可分法的光芒，与月球上以他命名的环形山。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {博纳文图拉·卡瓦列里\quad Bonaventura Cavalieri\quad 1598 — 1647};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 不可分法 · 几何 · 光学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\indivisibleslide
+\principleslide
+\integralslide
+\geometriaslide
+\opticsslide
+\logslide
+\guldinslide
+\networkslide
+\honorslide
+\closingslide
+\end{document}

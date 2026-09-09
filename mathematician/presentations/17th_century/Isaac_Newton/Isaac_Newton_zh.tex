@@ -1,0 +1,482 @@
+% =============================================================
+%  万有引力 · 《自然哲学的数学原理》：艾萨克·牛顿 (Isaac Newton)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/17th_century/pages/Isaac_Newton
+%  设计母题：苹果下落的抛物线 / 棱镜色散光谱 —— 柔和气泡呼应引力与光谱之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：皇家深蓝 + 苹果金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{16305C}        % 皇家深蓝 — 皇家学会主席 / 英国
+\definecolor{accentclr}{HTML}{C9A227}      % 苹果金 — 苹果树 / 万有引力
+\definecolor{badgeA}{HTML}{4C5FD5}         % 微积分 — 靛蓝
+\definecolor{badgeB}{HTML}{0E7C7B}         % 力学与引力 — 青绿
+\definecolor{badgeC}{HTML}{E07B30}         % 光学 — 琥珀
+\definecolor{badgeD}{HTML}{B76E79}         % 铸币与治理 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{14,28,56}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{228,232,250}
+\definecolor{panelB}{RGB}{220,240,238}
+\definecolor{panelC}{RGB}{248,233,220}
+\definecolor{panelD}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应苹果下落轨迹 / 棱镜色散光谱
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 英国\enspace·\enspace 数学家 · 物理学家 · 天文学家\enspace·\enspace 百科全书式学者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {艾萨克·牛顿};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Isaac Newton\enspace·\enspace 1643 — 1727};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {万有引力 · 运动三定律 · 微积分 · 反射望远镜};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {微积分\\Calculus\par\scriptsize 流数法};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {力学与引力\\Mechanics\par\scriptsize 《原理》};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {光学\\Optics\par\scriptsize 棱镜光谱};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {铸币与治理\\Legacy\par\scriptsize 学会主席};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他完成了物理学的第一次伟大统一，用一部《原理》照亮宇宙的秩序。};
+  % 肖像（Godfrey Kneller 1702 油画）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{newton_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Sir Isaac Newton (1643–1727)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国\enspace|\enspace \faIcon{university}\enspace 剑桥大学 · 皇家铸币厂\enspace|\enspace 微积分 · 引力 · 光学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{艾萨克·牛顿 - 从伍尔索普到威斯敏斯特}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Kneller 1702）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{newton_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Sir Isaac Newton (1643–1727)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1643-01-04（旧历 1642-12-25）\\[2pt]\quad — 1727-03-31\\[2pt]\lab{国籍}\quad 英格兰 / 英国};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Trinity College, Cambridge\\[2pt]
+     \quad BA 1665 / MA 1668\\[2pt]\lab{师承}\quad Isaac Barrow};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Woolsthorpe Manor（林肯郡）\\[2pt]\lab{家庭}\quad 遗腹子 · 终身未婚\\[2pt]\lab{身后}\quad Westminster Abbey（国葬）};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 微积分 · 力学 · 光学\\[2pt]
+     \quad 天文 · 炼金术 · 神学\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家 · 百科全书式学者};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 艾萨克·牛顿的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{艾萨克·牛顿的一生}{1643 — 1727 · 从伍尔索普到威斯敏斯特}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1643/1 月 4 日新历出生（旧历 1642 年圣诞节）,
+    2.2/1661/入剑桥大学三一学院,
+    1.5/1665--66/瘟疫年奇迹：微积分 · 光谱 · 引力萌芽,
+    0.8/1669/接任卢卡斯数学教授,
+    0.1/1687/《自然哲学的数学原理》出版,
+    -0.6/1696/就任皇家铸币厂监事,
+    -1.3/1703/皇家学会主席（1705 年封爵）,
+    -2.0/1727/国葬，安葬 Westminster Abbey
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1643–1669)}{遗腹子 · 一夸脱杯的早产儿 · 三一学院 subsizar}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1643} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于 Woolsthorpe Manor，父亲在出生前三个月去世；早产儿——母亲说他"能装进一夸脱杯里"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{遗腹子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1646} & \cellcolor{panelA}\textcolor{badgeA!82!black}{3 岁时母亲 Hannah Ayscough 改嫁，把他留给外祖母抚养} & \cellcolor{panelB}\textcolor{badgeB!82!black}{童年离散} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1655--59} & \cellcolor{panelA}\textcolor{badgeA!82!black}{The King's School, Grantham；1659 年曾被接回务农，校长 Stokes 与舅舅劝说返校} & \cellcolor{panelB}\textcolor{badgeB!82!black}{重返学堂} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1661} & \cellcolor{panelA}\textcolor{badgeA!82!black}{入 Trinity College, Cambridge，初为 subsizar，1664 年获奖学金} & \cellcolor{panelB}\textcolor{badgeB!82!black}{三一学院} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一夸脱杯里的早产儿，最终装下了整个宇宙的秩序。}
+\end{center}
+\end{frame}}
+
+% --- 5. 瘟疫年的奇迹：微积分（核心贡献页） ---
+\newcommand{\plagueslide}{\begin{frame}\plainbar\sectiontitle{瘟疫年的奇迹：微积分}{1665--1666 · 流数法与广义二项式定理}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{牛顿的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{奇迹年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{剑桥瘟疫停课，回伍尔索普；私人研究被誉为"科学家所经历的最丰富、最多产的研究"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1665--1666} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{流数法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{发明微积分（流数法），点记号 $\dot{x}$ 沿用至今} & \cellcolor{panelB}\textcolor{badgeB!82!black}{分析学利器} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{广义二项式} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1664--65 将二项式定理推广到任意指数，被称为"整个数学中最强大、最重要的成果之一"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{级数展开} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 广义二项式定理与流数记号（1664--1666）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$(1+x)^{n}=\displaystyle\sum_{k}\binom{n}{k}x^{k}\quad(n\ \text{为任意指数})\qquad \dot{x}=\dfrac{dx}{dt}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 《自然哲学的数学原理》（核心贡献页） ---
+\newcommand{\principiaslide}{\begin{frame}\plainbar\sectiontitle{《自然哲学的数学原理》}{1687 · 第一次伟大统一}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{牛顿的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{万有引力} & \cellcolor{panelB}\textcolor{badgeB!82!black}{$F=G\,m_1m_2/r^2$ 推导开普勒定律，解释潮汐、彗星与岁差} & \cellcolor{panelA}\textcolor{badgeA!82!black}{统一天上地下} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{运动三定律} & \cellcolor{panelB}\textcolor{badgeB!82!black}{奠定经典力学，"200 多年间无人改进"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{力学奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{出版} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Halley 鼓励并自费出版《原理》} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1687} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 万有引力定律（Principia, 1687）——"the first great unification in physics"}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$F=G\,\dfrac{m_1 m_2}{r^{2}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 光学与反射望远镜（核心贡献页） ---
+\newcommand{\opticsslide}{\begin{frame}\plainbar\sectiontitle{光学与反射望远镜}{棱镜分光 · 1668 反射望远镜 · 微粒说}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{牛顿的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{棱镜分光} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1666 年证明白光可分解与复合，"颜色是光本身内在的属性"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{光的本性} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{反射望远镜} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1668 年造出第一台真正可用的反射望远镜，以反射避免折射色差} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Newtonian} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{微粒说} & \cellcolor{panelC}\textcolor{badgeC!82!black}{主张光的微粒说，但在《光学》中承认光兼具波动性} & \cellcolor{panelA}\textcolor{badgeA!82!black}{波粒之辨} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 棱镜色散（prism dispersion, 1666）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black}
+  白光 $\rightarrow$ 棱镜 $\rightarrow$ 七色光谱 $\rightarrow$ 再复合为白光}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 牛顿法与代数（核心贡献页） ---
+\newcommand{\mathslide}{\begin{frame}\plainbar\sectiontitle{牛顿法与代数}{数值迭代 · 牛顿恒等式 · 变分法雏形}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{牛顿的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{牛顿法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{迭代求方程零点，数值分析的经典方法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{算法不朽} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{其他数学} & \cellcolor{panelA}\textcolor{badgeA!82!black}{牛顿恒等式、Newton polygon、Newton--Cotes 公式；1691--92 年草稿最早明确表述一般 Taylor 级数} & \cellcolor{panelB}\textcolor{badgeB!82!black}{级数先行} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{变分法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1685 年最小阻力问题，变分法的开创者之一} & \cellcolor{panelB}\textcolor{badgeB!82!black}{变分法雏形} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 牛顿迭代法（Newton's method）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$x_{n+1}=x_n-\dfrac{f(x_n)}{f'(x_n)}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 皇家铸币厂厂长 ---
+\newcommand{\mintslide}{\begin{frame}\plainbar\sectiontitle{皇家铸币厂厂长}{1696--1727 · 大重铸与铁腕执法}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{牛顿}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{就任} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Warden 1696--99、Master 1699--1727} & \cellcolor{panelB}\textcolor{badgeB!82!black}{双职终身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{大重铸} & \cellcolor{panelD}\textcolor{badgeD!82!black}{主持 1696 年大重铸，铸币周产量从 15,000 英镑提升到 100,000 英镑} & \cellcolor{panelB}\textcolor{badgeB!82!black}{金融治理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{追缉造假者} & \cellcolor{panelD}\textcolor{badgeD!82!black}{缉拿 William Chaloner 等造假者，铁腕执法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{整肃币制} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从《原理》到铸币厂，他把理性同样用于治理王国。}
+\end{center}
+\end{frame}}
+
+% --- 10. 皇家学会主席与封爵 ---
+\newcommand{\societyslide}{\begin{frame}\plainbar\sectiontitle{皇家学会主席与封爵}{FRS 1672 · 主席 1703--1727 · 1705 封爵}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{牛顿}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{FRS 1672} & \cellcolor{panelA}\textcolor{badgeA!82!black}{因反射望远镜当选皇家学会会士} & \cellcolor{panelB}\textcolor{badgeB!82!black}{早年认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{学会主席} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1703--1727 任皇家学会主席（第 12 任），直至去世} & \cellcolor{panelB}\textcolor{badgeB!82!black}{权力巅峰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{封爵} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1705 年 Queen Anne 册封爵士（"likely to have been motivated by political considerations"）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{政治因素} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 科学家执掌科学共同体与国家事务，前无古人。}
+\end{center}
+\end{frame}}
+
+% --- 11. 微积分优先权之争 ---
+\newcommand{\priorityslide}{\begin{frame}\plainbar\sectiontitle{微积分优先权之争}{各自独立 · 牛顿更早 · 莱布尼茨先发表}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{史实}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{口径}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{各自独立} & \cellcolor{panelA}\textcolor{badgeA!82!black}{"Both are now credited with independently developing calculus, though with very different mathematical notations."} & \cellcolor{panelB}\textcolor{badgeB!82!black}{双方并称} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{时间线} & \cellcolor{panelA}\textcolor{badgeA!82!black}{牛顿 1665--66 手稿在先但出版极迟（De analysi 1711）；莱布尼茨 1684 年发表在先} & \cellcolor{panelB}\textcolor{badgeB!82!black}{双陈述} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1711 调查} & \cellcolor{panelA}\textcolor{badgeA!82!black}{皇家学会调查优先权，"it was later found that Newton wrote the study's concluding remarks"；莱布尼茨记号更便利，英国数学家 1820 年后才改用} & \cellcolor{panelB}\textcolor{badgeB!82!black}{记号归宿} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 优先权之争没有赢家，记号最终归于更便利的一方。}
+\end{center}
+\end{frame}}
+
+% --- 12. 身后与国葬 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{身后与国葬}{Westminster Abbey · newton · 苹果树}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{身后}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{国葬} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1727 年举行国葬，安葬 Westminster Abbey 中殿——第一位葬入该教堂的科学家} & \cellcolor{panelB}\textcolor{badgeB!82!black}{国家荣耀} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{纪念} & \cellcolor{panelD}\textcolor{badgeD!82!black}{力的 SI 单位 newton；1 英镑纸币头像（1978--88）；Pope 为其拟墓志铭} & \cellcolor{panelB}\textcolor{badgeB!82!black}{身后之名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{苹果树} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Woolsthorpe 苹果树后代植于 Trinity 学院门外；苹果故事出自本人讲述，"苹果砸中脑袋"是后世讹传} & \cellcolor{panelB}\textcolor{badgeB!82!black}{故事分寸} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 苹果落地是真的，砸头是假的——而引力是真的。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{FRS · 皇家学会主席 · 爵士}\vspace{-0.3cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.66}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item FRS（1672）；皇家学会主席（1703--1727）\item Knight Bachelor（1705，Queen Anne）\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{生前之荣} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{身后} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 国葬 · Westminster Abbey 中殿第一位科学家\item 力的 SI 单位 newton · 1 英镑纸币头像\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{不朽之名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{传承} & \cellcolor{panelD}\textcolor{badgeD!82!black}{卢卡斯教席继任者 Roger Cotes、William Whiston；《原理》经 Halley 之手问世} & \cellcolor{panelB}\textcolor{badgeB!82!black}{薪火相传} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 晚年神学与炼金术约百万字手稿——Keynes 称他为"the last of the magicians"。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {站在巨人的肩上，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {他把宇宙写成了数学。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!70!black] at ([yshift=-1.15cm]current page.center) {"standing on the shoulders of giants"——1675 年致 Hooke 信，真伪存疑，此处取其历史定位意象。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {艾萨克·牛顿\quad Isaac Newton\quad 1643 — 1727};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 万有引力 · 微积分 · 光学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\plagueslide
+\principiaslide
+\opticsslide
+\mathslide
+\mintslide
+\societyslide
+\priorityslide
+\legacyslide
+\honorslide
+\closingslide
+\end{document}

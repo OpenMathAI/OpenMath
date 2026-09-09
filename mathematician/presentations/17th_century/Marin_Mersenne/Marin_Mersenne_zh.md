@@ -17,6 +17,10 @@
 
 ---
 
+## 0.5 模板机制（执行立传前必读）
+
+> 黄金参照 `Johann_Bernoulli/Johann_Bernoulli_zh.tex` 逐帧改写；机械要点（14 帧结构 / 共享封面 `\input{../../cover/openmath_page.tex}` / Makefile 复制改 MAIN / 肖像下载与装饰圆占位 / `make distclean && make` 编译循环 / 已知陷阱）见 **`17th_century/TEMPLATE_GUIDE.md`**。
+
 ## 1. 背景信息（用于 Slide 1-3）
 
 - **全名**：Marin Mersenne（拉丁文 Marinus Mersennus，法文惯称 *le Père* Mersenne「梅森神父」，中文：马兰·梅森，一作马林·梅森）

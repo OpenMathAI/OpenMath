@@ -1,0 +1,493 @@
+% =============================================================
+%  牛顿之前英国最重要的数学家：约翰·沃利斯 (John Wallis)
+%  Beamer 演示 —— 参照 Johann Bernoulli 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/17th_century/pages/John_Wallis
+%  设计母题：无穷符号 / 连乘积 —— 柔和气泡呼应 ∞ 之环与乘积链之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：牛津蓝 + 无穷金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{1E3A5F}        % 主色（牛津蓝）— Savilian 教席 / 英格兰
+\definecolor{accentclr}{HTML}{C9A227}      % 强调色（无穷金）— ∞ 符号 / 沃利斯乘积
+\definecolor{badgeA}{HTML}{4C5FD5}         % 无穷小分析 — 靛蓝
+\definecolor{badgeB}{HTML}{0E7C7B}         % 代数与记号 — 青绿
+\definecolor{badgeC}{HTML}{E07B30}         % 密码学 — 琥珀
+\definecolor{badgeD}{HTML}{B76E79}         % 神学与语音 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{228,232,250}     % 无穷小分析浅底
+\definecolor{panelB}{RGB}{220,240,238}     % 代数记号浅底
+\definecolor{panelC}{RGB}{248,233,220}     % 密码学浅底
+\definecolor{panelD}{RGB}{246,233,235}     % 神学语音浅底
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应 ∞ 无穷环 / 连乘积链
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 英国\enspace·\enspace 无穷符号的推广者\enspace·\enspace 牛津 Savilian 教授};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {约翰·沃利斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {John Wallis\enspace·\enspace 1616 — 1703};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {沃利斯乘积 · $\infty$ 符号 · 《Arithmetica Infinitorum》 · 数轴};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {无穷小分析\\Infinitesimals\par\scriptsize 沃利斯乘积};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {代数与记号\\Notation\par\scriptsize 分数指数 · $\infty$};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {密码学\\Cryptology\par\scriptsize 首席密码官};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {神学与语音\\Theology\par\scriptsize 聋哑人教育};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他用一连乘积丈量圆周，也把 $\infty$ 写进了数学。};
+  % 肖像（by Sir Godfrey Kneller, Bt.）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{wallis_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {John Wallis (1616–1703)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国\enspace|\enspace \faIcon{university}\enspace 剑桥 · 牛津大学\enspace|\enspace 无穷小分析 · 代数 · 密码学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{约翰·沃利斯 - 从肯特到牛津}{生卒（新旧历） · 本名 · 国籍 · 出生地 · 职业 · 教育 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（by Kneller）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{wallis_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {John Wallis (1616–1703)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1616-12-03 — 1703-11-08\\[2pt]\quad（旧历 O.S. 11-23 / 10-28）\\[2pt]\lab{国籍}\quad 英国（英格兰王国）};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Emmanuel College, Cambridge\\[2pt]
+     \quad B.A. 1637 · M.A. 1640 · Oxford D.D. 1654\\[2pt]\lab{自修}\quad Oughtred《Clavis》};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Ashford, Kent\\[2pt]\lab{身后}\quad 牛津\\[2pt]\lab{享年}\quad 86 岁};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 无穷小分析 · 代数记号\\[2pt]
+     \quad 密码学 · 神学\\[2pt]
+     \lab{身份}\quad 数学家 · 牧师 · 密码学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 沃利斯的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{沃利斯的一生}{1616 — 1703 · 从肯特到牛津}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1616/生于 Kent 郡 Ashford，牧师之家,
+    2.2/1632/Felsted School 师从 Holbeach，初遇数学,
+    1.5/1640/剑桥 Emmanuel College M.A.,
+    0.8/1643/出任议会首席密码官,
+    0.1/1649/任牛津 Savilian 几何教授,
+    -0.6/1656/《Arithmetica Infinitorum》出版,
+    -1.3/1685/《Algebra》：负数与数轴,
+    -2.0/1703/于牛津去世，享年 86
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1616–1640)}{肯特牧师之家 · Felsted 初遇数学 · 剑桥学医未成}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1616} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于 Ashford（Kent），父 Revd.~John Wallis 为牧师，五子女排行第三} & \cellcolor{panelB}\textcolor{badgeB!82!black}{牧师之家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1625–31} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Tenterden 文法学校（因瘟疫迁居）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{古典教育} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1631–32} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Felsted School 师从 Martin Holbeach，首次接触数学（十年前也教过巴罗）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{初遇数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1632–40} & \cellcolor{panelA}\textcolor{badgeA!82!black}{剑桥 Emmanuel College 原打算学医；B.A. 1637、M.A. 1640} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学医未成} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他自忆当时数学尚不被视为学院学问——数学于他是自学而来。}
+\end{center}
+\end{frame}}
+
+% --- 5. 沃利斯乘积（核心贡献页） ---
+\newcommand{\productslide}{\begin{frame}\plainbar\sectiontitle{沃利斯乘积}{$\pi$ 的无穷连乘积 · 插值法导出}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{沃利斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{连乘积} & \cellcolor{panelA}\textcolor{badgeA!82!black}{$\pi/2$ 等于一个只含奇偶整数的无穷连乘积} & \cellcolor{panelB}\textcolor{badgeB!82!black}{$\pi$ 的连乘表示} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{方法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{由插值法原理导出，为圆求积开辟新路} & \cellcolor{panelB}\textcolor{badgeB!82!black}{插值思想} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{出处} & \cellcolor{panelA}\textcolor{badgeA!82!black}{《Arithmetica Infinitorum》（1656）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{传世之作} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 沃利斯乘积（Wallis product）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\dfrac{\pi}{2}=\displaystyle\prod_{n=1}^{\infty}\frac{4n^{2}}{4n^{2}-1}=\frac{2}{1}\cdot\frac{2}{3}\cdot\frac{4}{3}\cdot\frac{4}{5}\cdot\frac{6}{5}\cdot\frac{6}{7}\cdots$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 无穷符号（核心贡献页） ---
+\newcommand{\inftyslide}{\begin{frame}\plainbar\sectiontitle{无穷符号 $\infty$}{引入与推广 · 无穷小的倒数}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{沃利斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{$\infty$ 记号} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以 $\infty$ 表无穷——他被认为引入并推广了这一符号} & \cellcolor{panelB}\textcolor{badgeB!82!black}{沿用至今} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{无穷小} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以 $1/\infty$ 表无穷小量} & \cellcolor{panelB}\textcolor{badgeB!82!black}{记号化无穷小} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{分寸} & \cellcolor{panelA}\textcolor{badgeA!82!black}{原文措辞 "credited with introducing / popularised"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{引入·推广} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 无穷与无穷小的记号}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\infty\ \text{表无穷},\qquad \dfrac{1}{\infty}\ \text{表无穷小}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 《Arithmetica Infinitorum》（核心贡献页） ---
+\newcommand{\arithslide}{\begin{frame}\plainbar\sectiontitle{《Arithmetica Infinitorum》}{1656 · 启发牛顿的著作}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{沃利斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{地位} & \cellcolor{panelA}\textcolor{badgeA!82!black}{沃利斯最重要的著作，系统化并扩展笛卡尔与卡瓦列里的方法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{承前启后} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{求积} & \cellcolor{panelA}\textcolor{badgeA!82!black}{证明 $y=x^{m}$ 与 $x$ 轴间面积之比为 $1/(m+1)$，扩展卡瓦列里公式} & \cellcolor{panelB}\textcolor{badgeB!82!black}{积分学前夜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{影响牛顿} & \cellcolor{panelA}\textcolor{badgeA!82!black}{牛顿 1664 年读到此书，直接受其启发} & \cellcolor{panelB}\textcolor{badgeB!82!black}{通往微积分} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 幂曲线下的面积}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\displaystyle\int_{0}^{1}x^{m}\,dx=\frac{1}{m+1}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 分数指数与代数记号（核心贡献页） ---
+\newcommand{\exponentslide}{\begin{frame}\plainbar\sectiontitle{分数指数与代数记号}{幂记号的推广 · 连分数}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{沃利斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{分数指数} & \cellcolor{panelB}\textcolor{badgeB!82!black}{将幂记号推广到有理数：$x^{0}=1$、$x^{1/2}=\sqrt{x}$、$x^{p/q}$} & \cellcolor{panelA}\textcolor{badgeA!82!black}{记号现代化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{连分数} & \cellcolor{panelB}\textcolor{badgeB!82!black}{《Opera Mathematica》I（1695）引入术语 "continued fraction"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{命名者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{公式化} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以代数公式化表达数学关系} & \cellcolor{panelA}\textcolor{badgeA!82!black}{影响深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 分数指数幂}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$x^{p/q}=\sqrt[q]{x^{p}},\qquad x^{0}=1,\qquad x^{1/2}=\sqrt{x}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 数轴与负数（核心贡献页） ---
+\newcommand{\numberlineslide}{\begin{frame}\plainbar\sectiontitle{数轴与负数}{为负数辩护 · 数轴的起源}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{沃利斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{负数辩护} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1685 年《Algebra》以"前进与后退"为负数作几何解释} & \cellcolor{panelA}\textcolor{badgeA!82!black}{直观化负数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{数轴起源} & \cellcolor{panelB}\textcolor{badgeB!82!black}{被认为后世数轴观念的源头} & \cellcolor{panelA}\textcolor{badgeA!82!black}{originator of the number line} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{原文措辞} & \cellcolor{panelB}\textcolor{badgeB!82!black}{"has been credited as the originator"}——归于首创之说 & \cellcolor{panelA}\textcolor{badgeA!82!black}{分寸如实} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 1685 年《Algebra》}\\[2pt]
+  {\fontsize{11}{14}\selectfont\itshape\color{mainclr!88!black}"+3, signifies 3 Yards Forward; and $-3$, signifies 3 Yards Backward."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 圆锥曲线的解析定义（核心贡献页） ---
+\newcommand{\conicslide}{\begin{frame}\plainbar\sectiontitle{圆锥曲线的解析定义}{1655 · 最早以二次方程定义圆锥曲线}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{沃利斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{解析定义} & \cellcolor{panelB}\textcolor{badgeB!82!black}{最早把圆锥曲线定义为二次曲线的书（1655）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{定义之首创} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{化解晦涩} & \cellcolor{panelB}\textcolor{badgeB!82!black}{"It helped to remove some of the perceived difficulty and obscurity" of Descartes' work} & \cellcolor{panelA}\textcolor{badgeA!82!black}{普及解析几何} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{承上启下} & \cellcolor{panelB}\textcolor{badgeB!82!black}{从希腊几何走向坐标代数} & \cellcolor{panelA}\textcolor{badgeA!82!black}{桥梁之作} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 二次曲线的一般方程}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$Ax^{2}+Bxy+Cy^{2}+Dx+Ey+F=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 密码学家沃利斯 ---
+\newcommand{\cryptoslide}{\begin{frame}\plainbar\sectiontitle{密码学家沃利斯}{首席密码官 · 拒教莱布尼茨}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{沃利斯}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{一战成名} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1642 年两小时破译 Chichester 密信，由此起家} & \cellcolor{panelA}\textcolor{badgeA!82!black}{破译奇才} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{宫廷服务} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1643–1689 年间为议会及王室担任首席密码官（期间有中断）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{长期公职} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{拒教莱布尼茨} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1697 年拒绝莱布尼茨的密码学请教} & \cellcolor{panelA}\textcolor{badgeA!82!black}{一段轶事} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 白日解方程，暗中解密文——数学是他的通用语言。}
+\end{center}
+\end{frame}}
+
+% --- 12. 论战与争议 ---
+\newcommand{\debateslide}{\begin{frame}\plainbar\sectiontitle{论战与争议}{Hobbes 论战 · 功劳之争}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{沃利斯}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Hobbes 论战} & \cellcolor{panelD}\textcolor{badgeD!82!black}{与托马斯·霍布斯的长期数学论战（infobox 明列）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{17 世纪著名笔战} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{聋哑人教育} & \cellcolor{panelD}\textcolor{badgeD!82!black}{参与设计教聋童说话的体系，与 William Holder 有功劳之争} & \cellcolor{panelA}\textcolor{badgeA!82!black}{功劳有争议} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{优先权之争} & \cellcolor{panelD}\textcolor{badgeD!82!black}{与费马等同时代人有优先权争议（时代常态）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{ secrecy 时代} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} Holder 曾讥其 "rifling his Neighbours, and adorning himself with their spoyls"。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{Savilian 教席 54 年 · 影响牛顿}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Savilian 教席} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 1649–1703 年任牛津 Savilian 几何教授，直至去世\item 任命更多出于政治因素，当时尚无数学名声\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{54 年教席} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{以其命名} & \cellcolor{panelA}\textcolor{badgeA!82!black}{小行星 31982 Johnwallis；沃利斯乘积、$\infty$ 记号与其相连} & \cellcolor{panelB}\textcolor{badgeB!82!black}{身后果然} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{影响牛顿} & \cellcolor{panelA}\textcolor{badgeA!82!black}{《Arithmetica Infinitorum》是牛顿微积分思想的直接源头之一} & \cellcolor{panelB}\textcolor{badgeB!82!black}{承前启后} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 无奖项与院士年份的确切记载——他的荣誉，写在记号与公式里。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他用一串连乘积逼近 $\pi$，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {也把 $\infty$ 写进了数学。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是无穷的符号，与牛顿之前英国数学的高峰。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {约翰·沃利斯\quad John Wallis\quad 1616 — 1703};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 无穷 · 代数 · 密码\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\productslide
+\inftyslide
+\arithslide
+\exponentslide
+\numberlineslide
+\conicslide
+\cryptoslide
+\debateslide
+\honorslide
+\closingslide
+\end{document}

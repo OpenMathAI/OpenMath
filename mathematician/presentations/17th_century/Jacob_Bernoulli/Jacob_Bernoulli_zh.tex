@@ -1,0 +1,505 @@
+% =============================================================
+%  概率论先驱 · 大数定律：雅各布·伯努利 (Jacob Bernoulli)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/17th_century/pages/Jacob_Bernoulli
+%  设计母题：对数螺线 / 概率树 —— 柔和气泡呼应自我相似与分叉之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：巴塞尔红 + 螺线金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{baselred}{HTML}{8B1A1A}       % 巴塞尔红 — 瑞士 / 伯努利家族
+\definecolor{mathgold}{HTML}{C9A227}       % 螺线金 — 对数螺线 / Eadem mutata resurgo
+\definecolor{badgeProb}{HTML}{4C5FD5}      % 概率 — 靛蓝
+\definecolor{badgeCurve}{HTML}{0E7C7B}     % 分析与曲线 — 青绿
+\definecolor{badgeSeries}{HTML}{E07B30}    % 常数与级数 — 琥珀
+\definecolor{badgeFam}{HTML}{B76E79}       % 家族与传承 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{46,20,20}
+\definecolor{muteddark}{RGB}{96,72,72}
+\definecolor{probpanel}{RGB}{228,232,250}
+\definecolor{curvepanel}{RGB}{220,240,238}
+\definecolor{seriespanel}{RGB}{248,233,220}
+\definecolor{fampanel}{RGB}{246,233,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应对数螺线自我相似 / 概率树分叉
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[mathgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeProb!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeCurve!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeSeries!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeFam!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=baselred!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 瑞士\enspace·\enspace 概率论先驱\enspace·\enspace 伯努利王朝开创者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=baselred!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {雅各布·伯努利};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=baselred!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Jacob Bernoulli\enspace·\enspace 1655 — 1705};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=mathgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {《猜度术》· 大数定律 · 对数螺线 · 伯努利数};
+  \draw[mathgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeProb] at (-5.05,0)
+        {概率\\Probability\par\scriptsize 猜度术 · 黄金定理};
+      \node[badge, fill=badgeCurve] at (-1.68,0)
+        {分析与曲线\\Curves\par\scriptsize 对数螺线 · 双纽线};
+      \node[badge, fill=badgeSeries] at (1.68,0)
+        {常数与级数\\Series\par\scriptsize e 的逼近 · 调和级数};
+      \node[badge, fill=badgeFam] at (5.05,0)
+        {家族与传承\\Legacy\par\scriptsize 伯努利王朝};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他写下第一版大数定律，墓碑上刻着自我相似的对数螺线——"Eadem mutata resurgo"。};
+  % 肖像（Nicholas Bernoulli after J. R. Huber 通行画像）
+  \node[draw=mathgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{jacob_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Jacob Bernoulli (1655–1705)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 瑞士\enspace|\enspace \faIcon{university}\enspace 巴塞尔大学\enspace|\enspace 概率论 · 微积分 · 力学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mathgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{雅各布·伯努利 - 巴塞尔的一生}{生卒 · 本名 · 国籍 · 家庭 · 教育 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Huber 通行画像）
+  \node[draw=mathgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{jacob_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Jacob Bernoulli (1655–1705)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=mathgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1655-01-06（旧历 1654-12-27）\\[2pt]\quad\quad — 1705-08-16\\[2pt]\lab{本名}\quad Jacob Bernoulli（Jakob）\\[2pt]\lab{国籍}\quad 瑞士（瑞士邦联）};
+  \node[infob, fill=probpanel, draw=badgeProb!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 巴塞尔大学（D.Th. 1676）\\[2pt]
+     \quad Dr. phil. hab. 1684\\[2pt]\lab{师承}\quad Peter Werenfels（神学）};
+  \node[infob, fill=curvepanel, draw=badgeCurve!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 巴塞尔（瑞士邦联）\\[2pt]\lab{家庭}\quad 新教香料商世家\\[2pt]\lab{身后}\quad 巴塞尔 Münster 墓志铭};
+  \node[infob, fill=fampanel, draw=badgeFam!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 概率论 · 微积分\\[2pt]
+     \quad 曲线 · 力学\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家 · 教授};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 雅各布·伯努利的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{雅各布·伯努利的一生}{1655 — 1705 · 巴塞尔的一生}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mathgold!88!black}}
+]
+  \draw[mathgold!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1655/生于巴塞尔，新教香料商世家,
+    2.2/1676/获神学博士（D.Th.），开始游学欧洲,
+    1.5/1682/游学归来，钻研数学与天文,
+    0.8/1684/成婚；与弟约翰研读莱布尼茨微积分,
+    0.1/1687/任巴塞尔大学数学教授（据信）,
+    -0.6/1690/解等时线，"integral" 一词首次以积分含义出现,
+    -1.3/1697/与弟约翰关系彻底破裂,
+    -2.0/1705/逝于巴塞尔，享年 50；1713《猜度术》遗作出版
+  }{
+    \fill[mathgold!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1655–1684)}{香料商世家 · 弃神从数 · 游学欧洲}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baselred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1655} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{生于巴塞尔，新教香料商世家（父系两代），母亲出身银行与市政家族} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{伯努利世家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{少年} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{遵父愿学神学、准备担任牧职，却违背父母意愿兼修数学与天文学} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{弃神从数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1676} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{获巴塞尔大学神学博士（导师 Peter Werenfels）} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{D.Th.} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1676–1682} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{游学欧洲，研读 Hudde、Boyle、Hooke 等人最新成果} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{游学归来} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 违背父愿改学数学与天文，巴塞尔少了一位牧师，多了一位数学家。}
+\end{center}
+\end{frame}}
+
+% --- 5. 《猜度术》与大数定律（核心贡献页） ---
+\newcommand{\arsslide}{\begin{frame}\plainbar\sectiontitle{《猜度术》与大数定律}{Ars Conjectandi 1713 · 黄金定理}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baselred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{雅各布的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{《猜度术》} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{1713 年死后八年出版，未完稿；受惠更斯《论赌博中的计算》启发} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{概率论奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{全书四部分} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{组合学综述 · 伯努利数与指数级数 · 概率论（数学期望与道德期望）} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{体系完备} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{黄金定理} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{第一版大数定律；"Bernoulli trial"（伯努利试验）一词由此而来} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{墓志铭所刻} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 黄金定理（大数定律第一版）}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{baselred!88!black}$\displaystyle\lim_{n\to\infty}P\!\left(\left|\bar{X}_n-\mu\right|<\varepsilon\right)=1$}\\[2pt]
+  {\fontsize{8.5}{11}\selectfont\color{muteddark}（样本频率随次数增大而收敛于真实概率——现代表述）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 常数 e 的最早逼近（核心贡献页） ---
+\newcommand{\eslide}{\begin{frame}\plainbar\sectiontitle{常数 $e$ 的最早逼近}{1683 复利问题 · $2.5<e<3$ · 欧拉命名}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baselred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{雅各布的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{复利问题} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{研究连续复利，考察 $\left(1+\frac{1}{n}\right)^{n}$ 当 $n\to\infty$ 的极限} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{1683 年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{数值估计} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{只算到足以确定其值大于 2.5 而小于 3} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{最早逼近} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{命名归属} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{该常数后由欧拉命名为 $e$} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{勿写伯努利命名} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 伯努利 1683 年的估计}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{baselred!88!black}$e=\lim_{n\to\infty}\left(1+\dfrac{1}{n}\right)^{n},\qquad 2.5<e<3$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 级数与伯努利数（核心贡献页） ---
+\newcommand{\seriesslide}{\begin{frame}\plainbar\sectiontitle{级数与伯努利数}{调和级数 · 巴塞尔问题前奏 · 伯努利数}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baselred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{雅各布的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{调和级数} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{证明 $\sum 1/n$ 发散，自以为首证——实为 Mengoli（40 年前）与 Oresme（14 世纪）先证} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{易错点注记} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{$\sum 1/n^{2}$} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{证明收敛且极限小于 2，未得闭式} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{巴塞尔问题前奏} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{伯努利数} & \cellcolor{seriespanel}\textcolor{badgeSeries!82!black}{《猜度术》中给出幂和公式所需的伯努利数} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{以其命名} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 调和级数发散（Mengoli / Oresme 先证）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{baselred!88!black}$\displaystyle\sum_{n=1}^{\infty}\frac{1}{n}=1+\frac{1}{2}+\frac{1}{3}+\cdots=\infty$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 等时线与"积分"的诞生（核心贡献页） ---
+\newcommand{\tautochroneslide}{\begin{frame}\plainbar\sectiontitle{等时线与"积分"的诞生}{tautochrone 1690 · "integral" 首次以积分含义出现}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baselred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{雅各布的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{等时线 1690} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{《Acta Eruditorum》发表，雅各布独作（惠更斯 1687、莱布尼茨 1689 亦曾研究该曲线）} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{归属明确} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{解法} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{化为一阶非线性微分方程，以分离变量求解} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{方法典范} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{术语诞生} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{"integral"（积分）一词首次以积分含义出现} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{影响至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 分离变量法（separation of variables）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{baselred!88!black}$\dfrac{dy}{dx}=f(x)\,g(y)\;\Rightarrow\;\int\dfrac{dy}{g(y)}=\int f(x)\,dx$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 伯努利微分方程（核心贡献页） ---
+\newcommand{\odeslide}{\begin{frame}\plainbar\sectiontitle{伯努利微分方程}{1696 · 非线性方程的线性化}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baselred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{雅各布的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{方程 1696} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{提出并求解一类非线性微分方程} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{以其命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{解法思想} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{通过代换化为线性微分方程} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{可解性突破} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{地位} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{微分方程经典类型，沿用至今} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{教科书常客} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 伯努利微分方程（Bernoulli differential equation, 1696）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{baselred!88!black}$y'+p(x)\,y=q(x)\,y^{\,n}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 对数螺线与双纽线（核心贡献页） ---
+\newcommand{\spiralslide}{\begin{frame}\plainbar\sectiontitle{对数螺线与双纽线}{spira mirabilis · 1694 双纽线 · 墓志铭}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baselred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{雅各布的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{对数螺线} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{发现其伸缩、旋转后仍与自身相似的奇妙性质，称 spira mirabilis（奇妙螺线）} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{自我相似} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{渐伸线} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{给出渐伸线 / 渐屈线的一般方法；caustics 研究} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{曲线论贡献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{双纽线 1694} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{研究双纽线（lemniscate）} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{以其关联} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 对数螺线（logarithmic spiral）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{baselred!88!black}$r=a\,e^{\,b\theta}$}\\[2pt]
+  {\fontsize{8.5}{11}\selectfont\color{muteddark}墓志铭刻对数螺线："Eadem mutata resurgo"（虽经变化，我故我重来）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 变分法的共同奠基（核心贡献页） ---
+\newcommand{\variationslide}{\begin{frame}\plainbar\sectiontitle{变分法的共同奠基}{与弟弟约翰共同开创 calculus of variations}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baselred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{雅各布的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{共同奠基} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{与弟弟约翰一同被尊为变分法的奠基人} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{兄弟同列} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{最速降线} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{约翰 1696 提出最速降线问题，雅各布给出解法并深化理论} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{竞逐催生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{等时线} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{1690 年等时线论文为雅各布独作} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{各有归属} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{mathgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mathgold!85!black} 变分法（calculus of variations）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{baselred!88!black}$\delta J[y]=\delta\!\int_{a}^{b}\!L(x,y,y')\,dx=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 兄弟之争与莱布尼茨结盟 ---
+\newcommand{\rivalslide}{\begin{frame}\plainbar\sectiontitle{兄弟之争与莱布尼茨结盟}{合作转竞争 · 1697 决裂 · 学派旗手}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{baselred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{史实}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{早期合作} & \cellcolor{fampanel}\textcolor{badgeFam!82!black}{弟弟约翰先随兄学习数学，二人合作研习莱布尼茨新微积分} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{伯努利双子星} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{转成竞争} & \cellcolor{fampanel}\textcolor{badgeFam!82!black}{合作的氛围转为敌意的竞争，公开互攻、互出难题} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{恩怨纠缠} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{1697 决裂} & \cellcolor{fampanel}\textcolor{badgeFam!82!black}{1697 年，兄弟关系彻底破裂（原文表述）} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{彻底决裂} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{学派旗手} & \cellcolor{fampanel}\textcolor{badgeFam!82!black}{微积分之争中站在莱布尼茨一边，是莱布尼茨学派的早期拥护者} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{立场鲜明} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 竞争是残酷的，却也把微积分推向了更深处。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{巴塞尔教授 18 年 · 伯努利王朝之始}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{mathgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{baselred}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{职位} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{巴塞尔大学数学教授逾 18 年（1687 年据信受聘，至 1705 去世）} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{终身教职} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{科学院} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{墓志铭载"巴黎、柏林皇家科学院成员"} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{墓志铭所载} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{以其命名} & \cellcolor{probpanel}\textcolor{badgeProb!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 伯努利数 · 伯努利试验\item 伯努利分布 · 伯努利微分方程\item 伯努利不等式\end{itemize}} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{教科书常客} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mathgold!88!black}{传承} & \cellcolor{fampanel}\textcolor{badgeFam!82!black}{学生 Jacob Hermann、侄 Nicolaus I；弟约翰承其衣钵——伯努利数学王朝之始} & \cellcolor{curvepanel}\textcolor{badgeCurve!82!black}{薪火相传} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一门王朝，自他而始；一具螺线，自我相似。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=baselred!90!black] at ([yshift=1.5cm]current page.center) {他写下第一版大数定律，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mathgold!85!black] at ([yshift=0.4cm]current page.center) {墓碑上，螺线仍自我相似。};
+\draw[mathgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=baselred!70!black] at ([yshift=-1.2cm]current page.center) {"Eadem mutata resurgo"——虽经变化，我故我重来。};
+\node[font=\fontsize{8}{10}\selectfont, text=baselred!60!black] at ([yshift=-2.0cm]current page.center) {雅各布·伯努利\quad Jacob Bernoulli\quad 1655 — 1705};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 概率论 · 微积分 · 力学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\arsslide
+\eslide
+\seriesslide
+\tautochroneslide
+\odeslide
+\spiralslide
+\variationslide
+\rivalslide
+\honorslide
+\closingslide
+\end{document}

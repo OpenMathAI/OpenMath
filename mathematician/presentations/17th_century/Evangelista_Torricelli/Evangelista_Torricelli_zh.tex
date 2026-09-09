@@ -1,0 +1,500 @@
+% =============================================================
+%  气压计之父 · 伽利略的继任者：埃万杰利斯塔·托里拆利 (Evangelista Torricelli)
+%  Beamer 演示 —— 参照 Johann Bernoulli 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/17th_century/pages/Evangelista_Torricelli
+%  设计母题：水银柱 / 空气之洋涟漪 —— 柔和气泡呼应真空实验的清澈之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：佛罗伦萨酒红 + 水银金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{7E2A33}        % 主色（佛罗伦萨酒红）— 托斯卡纳 / 伽利略学脉
+\definecolor{accentclr}{HTML}{C9A227}      % 强调色（水银金）— 气压计 / 大公数学家
+\definecolor{badgeA}{HTML}{0E7C7B}         % 气压与真空 — 青绿
+\definecolor{badgeB}{HTML}{4C5FD5}         % 几何 — 靛蓝
+\definecolor{badgeC}{HTML}{E07B30}         % 流体与力学 — 琥珀
+\definecolor{badgeD}{HTML}{B76E79}         % 光学 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{220,240,238}     % 气压真空浅底
+\definecolor{panelB}{RGB}{228,232,250}     % 几何浅底
+\definecolor{panelC}{RGB}{248,233,220}     % 流体力学浅底
+\definecolor{panelD}{RGB}{246,233,235}     % 光学浅底
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应水银柱涟漪 / 空气之洋
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 意大利\enspace·\enspace 气压计之父\enspace·\enspace 伽利略的继任者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {埃万杰利斯塔·托里拆利};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Evangelista Torricelli\enspace·\enspace 1608 — 1647};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {托里拆利真空 · 空气之海 · 托里拆利小号 · 托里拆利定律};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {气压与真空\\Barometer\par\scriptsize 托里拆利真空};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {几何\\Geometry\par\scriptsize 托里拆利小号};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {流体与力学\\Fluids\par\scriptsize 托里拆利定律};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {光学\\Optics\par\scriptsize 透镜研磨};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他让世界第一次造出"真空"，并量出了空气的重量。};
+  % 肖像（Lorenzo Lippi c.1647 画像）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{torricelli_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Evangelista Torricelli (1608–1647)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 意大利\enspace|\enspace \faIcon{university}\enspace 托斯卡纳大公宫廷 · 比萨大学\enspace|\enspace 气压计 · 流体 · 几何};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{埃万杰利斯塔·托里拆利 - 从罗马到佛罗伦萨}{生卒 · 本名 · 国籍 · 出生地 · 师承 · 教育 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Lorenzo Lippi c.1647）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{torricelli_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Evangelista Torricelli (1608–1647)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1608-10-15 — 1647-10-25\\[2pt]\lab{本名}\quad Evangelista Torricelli\\[2pt]\lab{国籍}\quad 意大利（教皇国 / 托斯卡纳大公国）};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 耶稣会学院（1624–26）\\[2pt]
+     \quad 罗马师从 Castelli\\[2pt]\lab{师承}\quad Benedetto Castelli · 伽利略};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 罗马（祖籍 Faenza）\\[2pt]\lab{职务}\quad 大公数学家 · 比萨大学讲席\\[2pt]\lab{身后}\quad 佛罗伦萨};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 气压与真空 · 几何\\[2pt]
+     \quad 流体力学 · 光学\\[2pt]
+     \lab{身份}\quad 数学家 · 物理学家 · 发明家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 托里拆利的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{托里拆利的一生}{1608 — 1647 · 从罗马到佛罗伦萨}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1608/生于罗马，家庭来自 Faenza,
+    2.2/1626/赴罗马，任 Castelli 的秘书与弟子,
+    1.5/1641/赴 Arcetri，任伽利略口述秘书,
+    0.8/1642/继任大公数学家与比萨大学讲席,
+    0.1/1643/水银实验，造出托里拆利真空,
+    -0.6/1644/《Opera geometrica》出版；致 Ricci 谈"空气之海",
+    -1.3/1646/摆线求积引发与 Roberval 的优先权争议,
+    -2.0/1647/于佛罗伦萨去世（发热，最可能伤寒），享年 39
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1608–1632)}{罗马出生 · Faenza 长大 · 师从 Castelli}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1608} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于罗马，父为纺织工人，家境贫寒；家庭来自 Faenza} & \cellcolor{panelB}\textcolor{badgeB!82!black}{寒门长子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{少年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在 Faenza 由舅舅（Camaldolese 修士）抚养教育} & \cellcolor{panelB}\textcolor{badgeB!82!black}{修士舅舅} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1624–26} & \cellcolor{panelA}\textcolor{badgeA!82!black}{耶稣会学院学习数学与哲学（可能在 Faenza）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{初识数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1626–32} & \cellcolor{panelA}\textcolor{badgeA!82!black}{赴罗马任 Castelli 秘书与弟子；无大学注册记载} & \cellcolor{panelB}\textcolor{badgeB!82!black}{师承 Castelli} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 与 Ricci、Magiotti 并称伽利略称许的罗马"三头同盟"。}
+\end{center}
+\end{frame}}
+
+% --- 5. 气压计与托里拆利真空（核心贡献页） ---
+\newcommand{\barometerslide}{\begin{frame}\plainbar\sectiontitle{气压计与托里拆利真空}{1643 水银实验 · 第一次造出持久真空}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{托里拆利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{水银实验} & \cellcolor{panelA}\textcolor{badgeA!82!black}{一端封闭约 1 米长管装满水银，倒立水银槽，水银柱降至约 76 cm} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1643 年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{托里拆利真空} & \cellcolor{panelA}\textcolor{badgeA!82!black}{管顶留下的空间，是有记录的第一次造出持久真空} & \cellcolor{panelB}\textcolor{badgeB!82!black}{科学史首创} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{先驱限定} & \cellcolor{panelA}\textcolor{badgeA!82!black}{笛卡尔 1631 年已描述原理但未造仪器；海拔效应由帕斯卡预测并证明} & \cellcolor{panelB}\textcolor{badgeB!82!black}{分寸如实} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 水银柱平衡大气压}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$p_{\text{大气}}=\rho_{\text{水银}}\,g\,h,\qquad h\approx 76\ \mathrm{cm}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 空气之海与大气压（核心贡献页） ---
+\newcommand{\airseaslide}{\begin{frame}\plainbar\sectiontitle{空气之海与大气压}{我们生活在空气海洋的底部}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{托里拆利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{空气之海} & \cellcolor{panelA}\textcolor{badgeA!82!black}{我们生活在 "air sea" 的底部，气压如水压随深度增加} & \cellcolor{panelB}\textcolor{badgeB!82!black}{大气压概念奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{解释泵极限} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首次科学解释抽水泵只能把水抽到约 10 米} & \cellcolor{panelB}\textcolor{badgeB!82!black}{旧谜题告破} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{致 Ricci 信} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1644-06-11 信中写下空气之海假说} & \cellcolor{panelB}\textcolor{badgeB!82!black}{本传主引语} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 1644 年致 Michelangelo Ricci}\\[2pt]
+  {\fontsize{12}{15}\selectfont\itshape\color{mainclr!88!black}"Noi viviamo sommersi nel fondo d'un pelago d'aria."}\\[3pt]
+  {\fontsize{9}{12}\selectfont\color{muteddark} 我们沉溺于空气之洋的底部。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 托里拆利小号（核心贡献页） ---
+\newcommand{\trumpetslide}{\begin{frame}\plainbar\sectiontitle{托里拆利小号}{Gabriel 号角 · 无穷悖论}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{托里拆利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{旋转体} & \cellcolor{panelB}\textcolor{badgeB!82!black}{$y=1/x$ 绕轴旋转所得的喇叭形几何体} & \cellcolor{panelA}\textcolor{badgeA!82!black}{亦称 Gabriel 号角} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{悖论} & \cellcolor{panelB}\textcolor{badgeB!82!black}{表面积无穷大，体积却有限} & \cellcolor{panelA}\textcolor{badgeA!82!black}{"不可思议"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{思想论战} & \cellcolor{panelB}\textcolor{badgeB!82!black}{引发关于无穷本质的大论战（霍布斯亦卷入）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{震动学界} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 托里拆利小号（$y=1/x,\ x\ge 1$ 绕轴旋转）}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{mainclr!88!black}$V=\pi\displaystyle\int_{1}^{\infty}\frac{dx}{x^{2}}=\pi<\infty,\qquad S=\infty$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 托里拆利定律（核心贡献页） ---
+\newcommand{\lawslide}{\begin{frame}\plainbar\sectiontitle{托里拆利定律}{小孔出流 · 伯努利原理的特例}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{托里拆利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{小孔出流} & \cellcolor{panelC}\textcolor{badgeC!82!black}{容器底部小孔出流的液面下降规律} & \cellcolor{panelA}\textcolor{badgeA!82!black}{流体力学经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{平方根律} & \cellcolor{panelC}\textcolor{badgeC!82!black}{出水速度正比于水深的平方根} & \cellcolor{panelA}\textcolor{badgeA!82!black}{$v\propto\sqrt{\text{深度}}$} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{历史地位} & \cellcolor{panelC}\textcolor{badgeC!82!black}{后成为伯努利原理的特例} & \cellcolor{panelA}\textcolor{badgeA!82!black}{承前启后} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 托里拆利定律（Torricelli's law）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\dfrac{dy}{dt}=-k\sqrt{y}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 摆线与包络（核心贡献页） ---
+\newcommand{\cycloidslide}{\begin{frame}\plainbar\sectiontitle{摆线与包络}{摆线求积 · 首建包络概念}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{托里拆利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{摆线求积} & \cellcolor{panelB}\textcolor{badgeB!82!black}{求出摆线的面积与重心} & \cellcolor{panelA}\textcolor{badgeA!82!black}{几何名题} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{优先权争议} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Roberval 指控抄袭；似是独立完成，争议至死未决} & \cellcolor{panelA}\textcolor{badgeA!82!black}{如实呈现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{安全抛物线} & \cellcolor{panelB}\textcolor{badgeB!82!black}{首次建立包络（envelope）概念} & \cellcolor{panelA}\textcolor{badgeA!82!black}{概念首创} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 摆线一拱下的面积}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$A=3\pi r^{2}\qquad \big(x=r(\theta-\sin\theta),\ y=r(1-\cos\theta)\big)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 虚功原理与风的解释（核心贡献页） ---
+\newcommand{\virtualworkslide}{\begin{frame}\plainbar\sectiontitle{虚功原理与风的科学解释}{托里拆利原理 · 温差成风}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{托里拆利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{托里拆利原理} & \cellcolor{panelC}\textcolor{badgeC!82!black}{重心不能升降则体系平衡（虚功原理雏形）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{静力学奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{影响惠更斯} & \cellcolor{panelC}\textcolor{badgeC!82!black}{后被惠更斯用于摆的研究} & \cellcolor{panelA}\textcolor{badgeA!82!black}{深远影响} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{风的解释} & \cellcolor{panelC}\textcolor{badgeC!82!black}{风由两地温差与密度差产生——首次科学解释} & \cellcolor{panelA}\textcolor{badgeA!82!black}{气象学先驱} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 托里拆利原理（平衡判据）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\delta y_{G}=0\quad\Longleftrightarrow\quad \text{体系平衡}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 光学与透镜（核心贡献页） ---
+\newcommand{\opticsslide}{\begin{frame}\plainbar\sectiontitle{光学与透镜}{灯焊玻璃 · 望远镜与显微镜}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{托里拆利的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{制镜方法} & \cellcolor{panelD}\textcolor{badgeD!82!black}{发明灯焊玻璃制显微透镜的方法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工艺首创} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{仪器制作} & \cellcolor{panelD}\textcolor{badgeD!82!black}{制作望远镜与显微镜的小透镜} & \cellcolor{panelB}\textcolor{badgeB!82!black}{实验利器} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{传世实物} & \cellcolor{panelD}\textcolor{badgeD!82!black}{佛罗伦萨存有多片刻有其名字的大透镜} & \cellcolor{panelB}\textcolor{badgeB!82!black}{至今可睹} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 继承伽利略的实验传统}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{mainclr!88!black}理论、实验与工艺并举——佛罗伦萨的镜片工坊即其实验室。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 不可分法的传播与学界网络 ---
+\newcommand{\networkslide}{\begin{frame}\plainbar\sectiontitle{不可分法的传播与学界网络}{伽利略学脉 · 书信共和国}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{托里拆利}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{不可分法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{表述比卡瓦列里更易读，许多 17 世纪数学家经他了解此法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{方法传播者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{通信网络} & \cellcolor{panelB}\textcolor{badgeB!82!black}{与 Ricci、Magiotti、Nardi 通信（罗马"三头同盟"）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{书信共和国} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{学脉传承} & \cellcolor{panelB}\textcolor{badgeB!82!black}{伽利略、卡瓦列里的学脉；学生 Viviani} & \cellcolor{panelA}\textcolor{badgeA!82!black}{薪火相传} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 级数求积的先驱：《De dimensione parabolae》以伸缩级数证明几何级数求和。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{又一个伽利略开花了}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{以其命名} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 压强单位 torr\item 月球环形山 Torricelli、小行星 7437\item Torricelli 山脉、植物属 Torricellia\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{身后果然} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{纪念} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Faenza 雕像（1868 年立）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{故乡致意} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{历史评价} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1715 年遗著卷首字谜："En virescit Galileus alter"（又一个伽利略开花了）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{伽利略传人} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 39 岁早逝，却把气压计、小号与透镜留给了整个时代。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他只活了 39 岁，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {却量出了空气的重量。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是第一管持久的真空，与"另一个伽利略"的传奇。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {埃万杰利斯塔·托里拆利\quad Evangelista Torricelli\quad 1608 — 1647};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 真空 · 几何 · 光学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\barometerslide
+\airseaslide
+\trumpetslide
+\lawslide
+\cycloidslide
+\virtualworkslide
+\opticsslide
+\networkslide
+\honorslide
+\closingslide
+\end{document}
