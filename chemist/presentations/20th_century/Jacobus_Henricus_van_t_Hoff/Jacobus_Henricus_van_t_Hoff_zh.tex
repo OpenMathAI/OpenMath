@@ -1,0 +1,480 @@
+% =============================================================
+%  物理化学的奠基者：雅各布斯·亨里克斯·范特霍夫 (Jacobus Henricus van 't Hoff)
+%  Beamer 演示 —— 参照化学家 Frederick Sanger 立传版式
+%  （表格语义化 tabularx + 公式展示框 + 时间线页）
+%  资料来源：chemist/presentations/20th_century/pages/Jacobus_Henricus_van_t_Hoff
+%  设计母题：气泡 —— 四面体碳的三维构型与稀溶液中的溶质粒子
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenChemist 项目首页（定义 coverprimary/coveraccent/coverdark/covermuted/goldpanel + \openchemistslide）
+\input{../../cover/openchemist_page.tex}
+
+% ===== Van 't Hoff 专属配色：深孔雀蓝（溶液/渗透压）+ 香槟金（诺奖）+ 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{deeppetrol}{HTML}{0E4D64}    % 深孔雀蓝 — 主色（表头 / 公式文本）
+\definecolor{badgeStereo}{HTML}{4C5FD5}   % 立体化学 — 蓝（四面体碳 / 手性）
+\definecolor{badgeKinetics}{HTML}{1B7A43} % 化学动力学 — 绿（Études）
+\definecolor{badgeOsmotic}{HTML}{0E7C7B}  % 溶液与渗透压 — 青（范特霍夫方程）
+\definecolor{badgeDiscipline}{HTML}{C0395B} % 学科建制 — 玫瑰（Zeitschrift / 柏林）
+\definecolor{titlecolor}{RGB}{18,26,52}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{stereopanel}{RGB}{228,231,247}
+\definecolor{kinpanel}{RGB}{222,240,230}
+\definecolor{osmpanel}{RGB}{222,238,238}
+\definecolor{discpanel}{RGB}{246,228,234}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「四面体构型 / 溶液中的粒子」的三维分布
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeStereo!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeOsmotic!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeKinetics!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% ========================= SLIDES =========================
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=deeppetrol!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{flask}\enspace 物理化学的奠基者\enspace·\enspace 荷兰};
+  \node[anchor=center, font=\fontsize{26}{32}\selectfont\bfseries, text=deeppetrol!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {雅各布斯·亨里克斯·范特霍夫};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=deeppetrol!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Jacobus Henricus van 't Hoff\enspace·\enspace 1852 — 1911};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {立体化学与物理化学的共同奠基人 · 首位诺贝尔化学奖得主};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeStereo] at (-5.05,0)
+        {立体化学\\Stereochemistry\par\scriptsize 四面体碳 · 1874};
+      \node[badge, fill=badgeKinetics] at (-1.68,0)
+        {化学动力学\\Chemical Kinetics\par\scriptsize Études · 1884};
+      \node[badge, fill=badgeOsmotic] at (1.68,0)
+        {溶液与渗透压\\Osmotic Pressure\par\scriptsize 1901 诺奖理由};
+      \node[badge, fill=badgeDiscipline] at (5.05,0)
+        {学科建制\\Discipline\par\scriptsize Zeitschrift · 1887};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"[his] discovery of the laws of chemical dynamics and osmotic pressure in solutions." —— 1901 诺贝尔化学奖获奖理由};
+  % 肖像（Wikipedia infobox 1904 年照片）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Jacobus_Henricus_van_t_Hoff.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Van 't Hoff (1852–1911)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 荷兰\enspace|\enspace \faIcon{university}\enspace Amsterdam · Berlin\enspace|\enspace Nobel 1901 · Davy 1893};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 高斯模板硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{雅各布斯·亨里克斯·范特霍夫 - 从医生之子到首位化学诺奖}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Jacobus_Henricus_van_t_Hoff.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Van 't Hoff in 1904};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1852-08-30 — 1911-03-01\\[2pt]\lab{本名}\quad Jacobus Henricus van 't Hoff Jr.\\[2pt]\lab{国籍}\quad 荷兰};
+  \node[infob, fill=stereopanel, draw=badgeStereo!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 代尔夫特 · 莱顿 · 波恩 · 巴黎 · 乌得勒支\\[2pt]
+     \lab{博士}\quad 1874 · 乌得勒支大学\\[2pt]\lab{师承}\quad Eduard Mulder；游学师从 Kekulé（波恩）· Wurtz（巴黎）};
+  \node[infob, fill=kinpanel, draw=badgeKinetics!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 荷兰 · 鹿特丹\\[2pt]\lab{去世地}\quad 柏林近郊 Steglitz（肺结核）\\[2pt]\lab{享年}\quad 58 岁};
+  \node[infob, fill=discpanel, draw=badgeDiscipline!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 立体化学 · 动力学 · 渗透压\\[2pt]
+     \lab{身份}\quad 物理化学家 · 有机化学家\\[2pt]
+     \lab{荣誉}\quad Nobel 1901 · Davy 1893 · ForMemRS 1897};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 范特霍夫的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{范特霍夫的一生}{1852 — 1911 · 从鹿特丹到柏林的学术远征}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1852/生于荷兰鹿特丹，医生之家，七子中行三,
+    2.41/1869/入代尔夫特理工学院（三年课程两年修完）,
+    1.72/1874/获乌得勒支博士；四面体碳论文早于学位三个月,
+    1.03/1875/法文小书 La chimie dans l'espace；预测轴手性,
+    0.34/1884/出版《化学动力学研究》（Études de Dynamique chimique）,
+    -0.35/1887/与 Ostwald、Arrhenius 创办《物理化学杂志》,
+    -1.04/1893/获 Davy Medal（与 Le Bel 共同获得）,
+    -1.73/1896/移居柏林，任普鲁士科学院教授,
+    -2.42/1901/获首届诺贝尔化学奖（独享）,
+    -3.11/1911/逝于柏林 Steglitz，享年 58 岁
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：医生之家的诗人少年 (1852–1869)}{鹿特丹 · 拜伦 · 植物学考察}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deeppetrol}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1852} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{生于鹿特丹；父亲 Jacobus Henricus van 't Hoff Sr.\ 是医生，母亲 Alida Kolff van 't Hoff，七个孩子中行三} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{医生之子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{少年时代} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{自幼对科学与自然感兴趣，常参加植物学考察；醉心诗歌与哲学，视拜伦（Lord Byron）为偶像} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{诗人气质} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{抉择} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{违背父亲意愿，选择学习化学} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{志向转折} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从诗歌与哲学出发，他最终把热情安放于化学的三维世界。}
+\end{center}
+\end{frame}}
+
+% --- 5. 求学之路 ---
+\newcommand{\studyslide}{\begin{frame}\plainbar\sectiontitle{求学之路：代尔夫特与欧陆游学 (1869–1874)}{Delft · Leiden · Bonn · Paris · Utrecht}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deeppetrol}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1869–1871} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{1869 年 9 月入代尔夫特理工学院；三年制课程两年修完，1871-07-08 通过毕业考试} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{化学工艺师学位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1871} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{入莱顿大学学习化学} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{理论深化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1871–1874} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{赴波恩师从 August Kekulé，赴巴黎师从 Adolphe Wurtz} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{游学欧陆} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1874} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{在 Eduard Mulder 指导下获博士学位（乌得勒支大学）} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{博士学位} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 技术与理论的双重底色，在四国五校的游学中奠定。}
+\end{center}
+\end{frame}}
+
+% --- 6. 四面体碳原子 ---
+\newcommand{\tetraslide}{\begin{frame}\plainbar\sectiontitle{四面体碳原子：化学进入三维空间}{La chimie dans l'espace · Le Bel–Van 't Hoff rule (1874–1875)}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deeppetrol}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{旋光性如何解释？(1874)} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{假设碳原子与相邻原子间的化学键指向正四面体的四个顶点} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{三维结构解释自然界中的异构体} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣誉归属？} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{法国化学家 Joseph Le Bel 同年各自独立提出同一思想} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{Le Bel–Van 't Hoff rule} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{理论预测力 (1875)} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{正确预测丙二烯与累积烯烃的结构及其轴手性} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{超前实验数十年} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 立体化学的奠基之作（1874 年秋荷兰文小册子，早于博士学位三个月）}\\[2pt]
+  {\color{deeppetrol!88!black}\fontsize{10.5}{13}\selectfont$\text{碳的四个键} \longrightarrow \text{正四面体的四个顶点}\ \Rightarrow\ \text{旋光性得以解释}$}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{muteddark}1875 年 5 月法文小书 \textit{La chimie dans l'espace}；1877 年德译本}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Kolbe 的批评与迟到承认 ---
+\newcommand{\kolbeslide}{\begin{frame}\plainbar\sectiontitle{Kolbe 的怒斥与迟到承认 (1874–1880)}{"mount Pegasus" · Wislicenus · Viktor Meyer}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deeppetrol}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{批评}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{回应}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学界普遍忽视} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{早年理论被科学共同体忽视；唯一能找到的教职是乌得勒支兽医学院的化学与物理讲师} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{处境清冷} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Kolbe 撰文嘲讽} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{"\ldots to mount Pegasus (apparently borrowed from the Veterinary School) and to proclaim in his \textit{La chimie dans l'espace} how, in his bold flight to the top of the chemical Parnassus, the atoms appeared to him to be arranged in cosmic space."} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{尖刻的人身讥讽} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{迟到承认 (约 1880)} & \cellcolor{stereopanel}\textcolor{badgeStereo!82!black}{Johannes Wislicenus、Viktor Meyer 等重要化学家支持该理论} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{获得学界承认} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 被嘲讽的理论，最终由时间与同行还以公道。}
+\end{center}
+\end{frame}}
+
+% --- 8. 化学动力学研究 ---
+\newcommand{\etudesslide}{\begin{frame}\plainbar\sectiontitle{《化学动力学研究》(1884)}{Études de Dynamique chimique · 反应级数 · 化学亲和力}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deeppetrol}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{反应级数如何测定？} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{用图解法（graphics）确定反应的级数} & \cellcolor{osmpanel}\textcolor{badgeOsmotic!82!black}{动力学研究的新方法} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{平衡如何处理？} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{把热力学定律应用于化学平衡} & \cellcolor{osmpanel}\textcolor{badgeOsmotic!82!black}{平衡研究理论化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{亲和力如何定义？} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{引入化学亲和力的现代概念} & \cellcolor{osmpanel}\textcolor{badgeOsmotic!82!black}{概念现代化} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 化学动力学的系统化（\textit{Études de Dynamique chimique}，1884）}\\[2pt]
+  {\color{deeppetrol!88!black}\fontsize{10.5}{13}\selectfont$\text{浓度–时间图解} \Rightarrow \text{反应级数};\qquad \text{热力学定律} \Rightarrow \text{化学平衡}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 稀溶液与渗透压 ---
+\newcommand{\osmoticslide}{\begin{frame}\plainbar\sectiontitle{稀溶液与渗透压：1901 诺奖的理由}{稀溶液–气体类比 · 范特霍夫方程 (1886–1887)}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deeppetrol}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{稀溶液有何规律？(1886)} & \cellcolor{osmpanel}\textcolor{badgeOsmotic!82!black}{证明稀溶液的行为与气体遵循高度相似的数学规律} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{渗透压理论的核心洞察} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{与气体的类比} & \cellcolor{osmpanel}\textcolor{badgeOsmotic!82!black}{极稀溶液遵循的数学定律与描述气体行为的定律高度相似} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{1901 诺奖的直接依据} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{诺尔演讲} & \cellcolor{osmpanel}\textcolor{badgeOsmotic!82!black}{1901-12-13 诺贝尔演讲《渗透压与化学平衡》} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{首届化学诺奖（独享）} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 渗透压公式与范特霍夫方程（Van 't Hoff equation）}\\[2pt]
+  {\color{deeppetrol!88!black}\fontsize{10.5}{13}\selectfont$\Pi V = n R T \qquad\text{（极稀溶液的渗透压，与气体定律同构）}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 物理化学的建制化 ---
+\newcommand{\disciplineslide}{\begin{frame}\plainbar\sectiontitle{物理化学的建制化 (1887–1889)}{Zeitschrift für physikalische Chemie · Arrhenius}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deeppetrol}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{伙伴}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1887 · 创办《物理化学杂志》} & \cellcolor{discpanel}\textcolor{badgeDiscipline!82!black}{与 Wilhelm Ostwald 在莱比锡创办；导言另载 Svante Arrhenius 为共同创办人} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{该学科第一份专门期刊} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1889 · 支持电离理论} & \cellcolor{discpanel}\textcolor{badgeDiscipline!82!black}{研究 Arrhenius 的电解质电离理论，并为 Arrhenius 方程提供物理依据} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{物理依据确立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学科成型} & \cellcolor{discpanel}\textcolor{badgeDiscipline!82!black}{他被广泛视为物理化学学科的三位共同奠基人之一} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{学科成型的标志} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一份期刊、一个共同体，物理化学从此成为一门学科。}
+\end{center}
+\end{frame}}
+
+% --- 11. 柏林时期 ---
+\newcommand{\berlinslide}{\begin{frame}\plainbar\sectiontitle{柏林时期 (1896–1911)}{普鲁士科学院 · Stassfurt 盐矿 · 柏林大学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deeppetrol}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{职务}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{此前 · 阿姆斯特丹} & \cellcolor{discpanel}\textcolor{badgeDiscipline!82!black}{任化学、矿物学与地质学三科教授近 18 年，后任化学系主任；更早在乌得勒支兽医学院任化学与物理讲师} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{教学生涯主体} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1896 · 普鲁士科学院教授} & \cellcolor{discpanel}\textcolor{badgeDiscipline!82!black}{对 Stassfurt 盐矿沉积的研究，是普鲁士化学工业的重要贡献} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{服务德国化学工业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1896–1911 · 柏林大学} & \cellcolor{discpanel}\textcolor{badgeDiscipline!82!black}{职业生涯在柏林大学结束} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{生涯终点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从阿姆斯特丹到柏林，他把溶液的科学带进了德意志的工业时代。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉}{首届化学诺奖 · Davy Medal · ForMemRS}\vspace{-0.85cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.65}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.4cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.6cm}}
+\toprule
+\rowcolor{deeppetrol}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首届诺奖} & \cellcolor{discpanel}\textcolor{badgeDiscipline!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\leftmargin}{1.1em}\item 1901 独享，第一任诺贝尔化学奖得主\item 理由：发现化学动力学定律与溶液渗透压定律\end{itemize}} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{他自认是其生涯的顶点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要奖章} & \cellcolor{discpanel}\textcolor{badgeDiscipline!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\leftmargin}{1.1em}\item Davy Medal（1893，与 Le Bel 共享）\item Pour le Mérite（1895）· ForMemRS（1897）· Helmholtz Medal（1911）\end{itemize}} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{国际学界高度认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣誉博士} & \cellcolor{discpanel}\textcolor{badgeDiscipline!82!black}{Harvard · Yale（1901）· Manchester（1903）· Heidelberg（1908）} & \cellcolor{kinpanel}\textcolor{badgeKinetics!82!black}{跨国学界尊崇} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在众多荣誉之中，他最珍视的仍是那第一枚化学诺奖。}
+\end{center}
+\end{frame}}
+
+% --- 13. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：以他命名}{Van 't Hoff equation · Van 't Hoff factor · Le Bel–Van 't Hoff rule}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=2.85cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=stereopanel, draw=badgeStereo!50, line width=0.7pt] (a) at (-5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeStereo} 立体化学}\\[3pt]四面体碳原子\\[2pt]轴手性预测};
+\node[leg, fill=kinpanel, draw=badgeKinetics!50, line width=0.7pt] (b) at (-1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeKinetics} 化学动力学}\\[3pt]反应级数图解法\\[2pt]化学亲和力};
+\node[leg, fill=osmpanel, draw=badgeOsmotic!50, line width=0.7pt] (c) at (1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeOsmotic} 溶液理论}\\[3pt]渗透压定律\\[2pt]1901 诺奖理由};
+\node[leg, fill=discpanel, draw=badgeDiscipline!50, line width=0.7pt] (d) at (5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDiscipline} 学科建制}\\[3pt]《物理化学杂志》\\[2pt]三奠基人之一};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 以他命名的术语与小行星}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{deeppetrol!88!black}$\text{Van 't Hoff equation}\ \cdot\ \text{Van 't Hoff factor}\ \cdot\ \text{Le Bel–Van 't Hoff rule}$}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{muteddark}小行星 34978 van 't Hoff（Palomar–Leiden 巡天 1977 年发现），2021-05-14 以他命名}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.08cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从四面体的四个顶点，到小行星命名——三维化学从此有了原点。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {化学，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {第一次被安放进三维空间。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是定律，而是一种看见分子形状的方法。};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {雅各布斯·亨里克斯·范特霍夫\quad Jacobus Henricus van 't Hoff\quad 1852 — 1911};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{flask}\enspace Nobel 1901 · 立体化学与物理化学的奠基人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openchemistslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\studyslide
+\tetraslide
+\kolbeslide
+\etudesslide
+\osmoticslide
+\disciplineslide
+\berlinslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

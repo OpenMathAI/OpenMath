@@ -1,0 +1,507 @@
+% =============================================================
+%  物理化学的奠基者：威廉·奥斯特瓦尔德 (Wilhelm Ostwald)
+%  Beamer 演示 —— 参照数学家 Carl Friedrich Gauss 立传版式
+%  （表格语义化 tabularx + 公式展示框 + 时间线页）
+%  资料来源：chemist/presentations/20th_century/pages/Wilhelm_Ostwald
+%  设计母题：体系化与统一 —— 气泡背景呼应熟化、催化与色立体双锥
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenChemist 项目首页（定义 coverprimary/coveraccent/coverdark/covermuted/goldpanel + \openchemistslide）
+\input{../../cover/openchemist_page.tex}
+
+% ===== Ostwald 专属配色：深青蓝（物理化学的精密与度量）+ 诺贝尔金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{246,247,249}
+\definecolor{deepcyan}{HTML}{17435B}      % 深青蓝 — 主色（表头 / 公式文本）
+\definecolor{badgeCat}{HTML}{A84B2A}      % 催化与工业 — 赭红
+\definecolor{badgeDil}{HTML}{1E6E8C}      % 稀释与电化学 — 青蓝
+\definecolor{badgeCry}{HTML}{4C5F8F}      % 结晶与规则 — 灰蓝
+\definecolor{badgeCol}{HTML}{8A1F3D}      % 色彩与体系 — 绛红
+\definecolor{titlecolor}{RGB}{16,32,44}
+\definecolor{muteddark}{RGB}{70,84,96}
+\definecolor{catpanel}{RGB}{244,230,222}
+\definecolor{dilpanel}{RGB}{220,234,240}
+\definecolor{crypanel}{RGB}{226,230,240}
+\definecolor{colpanel}{RGB}{242,224,230}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，四档大小错落 —— 圆点由小及大呼应 Ostwald 熟化与能量转化
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeDil!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeCat!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeCry!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% ========================= SLIDES =========================
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=deepcyan!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{atom}\enspace 物理化学的奠基者\enspace·\enspace 波罗的海德意志};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=deepcyan!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {威廉·奥斯特瓦尔德};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=deepcyan!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Wilhelm Ostwald\enspace·\enspace 1853 — 1932};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {催化 · 化学平衡 · 反应速率 · 色彩学的体系化者};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeCat] at (-5.05,0)
+        {催化与工业\\Catalysis\par\scriptsize 现代定义 · 硝酸工艺};
+      \node[badge, fill=badgeDil] at (-1.68,0)
+        {稀释与电化学\\Dilution\par\scriptsize 稀释定律};
+      \node[badge, fill=badgeCry] at (1.68,0)
+        {结晶与规则\\Crystallization\par\scriptsize 规则 · 熟化};
+      \node[badge, fill=badgeCol] at (5.05,0)
+        {色彩与体系\\Color System\par\scriptsize 双锥色立体};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his scientific contributions to the fields of catalysis, chemical equilibria and reaction velocities." —— 1909 诺贝尔化学奖获奖理由};
+  % 肖像（Wikipedia c. 1913 照片，Nicola Perscheid 摄）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Wilhelm_Ostwald.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Wilhelm Ostwald (1853–1932)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 波罗的海德意志（German, born in Latvia）\enspace|\enspace \faIcon{university}\enspace Riga · Leipzig\enspace|\enspace Nobel 1909};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（高斯模板硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{奥斯特瓦尔德：从里加作坊到莱比锡讲席}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Wilhelm_Ostwald.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Wilhelm Ostwald (1853–1932)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1853-09-02 — 1932-04-04\\[2pt]\lab{本名}\quad Wilhelm Friedrich Ostwald\\[2pt]\lab{国籍}\quad 波罗的海德意志};
+  \node[infob, fill=dilpanel, draw=badgeDil!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Riga Gymnasium · Dorpat 大学\\[2pt]
+     \lab{博士}\quad 1878 · Dorpat\\[2pt]\lab{师承}\quad Carl Schmidt（Oettingen 物理所）};
+  \node[infob, fill=crypanel, draw=badgeCry!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 俄罗斯帝国里加（今拉脱维亚）\\[2pt]\lab{去世地}\quad 莱比锡（医院）· 安葬 Großbothen\\[2pt]\lab{享年}\quad 78 岁};
+  \node[infob, fill=colpanel, draw=badgeCol!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 催化 · 平衡 · 速率 · 电化学 · 色立体\\[2pt]
+     \lab{身份}\quad 化学家 · 哲学家 · 画家\\[2pt]
+     \lab{荣誉}\quad Nobel 1909 · Faraday 1904 · Exner 1923};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 奥斯特瓦尔德的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{奥斯特瓦尔德的一生}{1853 — 1932 · 从波罗的海作坊到体系化的宏大工程}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1853/生于里加，波罗的海德意志箍桶匠之子,
+    2.41/1872/入 Imperial University of Dorpat,
+    1.72/1878/博士论文《容量化学与光化学研究》,
+    1.03/1881/任 Riga Polytechnicum 化学教授,
+    0.34/1887/转任莱比锡；创刊《物理化学杂志》,
+    -0.35/1900/将 mole 一词引入化学词汇,
+    -1.04/1906/退休，转向色彩学、哲学与国际语,
+    -1.73/1909/获诺贝尔化学奖（催化 · 平衡 · 速率）,
+    -2.42/1911/Die Brücke 研究所与国际化学学会联合会,
+    -3.11/1932/于莱比锡去世，享年 78 岁
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：里加箍桶匠之子 (1853–1872)}{Riga · 手工业者的作坊 · 烟花与摄影}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcyan}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1853} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{生于俄国帝国利沃尼亚省里加（今拉脱维亚），波罗的海德意志家庭；父亲 Gottfried Wilhelm Ostwald 是箍桶匠，母亲 Elisabeth Leuckel} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{手工业者的作坊} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{幼年} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{三兄弟中的老二（兄 Eugen、弟 Gottfried）；在家中做烟花与摄影实验，痴迷科学} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{动手化学的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{少年} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{入里加文理中学（Riga State Gymnasium No.\,1）；1872 年赴 Dorpat 求学} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{走向专业的化学之路} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 作坊里的烟火气，是这个体系化头脑最早的实验室。}
+\end{center}
+\end{frame}}
+
+% --- 5. Dorpat ---
+\newcommand{\dorpatslide}{\begin{frame}\plainbar\sectiontitle{Dorpat：亲和力与测量之术 (1872–1881)}{Carl Schmidt 实验室 · Lemberg 之教 · 博士论文}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcyan}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1872} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{入 Imperial University of Dorpat（今塔尔图大学）；在校期间广泛接触人文学科、艺术与哲学} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{1906 年后的伏笔} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1875} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{通过 Kandidatenschrift 考试；在 Carl Schmidt 实验室任无薪研究者，同侪 Lemberg 传授无机分析与平衡、反应速率的测量之术} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{测量化学的根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1877–1879} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{获 Magisterial 学位并取得授课资格；约 1877 年起转任物理研究所有薪助手（随 Oettingen），1879 年起任 Schmidt 有薪助手} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{双重训练：化学 + 物理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1878} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{发表博士论文 \textit{Volumchemische und Optisch-Chemische Studien}，导师 Carl Schmidt} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{博士学位} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 化学亲和力是他早期核心问题——兼顾温度与酸碱亲和力常数的三维亲和力表即出于此。}
+\end{center}
+\end{frame}}
+
+% --- 6. Riga -> Leipzig ---
+\newcommand{\leipzigslide}{\begin{frame}\plainbar\sectiontitle{Riga $\rightarrow$ Leipzig：物理化学奠基 (1881–1906)}{世界首位专设物理化学教授 · 稀释定律}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcyan}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Riga 教授 (1881)} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{任 Riga Polytechnicum 化学教授；继续亲和力、质量作用、电化学与化学动力学研究} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{学派雏形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Leipzig 首席 (1887)} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{转任莱比锡大学，成为世界上第一位专设的物理化学教授，任职至 1906 退休} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{学科的建制化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{稀释定律} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{弱电解质行为遵循质量作用原理，无限稀释时充分解离；可由电化学方法实验观测} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{Ostwald's dilution law} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Harvard 交换 (1904–05)} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{任哈佛大学首任交换教授} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{国际影响} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 稀释定律（Ostwald's dilution law）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{deepcyan!88!black}$K=\dfrac{c\,\alpha^{2}}{1-\alpha}$\qquad {\fontsize{7.5}{9.5}\selectfont（弱电解质解离平衡；通用教科书形式，page.md 仅定性描述）}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 催化 ---
+\newcommand{\catalysisslide}{\begin{frame}\plainbar\sectiontitle{催化：从 Berzelius 到现代定义}{概念史 · 现代定义 · 应用}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcyan}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{概念的源头} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{化学催化概念由 Berzelius 首创——Ostwald 之功不在首创，而在给出现代定义} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{概念史的正名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{现代定义} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{催化剂是不成为反应物或产物的一部分、却能加速反应速率的物质} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{沿用至今的界定} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{从酸碱到反应速率} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{在反应速率与酸碱研究中发现：溶液中酸或碱的浓度强烈影响化学过程的速率} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{催化理解的推进} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{广泛应用} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{生物过程（酶催化）与众多工业过程；其发明的硝酸工艺中亦使用催化剂} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{生物与工业双重意义} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 让反应加速而不参与反应——定义本身即是对催化本质的洞察。}
+\end{center}
+\end{frame}}
+
+% --- 8. 硝酸工艺 ---
+\newcommand{\nitricacidslide}{\begin{frame}\plainbar\sectiontitle{硝酸工艺：氨的催化氧化}{Kuhlmann 先例 · Haber--Bosch 廉价氨 · 至今广泛使用}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcyan}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{廉价制造硝酸} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{氨的催化氧化制硝酸；取得专利，使用催化剂并给出近理论极限产率的条件} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{Ostwald process} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{归属的正名} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{基本工艺 64 年前已被 Kuhlmann 专利，因无廉价氨未工业化——勿称"首创"} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{工业化的关键一步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{廉价氨的耦合} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{Haber--Bosch 合成氨（1911 或 1913 完成）提供廉价氨，两项突破结合} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{化肥与炸药的大规模生产} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{历史影响} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{一战德国短缺物资的战略性生产；工艺至今仍广泛使用} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{延续至今的工艺} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 氨的催化氧化（通用教科书总反应式）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{deepcyan!88!black}$4\,\mathrm{NH_3}+5\,\mathrm{O_2}\ \xrightarrow{\ \text{Pt 催化剂}\ }\ 4\,\mathrm{NO}+6\,\mathrm{H_2O}\ \Rightarrow\ \mathrm{HNO_3}$}\\[1pt]
+  {\fontsize{7.5}{9.5}\selectfont（page.md 未给出方程，此为通用教科书形式；正文叙述以 page.md 定性文字为准）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 结晶世界 ---
+\newcommand{\crystallizationslide}{\begin{frame}\plainbar\sectiontitle{结晶世界：规则 · 熟化 · Freundlich 方程}{多晶型 · 表面张力 · 尺寸与溶解度}
+\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.76}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcyan}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{现象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{解释}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{命名}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{多晶型结晶} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{固体未必结晶成最热力学稳定相，取决于各晶型相对结晶速率（由表面张力决定）} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{Ostwald's rule} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{溶液随时间演化} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{大晶体比大量小晶体更稳定，随时间大晶体吞小晶体——冰淇淋变糙是日常例} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{Ostwald ripening} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{尺寸与溶解度} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{小晶体（通常小于微米）溶解度升高；1900 首次发表，1909 由 Freundlich 精化；亦适用于分压} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{Ostwald--Freundlich equation} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{周期性结晶} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{与 Liesegang 合作解释周期性结晶，并给出数学模型} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{Liesegang rings} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Ostwald--Freundlich 方程（尺寸—溶解度关系）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{deepcyan!88!black}$\ln\dfrac{S_r}{S_\infty}=\dfrac{2\,\gamma\,V_m}{r\,R\,T}$\qquad {\fontsize{7.5}{9.5}\selectfont（通用教科书形式，page.md 仅定性描述）}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. mole 与原子论之争 ---
+\newcommand{\moleslide}{\begin{frame}\plainbar\sectiontitle{mole 与原子论之争}{唯能论 · Ernst Mach · Perrin 的布朗运动}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcyan}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{立场}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{论据}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{转折}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{唯能论} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{在哲学上对立于原子论；与 Ernst Mach 同为原子论最后两位坚守者（反对者）} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{世纪的哲学分歧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{mole 的引入（约 1900）} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{把 "mole" 引入化学词汇：分子量以克计、联系理想气体——讽刺的是这正是其唯能论的产物} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{与唯能论直接相关} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{被实验说服} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{在与 Sommerfeld 的谈话中自陈：被 Jean Perrin 的布朗运动实验说服} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{立场的历史转折} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{原子量建制 (1906)} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{当选国际原子量委员会成员；一战致通信中断，1917 年后未再恢复} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{战火中的插曲} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} mole 的定义（Ostwald，约 1900）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{deepcyan!88!black}$n=\dfrac{m}{M}$\qquad {\fontsize{7.5}{9.5}\selectfont（分子量以克计、联系理想气体；通用教科书形式，page.md 仅定性描述）}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 建制者 ---
+\newcommand{\institutionsslide}{\begin{frame}\plainbar\sectiontitle{建制者：期刊 · 学会 · Die Brücke}{1887 — 1927 · 六件套}
+\vspace{-0.15cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.0cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.4cm}}
+\toprule
+\rowcolor{deepcyan}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1887} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{创刊《Zeitschrift für Physikalische Chemie》，任主编至 1922} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{物理化学的旗舰期刊} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1889} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{创《Klassiker der exakten Wissenschaften》丛书，已出 250+ 卷} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{科学经典的传承} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1894} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{创德国电化学学会，后成为德国 Bunsen 学会} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{学界的组织化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1902} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{创《Annalen der Naturphilosophie》；1921 年首次德文刊出维特根斯坦《逻辑哲学论》} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{哲学与科学的交汇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1911} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{参与创建 Die Brücke 研究所（诺贝尔奖金资助）；创办国际化学学会联合会并任首任主席} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{标准化的宏大工程} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1927} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{创《Die Farbe》杂志} & \cellcolor{crypanel}\textcolor{badgeCry!82!black}{色彩学的收官之刊} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 逾 500 篇论文、约 45 部书——他为一个学科建立了全部骨架，也写下了它的大半内容。}
+\end{center}
+\end{frame}}
+
+% --- 12. 第二人生：色彩学与艺术 ---
+\newcommand{\colorslide}{\begin{frame}\plainbar\sectiontitle{第二人生：色彩学与艺术 (1906–1932)}{双锥色立体 · Mondrian · Klee · 包豪斯 · Ido}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}
+  % 左：双锥色立体示意
+  \begin{scope}[xshift=-4.6cm]
+    \fill[white, draw=deepcyan!60, line width=0.8pt] (0,1.75) -- (-1.15,0) -- (1.15,0) -- cycle;
+    \fill[black!75, draw=deepcyan!60, line width=0.8pt] (0,-1.75) -- (-1.15,0) -- (1.15,0) -- cycle;
+    \draw[deepcyan!70, line width=0.9pt] (0,0) ellipse (1.15 and 0.34);
+    \node[font=\fontsize{6.2}{7.4}\selectfont\color{deepcyan!80!black}] at (0,2.0) {白};
+    \node[font=\fontsize{6.2}{7.4}\selectfont\color{white}] at (0,-1.72) {\textcolor{white}{黑}};
+    \node[font=\fontsize{6.2}{7.4}\selectfont\color{badgeCol!85!black}] at (1.7,0) {8 原色沿赤道分布};
+    \node[font=\fontsize{7.5}{9.5}\selectfont\bfseries\color{badgeCol}] at (0,-2.2) {双锥色立体（Ostwald color solid）};
+  \end{scope}
+  % 右：文字面板
+  \node[rounded corners=5pt, fill=colpanel, draw=badgeCol!45, inner xsep=10pt, inner ysep=7pt,
+    text width=7.2cm, font=\fontsize{7.6}{9.8}\selectfont, align=left] at (2.2,0.95)
+    {{\bfseries\color{badgeCol!85!black} 色彩体系（1916--1918 出版《The Color Primer》与《The Color Atlas》）}\\[2pt]
+     以白、黑与八原色混合定义每一种颜色，三个自由度表示色彩；影响 Mondrian 与 De Stijl、Paul Klee 与包豪斯学派；\emph{Malerbriefe} 1904（退休前）已出};
+  \node[rounded corners=5pt, fill=goldpanel, draw=coveraccent!45, inner xsep=10pt, inner ysep=7pt,
+    text width=7.2cm, font=\fontsize{7.6}{9.8}\selectfont, align=left] at (2.2,-1.15)
+    {{\bfseries\color{coveraccent!85!black} 画家 · 和平运动 · 国际语}\\[2pt]
+     留下逾 1000 幅油画与 3000 幅色粉/色彩习作；投身 Berta von Suttner 的和平运动；先学 Esperanto，后支持 Ido——把 1909 诺奖奖金一半捐给 Ido 运动（资助《Progreso》）};
+\end{tikzpicture}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\itshape\color{coverdark!80} "Poetry, music and painting have given me refreshment and new courage, when exhausted by scientific work I have been obliged to lay my tools aside." —— Ostwald（page.md 实载引语）}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与纪念 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与纪念}{Nobel 1909 · 月球背面的环形山}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{deepcyan}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1909 诺贝尔化学奖} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{独享——表彰催化与化学平衡、反应速率基本原理；讲演 \textit{On Catalysis}（1909-12-12）；自 1904 年起被提名 20 次} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{至高认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要荣誉} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{Faraday Lectureship Prize（1904）· Wilhelm Exner Medal（1923，表彰经济影响）· Geheimrat 枢密顾问（1899）} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{国际认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{门生与伯乐} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{Arrhenius、van 't Hoff、Nernst 曾是其 research students；Noyes、Whitney、池田菊苗亦出其门下；1901 拒 Einstein 求职，后两度（1910/1913）提名其诺奖} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{莱比锡学派济济} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{纪念} & \cellcolor{catpanel}\textcolor{badgeCat!82!black}{月球背面 Ostwald 环形山；德国 Grimma 的 Wilhelm Ostwald Park and Museum（度假庄园原址）} & \cellcolor{dilpanel}\textcolor{badgeDil!82!black}{名字写在天上与地上} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 获奖后将奖金一半捐给 Ido 国际语运动——荣誉照旧转化为他者的能量。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {不浪费能量，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {而把它转化为最有用的形式。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是定律与工艺，而是一种把世界体系化的方法。};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {威廉·奥斯特瓦尔德\quad Wilhelm Ostwald\quad 1853 — 1932};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{atom}\enspace Nobel 1909 · 催化 · 化学平衡与反应速率\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openchemistslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\dorpatslide
+\leipzigslide
+\catalysisslide
+\nitricacidslide
+\crystallizationslide
+\moleslide
+\institutionsslide
+\colorslide
+\honorsslide
+\closingslide
+\end{document}

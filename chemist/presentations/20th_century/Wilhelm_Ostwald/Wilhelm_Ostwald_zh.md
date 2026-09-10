@@ -176,23 +176,23 @@
 
 ## 10. 终审清单
 
-- [ ] 生卒 1853-09-02（O.S. 08-21）/ 1932-04-04，享年 78；出生地里加、去世地莱比锡医院、安葬 Großbothen
-- [ ] 1909 独享；诺奖理由中文与总名单逐字一致；催化概念归 Berzelius、现代定义归 Ostwald
-- [ ] 硝酸工艺注明 Kuhlmann 64 年前专利与 Haber–Bosch 廉价氨前提；勿写"首创"
-- [ ] 唯能论/原子论之争：Mach 并列最后反对者、Perrin 布朗运动为转折
-- [ ] 博士导师 Carl Schmidt（Oettingen 单独注明）；三位诺奖"research students"不入 advisor-student
-- [ ] 公式框四处均有 §5 公式注记；正文叙述不超出 page.md 定性范围
-- [ ] 色彩学著作年份（1904 / 1916 / 1916–8）准确；一元论/优生学段落按建议略过或完整语境呈现
-- [ ] 奖金捐赠口径（一半 vs 逾 40,000 美元）不自行合并
-- [ ] 引语全部可在 page.md 找到原文（音乐绘画引语、科学与艺术两处、"不浪费能量"伦理观）
-- [ ] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1853-09-02（O.S. 08-21）/ 1932-04-04，享年 78；出生地里加、去世地莱比锡医院、安葬 Großbothen
+- [x] 1909 独享；诺奖理由中文与总名单逐字一致；催化概念归 Berzelius、现代定义归 Ostwald
+- [x] 硝酸工艺注明 Kuhlmann 64 年前专利与 Haber–Bosch 廉价氨前提；勿写"首创"
+- [x] 唯能论/原子论之争：Mach 并列最后反对者、Perrin 布朗运动为转折
+- [x] 博士导师 Carl Schmidt（Oettingen 单独注明）；三位诺奖"research students"不入 advisor-student
+- [x] 公式框四处均有 §5 公式注记；正文叙述不超出 page.md 定性范围
+- [x] 色彩学著作年份（1904 / 1916 / 1916–8）准确；一元论/优生学段落按建议略过或完整语境呈现
+- [x] 奖金捐赠口径（一半 vs 逾 40,000 美元）不自行合并
+- [x] 引语全部可在 page.md 找到原文（音乐绘画引语、科学与艺术两处、"不浪费能量"伦理观）
+- [x] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Wilhelm_Ostwald/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：images.txt **无独立肖像 URL**（仅 van 't Hoff 与 Ostwald 330px 合照缩略图、诺奖证书、色立体图等）；infobox 记有 "Photograph of Ostwald c. 1913"——执行时经 Wikipedia REST API `page/summary` 查 infobox 原图文件名下载（250px→500px），或 Commons `Special:FilePath` 回退；404 则装饰圆占位。合照（Van_'t_Hoff_und_Ostwald_01.jpg）可裁右半作身份页备选，图注须写明与 van 't Hoff 合影
+- [ ] **头像**：images.txt **无独立肖像 URL**（仅 van 't Hoff 与 Ostwald 330px 合照缩略图、诺奖证书、色立体图等）；infobox 记有 "Photograph of Ostwald c. 1913"——执行时经 Wikipedia REST API `page/summary` 查 infobox 原图文件名下载（250px→500px），或 Commons `Special:FilePath` 回退；404 则装饰圆占位。【执行留痕 2026-09-10：经 REST API 得 infobox 原图 Wilhelm_Ostwald_by_Nicola_Perscheid.jpg（c.1913，Perscheid 摄），500px 已入 images/，封面与身份页共用】（Van_'t_Hoff_und_Ostwald_01.jpg）可裁右半作身份页备选，图注须写明与 van 't Hoff 合影
 - [ ] **国籍**：封面顶部明示"波罗的海德意志"，底注 "German, born in Latvia" 口径
 - [ ] **引语核对**：引语必须在 page.md 原文找到（§5 引语纪律所列四组）
 - [ ] **编译验证**：`make distclean && make`

@@ -176,23 +176,23 @@
 
 ## 10. 终审清单
 
-- [ ] 生卒 1852-08-30 / 1911-03-01，享年 58，出生地鹿特丹、去世地柏林 Steglitz、死于肺结核
-- [ ] 1901 首位化学诺奖**独享**；获奖理由用总名单措辞「表彰他因发现化学动力学定律和溶液渗透压定律所作出的杰出贡献」
-- [ ] 四面体碳 1874 与 Le Bel 同年各自独立；Davy Medal 1893 与 Le Bel 共享
-- [ ] 1874 荷兰文小册子早于博士三个月；*La chimie dans l'espace* 为 1875 法文本
-- [ ] 《物理化学杂志》1887 三人共创（Van 't Hoff / Arrhenius / Ostwald）
-- [ ] 与 Arrhenius 仅"支持/论证"关系，无"论战"情节；无载禁写
-- [ ] 阿姆斯特丹三科教授（化学/矿物学/地质学）；1896 普鲁士科学院；兽医学校职衔准确
-- [ ] 博士论文题目不出现；学生页只用有正文依据者
-- [ ] 引语全部可在本地 page.md 原文找到（仅 Kolbe 评语为唯一直接引语）
-- [ ] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1852-08-30 / 1911-03-01，享年 58，出生地鹿特丹、去世地柏林 Steglitz、死于肺结核
+- [x] 1901 首位化学诺奖**独享**；获奖理由用总名单措辞「表彰他因发现化学动力学定律和溶液渗透压定律所作出的杰出贡献」
+- [x] 四面体碳 1874 与 Le Bel 同年各自独立；Davy Medal 1893 与 Le Bel 共享
+- [x] 1874 荷兰文小册子早于博士三个月；*La chimie dans l'espace* 为 1875 法文本
+- [x] 《物理化学杂志》1887 三人共创（Van 't Hoff / Arrhenius / Ostwald）
+- [x] 与 Arrhenius 仅"支持/论证"关系，无"论战"情节；无载禁写
+- [x] 阿姆斯特丹三科教授（化学/矿物学/地质学）；1896 普鲁士科学院；兽医学校职衔准确
+- [x] 博士论文题目不出现；学生页只用有正文依据者（本次 15 页未设独立学生页，Cohen/Donnan 未写错）
+- [x] 引语全部可在本地 page.md 原文找到（仅 Kolbe 评语为唯一直接引语）
+- [x] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误（Overfull 仅 hbox 5.8pt / vbox 0.4-0.9pt，均达标）
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Jacobus_Henricus_van_t_Hoff/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：images.txt 有 infobox 肖像 URL `https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Jacobus_Henricus_van_%27t_Hoff.jpg/250px-Jacobus_Henricus_van_%27t_Hoff.jpg`——下载时把 `250px` 改 `500px` 存为 `images/Jacobus_Henricus_van_t_Hoff.jpg`；另一张为与 Ostwald 的合影（`Van_'t_Hoff_und_Ostwald_01.jpg`），如需使用须注明双人并考虑裁切；404 则走 Wikipedia REST API / Commons Special:FilePath 回退，再 404 则装饰圆占位
+- [x] **头像（已执行 ✅）**：已按 images.txt URL（250px→500px）下载 infobox 1904 年照片至 `images/Jacobus_Henricus_van_t_Hoff.jpg`（JPEG 500×763 验证通过）；封面/身份页图注统一用 "Van 't Hoff (1852–1911)" 与 "Van 't Hoff in 1904"——注：完整姓名小字注 "Jacobus Henricus van 't Hoff (…)" 会超出封面右缘，已改短。**执行期新陷阱（Review-2 复用）**：①荣誉页三行 itemize 表格默认 topsep 会致 vbox 超 20pt——须 `\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}` + arraystretch 0.65 + 列宽 2.4/2.6cm 压缩；②表格单元格长句避免行尾孤字（如"…博士学位"拆出"位"字），改写句式规避
 - [ ] **国籍**：封面顶部明示荷兰（Kingdom of the Netherlands）
 - [ ] **引语核对**：中文引号内只允许出现 Kolbe 评语的原文（英文）或其忠实翻译；其余一律间接转述
 - [ ] **编译验证**：`make distclean && make`

@@ -1,0 +1,493 @@
+% =============================================================
+%  靛蓝的驯服者：阿道夫·冯·拜尔 (Adolf von Baeyer)
+%  Beamer 演示 —— 参照数学家 Carl Friedrich Gauss 立传版式
+%  （表格语义化 tabularx + 公式展示框 + 时间线页 + 身份信息页）
+%  资料来源：chemist/presentations/20th_century/pages/Adolf_von_Baeyer
+%  设计母题：染料 / 浸染 —— 靛蓝在染缸中晕开
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenChemist 项目首页（定义 coverprimary/coveraccent/coverdark/covermuted/goldpanel + \openchemistslide）
+\input{../../cover/openchemist_page.tex}
+
+% ===== Baeyer 专属配色：深靛蓝（染料本色）+ 香槟金（诺奖）+ 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{deepindigo}{HTML}{283593}    % 深靛蓝 — 主色（表头 / 公式文本）
+\definecolor{badgeIndigo}{HTML}{3F51B5}   % 靛蓝与染料 — 亮靛蓝
+\definecolor{badgePhthalein}{HTML}{1B7A43}% 酞类荧光 — 绿
+\definecolor{badgeStrain}{HTML}{0E7C7B}   % 张力学说与命名 — 青绿
+\definecolor{badgeLegacy}{HTML}{C0395B}   % 师承与荣誉 — 玫瑰
+\definecolor{titlecolor}{RGB}{18,26,52}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{indigopanel}{RGB}{228,231,246}
+\definecolor{phthaleinpanel}{RGB}{222,240,230}
+\definecolor{strainpanel}{RGB}{222,238,238}
+\definecolor{legacypanel}{RGB}{246,228,234}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，蓝色晕染如靛蓝在染缸中扩散
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeIndigo!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeStrain!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePhthalein!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% ========================= SLIDES =========================
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=deepindigo!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{flask}\enspace 靛蓝的驯服者\enspace·\enspace 德国};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=deepindigo!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {阿道夫·冯·拜尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=deepindigo!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Adolf von Baeyer\enspace·\enspace 1835 — 1917};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {有机染料与张力学说的奠基人 · 1905 年诺贝尔化学奖得主};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeIndigo] at (-5.05,0)
+        {靛蓝合成\\Indigo\par\scriptsize 1881 戴维奖章};
+      \node[badge, fill=badgePhthalein] at (-1.68,0)
+        {酞类染料\\Phthalein\par\scriptsize 酚酞 · 荧光素};
+      \node[badge, fill=badgeStrain] at (1.68,0)
+        {张力学说\\Strain Theory\par\scriptsize 获奖工作范围};
+      \node[badge, fill=badgeLegacy] at (5.05,0)
+        {命名法与学派\\Nomenclature\par\scriptsize IUPAC · 慕尼黑};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"in recognition of his services in the advancement of organic chemistry and the chemical industry, through his work on organic dyes and hydroaromatic compounds." —— 1905 诺贝尔化学奖获奖理由};
+  % 肖像（Wikimedia Commons：Baeyer.jpg，1905 年照片）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Baeyer.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Adolf von Baeyer (1835–1917)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国\enspace|\enspace \faIcon{university}\enspace 柏林 · 斯特拉斯堡 · 慕尼黑\enspace|\enspace Nobel 1905};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 高斯模板硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{阿道夫·冯·拜尔 - 靛蓝的驯服者}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Baeyer.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Adolf von Baeyer (1835–1917)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1835-10-31 — 1917-08-20\\[2pt]\lab{本名}\quad Johann Friedrich Wilhelm Adolf Baeyer\\[2pt]\lab{国籍}\quad 德国 · 1885 封 "von"};
+  \node[infob, fill=indigopanel, draw=badgeIndigo!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Friedrich Wilhelm Gymnasium · 柏林大学 · 海德堡 · 根特\\[2pt]
+     \lab{博士}\quad 1858 · 柏林大学\\[2pt]\lab{师承}\quad Kekulé（初投 Bunsen，争执改投）};
+  \node[infob, fill=phthaleinpanel, draw=badgePhthalein!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 柏林（普鲁士王国）\\[2pt]\lab{去世地}\quad 施塔恩贝格（巴伐利亚）\\[2pt]\lab{享年}\quad 81 岁};
+  \node[infob, fill=strainpanel, draw=badgeStrain!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 有机染料 · 氢化芳香族 · 张力学说\\[2pt]
+     \lab{身份}\quad 化学家 · 大学教师\\[2pt]
+     \lab{荣誉}\quad Nobel 1905 · Davy 1881 · Liebig 1903};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 拜尔的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{拜尔的一生}{1835 — 1917 · 从两塔勒的靛蓝到诺贝尔化学奖}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1835/生于柏林，著名大地测量学家 Johann Jacob Baeyer 之子,
+    2.41/1853/中学毕业；入柏林大学读物理与数学,
+    1.72/1858/随 Kekulé 完成博士（二甲胂基氯），转赴根特,
+    1.03/1860/任柏林皇家贸易学院讲师；起尿酸衍生物研究,
+    0.34/1871/酚酞与荧光素同年首获；任斯特拉斯堡教授,
+    -0.35/1875/接替 Liebig 出任慕尼黑大学化学教授,
+    -1.04/1881/因靛蓝工作获皇家学会戴维奖章,
+    -1.73/1885/50 岁生日获巴伐利亚世袭贵族 "von",
+    -2.42/1905/独享诺贝尔化学奖,
+    -3.11/1917/逝于施塔恩贝格，享年 81 岁
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：测量学家之子与靛蓝之约 (1835–1858)}{柏林 · Müggelsheim 农场 · Friedrich Wilhelm Gymnasium}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1835} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{生于柏林；父亲 Johann Jacob Baeyer 是著名大地测量学家、普鲁士皇家陆军上尉；母亲 Eugenie 在生幼妹时难产去世，幼年丧母} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{测量学家之子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{约 1844–1848} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{9 岁在柏林开始化学实验；三年后合成一种此前未知的化合物——铜钠复碳酸盐；童年在外祖父的 Müggelsheim 农场做植物营养实验} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{神童实验室} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1848} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{13 岁生日当天花两塔勒买下一块靛蓝，开启第一批染料实验——此后一生与靛蓝纠缠到底} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{终身之约} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1853} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{中学化学教师聘其为助手；中学毕业后入柏林大学读物理与数学} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{助手与入学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一块两塔勒的靛蓝，定下了一生的方向。}
+\end{center}
+\end{frame}}
+
+% --- 5. 师承 Kekulé ---
+\newcommand{\mentorslide}{\begin{frame}\plainbar\sectiontitle{师承 Kekulé：从海德堡到根特 (1856–1860)}{Bunsen 之争 · 博士论文 · 根特岁月}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1853–1856} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{柏林大学读物理与数学；一段普鲁士军旅生涯中断学业至 1856} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{学业中断与回归} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1856} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{入海德堡大学，欲师从 Robert Bunsen 学化学；与这位著名化学家争执后改投 August Kekulé} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{师承抉择} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1858} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{返回柏林完成博士论文《De arsenici cum methylo conjunctionibus》（二甲胂基氯）} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{博士完成} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1858–1860} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{Kekulé 就任根特大学教授，拜尔随其前往——成为 Kekulé 学派的核心成员} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{转赴根特} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一次争执换来的导师，成就了德国有机化学的一条主线。}
+\end{center}
+\end{frame}}
+
+% --- 6. 靛蓝与染料 ---
+\newcommand{\indigoslide}{\begin{frame}\plainbar\sectiontitle{靛蓝与染料：一生的母题}{靛蓝合成 · 吲哚结构 · 戴维奖章 (1860s–1880s)}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{靛蓝为何是母题？} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{靛蓝的合成与结构描述为其 chief achievement} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{1881 皇家学会戴维奖章} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{吲哚 (1866–1869)} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{1866 年发表吲哚的首次合成；1869 年首先提出吲哚的正确结构式} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{结构化学里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{其他战线} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{聚乙炔、氧鎓盐、亚硝基化合物 (1869) 的研究} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{理论化学积累} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 靛蓝与吲哚（Baeyer，1860s–1880s）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{deepindigo!88!black}$\text{靛蓝（indigo）}: \mathrm{C_{16}H_{10}N_2O_2}$\quad·\quad$\text{吲哚骨架} \Rightarrow \text{1869 首先提出正确结构式}$}\\[1pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{covermuted} Baeyer–Drewson 靛蓝合成 · Baeyer–Emmerling 吲哚合成——以他命名的反应}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 酞类染料 ---
+\newcommand{\phthaleinslide}{\begin{frame}\plainbar\sectiontitle{酞类染料：1871 年双丰收}{酚酞 · 荧光素 · "resorcinphthalein"}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{酚酞如何制得？(1871)} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{苯酐与两当量苯酚在酸性条件下缩合} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{名称即由此而来} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荧光素同年首获} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{从苯酐与间苯二酚首次人工获得；他将其命名为 "resorcinphthalein"} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{"fluorescein" 一词 1878 年才开始使用} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{意义} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{酞类染料的发现，与其 chief achievement 并列} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{染料化学的新一族} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 酚酞的缩合（Baeyer，1871）}\\[2pt]
+  {\color{deepindigo!88!black}\resizebox{11.4cm}{!}{$\text{苯酐（phthalic anhydride）} + 2\,\mathrm{C_6H_5OH}\ \xrightarrow{\text{酸性条件}}\ \text{酚酞（phenolphthalein）}$}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 尿酸衍生物与巴比妥酸 ---
+\newcommand{\barbituricslide}{\begin{frame}\plainbar\sectiontitle{尿酸衍生物与巴比妥酸 (1860s–)}{1860 年起的长线课题 · barbiturates 的母体}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{长线课题从何时起？} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{1860 年起研究尿酸衍生物（任柏林皇家贸易学院讲师时期）} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{贯穿 1860 年代的课题} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{巴比妥酸 (1864)} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{尿酸衍生物研究中发现巴比妥酸（barbituric acid）} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{barbiturates（巴比妥类药物）的母体化合物} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同期更广的研究} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{聚乙炔、氧鎓盐、亚硝基化合物 (1869)} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{理论与实验并进} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 巴比妥酸（Baeyer，1864）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{deepindigo!88!black}$\mathrm{C_4H_4N_2O_3}$\quad $\text{巴比妥酸（barbituric acid）——barbiturates 的母体化合物}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 张力学说与命名法 ---
+\newcommand{\strainslide}{\begin{frame}\plainbar\sectiontitle{张力学说与命名法 (1880s–)}{Spannung · 小碳环 · IUPAC}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三键如何理解？} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{'strain'（Spannung）张力理论} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{理论化学贡献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{小碳环为何不稳？} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{小碳环的 Baeyer 张力学说（strain theory）} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{属其获奖工作范围} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{化合物如何命名？} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{环状化合物的命名体系，后被扩展并采纳为 IUPAC 有机命名法的一部分} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{写进国际规则的化学语言} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Baeyer 张力学说：环张力来自偏离正四面体角}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{deepindigo!88!black}$\sigma = \dfrac{109^\circ 28' - \alpha}{2},\qquad \alpha = \dfrac{(n-2)\cdot 180^\circ}{n}\ \ (\text{正 } n \text{ 元环内角})$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 酚醛树脂前身 ---
+\newcommand{\resinslide}{\begin{frame}\plainbar\sectiontitle{酚醛树脂前身与工业化学 (1872)}{苯酚与甲醛 · Bakelite 的前身}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1872} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{苯酚与甲醛实验，所得树脂状产物成为 Leo Baekeland 后来商业化 Bakelite（电木）的前身} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{酚醛树脂前身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{表述边界} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{1872 年产物只是 Bakelite 的 "precursor"——商业化的完成者是 Baekeland} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{前身，而非发明} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{工业化学视野} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{其研究连接有机染料与化学工业——1905 年获奖理由中的 "chemical industry"} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{学术与工业的双向通道} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一支试管里的树脂，预告了塑料时代的到来。}
+\end{center}
+\end{frame}}
+
+% --- 11. 慕尼黑学派与门生 ---
+\newcommand{\studentsslide}{\begin{frame}\plainbar\sectiontitle{慕尼黑学派与门生}{Emil Fischer · Villiger · Nef · Willstätter}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方向}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Hermann Emil Fischer} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{infobox 所载博士学生} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{1902 诺贝尔化学奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Victor Villiger} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{infobox 所载博士学生} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{Baeyer–Villiger 氧化以二人命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{John Ulric Nef · Carl Liebermann · Carl Gräbe · Karl Andreas Hofmann} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{infobox 所载博士学生} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{有机化学中坚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Richard Willstätter} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{仅见 metadata（其本人页面交叉印证）} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{1915 诺贝尔化学奖} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 执教至去世前一年，他仍是世界最著名的有机化学教师之一。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与贵族封号 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与贵族封号}{Nobel 1905 · Davy 1881 · 世袭 "von"}\vspace{-0.62cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{deepindigo}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{诺贝尔奖 (1905)} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{独享；表彰他通过对有机染料和氢化芳香族化合物的研究，推动有机化学和化学工业的发展} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{染料 + 氢化芳香族，两部分齐全} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{奖章序列} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Davy Medal（1881，因靛蓝工作）\item Liebig Medal（1903）· Elliott Cresson Medal（1912）\end{itemize}} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{国际学界认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术身份} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{1884 美国艺术与科学院院士 · 普鲁士科学院 · 1885 皇家学会外籍会员 · 1892 曼彻斯特文学与哲学会荣誉会员} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{跨国学界网络} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{封爵与身后} & \cellcolor{indigopanel}\textcolor{badgeIndigo!82!black}{1885 路德维希二世授世袭 "von" · 1895 Pour le Mérite · 1911 起年度奖章 · 2009 月球环形山} & \cellcolor{phthaleinpanel}\textcolor{badgePhthalein!82!black}{名字进入天空} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从戴维奖章到月球环形山，荣誉序列见证一个世纪的化学。}
+\end{center}
+\end{frame}}
+
+% --- 13. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：写进 IUPAC 的名字}{靛蓝 $\rightarrow$ 张力学说 $\rightarrow$ 命名法 $\rightarrow$ 学派}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=2.85cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=indigopanel, draw=badgeIndigo!50, line width=0.7pt] (a) at (-5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeIndigo} 靛蓝合成}\\[3pt]chief achievement\\[2pt]1881 戴维奖章};
+\node[leg, fill=phthaleinpanel, draw=badgePhthalein!50, line width=0.7pt] (b) at (-1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePhthalein} 酞类染料}\\[3pt]酚酞 · 荧光素\\[2pt]1871 双丰收};
+\node[leg, fill=strainpanel, draw=badgeStrain!50, line width=0.7pt] (c) at (1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeStrain} 张力学说}\\[3pt]三键张力 · 小碳环\\[2pt]获奖工作范围};
+\node[leg, fill=legacypanel, draw=badgeLegacy!50, line width=0.7pt] (d) at (5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLegacy} 命名法与学派}\\[3pt]IUPAC · 慕尼黑学派\\[2pt]Fischer · Willstätter};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 以他命名的遗产}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{deepindigo!88!black}$\text{Von Baeyer 命名法} \Rightarrow \text{IUPAC 有机命名法的一部分}$}\\[1pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{covermuted} 1911 年起每年颁发 Adolf von Baeyer 奖章 · 2009 年月球环形山 Von Baeyer 以他命名}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.08cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 两塔勒的靛蓝，最终写进了国际命名规则与月面地图。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {从 13 岁那块两塔勒的靛蓝开始，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {他把一种颜色，写成了一门科学。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是染料与学说，而是一条从 1848 通向今天的化学长路。};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {阿道夫·冯·拜尔\quad Adolf von Baeyer\quad 1835 — 1917};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{flask}\enspace Nobel 1905 · 靛蓝合成 · Baeyer 张力学说\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openchemistslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\mentorslide
+\indigoslide
+\phthaleinslide
+\barbituricslide
+\strainslide
+\resinslide
+\studentsslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

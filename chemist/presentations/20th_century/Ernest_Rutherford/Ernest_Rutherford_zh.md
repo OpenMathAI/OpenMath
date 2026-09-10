@@ -201,33 +201,33 @@
 
 ## 10. 终审清单
 
-- [ ] 生卒 1871-08-30 / 1937-10-19，享年 66，出生地 Brightwater、去世地剑桥、安葬威斯敏斯特教堂
-- [ ] 1908 **化学奖**、独享、理由中文措辞照总名单；"物理学家获化学奖" 表述贯穿全篇
-- [ ] 原子核（1909 金箔 → 1911 理论）在获奖**之后**，因果未倒置
-- [ ] α/β（1899）、γ（1903，Villard 发现）命名归属与年份准确
-- [ ] 半衰期（与 Owens）与蜕变理论（与 Soddy）两组合作未互换；Thorium X 同位素写法与 page.md 一致或已规避
-- [ ] 质子 1920 命名、中子 1920 提出/1932 Chadwick 证实、sonar 归属误解口径正确
-- [ ] 学生仅收 page.md infobox 明确者；metadata 无载者未入库
-- [ ] 引语仅三处 page.md 实载（15-inch shell / moonshine / Jeans 悼词），其余为间接转述
-- [ ] 奖项年份表（1904/1908/1910/1913/1916/1922/1924/1928/1930/1936×2）与爵位（1914/1925/1931）无误
-- [ ] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1871-08-30 / 1937-10-19，享年 66，出生地 Brightwater、去世地剑桥、安葬威斯敏斯特教堂
+- [x] 1908 **化学奖**、独享、理由中文措辞照总名单；"物理学家获化学奖" 表述贯穿全篇
+- [x] 原子核（1909 金箔 → 1911 理论）在获奖**之后**，因果未倒置
+- [x] α/β（1899）、γ（1903，Villard 发现）命名归属与年份准确
+- [x] 半衰期（与 Owens）与蜕变理论（与 Soddy）两组合作未互换；Thorium X 同位素写法与 page.md 一致或已规避
+- [x] 质子 1920 命名、中子 1920 提出/1932 Chadwick 证实、sonar 归属误解口径正确
+- [x] 学生仅收 page.md infobox 明确者；metadata 无载者未入库
+- [x] 引语仅三处 page.md 实载（15-inch shell / moonshine / Jeans 悼词），其余为间接转述
+- [x] 奖项年份表（1904/1908/1910/1913/1916/1922/1924/1928/1930/1936×2）与爵位（1914/1925/1931）无误
+- [x] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `pages/Ernest_Rutherford/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：images.txt 已有真实肖像 URL `https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Ernest_Rutherford_1892.jpg/250px-Ernest_Rutherford_1892.jpg`——下载时 250px 改 500px 以上；404 则用 Wikipedia REST API page/summary 查 infobox 原图名或 Commons Special:FilePath 回退，再 404 则装饰圆占位
-- [ ] **国籍**：封面顶部明示新西兰（New Zealander）
-- [ ] **引语核对**：仅三处实载引语可加引号（15-inch shell / moonshine / Jeans 悼词），须逐字对照 page.md
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
+- [x] **结合本地 Wikipedia**：读取 `pages/Ernest_Rutherford/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
+- [x] **头像**：images.txt 已有真实肖像 URL `https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Ernest_Rutherford_1892.jpg/250px-Ernest_Rutherford_1892.jpg`——下载时 250px 改 500px 以上；404 则用 Wikipedia REST API page/summary 查 infobox 原图名或 Commons Special:FilePath 回退，再 404 则装饰圆占位
+- [x] **国籍**：封面顶部明示新西兰（New Zealander）
+- [x] **引语核对**：仅三处实载引语可加引号（15-inch shell / moonshine / Jeans 悼词），须逐字对照 page.md
+- [x] **编译验证**：`make distclean && make`
+- [x] **更新提示词**：Review 修正写回本文件
 
 ### 第 2 轮（Review-2）：结构优化
-- [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
-- [ ] 身份信息页布局与高斯模板对齐（左头像 + 右 2×2 网格）
-- [ ] 中文标点 / 断行 / 间距统一
-- [ ] 与化学家侧（Frederick Sanger）及数学家侧（高斯）既有格式对齐
+- [x] 检查 Overfull/Underfull 告警（<10pt 可接受）
+- [x] 身份信息页布局与高斯模板对齐（左头像 + 右 2×2 网格）
+- [x] 中文标点 / 断行 / 间距统一
+- [x] 与化学家侧（Frederick Sanger）及数学家侧（高斯）既有格式对齐
 
 ---
 

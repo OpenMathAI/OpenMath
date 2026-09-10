@@ -158,33 +158,33 @@
 
 ## 10. 终审清单
 
-- [ ] 生卒 1860-05-20 / 1917-08-13，享年 57，出生地慕尼黑、去世地 Focșani 野战医院
-- [ ] 博士导师 Theodor Curtius（非 Baeyer——metadata 冲突已按 page.md 裁定）
-- [ ] 1907 诺奖独享、理由中文措辞照总名单
-- [ ] 无细胞发酵实验流程（石英 + 硅藻土 + 研钵 → 压榨汁 → 加糖 → CO₂ 数天 → 显微镜无活细胞）逐项核对
-- [ ] 分泌假说→细胞内发酵的方向未写反
-- [ ] Büchner flask/funnel 归属 Ernst Büchner，未误写
-- [ ] 从军时间线（1914 志愿 → Major → 西线东线 → 1916-03 回校 → 1917-04 再从军 → 08-11 中弹 → 08-13 卒）未倒置
-- [ ] 机构年份链（1889/1891/1893/1895/1896/1898/1900/1909/1911）与 page.md 一致
-- [ ] 无任何中文引号内的"原话"（page.md 无直接引语）
-- [ ] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1860-05-20 / 1917-08-13，享年 57，出生地慕尼黑、去世地 Focșani 野战医院
+- [x] 博士导师 Theodor Curtius（非 Baeyer——metadata 冲突已按 page.md 裁定）
+- [x] 1907 诺奖独享、理由中文措辞照总名单
+- [x] 无细胞发酵实验流程（石英 + 硅藻土 + 研钵 → 压榨汁 → 加糖 → CO₂ 数天 → 显微镜无活细胞）逐项核对
+- [x] 分泌假说→细胞内发酵的方向未写反
+- [x] Büchner flask/funnel 归属 Ernst Büchner，未误写
+- [x] 从军时间线（1914 志愿 → Major → 西线东线 → 1916-03 回校 → 1917-04 再从军 → 08-11 中弹 → 08-13 卒）未倒置
+- [x] 机构年份链（1889/1891/1893/1895/1896/1898/1900/1909/1911）与 page.md 一致
+- [x] 无任何中文引号内的"原话"（page.md 无直接引语）
+- [x] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `pages/Eduard_Buchner/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：`images.txt` 为空、无肖像 URL——执行 **Wikipedia REST API（page/summary 查 infobox 原图名）或 Commons `Special:FilePath/<文件名>?width=600` 回退**；404/HTML 则用装饰圆占位（主色 #5C3A1E 实心圆 + EB 首字母）
-- [ ] **国籍**：封面顶部明示德国（German Empire）
-- [ ] **引语核对**：本篇**不应出现任何引号内原话**；获奖理由用总名单中文措辞
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
+- [x] **结合本地 Wikipedia**：读取 `pages/Eduard_Buchner/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
+- [x] **头像**：`images.txt` 为空、无肖像 URL——执行 **Wikipedia REST API（page/summary 查 infobox 原图名）或 Commons `Special:FilePath/<文件名>?width=600` 回退**；404/HTML 则用装饰圆占位（主色 #5C3A1E 实心圆 + EB 首字母）
+- [x] **国籍**：封面顶部明示德国（German Empire）
+- [x] **引语核对**：本篇**不应出现任何引号内原话**；获奖理由用总名单中文措辞
+- [x] **编译验证**：`make distclean && make`
+- [x] **更新提示词**：Review 修正写回本文件
 
 ### 第 2 轮（Review-2）：结构优化
-- [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
-- [ ] 身份信息页布局与高斯模板对齐（左头像 + 右 2×2 网格）
-- [ ] 中文标点 / 断行 / 间距统一
-- [ ] 与化学家侧（Frederick Sanger）及数学家侧（高斯）既有格式对齐
+- [x] 检查 Overfull/Underfull 告警（<10pt 可接受）
+- [x] 身份信息页布局与高斯模板对齐（左头像 + 右 2×2 网格）
+- [x] 中文标点 / 断行 / 间距统一
+- [x] 与化学家侧（Frederick Sanger）及数学家侧（高斯）既有格式对齐
 
 ---
 

@@ -1,0 +1,505 @@
+% =============================================================
+%  核物理之父：欧内斯特·卢瑟福 (Ernest Rutherford)
+%  Beamer 演示 —— 参照数学家 Carl Friedrich Gauss 立传版式
+%  （表格语义化 tabularx + 公式展示框 + 时间线页）
+%  资料来源：chemist/presentations/20th_century/pages/Ernest_Rutherford
+%  设计母题：散射 —— 绝大多数 α 粒子径直穿过，极少数撞上原子核偏转
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenChemist 项目首页（定义 coverprimary/coveraccent/coverdark/covermuted/goldpanel + \openchemistslide）
+\input{../../cover/openchemist_page.tex}
+
+% ===== Rutherford 专属配色：深藏青（卡文迪许）+ 香槟金（诺奖）+ 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{deepnavy}{HTML}{14324F}     % 深藏青 — 主色（表头 / 公式文本）
+\definecolor{badgeRays}{HTML}{B23A48}    % α/β/γ 三射线 — 红
+\definecolor{badgeDecay}{HTML}{2E6E4E}   % 蜕变与半衰期 — 绿
+\definecolor{badgeNucleus}{HTML}{3B5BA5} % 原子核 — 蓝
+\definecolor{badgeParticles}{HTML}{C8862A}% 质子中子与传承 — 金橙
+\definecolor{titlecolor}{RGB}{14,28,46}
+\definecolor{muteddark}{RGB}{68,80,96}
+\definecolor{rayspanel}{RGB}{240,224,227}
+\definecolor{decaypanel}{RGB}{222,236,229}
+\definecolor{nucleuspanel}{RGB}{224,231,244}
+\definecolor{particlespanel}{RGB}{247,236,220}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「散射」——α 粒子穿过金箔后的偶发偏转
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeRays!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeDecay!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeNucleus!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% ========================= SLIDES =========================
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=deepnavy!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{atom}\enspace 核物理之父\enspace·\enspace 新西兰};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=deepnavy!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {欧内斯特·卢瑟福};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=deepnavy!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Ernest Rutherford\enspace·\enspace 1871 — 1937};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {物理学家 · 1908 年诺贝尔化学奖得主（独享）};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeRays] at (-5.05,0)
+        {$\alpha$/$\beta$/$\gamma$ 命名\\Rays\par\scriptsize 1899 · 1903};
+      \node[badge, fill=badgeDecay] at (-1.68,0)
+        {蜕变与半衰期\\Decay\par\scriptsize 与 Soddy · Owens};
+      \node[badge, fill=badgeNucleus] at (1.68,0)
+        {原子核\\Nucleus\par\scriptsize 1909 金箔 · 1911};
+      \node[badge, fill=badgeParticles] at (5.05,0)
+        {质子中子传承\\Proton · Neutron\par\scriptsize 1917--1920};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {表彰他对元素蜕变及放射性物质化学的研究 —— 1908 诺贝尔化学奖获奖理由};
+  % 肖像（Wikipedia 1892 年照片）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Ernest_Rutherford_1892.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Ernest Rutherford, 1892};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 新西兰\enspace|\enspace \faIcon{university}\enspace McGill · Manchester · Cambridge\enspace|\enspace Nobel 1908（化学）};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 高斯模板硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{欧内斯特·卢瑟福 - 从殖民地奖学金生到核物理之父}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Ernest_Rutherford_1892.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Ernest Rutherford (1871–1937), 1892};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1871-08-30 — 1937-10-19（享年 66）\\[2pt]\lab{本名}\quad 1st Baron Rutherford of Nelson\\[2pt]\lab{国籍}\quad 新西兰（New Zealand）};
+  \node[infob, fill=nucleuspanel, draw=badgeNucleus!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Canterbury College（BA 1892 · MA 1893 · BSc 1894）· Cavendish, Cambridge\\[2pt]
+     \lab{师承}\quad Alexander Bickerton · J.~J. Thomson};
+  \node[infob, fill=decaypanel, draw=badgeDecay!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Brightwater（尼尔森省）\\[2pt]\lab{去世地}\quad 剑桥 · 安葬威斯敏斯特教堂\\[2pt]\lab{享年}\quad 66 岁};
+  \node[infob, fill=particlespanel, draw=badgeParticles!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 原子物理 · 核物理 · 放射化学\\[2pt]
+     \lab{身份}\quad 物理学家获诺贝尔化学奖\\[2pt]
+     \lab{荣誉}\quad Nobel 1908 · OM 1925 · Baron 1931};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 卢瑟福的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{卢瑟福的一生}{1871 — 1937 · 从新西兰殖民地到卡文迪许掌门}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1871/生于新西兰 Brightwater，十二个孩子中的第四个,
+    2.41/1895/获 1851 Research Fellowship，赴剑桥卡文迪许随 J.~J. Thomson,
+    1.72/1899/在加拿大 McGill 期间首创 alpha ray 与 beta ray 两词,
+    1.03/1903/识别并命名 gamma ray；与 Soddy 发表蜕变理论,
+    0.34/1907/回英国任曼彻斯特 Langworthy 讲席教授,
+    -0.35/1908/获诺贝尔化学奖（独享）——获奖时主业仍是物理学家,
+    -1.04/1911/由金箔实验的解读提出原子核,
+    -1.73/1917/实现首例人工核反应（$\alpha$ 轰击氮核）,
+    -2.42/1919/继 Thomson 任卡文迪许教授直至去世,
+    -3.11/1937/于剑桥去世，安葬威斯敏斯特教堂
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：新西兰十二子之四 (1871–1894)}{两次靠奖学金层层晋级的殖民地天才}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1871} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{生于 Brightwater；父 James 为自苏格兰珀斯移民的农民兼机械师，母 Martha 为自英格兰来的教师；出生证明误写为 'Earnest'，家人昵称 Ern} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{移民家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1887} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{第二次尝试获奖学金入 Nelson College（580/600 分），1887--1889 就读，1889 任 head boy} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{奖学金晋级} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1889--1894} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{第二次尝试获奖学金入 Canterbury College（新西兰大学）：1892 BA（拉丁语、英语、数学）、1893 MA（数学与物理科学）、1894 BSc（化学与地质学）} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{三年三学位} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 殖民地的上升通道虽窄，却没能挡住这个农民的儿子。}
+\end{center}
+\end{frame}}
+
+% --- 5. 剑桥与师承 ---
+\newcommand{\cambridgeslide}{\begin{frame}\plainbar\sectiontitle{剑桥与师承：Thomson 门下 (1895–1898)}{首批 aliens · 无线电纪录 · 转向放射性}
+\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.76}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1895 · 卡文迪许} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{获 1851 Research Fellowship 入剑桥；成为剑桥首批 aliens（无剑桥学位而可做研究者）之一，师从 J.~J. Thomson} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{进入世界物理前沿} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{无线电} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{在 Thomson 鼓励下检出 0.5 英里（800 m）外电波，一度保持电磁波检出距离世界纪录；1896 年在英国科学促进会会议上发现已被 Marconi（近 10 英里）超越} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{短暂世界纪录} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{X 射线} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{随 Thomson 研究 X 射线对气体的导电效应——通往电子发现的工作} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{1897 年成果首肯} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转向放射性} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{闻 Becquerel 的铀实验后转向放射性，发现两种穿透力不同于 X 射线的辐射} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{$\alpha$/$\beta$ 之伏笔} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.55cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 无线电检出距离世界纪录（1895--1896）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{deepnavy!88!black}$d_{\text{Rutherford}} = 0.5\ \text{英里}\ (800\ \mathrm{m})\ \xrightarrow{\ 1896\ }\ d_{\text{Marconi}} \approx 10\ \text{英里}\ (16\ \mathrm{km})$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. McGill 岁月 ---
+\newcommand{\mcgillslide}{\begin{frame}\plainbar\sectiontitle{McGill 岁月：$\alpha$/$\beta$ 命名与半衰期 (1898–1907)}{蒙特利尔 · thoron · half-life 首创}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1898 · 赴加拿大} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{经 Thomson 推荐任 McGill 大学 Macdonald 讲席物理教授} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{远征新大陆} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{辐射如何分类？(1899)} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{按穿透力区分铀放射出的两种辐射} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{首创 alpha ray 与 beta ray 两词} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{钍的射气是什么？(1900--1903)} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{与 Soddy 确认钍放出的惰性气体，命名为 thoron（后知为 $^{220}$Rn）} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{发现放射性气体射气} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{衰变有无规律？} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{与 R.B. Owens 研究 thoron：任何尺寸的放射性样品总在相同时间内衰变一半} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{首创 half-life 一词} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 半衰期（half-life，与 R.B. Owens）}\\[2pt]
+  {\color{deepnavy!88!black}$\forall\ \text{样品尺寸}:\quad t_{1/2}(\text{thoron}) = 11\tfrac{1}{2}\ \text{min}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 与 Soddy：蜕变理论 ---
+\newcommand{\soddyslide}{\begin{frame}\plainbar\sectiontitle{与 Soddy：蜕变理论 (1900–1903)}{原子并非不可毁灭 · $\gamma$ 命名 1903}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{旧观念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{新事实}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{原子不可毁灭} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{放射性是原子自发蜕变为其他物质的过程；1902/1903 发表 Law of Radioactive Change} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{彻底动摇旧信条} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{第三种辐射无名 (1903)} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{识别 Villard 1900 年发现但未命名的辐射——穿透力远强于 $\alpha$/$\beta$，命名为 gamma ray} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{$\alpha$/$\beta$/$\gamma$ 沿用至今} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Kelvin：地球太年轻} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{1904 年在 Kelvin 在场的讲演中指出放射性可解释太阳长期能量来源} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{化解地球年龄之争} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 蜕变理论（Rutherford \& Soddy，1902/1903）}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{deepnavy!88!black}$\text{放射性}\ \equiv\ \text{原子自发蜕变}\quad\Rightarrow\quad\text{原子并非不可毁灭}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 1908 诺贝尔化学奖 ---
+\newcommand{\nobelslide}{\begin{frame}\plainbar\sectiontitle{1908 诺贝尔化学奖——物理学家的化学奖}{独享 · 元素蜕变与放射性物质化学}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.2cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{奖项}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{理由}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1904} & \cellcolor{particlespanel}\textcolor{badgeParticles!82!black}{Rumford Medal（皇家学会）} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{放射性研究，尤其是放射性气体射气的存在与性质} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1907} & \cellcolor{particlespanel}\textcolor{badgeParticles!82!black}{回英国任曼彻斯特维多利亚大学 Langworthy 讲席教授} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{获奖时主业仍是物理学家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1908} & \cellcolor{particlespanel}\textcolor{badgeParticles!82!black}{诺贝尔化学奖（独享，无共同得主）} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{表彰他对元素蜕变及放射性物质化学的研究} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} $\alpha$ 粒子 = 氦核（与 Thomas Royds，1907 底开始、1909 发表）}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{deepnavy!88!black}$\alpha\ \text{粒子} = \text{电离氦原子（很可能是氦核）}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Manchester：金箔实验与原子核 ---
+\newcommand{\nucleusslide}{\begin{frame}\plainbar\sectiontitle{Manchester：金箔实验与原子核 (1907–1911)}{Geiger--Marsden · 罕见大角散射 · 核式原子}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.74}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{实验}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{观察}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结论}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{计数 $\alpha$ 粒子} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{与 Geiger 发展硫化锌闪烁屏与电离室计数 $\alpha$ 粒子；总电荷除以计数} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{$\alpha$ 粒子电荷为 2} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{金箔实验 (1909)} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{在其指导下 Geiger 与 Marsden 用 $\alpha$ 粒子轰击金箔，发现罕见的大角散射——当时的任何物质理论都未预料} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{散射虽罕见、确实存在} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1911 论文} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{他对数据的解读：原子电荷集中于极小区域，几乎全部质量所在} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{原子核理论诞生} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.55cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 核式原子（1911 年论文，Philosophical Magazine）}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{deepnavy!88!black}$\text{原子} \approx \text{极小的核（电荷集中）} + \text{空旷的外围}$}
+  \end{minipage}%
+}
+\end{center}
+\vspace{-0.05cm}
+\begin{center}
+{\fontsize{7}{9}\selectfont\itshape\color{muteddark} 晚年一次讲演中，他被转述道："It was almost as incredible as if you fired a 15-inch shell at a piece of tissue paper and it came back and hit you."}
+\end{center}
+\end{frame}}
+
+% --- 10. 人工核反应与质子 ---
+\newcommand{\protonslide}{\begin{frame}\plainbar\sectiontitle{人工核反应与质子 (1913–1920)}{首例人工核反应 · proton 命名 1920 · 中子预言}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{发现}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{原子序数体系} & \cellcolor{particlespanel}\textcolor{badgeParticles!82!black}{1913，与 H.G. Moseley} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{每个元素由其内部结构定义} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首例人工核反应} & \cellcolor{particlespanel}\textcolor{badgeParticles!82!black}{1917--1919，$\alpha$ 粒子轰击氮核；被击出的粒子先叫 hydrogen atom} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{点石成金的现代版} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{proton 命名} & \cellcolor{particlespanel}\textcolor{badgeParticles!82!black}{1920，确认并扩展 Wien 1898 的工作} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{氢核成为基本粒子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中子概念} & \cellcolor{particlespanel}\textcolor{badgeParticles!82!black}{1920 Bakerian Lecture 提出；1932 由 Chadwick 证实（1935 诺奖）} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{为核结构补上拼图} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 首例人工核反应（氧产物由 Blackett 证实）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{deepnavy!88!black}$^{14}\mathrm{N} + \alpha \ \longrightarrow\ ^{17}\mathrm{O} + p$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 卡文迪许掌门 ---
+\newcommand{\cavendishslide}{\begin{frame}\plainbar\sectiontitle{卡文迪许掌门 (1919–1937)}{继 Thomson 出任 · 门生诺奖成群}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.4cm}|>{\scriptsize}X|>{\scriptsize}p{2.6cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成就}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{年份}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{James Chadwick} & \cellcolor{particlespanel}\textcolor{badgeParticles!82!black}{发现中子——证实卢瑟福 1920 年的预言} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{1932 · 1935 诺奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{John Cockcroft \& Ernest Walton} & \cellcolor{particlespanel}\textcolor{badgeParticles!82!black}{加速器 splitting the atom——首个受控核分裂实验} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{1932 · 1951 诺奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Edward Appleton} & \cellcolor{particlespanel}\textcolor{badgeParticles!82!black}{证实电离层的存在} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{诺奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{本人} & \cellcolor{particlespanel}\textcolor{badgeParticles!82!black}{第 44 任皇家学会会长；1931 年受封男爵（1st Baron Rutherford of Nelson）} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{1925--1930 · 1931} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 中子、分裂原子、电离层——都出自他掌舵的实验室。}
+\end{center}
+\end{frame}}
+
+% --- 12. 门生与传承 ---
+\newcommand{\studentsslide}{\begin{frame}\plainbar\sectiontitle{门生与传承}{Bohr · Moseley · Blackett · Fowler}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方向}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Niels Bohr（1912 应邀加入）} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{把核式原子与 Planck 量子假说结合} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{Bohr 模型} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Henry Moseley} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{1913 共同建立原子序数体系} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{元素排定新秩序} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Patrick Blackett} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{证实 $^{14}\mathrm{N}+\alpha$ 反应的氧产物（云室）} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{1948 诺贝尔奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Ralph Fowler（女婿）} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{娶独女 Eileen Mary（1901--1930）} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{理论物理中坚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博士生 11 人 + 其他著名学生 15 人} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{含 Cockcroft、Walton、Powell、Oliphant、Soddy、Otto Hahn、Hevesy 等（infobox 有载者）} & \cellcolor{rayspanel}\textcolor{badgeRays!82!black}{诺奖成群} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Bohr 模型到中子，他的学生把原子物理推向了整个 20 世纪。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与遗产 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与遗产}{Rumford 1904 $\rightarrow$ Nobel 1908 $\rightarrow$ Copley 1922 $\rightarrow$ Baron 1931}\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{deepnavy}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要奖章} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Rumford（1904）· Nobel 化学奖（1908）\item Copley（1922）· Franklin（1924）\item Faraday（1930）· Faraday Lectureship（1936）\end{itemize}} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{国际学界高度认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{爵位与会籍} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{Knight Bachelor（1914）· OM（1925）· Baron（1931）；FRS（1903）· 皇家学会会长（1925--1930，第 44 任）} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{科学界的显赫地位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名遗产} & \cellcolor{nucleuspanel}\textcolor{badgeNucleus!82!black}{化学元素 rutherfordium（Rf, $Z=104$，1997 年命名）；新西兰 100 元纸币肖像（1999 年起）；1999 年被评为史上第十位最伟大的物理学家} & \cellcolor{decaypanel}\textcolor{badgeDecay!82!black}{名字写进元素周期表} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1937 年去世后，他安葬于威斯敏斯特教堂，近牛顿与达尔文。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {原子之内，另有天地。};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {核物理，因他而得名。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {他曾断言从原子嬗变中取能无异于 talking moonshine——而时代在他身后转向。};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {欧内斯特·卢瑟福\quad Ernest Rutherford\quad 1871 — 1937};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{atom}\enspace Nobel 1908 · 核物理之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openchemistslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\cambridgeslide
+\mcgillslide
+\soddyslide
+\nobelslide
+\nucleusslide
+\protonslide
+\cavendishslide
+\studentsslide
+\honorsslide
+\closingslide
+\end{document}

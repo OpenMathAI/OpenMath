@@ -1,0 +1,471 @@
+% =============================================================
+%  无细胞发酵的发现者：爱德华·布赫纳 (Eduard Buchner)
+%  Beamer 演示 —— 参照数学家 Carl Friedrich Gauss 立传版式
+%  （表格语义化 tabularx + 公式展示框 + 时间线页）
+%  资料来源：chemist/presentations/20th_century/pages/Eduard_Buchner
+%  设计母题：破壁渗出 —— 被研磨的酵母细胞渗出的汁液微滴
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenChemist 项目首页（定义 coverprimary/coveraccent/coverdark/covermuted/goldpanel + \openchemistslide）
+\input{../../cover/openchemist_page.tex}
+
+% ===== Buchner 专属配色：深琥珀褐（发酵醪液）+ 香槟金（诺奖）+ 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{deepamber}{HTML}{5C3A1E}    % 深琥珀褐 — 主色（表头 / 公式文本）
+\definecolor{badgeCellfree}{HTML}{8C5A2B}% 无细胞发酵 — 琥珀（press juice / 1897 论文）
+\definecolor{badgeEnzyme}{HTML}{3E6B4F}  % 酶与 zymase — 绿
+\definecolor{badgeVitalism}{HTML}{7A3B5E}% 生机论的终结 — 紫红
+\definecolor{badgeWar}{HTML}{555F6E}     % 战争与牺牲 — 钢灰
+\definecolor{titlecolor}{RGB}{42,28,16}
+\definecolor{muteddark}{RGB}{96,84,72}
+\definecolor{cellfreepanel}{RGB}{238,229,216}
+\definecolor{enzymepanel}{RGB}{222,236,227}
+\definecolor{vitalismpanel}{RGB}{238,224,232}
+\definecolor{warpanel}{RGB}{226,229,233}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「破壁渗出」——酵母汁液微滴
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCellfree!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeEnzyme!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeVitalism!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% ========================= SLIDES =========================
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=deepamber!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{flask}\enspace 无细胞发酵的发现者\enspace·\enspace 德国};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=deepamber!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {爱德华·布赫纳};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=deepamber!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Eduard Buchner\enspace·\enspace 1860 — 1917};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {生物化学家 · 1907 年诺贝尔化学奖得主（独享）};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeCellfree] at (-5.05,0)
+        {无细胞发酵\\Cell-free\par\scriptsize 1897 论文};
+      \node[badge, fill=badgeEnzyme] at (-1.68,0)
+        {酶与 zymase\\Enzymes\par\scriptsize 发酵的本质};
+      \node[badge, fill=badgeVitalism] at (1.68,0)
+        {生机论的终结\\Vitalism\par\scriptsize 1907 诺奖};
+      \node[badge, fill=badgeWar] at (5.05,0)
+        {战争与牺牲\\Foc\c{s}ani\par\scriptsize 1917};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {表彰他的生物化学研究，以及他发现无细胞发酵 —— 1907 诺贝尔化学奖获奖理由};
+  % 肖像（Wikipedia infobox 1907 年照片）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Eduard_Buchner_1907.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Eduard Buchner, 1907};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国\enspace|\enspace \faIcon{university}\enspace LMU · Kiel · 柏林农大 · Würzburg\enspace|\enspace Nobel 1907};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 高斯模板硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{爱德华·布赫纳 - 医生之子与发酵的破壁人}{生卒 · 本名 · 国籍 · 教育 · 博士 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Eduard_Buchner_1907.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Eduard Buchner (1860–1917), 1907};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1860-05-20 — 1917-08-13（享年 57）\\[2pt]\lab{本名}\quad Eduard Buchner\\[2pt]\lab{国籍}\quad 德国（德意志帝国）};
+  \node[infob, fill=cellfreepanel, draw=badgeCellfree!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 慕尼黑植物学研究所 · Erlangen · LMU München\\[2pt]
+     \lab{博士}\quad 1888 · LMU，导师 Theodor Curtius\\[2pt]\lab{师承}\quad Baeyer（化学）· Nägeli（植物学）};
+  \node[infob, fill=enzymepanel, draw=badgeEnzyme!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 慕尼黑（巴伐利亚王国）\\[2pt]\lab{去世地}\quad 罗马尼亚 Foc\c{s}ani 野战医院\\[2pt]\lab{享年}\quad 57 岁};
+  \node[infob, fill=vitalismpanel, draw=badgeVitalism!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 生物化学 · 发酵\\[2pt]
+     \lab{身份}\quad 化学家 · 发酵专家（zymologist）\\[2pt]
+     \lab{荣誉}\quad Liebig 奖章 1905 · Nobel 1907（独享）};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 布赫纳的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{布赫纳的一生}{1860 — 1917 · 从慕尼黑医生之子到诺奖十年后倒在战场}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1860/生于慕尼黑，父亲是医生兼法医学特聘讲师,
+    2.41/1884/在慕尼黑植物学研究所随 Baeyer 学化学、随 Nägeli 学植物学,
+    1.72/1888/获 LMU 博士学位，导师 Theodor Curtius,
+    1.03/1893/秋赴基尔大学（1895 任教授）,
+    0.34/1897/发表无酵母细胞的酒精发酵初步报道,
+    -0.35/1900/娶 Lotte Stahl；获柏林农业大学任教资格,
+    -1.04/1905/获 Liebig 奖章,
+    -1.73/1907/独享诺贝尔化学奖,
+    -2.42/1909/转布雷斯劳大学，1911 迁维尔茨堡大学,
+    -3.11/1917/于 Foc\c{s}ani 中弹，两日后卒于野战医院
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：慕尼黑医生之子 (1860–1884)}{医学与生命的家庭底色}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepamber}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1860} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{生于慕尼黑；父亲是医生、法医学特聘讲师（Doctor Extraordinary of Forensic Medicine）} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{医学之家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{兄长 Hans Ernst August Buchner 是细菌学家——生命科学在家庭中已有回声} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{兄长为细菌学家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1884} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{在慕尼黑植物学研究所同时随 Adolf von Baeyer 学化学、随 Carl Nägeli 学植物学} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{化学与生命的双轨起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 化学与生命科学的交叉，从求学之初就已注定。}
+\end{center}
+\end{frame}}
+
+% --- 5. 求学与师承 ---
+\newcommand{\mentorslide}{\begin{frame}\plainbar\sectiontitle{求学与师承：Baeyer、Nägeli 与 Curtius (1884–1889)}{Erlangen 插曲 · 1888 慕尼黑博士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepamber}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{老师}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{收获}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1884 · 慕尼黑植物学研究所} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{化学随 Adolf von Baeyer，植物学随 Carl Nägeli} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{双学科训练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Erlangen 插曲} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{在埃尔朗根大学与 Otto Fischer（Emil Fischer 之堂兄）共事一段时期} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{有机化学历练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1888 · LMU München} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{在 Theodor Curtius 指导下完成博士论文} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{获博士学位} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 博士导师是 Theodor Curtius；Baeyer 是他学化学的老师与日后实验室的主人。}
+\end{center}
+\end{frame}}
+
+% --- 6. 无细胞发酵实验 ---
+\newcommand{\cellfreeslide}{\begin{frame}\plainbar\sectiontitle{无细胞发酵实验 (1897)}{干酵母 + 石英 + 硅藻土 · 研钵破壁 · 压榨汁}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepamber}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{如何得到无细胞提取液？} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{干酵母 + 石英 + 硅藻土，以研钵研磨破壁；混合物受潮后经压榨取得 press juice（压榨汁）} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{压榨汁到手} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{汁液还能发酵吗？} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{向压榨汁中加入葡萄糖、果糖或麦芽糖} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{持续冒出 CO$_2$，有时长达数天} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{还有活细胞吗？} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{显微检查汁液} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{没有活酵母细胞} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发表 (1897)} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{《Alkoholische G\"ahrung ohne Hefezellen》（初步报道），Ber.\ 30: 117--124} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{里程碑论文} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 无细胞酒精发酵（Buchner，1897）}\\[2pt]
+  {\color{deepamber!88!black}$\mathrm{C_6H_{12}O_6}\ \xrightarrow{\ \text{压榨汁（无活酵母细胞）}\ }\ 2\,\mathrm{C_2H_5OH} + 2\,\mathrm{CO_2}\uparrow$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 生机论的黄昏与 1907 诺奖 ---
+\newcommand{\nobelslide}{\begin{frame}\plainbar\sectiontitle{生机论的黄昏与 1907 诺奖}{发酵不需要活酵母细胞 · 诺奖独享}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepamber}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{旧观念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{新事实}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发酵必须依赖活酵母} & \cellcolor{vitalismpanel}\textcolor{badgeVitalism!82!black}{无活细胞的压榨汁仍能持续发酵糖分} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{对生机论的又一击} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{生命过程只在细胞内发生} & \cellcolor{vitalismpanel}\textcolor{badgeVitalism!82!black}{生命过程可以离开完整细胞在体外发生} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{生物化学史的决定性一步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1907 · 斯德哥尔摩} & \cellcolor{vitalismpanel}\textcolor{badgeVitalism!82!black}{诺贝尔化学奖一人独得，获奖工作即压榨汁发酵糖实验；1907-12-11 发表诺贝尔演讲 Cell-Free Fermentation} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{Nobel 1907（独享）} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1907 诺贝尔化学奖（独享）}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{deepamber!88!black}表彰他的生物化学研究，以及他发现无细胞发酵}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 学院生涯与迁徙 ---
+\newcommand{\careerslide}{\begin{frame}\plainbar\sectiontitle{学院生涯与迁徙 (1889–1911)}{LMU · Kiel · Tübingen · 柏林农大 · Breslau · Würzburg}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepamber}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{机构}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{职务}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1889 / 1891} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{慕尼黑大学（LMU）Baeyer 有机实验室} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{助教，1891 升讲师} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1893 / 1895} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{秋赴基尔大学} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{1895 任教授} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1896} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{图宾根大学，Pechmann 化学实验室} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{分析与药物化学特聘教授} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1898 / 1900} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{柏林农业大学，自行培养全部助手；1900 获任教资格（habilitation）} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{普通化学讲席教授} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1909 / 1911} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{布雷斯劳大学（1945 年改组为弗罗茨瓦夫大学），1911 迁维尔茨堡大学} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{讲席教授} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 9. 分泌假说 vs 细胞内发酵 ---
+\newcommand{\hypothesisslide}{\begin{frame}\plainbar\sectiontitle{学说细节：分泌假说 vs 细胞内发酵}{结论细节有误，实验事实不变}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepamber}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{观点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{提出者}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{后续裁定}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{酵母细胞把蛋白质（酶）分泌到环境中发酵糖分} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{Buchner 的设想} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{方向有误} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发酵其实发生在酵母细胞内部} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{后来的研究} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{修正了假说细节} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{压榨汁发酵糖的实验事实} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{Buchner，1897} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{经得起时间检验} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 酶不是被分泌出来的信使，而是细胞内部的工人——但无细胞系统的大门已经打开。}
+\end{center}
+\end{frame}}
+
+% --- 10. 优先权之争 ---
+\newcommand{\priorityslide}{\begin{frame}\plainbar\sectiontitle{优先权之争：Manasseina}{无细胞发酵的归属}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.2cm}}
+\toprule
+\rowcolor{deepamber}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主张}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{裁定}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Maria Manasseina} & \cellcolor{vitalismpanel}\textcolor{badgeVitalism!82!black}{声称自己早一代人已发现无细胞发酵} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{主张未被接受} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Buchner 与 Rapp} & \cellcolor{vitalismpanel}\textcolor{badgeVitalism!82!black}{回应：她只是主观确信存在发酵酶，实验证据不令人信服} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{1899 年与 Rapp 发表后续论文（Ber.\ 32: 2086--2094）} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 优先权的裁定最终靠的是可重复的实验证据，而非主观确信。}
+\end{center}
+\end{frame}}
+
+% --- 11. 荣誉 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉}{Liebig 奖章 · 诺贝尔化学奖}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{deepamber}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Liebig 奖章} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{1905 年获得} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{德国化学界的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{诺贝尔化学奖} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{1907 年独享；表彰其生物化学研究及无细胞发酵的发现；同年 12 月 11 日发表诺贝尔演讲 Cell-Free Fermentation} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{无细胞发酵的确证} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名留意} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{Büchner 瓶与 Büchner 漏斗纪念的是工业化学家 Ernst Büchner，与本篇主人公无关} & \cellcolor{enzymepanel}\textcolor{badgeEnzyme!82!black}{同名勿混} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1905 到 1907，两枚奖章把无细胞发酵写进了化学史。}
+\end{center}
+\end{frame}}
+
+% --- 12. 一战与牺牲 ---
+\newcommand{\warslide}{\begin{frame}\plainbar\sectiontitle{一战与牺牲 (1914–1917)}{从志愿从军到 Foc\c{s}ani 的终结}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepamber}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1914} & \cellcolor{warpanel}\textcolor{badgeWar!82!black}{开战即志愿加入德意志帝国陆军} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{官至少校（Major）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1914–1916} & \cellcolor{warpanel}\textcolor{badgeWar!82!black}{先西线后东线，指挥弹药运输队} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{1916 年 3 月回维尔茨堡大学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1917-04} & \cellcolor{warpanel}\textcolor{badgeWar!82!black}{再度志愿从军} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{重返前线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1917-08} & \cellcolor{warpanel}\textcolor{badgeWar!82!black}{在罗马尼亚 Foc\c{s}ani（M\u{a}r\u{a}\c{s}e\c{s}ti 战役）被弹片击中左大腿，两日后卒于野战医院；安葬于 Foc\c{s}ani 德军公墓} & \cellcolor{cellfreepanel}\textcolor{badgeCellfree!82!black}{诺奖十年后倒在战场} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1860 到 1917，一个把生命化学带出细胞的人，把生命留在了战场。}
+\end{center}
+\end{frame}}
+
+% --- 13. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：生物化学的诞生}{无细胞系统 $\rightarrow$ 酶化学 $\rightarrow$ 现代生物化学}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=2.85cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=cellfreepanel, draw=badgeCellfree!50, line width=0.7pt] (a) at (-5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCellfree} 无细胞发酵}\\[3pt]压榨汁发酵糖\\[2pt]1897 里程碑论文};
+\node[leg, fill=enzymepanel, draw=badgeEnzyme!50, line width=0.7pt] (b) at (-1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeEnzyme} 酶与 zymase}\\[3pt]发酵的化学本质\\[2pt]非生命过程专属};
+\node[leg, fill=vitalismpanel, draw=badgeVitalism!50, line width=0.7pt] (c) at (1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeVitalism} 生机论的黄昏}\\[3pt]发酵无需活细胞\\[2pt]1907 诺奖};
+\node[leg, fill=warpanel, draw=badgeWar!50, line width=0.7pt] (d) at (5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeWar} 无细胞系统}\\[3pt]\mbox{cell-free system}\\[2pt]概念的源头 · 现代生化的起点};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 无细胞系统（cell-free system）概念的源头}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{deepamber!88!black}$\text{生命化学}\ \not\Rightarrow\ \text{必须有完整细胞}$}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.08cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 离开活细胞，生命化学依然运转——生物化学由此成为一门独立的学科。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {破壁之后，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {生命化学依然运转。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是压榨汁，而是一门离开细胞也能研究生命的学问。};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {爱德华·布赫纳\quad Eduard Buchner\quad 1860 — 1917};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{flask}\enspace Nobel 1907 · 无细胞发酵的发现\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openchemistslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\mentorslide
+\cellfreeslide
+\nobelslide
+\careerslide
+\hypothesisslide
+\priorityslide
+\honorsslide
+\warslide
+\legacyslide
+\closingslide
+\end{document}

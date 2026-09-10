@@ -177,19 +177,19 @@
 - 任职：Gewerbeinstitut Berlin（皇家贸易学院）讲师（1860–）；University of Strasbourg 教授（1871–）；Ludwig-Maximilians-Universität München 化学教授（1875–，接替 Liebig，终身执教至去世前一年）
 - 命名机构/命名物：Adolf von Baeyer Medal（1911 年起年度颁发）；月球环形山 Von Baeyer（2009）
 
-## 10. 终审清单
+## 10. 终审清单（Beamer 执行完毕 2026-09-10，15 页全部核实）
 
-- [ ] 生卒 1835-10-31 / 1917-08-20，享年 81，出生地柏林、去世地施塔恩贝格（不用 metadata 的 Munich）
-- [ ] 1905 诺奖独享，理由中文措辞与总名单一致（染料 + 氢化芳香族化合物）
-- [ ] 张力学说表述为"获奖工作范围之一"，不倒置为获奖理由
-- [ ] 荧光素命名 resorcinphthalein、fluorescein 一词 1878 年起用——表述准确
-- [ ] 反应名（Baeyer–Villiger 等）仅写名，不展开正文无载细节
-- [ ] 与 Bayer AG 公司无关联表述；拼写 Baeyer 全文统一
-- [ ] 1989 年 NAS 笔误条目已剔除；1884/1885 荣誉表述与 page.md 文字一致
-- [ ] 学生入库名单与 §7 策略一致，单源者有 note
-- [ ] 引语全部可在本地 Wikipedia 原文找到（几乎为零——全部间接转述）
-- [ ] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1835-10-31 / 1917-08-20，享年 81，出生地柏林、去世地施塔恩贝格（不用 metadata 的 Munich）
+- [x] 1905 诺奖独享，理由中文措辞与总名单一致（染料 + 氢化芳香族化合物）
+- [x] 张力学说表述为"获奖工作范围之一"，不倒置为获奖理由
+- [x] 荧光素命名 resorcinphthalein、fluorescein 一词 1878 年起用——表述准确
+- [x] 反应名（Baeyer–Villiger 等）仅写名，不展开正文无载细节
+- [x] 与 Bayer AG 公司无关联表述；拼写 Baeyer 全文统一
+- [x] 1989 年 NAS 笔误条目已剔除；1884/1885 荣誉表述与 page.md 文字一致
+- [x] 学生入库名单与 §7 策略一致，单源者有 note
+- [x] 引语全部可在本地 Wikipedia 原文找到（几乎为零——全部间接转述）
+- [x] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误（Overfull vbox 最大 5.8pt ≤10pt）
 
 ## 11. Review 流程规范（两轮 Review）
 
@@ -209,6 +209,6 @@
 
 ---
 
-> **名单状态**：本提示词已完成；Beamer 立传待执行。`chemist/generate_20th_century_list.py` 的 `BIOGRAPHIES_DONE` **暂不更新**，待 Beamer 完成后再置 ✅。
+> **名单状态**：Beamer 立传已于 2026-09-10 执行完成（15 页 PDF + mp4，肖像 Baeyer.jpg 500px 下载成功，BGM The Flow of Time）；`chemist/generate_20th_century_list.py` 的 `BIOGRAPHIES_DONE` **暂不更新**，由主控统一置 ✅。
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

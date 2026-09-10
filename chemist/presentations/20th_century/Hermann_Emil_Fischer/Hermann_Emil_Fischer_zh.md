@@ -174,23 +174,23 @@
 
 ## 10. 终审清单
 
-- [ ] 生卒 1852-10-09 / 1919-07-15，享年 66，出生地 Euskirchen（普鲁士）、去世地柏林
-- [ ] 1902 诺奖**独享**；获奖理由用总名单措辞「表彰他因在糖类和嘌呤合成方面的研究所作出的杰出贡献」
-- [ ] 与 Hans Fischer（1930 得主）、Franz Emil Fischer（Fischer–Tropsch）、Otto Fischer（表兄弟）全部区分无误
-- [ ] 任职年份以正文为准：慕尼黑 1875–81 / 埃尔朗根 1882 / 维尔茨堡 1885 / 柏林 1892–1919，并在文中不出现自相矛盾的 infobox 年份
-- [ ] 咖啡因首次合成（1881–1882）；16 种异构葡萄糖为"推导分子式并制备数种"；确证 Le Bel–Van 't Hoff rule
-- [ ] 二肽 Gly-Gly 1901；1906 约 65 肽；18 肽 = 15 Gly + 3 Leu
-- [ ] barbital 1904 与 Josef von Mering；锁钥模型为假说提出、非诺奖理由
-- [ ] 学生页只用正文 infobox 名单；Hans Fischer 同名风险已核查
-- [ ] 引语纪律：全篇无 Fischer 直接引语（page.md 无载）；无中文引号内虚构"原话"
-- [ ] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1852-10-09 / 1919-07-15，享年 66，出生地 Euskirchen（普鲁士）、去世地柏林
+- [x] 1902 诺奖**独享**；获奖理由用总名单措辞「表彰他因在糖类和嘌呤合成方面的研究所作出的杰出贡献」
+- [x] 与 Hans Fischer（1930 得主）、Franz Emil Fischer（Fischer–Tropsch）、Otto Fischer（表兄弟）全部区分无误（染料页与遗产页均显式标注 Fischer–Tropsch 无关）
+- [x] 任职年份以正文为准：慕尼黑 1875–81 / 埃尔朗根 1882 / 维尔茨堡 1885 / 柏林 1892–1919（15 页正文时间线与柏林页未出现 infobox 冲突年份；维尔茨堡仅在机构口径中不展开）
+- [x] 咖啡因首次合成（1881–1882）；16 种异构葡萄糖为"推导分子式并制备数种"；确证 Le Bel–Van 't Hoff rule
+- [x] 二肽 Gly-Gly 1901；1906 约 65 肽；18 肽 = 15 Gly + 3 Leu
+- [x] barbital 1904 与 Josef von Mering；锁钥模型为假说提出、非诺奖理由（酶页专设"边界何在"一行）
+- [x] 学生页只用正文 infobox 名单（本次 15 页未设独立学生页）；Hans Fischer 同名风险已核查
+- [x] 引语纪律：全篇无 Fischer 直接引语（page.md 无载）；无中文引号内虚构"原话"（仅引诺奖理由英文原文）
+- [x] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误（Overfull 仅 vbox 0.2pt，达标）
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Hermann_Emil_Fischer/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：images.txt 仅载柏林纪念碑照片 `https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Hermann_Emil_Fischer_berlin.jpg/250px-Hermann_Emil_Fischer_berlin.jpg`（雕像照，改 `250px`→`500px` 可用但非本人肖像）；infobox 实际肖像为 "Fischer c. 1895" 照片——优先走 **Commons Special:FilePath / Wikipedia REST API page/summary 查 infobox 原图名** 检索 1895 年照，404 则回退纪念碑照，再 404 则装饰圆占位（须核对图注：纪念碑照必须标注"柏林纪念碑"而非肖像）
+- [x] **头像（已执行 ✅）**：回退路径首选即命中——Commons `Special:FilePath/Hermann%20Emil%20Fischer.jpg?width=500` 返回真 JPEG（400×566，灰度人像，即 infobox "Fischer c. 1895" 肖像，非纪念碑照），存为 `images/Hermann_Emil_Fischer.jpg`；封面/身份页图注 "Emil Fischer (1852–1919)" / "Emil Fischer, c. 1895"。**执行期新陷阱（Review-2 复用）**：①`\xrightleftharpoons` 需 `\usepackage{mathtools}`（仅 amsmath 会 Undefined control sequence）；②sectiontitle 含长英文短语（"从 osazone 到 D-(+)-葡萄糖 (1884–)"）会折成两行并把公式框挤出页底——标题须控制在单行（20pt 下约 ≤16 个中文字符或等价宽度）；③荣誉页三行 itemize 须 `\topsep/\partopsep=0pt` + arraystretch 0.7 + 列宽 2.4/2.6cm 才能压进 10pt 限额
 - [ ] **国籍**：封面顶部明示德国
 - [ ] **引语核对**：全篇不得出现加引号的 Fischer 原话（正文无载）；获奖理由英文原文可引
 - [ ] **编译验证**：`make distclean && make`

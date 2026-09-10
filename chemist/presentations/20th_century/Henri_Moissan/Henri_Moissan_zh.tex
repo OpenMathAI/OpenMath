@@ -1,0 +1,514 @@
+% =============================================================
+%  驯服氟的人：亨利·莫瓦桑 (Henri Moissan)
+%  Beamer 演示 —— 参照数学家 Carl Friedrich Gauss 立传版式
+%  （表格语义化 tabularx + 公式展示框 + 时间线页 + 身份信息页）
+%  资料来源：chemist/presentations/20th_century/pages/Henri_Moissan
+%  设计母题：炉火 / 晶体 —— 电弧炉的火色与碳化硅晶面的闪光
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenChemist 项目首页（定义 coverprimary/coveraccent/coverdark/covermuted/goldpanel + \openchemistslide）
+\input{../../cover/openchemist_page.tex}
+
+% ===== Moissan 专属配色：深氟绿（氟气之深调）+ 香槟金（诺奖）+ 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{fluorteal}{HTML}{145C54}     % 深氟绿 — 主色（表头 / 公式文本）
+\definecolor{badgeFluorine}{HTML}{1B7A43} % 氟化学 — 氟绿
+\definecolor{badgeFurnace}{HTML}{B03A2E}  % 电炉与高温化学 — 炉火红
+\definecolor{badgeMineral}{HTML}{4C5FD5}  % 矿物与晶体 — 晶蓝
+\definecolor{badgePharma}{HTML}{7D5BA6}   % 药剂师与荣誉 — 紫
+\definecolor{titlecolor}{RGB}{18,26,52}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{fluorinepanel}{RGB}{222,240,230}
+\definecolor{furnacepanel}{RGB}{249,228,224}
+\definecolor{mineralpanel}{RGB}{228,231,246}
+\definecolor{pharmapanel}{RGB}{238,231,246}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，炉光圆斑与晶体刻面
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeFluorine!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeFurnace!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeMineral!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% ========================= SLIDES =========================
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=fluorteal!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{fire}\enspace 驯服氟的人\enspace·\enspace 法国};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=fluorteal!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {亨利·莫瓦桑};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=fluorteal!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Henri Moissan\enspace·\enspace 1852 — 1907};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {元素氟的分离者与电弧炉的开拓者 · 1906 年诺贝尔化学奖得主};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeFluorine] at (-5.05,0)
+        {氟的分离\\Fluorine\par\scriptsize 1886-06-26};
+      \node[badge, fill=badgeFurnace] at (-1.68,0)
+        {电弧炉\\Arc Furnace\par\scriptsize 碳化物 · 硼化物};
+      \node[badge, fill=badgeMineral] at (1.68,0)
+        {moissanite\\SiC 矿物\par\scriptsize 1893 陨石 · 1905 命名};
+      \node[badge, fill=badgePharma] at (5.05,0)
+        {药剂师出身\\Pharmacist\par\scriptsize 药学院 · 索邦};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his work in isolating fluorine from its compounds." —— 1906 诺贝尔化学奖获奖理由};
+  % 肖像（Wikimedia Commons：Henri Moissan.jpg，1906 年照片）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Henri_Moissan.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Henri Moissan (1852–1907)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace 巴黎高等药剂学校 · 索邦\enspace|\enspace Nobel 1906};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 高斯模板硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{亨利·莫瓦桑 - 驯服氟的人}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Henri_Moissan.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Henri Moissan (1852–1907)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1852-09-28 — 1907-02-20\\[2pt]\lab{本名}\quad Ferdinand Frédéric Henri Moissan\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=fluorinepanel, draw=badgeFluorine!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Meaux 地方学校 · 巴黎高等药剂学校\\[2pt]
+     \lab{博士}\quad 1880 · 巴黎高等药剂学校\\[2pt]\lab{师承}\quad Frémy · Dehérain 实验室（infobox 博士导师作 Debray）};
+  \node[infob, fill=furnacepanel, draw=badgeFurnace!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 巴黎\\[2pt]\lab{去世地}\quad 巴黎\\[2pt]\lab{享年}\quad 54 岁};
+  \node[infob, fill=mineralpanel, draw=badgeMineral!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 氟化学 · 电弧炉 · 碳化物\\[2pt]
+     \lab{身份}\quad 化学家 · 药剂师\\[2pt]
+     \lab{荣誉}\quad Nobel 1906 · Davy 1896 · Cresson 1898};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 莫瓦桑的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{莫瓦桑的一生}{1852 — 1907 · 从钟表匠学徒到诺贝尔化学奖}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1852/生于巴黎，铁路小职员与缝纫女工之子,
+    2.41/1864/随家迁 Meaux，入学并做钟表匠学徒,
+    1.72/1872/巴黎药房救活砷中毒者，决心投身化学,
+    1.03/1880/获博士学位（铁族金属氧化物）,
+    0.34/1886/首次分离元素氟（06-26），科学院验证风波,
+    -0.35/1892/观察并记录氟气颜色；电弧炉打开高温化学,
+    -1.04/1893/研究 Meteor Crater 陨石碎片，发现碳化硅矿物,
+    -1.73/1900/接替 Troost 出任索邦无机化学教授,
+    -2.42/1906/获诺贝尔化学奖,
+    -3.11/1907/领奖归来不久骤逝于巴黎（急性阑尾炎）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：钟表匠学徒与药剂学徒 (1852–1874)}{巴黎 · Meaux · 普法战争}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{fluorteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1852} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{生于巴黎；父亲 Francis Ferdinand Moissan 是东方铁路公司小职员，母亲 Joséphine Améraldine（娘家姓 Mitel）是缝纫女工} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{平民之子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1864} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{随家迁 Meaux，入当地学校；其间做钟表匠学徒——精密手艺成为日后玻璃真空系统与电极工艺的伏笔} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{精密手艺伏笔} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1870} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{普法战争爆发随家回巴黎；没有进入大学所需的 grade universitaire；服一年兵役} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{学业中断} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 没有大学文凭的钟表匠学徒，起点比谁都低。}
+\end{center}
+\end{frame}}
+
+% --- 5. 从药房急救到实验室 ---
+\newcommand{\pharmaslide}{\begin{frame}\plainbar\sectiontitle{从药房急救到实验室 (1872–1880)}{Frémy · Dehérain · 博士学位}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{fluorteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1871–1872} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{药剂学徒；1872 年起在巴黎一家药房工作，救活一名砷中毒者——由此决心投身化学} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{一次急救定终身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1872–1874} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{先入 Edmond Frémy 实验室（国立自然史博物馆），后入 Pierre Paul Dehérain 实验室（高等研究实践学院）；Dehérain 劝其走学术道路} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{实验室出身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1874} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{第二次尝试通过 baccalauréat；与 Dehérain 合发首篇论文（植物二氧化碳与氧代谢）；发火铁研究获 Deville 与 Debray 赏识} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{学术起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1879–1880} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{1879 取得一级药剂师资格；1880 获博士学位《Sur les oxydes métalliques de la famille du fer》（正文另述其 Ph.D. 工作为氰及其氰化物反应）} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{博士完成} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一次砷中毒急救，把药房学徒推向了化学。}
+\end{center}
+\end{frame}}
+
+% --- 6. 氟：世纪难题 ---
+\newcommand{\fluorgenesis}{%
+\begin{frame}\plainbar\sectiontitle{氟：世纪难题 (1880s)}{历代失败 · 借来的实验室 · 90 个电池}
+\vspace{-0.78cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.7}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{fluorteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{元素早已为人所知} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{历代分离尝试全部失败，有实验者丧命} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{最危险的元素之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{没有自己的实验室} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{借 Charles Friedel 等人的场地做实验} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{借来的实验室} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三氯化砷电解} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{用 90 个 Bunsen 电池的强电池组电解熔融三氯化砷；观察到气体，却被三氯化砷重新吸收} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{观察，而非分离} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 借来的强电池组（1880s）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{fluorteal!88!black}$90\ \text{个 Bunsen 电池}\ \Rightarrow\ \text{电解熔融 } \mathrm{AsCl_3}\ \Rightarrow\ \text{气体被重新吸收——功亏一篑}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 1886-06-26 首次分离氟 ---
+\newcommand{\isolationslide}{\begin{frame}\plainbar\sectiontitle{1886-06-26：首次分离氟}{KHF$_2$ 溶于液态 HF · 铂-铱电极 · $-50\,^\circ$C}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{fluorteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{电解质为何难选？} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{HF 不导电，必须加入 KHF$_2$（potassium hydrogen difluoride）} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{KHF$_2$ 溶于液态 HF} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{装置如何设计？} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{铂-铱电极、铂制装置，冷至 $-50\,^\circ$C} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{低温下的电解体系} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首次成功 (06-26)} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{阴极产生的氢与阳极产生的氟完全分开} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{至今仍是工业制氟标准方法} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 电解分离氟（Moissan，1886-06-26）}\\[2pt]
+  {\color{fluorteal!88!black}\resizebox{11.4cm}{!}{$2\,\mathrm{HF}\ (\text{液态，含 KHF}_2)\ \xrightarrow{\text{电解，}\ -50\,^\circ\mathrm{C},\ \mathrm{Pt}\text{-}\mathrm{Ir}}\ \mathrm{H_2}\ (\text{阴极}) + \mathrm{F_2}\ (\text{阳极})$}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 科学院验证风波 ---
+\newcommand{\verificationslide}{\begin{frame}\plainbar\sectiontitle{科学院验证风波 (1886)}{Berthelot · Debray · Frémy · 痕量 KF 之谜}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{fluorteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{原因}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{验证团到场} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{法兰西科学院派 Berthelot、Debray、Frémy 三人代表验证} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{首次竟无法复现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{原因何在？} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{本次 HF 中缺少此前实验里痕量的氟化钾} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{痕量 KF 之谜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{风波如何收场？} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{解决问题并多次成功演示氟的制备} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{获一万法郎奖金} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 验证风波的因果链}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{fluorteal!88!black}$\text{痕量 KF 缺失} \Rightarrow \text{无法复现};\qquad \text{补回 KF} \Rightarrow \text{多次演示成功} \Rightarrow 10{,}000\ \text{francs}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 氟化学大家族 ---
+\newcommand{\famslide}{\begin{frame}\plainbar\sectiontitle{氟化学大家族 (1886–1907)}{氟的表征 · SF$_6$ · 与 Lebeau 合作}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{fluorteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{分离之后做什么？} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{此后专注氟的化学表征} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{发现大量氟化合物} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{SF$_6$ (1901)} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{与学生 Paul Lebeau 共同发现六氟化硫} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{氟化学大家族的代表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{infobox "Known for"} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{氟的分离 · Disilane · moissanite · Strontium carbide} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{以他命名的贡献序列} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 六氟化硫（Moissan \& Lebeau，1901）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{fluorteal!88!black}$\mathrm{SF_6}$\quad $\text{六氟化硫——氟化学大家族中的明星分子}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 电弧炉与高温化学 ---
+\newcommand{\furnaceslide}{\begin{frame}\plainbar\sectiontitle{电弧炉与高温化学 (1892–)}{新化合物之路 · 碳化物 · 乙炔化学}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{fluorteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{如何抵达高温？} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{发展电弧炉（electric arc furnace），并参与其开发} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{打开新化合物制备之路} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{炉中能制备什么？} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{用电炉合成多种元素的硼化物与碳化物} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{高温化学开疆} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{显著的成就} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{碳化钙的合成} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{为乙炔化学铺路} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 电弧炉的化学延伸}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{fluorteal!88!black}$\text{电弧炉} \Rightarrow \text{碳化物 · 硼化物};\qquad \mathrm{CaC_2} \Rightarrow \text{乙炔化学的起点}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 金刚石尝试与 moissanite ---
+\newcommand{\mineralslide}{\begin{frame}\plainbar\sectiontitle{金刚石尝试与 moissanite (1893–1905)}{Meteor Crater · Canyon Diablo · SiC}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{9.6cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{2.2cm}}
+\toprule
+\rowcolor{fluorteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{人造金刚石？} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{试图用压力使常见形态的碳转变为金刚石} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{是尝试，非成功} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{陨石研究 (1893)} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{研究亚利桑那 Meteor Crater（Canyon Diablo 峡谷）陨石碎片} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{发现微量新矿物} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{判定与命名} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{经大量研究判定该矿物为碳化硅} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{1905 年命名 moissanite} \\
+\bottomrule
+\end{tabularx}
+\hfill
+\begin{tikzpicture}
+  \node[draw=coveraccent!55, line width=1.0pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.5,1.85);
+      \node[anchor=center] at (1.25,0.93) {\includegraphics[width=2.5cm,height=1.85cm,keepaspectratio]{Henri_Moissan_making_diamonds.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.8}\selectfont\itshape, text=covermuted, align=center, text width=2.9cm]
+    at (1.25,-1.05) {用他发明的电炉尝试造金刚石};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} moissanite：陨石中的碳化硅}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{fluorteal!88!black}$\mathrm{SiC}$\quad $\text{Canyon Diablo 陨石碎片（1893 发现）}\ \Rightarrow\ 1905\ \text{年以他命名}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与学术任职 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与学术任职}{Nobel 1906 · Davy 1896 · 原子量委员会}\vspace{-0.50cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{fluorteal}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{诺贝尔奖 (1906)} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{独享；表彰他研究并分离出元素氟所作出的巨大贡献，以及他为科学服务而采用以他名字命名的电炉} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{氟 + 电炉，两部分齐全} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{奖章与奖金} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{Davy Medal（1896）· Elliott Cresson Medal（1898）· Prix Lucaze · Hofmann Medal} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{国际学界认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术任职} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{1886 年前升药学院毒理学教授 · 1899 任药学院无机化学讲席 · 1900 接替 Troost 出任索邦无机化学教授 · 1903 国际原子量委员会原始成员（任职至去世）} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{1899（药学院）与 1900（索邦）不混} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术身份} & \cellcolor{fluorinepanel}\textcolor{badgeFluorine!82!black}{皇家学会会士 · 伦敦化学会会士 · 荣誉军团三级（commandeur，年份无载）· 逾三百篇论文} & \cellcolor{furnacepanel}\textcolor{badgeFurnace!82!black}{多国学界网络} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{7}{9}\selectfont\color{covermuted} $\ast$ 1906 年诺奖评选中，他以一票之差击败俄国化学家门捷列夫（Dmitri Mendeleev）——page.md 脚注，单源表述。\\[1pt]
+$\ast$ 1907-02-20 骤逝于巴黎，死因为急性阑尾炎；另有推测认为长期氟与一氧化碳暴露亦有影响。}
+\end{center}
+\end{frame}}
+
+% --- 13. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：标准方法与以他命名的矿物}{KHF$_2$/HF 电解 $\rightarrow$ 电弧炉 $\rightarrow$ moissanite}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=2.85cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=fluorinepanel, draw=badgeFluorine!50, line width=0.7pt] (a) at (-5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeFluorine} 氟的分离}\\[3pt]1886-06-26\\[2pt]至今的工业标准方法};
+\node[leg, fill=furnacepanel, draw=badgeFurnace!50, line width=0.7pt] (b) at (-1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeFurnace} 电弧炉}\\[3pt]碳化物 · 硼化物\\[2pt]乙炔化学铺路};
+\node[leg, fill=mineralpanel, draw=badgeMineral!50, line width=0.7pt] (c) at (1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeMineral} moissanite}\\[3pt]SiC · 陨石矿物\\[2pt]1905 以他命名};
+\node[leg, fill=pharmapanel, draw=badgePharma!50, line width=0.7pt] (d) at (5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePharma} 学术传承}\\[3pt]Lebeau · Meslans\\[2pt]300+ 论文 · 原子量委员会};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 以他命名的遗产}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{fluorteal!88!black}$\text{工业制氟标准方法（KHF}_2/\text{HF 电解）}$\quad·\quad$\text{矿物 moissanite}$\quad·\quad$300+\ \text{篇论文}$}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.08cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从借来的实验室到索邦讲席，他用 90 个电池驯服了最危险的元素。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {历代化学家倒在氟的面前，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {他把最危险的元素，变成了标准方法。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是氟与炉火，而是一种把不可能变成常规的方法。};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {亨利·莫瓦桑\quad Henri Moissan\quad 1852 — 1907};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{fire}\enspace Nobel 1906 · 氟的分离 · 电弧炉\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openchemistslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\pharmaslide
+\fluorgenesis
+\isolationslide
+\verificationslide
+\famslide
+\furnaceslide
+\mineralslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

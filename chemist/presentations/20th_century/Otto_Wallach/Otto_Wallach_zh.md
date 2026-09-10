@@ -162,22 +162,23 @@
 
 ## 10. 终审清单
 
-- [ ] 生卒 1847-03-27 / 1931-02-26，享年 83；出生地柯尼斯堡、去世地哥廷根；metadata 01-01 噪声值已弃用
-- [ ] 1910 独享；诺奖理由中文与总名单逐字一致（脂环族化合物）；勿写成"因萜烯获奖"
-- [ ] 博士导师 Hans Hübner（Hofmann 注明"柏林一学期"，metadata 冲突已留痕）
-- [ ] Kekulé 写"共事"，禁写师生；"father of terpene chemistry" 禁写；Emil Fischer 禁写
-- [ ] terpene/pinene 为"命名"非"发现"；三个命名反应与 Wallach's rule 不混淆
-- [ ] *Terpene und Campher* 1909 初版 / 1914 第二版注明版次；卸任 1915（一战期间）
-- [ ] 学生 Walter (Norman) Haworth 统一异写；Mallison/Berkengeim 不入库
-- [ ] 全篇无 Wallach 加引号"原话"；结尾金句为叙述题记
-- [ ] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
+- [x] 生卒 1847-03-27 / 1931-02-26，享年 83；出生地柯尼斯堡、去世地哥廷根；metadata 01-01 噪声值已弃用
+- [x] 1910 独享；诺奖理由中文与总名单逐字一致（脂环族化合物）；勿写成"因萜烯获奖"
+- [x] 博士导师 Hans Hübner（Hofmann 注明"柏林一学期"，metadata 冲突已留痕）
+- [x] Kekulé 写"共事"，禁写师生；"father of terpene chemistry" 禁写；Emil Fischer 禁写
+- [x] terpene/pinene 为"命名"非"发现"；三个命名反应与 Wallach's rule 不混淆
+- [x] *Terpene und Campher* 1909 初版 / 1914 第二版注明版次；卸任 1915（一战期间）
+- [x] 学生 Walter (Norman) Haworth 统一异写；Mallison/Berkengeim 不入库
+- [x] 全篇无 Wallach 加引号"原话"；结尾金句为叙述题记
+- [x] 正文采用高斯式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Otto_Wallach/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
 - [ ] **头像**：images.txt **无肖像 URL**（仅哥廷根墓照与 α-蒎烯结构图）；infobox 记有 "Wallach c. 1873" 照片——执行时经 Wikipedia REST API `page/summary` 查 infobox 原图文件名下载（250px→500px），或 Commons `Special:FilePath` 回退；404 则装饰圆占位
+  - 【执行留痕 2026-09-10】REST API 查得 infobox 原图 `Otto_Wallach_1880s.jpg`（Archivio Mondadori 藏 "portrait de OTTO WALLACH"），已下载 500px（500×642 JPEG）至 `images/Otto_Wallach.jpg`；α-蒎烯结构图 AlphaPinene.png 亦已下载用于 Slide 08
 - [ ] **国籍**：封面顶部明示德国
 - [ ] **引语核对**：page.md 无 Wallach 直接引语——任何引号内容出现即为错误（获奖理由与书名除外）
 - [ ] **编译验证**：`make distclean && make`

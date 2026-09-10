@@ -1,0 +1,489 @@
+% =============================================================
+%  溶液中的离子：斯万特·阿伦尼乌斯 (Svante Arrhenius)
+%  Beamer 演示 —— 参照数学家 Carl Friedrich Gauss 立传版式
+%  （表格语义化 tabularx + 公式展示框 + 时间线页）
+%  资料来源：chemist/presentations/20th_century/pages/Svante_Arrhenius
+%  设计母题：离子 (Ion) —— 带电粒子在溶液中离散弥散、彼此作用
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenChemist 项目首页（定义 coverprimary/coveraccent/coverdark/covermuted/goldpanel + \openchemistslide）
+\input{../../cover/openchemist_page.tex}
+
+% ===== Arrhenius 专属配色：北欧极夜蓝绿（溶液深处的离子世界）+ 香槟金（诺奖）+ 四分类色 =====
+\definecolor{bgmain}{RGB}{246,247,249}
+\definecolor{deepnordic}{HTML}{0F4C5C}   % 北欧极夜蓝绿 — 主色（表头 / 公式文本）
+\definecolor{badgeIon}{HTML}{1F6FB2}     % 电离理论 — 蓝
+\definecolor{badgeAct}{HTML}{B4502A}     % 活化能与方程 — 赭
+\definecolor{badgeClim}{HTML}{2E7D4F}    % 温室效应 — 绿
+\definecolor{badgeCosm}{HTML}{6B4FA0}    % 宇宙物理 / 免疫化学 — 紫
+\definecolor{titlecolor}{RGB}{16,42,52}
+\definecolor{muteddark}{RGB}{70,88,94}
+\definecolor{ionpanel}{RGB}{224,235,245}
+\definecolor{actpanel}{RGB}{246,230,222}
+\definecolor{climpanel}{RGB}{222,238,229}
+\definecolor{cosmpanel}{RGB}{233,227,244}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，以离散圆点呼应「离子」——带电粒子在溶液中弥散
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeIon!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeClim!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeAct!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% ========================= SLIDES =========================
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=deepnordic!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{atom}\enspace 溶液中的离子\enspace·\enspace 瑞典};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=deepnordic!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {斯万特·阿伦尼乌斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=deepnordic!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Svante Arrhenius\enspace·\enspace 1859 — 1927};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {物理化学奠基人之一 · 电离理论 · 首位瑞典诺贝尔奖得主};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeIon] at (-5.05,0)
+        {电离理论\\Ionic Theory\par\scriptsize 1903 诺奖理由};
+      \node[badge, fill=badgeAct] at (-1.68,0)
+        {活化能\\Arrhenius Eq.\par\scriptsize 1889 · 莱比锡};
+      \node[badge, fill=badgeClim] at (1.68,0)
+        {温室效应\\Greenhouse\par\scriptsize 1896 首算};
+      \node[badge, fill=badgeCosm] at (5.05,0)
+        {宇宙物理\\Cosmophysics\par\scriptsize 泛种论 · 免疫化学};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"in recognition of the extraordinary services he has rendered to the advancement of chemistry by his theory of electrolytic dissociation." —— 1903 诺贝尔化学奖获奖理由};
+  % 肖像（Wikipedia 1909 年肖像照）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Svante_Arrhenius_01.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Arrhenius (1859–1927)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 瑞典\enspace|\enspace \faIcon{university}\enspace Uppsala · Stockholm\enspace|\enspace Nobel 1903};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 高斯模板硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{阿伦尼乌斯 - 从算术神童到首位瑞典诺奖}{生卒 · 本名 · 国籍 · 教育 · 导师 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Svante_Arrhenius_01.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Svante Arrhenius (1859–1927)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1859-02-19 — 1927-10-02\\[2pt]\lab{本名}\quad Svante August Arrhenius\\[2pt]\lab{国籍}\quad 瑞典};
+  \node[infob, fill=ionpanel, draw=badgeIon!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 座堂学校（五年级插班）· 乌普萨拉大学 · 斯德哥尔摩物理研究所\\[2pt]
+     \lab{导师}\quad Cleve（化学，名义）· Edlund（物理，实际指导）\\[2pt]\lab{学生}\quad Oskar Klein};
+  \node[infob, fill=climpanel, draw=badgeClim!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Vik 庄园（近乌普萨拉）\\[2pt]\lab{去世地}\quad 斯德哥尔摩 · 葬于乌普萨拉\\[2pt]\lab{享年}\quad 68 岁};
+  \node[infob, fill=cosmpanel, draw=badgeCosm!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 物理化学 · 电离 · 活化能 · 温室效应\\[2pt]
+     \lab{身份}\quad 科学家（原为物理学家，常被称作化学家）\\[2pt]
+     \lab{荣誉}\quad Nobel 1903 · Davy 1902 · ForMemRS 1910};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 阿伦尼乌斯的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{阿伦尼乌斯的一生}{1859 — 1927 · 从乌普萨拉的冷遇到斯德哥尔摩的承认}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1859/生于乌普萨拉近郊 Vik 庄园，土地测量员之子,
+    2.41/1876/以最年轻且最有才能的学生毕业于座堂学校,
+    1.72/1881/离开乌普萨拉，转入斯德哥尔摩 Edlund 门下,
+    1.03/1884/150 页电离论文答辩：初评四等，答辩后改判三等,
+    0.34/1885/获旅费资助，开始欧洲游学（里加 · 莱比锡 · 维尔茨堡 · 格拉茨 · 阿姆斯特丹）,
+    -0.35/1889/莱比锡提出活化能概念与 Arrhenius 方程,
+    -1.04/1896/首算大气 CO$_2$ 增温——温室效应,
+    -1.73/1903/获诺贝尔化学奖，成为首位瑞典诺奖得主,
+    -2.42/1905/出任诺贝尔物理研究所所长,
+    -3.11/1927/10 月 2 日逝于斯德哥尔摩，享年 68 岁
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：乌普萨拉的算术神童 (1859–1881)}{Vik 庄园 · 座堂学校 · 出走斯德哥尔摩}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnordic}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1859} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{生于乌普萨拉省 Vik 庄园；父亲为乌普萨拉大学土地测量员，后升任主管；家庭信路德宗} & \cellcolor{climpanel}\textcolor{badgeClim!82!black}{瑞典·乌普萨拉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{3 岁} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{无人督促自学认字；看父亲账本上加数而成为算术神童} & \cellcolor{climpanel}\textcolor{badgeClim!82!black}{数字与规律之爱由此生根} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{8 岁} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{入乌普萨拉座堂学校，直接从五年级读起，物理与数学出众} & \cellcolor{climpanel}\textcolor{badgeClim!82!black}{插班生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1876 / 1881} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{1876 年以最年轻、最有才能的学生毕业；因不满乌普萨拉物理教学与 Cleve，1881 年转入瑞典科学院斯德哥尔摩物理研究所，师从 Erik Edlund} & \cellcolor{climpanel}\textcolor{badgeClim!82!black}{聚焦电解质电导} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 三岁识字、看账本学会加法——对数据与规律的终生热爱，始于童年的账本。}
+\end{center}
+\end{frame}}
+
+% --- 5. 博士论文与答辩风波 ---
+\newcommand{\dissertationslide}{\begin{frame}\plainbar\sectiontitle{博士论文与答辩风波 (1884)}{电离理论 · 评级改判 · 酸碱定义}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnordic}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{盐溶于水后是什么？} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{150 页电解质电导论文（56 条论纲）：固态结晶盐溶于水后解离成带电粒子} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{无电流时溶液中亦有离子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教授们怎么看？} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{论文未打动乌普萨拉教授们（含 Cleve）：初评四等，答辩后改判三等} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{冷遇——其延伸工作却赢得 1903 诺奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{酸碱如何定义？(1884)} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{电离理论的延伸：酸产生氢离子，碱产生氢氧根离子} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{Arrhenius 酸碱定义} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{离子一词从哪来？} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{"ion" 由 Faraday 命名，他以为离子须由电解（外电流）产生；阿伦尼乌斯的贡献是把它变成溶液的常态} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{溶液中的反应即离子间的反应} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 电离理论的核心主张（1884）}\\[2pt]
+  {\color{deepnordic!88!black}\fontsize{10.5}{13}\selectfont$\text{固态结晶盐}\ \xrightarrow{\ \text{溶于水}\ }\ \text{带电粒子（离子）};\qquad \text{酸} \to \mathrm{H}^{+},\quad \text{碱} \to \mathrm{OH}^{-}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 欧洲游学 ---
+\newcommand{\tourslide}{\begin{frame}\plainbar\sectiontitle{欧洲游学与物理化学共同体 (1884–1891)}{Ostwald 亲赴乌普萨拉被婉拒 · 五城四师}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnordic}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{城市}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{导师}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{收获}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1884 · 乌普萨拉} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{他把论文寄给 Clausius、Ostwald、van 't Hoff 等物理化学先驱；Ostwald 亲赴乌普萨拉邀他赴里加，被他婉拒（父亲病重将于 1885 年去世，且已在乌普萨拉获任命）} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{欧洲同行的认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1885– · 里加 / 莱比锡} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{Wilhelm Ostwald（获瑞典科学院旅费资助后成行）} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{活化能合作的前奏} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{维尔茨堡} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{Friedrich Kohlrausch} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{电导测量精义} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{格拉茨} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{Ludwig Boltzmann} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{统计物理视野} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{阿姆斯特丹} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{Jacobus Henricus van 't Hoff} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{溶液理论的同道} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一封封寄往欧洲的论文抄件，把乌普萨拉的冷遇翻盘成整个物理化学共同体的接纳。}
+\end{center}
+\end{frame}}
+
+% --- 7. Arrhenius 方程与活化能 ---
+\newcommand{\equationslide}{\begin{frame}\plainbar\sectiontitle{Arrhenius 方程与活化能 (1889)}{能垒 · 反应速率 · 与电离理论相隔五年}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnordic}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{为何多数反应需要加热？} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{1889 年与 Ostwald 合作研究期间提出活化能概念——两分子反应前须翻越的能垒} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{能量壁垒图像} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{速率如何定量？} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{方程给出活化能与反应速率关系的定量基础} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{Arrhenius 方程} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{与 1884 何干？} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{电离理论（1884）与活化能（1889）是两项不同贡献、相隔五年——诺奖理由是前者} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{勿混淆} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Arrhenius 方程（1889，莱比锡）}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{deepnordic!88!black}$k = A\,e^{-E_a/(RT)}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 温室效应首算 ---
+\newcommand{\greenhouseslide}{\begin{frame}\plainbar\sectiontitle{温室效应首算 (1896)}{CO$_2$ · 冰期之问 · 一条沿用至今的规则}
+\vspace{-0.42cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnordic}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{冰期从何而来？} & \cellcolor{climpanel}\textcolor{badgeClim!82!black}{为解释冰期，首次用物理化学基本原理计算 CO$_2$ 增加对地表温度的影响} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{1896 年论文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{数据与工具？} & \cellcolor{climpanel}\textcolor{badgeClim!82!black}{用 Langley 与 Very 的月球红外观测计算 CO$_2$ 与水汽的红外吸收；以 Stefan--Boltzmann 定律 formulated 其"rule"} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{承 Fourier / Tyndall / Pouillet 先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{化石燃料之问？} & \cellcolor{climpanel}\textcolor{badgeClim!82!black}{基于同事 H\"ogbom 的信息，他成为首位预测化石燃料排放足以致暖的人} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{现代气候科学的源头} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{争议？} & \cellcolor{climpanel}\textcolor{badgeClim!82!black}{1900 年 \AA ngstr\"om 依"吸收饱和"批评，1901 年他在 \textit{Annalen der Physik} 强硬回应；1908 年出版 \textit{Worlds in the Making}} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{争论进入核心} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 阿伦尼乌斯规则（沿用至今）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{deepnordic!88!black}$\Delta F = \alpha\,\ln(C/C_0),\qquad \alpha \approx 5.35\ \mathrm{W/m^2}\ (\mathrm{CO_2})$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 1903 诺贝尔化学奖 ---
+\newcommand{\nobelslide}{\begin{frame}\plainbar\sectiontitle{1903：诺贝尔化学奖}{首位瑞典诺奖得主 · 电离理论的胜利}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnordic}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{背景}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{评审}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{获奖工作} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{1884 年博士论文的延伸工作——电离理论；诺奖理由表彰的是电离理论，而非方程或温室效应} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{答辩冷遇的迟来回响} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{奖项归属} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{1903 年诺贝尔化学奖由他独享；1902 年先获 Davy Medal} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{首位瑞典诺奖得主} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{诺奖演讲} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{"Development of the Theory of Electrolytic Dissociation"（1903-12-11）} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{回到 19 年前的命题} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从四等初评到诺贝尔奖——同一条 150 页论文，用了十九年时间被世界读懂。}
+\end{center}
+\end{frame}}
+
+% --- 10. 诺贝尔体系中的角色 ---
+\newcommand{\committeeslide}{\begin{frame}\plainbar\sectiontitle{诺贝尔体系中的角色}{委员 · 评审政治 · 间接转述}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnordic}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{关系}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{van 't Hoff · Ostwald · Theodore Richards} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{友人——据 page.md 记载，他利用职务为其安排奖项} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{三位皆获诺奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Paul Ehrlich · Walther Nernst · 门捷列夫} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{对手——据 page.md 记载，他曾试图阻止其获奖} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{门捷列夫终生未获诺奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{他本人} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{1901 年顶着强烈反对当选瑞典皇家科学院院士；终其一生任诺贝尔物理学委员会委员、化学委员会事实成员} & \cellcolor{actpanel}\textcolor{badgeAct!82!black}{约 1900 年起深度参与 Nobel 体系} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他既是诺奖史上最伟大的获奖者之一，也是评审席上最有争议的操盘手。}
+\end{center}
+\end{frame}}
+
+% --- 11. 更广阔的疆域 ---
+\newcommand{\frontiersslide}{\begin{frame}\plainbar\sectiontitle{更广阔的疆域 (1902– )}{免疫化学 · 宇宙物理 · 泛种论 · 通用语言}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepnordic}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{免疫化学} & \cellcolor{cosmpanel}\textcolor{badgeCosm!82!black}{1902 年起用化学理论研究生理学问题——生物体内反应与试管反应服从同一定律；1904 年伯克利讲座后出版 \textit{Immunochemistry}（1907）} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{方法即理论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地质与宇宙物理} & \cellcolor{cosmpanel}\textcolor{badgeCosm!82!black}{冰期成因；星际碰撞解释太阳系起源；辐射压解释彗星、日冕、极光与黄道光} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{物理化学的外推} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{泛种论} & \cellcolor{cosmpanel}\textcolor{badgeCosm!82!black}{他认为生命可能由孢子在行星间搬运（今称 panspermia）——一种设想，而非证明} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{跨行星的生命观} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{通用语言} & \cellcolor{cosmpanel}\textcolor{badgeCosm!82!black}{设想改造英语的通用语言} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{科学之外的心事} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 电解池之外，他把物理化学的方法一路推向生命、地球与星空。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与学会 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与学会}{Nobel 1903 · 四枚奖章 · 八所荣誉博士}
+\vspace{-1.0cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.68}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{deepnordic}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{诺贝尔奖} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 1903 诺贝尔化学奖（独享）\item 首位瑞典诺奖得主\end{itemize}} & \cellcolor{climpanel}\textcolor{badgeClim!82!black}{国家与学科的双重突破} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{奖章} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Davy Medal（1902）· Faraday Lectureship Prize（1914）\item Willard Gibbs Award（1911，首位得主）· Franklin Medal（1920）\end{itemize}} & \cellcolor{climpanel}\textcolor{badgeClim!82!black}{跨越三十年的认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学会与博士} & \cellcolor{ionpanel}\textcolor{badgeIon!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item ForMemRS（1910）· U.S. NAS（1908）· 荷兰化学会（1909）等\item 荣誉博士八所：Edinburgh · Cambridge · Oxford · Paris 等\end{itemize}} & \cellcolor{climpanel}\textcolor{badgeClim!82!black}{国际学界高度认可} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1922 年，他出席布鲁塞尔首届索尔维化学会议——旧世纪的论敌与新世纪的同行同坐一室。}
+\end{center}
+\end{frame}}
+
+% --- 13. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：从离子到气候}{电离理论 $\rightarrow$ Arrhenius 方程 $\rightarrow$ 现代气候科学}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=2.85cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=ionpanel, draw=badgeIon!50, line width=0.7pt] (a) at (-5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeIon} 物理化学奠基}\\[3pt]电离理论 · 酸碱定义\\[2pt]1903 诺奖理由};
+\node[leg, fill=actpanel, draw=badgeAct!50, line width=0.7pt] (b) at (-1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAct} 活化能方程}\\[3pt]$k = A\,e^{-E_a/(RT)}$\\[2pt]沿用至今};
+\node[leg, fill=climpanel, draw=badgeClim!50, line width=0.7pt] (c) at (1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeClim} 气候科学源头}\\[3pt]$\Delta F=\alpha\ln(C/C_0)$\\[2pt]1896 首算};
+\node[leg, fill=cosmpanel, draw=badgeCosm!50, line width=0.7pt] (d) at (5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCosm} 以他命名}\\[3pt]月球·火星环形山\\[2pt]Arrheniusfjellet · Arrhenius Labs};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 阿伦尼乌斯规则原句（\textit{Worlds in the Making}）}\\[2pt]
+  {\fontsize{8}{10.5}\selectfont\itshape\color{deepnordic!88!black}"if the quantity of carbonic acid increases in geometric progression, the augmentation of the temperature will increase nearly in arithmetic progression."}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.08cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1960 年代 Keeling 可靠测得大气 CO$_2$ 持续上升——温室假说从此进入现代气候科学的核心。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {溶液虽静，离子自行；};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {大气无声，碳已在数。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {他算出的不只是温度，而是一个世纪后全人类必须面对的账。};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {斯万特·阿伦尼乌斯\quad Svante Arrhenius\quad 1859 — 1927};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{atom}\enspace Nobel 1903 · 电离理论 · 温室效应首算\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openchemistslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\dissertationslide
+\tourslide
+\equationslide
+\greenhouseslide
+\nobelslide
+\committeeslide
+\frontiersslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

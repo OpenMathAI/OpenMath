@@ -1,0 +1,472 @@
+% =============================================================
+%  脂环世界的开路人：奥托·瓦拉赫 (Otto Wallach)
+%  Beamer 演示 —— 参照数学家 Carl Friedrich Gauss 立传版式
+%  （表格语义化 tabularx + 公式展示框 + 时间线页）
+%  资料来源：chemist/presentations/20th_century/pages/Otto_Wallach
+%  设计母题：脂环 / 环状结构 —— 圆环与圆点错落呼应碳骨架与精油分子
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenChemist 项目首页（定义 coverprimary/coveraccent/coverdark/covermuted/goldpanel + \openchemistslide）
+\input{../../cover/openchemist_page.tex}
+
+% ===== Wallach 专属配色：深林绿（精油与植物世界的深邃）+ 诺贝尔金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{246,248,245}
+\definecolor{forestdeep}{HTML}{1E4D3B}    % 深林绿 — 主色（表头 / 公式文本）
+\definecolor{badgeTer}{HTML}{2E7D5B}      % 萜烯与精油 — 翠绿
+\definecolor{badgeAli}{HTML}{1D5F7A}      % 脂环族 — 青蓝
+\definecolor{badgeRea}{HTML}{B07A1F}      % 反应与方法 — 琥珀
+\definecolor{badgeRul}{HTML}{6B4E8E}      % 结晶学规则 — 紫晶
+\definecolor{titlecolor}{RGB}{18,36,28}
+\definecolor{muteddark}{RGB}{72,88,78}
+\definecolor{terpanel}{RGB}{222,238,229}
+\definecolor{alipanel}{RGB}{219,233,240}
+\definecolor{reapanel}{RGB}{246,236,216}
+\definecolor{rulpanel}{RGB}{231,224,240}
+\definecolor{silverpanel}{RGB}{240,242,238}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，圆环与圆点组合呼应「脂环 / 碳环骨架」——精油一滴中的几何世界
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeTer!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeAli!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeRea!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \draw[badgeRul!18, line width=1.6pt] (current page.south west) ++(1.1,0.9) circle (0.55cm);
+  \draw[badgeTer!20, line width=1.2pt] (current page.north east) ++(-1.4,-1.1) circle (0.4cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% ========================= SLIDES =========================
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=forestdeep!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{flask}\enspace 脂环世界的开路人\enspace·\enspace 德国};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=forestdeep!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {奥托·瓦拉赫};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=forestdeep!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Otto Wallach\enspace·\enspace 1847 — 1931};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {萜烯 · 脂环族化合物 · 精油化学的系统化者};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeTer] at (-5.05,0)
+        {萜烯与精油\\Terpenes\par\scriptsize terpene · pinene};
+      \node[badge, fill=badgeAli] at (-1.68,0)
+        {脂环族化合物\\Alicyclic\par\scriptsize 1910 诺奖};
+      \node[badge, fill=badgeRea] at (1.68,0)
+        {反应与方法\\Reactions\par\scriptsize 重排 · 降解};
+      \node[badge, fill=badgeRul] at (5.05,0)
+        {结晶学规则\\Wallach's Rule\par\scriptsize 外消旋混合物};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his work on alicyclic compounds." —— 1910 诺贝尔化学奖获奖理由};
+  % 肖像（Wikipedia 1880s 照片）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Otto_Wallach.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Otto Wallach (1847–1931)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国\enspace|\enspace \faIcon{university}\enspace Bonn · Göttingen\enspace|\enspace Nobel 1910};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（高斯模板硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{瓦拉赫：从柯尼斯堡到哥廷根讲席}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Otto_Wallach.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Otto Wallach (1847–1931)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1847-03-27 — 1931-02-26\\[2pt]\lab{本名}\quad Otto Wallach\\[2pt]\lab{国籍}\quad 德国（German Empire）};
+  \node[infob, fill=alipanel, draw=badgeAli!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 波茨坦文理中学 · 哥廷根大学 · 柏林一学期\\[2pt]
+     \lab{博士}\quad 1869 · 哥廷根\\[2pt]\lab{师承}\quad Hans Hübner（柏林随 Hofmann）};
+  \node[infob, fill=reapanel, draw=badgeRea!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 普鲁士王国柯尼斯堡\\[2pt]\lab{去世地}\quad 哥廷根（安葬于哥廷根）\\[2pt]\lab{享年}\quad 83 岁};
+  \node[infob, fill=terpanel, draw=badgeTer!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 萜烯 · 脂环族 · 精油 · 重排反应\\[2pt]
+     \lab{身份}\quad 有机化学家\\[2pt]
+     \lab{荣誉}\quad Nobel 1910 · Davy Medal 1912 · Cothenius 1889};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 瓦拉赫的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{瓦拉赫的一生}{1847 — 1931 · 把混沌的精油整理成体系}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1847/生于普鲁士柯尼斯堡，公务员之子,
+    2.41/1867/入哥廷根大学学化学（Wöhler 执掌有机化学）,
+    1.72/1869/22 岁获哥廷根大学博士学位,
+    1.03/1870/赴波恩大学任教，开始萜烯系统分析,
+    0.34/1889/回哥廷根任教授,
+    -0.35/1909/出版《萜烯与樟脑》,
+    -1.04/1910/获诺贝尔化学奖（脂环族化合物）,
+    -1.73/1912/获英国皇家学会 Davy Medal,
+    -2.42/1915/自哥廷根教席卸任,
+    -3.11/1931/于哥廷根去世，享年 83 岁
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：柯尼斯堡公务员之子 (1847–1867)}{斯德丁 · 波茨坦 · 文学 · 艺术史}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{forestdeep}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1847} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{生于普鲁士王国柯尼斯堡；父亲 Gerhard Wallach 是普鲁士公务员，出身皈依信义宗的犹太家庭；母亲 Otillie（娘家姓 Thoma）为新教德意志人} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{普鲁士公务员之家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{随父迁居} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{父亲先后调职斯德丁（Stettin，今什切青）与波茨坦} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{辗转东陲与西部} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学时代} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{在波茨坦文理中学研习文学与艺术史——终生兴趣；同期在父母家中开始私人化学实验} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{文人趣味 + 动手化学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 化学家中的文人：文学与艺术史的趣味，他保持了一生。}
+\end{center}
+\end{frame}}
+
+% --- 5. Göttingen 求学 ---
+\newcommand{\goettingenslide}{\begin{frame}\plainbar\sectiontitle{Göttingen 求学与柏林一学期 (1867–1870)}{Wöhler 的哥廷根 · Hofmann 的柏林 · 1869 博士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{forestdeep}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1867} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{入哥廷根大学学化学——此时 Friedrich Wöhler 正执掌哥廷根有机化学} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{有机化学的圣地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{柏林一学期} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{赴柏林大学，随 August Wilhelm von Hofmann 学习一学期} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{拓宽师承} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1869} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{22 岁获哥廷根大学博士学位（infobox 明载博士导师 Hans Hübner）} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{少年博士} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1870} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{赴波恩大学任教——一去十九年} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{Bonn 三十年的开端} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Wöhler 的哥廷根到 Hofmann 的柏林，再回到哥廷根——经典的有机化学训练。}
+\end{center}
+\end{frame}}
+
+% --- 6. Bonn 三十年 ---
+\newcommand{\bonnslide}{\begin{frame}\plainbar\sectiontitle{Bonn 三十年：与 Kekulé 共事 (1870–1889)}{精油中的萜烯 · 系统分析的起点}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{forestdeep}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{背景}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{契机}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{转向}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1869–1889} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{波恩大学任教十九年；在与 Friedrich Kekulé 共事期间，开始对精油中萜烯的系统分析} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{毕生主题确立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{起点是一片混沌} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{在他之前，只有寥寥数种萜烯被纯化，结构信息稀少} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{系统研究的空白地带} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1880} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{波恩出版《Tabellen zur chemischen Analyse》} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{分析化学的工具书} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 与 Kekulé 共事是"共事"而非师承——萜烯的系统研究正是从波恩的实验室起步。}
+\end{center}
+\end{frame}}
+
+% --- 7. 萜烯研究法三部曲 ---
+\newcommand{\terpeneslide}{\begin{frame}\plainbar\sectiontitle{萜烯研究法三部曲}{熔点比较 · 逐步衍生化 · 重排追踪}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{forestdeep}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{如何确认"同一物质"？} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{熔点比较法与混合物熔点测定——但萜烯多为液体，必须先变成晶体} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{经典鉴定法的前提} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{液体如何变晶体？} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{逐步衍生化——尤其对萜烯双键的加成，得到结晶化合物} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{让经典方法得以施展} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{未知结构如何破解？} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{研究环状不饱和萜烯的重排反应——沿重排路径追到已知结构} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{重排追踪法} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 萜烯的通式}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{forestdeep!88!black}$\mathrm{C_{10}H_{16}}$（常见通式）\qquad {\fontsize{7.5}{9.5}\selectfont（通用教科书形式，page.md 未给出方程）}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 命名者 ---
+\newcommand{\namingslide}{\begin{frame}\plainbar\sectiontitle{命名者：terpene 与 pinene}{首次系统研究蒎烯 · $\alpha$-蒎烯结构}
+\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{forestdeep}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{terpene} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{他负责命名"terpene"（萜烯）这一化合物类别} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{词汇的奠定者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{pinene} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{他负责命名"pinene"（蒎烯），并对 pinene 作出首次系统研究} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{单体研究的范式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{$\alpha$-蒎烯} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{$\alpha$-蒎烯结构图存世（右图）——萜烯化学可视化的早期样本} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{结构的实证} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coveraccent!55, line width=1.0pt, rounded corners=4pt, fill=white, inner sep=3pt]
+    {\includegraphics[height=1.75cm,keepaspectratio]{AlphaPinene.png}};
+  \node[font=\fontsize{6.5}{8}\selectfont\itshape, text=covermuted, anchor=north] at (0,-1.05)
+    {$\alpha$-Pinene（$\alpha$-蒎烯）结构图 · Wikimedia Commons};
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 9. 以他命名的反应 ---
+\newcommand{\reactionslide}{\begin{frame}\plainbar\sectiontitle{以他命名的反应}{重排 · 降解 · Leuckart--Wallach}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{forestdeep}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{反应}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{传承}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Wallach rearrangement} & \cellcolor{reapanel}\textcolor{badgeRea!82!black}{以他命名的重排反应} & \cellcolor{rulpanel}\textcolor{badgeRul!82!black}{反应名录之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Wallach degradation} & \cellcolor{reapanel}\textcolor{badgeRea!82!black}{以他命名的降解反应} & \cellcolor{rulpanel}\textcolor{badgeRul!82!black}{反应名录之二} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Leuckart--Wallach reaction} & \cellcolor{reapanel}\textcolor{badgeRea!82!black}{与 Rudolf Leuckart 共同发展} & \cellcolor{rulpanel}\textcolor{badgeRul!82!black}{合作的名录之三} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Leuckart--Wallach 反应（概念式）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{forestdeep!88!black}$\mathrm{R_2C{=}O}\ \xrightarrow{\ \text{Leuckart--Wallach}\ }\ \mathrm{R_2CH{-}NH_2}$}\\[1pt]
+  {\fontsize{7.5}{9.5}\selectfont（通用教科书概念式，page.md 未给出方程；正文不展开机理细节）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. Wallach's rule ---
+\newcommand{\ruleslide}{\begin{frame}\plainbar\sectiontitle{Wallach's rule：结晶学的遗产}{外消旋混合物 · 以他命名的第四件遗产}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{forestdeep}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{规则}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{外消旋混合物} & \cellcolor{rulpanel}\textcolor{badgeRul!82!black}{Wallach's rule——关于外消旋混合物结晶行为的经验规则（词条见 Racemic mixture）} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{从溶液化学到晶体} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{与三个反应的区分} & \cellcolor{rulpanel}\textcolor{badgeRul!82!black}{Wallach rearrangement 是重排、Wallach degradation 是降解、Leuckart--Wallach 是共同发展——四者各有所指，互不混淆} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{命名的版图} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{遗产的广度} & \cellcolor{rulpanel}\textcolor{badgeRul!82!black}{一个名字同时留在反应名录与结晶学规则之中} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{方法学家的印记} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 萜烯之外，他还在结晶学里留下了一条以自己命名的规则。}
+\end{center}
+\end{frame}}
+
+% --- 11. Göttingen 岁月与学生 ---
+\newcommand{\studentsslide}{\begin{frame}\plainbar\sectiontitle{Göttingen 岁月与学生 (1889–1915)}{Haworth 与 Sieverts · 萜烯化学的传承}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{forestdeep}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方向}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Walter (Norman) Haworth} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{Wallach 的博士学生（infobox 记 Walter Haworth）——后来把方法带向糖化学} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{1937 年诺贝尔化学奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Adolf Sieverts} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{Wallach 的博士学生} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{同门之谊} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1889–1915 教席} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{自波恩回哥廷根任教授，直至 1915 年（一战期间）卸任} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{哥廷根的 26 年} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 萜烯化学由学生带向糖化学的巅峰——这是学派最安静的胜利。}
+\end{center}
+\end{frame}}
+
+% --- 12. 著作 ---
+\newcommand{\bookslide}{\begin{frame}\plainbar\sectiontitle{《萜烯与樟脑》与著作}{1909 初版 · 1914 第二版 · 1880 分析表}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{4.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{forestdeep}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专著（1909 初版）} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{\textit{Terpene und Campher}——汇总其在脂环族碳化合物领域的自身研究} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{萜烯化学的集大成} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{第二版（1914）} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{Leipzig: von Veit, 1914——引用时注明版次，勿与 1909 初版混为两书} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{体系的再确认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{工具书（1880）} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{\textit{Tabellen zur chemischen Analyse}（Weber, Bonn 1880）} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{分析化学的案头书} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一本书汇总一个领域——"Zusammenfassung eigener Untersuchungen"，他自己的话说尽了定位。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉：1910 诺贝尔与 Davy Medal}{独享 · 讲演 \textit{Alicyclic Compounds}}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{forestdeep}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1910 诺贝尔化学奖} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{独享——表彰其在脂环族化合物上的工作；诺奖讲演 \textit{Alicyclic Compounds}（1910-12-12）} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{至高认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Davy Medal（1912）} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{英国皇家学会授予} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{诺奖之后的再确认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{早期荣誉} & \cellcolor{alipanel}\textcolor{badgeAli!82!black}{Cothenius Medal（1889）· 红鹰勋章三等（Order of the Red Eagle 3rd Class）· 法兰克福物理协会荣誉会籍} & \cellcolor{terpanel}\textcolor{badgeTer!82!black}{年代贯穿始终} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 获奖词是"脂环族化合物"——萜烯是路径，脂环世界才是加冕的疆域。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {在精油的一滴液体里，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {看见碳原子的环。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {——题记};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {奥托·瓦拉赫\quad Otto Wallach\quad 1847 — 1931};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{flask}\enspace Nobel 1910 · 脂环族化合物\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openchemistslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\goettingenslide
+\bonnslide
+\terpeneslide
+\namingslide
+\reactionslide
+\ruleslide
+\studentsslide
+\bookslide
+\honorsslide
+\closingslide
+\end{document}

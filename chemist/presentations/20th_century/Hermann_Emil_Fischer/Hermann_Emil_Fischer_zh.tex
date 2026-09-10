@@ -1,0 +1,498 @@
+% =============================================================
+%  糖与嘌呤的建筑师：赫尔曼·埃米尔·费歇尔 (Hermann Emil Fischer)
+%  Beamer 演示 —— 参照化学家 Frederick Sanger 立传版式
+%  （表格语义化 tabularx + 公式展示框 + 时间线页）
+%  资料来源：chemist/presentations/20th_century/pages/Hermann_Emil_Fischer
+%  设计母题：气泡 —— Fischer projection 中纵横交错的碳链骨架节点
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{mathtools}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenChemist 项目首页（定义 coverprimary/coveraccent/coverdark/covermuted/goldpanel + \openchemistslide）
+\input{../../cover/openchemist_page.tex}
+
+% ===== Emil Fischer 专属配色：深咖啡棕（糖/焦糖）+ 香槟金（诺奖）+ 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{deepcocoa}{HTML}{4E342E}     % 深咖啡棕 — 主色（表头 / 公式文本）
+\definecolor{badgeSugar}{HTML}{2E7D32}    % 糖类化学 — 绿（葡萄糖全合成 / osazone）
+\definecolor{badgePurine}{HTML}{5E35B1}   % 嘌呤化学 — 紫（咖啡因 / 尿酸 / 黄嘌呤）
+\definecolor{badgePeptide}{HTML}{0277BD}  % 蛋白质与多肽 — 蓝（二肽 / 18 肽）
+\definecolor{badgeEnzyme}{HTML}{C0395B}   % 酶与药物 — 玫瑰（锁钥模型 / barbital）
+\definecolor{titlecolor}{RGB}{18,26,52}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{sugarpanel}{RGB}{222,240,230}
+\definecolor{purinepanel}{RGB}{231,226,246}
+\definecolor{peppanel}{RGB}{221,236,248}
+\definecolor{enzpanel}{RGB}{246,228,234}
+\definecolor{silverpanel}{RGB}{240,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「糖环与投影式的骨架节点」
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeSugar!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgePurine!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePeptide!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% ========================= SLIDES =========================
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=deepcocoa!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{flask}\enspace 糖与嘌呤的建筑师\enspace·\enspace 德国};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=deepcocoa!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {赫尔曼·埃米尔·费歇尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=deepcocoa!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Hermann Emil Fischer\enspace·\enspace 1852 — 1919};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {有机化学家 · 生物化学家 · 1902 年诺贝尔化学奖得主};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeSugar] at (-5.05,0)
+        {糖类化学\\Sugar Chem.\par\scriptsize D-(+)-葡萄糖全合成};
+      \node[badge, fill=badgePurine] at (-1.68,0)
+        {嘌呤化学\\Purine Chem.\par\scriptsize 咖啡因首次合成};
+      \node[badge, fill=badgePeptide] at (1.68,0)
+        {蛋白质与多肽\\Peptides\par\scriptsize 二肽 · 18 肽};
+      \node[badge, fill=badgeEnzyme] at (5.05,0)
+        {酶与药物\\Enzyme · Drugs\par\scriptsize 锁钥模型 · barbital};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"in recognition of the extraordinary services he has rendered by his work on sugar and purine syntheses." —— 1902 诺贝尔化学奖获奖理由};
+  % 肖像（Commons "Hermann Emil Fischer.jpg"，infobox c. 1895 照）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Hermann_Emil_Fischer.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Emil Fischer (1852–1919)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国\enspace|\enspace \faIcon{university}\enspace Würzburg · Berlin\enspace|\enspace Nobel 1902 · Davy 1890};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 高斯模板硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{赫尔曼·埃米尔·费歇尔 - 从商人之子到 1902 诺奖}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Hermann_Emil_Fischer.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Emil Fischer, c.~1895};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1852-10-09 — 1919-07-15\\[2pt]\lab{本名}\quad Hermann Emil Louis Fischer（终生以 Emil 行世）\\[2pt]\lab{国籍}\quad 德国};
+  \node[infob, fill=sugarpanel, draw=badgeSugar!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 波恩大学（1871）· 斯特拉斯堡大学（1872 起）\\[2pt]
+     \lab{博士}\quad 1874 · 斯特拉斯堡（酞类研究）\\[2pt]\lab{师承}\quad Adolf von Baeyer（infobox 另列 Kekulé）};
+  \node[infob, fill=purinepanel, draw=badgePurine!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 普鲁士 · Euskirchen（科隆附近）\\[2pt]\lab{去世地}\quad 柏林\\[2pt]\lab{享年}\quad 66 岁};
+  \node[infob, fill=enzpanel, draw=badgeEnzyme!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 糖类 · 嘌呤 · 多肽 · 酶\\[2pt]
+     \lab{身份}\quad 化学家 · 有机化学家 · 生物化学家\\[2pt]
+     \lab{荣誉}\quad Nobel 1902 · Davy 1890 · ForMemRS 1899};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 费歇尔的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{费歇尔的一生}{1852 — 1919 · 从 Euskirchen 到柏林}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.0cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.1) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.1/1852/生于普鲁士 Euskirchen，商人之家,
+    2.41/1871/入波恩大学,
+    1.72/1874/获斯特拉斯堡博士（导师 Adolf von Baeyer）,
+    1.03/1875/发现并命名肼类，包括苯肼,
+    0.34/1881/确立尿酸、黄嘌呤、咖啡因等分子式（咖啡因首次合成）,
+    -0.35/1882/任埃尔朗根大学教授,
+    -1.04/1892/接掌柏林大学化学教授（接替 von Hofmann）,
+    -1.73/1902/获诺贝尔化学奖（独享）,
+    -2.42/1907/获 Faraday 讲席奖,
+    -3.11/1919/逝于柏林，享年 66 岁
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：商人之子的化学转身 (1852–1871)}{Euskirchen · 家族企业 · 波恩}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcocoa}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1852} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{生于 Euskirchen（科隆附近）；父亲 Laurenz Fischer 是商人，母亲 Julie Poensgen} & \cellcolor{purinepanel}\textcolor{badgePurine!82!black}{商人之子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{毕业后} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{想读自然科学，却被父亲强令先进入家族企业，直到父亲确认他不适合经商} & \cellcolor{purinepanel}\textcolor{badgePurine!82!black}{被"退回"科学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1871} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{入波恩大学} & \cellcolor{purinepanel}\textcolor{badgePurine!82!black}{化学之路开启} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一位不情愿的商人，被命运还给了化学。}
+\end{center}
+\end{frame}}
+
+% --- 5. 波恩—斯特拉斯堡—拜耳门下 ---
+\newcommand{\baeyerslide}{\begin{frame}\plainbar\sectiontitle{波恩—斯特拉斯堡—拜耳门下 (1871–1875)}{Baeyer · 肼类 · 苯肼}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcocoa}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1872} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{转学斯特拉斯堡大学} & \cellcolor{purinepanel}\textcolor{badgePurine!82!black}{遇到 Baeyer} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1874} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{在 Adolf von Baeyer 指导下以酞类（phthaleins）研究获博士学位；留校任有机实验室助手} & \cellcolor{purinepanel}\textcolor{badgePurine!82!black}{博士学位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1875} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{发现并命名肼类（hydrazines）：偏二甲肼（很久之后在太空竞赛中变得重要）与苯肼（phenylhydrazine）；随 Baeyer 赴慕尼黑} & \cellcolor{purinepanel}\textcolor{badgePurine!82!black}{打开糖化学的钥匙} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 苯肼：糖化学的起点}\\[2pt]
+  {\color{deepcocoa!88!black}\fontsize{10.5}{13}\selectfont$\text{苯肼} + \text{醛/酮} \longrightarrow \text{结晶苯腙};\qquad \text{糖} \longrightarrow \text{osazone（高度结晶，易于鉴定）}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 染料与吲哚 ---
+\newcommand{\dyesslide}{\begin{frame}\plainbar\sectiontitle{染料与吲哚 (1878–1886)}{三苯甲烷 · 表兄弟 Otto Fischer · 靛蓝母体}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcocoa}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{合作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{品红染料是什么？(1878–1879)} & \cellcolor{enzpanel}\textcolor{badgeEnzyme!82!black}{与表兄弟（cousin）Otto Fischer 合作发表论文，确立品红（fuchsine/magenta）染料是三苯甲烷的衍生物} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{染料化学结构化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{吲哚如何合成？(1886)} & \cellcolor{enzpanel}\textcolor{badgeEnzyme!82!black}{用苯腙经盐酸或氯化锌处理得到吲哚衍生物，确证 Baeyer 关于靛蓝的观点} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{Fischer indole synthesis} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同名辨析} & \cellcolor{enzpanel}\textcolor{badgeEnzyme!82!black}{Fischer--Tropsch process 以 Franz Emil Fischer 命名，与本篇人物无关} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{同名不同人} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从染料到吲哚，他在有机化学的版图上不断开疆拓土。}
+\end{center}
+\end{frame}}
+
+% --- 7. 嘌呤化学 ---
+\newcommand{\purineslide}{\begin{frame}\plainbar\sectiontitle{嘌呤化学：咖啡因的首次合成 (1881–1900)}{尿酸 · 黄嘌呤 · 可可碱 · 嘌呤衍生物}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcocoa}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{尿酸类如何确定？(1881–1882)} & \cellcolor{purinepanel}\textcolor{badgePurine!82!black}{在 Baeyer 开辟的基础上大步推进，发表论文确立尿酸、黄嘌呤、咖啡因、可可碱等的分子式} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{嘌呤家族分子式确立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{咖啡因} & \cellcolor{purinepanel}\textcolor{badgePurine!82!black}{实现首次合成（achieving the first synthesis）} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{首个合成的重要嘌呤} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{嘌呤本体之后} & \cellcolor{purinepanel}\textcolor{badgePurine!82!black}{嘌呤本体分离后制备一系列衍生物，部分因潜在治疗应用而申请专利} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{通向药物化学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 嘌呤家族的分子式（1881–1882 确立）}\\[2pt]
+  {\color{deepcocoa!88!black}\fontsize{10.5}{13}\selectfont$\text{咖啡因 } \mathrm{C_8H_{10}N_4O_2}\quad\text{尿酸 } \mathrm{C_5H_4N_4O_3}\quad\text{黄嘌呤 } \mathrm{C_5H_4N_4O_2}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 糖类合成 ---
+\newcommand{\sugarslide}{\begin{frame}\plainbar\sectiontitle{糖类合成：osazone 与全合成 (1884–)}{D-(+)-葡萄糖 · 16 种立体异构}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcocoa}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{糖如何鉴定？} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{苯肼与糖反应生成 osazone——高度结晶、易于形成} & \cellcolor{peppanel}\textcolor{badgePeptide!82!black}{碳水化合物鉴定更明确} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{葡萄糖能否合成？} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{实现 D-(+)-葡萄糖的有机全合成} & \cellcolor{peppanel}\textcolor{badgePeptide!82!black}{里程碑式的全合成} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{立体异构有多少？} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{推导 16 种立体异构葡萄糖的分子式，并制备数种异构体} & \cellcolor{peppanel}\textcolor{badgePeptide!82!black}{确证 Le Bel–Van 't Hoff rule} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 16 种立体异构葡萄糖的由来}\\[2pt]
+  {\color{deepcocoa!88!black}\fontsize{10.5}{13}\selectfont$4\ \text{个不对称碳原子} \Rightarrow 2^{4} = 16\ \text{种立体异构葡萄糖}$}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{muteddark}推导分子式并制备数种异构体——确证 Le Bel--Van 't Hoff rule}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Fischer projection 与立体化学确证 ---
+\newcommand{\projectionsslide}{\begin{frame}\plainbar\sectiontitle{Fischer projection 与命名反应群}{投影式 · 酯化 · 通用语言}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcocoa}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{不对称碳如何表示？} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{发展 Fischer projection——一种表示不对称碳原子的符号画法} & \cellcolor{peppanel}\textcolor{badgePeptide!82!black}{沿用至今的糖化学通用语言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{法则如何确证？} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{由 16 种立体异构葡萄糖的推导与制备，实验确证 Le Bel–Van 't Hoff 不对称碳原子法则} & \cellcolor{peppanel}\textcolor{badgePeptide!82!black}{立体化学的实验基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{酯化如何机理化？} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{发现 Fischer esterification（infobox 级成就）} & \cellcolor{peppanel}\textcolor{badgePeptide!82!black}{以他命名的经典反应} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Fischer esterification}\\[2pt]
+  {\color{deepcocoa!88!black}\fontsize{10.5}{13}\selectfont$\text{羧酸} + \text{醇}\ \xrightleftharpoons{\ \text{酸催化}\ }\ \text{酯} + \text{水}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 锁钥模型与巴比妥 ---
+\newcommand{\enzymesslide}{\begin{frame}\plainbar\sectiontitle{锁钥模型与巴比妥 (1894–1904)}{lock and key · 与 von Mering 合作 barbital}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcocoa}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{酶如何结合底物？} & \cellcolor{enzpanel}\textcolor{badgeEnzyme!82!black}{提出底物结合的 "lock and key"（锁钥）机制假说} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{酶学的奠基性思想} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{镇静剂如何诞生？(1904)} & \cellcolor{enzpanel}\textcolor{badgeEnzyme!82!black}{与医生 Josef von Mering 合作，推出首个巴比妥类镇静剂 barbital} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{第一个巴比妥类药物} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{边界何在？} & \cellcolor{enzpanel}\textcolor{badgeEnzyme!82!black}{锁钥模型是假说提出，并非 1902 诺奖获奖理由} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{诺奖理由仍是糖与嘌呤} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 锁钥模型（lock and key model）}\\[2pt]
+  {\color{deepcocoa!88!black}\fontsize{10.5}{13}\selectfont$\text{底物（钥匙）} \longrightarrow \text{酶（锁）} \Rightarrow \text{酶–底物复合物}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 蛋白质与多肽 ---
+\newcommand{\peptideslide}{\begin{frame}\plainbar\sectiontitle{蛋白质与多肽 (1899–1907)}{氨基酸重组 · 二肽 · 18 肽}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepcocoa}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{白蛋白如何拆解？} & \cellcolor{peppanel}\textcolor{badgePeptide!82!black}{用新方法把复杂白蛋白分解为氨基酸等含氮化合物，再推动重组} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{合成肽近似天然产物} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{第一个二肽 (1901)} & \cellcolor{peppanel}\textcolor{badgePeptide!82!black}{研究组合成第一个游离二肽（甘氨酸–甘氨酸）} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{Gly--Gly} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{规模多大？(1906–1910)} & \cellcolor{peppanel}\textcolor{badgePeptide!82!black}{1906 年约 65 种肽；三年后总数超过 100，最长为 18 肽（15 甘氨酸 + 3 亮氨酸），通过缩二脲试验、盐沉淀、蛋白酶酶切等标准检验；1907 年出版论文集} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{蛋白质化学的工业化前夜} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 第一个游离二肽与最长的 18 肽}\\[2pt]
+  {\color{deepcocoa!88!black}\fontsize{10.5}{13}\selectfont$\mathrm{Gly{-}Gly}\ (1901);\qquad \text{18 肽} = 15\ \text{甘氨酸} + 3\ \text{亮氨酸}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉}{诺贝尔化学奖 · Davy Medal · Faraday 讲席}\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.7}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.4cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.6cm}}
+\toprule
+\rowcolor{deepcocoa}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1902 诺奖} & \cellcolor{enzpanel}\textcolor{badgeEnzyme!82!black}{独享；获奖理由："in recognition of the extraordinary services he has rendered by his work on sugar and purine syntheses."} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{表彰糖类与嘌呤合成} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要奖章} & \cellcolor{enzpanel}\textcolor{badgeEnzyme!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\leftmargin}{1.1em}\item Davy Medal（1890）· ForMemRS（1899）\item Faraday Lectureship Prize（1907）· Elliott Cresson Medal（1913）\end{itemize}} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{国际学界高度认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{会员与建制} & \cellcolor{enzpanel}\textcolor{badgeEnzyme!82!black}{US National Academy of Sciences（1904）· American Academy of Arts and Sciences（1908）· American Philosophical Society（1909）} & \cellcolor{sugarpanel}\textcolor{badgeSugar!82!black}{跨国学界尊崇} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1897 年他提议创建国际原子量委员会；柏林建有 Emil Fischer 纪念碑。}
+\end{center}
+\end{frame}}
+
+% --- 13. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：以他命名}{从投影式到命名反应群}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=2.85cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=sugarpanel, draw=badgeSugar!50, line width=0.7pt] (a) at (-5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSugar} 糖类化学}\\[3pt]D-(+)-葡萄糖全合成\\[2pt]osazone 鉴定法};
+\node[leg, fill=purinepanel, draw=badgePurine!50, line width=0.7pt] (b) at (-1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePurine} 嘌呤化学}\\[3pt]咖啡因首次合成\\[2pt]尿酸 · 黄嘌呤};
+\node[leg, fill=peppanel, draw=badgePeptide!50, line width=0.7pt] (c) at (1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePeptide} 蛋白质与多肽}\\[3pt]Gly--Gly · 18 肽\\[2pt]氨基酸重组};
+\node[leg, fill=enzpanel, draw=badgeEnzyme!50, line width=0.7pt] (d) at (5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeEnzyme} 酶与药物}\\[3pt]锁钥模型\\[2pt]barbital};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 以他命名的反应与概念}\\[2pt]
+  {\fontsize{10}{12.5}\selectfont\color{deepcocoa!88!black}Fischer indole synthesis · projection · oxazole · peptide · glycosidation\quad Fischer--Speier esterification · Kiliani--Fischer synthesis}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.08cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 注意：Fischer--Tropsch process 以 Franz Emil Fischer 命名，与本篇人物无关。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {糖与嘌呤，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {一砖一瓦砌成了有机化学的殿堂。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是分子，而是一种搭建分子的方法。};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {赫尔曼·埃米尔·费歇尔\quad Hermann Emil Fischer\quad 1852 — 1919};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{flask}\enspace Nobel 1902 · 糖类与嘌呤合成\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openchemistslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\baeyerslide
+\dyesslide
+\purineslide
+\sugarslide
+\projectionsslide
+\enzymesslide
+\peptideslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}
