@@ -28,6 +28,12 @@ REVIEWS_DONE = {
     "Frederick Sanger",
 }
 
+# 社会关系已入库 greatminds 库的化学家（姓名需与获奖者名单精确匹配）。
+# 按 {Name}_zh.md 提示词 §7 清单完成 seed_person.py 入库后在此补充姓名。
+SOCIAL_DONE = {
+    "Frederick Sanger",
+}
+
 # 获奖者英文名 → 中文名（诺贝尔化学奖得主常用中译）。
 NAME_ZH = {
     "Jacobus Henricus van 't Hoff": "雅各布斯·亨里克斯·范特霍夫",
@@ -407,9 +413,10 @@ def main() -> int:
     # 国籍分布
     country_counter = Counter(r["country"] for r in rows)
 
-    # 立传 / Review 状态（去重计数，避免两度获奖者被重复统计）
+    # 立传 / Review / 社会关系入库状态（去重计数，避免两度获奖者被重复统计）
     done_count = len({r["name"] for r in rows if r["name"] in BIOGRAPHIES_DONE})
     review_count = len({r["name"] for r in rows if r["name"] in REVIEWS_DONE})
+    social_count = len({r["name"] for r in rows if r["name"] in SOCIAL_DONE})
 
     lines: list[str] = []
     lines.append("# 20 世纪诺贝尔化学奖得主 — OpenChemist 名录\n")
@@ -418,7 +425,7 @@ def main() -> int:
         ">\n"
         "> 从 van 't Hoff 的化学动力学到 Sanger 的基因测序：一百年间，化学奖见证了现代化学从分子结构走向生命科学的全过程。\n"
         ">\n"
-        "> 获奖理由为诺贝尔奖官方获奖理由（中文翻译）；「立传」表示是否已生成立传 Beamer，「Review」表示是否已完成事实核查。\n"
+        "> 获奖理由为诺贝尔奖官方获奖理由（中文翻译）；「立传」表示是否已生成立传 Beamer，「Review」表示是否已完成事实核查，「社会关系入库」表示是否已按提示词 §7 清单将社会关系入库 greatminds 库。\n"
         ">\n"
         "> 数据来源：英文维基百科「List of Nobel laureates in Chemistry」。\n"
         % (total_items, len(unique_people))
@@ -426,8 +433,8 @@ def main() -> int:
     lines.append("---\n")
 
     lines.append("\n## 一、完整名单（按年份）\n")
-    lines.append("\n| 年份 | 获奖者 | 国籍 | 获奖理由 | 立传 | Review |")
-    lines.append("|:--:|------|------|------|:--:|:--:|")
+    lines.append("\n| 年份 | 获奖者 | 国籍 | 获奖理由 | 立传 | Review | 社会关系入库 |")
+    lines.append("|:--:|------|------|------|:--:|:--:|:--:|")
     for r in rows:
         name = r["name"]
         zh = NAME_ZH.get(name)
@@ -437,7 +444,8 @@ def main() -> int:
         citation = CITATION_ZH.get(citation_en, citation_en).replace("|", "/")  # 转义表格竖线
         bio = "✅" if name in BIOGRAPHIES_DONE else "🔲"
         review = "✅" if name in REVIEWS_DONE else "🔲"
-        lines.append("| %d | %s | %s | %s | %s | %s |" % (r["year"], name_display, country, citation, bio, review))
+        social = "✅" if name in SOCIAL_DONE else "🔲"
+        lines.append("| %d | %s | %s | %s | %s | %s | %s |" % (r["year"], name_display, country, citation, bio, review, social))
 
     lines.append("\n---\n")
     lines.append("\n## 二、统计说明\n")
@@ -446,6 +454,7 @@ def main() -> int:
     lines.append("- **获奖总人数**：%d 位" % len(unique_people))
     lines.append("- **已立传**：%d 位（%s）" % (done_count, "、".join(sorted(BIOGRAPHIES_DONE)) if BIOGRAPHIES_DONE else "暂无"))
     lines.append("- **已 Review**：%d 位（%s）" % (review_count, "、".join(sorted(REVIEWS_DONE)) if REVIEWS_DONE else "暂无"))
+    lines.append("- **社会关系已入库**：%d 位（%s）" % (social_count, "、".join(sorted(SOCIAL_DONE)) if SOCIAL_DONE else "暂无"))
     if double:
         lines.append("- **两度获奖者**：" + "、".join(sorted(double)) + "（唯一两度获诺贝尔化学奖者）")
     if women:
