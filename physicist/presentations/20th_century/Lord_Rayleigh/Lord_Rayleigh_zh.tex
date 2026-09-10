@@ -1,0 +1,512 @@
+% =============================================================
+%  维多利亚通才物理学家：瑞利勋爵 (Lord Rayleigh, John William Strutt)
+%  Beamer 演示 —— 参照 Becquerel 高斯模板版式（表格语义化 + 引文框 + 卡片）
+%  资料来源：physicist/presentations/20th_century/20th_century/Lord_Rayleigh
+%  设计母题：天空之蓝 / 散射光晕 —— 柔和气泡（短波散射的视觉语言）
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\xeCJKDeclareCharClass{CJK}{"2460 -> "2473} % 带圈数字 ①-⑳ 交给中文字体
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：英伦蓝（维多利亚皇家学会气质）+ 诺奖金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{rayleighblue}{HTML}{1E3A5F}   % 英伦蓝 — 皇家学会 / 英伦学术传统
+\definecolor{nobelgold}{HTML}{C9A227}      % 诺奖金 — 1904 诺贝尔奖
+\definecolor{badgeScat}{HTML}{3E7CB1}      % 散射与光学 — 天青
+\definecolor{badgeSound}{HTML}{2E7D6B}     % 声学 — 靛青
+\definecolor{badgeFluid}{HTML}{E07B30}     % 流体力学 — 琥珀
+\definecolor{badgeArgon}{HTML}{6B4FA1}     % 氩与精密测量 — 稀有气体紫
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,35,54}
+\definecolor{muteddark}{RGB}{74,86,100}
+\definecolor{scatpanel}{RGB}{226,236,245}
+\definecolor{soundpanel}{RGB}{225,240,236}
+\definecolor{fluidpanel}{RGB}{250,236,224}
+\definecolor{argonpanel}{RGB}{235,230,245}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆 —— 散射光晕 / 天空之蓝
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[nobelgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeScat!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeArgon!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeSound!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeFluid!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openphysicist_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=rayleighblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{atom}\enspace 英国\enspace·\enspace 维多利亚通才物理学家\enspace·\enspace 世袭贵族实验家};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=rayleighblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {瑞利勋爵};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=rayleighblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Lord Rayleigh (John William Strutt)\enspace·\enspace 1842 — 1919};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=nobelgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {瑞利散射 · 声学理论 · 发现氩 · 流体力学};
+  \draw[nobelgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeScat] at (-5.05,0)
+        {瑞利散射\\Rayleigh Scattering\par\scriptsize 天空为什么是蓝};
+      \node[badge, fill=badgeSound] at (-1.68,0)
+        {声学理论\\Theory of Sound\par\scriptsize 两卷经典教科书};
+      \node[badge, fill=badgeFluid] at (1.68,0)
+        {流体力学\\Fluid Dynamics\par\scriptsize Rayleigh number};
+      \node[badge, fill=badgeArgon] at (5.05,0)
+        {发现氩\\Discovery of Argon\par\scriptsize 1894 · 诺贝尔奖};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"表彰他对最重要气体密度的研究，以及在此研究中发现了氩。" —— 1904 诺贝尔物理学奖获奖理由};
+  % 头像（1899 年 Vanity Fair 漫画像，images.txt 唯一人物图）
+  \node[draw=nobelgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Lord_Rayleigh_Vanity_Fair_1899.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Lord_Rayleigh_Vanity_Fair_1899.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted, align=center, text width=3.2cm]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Vanity Fair 漫画像, 1899};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国\enspace|\enspace \faIcon{university}\enspace 剑桥大学 · 皇家研究院\enspace|\enspace Nobel 1904};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 物理学家硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{nobelgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{瑞利勋爵 - 从世袭男爵到诺贝尔奖}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[draw=nobelgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\IfFileExists{images/Lord_Rayleigh_Vanity_Fair_1899.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Lord_Rayleigh_Vanity_Fair_1899.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted, align=center, text width=4.2cm]
+    at (-6.0,-2.25) {Vanity Fair 漫画像, 1899};
+  \node[infob, fill=goldpanel, draw=nobelgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1842-11-12 — 1919-06-30\\[2pt]\lab{本名}\quad John William Strutt\\[2pt]\quad\enspace（第三代瑞利男爵，世袭）\\[2pt]\lab{国籍}\quad 英国};
+  \node[infob, fill=argonpanel, draw=badgeArgon!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 剑桥三一学院（1861 入学）\\[2pt]
+     \quad 1865 B.A.：Senior Wrangler\\[2pt]\lab{师承}\quad Maxwell · Stokes · Routh};
+  \node[infob, fill=scatpanel, draw=badgeScat!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Maldon（Langford Grove）\\[2pt]\lab{去世地}\quad Witham（Terling Place）\\[2pt]\lab{任职}\quad 剑桥卡文迪许教授 · 皇家研究院};
+  \node[infob, fill=fluidpanel, draw=badgeFluid!45, anchor=south] at (3.5,-1.85)
+    {\lab{主要荣誉}\quad Nobel 1904 · OM 1902\\[2pt]
+     \quad Copley 1899 · 皇家学会第 39 任会长\\[2pt]
+     \lab{核心领域}\quad 散射光学 · 声学\\[2pt]
+     \quad 流体力学 · 气体密度};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{核心贡献概览}{一位维多利亚绅士学者 · 四条发现之路}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[
+    leg/.style={rounded corners=5pt, inner xsep=10pt, inner ysep=9pt, text width=5.35cm,
+      font=\fontsize{7.2}{9.4}\selectfont, align=left}
+  ]
+  \node[leg, fill=scatpanel, draw=badgeScat!55, anchor=north] at (-3.15,2.5)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeScat!85!black}① 瑞利散射（1871）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 第一个关于远小于光波长粒子弹性散射的理论处理——最广为人知的贡献，回答了"天空为什么是蓝的"。}};
+  \node[leg, fill=soundpanel, draw=badgeSound!55, anchor=north] at (3.15,2.5)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeSound!85!black}② 《声学理论》（1877–1878）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 两卷本经典教科书，至今仍被声学家与工程师使用；随后研究固体中的横向表面波——瑞利波。}};
+  \node[leg, fill=fluidpanel, draw=badgeFluid!55, anchor=south] at (-3.15,-1.55)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeFluid!85!black}③ 流体力学体系\\[3pt]
+     {\fontsize{7}{9.5}\selectfont Rayleigh number（自然对流）、Rayleigh--Taylor 不稳定性、Taylor--Couette 流稳定性判据与升力环流理论。}};
+  \node[leg, fill=argonpanel, draw=badgeArgon!55, anchor=south] at (3.15,-1.55)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeArgon!85!black}④ 发现氩（1894）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 用两种方法分离氮气发现微小密度差，推断空气中存在更重的惰性气体——1904 年诺贝尔物理学奖由此而来。}};
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：从体弱多病到 Senior Wrangler ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：从体弱多病到 Senior Wrangler (1842--1873)}{贵族之家 · 三一学院 · 数学头名}
+\vspace{-0.6cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{rayleighblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{轨迹}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1842} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{生于埃塞克斯郡 Maldon 的 Langford Grove，父为第二代瑞利男爵 John James Strutt；幼年体弱多病} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{世袭贵族之家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{早年求学} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{伊顿公学与哈罗公学各仅短暂就读，健康原因使正规求学断续} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{体弱者的家庭课堂} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1861--1865} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{入剑桥三一学院学习数学；1865 年获 B.A.——Senior Wrangler（数学荣誉学位考试第一名）兼 Smith's Prize 得主} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{剑桥数学荣誉的顶点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1866--1873} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{1866 年当选三一 Fellow，1868 年获 M.A.；1871 年与 Evelyn Balfour 成婚（育三子）；1873 年继承第三代瑞利男爵爵位} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{学者与男爵的双重身份} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.05cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} "瑞利勋爵"是世袭爵位称号，非因功受封——本名始终是 John William Strutt。}
+\end{center}
+\end{frame}}
+
+% --- 5. 瑞利散射：天空为什么是蓝 ---
+\newcommand{\scatterslide}{\begin{frame}\plainbar\sectiontitle{瑞利散射：天空为什么是蓝 (1871)}{弹性散射理论 · 瑞利判据}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{rayleighblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1871} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{发表第一个关于远小于光波长粒子的弹性散射的理论处理——今称瑞利散射（Rayleigh scattering）} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{光散射理论的开山之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{天空之蓝} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{该理论显著地解释了天空为什么是蓝的——波长更短的蓝光被散射得更强} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{最广为人知的贡献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{瑞利判据} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{在光学中提出著名的角分辨率判据（Rayleigh criterion）} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{望远镜与显微镜分辨率的标准} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 一问传世}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{rayleighblue!88!black}"天空为什么是蓝的"——答案出自瑞利散射：微粒远小于波长时，短波散射占优。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 《声学理论》与瑞利波 ---
+\newcommand{\soundslide}{\begin{frame}\plainbar\sectiontitle{《声学理论》与瑞利波 (1877--1885)}{两卷经典 · 固体表面波}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{rayleighblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{地位}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1877} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{《声学理论》（The Theory of Sound）卷 I 出版（London: Macmillan）} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{声学的系统化开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1878} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{卷 II 出版，两卷本构成完整的声学理论体系} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{工程师案头的常备书} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{至今} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{这本教科书至今仍被声学家与工程师使用} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{跨越一个半世纪的经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{瑞利波} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{研究并描述了固体中的横向表面波，今称瑞利波（Rayleigh waves）} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{地震学的基石之一} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从可闻的声到可感的地动，同一套波动的数学贯穿始终。}
+\end{center}
+\end{frame}}
+
+% --- 7. 卡文迪许教授与皇家研究院 ---
+\newcommand{\careerslide}{\begin{frame}\plainbar\sectiontitle{卡文迪许教授与皇家研究院 (1879--1905)}{接替 Maxwell · Terling Place 自宅实验室}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{rayleighblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{任职与工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1879} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{出任剑桥大学卡文迪许实验物理学教授，接替 James Clerk Maxwell} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{执掌英国物理学的讲席} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1883} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{在 Nature 上首次描述海鸟的动态翱翔（dynamic soaring）} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{生物飞行力学的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1884} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{辞去卡文迪许教职（任期仅五年），回 Terling Place 自宅实验室继续实验工作} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{庄园实验室的绅士学者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1887--1905} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{任皇家研究院自然哲学教授；期间精密测量氢与氧的原子量，1892 年起转向氮} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{发现氩的精密测量前奏} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 教席可以辞去，实验台永远都在——就在自家的庄园里。}
+\end{center}
+\end{frame}}
+
+% --- 8. 发现氩 ---
+\newcommand{\argonslide}{\begin{frame}\plainbar\sectiontitle{发现氩：氮密度之谜 (1892--1894)}{两种方法 · 一点误差 · 一种新元素}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{rayleighblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1892 · 转向氮} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{在皇家研究院的精密测量工作中，由氢、氧原子量转向氮的研究} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{追猎一个小数点后的差异} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{方法的分歧} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{用两种不同的方法分离氮气，发现一个微小但显著的密度差异} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{误差本身就是线索} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{大胆推断} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{差异表明：空气中除氮之外，还存在一种更重的惰性气体} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{从测量走向发现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1894 年 8 月} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{William Ramsay 加入这一研究课题，两人共同发现氩（argon）} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{稀有气体的第一次现身} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 精密测量的意义，正在于让"看不见的成分"无处藏身。}
+\end{center}
+\end{frame}}
+
+% --- 9. 1904 诺贝尔奖 ---
+\newcommand{\nobelslide}{\begin{frame}\plainbar\sectiontitle{1904 诺贝尔奖：一氩两奖}{物理奖与化学奖 · 同源而分流}
+\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{rayleighblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{奖项}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{得主与理由}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{备注}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{物理学奖 · Rayleigh} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{1904 年瑞利单独获得诺贝尔物理学奖，理由以气体密度研究为主、发现氩为果} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{诺奖表彰的是这项研究本身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{化学奖 · Ramsay} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{同年 William Ramsay 获诺贝尔化学奖——两人分别获得物理学奖与化学奖，均与发现氩的研究相关} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{一氩两奖，学科分流} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{先行的英国荣誉} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{Copley Medal（1899，皇家学会）："In recognition of his contributions to physical science."} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{1904 之前的国际公认} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.55cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 官方获奖理由（1904，英文原文）}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{rayleighblue!88!black}"For his investigations of the densities of the most important gases and for his discovery of argon in connection with these studies."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 流体力学的体系化 ---
+\newcommand{\fluidslide}{\begin{frame}\plainbar\sectiontitle{流体力学的体系化}{Rayleigh number · 不稳定性 · 升力环流}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{rayleighblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{领域}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Rayleigh number} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{与自然对流相关的无量纲数——后世传热与对流研究的标准参量} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{自然对流} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{不稳定性家族} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{Rayleigh flow、Rayleigh--Taylor 不稳定性，以及 Taylor--Couette 流稳定性的瑞利判据} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{流动稳定性的框架} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{升力环流理论} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{提出机翼升力的环流理论（circulation theory of aerodynamic lift）} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{空气动力学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 一位"非专业"力学家留下的专业词汇表}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{rayleighblue!88!black}Rayleigh number\enspace·\enspace Rayleigh flow\enspace·\enspace Rayleigh--Taylor instability\enspace·\enspace Rayleigh waves}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 瑞利--金斯定律：经典物理的边界 ---
+\newcommand{\rjslide}{\begin{frame}\plainbar\sectiontitle{瑞利--金斯定律：经典物理的边界}{黑体辐射 · 紫外灾难 · 量子前夜}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{rayleighblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{经典推导} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{他对经典黑体辐射的推导，即后世所称的瑞利--金斯定律（Rayleigh--Jeans law）} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{经典框架内的完备推演} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{紫外灾难} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{经典理论在高频端与实验相悖——史称"紫外灾难"（ultraviolet catastrophe）} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{经典物理的裂缝} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{量子前夜} & \cellcolor{fluidpanel}\textcolor{badgeFluid!82!black}{这一推导后来在量子力学的诞生中扮演了重要角色} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{失败处正是新物理的入口} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 经典物理的边界标记}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{rayleighblue!88!black}一条"错了"的定律，反而标出了通往量子力学的那道门缝。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 科学领袖 ---
+\newcommand{\leaderslide}{\begin{frame}\plainbar\sectiontitle{科学领袖：皇家学会与剑桥大学 (1905--1919)}{第 39 任会长 · 剑桥校长 · Order of Merit}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{rayleighblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{职务}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1905--1908} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{任皇家学会第 39 任会长} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{英国科学界的最高席位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1908--1919} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{任剑桥大学校长，直至去世} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{母校的掌舵人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1902 / 1903} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{获 Order of Merit（Edward VII 颁授）；1903 年获德国 Pour le M\'erite（Wilhelm II 颁授）} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{两国君主的致敬} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{上议院} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{不时参与上议院事务，但仅在政治试图干涉科学时发言} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{为科学守门的贵族} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 国教徒的科学信仰（表述须注明语境，非"迷信"）}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{rayleighblue!88!black}英国国教徒，拒斥唯物主义；晚年任心灵研究学会（SPR）会长，会长演讲未得出任何确定结论。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 声学之外 ---
+\newcommand{\beyondslide}{\begin{frame}\plainbar\sectiontitle{声学之外：双耳定位与摩擦学先驱}{duplex 理论 · 航空咨询委员会 · 相似性原理}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{rayleighblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{双耳定位（约 1900）} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{提出人耳声源定位的 duplex 理论：耳间相位差（IPD）与耳间强度差（ILD）两条线索} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{听觉心理声学的基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{一战航空} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{一战期间任航空咨询委员会（Advisory Committee for Aeronautics）主席} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{老学者投身国家急务} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{润滑与摩擦学} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{多篇润滑论文今被公认为摩擦学（tribology）领域的早期经典贡献，被 Duncan Dowson 列为 23 位 "Men of Tribology" 之一} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{工程科学的先导} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{科学方法} & \cellcolor{soundpanel}\textcolor{badgeSound!82!black}{主张简洁性与理论应是科学方法的一部分，倡导相似性原理（principle of similitude）} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{方法论层面的遗产} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 通才的定义：在每一个碰过的领域里，都留下以自己命名的概念。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与纪念 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{荣誉与纪念}{环形山 · 小行星 · 声学单位 rayl}\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{rayleighblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{以他命名} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{月球、火星各有一座 Rayleigh 环形山\enspace·\enspace 小行星 22740 Rayleigh（2007-06-01 命名）\enspace·\enspace 声学单位 rayl（比声阻抗）} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{名字写进天空与单位制} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{奖项全录} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{Royal 1882 · De Morgan 1890 · Matteucci 1894 · Faraday Lectureship 1895 · Copley 1899 · Nobel 1904 · Albert 1905 · Elliott Cresson 1913 · Rumford 1914} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{物理与数学两边通吃} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{学会与纪念} & \cellcolor{argonpanel}\textcolor{badgeArgon!82!black}{皇家学会 Fellow（1873）· 美国哲学学会国际会员（1886）· 荣誉博士（1902，皇家弗雷德里克大学，纪念阿贝尔诞辰百年）· Westminster Abbey 有 Derwent Wood 制作纪念像} & \cellcolor{scatpanel}\textcolor{badgeScat!82!black}{跨国界、跨学科的公认} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.62cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.6}{11}\selectfont\bfseries\color{nobelgold!85!black} 同时代人的评价}\\[1pt]
+  {\fontsize{8.2}{10.5}\selectfont\color{rayleighblue!88!black}Ramsay 称他"the greatest man alive"；Hyndman 说"no man ever showed less consciousness of great genius"。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=rayleighblue!90!black] at ([yshift=1.5cm]current page.center) {他把庄园的客厅变成实验室，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=nobelgold!85!black] at ([yshift=0.4cm]current page.center) {把"天空为什么是蓝"写成了物理学。};
+\draw[nobelgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=rayleighblue!70!black, align=center, text width=12.6cm] at ([yshift=-1.2cm]current page.center) {1919 年 6 月 30 日逝于 Witham，享年 76，葬于 Terling 的 All Saints' Church 教堂墓地——后世称他为"最后一位伟大的维多利亚通才"。};
+\node[font=\fontsize{8}{10}\selectfont, text=rayleighblue!60!black] at ([yshift=-2.0cm]current page.center) {瑞利勋爵\quad Lord Rayleigh (John William Strutt)\quad 1842 — 1919};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{atom}\enspace 瑞利散射 · 声学理论 · 发现氩 · 流体力学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\scatterslide
+\soundslide
+\careerslide
+\argonslide
+\nobelslide
+\fluidslide
+\rjslide
+\leaderslide
+\beyondslide
+\legacyslide
+\closingslide
+\end{document}

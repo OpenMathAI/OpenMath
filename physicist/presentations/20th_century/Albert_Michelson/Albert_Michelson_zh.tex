@@ -1,0 +1,527 @@
+% =============================================================
+%  光学精密测量之父：阿尔伯特·亚伯拉罕·迈克耳孙 (Albert Abraham Michelson)
+%  Beamer 演示 —— 参照 Becquerel 高斯模板版式（表格语义化 + 公式框 + 卡片）
+%  资料来源：physicist/presentations/20th_century/20th_century/Albert_Abraham_Michelson
+%  设计母题：干涉条纹 / 光的波长 —— 柔和气泡 + 等距明暗交替条纹弧段
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+% 带圈数字 ①-④ 路由到中文字体（拉丁字体无此字形）
+\xeCJKDeclareCharClass{CJK}{"2460 -> "2473}
+
+% ===== 配色：深海蓝（海军学院/精密计量）+ 诺奖金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{seablue}{HTML}{1C3D5A}        % 深海蓝 — 海军学院 / 芝加哥湖畔 / 精密计量的冷静
+\definecolor{nobelgold}{HTML}{C9A227}      % 诺奖金 — 1907 诺贝尔奖
+\definecolor{badgeLight}{HTML}{2E86AB}     % 光速测量 — 湖蓝
+\definecolor{badgeEther}{HTML}{A63D40}     % 以太实验 — 干涉红
+\definecolor{badgeStar}{HTML}{7A5C9E}      % 恒星干涉 — 星紫
+\definecolor{badgeMetro}{HTML}{4E6E58}     % 计量与光谱 — 青铜绿
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{17,37,54}
+\definecolor{muteddark}{RGB}{74,84,92}
+\definecolor{lightpanel}{RGB}{226,238,245}
+\definecolor{etherpanel}{RGB}{242,228,229}
+\definecolor{starpanel}{RGB}{234,228,242}
+\definecolor{metropanel}{RGB}{228,238,231}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆 + 干涉条纹弧段（等距明暗交替的光波母题）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[nobelgold!4] (current page.north west) rectangle (current page.south east);
+  % 左上角：等距明暗交替条纹弧段
+  \draw[seablue!15, line width=3.5pt] (current page.north west) circle (1.05cm);
+  \draw[seablue!6,  line width=3.5pt] (current page.north west) circle (1.55cm);
+  \draw[seablue!15, line width=3.5pt] (current page.north west) circle (2.05cm);
+  \draw[seablue!6,  line width=3.5pt] (current page.north west) circle (2.55cm);
+  \draw[seablue!15, line width=3.5pt] (current page.north west) circle (3.05cm);
+  % 气泡（四档错落）
+  \fill[badgeLight!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeStar!10]  (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[nobelgold!10]  (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[seablue!8]     ([xshift=5.2cm,yshift=-2.6cm]current page.center) circle (2.2cm);
+  % 右下角：淡金色细条纹
+  \draw[nobelgold!12, line width=2.5pt] (current page.south east) circle (1.0cm);
+  \draw[nobelgold!6,  line width=2.5pt] (current page.south east) circle (1.45cm);
+  \draw[nobelgold!12, line width=2.5pt] (current page.south east) circle (1.9cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openphysicist_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=seablue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{atom}\enspace 美国\enspace·\enspace 光学精密测量之父\enspace·\enspace 实验物理学家};
+  \node[anchor=center, font=\fontsize{25}{30}\selectfont\bfseries, text=seablue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {阿尔伯特·亚伯拉罕·迈克耳孙};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=seablue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Albert Abraham Michelson\enspace·\enspace 1852 — 1931};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=nobelgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {光速测量 · 以太实验 · 恒星干涉 · 精密计量};
+  \draw[nobelgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeLight] at (-5.05,0)
+        {光速测量\\Speed of Light\par\scriptsize 1879 · 1926};
+      \node[badge, fill=badgeEther] at (-1.68,0)
+        {以太实验\\Ether Drift\par\scriptsize 1887 零结果};
+      \node[badge, fill=badgeStar] at (1.68,0)
+        {恒星干涉\\Stellar Interf.\par\scriptsize 1920 参宿四};
+      \node[badge, fill=badgeMetro] at (5.05,0)
+        {精密计量\\Metrology\par\scriptsize 1907 诺奖理由};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"他发明的光学精密仪器，以及借助这些仪器进行的光谱学与计量学研究。" —— 1907 诺贝尔物理学奖获奖理由};
+  % 头像（1918 年美国海军肖像，images.txt 载）
+  \node[draw=nobelgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Albert_Abraham_Michelson_1918.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Albert_Abraham_Michelson_1918.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Albert A. Michelson, 1918 (U.S. Navy)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace 海军学院 · Case · Clark · 芝加哥大学\enspace|\enspace Nobel 1907};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 物理学家硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{nobelgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{迈克耳孙 - 从普鲁士到诺贝尔奖}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[draw=nobelgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\IfFileExists{images/Albert_Abraham_Michelson_1918.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Albert_Abraham_Michelson_1918.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Albert A. Michelson, 1918 (U.S. Navy)};
+  \node[infob, fill=goldpanel, draw=nobelgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1852-12-19 — 1931-05-09（享年 78）\\[2pt]\lab{本名}\quad Albert Abraham Michelson\\[2pt]\lab{国籍}\quad 美国（生于普鲁士，2 岁移民）};
+  \node[infob, fill=lightpanel, draw=badgeLight!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 美国海军学院（1873 毕业）\\[2pt]
+     \quad\enspace 柏林大学 · 海德堡大学\\[2pt]
+     \quad\enspace 巴黎 Collège de France · École polytechnique\\[2pt]
+     \lab{师承}\quad Helmholtz（柏林）· Cornu（巴黎）};
+  \node[infob, fill=starpanel, draw=badgeStar!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad Strelno, Prussia（今波兰 Strzelno）\\[2pt]\lab{去世地}\quad Pasadena, California（美国）\\[2pt]\lab{任职}\quad 美国海军 · Case · Clark · 芝加哥大学};
+  \node[infob, fill=metropanel, draw=badgeMetro!45, anchor=south] at (3.5,-1.85)
+    {\lab{主要荣誉}\quad Nobel 1907 · Copley 1907\\[2pt]
+     \quad\enspace RAS 金质奖章 1923 · ForMemRS 1902\\[2pt]
+     \lab{核心领域}\quad 光学 · 精密计量 · 光谱学\\[2pt]
+     \quad\enspace 天体物理干涉测量};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{核心贡献概览}{一位测量的远征者 · 四条主线}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[
+    leg/.style={rounded corners=5pt, inner xsep=10pt, inner ysep=9pt, text width=5.35cm,
+      font=\fontsize{7.2}{9.4}\selectfont, align=left}
+  ]
+  \node[leg, fill=lightpanel, draw=badgeLight!55, anchor=north] at (-3.15,2.5)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeLight!85!black}① 光速的毕生测量\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 从 1879 年安纳波利斯的 299,910 ± 50 km/s，到 1926 年威尔逊山的 299,796 ± 4 km/s——半个世纪的精度远征。}};
+  \node[leg, fill=etherpanel, draw=badgeEther!55, anchor=north] at (3.15,2.5)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeEther!85!black}② 迈克耳孙-莫雷实验（1887）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 与 Morley 合作寻找地球相对以太的运动，得到零结果——这个"失败"成了物理学史上最有影响的实验之一。}};
+  \node[leg, fill=starpanel, draw=badgeStar!55, anchor=south] at (-3.15,-1.55)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeStar!85!black}③ 天体物理干涉测量（1920）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 在威尔逊山 100 英寸胡克望远镜上，首次测出太阳以外一颗恒星——红巨星参宿四的直径。}};
+  \node[leg, fill=metropanel, draw=badgeMetro!55, anchor=south] at (3.15,-1.55)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeMetro!85!black}④ 精密仪器与计量\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 发明以分振幅产生双光束干涉的干涉仪——1907 年诺贝尔奖表彰的正是"光学精密仪器及借助它们的光谱学与计量学研究"。}};
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：从普鲁士小镇到美国西部 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：从普鲁士小镇到美国西部}{1852–1869 · Strelno · 矿镇童年 · 不可知论者}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{seablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{轨迹}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{备注}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1852-12-19} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{生于普鲁士 Strelno（今波兰 Strzelno），波兰犹太家庭} & \cellcolor{graypanel}\textcolor{coverdark!75}{"普鲁士出生"与"美国诺奖第一人"并列} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1855} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{2 岁随父母移居美国} & \cellcolor{graypanel}\textcolor{coverdark!75}{美国长大} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{童年} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{在加州 Murphy's Camp 与内华达 Virginia City 矿镇长大，父亲经商} & \cellcolor{graypanel}\textcolor{coverdark!75}{西部边疆的少年时代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{少年} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{高中寄居旧金山姨母 Henriette Levy 家；妹妹 Miriam 后成为小说家} & \cellcolor{graypanel}\textcolor{coverdark!75}{家中亦有文脉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{家庭氛围} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{家庭不宗教，本人终生不可知论者（agnostic）} & \cellcolor{graypanel}\textcolor{coverdark!75}{与虔诚的 Morley 形成对照} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从矿区少年到精密测量大师，中间隔着一条海军学院的走廊。}
+\end{center}
+\end{frame}}
+
+% --- 5. 海军学院与第一束光 ---
+\newcommand{\navyslide}{\begin{frame}\plainbar\sectiontitle{海军学院与第一束光 (1869–1879)}{Grant 特别任命 · 安纳波利斯的北海墙}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{seablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{轨迹}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1869} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{经 Grant 总统特别任命入美国海军学院；学员期间擅长光学、热学、气候学与工程制图} & \cellcolor{graypanel}\textcolor{coverdark!75}{军旅与光学的交汇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1873} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{毕业任航海学员，海上服役两年} & \cellcolor{graypanel}\textcolor{coverdark!75}{海上岁月} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1875–1879} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{回海军学院任物理与化学讲师} & \cellcolor{graypanel}\textcolor{coverdark!75}{讲台上的实验家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1877–1878} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{1877 年在课堂演示中首次做光速实验；1878 年用简陋设备初步测量，工作引起 Newcomb 注意} & \cellcolor{graypanel}\textcolor{coverdark!75}{兴趣成形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1879} & \cellcolor{metropanel}\textcolor{badgeMetro!82!black}{6–7 月正式实验：沿学院北海墙搭建实验室；发表 299,910 ± 50 km/s；同年入华盛顿航海年历办公室，与 Simon Newcomb 开始长期合作} & \cellcolor{graypanel}\textcolor{coverdark!75}{光速测量的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.42cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 1879 旋转镜法（改进 Fizeau/Foucault 的装置）}\\[2pt]
+  {\fontsize{9.5}{13}\selectfont\color{seablue!88!black}$\tan(2\alpha)=d/r$\qquad $\Delta t=(\alpha/2\pi)/\omega$\qquad $c=2D/\Delta t$}
+  \end{minipage}%
+}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{7.5}{10}\selectfont\itshape\color{muteddark} 同年，Maxwell 致天文学家 David Peck Todd 的一封信辗转引起他的注意——或为重要动机（page.md 注 17）。}
+\end{center}
+\end{frame}}
+
+% --- 6. 欧洲游学 ---
+\newcommand{\europeslide}{\begin{frame}\plainbar\sectiontitle{欧洲游学 (1880–1882)}{柏林 · 海德堡 · 巴黎 · 辞去军职}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{seablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1880} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{休假赴欧游学，继续深造} & \cellcolor{graypanel}\textcolor{coverdark!75}{走向欧洲物理学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{柏林大学} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{师从 Hermann von Helmholtz（metadata 载其为博士导师）} & \cellcolor{graypanel}\textcolor{coverdark!75}{一代宗师门下} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{海德堡 · 巴黎} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{海德堡大学；巴黎 Collège de France 与 École polytechnique，师从 Marie Alfred Cornu} & \cellcolor{graypanel}\textcolor{coverdark!75}{光学谱系的欧洲源头} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1881} & \cellcolor{metropanel}\textcolor{badgeMetro!82!black}{两年游学后辞去海军现役军职，此后专职物理学} & \cellcolor{graypanel}\textcolor{coverdark!75}{从军官到物理学家} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 军装换成常礼服，测量光速的执念却从未更换。}
+\end{center}
+\end{frame}}
+
+% --- 7. 迈克耳孙干涉仪 ---
+\newcommand{\interferometerslide}{\begin{frame}\plainbar\sectiontitle{迈克耳孙干涉仪 (1881–1889)}{Case 学院 · 分振幅双光束干涉}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{seablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{装置原理} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{以分振幅法把一束光分成两路，再汇合产生干涉——以条纹的移动度量极其微小的光程差} & \cellcolor{graypanel}\textcolor{coverdark!75}{20 世纪光学的基石装置} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1883 · Case} & \cellcolor{metropanel}\textcolor{badgeMetro!82!black}{应聘俄亥俄克利夫兰的 Case 应用科学学院物理学教授，并创建其物理系；"集中精力研制改进型干涉仪"（page.md）} & \cellcolor{graypanel}\textcolor{coverdark!75}{仪器的摇篮} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{精确测量} & \cellcolor{metropanel}\textcolor{badgeMetro!82!black}{其精度使他与 Morley 首次精确测得原子谱线的精细结构；后用于光的波长计量} & \cellcolor{graypanel}\textcolor{coverdark!75}{从装置到科学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{现代回响} & \cellcolor{starpanel}\textcolor{badgeStar!82!black}{实验室型迈克耳孙干涉仪正是迈克耳孙-莫雷实验所用装置的一例；今日 LIGO 引力波探测器仍是 4 km 臂的迈克耳孙构型} & \cellcolor{graypanel}\textcolor{coverdark!75}{一个世纪的寿命} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他造的不是一台仪器，而是一种此后百年不断放大的测量方式。}
+\end{center}
+\end{frame}}
+
+% --- 8. 1887：与莫雷的"失败"实验 ---
+\newcommand{\morleyslide}{\begin{frame}\plainbar\sectiontitle{1887：与莫雷的"失败"实验}{迈克耳孙-莫雷实验 · 零结果}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{seablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{备注}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{合作者} & \cellcolor{etherpanel}\textcolor{badgeEther!82!black}{Edward Williams Morley——Western Reserve 大学的同事；原修神学、后转化学（Barrow 载）} & \cellcolor{graypanel}\textcolor{coverdark!75}{实验以两人姓氏并称} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{目的} & \cellcolor{etherpanel}\textcolor{badgeEther!82!black}{寻找地球相对"以太"——光传播所依赖的假想介质——的运动} & \cellcolor{graypanel}\textcolor{coverdark!75}{19 世纪物理学的时代之问} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{结果} & \cellcolor{etherpanel}\textcolor{badgeEther!82!black}{零结果（null result）：未探测到预期中的以太运动} & \cellcolor{graypanel}\textcolor{coverdark!75}{没有找到要找的东西} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{执着复测} & \cellcolor{etherpanel}\textcolor{badgeEther!82!black}{迈克耳孙对此感到惊讶，此后多年以越来越高的精度重复实验，始终未能测到以太} & \cellcolor{graypanel}\textcolor{coverdark!75}{诚实的失败} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{影响力} & \cellcolor{metropanel}\textcolor{badgeMetro!82!black}{结果在物理学界影响巨大（"immensely influential"，page.md）} & \cellcolor{graypanel}\textcolor{coverdark!75}{"失败"改变了物理学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 9. 零结果的余波 ---
+\newcommand{\afterslide}{\begin{frame}\plainbar\sectiontitle{零结果的余波}{Lorentz 收缩 · 爱因斯坦之争 · 精细结构}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[
+    card/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=7pt, text width=7.3cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[card, fill=etherpanel, draw=badgeEther!50, anchor=north]
+    at (-3.35,2.3) {\lab{洛伦兹收缩}\quad 为解释这一零结果，Hendrik Lorentz 提出了后来著名的洛伦兹收缩方程（page.md）};
+  \node[card, fill=lightpanel, draw=badgeLight!50, anchor=north]
+    at (-3.35,0.7) {\lab{历史争议}\quad 爱因斯坦创立狭义相对论时是否知晓该结果，历史上一直有争议——1905 年论文中看似引用该实验的那句话，实际所指是另一类实验};
+  \node[card, fill=starpanel, draw=badgeStar!50, anchor=north]
+    at (-3.35,-1.25) {\lab{意外的收获}\quad 正是设备的精度，使迈克耳孙与莫利首次精确测得原子谱线的精细结构——1916 年 Sommerfeld 给出理论解释并引入精细结构常数};
+  \node[draw=nobelgold!55, line width=1.2pt, rounded corners=5pt, fill=goldpanel, inner sep=7pt, anchor=north,
+    text width=4.6cm, font=\fontsize{7.4}{9.6}\selectfont, align=left]
+    at (3.6,2.3) {\lab{爱因斯坦晚年访谈（page.md 原文）}\\[3pt]
+     \itshape "I was not conscious it had influenced me directly \ldots\ I guess I just took it for granted that it was true."\\[3pt]
+     {\upshape\color{muteddark}"我没有意识到它直接影响了我……我想我只是理所当然地认为它是对的。"}\\[3pt]
+     {\scriptsize\color{muteddark}——表述为"历史上有争议"，勿断言该实验直接启发了相对论}};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个测不出来的结果，逼出了 20 世纪物理学的新地基。}
+\end{center}
+\end{frame}}
+
+% --- 10. 芝加哥大学 ---
+\newcommand{\chicagoslide}{\begin{frame}\plainbar\sectiontitle{Case · Clark · 芝加哥大学 (1883–1929)}{两个物理系的创始人 · 首任主任}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{seablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{任职}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1883} & \cellcolor{metropanel}\textcolor{badgeMetro!82!black}{Case 应用科学学院物理学教授——物理系的创始人暨首任主任} & \cellcolor{graypanel}\textcolor{coverdark!75}{第一个物理系} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1890} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{克拉克大学（Clark University, Worcester）教授} & \cellcolor{graypanel}\textcolor{coverdark!75}{过渡一站} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1892} & \cellcolor{metropanel}\textcolor{badgeMetro!82!black}{新组建的芝加哥大学教授暨首任物理系主任，直到 1929 年退休} & \cellcolor{graypanel}\textcolor{coverdark!75}{37 年的主帅生涯} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1890s} & \cellcolor{starpanel}\textcolor{badgeStar!82!black}{与 S. W. Stratton 制造"谐波分析仪"——计算傅里叶级数系数并绘制部分和图形的机械装置；1898 年合著论文发表于 \textit{American Journal of Science}} & \cellcolor{graypanel}\textcolor{coverdark!75}{机械计算的前驱} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从克利夫兰到芝加哥，他把实验物理学系当成另一台精密仪器来建造。}
+\end{center}
+\end{frame}}
+
+% --- 11. Mount Wilson：光速的终极测量 ---
+\newcommand{\wilsonslide}{\begin{frame}\plainbar\sectiontitle{Mount Wilson：光速的终极测量}{1924–1926 · 22 英里基线 · 山火与地震之间}
+\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{1.6cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.4cm}}
+\toprule
+\rowcolor{seablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{地点 / 项目}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{测量值 (km/s)}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1879} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{安纳波利斯（北海墙实验）} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{299,910 ± 50} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1879} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{华盛顿 · Simon Newcomb（互相印证）} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{299,860 ± 30} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1883} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{Case 时期（更接近导师之值）} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{299,853 ± 60} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1926} & \cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Mount Wilson–Lookout Mountain 基线} & \cellcolor{goldpanel}\textcolor{nobelgold!88!black}{\textbf{299,796 ± 4}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1935} & \cellcolor{starpanel}\textcolor{badgeStar!82!black}{真空管实验（身后发表）} & \cellcolor{starpanel}\textcolor{badgeStar!82!black}{299,774 ± 11} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+{\fontsize{7.6}{10}\selectfont\color{muteddark}
+1920 年起规划；美国海岸大地测量局以 invar 卷尺历时两年（1922–1924）测定 22 英里基线，此后两年正式测量。困扰：山火烟霾模糊镜像；1925-06-29 Santa Barbara 地震（约 6.3 级）或使基线位移。}
+\end{center}
+\end{frame}}
+
+% --- 12. 恒星干涉测量 ---
+\newcommand{\stellarslide}{\begin{frame}\plainbar\sectiontitle{恒星干涉测量 (1920)}{胡克望远镜 · 第一颗被测直径的"太阳以外"恒星}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{seablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1920 · 首测} & \cellcolor{starpanel}\textcolor{badgeStar!82!black}{与 Francis G. Pease 在威尔逊山天文台首次测出\textbf{太阳以外}一颗恒星的直径——红巨星参宿四（Betelgeuse）} & \cellcolor{graypanel}\textcolor{coverdark!75}{发明天体物理干涉测量} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{装置} & \cellcolor{starpanel}\textcolor{badgeStar!82!black}{100 英寸胡克（Hooker）望远镜顶部的恒星干涉仪：相距至多 20 英尺（6 m）的两个副瞳经潜望镜布局把星光导入主瞳，在目镜中观察干涉条纹} & \cellcolor{graypanel}\textcolor{coverdark!75}{小孔径 + 长基线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{遗产} & \cellcolor{starpanel}\textcolor{badgeStar!82!black}{1970 年代天文干涉测量复兴，此类构型被称为"Michelson Stellar Interferometry"；VLTI、CHARA、NPOI 等现代阵列沿用其概念} & \cellcolor{graypanel}\textcolor{coverdark!75}{今日仍在观测台运行} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{荣誉印证} & \cellcolor{metropanel}\textcolor{badgeMetro!82!black}{1923 年皇家天文学会金质奖章，表彰"将干涉仪应用于天文测量"（page.md 载颁奖词）} & \cellcolor{graypanel}\textcolor{coverdark!75}{同行的承认} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 此后余生，恒星直径与双星间距的测量占据了他越来越多的时间。}
+\end{center}
+\end{frame}}
+
+% --- 13. 最后的真空管实验 ---
+\newcommand{\vacuumslide}{\begin{frame}\plainbar\sectiontitle{最后的真空管实验 (1929–1935)}{近完美真空 · 36 / 233 组 · 身后发表}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{seablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{备注}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1929 · 合作} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{为避开大气效应，与 Francis G. Pease、Fred Pearson 在加州 Santa Ana 附近的 Irvine Ranch 开始新测量} & \cellcolor{graypanel}\textcolor{coverdark!75}{晚年最后一役} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{装置} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{1.6 km 长、3 英尺直径的真空管；多次反射使光程增至 5 英里} & \cellcolor{graypanel}\textcolor{coverdark!75}{史上最大光学基线之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{首次} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{史上第一次在近乎完美的真空（0.5 mm 汞柱）中测量光速} & \cellcolor{graypanel}\textcolor{coverdark!75}{方法学的顶点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{结局} & \cellcolor{etherpanel}\textcolor{badgeEther!82!black}{233 组测量只完成 36 组，迈克耳孙即去世（1931-05-09）；实验其后又受地质不稳定与冷凝问题困扰} & \cellcolor{graypanel}\textcolor{coverdark!75}{未竟之战} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{身后发表} & \cellcolor{metropanel}\textcolor{badgeMetro!82!black}{299,774 ± 11 km/s 于 1935 年发表，署名 Michelson, Pease \& Pearson} & \cellcolor{graypanel}\textcolor{coverdark!75}{迟到的答案} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{7.5}{10}\selectfont\itshape\color{muteddark} 趣闻：1929 年 11 月，法国科学院曾误发迈克耳孙的死讯（page.md 注 21）。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与纪念 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与纪念}{美国首位科学诺奖 · 一座座以他命名的建筑}
+\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.66}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{seablue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{内容}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{诺贝尔奖 1907} & \cellcolor{goldpanel}\textcolor{nobelgold!88!black}{独得、无共同得主——美国首位科学类诺奖得主；同年获皇家学会 Copley Medal（"表彰其光学研究"）。海军学院校园保留其实验路径纪念碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{奖章与会员} & \cellcolor{lightpanel}\textcolor{badgeLight!82!black}{Rumford 1888 · Matteucci 1903 · Elliott Cresson 1912 · Henry Draper 1916 · Albert 1920 · Prix Jules Janssen 1922 · RAS 金质 1923 · Franklin 1923 · Duddell 1929；皇家学会外籍会员 1902 · 美国国家科学院院士 1888} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{纪念} & \cellcolor{metropanel}\textcolor{badgeMetro!82!black}{Michelson House（芝大 / CWRU）· Michelson Hall（海军学院）· China Lake 的 Michelson Laboratory（藏诺奖奖章复制品与衍射光栅）；2017 年芝大物理研究中心以他命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{现代回响} & \cellcolor{starpanel}\textcolor{badgeStar!82!black}{LIGO 等引力波探测器即臂长 4 km 的迈克耳孙干涉仪——2020 年已有 3 台运行、1 台在建，累计观测到 15 起引力波事件（page.md）} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 官方获奖理由（1907，page.md 原文）}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{seablue!88!black}"For his optical precision instruments and the spectroscopic and metrological investigations carried out with their aid."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=seablue!90!black] at ([yshift=1.5cm]current page.center) {从安纳波利斯的海墙，到威尔逊山之巅，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=nobelgold!85!black] at ([yshift=0.4cm]current page.center) {再到 4 公里长的引力波干涉臂。};
+\draw[nobelgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=seablue!70!black] at ([yshift=-1.2cm]current page.center) {据说，有人问他为何研究光——"因为它太有趣了。"};
+\node[font=\fontsize{8}{10}\selectfont, text=seablue!60!black] at ([yshift=-2.0cm]current page.center) {迈克耳孙\quad Albert Abraham Michelson\quad 1852 — 1931\quad（享年 78 岁）};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{atom}\enspace 光速测量 · 以太实验 · 恒星干涉 · 精密计量\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\navyslide
+\europeslide
+\interferometerslide
+\morleyslide
+\afterslide
+\chicagoslide
+\wilsonslide
+\stellarslide
+\vacuumslide
+\honorslide
+\closingslide
+\end{document}

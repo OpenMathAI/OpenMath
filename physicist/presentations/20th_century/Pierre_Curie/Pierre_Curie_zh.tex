@@ -1,0 +1,518 @@
+% =============================================================
+%  放射性研究先驱：皮埃尔·居里 (Pierre Curie)
+%  Beamer 演示 —— 参照 Becquerel 模板版式（表格语义化 + 公式框 + 卡片）
+%  资料来源：physicist/presentations/20th_century/20th_century/Pierre_Curie
+%  设计母题：晶体对称 / 磁畴有序 —— 柔和气泡 + 晶格点阵
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：深晶蓝（晶体/磁学的精密）+ 诺奖金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{crystalblue}{HTML}{1C3F60}    % 深晶蓝 — 晶体学 / 磁学 / 仪器制造者
+\definecolor{nobelgold}{HTML}{C9A227}      % 诺奖金 — 1903 诺贝尔奖
+\definecolor{badgePiezo}{HTML}{2C7A7B}     % 压电与晶体 — 晶体青
+\definecolor{badgeMag}{HTML}{3B5BA5}       % 磁学 — 磁蓝
+\definecolor{badgeRad}{HTML}{4E9A51}       % 放射性 — 镭绿
+\definecolor{badgeFam}{HTML}{B23A5E}       % 原理与家族 — 玫瑰红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{16,38,60}
+\definecolor{muteddark}{RGB}{70,80,92}
+\definecolor{piezopanel}{RGB}{228,240,240}
+\definecolor{magpanel}{RGB}{226,233,244}
+\definecolor{radpanel}{RGB}{232,242,230}
+\definecolor{fampanel}{RGB}{247,231,236}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\definecolor{silverpanel}{RGB}{230,233,238}
+\setbeamercolor{background canvas}{bg=bgmain}
+% 圆数字 ①②③④ 交给中文字体渲染，避免拉丁字体缺字
+\xeCJKDeclareCharClass{CJK}{"2460 -> "24FF}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆 + 极淡晶格点阵（晶体对称母题）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[nobelgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgePiezo!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeMag!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeRad!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeFam!9] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[badgePiezo!7] ([xshift=-6.2cm, yshift=-0.9cm]current page.center) circle (0.05cm);
+  \fill[badgePiezo!7] ([xshift=-5.9cm, yshift=-0.9cm]current page.center) circle (0.05cm);
+  \fill[badgePiezo!7] ([xshift=-5.6cm, yshift=-0.9cm]current page.center) circle (0.05cm);
+  \fill[badgePiezo!7] ([xshift=-6.2cm, yshift=-0.6cm]current page.center) circle (0.05cm);
+  \fill[badgePiezo!7] ([xshift=-5.9cm, yshift=-0.6cm]current page.center) circle (0.05cm);
+  \fill[badgePiezo!7] ([xshift=-5.6cm, yshift=-0.6cm]current page.center) circle (0.05cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openphysicist_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=crystalblue!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{atom}\enspace 法国\enspace·\enspace 放射性研究先驱\enspace·\enspace 物理学家与化学家};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=crystalblue!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {皮埃尔·居里};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=crystalblue!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Pierre Curie\enspace·\enspace 1859 — 1906};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=nobelgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {压电效应 · 居里定律与居里温度 · 钋与镭 · 对称性原理};
+  \draw[nobelgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgePiezo] at (-5.05,0)
+        {压电效应\\Piezoelectricity\par\scriptsize 1880 兄弟发现};
+      \node[badge, fill=badgeMag] at (-1.68,0)
+        {磁学\\Magnetism\par\scriptsize 居里定律·居里温度};
+      \node[badge, fill=badgeRad] at (1.68,0)
+        {放射性\\Radioactivity\par\scriptsize 钋与镭};
+      \node[badge, fill=badgeFam] at (5.05,0)
+        {对称性原理\\Curie's Principle\par\scriptsize 效应与原因};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"表彰他们基于亨利·贝克勒尔教授所发现的辐射现象进行的联合研究所作出的杰出贡献。" —— 1903 诺贝尔物理学奖获奖理由};
+  % 合影（1903 年 Pierre 与 Marie 合影，用户指定封面头像）
+  \node[draw=nobelgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=2.85cm]current page.center)
+    {\IfFileExists{images/Pierre_Curie.jpeg}{\includegraphics[width=2.4cm,keepaspectratio]{Pierre_Curie.jpeg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted, align=center, text width=2.9cm]
+    at ([xshift=6.86cm, yshift=1.0cm]current page.center) {Pierre Curie};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国\enspace|\enspace \faIcon{university}\enspace University of Paris · ESPCI\enspace|\enspace Nobel 1903};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 物理学家硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{nobelgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{居里 - 从家庭教育到诺贝尔奖}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[draw=nobelgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\IfFileExists{images/Pierre_Curie.jpeg}{\includegraphics[width=3.0cm,keepaspectratio]{Pierre_Curie.jpeg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.45) {Pierre Curie};
+  \node[infob, fill=goldpanel, draw=nobelgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1859-05-15 — 1906-04-19\\[2pt]\lab{本名}\quad Pierre Curie\\[2pt]\lab{国籍}\quad 法国};
+  \node[infob, fill=magpanel, draw=badgeMag!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 家庭自学 · 巴黎大学理学院\\[2pt]
+     \quad 1878 物理学 licentiate · 1895 D.Sc.\\[2pt]
+     \lab{师承}\quad Gabriel Lippmann（博士导师）};
+  \node[infob, fill=piezopanel, draw=badgePiezo!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 巴黎（法国）\\[2pt]\lab{去世地}\quad 巴黎（法国）\\[2pt]\lab{任职}\quad University of Paris · ESPCI};
+  \node[infob, fill=radpanel, draw=badgeRad!45, anchor=south] at (3.5,-1.85)
+    {\lab{主要荣誉}\quad Nobel 1903 · Davy 1903\\[2pt]
+     \quad Matteucci 1904 · Cresson 1909\\[2pt]
+     \lab{核心领域}\quad 晶体学 · 磁学 · 压电 · 放射性};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{核心贡献概览}{一位仪器制造者 · 四条发现之路}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[
+    leg/.style={rounded corners=5pt, inner xsep=10pt, inner ysep=9pt, text width=5.35cm,
+      font=\fontsize{7.2}{9.4}\selectfont, align=left}
+  ]
+  \node[leg, fill=piezopanel, draw=badgePiezo!55, anchor=north] at (-3.15,2.5)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgePiezo!85!black}① 压电效应（1880，与兄 Jacques）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 晶体受压即生电位差；为测量而发明压电石英静电计。今日几乎所有数字电路中的晶体振荡器皆源于此。}};
+  \node[leg, fill=magpanel, draw=badgeMag!55, anchor=north] at (3.15,2.5)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeMag!85!black}② 磁学（1895 博士论文）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 极高灵敏度扭力天平；居里定律、居里常数与居里温度——温度如何改变顺磁与铁磁的边界。}};
+  \node[leg, fill=radpanel, draw=badgeRad!55, anchor=south] at (-3.15,-1.55)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeRad!85!black}③ 钋、镭与放射性\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 与 Marie 首先使用 radioactivity 一词；1898 年发现钋与镭；与 Laborde 确认镭持续放热——核能的首次线索。}};
+  \node[leg, fill=fampanel, draw=badgeFam!55, anchor=south] at (3.15,-1.55)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeFam!85!black}④ 居里对称性原理\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 物理效应不能具有其原因所不具有的不对称性——一条关于因果与对称的普适判据。}};
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 家庭教育的少年 ---
+\newcommand{\familyslide}{\begin{frame}\plainbar\sectiontitle{家庭教育的少年 (1859–1882)}{全科医生之子 · 未受正规学校教育 · 大器而不早成}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{crystalblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{轨迹}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1859} & \cellcolor{piezopanel}\textcolor{badgePiezo!82!black}{生于巴黎，父亲是全科医生；父亲亲自施教，Pierre 在家中完成全部早期教育（homeschooling）} & \cellcolor{silverpanel}\textcolor{coverdark!70}{不走寻常路的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1878（19 岁）} & \cellcolor{piezopanel}\textcolor{badgePiezo!82!black}{进入巴黎大学理学院（Faculty of Sciences），获物理学 licentiate（学士级学位）} & \cellcolor{silverpanel}\textcolor{coverdark!70}{未受正规学校教育即入大学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1878–1882} & \cellcolor{piezopanel}\textcolor{badgePiezo!82!black}{留校任实验室助教（laboratory demonstrator）} & \cellcolor{silverpanel}\textcolor{coverdark!70}{动手训练的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1882} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{加入 ESPCI Paris（巴黎市工业物理化学学院）任教} & \cellcolor{silverpanel}\textcolor{coverdark!70}{此后长期的研究基地} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他 19 岁取得学位，却要到 35 岁才完成博士——大器而不早成。}
+\end{center}
+\end{frame}}
+
+% --- 5. 压电效应与兄弟 Jacques ---
+\newcommand{\piezoslide}{\begin{frame}\plainbar\sectiontitle{压电效应：与兄长 Jacques 共同的发现 (1880–1881)}{正效应 · 逆效应 · 石英静电计 · 晶体振荡器}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{crystalblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1880} & \cellcolor{piezopanel}\textcolor{badgePiezo!82!black}{Pierre 与兄长 Jacques 证实：晶体受压缩时产生电位差——即压电效应（piezoelectricity）} & \cellcolor{silverpanel}\textcolor{coverdark!70}{兄弟二人的共同发现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{为测量而发明} & \cellcolor{piezopanel}\textcolor{badgePiezo!82!black}{兄弟发明压电石英静电计（piezoelectric quartz electrometer）以辅助此项工作} & \cellcolor{silverpanel}\textcolor{coverdark!70}{仪器成为后续研究的钥匙} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1881} & \cellcolor{piezopanel}\textcolor{badgePiezo!82!black}{证实逆效应：电场可使晶体发生形变} & \cellcolor{silverpanel}\textcolor{coverdark!70}{正逆两个方向都成立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{今日} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{几乎所有数字电子电路都以晶体振荡器的形式依赖这一效应} & \cellcolor{silverpanel}\textcolor{coverdark!70}{从 1880 的石英到今日的芯片} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 这台为压电而造的静电计，日后将成为放射性测量的核心仪器。}
+\end{center}
+\end{frame}}
+
+% --- 6. 磁性研究：1895 博士论文 ---
+\newcommand{\magslide}{\begin{frame}\plainbar\sectiontitle{磁学研究：1895 博士论文}{扭力天平 · 居里定律 · 居里温度}
+\vspace{-0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+    card/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=7pt, text width=12.0cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[card, fill=magpanel, draw=badgeMag!50, anchor=north]
+    at (0,2.05) {\lab{仪器}\quad 设计并完善极高灵敏度的扭力天平（torsion balance），用于测量磁系数——后来的研究者普遍沿用其变体};
+  \node[card, fill=magpanel, draw=badgeMag!50, anchor=north]
+    at (0,1.05) {\lab{系统研究}\quad 博士论文《Propriétés magnétiques des corps à diverses températures》系统研究铁磁性、顺磁性与抗磁性};
+  \node[card, fill=goldpanel, draw=nobelgold!50, anchor=north]
+    at (0,0.05) {\lab{居里定律}\quad 发现温度对顺磁性的影响，其中的材料常数被称为居里常数（Curie constant）};
+  \node[card, fill=goldpanel, draw=nobelgold!50, anchor=north]
+    at (0,-0.95) {\lab{居里温度}\quad 发现铁磁物质的临界温度转变——超过此温度铁磁性消失；今日仍用于板块构造、低温症治疗、咖啡因测量与地外磁场研究};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.42cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 居里定律（顺磁磁化率随温度的变化）}\\[2pt]
+  {\fontsize{10.5}{14}\selectfont\color{crystalblue!88!black}$\chi=\dfrac{C}{T}$\qquad\scriptsize（$\chi$ 磁化率 · $C$ 居里常数 · $T$ 绝对温度）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 居里对称性原理 ---
+\newcommand{\principleslide}{\begin{frame}\plainbar\sectiontitle{居里对称性原理}{效应不能具有原因所没有的不对称}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 居里不对称原理（Curie Dissymmetry Principle）}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{crystalblue!88!black}物理效应不能具有其原因所不具有的不对称性——结果中的每一处不对称，都必然来自原因。}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.25cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{crystalblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{思想实验}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{推理}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结论}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{零重力下的沙粒} & \cellcolor{fampanel}\textcolor{badgeFam!82!black}{随机混合的沙粒在零重力中没有不对称性（各向同性）——沙粒分布处处均匀} & \cellcolor{silverpanel}\textcolor{coverdark!70}{原因无不对称，结果亦无} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{引入重力场} & \cellcolor{fampanel}\textcolor{badgeFam!82!black}{重力场有方向，出现了不对称——沙粒于是"自排序"，密度随深度增加} & \cellcolor{silverpanel}\textcolor{coverdark!70}{原因的不对称传给了结果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{回看结果} & \cellcolor{fampanel}\textcolor{badgeFam!82!black}{沙粒按方向排列的新分布，恰恰反映的是造成分离的重力场的不对称} & \cellcolor{silverpanel}\textcolor{coverdark!70}{从结果读出原因} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 8. 与 Marie 相遇 ---
+\newcommand{\marieslide}{\begin{frame}\plainbar\sectiontitle{与 Marie 相遇 (1894–1895)}{引荐 · 实验室 · 求婚 · 成婚}
+\vspace{-0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+    card/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=7pt, text width=7.3cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[draw=nobelgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.1,0.35) {\IfFileExists{images/Pierre_Curie_et_Marie_1895.jpg}{\includegraphics[width=3.4cm,keepaspectratio]{Pierre_Curie_et_Marie_1895.jpg}}{\textcolor{covermuted}{\faIcon{image}}}};
+  \node[anchor=north, font=\fontsize{6.0}{7.2}\selectfont\itshape, text=covermuted, align=center, text width=4.2cm]
+    at (-6.1,-2.15) {Pierre and Marie Skłodowska-Curie, 1895};
+  \node[card, fill=fampanel, draw=badgeFam!50, anchor=north]
+    at (0.4,2.15) {\lab{引荐}\quad 波兰物理学家 Józef Wierusz-Kowalski 介绍二人相识};
+  \node[card, fill=fampanel, draw=badgeFam!50, anchor=north]
+    at (0.4,1.05) {\lab{起点}\quad Pierre 接纳 Marie 进入自己的实验室——她成为他的学生};
+  \node[card, fill=goldpanel, draw=nobelgold!50, anchor=north]
+    at (0.4,-0.05) {\lab{求婚}\quad Marie 起初拒绝了他的第一次求婚，最终同意——1895-07-26 成婚};
+  \node[card, fill=goldpanel, draw=nobelgold!50, anchor=north]
+    at (0.4,-1.15) {\lab{信中的话}\quad "若能与你共度一生……那将是一件美事：你爱国的梦、我们人道主义的梦，还有我们科学的梦。"};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一段婚姻，也是二十世纪最重要的科学合作之一。}
+\end{center}
+\end{frame}}
+
+% --- 9. 钋与镭 ---
+\newcommand{\poloniumslide}{\begin{frame}\plainbar\sectiontitle{钋与镭：命名 radioactivity (1898)}{与 Marie 的合作 · Bémont · ESPCI 棚屋}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{crystalblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{一个新词} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{Pierre 与 Marie 首先使用 radioactivity（放射性）一词，并成为这一领域的先驱} & \cellcolor{silverpanel}\textcolor{coverdark!70}{为现象命名的人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{分离钋与镭} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{夫妇合作从矿渣中分离出钋（polonium）与镭（radium）；所用的高灵敏度压电静电计正是 Pierre 与其兄 Jacques 所造} & \cellcolor{silverpanel}\textcolor{coverdark!70}{1880 年的仪器在此重逢} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1898-12-26} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{与 Marie 及 G. Bémont 联合发表镭与钋之发现的论文} & \cellcolor{silverpanel}\textcolor{coverdark!70}{三人署名的历史文献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{2015} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{这篇 1898 年论文获美国化学会 Citation for Chemical Breakthrough Award，授予 ESPCI Paris} & \cellcolor{silverpanel}\textcolor{coverdark!70}{一个多世纪后的回响} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 选题是 Marie 的，仪器是 Pierre 的——放射性研究从合作开始。}
+\end{center}
+\end{frame}}
+
+% --- 10. 核能与三类射线 ---
+\newcommand{\energyslide}{\begin{frame}\plainbar\sectiontitle{核能的线索与三类射线}{Laborde · 镭持续放热 · 磁场分选 $\alpha$ $\beta$ $\gamma$}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{crystalblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{研究}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{观察}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结论}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{核能的首次发现} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{与学生 Albert Laborde 确认镭颗粒持续放出热量} & \cellcolor{silverpanel}\textcolor{coverdark!70}{核结合能的第一条实验线索} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{磁场分选} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{用磁场研究放射性物质的辐射：一部分带正电、一部分带负电、一部分中性} & \cellcolor{silverpanel}\textcolor{coverdark!70}{对应 $\alpha$、$\beta$、$\gamma$ 三类射线} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 磁场中的三类射线（后来定名）}\\[2pt]
+  {\fontsize{10.5}{14}\selectfont\color{crystalblue!88!black}$\alpha$（正电）\qquad $\beta$（负电）\qquad $\gamma$（电中性）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 1903 荣誉之年 ---
+\newcommand{\nobelslide}{\begin{frame}\plainbar\sectiontitle{1903 荣誉之年}{皇家学会 · Davy Medal · 诺贝尔物理学奖}
+\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{crystalblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{备注}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{皇家学会演讲} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{皇家学会邀请 Pierre 主讲夫妇的研究；按当时的惯例 Marie 不被允许发言，Lord Kelvin 坐在她的身旁} & \cellcolor{silverpanel}\textcolor{coverdark!70}{那个时代的性别惯例} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Davy Medal} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{伦敦之行，夫妇同获皇家学会 Davy Medal——"表彰其对镭的研究"} & \cellcolor{silverpanel}\textcolor{coverdark!70}{"For their researches on radium."} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{诺贝尔物理学奖} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{夫妇共享一半（另一半归 Becquerel）——居里夫妇由此成为首对共同获诺奖的夫妇，开启居里家族五座诺奖的传奇} & \cellcolor{silverpanel}\textcolor{coverdark!70}{份额：夫妇一半 · Becquerel 一半} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.55cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 官方获奖理由（1903，英文原文）}\\[2pt]
+  {\fontsize{8.2}{10.8}\selectfont\color{crystalblue!88!black}"In recognition of the extraordinary services they have rendered by their joint researches on the radiation phenomena discovered by Professor Henri Becquerel."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 讲席与 1905 演讲 ---
+\newcommand{\chairsclide}{\begin{frame}\plainbar\sectiontitle{讲席与 1905 诺贝尔演讲}{巴黎大学 · 法兰西学术院 · 斯德哥尔摩}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{crystalblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1895} & \cellcolor{piezopanel}\textcolor{badgePiezo!82!black}{获巴黎大学 D.Sc. 后，被任命为物理学教授（ESPCI 任教同期）} & \cellcolor{silverpanel}\textcolor{coverdark!70}{35 岁的教授} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1900} & \cellcolor{piezopanel}\textcolor{badgePiezo!82!black}{升任巴黎大学理学院教授（Professor in the Faculty of Sciences）} & \cellcolor{silverpanel}\textcolor{coverdark!70}{回到母校的讲席} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1904} & \cellcolor{piezopanel}\textcolor{badgePiezo!82!black}{成为 titular professor（正席教授）} & \cellcolor{silverpanel}\textcolor{coverdark!70}{诺奖前夜的学术地位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1905} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{当选法兰西学术院院士；6 月 6 日在斯德哥尔摩补做诺贝尔演讲《Radioactive Substances, Especially Radium》} & \cellcolor{silverpanel}\textcolor{coverdark!70}{迟到两年的演讲} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从家庭课堂到索邦讲席，他走的每一步都慢而扎实。}
+\end{center}
+\end{frame}}
+
+% --- 13. 1906 意外 ---
+\newcommand{\deathslide}{\begin{frame}\plainbar\sectiontitle{1906-04-19：雨中的 Rue Dauphine}{一次事故 · 46 岁 · 未竟的岁月}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{crystalblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经过}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事实}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{备注}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1906-04-19} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{雨天，Pierre 在 Quai de Conti 横穿繁忙的 Rue Dauphine 时滑倒，跌入一辆沉重的马车之下} & \cellcolor{silverpanel}\textcolor{coverdark!70}{巴黎的雨夜路口} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{当场离世} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{车轮碾过他的头部，颅骨骨折，当场身亡——享年 46 岁} & \cellcolor{silverpanel}\textcolor{coverdark!70}{研究中断在最盛年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{辐射的代价} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{夫妇二人都经历过镭灼伤与辐射病；page.md 指出，若非死于事故，他很可能会像妻子、女儿 Irène 与婿 Frédéric 一样，最终死于辐射效应} & \cellcolor{silverpanel}\textcolor{coverdark!70}{一个沉重的历史假设} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.28cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.6}{11.2}\selectfont\color{crystalblue!88!black} 时至今日，他们 1890 年代的论文笔记——甚至她的菜谱——仍带放射性，被保存在法国国家图书馆的特制铅盒中。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 身后哀荣与家族传承 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{身后哀荣与家族传承}{curie 单位 · Panthéon · 两代五座诺奖}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.75}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{crystalblue}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{以他们命名} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{1910 年放射学大会将放射性强度单位命名为 curie（居里）——纪念 Marie 与 Pierre Curie} & \cellcolor{silverpanel}\textcolor{coverdark!70}{名字成为单位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{先贤祠} & \cellcolor{radpanel}\textcolor{badgeRad!82!black}{1995 年 4 月，夫妇遗骸由家族墓地迁入巴黎先贤祠（Panthéon）墓室} & \cellcolor{silverpanel}\textcolor{coverdark!70}{法兰西的最高礼遇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{家族传承} & \cellcolor{fampanel}\textcolor{badgeFam!82!black}{女儿 Irène 与婿 Frédéric Joliot-Curie 亦获诺贝尔奖；女儿 Ève 为母亲作传（家族中唯一非物理学家）；外孙女 Hélène Langevin-Joliot 为核物理教授、外孙 Pierre Joliot 为著名生物化学家} & \cellcolor{silverpanel}\textcolor{coverdark!70}{两代五座诺奖的家族} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 居里单位（curie）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{crystalblue!88!black}$1\ \mathrm{Ci}=3.7\times10^{10}\ \text{次衰变每秒}=37\ \mathrm{GBq}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=crystalblue!90!black] at ([yshift=1.5cm]current page.center) {他用一台静电计测量看不见的射线，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=nobelgold!85!black] at ([yshift=0.4cm]current page.center) {用一个词命名了一个时代。};
+\draw[nobelgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=crystalblue!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是压电、居里定律与镭，还有"首对诺奖夫妇"传奇的起点。};
+\node[font=\fontsize{8}{10}\selectfont, text=crystalblue!60!black] at ([yshift=-2.0cm]current page.center) {皮埃尔·居里\quad Pierre Curie\quad 1859 — 1906};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{atom}\enspace 压电效应 · 居里定律 · 钋与镭 · 对称性原理\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\hookslide
+\familyslide
+\piezoslide
+\magslide
+\principleslide
+\marieslide
+\poloniumslide
+\energyslide
+\nobelslide
+\chairsclide
+\deathslide
+\legacyslide
+\closingslide
+\end{document}

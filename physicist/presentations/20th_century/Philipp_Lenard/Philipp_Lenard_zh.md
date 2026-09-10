@@ -101,6 +101,16 @@
 - **享年**：84 岁逝于 Messelhausen（1947-05-20）。
 - **引语红线**："mother of the X-rays" / "midwife"、"Jewish fraud"、1954 年出版者评语、LSD 出版 understatement 均有 page.md 原文；其余一律间接转述，勿伪造莱纳德"忏悔式"发言——他至死未悔。
 
+### Review-1 修正（2026-09-10 Beamer 立传执行后回写）
+
+- **肖像已解决**：Commons infobox 实际文件名为 `Lenard.jpg`（"Philipp Lenard.jpg" / "Philipp_Lenard.jpg" 均 404；经 Wikipedia REST API `page/summary/Philipp_Lenard` 查得原图），下载 280×396 JPEG 存为 `images/Lenard_in_1905.jpg`——封面与身份信息页均用真实肖像，无需装饰圆占位。
+- **配图补充**：page.md 实载的莱纳德窗标注图（`Lenard_window_tube_labeled.svg`，500px PNG）已下载为 `images/Lenard_window_tube.png`，用于 Slide 5。
+- **"1945 后被逐出教职"**：page.md 无载（仅载 1931 年从海德堡退休），未写入正文。
+- **"1903 Hertz 奖章"**：page.md 无载，未写入。
+- **编译陷阱两则**：①②③④ 圈号（U+2460–）须在导言区加 `\xeCJKDeclareCharClass{CJK}{"2460 -> "2473}`，否则 Latin Modern 缺字；★（U+2605）在 `lmsans8-oblique` 缺字，帧副标题避免使用。
+- **引语核对**：全部引号内文字（"mother of the X-rays"/"midwife"/"Jewish physics"/"Jewish fraud"/1954 出版者评语/1905 获奖理由原文）均可回溯 page.md；无伪引语、无"忏悔式"发言。
+- **编译终态**：0 错误、0 缺字、0 hbox 溢出；仅 einsteinslide 1 处 vbox 6.8pt（<10pt 达标）。
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -113,7 +123,7 @@
 | nationality | Germany（匈牙利裔；另记 Hungary） | 待写入 |
 | primary_occupation | physicist | 待写入 |
 | field_of_work | physics（cathode rays / photoelectric effect） | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 1 | 已置 1（待 DB 执行） |
 
 ## 7. 社会关系入库清单
 

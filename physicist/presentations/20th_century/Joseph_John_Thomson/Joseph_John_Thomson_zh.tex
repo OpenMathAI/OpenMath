@@ -1,0 +1,511 @@
+% =============================================================
+%  电子的发现者：约瑟夫·约翰·汤姆孙 (Joseph John Thomson)
+%  Beamer 演示 —— 参照 Becquerel/Heisenberg 模板版式
+%  资料来源：physicist/presentations/20th_century/20th_century/Joseph_John_Thomson
+%  设计母题：阴极射线管的辉光 / 电子云 —— 柔和气泡 + 电子轨道
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：剑桥深蓝 + 诺奖金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{cambridge}{HTML}{16324F}      % 剑桥深蓝 — 卡文迪许 / 剑桥学术传统
+\definecolor{nobelgold}{HTML}{C9A227}      % 诺奖金 — 1906 诺贝尔奖
+\definecolor{badgeElec}{HTML}{0E7C7B}      % 电子青 — 1897 阴极射线 / corpuscle
+\definecolor{badgeAtom}{HTML}{4C5FD5}      % 靛蓝 — 原子模型 / 电磁质量
+\definecolor{badgeIso}{HTML}{E07B30}       % 琥珀 — 同位素与质谱
+\definecolor{badgeTeach}{HTML}{C4204F}     % 玫瑰 — 师门传承 / 父子双诺奖
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,38,58}
+\definecolor{muteddark}{RGB}{70,80,92}
+\definecolor{elecpanel}{RGB}{226,242,241}
+\definecolor{atompanel}{RGB}{228,231,248}
+\definecolor{isopanel}{RGB}{250,238,226}
+\definecolor{teachpanel}{RGB}{249,229,235}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆 + 极淡电子轨道（阴极射线辉光母题）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[cambridge!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeElec!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeAtom!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[nobelgold!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeTeach!8] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \draw[badgeElec!18, line width=0.7pt] ([xshift=5.6cm, yshift=1.0cm]current page.center) ellipse (0.62cm and 0.24cm);
+  \fill[badgeElec!30] ([xshift=6.18cm, yshift=1.0cm]current page.center) circle (0.055cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openphysicist_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=cambridge!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{atom}\enspace 英国\enspace·\enspace 电子的发现者\enspace·\enspace 实验物理学家};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=cambridge!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {约瑟夫·约翰·汤姆孙};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=cambridge!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Joseph John Thomson\enspace·\enspace 1856 — 1940};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=nobelgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {corpuscle · 葡萄干布丁模型 · 氖同位素 · 质谱法的开端};
+  \draw[nobelgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeElec] at (-5.05,0)
+        {电子发现\\Corpuscle\par\scriptsize 1897 阴极射线};
+      \node[badge, fill=badgeAtom] at (-1.68,0)
+        {原子模型\\Plum Pudding\par\scriptsize 1904 正电球};
+      \node[badge, fill=badgeIso] at (1.68,0)
+        {同位素质谱\\Isotopes\par\scriptsize 1912 氖抛物线};
+      \node[badge, fill=badgeTeach] at (5.05,0)
+        {师门传承\\Cavendish\par\scriptsize 7 位诺奖学生};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12.5cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"表彰他在气体导电方面理论与实验研究的杰出贡献。" —— 1906 诺贝尔物理学奖获奖理由（意译）};
+  % 头像（Wikipedia 词条 infobox 肖像 J.J_Thomson.jpg；images.txt 的 Thomson-13.jpg 实为 1893 书扉页，已弃用）
+  \node[draw=nobelgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/JJ_Thomson_portrait.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{JJ_Thomson_portrait.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {J. J. Thomson};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国\enspace|\enspace \faIcon{university}\enspace 剑桥大学 · 卡文迪许实验室 · 三一学院\enspace|\enspace Nobel 1906};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 物理学家硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{nobelgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{汤姆孙 - 从曼彻斯特书店之子到卡文迪许教授}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[draw=nobelgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\IfFileExists{images/JJ_Thomson_portrait.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{JJ_Thomson_portrait.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {J. J. Thomson};
+  \node[infob, fill=goldpanel, draw=nobelgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1856-12-18 — 1940-08-30\\[2pt]\lab{本名}\quad Joseph John Thomson\\[2pt]\lab{国籍}\quad 英国};
+  \node[infob, fill=elecpanel, draw=badgeElec!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 欧文斯学院（1870，14 岁）\\[2pt]
+     \quad 三一学院（1880 B.A. · 1883 M.A.）\\[2pt]\lab{师承}\quad Lord Rayleigh · Balfour Stewart};
+  \node[infob, fill=atompanel, draw=badgeAtom!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 曼彻斯特 Cheetham Hill\\[2pt]\lab{去世地}\quad 剑桥（骨灰葬威斯敏斯特教堂）\\[2pt]\lab{任职}\quad 卡文迪许教授（1884–1918）\\[2pt]\quad 三一学院院长（1918–1940）};
+  \node[infob, fill=teachpanel, draw=badgeTeach!45, anchor=south] at (3.5,-1.85)
+    {\lab{主要荣誉}\quad Nobel 1906 · OM 1912\\[2pt]
+     \quad Copley 1914 · 皇家学会会长\\[2pt]
+     \lab{核心领域}\quad 气体导电 · 阴极射线\\[2pt]
+     \quad 电子 · 电磁质量 · 质谱};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{核心贡献概览}{第一位看见原子内部的人 · 四条发现之路}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[
+    leg/.style={rounded corners=5pt, inner xsep=10pt, inner ysep=9pt, text width=5.35cm,
+      font=\fontsize{7.2}{9.4}\selectfont, align=left}
+  ]
+  \node[leg, fill=elecpanel, draw=badgeElec!55, anchor=north] at (-3.15,2.5)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeElec!85!black}① 电子的发现（1897）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 阴极射线由比原子小千倍以上、带负电的粒子组成——人类发现的第一个亚原子粒子，他称之为 "corpuscles"。}};
+  \node[leg, fill=atompanel, draw=badgeAtom!55, anchor=north] at (3.15,2.5)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeAtom!85!black}② 原子模型（1904）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 葡萄干布丁模型：正电球体内嵌快速轨道运动的 corpuscles——后被他的学生 Rutherford 的核式模型推翻。}};
+  \node[leg, fill=isopanel, draw=badgeIso!55, anchor=south] at (-3.15,-1.55)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeIso!85!black}③ 同位素与质谱（1912）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 氖离子束在感光板上留下两道抛物线——稳定元素同位素的第一个证据，也是质谱法的第一次应用。}};
+  \node[leg, fill=teachpanel, draw=badgeTeach!55, anchor=south] at (3.15,-1.55)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeTeach!85!black}④ 师门传承\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 卡文迪许实验室走出 7 位诺贝尔奖学生；其子 G. P. Thomson 又因证实电子的波动性获 1937 年诺贝尔奖。}};
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：书店之子与欧文斯学院 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：书店之子与欧文斯学院 (1856–1876)}{Cheetham Hill · 14 岁入学 · 丧父改志}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{cambridge}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{轨迹}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1856} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{生于曼彻斯特 Cheetham Hill；父亲 Joseph James 经营祖传古旧书店，母亲 Emma Swindells 出自当地纺织家庭} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{书店之子的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1870 · 14 岁} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{入曼彻斯特欧文斯学院（今曼彻斯特大学），受物理学教授 Balfour Stewart 引入物理研究，很快发表第一篇科学论文} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{少年得志的科学起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{原定之路} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{父母原计划送他去做机车厂商 Sharp, Stewart \& Co. 的工程师学徒} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{一条尚未铺开的工程路} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1873} & \cellcolor{isopanel}\textcolor{badgeIso!82!black}{父亲去世，学徒计划中断——人生的轨迹由此改变} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{命运转向学术} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一场家庭变故，把一位准工程师留给了物理学。}
+\end{center}
+\end{frame}}
+
+% --- 5. 三一学院与 Adams 奖 ---
+\newcommand{\trinityslide}{\begin{frame}\plainbar\sectiontitle{三一学院与 Adams 奖 (1876–1884)}{Second Wrangler · 涡环论文 · 数学家之名}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{cambridge}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成就}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1876} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{进入剑桥大学三一学院} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{剑桥传统的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1880} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{数学荣誉学位考试 \textbf{Second Wrangler}（第二名）+ 第 2 名 Smith's Prizeman，获 B.A.} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{第二名，而非第一名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1881} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{当选三一学院 Fellow} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{学院生涯的确立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1882/1883} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{Adams Prize 论文《论涡环的运动》：对 Kelvin 涡环原子论的数学描述；1883 年获 M.A.} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{早期兴趣指向原子结构} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{同期研究} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{引入带电粒子的\textbf{电磁质量}概念，证明运动带电体表观质量增加} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{电子论的先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 到 1884 年为止，外界所知的 Thomson 是一位数学家。}
+\end{center}
+\end{frame}}
+
+% --- 6. 28 岁的意外任命 ---
+\newcommand{\cavendishslide}{\begin{frame}\plainbar\sectiontitle{28 岁的意外任命 (1884-12-22)}{接掌卡文迪许 · Rayleigh 之后的传承}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{cambridge}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1884-12-22} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{被任命为剑桥大学卡文迪许实验物理学教授，时年 \textbf{28 岁}——接替的正是他的导师 Lord Rayleigh} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{师门的直接传承} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{相当惊讶} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{这项任命"引起了相当大的惊讶"：竞争者 Osborne Reynolds 与 Richard Glazebrook 更年长、实验室经验更丰富，而 Thomson 以数学家之名为人所知} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{并非众望所归的顺位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{同在 1884} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{当选皇家学会 Fellow} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{学界承认的加冕} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 这间实验室即将发生什么}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{cambridge!88!black}此后 34 年里，卡文迪许将成为原子物理的摇篮——电子、云室、同位素，都从这里出发。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 阴极射线之谜 ---
+\newcommand{\mysteryslide}{\begin{frame}\plainbar\sectiontitle{阴极射线之谜：以太说 vs 粒子说}{Hertz 的失败 · 一道可检验的题目}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{cambridge}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{立场}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主张}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{检验空间}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{以太说} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{阴极射线是"以太中的某种过程"，像光一样非物质——但这一假说含混模糊} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{难以设计判决实验} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{粒子说} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{射线"完全是物质的"，是带负电的物质粒子标出的路径——这是 Thomson 引述的粒子假说立场} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{足够明确，可以检验} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Hertz 的失败} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{包括 Hertz 在内的早先实验者未能观察到射线被电场偏转——他们由此认为粒子说站不住脚} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{失败原因尚无人识破} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Thomson 的判断} & \cellcolor{isopanel}\textcolor{badgeIso!82!black}{他相信前人的实验有缺陷——管内气体太多；残余气体的空间电荷屏蔽了外加电场} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{答案藏在真空度里} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 前人输给的不是理论，而是一管没有抽干净的气体。}
+\end{center}
+\end{frame}}
+
+% --- 8. 1897：发现电子 ---
+\newcommand{\discoveryslide}{\begin{frame}\plainbar\sectiontitle{1897：发现电子}{磁偏转 · 静电计 · 高真空电偏转——经典三部曲}
+\vspace{-0.55cm}
+\begin{center}
+\IfFileExists{images/JJ_Thomson_Cathode_Ray_2.png}{\fcolorbox{nobelgold!45}{white}{\includegraphics[width=8.6cm,height=1.42cm,keepaspectratio]{JJ_Thomson_Cathode_Ray_2.png}}}{\textcolor{covermuted}{\faIcon{image}}}
+
+{\fontsize{6.0}{7.2}\selectfont\itshape\textcolor{covermuted}{Thomson 手绘的 Crookes 管：阴极 C 出射的射线经狭缝 A、B 准直，穿过平行板 D、E 之间的电场}}
+\end{center}
+\vspace{-0.34cm}
+\begin{center}
+\begin{tikzpicture}[
+    card/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=5pt, text width=3.62cm,
+      font=\fontsize{7.0}{8.8}\selectfont, align=left}
+  ]
+  \node[card, fill=elecpanel, draw=badgeElec!50, anchor=north] at (-4.1,0.45)
+    {\fontsize{7.4}{9.2}\selectfont\bfseries\color{badgeElec!85!black}① 磁偏转\\[2pt]{无论阴极材料与气体为何，磁致偏转相同——射线与来源无关，是普适的。}};
+  \node[card, fill=elecpanel, draw=badgeElec!50, anchor=north] at (0.05,0.45)
+    {\fontsize{7.4}{9.2}\selectfont\bfseries\color{badgeElec!85!black}② 静电计\\[2pt]{只有用磁铁把射线偏到静电计上，静电计才记录到电荷——电荷与射线本是同一物。}};
+  \node[card, fill=elecpanel, draw=badgeElec!50, anchor=north] at (4.2,0.45)
+    {\fontsize{7.4}{9.2}\selectfont\bfseries\color{badgeElec!85!black}③ 高真空电偏转\\[2pt]{1897 年 5–6 月，抽至极低气压后首次可靠实现电偏转，测得荷质比——比氢离子低千倍以上。}};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.18cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{12.2cm}
+  \centering
+  {\fontsize{8.4}{10.8}\selectfont\bfseries\color{nobelgold!85!black} 1897-04-30 皇家研究院首次宣布 · 荷质比测量（原记号：$F$ 电场、$H$ 磁场）}\\[2pt]
+  {\fontsize{8.0}{10.2}\selectfont\color{cambridge!88!black}$\Theta = Fel/mv^{2}$\quad（电偏转）\qquad $\phi = Hel/mv$\quad（磁偏转）\qquad $\Rightarrow\ m/e = H^{2}l/(F\Theta)$}\\[1pt]
+  {\fontsize{7.6}{9.8}\selectfont\itshape\color{muteddark}"I can see no escape from the conclusion that they are charges of negative electricity carried by particles of matter." —— J. J. Thomson, 1897}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. "corpuscle" 与 "electron" ---
+\newcommand{\namingslide}{\begin{frame}\plainbar\sectiontitle{"corpuscle" 与 "electron"：一个词的让步史}{Stoney 1891 创词 · Thomson 1914 年才接受}
+\vspace{-0.6cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\renewcommand{\arraystretch}{0.72}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.9cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{cambridge}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{史实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Thomson 的命名} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{他把发现物称为 "\textbf{corpuscles}"，并严格将其定义为带负电的粒子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Stoney（1891）} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{"\textbf{electron}" 一词是 George Johnstone Stoney 在 Thomson 发现\textbf{之前}的 1891 年，为电荷的基本单位创造的临时名称} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{成为通名} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{主要经 FitzGerald、Larmor 与 Lorentz 的推动，科学界采用了 "electron" 一词} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{多年的抵制} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{Thomson 抵制 "electron" 一词多年——他不喜欢一些物理学家谈论"正电子"（作为正电荷基本单元）的说法} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1914 · 让步} & \cellcolor{isopanel}\textcolor{badgeIso!82!black}{迟至 1914 年，他才在《The Atomic Theory》中使用 "electron"；诺贝尔演讲中仍在说 "corpuscles"。1920 年，Rutherford 等人把氢离子核命名为 "proton"} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.2}{10.4}\selectfont\bfseries\color{nobelgold!85!black} 同时代的平行工作}\\[1pt]
+  {\fontsize{7.6}{9.8}\selectfont\color{cambridge!88!black}Walter Kaufmann 与 Emil Wiechert 也在同期测得了正确的荷质比——Thomson 的独到处，在于"\,corpuscles 是原子的普适建块\,"这一论断与系统测量。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 葡萄干布丁模型与其他工作 ---
+\newcommand{\puddingslide}{\begin{frame}\plainbar\sectiontitle{葡萄干布丁模型 (1904) 与其他工作}{正电球 + 内嵌 corpuscles · 被学生推翻}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{cambridge}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{细节}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1904 · 布丁模型} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{原子是正电球体，静电势力决定 corpuscles 的位置；为解释原子整体电中性，corpuscles 如葡萄干般嵌在均匀正电荷之中——\textbf{并非静止，而是快速轨道运动}} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{第一个有结构的原子模型} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{被学生推翻} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{他的学生 Ernest Rutherford 证明正电荷集中在原子核——布丁模型由此退场} & \cellcolor{teachpanel}\textcolor{badgeTeach!82!black}{学生推翻了老师的模型} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1905} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{发现钾的天然放射性} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{放射性走出铀矿的成见} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1906} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{证明氢原子每原子只含\textbf{一个}电子（此前理论允许多个）} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{原子组成的定量约束} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 模型错了，但"原子可分、有其内部结构"这一点，从此再未被推翻。}
+\end{center}
+\end{frame}}
+
+% --- 11. 同位素与质谱 ---
+\newcommand{\isotopeslide}{\begin{frame}\plainbar\sectiontitle{同位素与质谱的开端 (1912–1913)}{氖的两道抛物线 · 与 Aston 的合作}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+    card/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=7pt, text width=7.3cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[draw=nobelgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.1,0.5) {\IfFileExists{images/Discovery_of_neon_isotopes.jpg}{\includegraphics[width=3.6cm,height=4.1cm,keepaspectratio]{Discovery_of_neon_isotopes.jpg}}{\textcolor{covermuted}{\faIcon{image}}}};
+  \node[anchor=north, font=\fontsize{6.0}{7.2}\selectfont\itshape, text=covermuted, align=center, text width=4.3cm]
+    at (-6.0,-1.85) {感光板右下角的两道抛物线：氖-20 与氖-22};
+  \node[card, fill=isopanel, draw=badgeIso!50, anchor=north]
+    at (0.4,2.35) {\lab{实验}\quad 1912 年，Thomson 与研究助手 F. W. Aston 让氖离子束穿过磁场与电场，在感光板上记录偏转};
+  \node[card, fill=isopanel, draw=badgeIso!50, anchor=north]
+    at (0.4,1.15) {\lab{观察}\quad 感光板上出现两团光斑——对应两条不同的偏转抛物线，指向两种不同的原子质量（氖-20 与氖-22）};
+  \node[card, fill=goldpanel, draw=nobelgold!50, anchor=north]
+    at (0.4,0.05) {\lab{意义}\quad \textbf{稳定（非放射性）元素同位素存在的第一个证据}——此前 Soddy 为解释放射性元素的衰变提出过同位素假说};
+  \node[card, fill=goldpanel, draw=nobelgold!50, anchor=north]
+    at (0.4,-1.05) {\lab{开端}\quad 这是\textbf{质谱法的第一次应用}，后经 Aston 与 Dempster 发展为质谱仪；1991 年，质谱学界以 "thomson（Th）" 作为荷质比单位纪念他};
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 12. 卡文迪许学派 ---
+\newcommand{\schoolslide}{\begin{frame}\plainbar\sectiontitle{卡文迪许学派：七位诺贝尔奖学生}{"教师与领袖" · 一间实验室的黄金年代}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[
+    stu/.style={rounded corners=5pt, inner xsep=7pt, inner ysep=6pt, text width=5.6cm,
+      font=\fontsize{7.4}{9.6}\selectfont, align=left},
+    oth/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=8pt, text width=5.5cm,
+      font=\fontsize{7.2}{9.4}\selectfont, align=left}
+  ]
+  \node[stu, fill=teachpanel, draw=badgeTeach!55, anchor=north] at (-3.15,2.55)
+    {\fontsize{8.6}{11.5}\selectfont\bfseries\color{badgeTeach!85!black}7 位学生获诺贝尔奖\\[3pt]
+     Rutherford（化学 1908）· L. Bragg（物理 1915）\\Barkla（物理 1917）· Aston（化学 1922）\\C. T. R. Wilson（物理 1927）\\Richardson（物理 1928）· Appleton（物理 1947）};
+  \node[oth, fill=elecpanel, draw=badgeElec!55, anchor=north] at (3.15,2.55)
+    {\fontsize{8.6}{11.5}\selectfont\bfseries\color{badgeElec!85!black}助手与同僚的丰收\\[3pt]
+     另有 \textbf{6 位研究助手与年轻同事}获诺贝尔物理学奖（Barkla、Bohr、Born、W. H. Bragg、Richardson、C. T. R. Wilson），\textbf{2 人}获化学奖（Aston、Rutherford）——两套名单互有重叠。};
+  \node[oth, fill=atompanel, draw=badgeAtom!55, anchor=south] at (3.15,-1.6)
+    {\fontsize{8.6}{11.5}\selectfont\bfseries\color{badgeAtom!85!black}群星之门\\[3pt]
+     Bohr、Born、W. H. Bragg、Langevin 等亦出自其门下；1925 年 Franklin Medal 授奖理由称他"在电学与物质构成方面作为教师与领袖的贡献"。};
+  \node[oth, fill=goldpanel, draw=nobelgold!55, anchor=south] at (-3.15,-1.6)
+    {\fontsize{8.6}{11.5}\selectfont\bfseries\color{nobelgold!85!black}薪火相传\\[3pt]
+     1919 年，Rutherford 接替他出任卡文迪许教授——学生的名字从此写在这间实验室的门牌上。};
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 13. 家庭与父子双诺奖 ---
+\newcommand{\fathersonslide}{\begin{frame}\plainbar\sectiontitle{家庭与父子双诺奖}{Rose Paget · G. P. Thomson 与电子衍射 (1937)}
+\vspace{-0.6cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\renewcommand{\arraystretch}{0.72}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{cambridge}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成员}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{故事}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{注脚}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1890 · 成婚} & \cellcolor{teachpanel}\textcolor{badgeTeach!82!black}{与 Rose Elisabeth Paget 在剑桥 Little St Mary's 教堂成婚——她因旁听他的演示课与讲座而结缘；岳父 Sir George Edward Paget 是剑桥 Regius Professor of Physic} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{课堂上的姻缘} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1937 · 诺奖之子} & \cellcolor{teachpanel}\textcolor{badgeTeach!82!black}{其子 George Paget Thomson 与 Clinton Davisson 因"电子被晶体衍射的实验发现"共享 1937 年诺贝尔物理学奖——\textbf{父亲发现电子（粒子），儿子的实验证实了电子的波动性}} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{粒子与波的历史呼应} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.52cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.2}{10.4}\selectfont\bfseries\color{nobelgold!85!black} 1906 诺贝尔物理学奖官方获奖理由（英文原文）}\\[1pt]
+  {\fontsize{7.8}{10}\selectfont\color{cambridge!88!black}"In recognition of the great merits of his theoretical and experimental investigations on the conduction of electricity by gases."}\\[1pt]
+  {\fontsize{7.2}{9.4}\selectfont\color{muteddark}——表彰的是\textbf{气体导电}的理论与实验研究，而非笼统的"因发现电子获奖"。女儿 Joan Paget Thomson 后成为作家。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与晚年 ---
+\newcommand{\honourslide}{\begin{frame}\plainbar\sectiontitle{荣誉与晚年 (1908–1940)}{爵士 · Order of Merit · 皇家学会会长 · 三一学院院长}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{cambridge}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{荣誉 / 事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{备注}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1908 / 1912} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{封 Knight Bachelor（爵士）；获 Order of Merit（1912）；1914 年又获皇家学会 Copley Medal} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{英伦科学界最高礼遇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1915–1920} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{任皇家学会第 42 任会长} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{继 Crookes 之后执掌皇家学会} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1918–1940} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{任三一学院第 30 任院长（Master），直至去世——此后 22 年从未离开剑桥} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{学院与人生的终点重合} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{讲学与公职} & \cellcolor{elecpanel}\textcolor{badgeElec!82!black}{1896 普林斯顿讲座（后出版《气体放电》）· 1904 耶鲁 Silliman 讲座 · 1914 牛津 Romanes 讲座《原子论》；1916–1918 主持首相委托的科学教育调查（Thomson Report, 1918）} & \cellcolor{atompanel}\textcolor{badgeAtom!82!black}{影响超出实验室} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 剑桥的 J J Thomson Avenue、IOP 的 Joseph Thomson Medal，都以他的名字命名。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=cambridge!90!black] at ([yshift=2.0cm]current page.center) {83 岁，他在威斯敏斯特教堂安息，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=cambridge!90!black] at ([yshift=0.9cm]current page.center) {紧邻牛顿与学生 Rutherford——};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=nobelgold!85!black] at ([yshift=-0.2cm]current page.center) {第一个打开原子的人。};
+\draw[nobelgold!60, line width=1.3pt] ([yshift=-0.85cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.85cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=cambridge!70!black] at ([yshift=-1.45cm]current page.center) {他留下的，不只是第一个亚原子粒子，还有一整代卡文迪许的诺贝尔奖得主。};
+\node[font=\fontsize{8}{10}\selectfont, text=cambridge!60!black] at ([yshift=-2.15cm]current page.center) {约瑟夫·约翰·汤姆孙\quad Joseph John Thomson\quad 1856 — 1940};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{atom}\enspace corpuscle · 葡萄干布丁模型 · 氖同位素 · 质谱法\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\trinityslide
+\cavendishslide
+\mysteryslide
+\discoveryslide
+\namingslide
+\puddingslide
+\isotopeslide
+\schoolslide
+\fathersonslide
+\honourslide
+\closingslide
+\end{document}

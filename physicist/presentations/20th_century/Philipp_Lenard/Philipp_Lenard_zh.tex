@@ -1,0 +1,484 @@
+% =============================================================
+%  阴极射线与光电效应实验家 / "德国物理学"旗手：菲利普·莱纳德
+%  (Philipp Eduard Anton von Lenard, 1862–1947)
+%  Beamer 演示 —— 复用 Becquerel 打磨版骨架（表格语义化 + 公式框 + 卡片）
+%  资料来源：physicist/presentations/20th_century/20th_century/Philipp_Eduard_Anton_von_Lenard
+%  设计母题：被历史尘埃覆盖的实验成就 —— 冷色柔和气泡，审慎不颂扬
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\xeCJKDeclareCharClass{CJK}{"2460 -> "2473} % ①-⑳ 圈号交给中文字体，避免缺字
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：钢青灰蓝（冷峻审慎）+ 诺奖金 + 四分类色 =====
+\definecolor{bgmain}{HTML}{F6F5F3}         % 浅暖灰白 —— 比标准背景更冷一档
+\definecolor{steelmain}{HTML}{3B4A5A}      % 主色 钢青灰蓝 —— 实验物理的冷峻
+\definecolor{nobelgold}{HTML}{C9A227}      % 诺奖金 —— 仅指奖项本身
+\definecolor{badgeCathode}{HTML}{456990}   % 阴极射线 — 钢蓝
+\definecolor{badgePhoto}{HTML}{0E7C7B}     % 光电效应 — 青绿
+\definecolor{badgeMeteo}{HTML}{6B8F71}     % 气象物理 — 灰绿
+\definecolor{badgeWarn}{HTML}{8B3A3A}      % 争议与"德国物理学" — 警示红棕（专属争议章节）
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{HTML}{26303B}
+\definecolor{muteddark}{RGB}{74,82,90}
+\definecolor{cathodepanel}{RGB}{228,234,241}
+\definecolor{photopanel}{RGB}{224,238,238}
+\definecolor{meteopanel}{RGB}{232,239,233}
+\definecolor{warnpanel}{RGB}{242,230,230}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆（冷色为主、明度收敛）—— 审慎传记基调
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[nobelgold!3] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCathode!11] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgePhoto!9] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeMeteo!9] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeCathode!9] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openphysicist_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=steelmain!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{atom}\enspace 匈牙利裔德国\enspace·\enspace 实验物理学家\enspace·\enspace 1905 诺贝尔物理学奖};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=steelmain!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {菲利普·莱纳德};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=steelmain!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Philipp Eduard Anton von Lenard\enspace·\enspace 1862 — 1947};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=nobelgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {阴极射线 · 莱纳德窗 · 光电效应实验 · 一段必须如实呈现的争议};
+  \draw[nobelgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeCathode] at (-5.05,0)
+        {阴极射线\\Cathode Rays\par\scriptsize 莱纳德窗};
+      \node[badge, fill=badgePhoto] at (-1.68,0)
+        {光电效应\\Photoelectric\par\scriptsize 1902 频率律};
+      \node[badge, fill=badgeMeteo] at (1.68,0)
+        {气象物理\\Meteorology\par\scriptsize 雨滴的形状};
+      \node[badge, fill=badgeWarn] at (5.05,0)
+        {"德国物理学"\\Deutsche Physik\par\scriptsize 争议与污名};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"表彰他在阴极射线方面的研究。" —— 1905 诺贝尔物理学奖获奖理由};
+  % 头像（infobox 肖像 "Lenard in 1905"，取自 Commons Lenard.jpg）
+  \node[draw=nobelgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Lenard_in_1905.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Lenard_in_1905.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Philipp Lenard (1905)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 匈牙利裔德国\enspace|\enspace \faIcon{university}\enspace 海德堡 · 基尔 · 波恩\enspace|\enspace Nobel 1905};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 物理学家硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{nobelgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{莱纳德 - 从普雷斯堡到海德堡}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[draw=nobelgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\IfFileExists{images/Lenard_in_1905.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Lenard_in_1905.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Philipp Lenard (1905)};
+  \node[infob, fill=goldpanel, draw=nobelgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1862-06-07 — 1947-05-20\\[2pt]\lab{本名}\quad Philipp Eduard Anton von Lenard\\[2pt]\lab{国籍}\quad 匈牙利裔德国};
+  \node[infob, fill=cathodepanel, draw=badgeCathode!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 普雷斯堡中学 · 维也纳 / 布达佩斯\\[2pt]
+     \quad 海德堡大学（1886 博士）\\[2pt]
+     \lab{师承}\quad Quincke（博士导师）· Bunsen\\[2pt]\quad\enspace Helmholtz · E\"otv\"os（演示员时期）};
+  \node[infob, fill=photopanel, draw=badgePhoto!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 普雷斯堡（时属奥地利帝国\\[1pt]\quad\enspace 匈牙利王国，今布拉迪斯拉发）\\[2pt]\lab{去世地}\quad Messelhausen（德国）\\[2pt]\lab{任职}\quad 海德堡 · 基尔 · 波恩等};
+  \node[infob, fill=meteopanel, draw=badgeMeteo!45, anchor=south] at (3.5,-1.85)
+    {\lab{主要荣誉}\quad Nobel 1905 · Rumford 1896\\[2pt]
+     \quad Matteucci 1896 · Franklin 1932\\[2pt]
+     \lab{核心领域}\quad 阴极射线 · 光电效应\\[2pt]\quad\enspace 气象物理};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{核心贡献概览}{一面是实验的巨匠 · 一面是历史的污点}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[
+    leg/.style={rounded corners=5pt, inner xsep=10pt, inner ysep=9pt, text width=5.35cm,
+      font=\fontsize{7.2}{9.4}\selectfont, align=left}
+  ]
+  \node[leg, fill=cathodepanel, draw=badgeCathode!55, anchor=north] at (-3.15,2.5)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeCathode!85!black}① 阴极射线与莱纳德窗（1888–）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 在玻璃管上做出金属薄窗，把射线引出真空管——阴极射线第一次成为可在管外系统研究的对象。}};
+  \node[leg, fill=photopanel, draw=badgePhoto!55, anchor=north] at (3.15,2.5)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgePhoto!85!black}② 光电效应实验（1902）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 光电子能量只依赖光的频率、与光强无关——实验事实是他的，量子解释属于爱因斯坦。}};
+  \node[leg, fill=meteopanel, draw=badgeMeteo!55, anchor=south] at (-3.15,-1.55)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeMeteo!85!black}③ 气象物理先驱\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 1892 年"莱纳德效应"（水滴破碎的电荷分离）；风洞悬浮水滴，首次发现大雨滴近似汉堡包形。}};
+  \node[leg, fill=warnpanel, draw=badgeWarn!55, anchor=south] at (3.15,-1.55)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeWarn!85!black}④ 争议的一生\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 纳粹时期"德国物理学"运动的旗帜，攻击相对论——本片如实呈现两面，不美化亦不回避。}};
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：普雷斯堡的德语少年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：普雷斯堡的德语少年 (1862–1886)}{酒商之家 · Gamča 中学 · 海德堡 Bunsen 门下}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{2.7cm}}
+\toprule
+\rowcolor{steelmain}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{轨迹}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1862} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{生于普雷斯堡（Pressburg / Pozsony，时属奥地利帝国治下匈牙利王国，今布拉迪斯拉发）——父母均为德语裔：父为酒商，家族源自蒂罗尔；母系源自巴登} & \cellcolor{graypanel}\textcolor{muteddark}{德语裔少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{中学} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{普雷斯堡皇家天主教中学（今 Gamča）；自传中称教师 Virgil Klatt 对其影响深远} & \cellcolor{graypanel}\textcolor{muteddark}{科学兴趣的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1880–1883} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{在维也纳与布达佩斯学习物理与化学；1883 年因布达佩斯助教申请被拒，转往海德堡} & \cellcolor{graypanel}\textcolor{muteddark}{辗转中前行} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1883–1886} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{海德堡大学师从 Bunsen（其间在柏林随 Helmholtz 一学期），并受教于 Quincke；1886 年博士，论文《Über die Schwingung fallender Tropfen》（下落水滴的振动）} & \cellcolor{graypanel}\textcolor{muteddark}{实验生涯的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1887} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{在布达佩斯任 Loránd Eötvös 的 demonstrator} & \cellcolor{graypanel}\textcolor{muteddark}{回到匈牙利一年} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 5. 莱纳德窗：把射线请出玻璃管 ---
+\newcommand{\windowslide}{\begin{frame}\plainbar\sectiontitle{莱纳德窗：把射线请出玻璃管 (1888–)}{Bonn 时期 Hertz 助手 · 金属薄窗装置}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+    card/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=7pt, text width=7.3cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[draw=nobelgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.1,0.35) {\IfFileExists{images/Lenard_window_tube.png}{\includegraphics[width=4.3cm]{Lenard_window_tube.png}}{\textcolor{covermuted}{\faIcon{image}}}};
+  \node[anchor=north, font=\fontsize{6.0}{7.2}\selectfont\itshape, text=covermuted, align=center, text width=4.2cm]
+    at (-6.05,-1.55) {莱纳德窗装置标注图：阴极射线经金属薄窗引出真空管};
+  \node[card, fill=cathodepanel, draw=badgeCathode!50, anchor=north]
+    at (0.4,2.15) {\lab{困境}\quad 阴极射线困在部分真空的玻璃管内——难以接触、与空气分子共存，无法系统研究};
+  \node[card, fill=cathodepanel, draw=badgeCathode!50, anchor=north]
+    at (0.4,1.05) {\lab{装置}\quad 在玻璃管上做出金属薄窗：厚到承受压差、薄到让射线穿出——射线可引入实验室或另一真空室};
+  \node[card, fill=cathodepanel, draw=badgeCathode!50, anchor=north]
+    at (0.4,-0.05) {\lab{检测}\quad 用荧光材料涂层纸检测并测量强度；他使用的荧光酮对 X 射线并不发光};
+  \node[card, fill=goldpanel, draw=nobelgold!50, anchor=north]
+    at (0.4,-1.15) {\lab{伏笔}\quad R\"ontgen 复现时被迫改用铂氰化钡（前者已被莱纳德买光）——它对紫外与 X 射线都敏感，X 射线由此被发现};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一扇小小的金属窗，让阴极射线第一次走进了实验室的白天。}
+\end{center}
+\end{frame}}
+
+% --- 6. 阴极射线的本质 ---
+\newcommand{\cathodeslide}{\begin{frame}\plainbar\sectiontitle{阴极射线的本质：粒子、空原子与 dynamids}{密度吸收律 · 比分子更小 · 证实 Thomson}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{2.7cm}}
+\toprule
+\rowcolor{steelmain}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{观察}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结论}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{吸收律} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{射线吸收近似正比于所穿物质的密度（一阶）——与"电磁辐射"的设想相矛盾} & \cellcolor{graypanel}\textcolor{muteddark}{更像粒子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{穿透与散射} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{能穿过数英寸常密度空气并被散射——必是比空气分子更小的粒子} & \cellcolor{graypanel}\textcolor{muteddark}{亚分子尺度} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{证实 Thomson} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{证实 J. J. Thomson 的结论——阴极射线是带负电的高速粒子流；沿 Helmholtz 称 "quanta of electricity"，Thomson 称 "corpuscles"，最终 "electrons" 成为通名} & \cellcolor{graypanel}\textcolor{muteddark}{电子论的确立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{空原子与 dynamids} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{结合金属吸收实验，正确主张\textbf{原子大部分是空的空间}；并提出中性 "dynamids" 假说（电子 + 等量正电）——后被证明\textbf{不成立}} & \cellcolor{graypanel}\textcolor{muteddark}{一半正确，一半落空} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 7. 光电效应实验（1902） ---
+\newcommand{\photoelectricslide}{\begin{frame}\plainbar\sectiontitle{光电效应实验 (1902)：只认频率，不认光强}{莱纳德的实验事实 · 他自己错失的解释}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+    card/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=7pt, text width=11.9cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[card, fill=photopanel, draw=badgePhoto!50, anchor=north]
+    at (0,2.35) {\lab{现象}\quad 真空中用紫外光照射金属，产生的射线与阴极射线性质相似——管外研究阴极射线的装置顺理成章地转向了光电效应};
+  \node[card, fill=photopanel, draw=badgePhoto!50, anchor=north]
+    at (0,1.15) {\lab{关键观察}\quad \textbf{光电子的能量只依赖光的频率、与光强无关}——光强只改变电子的数量，不改变单个电子的能量};
+  \node[card, fill=photopanel, draw=badgePhoto!50, anchor=north]
+    at (0,-0.05) {\lab{他自己的解释}\quad "光从原子内部释放\textbf{已在运动}的射线"——他没有建立光能与电子能量之间的联系，与量子解释擦肩而过};
+  \node[card, fill=goldpanel, draw=nobelgold!50, anchor=north]
+    at (0,-1.25) {\lab{归属红线}\quad \textbf{实验事实是莱纳德的，量子理论解释是爱因斯坦的}——两人分工必须分清：既不能说莱纳德"解释了"光电效应，也不能说爱因斯坦"发现了"光电效应};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.05cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他把最关键的曲线画了出来，却把解释它的机会留给了 1905 年的伯尔尼。}
+\end{center}
+\end{frame}}
+
+% --- 8. 1905 诺贝尔物理学奖 ---
+\newcommand{\nobelslide}{\begin{frame}\plainbar\sectiontitle{1905 诺贝尔物理学奖}{独得 · 一句理由 · 与 R\"ontgen 的另一笔账}
+\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{2.7cm}}
+\toprule
+\rowcolor{steelmain}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{荣誉}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份与理由}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{备注}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{诺贝尔物理学奖} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{1905："表彰他在阴极射线方面的研究"（For his work on cathode rays）——\textbf{一人独得，无共同得主}} & \cellcolor{graypanel}\textcolor{muteddark}{最高荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Rumford Medal} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{1896，皇家学会，\textbf{与 R\"ontgen 共享}——"表彰他们对高真空放电管外所产生现象的研究"} & \cellcolor{graypanel}\textcolor{muteddark}{共享的是此奖，非诺奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Matteucci / Franklin} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{Matteucci Medal（1896，意大利 Accademia dei XL）；Franklin Medal（1932）——"表彰阴极射线与光电研究"} & \cellcolor{graypanel}\textcolor{muteddark}{同一条研究主线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Golden Party Badge} & \cellcolor{warnpanel}\textcolor{badgeWarn!82!black}{纳粹党金色党徽——历史事实，如实列出；这是政治效忠的标记，不是科学荣誉} & \cellcolor{graypanel}\textcolor{muteddark}{另一面的注脚} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.55cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 官方获奖理由（1905，英文原文）}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{steelmain!88!black}"For his work on cathode rays."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 爱因斯坦的解释 ---
+\newcommand{\einsteinslide}{\begin{frame}\plainbar\sectiontitle{爱因斯坦的解释：实验与理论的分工}{光量子 · 斜率即普朗克常数 · 1921 诺奖所引}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.76}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{2.7cm}}
+\toprule
+\rowcolor{steelmain}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1905 光量子理论} & \cellcolor{photopanel}\textcolor{badgePhoto!82!black}{爱因斯坦：每个能量足够的光量子释出一个光电子——光强影响电子数量，而非单个电子的能量} & \cellcolor{graypanel}\textcolor{muteddark}{量子假说的实证入口} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{可检验的预言} & \cellcolor{photopanel}\textcolor{badgePhoto!82!black}{电子能量对频率作图为直线，斜率恰为普朗克常数 $h$——数年后被实验证实} & \cellcolor{graypanel}\textcolor{muteddark}{理论被钉在数据上} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1921 诺贝尔奖} & \cellcolor{photopanel}\textcolor{badgePhoto!82!black}{光电效应的量子理论，正是爱因斯坦 1921 年诺贝尔物理学奖所引用的工作} & \cellcolor{graypanel}\textcolor{muteddark}{莱纳德实验的延长线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{怨结（个人主张）} & \cellcolor{warnpanel}\textcolor{badgeWarn!82!black}{莱纳德自称是"X 射线之母"（产生 X 射线的装置是他发明的），把 R\"ontgen 比作"只是协助接生的'助产士'"——这是其个人怨言，非公认事实；他\textbf{并未} dispute 爱因斯坦对光电效应的解释} & \cellcolor{graypanel}\textcolor{muteddark}{积怨自此埋下} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.98cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 光电效应最大动能式（爱因斯坦 1905 理论）}\\[2pt]
+  {\fontsize{10.5}{14}\selectfont\color{steelmain!88!black}$h\nu = W + E_k$\quad（光子能量 = 逸出功 + 光电子最大动能；$E_k$--$\nu$ 直线斜率即 $h$）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 气象物理 ---
+\newcommand{\meteoslide}{\begin{frame}\plainbar\sectiontitle{气象物理：水滴、瀑布与"汉堡包"}{莱纳德效应 · 风洞悬浮水滴}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{2.7cm}}
+\toprule
+\rowcolor{steelmain}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{莱纳德效应 (1892)} & \cellcolor{meteopanel}\textcolor{badgeMeteo!82!black}{水滴气动破碎时伴随的电荷分离——又称喷雾起电（spray electrification）或瀑布效应（waterfall effect）；他是第一个研究者} & \cellcolor{graypanel}\textcolor{muteddark}{以他命名的物理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{风洞} & \cellcolor{meteopanel}\textcolor{badgeMeteo!82!black}{建造新颖的风洞，可使不同大小的水滴悬浮静止数秒——测量其大小与形状分布} & \cellcolor{graypanel}\textcolor{muteddark}{仪器自制的功底} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{雨滴的形状} & \cellcolor{meteopanel}\textcolor{badgeMeteo!82!black}{首次发现大雨滴不是泪滴形，而是近似\textbf{汉堡包形}（hamburger bun）——纠正了流行已久的直觉图像} & \cellcolor{graypanel}\textcolor{muteddark}{一眼皆错的常识} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 即使在争议缠身的晚年之后，这几页气象物理仍然干净地立得住。}
+\end{center}
+\end{frame}}
+
+% --- 11. 走向"德国物理学"（1920s） ---
+\newcommand{\deutschslide}{\begin{frame}\plainbar\sectiontitle{走向"德国物理学" (1920s)}{边缘化 · Stark 同路 · 一条因果链}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+    card/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=7pt, text width=11.9cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[card, fill=warnpanel, draw=badgeWarn!50, anchor=north]
+    at (0,2.35) {\lab{民族主义}\quad 强烈的德意志民族主义者——鄙视所谓 "English physics"，认为它窃取了德国的思想};
+  \node[card, fill=warnpanel, draw=badgeWarn!50, anchor=north]
+    at (0,1.15) {\lab{边缘化}\quad 1920 年代，因拒绝相对论与量子力学，他与实验物理学家 Johannes Stark 一道日益被主流物理学界冷落};
+  \node[card, fill=warnpanel, draw=badgeWarn!50, anchor=north]
+    at (0,-0.05) {\lab{因果顺序}\quad 先是 1902 年的实验得不到自己的理论解释、后有对爱因斯坦盛誉的嫉妒与积怨——并非先有政治立场再做实验};
+  \node[card, fill=warnpanel, draw=badgeWarn!50, anchor=north]
+    at (0,-1.25) {\lab{敌意所向}\quad 他尤其憎恶以高等数学为基础的物理学——那一代实验物理学家多以散文描述实验室观察，而非以数学表述};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.05cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 科学的失落感与时代的毒雾，在他身上完成了致命的化合。}
+\end{center}
+\end{frame}}
+
+% --- 12. 纳粹时期（★ 谨慎处理） ---
+\newcommand{\nazislide}{\begin{frame}\plainbar\sectiontitle{纳粹时期："雅利安物理学"首领}{本页如实呈现历史事实 · 不美化 · 不淡化}
+\vspace{-0.4cm}
+\begin{center}
+\begin{tikzpicture}[
+    card/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=7pt, text width=11.9cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[card, fill=warnpanel, draw=badgeWarn!55, anchor=north]
+    at (0,2.35) {\lab{旗帜}\quad 纳粹意识形态的积极拥护者，1920 年代起支持希特勒；纳粹时期成为"德国物理学"（\textit{Deutsche Physik}）运动的重要旗帜，纳粹下的"雅利安物理学"首领（Chief of Aryan Physics）};
+  \node[card, fill=warnpanel, draw=badgeWarn!55, anchor=north]
+    at (0,1.05) {\lab{攻击性用语}\quad 他把爱因斯坦对理论物理的贡献称为"犹太物理学"（Jewish physics），把相对论称为"犹太骗局"（Jewish fraud）——\textbf{这些均为莱纳德的攻击性用语，置于引号内，非叙述者措辞}};
+  \node[card, fill=warnpanel, draw=badgeWarn!55, anchor=north]
+    at (0,-0.25) {\lab{教科书}\quad 四卷教科书《\textit{Deutsche Physik}》（1936）前言宣称：如同人的一切造物，科学由种族决定};
+  \node[card, fill=graypanel, draw=covermuted!45, anchor=north]
+    at (0,-1.55) {\lab{本片口径}\quad 上述立场是其科学声誉崩塌的根源——与成就并置呈现，是本传记唯一的诚实写法};
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 13. 历史评价 ---
+\newcommand{\historyslide}{\begin{frame}\plainbar\sectiontitle{历史评价：成见左右判断的一面镜子}{1933 选样 · 1954 出版者评语 · 文化形象}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{2.7cm}}
+\toprule
+\rowcolor{steelmain}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{棱镜}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事实}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意味}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{《Great Men in Science》} & \cellcolor{warnpanel}\textcolor{badgeWarn!82!black}{1933 年英文初版——所选科学家全是"雅利安科学家"：不收爱因斯坦与居里夫人，也不收任何 20 世纪科学家} & \cellcolor{graypanel}\textcolor{muteddark}{偏见写进了选目} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1954 出版者序言} & \cellcolor{warnpanel}\textcolor{badgeWarn!82!black}{英译本出版者写道（转译）："论及他之前的科学家时，他不仅学识深厚而且极为平衡；而论及同时代的人时，他容易让其在当代问题上的强烈观点左右自己的判断"} & \cellcolor{graypanel}\textcolor{muteddark}{著名的 understatement} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{文化形象} & \cellcolor{warnpanel}\textcolor{badgeWarn!82!black}{2017 年 National Geographic 剧集《Genius》中由 Michael McElhatton 饰演反派；传记《The Man Who Stalked Einstein》记其与爱因斯坦的纠缠} & \cellcolor{graypanel}\textcolor{muteddark}{公众记忆中的反派} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一部科学史著作的选目，泄露了作者全部的成见。}
+\end{center}
+\end{frame}}
+
+% --- 14. 身后除名 ---
+\newcommand{\removalslide}{\begin{frame}\plainbar\sectiontitle{身后除名：纪念的消退}{学校更名 · 陨石坑除名 · Messelhausen 岁月}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{2.7cm}}
+\toprule
+\rowcolor{steelmain}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间线}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结局}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{海德堡的学校} & \cellcolor{warnpanel}\textcolor{badgeWarn!82!black}{Helmholtz-Gymnasium Heidelberg 在 1927–1945 年间名"Philipp Lenard Schule"——1945 年被海德堡市长在去纳粹化（denazification）中更名} & \cellcolor{graypanel}\textcolor{muteddark}{名字被城市取下} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{月球陨石坑} & \cellcolor{warnpanel}\textcolor{badgeWarn!82!black}{月球北极附近的 Lenard 陨石坑：2005 年命名（2008 年批准）——2020 年 IAU 获悉其纳粹关联后决定除名} & \cellcolor{graypanel}\textcolor{muteddark}{连月球也不留名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{晚年} & \cellcolor{cathodepanel}\textcolor{badgeCathode!82!black}{1931 年从海德堡大学退休，退居 Messelhausen；1947-05-20 逝于此，享年 84——至死未悔，无"忏悔式"发言可载} & \cellcolor{graypanel}\textcolor{muteddark}{84 岁的终点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 纪念被逐一收回——这本身就是历史写下的评价。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=steelmain!90!black] at ([yshift=1.5cm]current page.center) {他的射线穿过了那扇金属小窗，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=badgeWarn!85!black] at ([yshift=0.4cm]current page.center) {他的名字却被自己逐出了科学的纪念册。};
+\draw[nobelgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=steelmain!70!black] at ([yshift=-1.2cm]current page.center) {实验物理的巨匠，科学史的反面教材——两面并置，即是完整的莱纳德。};
+\node[font=\fontsize{8}{10}\selectfont, text=steelmain!60!black] at ([yshift=-2.0cm]current page.center) {菲利普·莱纳德\quad Philipp Eduard Anton von Lenard\quad 1862 — 1947};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{atom}\enspace 阴极射线 · 光电效应 · 气象物理 · "德国物理学"\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\hookslide
+\earlyslide
+\windowslide
+\cathodeslide
+\photoelectricslide
+\nobelslide
+\einsteinslide
+\meteoslide
+\deutschslide
+\nazislide
+\historyslide
+\removalslide
+\closingslide
+\end{document}

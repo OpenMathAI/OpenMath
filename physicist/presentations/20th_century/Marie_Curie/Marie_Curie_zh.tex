@@ -1,0 +1,515 @@
+% =============================================================
+%  放射性开创者：玛丽·居里 (Marie Curie)
+%  Beamer 演示 —— 参照高斯模板版式（表格语义化 + 公式框 + 卡片）
+%  资料来源：physicist/presentations/20th_century/20th_century/Marie_Curie
+%  设计母题：镭在暗处的幽光 —— 柔和气泡 + 暗室微光
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\xeCJKDeclareCharClass{CJK}{"2460 -> "2469} % ①-⑨ 圈号交由中文字体渲染
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：深酒红（波兰之红 / 暗处镭光）+ 诺奖金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{6E1E2B}        % 深酒红 — 波兰之红 / 镭在暗处的赤忱
+\definecolor{nobelgold}{HTML}{C9A227}      % 诺奖金 — 两座诺贝尔奖
+\definecolor{badgeRa}{HTML}{0E8A8A}        % 镭光青 — 放射性 / 铀射线 / 原子假说
+\definecolor{badgePo}{HTML}{5E8C3A}        % 钋镭金绿 — 钋与镭 / 提纯
+\definecolor{badgeWo}{HTML}{6B4C9A}        % 女性紫 — 首位 / 开拓与平等
+\definecolor{badgeHu}{HTML}{31618F}        % 人道蓝 — petites Curies / 家国与传承
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{62,22,30}
+\definecolor{muteddark}{RGB}{85,72,76}
+\definecolor{rapanel}{RGB}{226,240,240}
+\definecolor{popanel}{RGB}{234,241,226}
+\definecolor{wopanel}{RGB}{236,231,244}
+\definecolor{hupanel}{RGB}{226,234,243}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆（四档大小错落）+ 暗室微光点（镭之幽光母题）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[nobelgold!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeRa!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeWo!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeHu!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgePo!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[nobelgold!12] ([xshift=4.2cm, yshift=2.6cm]current page.center) circle (0.05cm);
+  \fill[nobelgold!10] ([xshift=4.7cm, yshift=2.2cm]current page.center) circle (0.035cm);
+  \fill[nobelgold!9] ([xshift=3.8cm, yshift=1.9cm]current page.center) circle (0.03cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openphysicist_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{atom}\enspace 波兰裔法国\enspace·\enspace 两获诺奖的物理化学家\enspace·\enspace 放射性开创者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {玛丽·居里};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Maria Salomea Sk\l{}odowska Curie\enspace·\enspace 1867 — 1934};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=nobelgold!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {放射性 · 钋与镭 · 首位两获诺奖者 · 暗中之光};
+  \draw[nobelgold!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeRa] at (-5.05,0)
+        {放射性\\Radioactivity\par\scriptsize 命名者 · 原子假说};
+      \node[badge, fill=badgePo] at (-1.68,0)
+        {钋与镭\\Polonium · Radium\par\scriptsize 1898 发现};
+      \node[badge, fill=badgeWo] at (1.68,0)
+        {双诺奖\\Nobel 1903 · 1911\par\scriptsize 物理与化学};
+      \node[badge, fill=badgeHu] at (5.05,0)
+        {小居里\\petites Curies\par\scriptsize 一战移动 X 光};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"表彰他们对亨利·贝克勒尔教授所发现的辐射现象进行的联合研究。" —— 1903 诺贝尔物理学奖获奖理由};
+  % 头像（1903 年诺贝尔奖肖像，images.txt 载 Marie_Curie_1903.jpg）
+  \node[draw=nobelgold!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Marie_Curie_1903.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Marie_Curie_1903.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Marie Curie, 1903 Nobel portrait};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 波兰裔法国\enspace|\enspace \faIcon{university}\enspace 巴黎大学 · 镭研究所 · ENS\enspace|\enspace Nobel 1903 物理 · 1911 化学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ 物理学家硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{nobelgold!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{玛丽·居里 - 从华沙到两座诺贝尔奖}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[draw=nobelgold!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\IfFileExists{images/Marie_Curie_1903.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Marie_Curie_1903.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Marie Curie, 1903 Nobel portrait};
+  \node[infob, fill=goldpanel, draw=nobelgold!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1867-11-07 — 1934-07-04\\[2pt]\lab{本名}\quad Maria Salomea\\[2pt]\quad\enspace Sk\l{}odowska Curie\\[2pt]\lab{国籍}\quad 俄罗斯帝国（至 1895）\\[2pt]\quad\enspace → 法国（1895 起）};
+  \node[infob, fill=wopanel, draw=badgeWo!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 华沙女子文理中学（1883 金奖）· 飞行大学 · 巴黎大学\\[2pt]
+     \lab{师承}\quad Gabriel Lippmann（博士导师）\\[2pt]\lab{论文}\quad 《放射性物质的研究》};
+  \node[infob, fill=hupanel, draw=badgeHu!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 华沙（俄罗斯帝国治下\\[2pt]\quad\enspace 波兰会议王国）\\[2pt]\lab{去世地}\quad Passy, Haute-Savoie（法国）\\[2pt]\lab{任职}\quad 巴黎大学 · 镭研究所 · ENS};
+  \node[infob, fill=rapanel, draw=badgeRa!45, anchor=south] at (3.5,-1.85)
+    {\lab{主要荣誉}\quad Nobel 1903 物理 · Nobel 1911 化学\\[2pt]
+     \quad Davy 1903 · Matteucci 1904\\[2pt]
+     \lab{核心领域}\quad 放射性 · 钋 · 镭\\[2pt]\quad\enspace 放射医学};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{核心贡献概览}{一位在暗处点灯的人 · 四条人生与科学之路}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[
+    leg/.style={rounded corners=5pt, inner xsep=10pt, inner ysep=9pt, text width=5.35cm,
+      font=\fontsize{7.2}{9.4}\selectfont, align=left}
+  ]
+  \node[leg, fill=rapanel, draw=badgeRa!55, anchor=north] at (-3.15,2.5)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeRa!85!black}① 放射性与原子假说\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 铀化合物的活性只取决于铀的含量——辐射只能来自原子本身。她还创立了 radioactivity（放射性）一词。}};
+  \node[leg, fill=popanel, draw=badgePo!55, anchor=north] at (3.15,2.5)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgePo!85!black}② 钋与镭（1898）\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 从沥青铀矿的异常活性出发，先后发现钋（以祖国波兰命名）与镭，并历时四年提得十分之一克氯化镭。}};
+  \node[leg, fill=wopanel, draw=badgeWo!55, anchor=south] at (-3.15,-1.55)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeWo!85!black}③ 双诺奖与"首位"\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 首位女性诺奖得主（1903 物理，与 Pierre 共享一半）、首位两获诺奖者、唯一在两个不同科学门类获奖者（1911 化学奖独得）。}};
+  \node[leg, fill=hupanel, draw=badgeHu!55, anchor=south] at (3.15,-1.55)
+    {\fontsize{9}{12}\selectfont\bfseries\color{badgeHu!85!black}④ 人道与传承\\[3pt]
+     {\fontsize{7}{9.5}\selectfont 一战组建移动 X 光车队"petites Curies"，逾百万伤员受检；创建巴黎与华沙的镭研究所，培育又四位诺奖得主。}};
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 华沙童年 ---
+\newcommand{\warsawslide}{\begin{frame}\plainbar\sectiontitle{华沙童年 (1867–1883)}{一月起义之后 · 家中的"地下实验室"}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{轨迹}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1867-11-07} & \cellcolor{popanel}\textcolor{badgePo!82!black}{生于华沙——俄罗斯帝国治下的波兰会议王国；父系母系两代因波兰民族起义（最近一次为 1863–1865 一月起义）失去财产} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{家道中落的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{家中启蒙} & \cellcolor{popanel}\textcolor{badgePo!82!black}{父亲 W\l{}adys\l{}aw 教数学物理、任两所华沙男子中学督学；俄当局取消波兰学校实验课后，他把仪器搬回家中亲自授课；后因亲波兰立场被解职} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{科学始于家中那间"地下实验室"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1876–1878} & \cellcolor{popanel}\textcolor{badgePo!82!black}{长姐 Zofia 死于斑疹伤寒；母亲 Bronis\l{}awa（女子寄宿学校创办者）1878 年 5 月死于肺结核，时玛丽 10 岁} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{丧母失姐，此后放弃天主教成为不可知论者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1883-06-12} & \cellcolor{popanel}\textcolor{badgePo!82!black}{以金质奖章毕业于华沙女子文理中学} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{优秀到无法被忽视} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 被战争与贫困塑造的童年，把科学藏进了家中的仪器箱。}
+\end{center}
+\end{frame}}
+
+% --- 5. 飞行大学与家庭教师 ---
+\newcommand{\flyingslide}{\begin{frame}\plainbar\sectiontitle{飞行大学与家庭教师 (1883–1891)}{地下高等教育 · 姐妹之约 · 第一间实验室}
+\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{线索}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{制度性门槛} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{因性别无法进入正规高等教育，与姐姐 Bronis\l{}awa 参加华沙地下"飞行大学"（Flying University）——一所招收女性的爱国高等教育机构} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{被拒之门外的年代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{姐妹之约} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{约定：Marie 先做家庭教师资助 Bronis\l{}awa 在巴黎学医，两年后换对方资助自己赴巴黎} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{通往巴黎的梯子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{Szczuki 岁月} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{在 Żorawski 地主家做两年家庭女教师；与其子 Kazimierz（后来的著名数学家）相恋，因门第之见被其父母拆散} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{一段悲剧性的失落} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1890–1891} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{在工业与农业博物馆化学实验室受训，主持者是表兄 Józef Boguski——他曾任门捷列夫的助手} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{第一段真正的实验室经历} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 大门关闭的地方，她自己修了一条路。}
+\end{center}
+\end{frame}}
+
+% --- 6. 巴黎求学 ---
+\newcommand{\parisslide}{\begin{frame}\plainbar\sectiontitle{巴黎求学 (1891–1894)}{拉丁区阁楼 · 两个学位 · 钢的磁性}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{轨迹}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1891 年末} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{只身赴巴黎入巴黎大学；先暂住姐姐家，后在拉丁区租住离大学更近的阁楼} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{从 Maria 到 Marie} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{阁楼岁月} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{靠微薄积蓄度日：冬天穿着全部衣物御寒，专注到有时忘记吃饭；白天上课、晚间做家教} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{贫寒而炽烈} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1893} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{获物理学学位（获奖学金）；进入 Gabriel Lippmann 的工业实验室，研究各种钢的磁性（受国家工业促进学会委托）} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{科学生涯的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1894} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{借奖学金再获第二学位（page.md 注 4：Estreicher 考证为化学，"数学"说不确——此处只写"第二学位"）} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{两年之内，两个学位} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 当时人戏言：玛丽是"Pierre 最大的发现"——那是后话，先得有巴黎。}
+\end{center}
+\end{frame}}
+
+% --- 7. 与 Pierre ---
+\newcommand{\pierreslide}{\begin{frame}\plainbar\sectiontitle{与 Pierre (1894–1895)}{引荐 · 求婚 · Sceaux 成婚}
+\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{引荐} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{波兰物理学家 Józef Wierusz-Kowalski 得知她在寻找更大的实验室空间，引荐了在 ESPCI 任教的 Pierre Curie} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{科学的相遇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{空间} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{Pierre 虽无大实验室，仍为她找到一处可以开始工作的地方} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{第一间"共用"实验室} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{求婚与抉择} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{Pierre 求婚，她起初因打算回波兰而犹豫；Pierre 表示愿意随她去波兰、哪怕只能教法语。1894 年夏她回华沙，却被克拉科夫大学因性别拒收；Pierre 的一封信让她回巴黎攻读博士} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{科学与爱情的双重选择} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1895-07-26} & \cellcolor{popanel}\textcolor{badgePo!82!black}{在 Sceaux 成婚，不办宗教仪式；那身深蓝色衣裙此后多年仍是她的实验服。共同的爱好：长途自行车与远行} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{爱人 · 伴侣 · 合作者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在 Pierre 身上，她找到了可以托付一生的科学同行。}
+\end{center}
+\end{frame}}
+
+% --- 8. 铀射线与原子假说 ---
+\newcommand{\uraniumslide}{\begin{frame}\plainbar\sectiontitle{铀射线与原子假说 (1896–1897)}{压电静电计 · 活性只与铀含量相关}
+\vspace{-0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+    card/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=7pt, text width=7.3cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  \node[card, fill=rapanel, draw=badgeRa!50, anchor=north]
+    at (0.4,2.15) {\lab{课题}\quad 1895 Röntgen 发现 X 射线；1896 Becquerel 发现铀盐自发发出穿透性射线——她选择铀射线作为博士课题};
+  \node[card, fill=rapanel, draw=badgeRa!50, anchor=north]
+    at (0.4,1.05) {\lab{方法}\quad 用 Pierre 与其兄发明的压电静电计，测得铀射线使样品周围的空气导电——一个可定量的新手段};
+  \node[card, fill=goldpanel, draw=nobelgold!50, anchor=north]
+    at (0.4,-0.05) {\lab{关键结果}\quad 铀化合物的活性\textbf{只取决于铀的含量}};
+  \node[card, fill=goldpanel, draw=nobelgold!50, anchor=north]
+    at (0.4,-1.15) {\lab{假说}\quad 辐射不是分子间的相互作用，只能来自\textbf{原子本身}——推翻"原子不可再分"教条的重要一步};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1897 年长女 Irène 出生；她开始在高等师范任教——研究在 ESPCI 旁的棚屋里继续。}
+\end{center}
+\end{frame}}
+
+% --- 9. 钋与镭 ---
+\newcommand{\elementsslide}{\begin{frame}\plainbar\sectiontitle{钋与镭 (1898)}{异常活性 · 以波兰命名 · radioactivity 一词}
+\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{系统测量} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{沥青铀矿活性 4 倍于铀、铜铀云母 2 倍于铀 → 推断这两种矿物含有活性远强于铀的新元素} & \cellcolor{popanel}\textcolor{badgePo!82!black}{假说成形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1898-04-12} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{首篇论文由 Lippmann 代呈科学院；钍的放射性发现被德国 Gerhard Carl Schmidt 抢先数周} & \cellcolor{popanel}\textcolor{badgePo!82!black}{优先权的教训} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1898-07 \& 12-26} & \cellcolor{popanel}\textcolor{badgePo!82!black}{7 月宣布钋（以仍被瓜分的祖国波兰命名）；12 月 26 日宣布镭（拉丁语"射线"）；研究过程中创立 radioactivity 一词} & \cellcolor{popanel}\textcolor{badgePo!82!black}{两个新元素} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.55cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 1898 年论文中的关键一句（page.md 载原文）}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{mainclr!88!black}"The fact is very remarkable, and leads to the belief that these minerals may contain an element which is much more active than uranium."}\\[1pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{muteddark}（事实非常引人注目，令人相信这些矿物可能含有一种活性远强于铀的元素。）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 十分之一克镭 ---
+\newcommand{\gramslide}{\begin{frame}\plainbar\sectiontitle{十分之一克镭 (1898–1902)}{棚屋 · 分步结晶 · 1903 博士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{棚屋实验室} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{没有专门实验室——研究在 ESPCI 旁由医学校解剖室改建的棚屋中进行：不通风、甚至不防水；当时无人知晓辐射的危害} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{条件简陋的四年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{分步结晶} & \cellcolor{popanel}\textcolor{badgePo!82!black}{镭的化学性质近钡，须以分步结晶从沥青铀矿中把镭盐分离出来——钋较易（近铋），镭则难得多} & \cellcolor{popanel}\textcolor{badgePo!82!black}{艰苦的化学分离} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1902} & \cellcolor{popanel}\textcolor{badgePo!82!black}{从 1 吨沥青铀矿渣中提得 0.1 克氯化镭——镭的存在无可置疑} & \cellcolor{popanel}\textcolor{badgePo!82!black}{一吨矿渣，十分之一克} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1903-06} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{以 Lippmann 为导师获巴黎大学博士；1898–1902 年间夫妇联合或分别发表论文 32 篇（含镭辐射破坏肿瘤细胞的报道）} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{学位与高产出} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 四年棚屋、一吨矿渣——换来装在试管里的 0.1 克氯化镭。}
+\end{center}
+\end{frame}}
+
+% --- 11. 1903 诺贝尔物理学奖 ---
+\newcommand{\physnobelslide}{\begin{frame}\plainbar\sectiontitle{1903 诺贝尔物理学奖}{共享一半 · 首位女性诺奖得主}
+\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.73}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{份额}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{得主与理由}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{备注}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{一半 · 居里夫妇} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{Marie 与 Pierre 共享一半——"基于亨利·贝克勒尔教授所发现的辐射现象进行的联合研究"} & \cellcolor{popanel}\textcolor{badgePo!82!black}{发现镭的成果不在此理由中} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{另一半 · Becquerel} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{Becquerel 单独获得另一半（发现天然放射性）——两人理由不同} & \cellcolor{popanel}\textcolor{badgePo!82!black}{与 Becquerel 篇口径互恰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{提名的波澜} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{委员会最初只拟表彰 Pierre 与 Becquerel；瑞典数学家 Mittag-Leffler 告知 Pierre，经其申诉，Marie 才被补入提名} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{首位女性诺奖得主} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{未赴典礼} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{因工作繁忙、Pierre 恶病且厌恶典礼，未赴斯德哥尔摩；1905 年补做诺贝尔演讲} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{勿写"1903 亲自领奖"} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.55cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 官方获奖理由（1903，英文原文）}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{mainclr!88!black}"in recognition of the extraordinary services they have rendered by their joint researches on the radiation phenomena discovered by Professor Henri Becquerel."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 1906 讲席与 1911 风暴 ---
+\newcommand{\stormslide}{\begin{frame}\plainbar\sectiontitle{1906 讲席与 1911 风暴}{首位女教授 · 化学奖独得 · 克制的回应}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.73}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1906} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{Pierre 车祸离世（04-19）；05-13 巴黎大学保留为其专设的讲席并授予 Marie——\textbf{巴黎大学首位女教授}} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{接棒与纪念：为亡夫建一座世界级实验室} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1910–1911} & \cellcolor{popanel}\textcolor{badgePo!82!black}{分离纯金属镭、定义 curie 单位；法兰西学术院院士选举以一两票之差落败} & \cellcolor{popanel}\textcolor{badgePo!82!black}{成就与冷遇并存} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1911-12} & \cellcolor{popanel}\textcolor{badgePo!82!black}{获诺贝尔化学奖（\textbf{独得}）——发现镭与钋、分离镭并研究其性质；同年 Langevin 恋情曝光引发媒体风暴} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{首位两获诺奖者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 她的回应（1911，致试图劝阻其出席的 Arrhenius；仍赴斯德哥尔摩）}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{mainclr!88!black}"the prize has been given to her for her discovery of polonium and radium" \& "there is no relation between her scientific work and the facts of her private life"}\\[1pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{muteddark}（奖项是为发现钋和镭而授；她的科学工作与其私生活的事实之间没有任何关系。）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. petites Curies ---
+\newcommand{\warslide}{\begin{frame}\plainbar\sectiontitle{petites Curies (1914–1918)}{移动 X 光车队 · 逾百万伤员 · 未获表彰}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.73}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{线索}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{快速自学} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{自学放射学、解剖学与汽车机械，组建移动 X 光车队"petites Curies"} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{任红十字会放射服务主任} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1914 年末} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{建成法国首个军事放射中心；首年装备 20 辆移动放射车与 200 个野战放射单元} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{估计逾百万伤员受其检查；Irène 17 岁随行} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1915} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{以自己 1 克存镭制备镭射气（氡）空心针，用于消毒感染组织} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{把自己的存镭投入战地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{战后} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{用诺奖奖金购战争公债（银行拒收金牌）；法国政府始终未正式表彰其战时贡献} & \cellcolor{graypanel}\textcolor{coverdark!70}{战后著《战争中的放射学》(1919)} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.58cm}
+\begin{center}
+\fcolorbox{nobelgold!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{nobelgold!85!black} 战争公债独白（1914，page.md 载原文意译）}\\[2pt]
+  {\fontsize{8.6}{11.5}\selectfont\color{mainclr!88!black}"I am going to give up the little gold I possess \ldots\ Only, I have no illusions: this money will probably be lost."}\\[1pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{muteddark}（我将交出我仅有的一点黄金……只是，我不抱幻想：这笔钱多半会打水漂。）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 镭研究所与晚年 ---
+\newcommand{\instituteslide}{\begin{frame}\plainbar\sectiontitle{镭研究所与国际晚年 (1909–1934)}{两所研究所 · 两度访美 · 清贫与拒绝}
+\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{nobelgold!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{轨迹}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1909 → 1914} & \cellcolor{rapanel}\textcolor{badgeRa!82!black}{Pasteur 研究所所长 Roux 倡议共建；镭研究所 1914 年建成（今居里研究所），后培育出又四位诺奖得主（含 Irène 与 Frédéric Joliot-Curie）} & \cellcolor{popanel}\textcolor{badgePo!82!black}{为亡夫建的实验室} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1920 / 1932} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{1920 年建巴黎居里研究所；1932 年华沙镭研究所建成——姐姐 Bronis\l{}awa 任所长} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{巴黎与华沙双城} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1921 / 1929} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{两度访美：1921 年 Harding 总统赠 1 克美国公众捐赠之镭；1929 年之行促成华沙研究所的镭装备；此前法国政府欲授荣誉军团勋章，被她拒绝} & \cellcolor{wopanel}\textcolor{badgeWo!82!black}{声誉与拒绝} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{nobelgold!88!black}{1922–1934} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{入国际联盟知识合作国际委员会（与 Einstein、Lorentz、Bergson 同列）；1922 年入法国医学科学院；1930 年入选国际原子量委员会} & \cellcolor{hupanel}\textcolor{badgeHu!82!black}{国际科学协调者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 清贫与拒绝：奖学金有收入即还、诺奖奖金大半分赠、有意不为提镭工艺申请专利。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {她在黑暗中看见了微光，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=nobelgold!85!black] at ([yshift=0.4cm]current page.center) {并把那束光留给了整个世纪。};
+\draw[nobelgold!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black, align=center, text width=12.5cm] at ([yshift=-1.25cm]current page.center) {1934-07-04 逝于 Passy 疗养院（再生障碍性贫血，归因于长期辐射暴露）。1995 年与 Pierre 一同迁入先贤祠（铅衬防辐射）——第二位入葬的女性（Sophie Berthelot 在先），却是凭自身功绩入葬的首位女性。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.15cm]current page.center) {元素锔（curium）以居里夫妇命名 · 居里家族五座诺奖 · 1890 年代的论文至今藏于铅盒};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.75cm]current page.center) {玛丽·居里\quad Maria Salomea Sk\l{}odowska Curie\quad 1867 — 1934};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{atom}\enspace 放射性 · 钋与镭 · 双诺奖 · 人道传承\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openphysicistslide
+\titleslide
+\profileslide
+\hookslide
+\warsawslide
+\flyingslide
+\parisslide
+\pierreslide
+\uraniumslide
+\elementsslide
+\gramslide
+\physnobelslide
+\stormslide
+\warslide
+\instituteslide
+\closingslide
+\end{document}

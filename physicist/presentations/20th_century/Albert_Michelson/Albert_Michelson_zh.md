@@ -104,6 +104,18 @@
 - **国籍**：封面用「美国」。
 - **引语红线**："because it's so much fun"（reputedly，须保留"据说"限定）与爱因斯坦访谈原话有 page.md 原文；其余一律间接转述。
 
+### Review-1 修正（2026-09-10，以 page.md 为准的冲突裁决）
+
+1. **光速首测年份**：§2 原载"1878 年安纳波利斯首测"——page.md 实载 **1877 年课堂演示首测、1878 年初步测量、1879 年 6–7 月正式实验**，以 page.md 为准（正文已按此三段表述）。
+2. **Maxwell 信件年份**：§2 原载"1877 年 Maxwell 致 Todd 的信"——page.md 注 17 载 **1879 年**，以 page.md 为准。
+3. **首婚离异年份**：§1 原载"1911 前后离异（div. 1898）"存在噪声——统一为 **1898 年离异**（page.md infobox）。
+4. **1881 波茨坦以太漂移实验**：page.md **无载**，正文不写（原 §5 提示词中该句不再作为正文素材）。
+5. **参宿四称谓**：§2 原载"红超巨星"——page.md 载 **"red giant"**，正文用"红巨星参宿四"。
+6. **1879 光速数值**：page.md 双处记载并存（Biography 节 299,864±51 空气测量与 299,940 真空估计；Speed of Light 节发表值 **299,910 ± 50**）——正文统一采用发表值 299,910 ± 50，与 §5 数值谱系一致。
+7. **LIGO 表述口径**：按 page.md 写"2020 年 3 台运行、1 台在建、臂长 4 km、累计 15 起引力波事件"，不写更新年份的数据。
+8. **公式框素材**：迈克耳孙干涉仪光程差/条纹移动公式 page.md 无载不写；改用 page.md 实载的 1879 旋转镜法公式（$\tan(2\alpha)=d/r$、$\Delta t=(\alpha/2\pi)/\omega$、$c=2D/\Delta t$）。
+9. **编译实测**：16 页（共享封面 + 15 帧）0 错误；vbox 最大 9.3pt、hbox 最大 1.6pt，达标。①–④ 带圈数字须 `\xeCJKDeclareCharClass{CJK}{"2460 -> "2473}` 路由中文字体，否则 Helvetica 缺字。
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -116,7 +128,7 @@
 | nationality | United States | 待写入 |
 | primary_occupation | physicist | 待写入 |
 | field_of_work | physics（optics / metrology / astronomy） | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 1 | 已置 1（待 DB 执行） |
 
 ## 7. 社会关系入库清单
 

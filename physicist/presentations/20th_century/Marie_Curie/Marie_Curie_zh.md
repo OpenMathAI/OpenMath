@@ -106,6 +106,14 @@
 - **第二学位**：1894 年第二学位的领域史料有分歧（数学 vs 化学，page.md 注 4：Estreicher 考证为化学，"许多来源称数学是不正确的"）——写"第二学位"即可，勿断言数学。
 - **引语红线**：战争公债独白（"我将交出我仅有的一点黄金……"）、1911 年回应（"她的科学工作与其私生活的事实之间没有任何关系"）、论文中"事实非常引人注目……"在 page.md 均有原文可引；"Pierre 最大的发现"是当时人的戏言（contemporary quip），引用需注明语境。
 
+### Review-1 修正（2026-09-10，以 page.md 为准的裁决）
+
+1. **Gustave Bémont 无载**：本提示词 §4 Slide 9 原写"12 月镭（与 Bémont）"、§7 列 Bémont 为合作者——但 page.md 全文未出现 Bémont，宣布镭只写"the Curies announced"。正文已按 page.md 只写居里夫妇；§7 的 Bémont 关系入库前需再核（page.md 无据）。
+2. **1910 纯金属镭无"电解"细节**：page.md 仅载 "In 1910, she isolated pure radium metal"，无电解表述——正文不写"电解得纯金属镭"。
+3. **头像已定**：使用 images.txt 的 `Marie_Curie_1903.jpg`（500px，JPEG 验证通过），与 §0/§11.1 建议一致。
+4. **其余核对无冲突**：两座诺奖份额与理由原文、生卒、钋 1898-07/镭 1898-12-26、Schmidt 钍优先权、1905 补演讲、先贤祠"第二位女性/凭自身功绩首位"、死因两说（1995 OPRI 开棺）、第二学位歧义、"不专利"争议 nuance 均与 page.md 一致，已按 §5 红线执行。
+5. **LaTeX 执行层经验**：`\newcommand` 命令名不可含数字（`\nobel1903slide` 会被截断为 `\nobel1903s`，余下 `lide}` 在导言区执行并引发连环错误——已改名 `\physnobelslide`）；①-④ 圈号需 `\xeCJKDeclareCharClass{CJK}{"2460 -> "2469}` 交由中文字体渲染，否则缺字。
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -118,7 +126,7 @@
 | nationality | France（生于俄罗斯帝国治下波兰，1895 年入籍法国） | 待写入 |
 | primary_occupation | physicist / chemist | 待写入 |
 | field_of_work | radioactivity / physics / chemistry / radium / polonium | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 1 | 已置 1（待 DB 执行） |
 
 ## 7. 社会关系入库清单
 

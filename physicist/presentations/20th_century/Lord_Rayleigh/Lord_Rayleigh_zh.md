@@ -101,6 +101,16 @@
 - **宗教观**：英国国教徒（Anglican），拒绝唯物主义；晚年任心灵研究学会（SPR）会长但"未得出任何确定结论"——表述需注明语境，勿渲染为"迷信"。
 - **国籍**：封面用「英国」。
 
+### 5.1 Review-1 修正（2026-09-10，以 page.md 为准的冲突裁决）
+
+- **瑞利散射 λ⁻⁴ 公式**：page.md 无该公式记载，正文不用公式框，改为定性表述（"波长更短的蓝光被散射得更强"）。
+- **瑞利–金斯定律**：page.md 未载 1900 年份、未载与 Jeans 的合作细节，正文只写"对经典黑体辐射的推导，即后世所称的瑞利–金斯定律"，不标年份、不写合作案。
+- **瑞利波年份**：page.md 未载具体年份，Slide 7 标题沿用本提示词 §4 规划的 1877–1885 区间表述，正文不落 1885 单点年份。
+- **诺奖理由主次**：page.md 导语写 "for his discovery of argon"，但官方引文以气体密度研究为主、发现氩为果——以官方引文为准（与上文裁定一致）。
+- **引语实际使用**：正文直引仅用 Ramsay、Hyndman 两条；圣诗引文未使用（非必须）。
+- **page.md 有载、已补入正文的细节**：1883 年在 Nature 首次描述海鸟动态翱翔（dynamic soaring）；SPR 早年成员、1919 年会长演讲"未得出任何确定结论"；Duncan Dowson 将其列为 23 位 "Men of Tribology" 之一；Westminster Abbey 圣安德鲁礼拜堂有 Derwent Wood 制作纪念像；小行星 22740 Rayleigh 于 2007-06-01 命名。
+- **编译陷阱（新增）**：带圈数字 ①–⑳ 在 Helvetica Neue/lmsans 下缺字，须在 preamble 加 `\xeCJKDeclareCharClass{CJK}{"2460 -> "2473}` 交给中文字体。
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -113,7 +123,7 @@
 | nationality | United Kingdom | 待写入 |
 | primary_occupation | physicist | 待写入 |
 | field_of_work | physics（散射光学 / 声学 / 流体力学 / 气体密度） | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 1 | 已置 1（Beamer 立传完成，待 DB 执行） |
 
 ## 7. 社会关系入库清单
 

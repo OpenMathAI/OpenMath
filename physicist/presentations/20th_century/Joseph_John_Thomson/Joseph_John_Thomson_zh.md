@@ -115,7 +115,7 @@
 | nationality | United Kingdom | 待写入 |
 | primary_occupation | physicist | 待写入 |
 | field_of_work | physics / experimental physics / electron / electrical conductance | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 1 | 已置 1（Beamer 立传已完成；待 DB 执行） |
 
 ## 7. 社会关系入库清单
 
@@ -156,11 +156,19 @@
 - [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
 - [ ] `make distclean && make` 编译通过，0 错误
 
+### Review-1 修正（2026-09-10，执行 Beamer 时裁定，以 page.md 为准）
+
+1. **★ 肖像纠错**：本提示词 §0.1 与 §11 原指定 `images.txt` 中的 `Thomson-13.jpg` 为 infobox 肖像（"Thomson in 1915"）——**有误**。page.md 第 87-89 行显示 `Thomson-13.jpg` 实为 1893 年《Notes on Recent Researches in Electricity and Magnetism》的**扉页书影**，不是人物照片；infobox 中 "Thomson in 1915" 一行的图片 URL 在 page.md 中缺失。已改经 Wikipedia REST API（page/summary）查得词条真实 infobox 肖像 `J.J_Thomson.jpg`（commons `c/c1`，1000×1563），下载 500px 版为 `images/JJ_Thomson_portrait.jpg` 使用。**图注不写 "(1915)"**（该年份对现用肖像无据）。
+2. **皇家学会会长任期**：page.md infobox 载 "42nd President, 1915–1920"，正文第 73 行的叙述亦一致——§2.13 的 "1915–1920" 维持不变。
+3. **1899 电荷测量**：page.md 明载 "Later in 1899 he measured the charge of the electron to be of 6.8×10−10 esu"，可写（电子发现页细节）。
+4. **三一学院 Fellow 年份**：page.md 载 "became a Fellow of Trinity College the following year"（即 1881），Beamer 已按 1881 写。
+5. 其余事实红线（诺奖理由、corpuscle/electron、1884 任命、布丁模型、父子诺奖、两套学生名单、Second Wrangler、引语仅限两条 1897 原话）逐条核对无冲突，正文已按红线执行。
+
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `20th_century/Joseph_John_Thomson/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：使用 `images.txt` 中的 infobox 肖像 `Thomson-13.jpg`（1915）
+- [ ] **头像**：~~使用 `images.txt` 中的 infobox 肖像 `Thomson-13.jpg`（1915）~~ **Review-1 纠错：`Thomson-13.jpg` 实为 1893 书扉页，改用 Wikipedia REST API 查得的词条真实肖像 `J.J_Thomson.jpg`（`images/JJ_Thomson_portrait.jpg`，图注不写 1915）**
 - [ ] **国籍**：封面顶部徽章明示英国
 - [ ] **引语核对**：每条中文引号内文字须能在 page.md 找到英文原文（限两条 1897 原话）
 - [ ] **编译验证**：`make distclean && make`

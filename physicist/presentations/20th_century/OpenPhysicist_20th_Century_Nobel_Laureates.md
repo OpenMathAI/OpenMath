@@ -20,12 +20,12 @@
 | 1902 | Hendrik Antoon Lorentz (亨德里克·安东·洛伦兹) | Netherlands | 表彰他们研究磁对辐射现象的影响所作出的杰出贡献 | ✅ | ✅ | ✅ |
 | 1902 | Pieter Zeeman (彼得·塞曼) | Netherlands | 表彰他们研究磁对辐射现象的影响所作出的杰出贡献 | ✅ | ✅ | ✅ |
 | 1903 | Antoine Henri Becquerel (安托万·亨利·贝克勒尔) | France | 表彰他发现天然放射性所作出的杰出贡献 | ✅ | 🔲 | 🔲 |
-| 1903 | Pierre Curie (皮埃尔·居里) | France | 表彰他们基于亨利·贝克勒尔教授所发现的辐射现象进行的联合研究所作出的杰出贡献 | 🔲 | 🔲 | 🔲 |
-| 1903 | Marie Curie (玛丽·居里) | France | 表彰他们基于亨利·贝克勒尔教授所发现的辐射现象进行的联合研究所作出的杰出贡献 | 🔲 | 🔲 | 🔲 |
-| 1904 | Lord Rayleigh (瑞利勋爵) | United Kingdom | 表彰他对最重要气体密度的研究，以及在此研究中发现了氩 | 🔲 | 🔲 | 🔲 |
-| 1905 | Philipp Eduard Anton von Lenard (菲利普·爱德华·安东·冯·莱纳德) | Germany | 表彰他在阴极射线方面的研究 | 🔲 | 🔲 | 🔲 |
-| 1906 | Joseph John Thomson (约瑟夫·约翰·汤姆孙) | United Kingdom | 表彰他在气体导电的理论和实验研究方面的巨大功绩 | 🔲 | 🔲 | 🔲 |
-| 1907 | Albert Abraham Michelson (阿尔伯特·亚伯拉罕·迈克耳孙) | United States | 表彰他发明的光学精密仪器，以及借助这些仪器进行的光谱学和计量学研究 | 🔲 | 🔲 | 🔲 |
+| 1903 | Pierre Curie (皮埃尔·居里) | France | 表彰他们基于亨利·贝克勒尔教授所发现的辐射现象进行的联合研究所作出的杰出贡献 | ✅ | 🔲 | 🔲 |
+| 1903 | Marie Curie (玛丽·居里) | France | 表彰他们基于亨利·贝克勒尔教授所发现的辐射现象进行的联合研究所作出的杰出贡献 | ✅ | 🔲 | 🔲 |
+| 1904 | Lord Rayleigh (瑞利勋爵) | United Kingdom | 表彰他对最重要气体密度的研究，以及在此研究中发现了氩 | ✅ | 🔲 | 🔲 |
+| 1905 | Philipp Eduard Anton von Lenard (菲利普·爱德华·安东·冯·莱纳德) | Germany | 表彰他在阴极射线方面的研究 | ✅ | 🔲 | 🔲 |
+| 1906 | Joseph John Thomson (约瑟夫·约翰·汤姆孙) | United Kingdom | 表彰他在气体导电的理论和实验研究方面的巨大功绩 | ✅ | 🔲 | 🔲 |
+| 1907 | Albert Abraham Michelson (阿尔伯特·亚伯拉罕·迈克耳孙) | United States | 表彰他发明的光学精密仪器，以及借助这些仪器进行的光谱学和计量学研究 | ✅ | 🔲 | 🔲 |
 | 1908 | Gabriel Lippmann (加布里埃尔·李普曼) | France | 表彰他基于干涉现象发明的彩色摄影方法 | 🔲 | 🔲 | 🔲 |
 | 1909 | Guglielmo Marconi (古列尔莫·马可尼) | Italy | 表彰他们对无线电报发展所作出的贡献 | 🔲 | 🔲 | 🔲 |
 | 1909 | Karl Ferdinand Braun (卡尔·费迪南德·布劳恩) | Germany | 表彰他们对无线电报发展所作出的贡献 | 🔲 | 🔲 | 🔲 |
@@ -188,7 +188,7 @@
 - **获奖年份跨度**：1901–2000
 - **获奖总项数**：162 项
 - **获奖总人数**：161 位
-- **已立传**：10 位（Antoine Henri Becquerel、Chen Ning Yang、Eugene Paul Wigner、Hendrik Antoon Lorentz、Kenneth G. Wilson、Pieter Zeeman、Tsung-Dao Lee、Werner Karl Heisenberg、Wilhelm Conrad Röntgen、Wolfgang Pauli）
+- **已立传**：16 位（Albert Abraham Michelson、Antoine Henri Becquerel、Chen Ning Yang、Eugene Paul Wigner、Hendrik Antoon Lorentz、Joseph John Thomson、Kenneth G. Wilson、Lord Rayleigh、Marie Curie、Philipp Eduard Anton von Lenard、Pierre Curie、Pieter Zeeman、Tsung-Dao Lee、Werner Karl Heisenberg、Wilhelm Conrad Röntgen、Wolfgang Pauli）
 - **已 Review**：9 位（Chen Ning Yang、Eugene Paul Wigner、Hendrik Antoon Lorentz、Kenneth G. Wilson、Pieter Zeeman、Tsung-Dao Lee、Werner Karl Heisenberg、Wilhelm Conrad Röntgen、Wolfgang Pauli）
 - **已社会关系入库**：9 位（Chen Ning Yang、Eugene Paul Wigner、Hendrik Antoon Lorentz、Kenneth G. Wilson、Pieter Zeeman、Tsung-Dao Lee、Werner Karl Heisenberg、Wilhelm Conrad Röntgen、Wolfgang Pauli）
 - **两度获奖者**：John Bardeen（唯一两度获诺贝尔物理学奖者）

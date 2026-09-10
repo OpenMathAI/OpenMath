@@ -97,6 +97,16 @@
 - **家世**：经祖母一系为 John(Jean) Bernoulli 后裔、与 Pierre-Gilles de Gennes 同源——引用需准确（"直系后裔"出自 page.md），勿扩展为"伯努利家族成员"。
 - **引语红线**：致玛丽的信（"你爱国的梦、人道主义的梦、科学的梦"）在 page.md 有英文原文，引用须忠实；其余（如"Einstein 评价"）不适用于 Pierre 篇，勿移花接木。
 
+### Review-1 修正（2026-09-10，立传执行后回写）
+
+1. **肖像裁决（重要）**：`images.txt` 的 `Curie1895These.jpg` **不是人物肖像**——page.md 中图注为 "Curie's dissertation, 1895"，实为 1895 年博士论文《Propriétés magnétiques des corps à diverses températures》的封面页。本条 §0 第 1 点与 §11 "头像"项原写"1895 年论文照 Curie1895These.jpg 或居里夫妇合影"有误导，**已裁决不用作头像**。实际采用：封面/身份页用实验室合影 `Pierre_and_Marie_Curie.jpg`（page.md 图注 "Pierre and Marie Curie in the laboratory"），Marie 相遇页用 1895 结婚照 `Pierre_Curie_et_Marie_Sklodowska_Curie_1895.jpg`。
+2. **钋的"1898 年 7 月"日期 page.md 无载**：page.md 仅载 1898-12-26 与 G. Bémont 联合发表"镭与钋之发现"的论文。正文已按 page.md 口径表述（"1898-12-26 联合发表镭与钋之发现的论文"），未写 7 月日期；后续引用钋发现月份需另行查证。
+3. **"拒绝镭提纯专利"与"日内瓦大学邀聘"page.md 无载**：§2 第 10 条与 §4 第 12 页原规划"不专利的选择/Geneva 邀聘的转机"已**整体移除**，Slide 12 改为"讲席与 1905 诺贝尔演讲"（1895 D.Sc. 后任物理学教授、1900 理学院教授、1904 titular professor、1905 法兰西学术院院士 + 6 月 6 日斯德哥尔摩诺贝尔演讲《Radioactive Substances, Especially Radium》——后者出自 page.md External links）。
+4. **"Marie 接任其讲席"page.md 无载**：§4 第 13 页原规划有此句，未写入正文。
+5. **BGM 落地确认**：`PAST.wav` 已复制自 `music_audio/alex-productions/89-geyy8_WXDK0-PAST.wav`，`make video` 已出片。
+6. **编译终态**：16 页（项目首页 + 15 帧），0 错误、0 缺字，仅 1 处 Overfull \hbox 3.0pt（≤50pt 达标），无 Overfull \vbox。
+7. **技术备忘**：①②③④ 圆数字须 `\xeCJKDeclareCharClass{CJK}{"2460 -> "24FF}` 交给中文字体，否则 Helvetica Neue/LM Sans 缺字；`silverpanel` 等面板色须在导言区显式定义。
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -109,7 +119,7 @@
 | nationality | France | 待写入 |
 | primary_occupation | physicist | 待写入 |
 | field_of_work | physics / crystallography / magnetism / piezoelectricity / radioactivity | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 1 | 已置 1（待 DB 执行） |
 
 ## 7. 社会关系入库清单
 
