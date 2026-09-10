@@ -28,6 +28,7 @@ BIOGRAPHIES_DONE = {
     "Tsung-Dao Lee",
     "Wolfgang Pauli",
     "Werner Karl Heisenberg",
+    "Antoine Henri Becquerel",
 }
 
 # 已完成 Review（两轮事实核查）的物理学家（姓名需与获奖者名单精确匹配）。
