@@ -19,7 +19,7 @@
 | 1901 | Jacobus Henricus van 't Hoff (雅各布斯·亨里克斯·范特霍夫) | Dutch | 表彰他因发现化学动力学定律和溶液渗透压定律所作出的杰出贡献 | ✅ | 🔲 | 🔲 |
 | 1902 | Hermann Emil Fischer (赫尔曼·埃米尔·费歇尔) | German | 表彰他因在糖类和嘌呤合成方面的研究所作出的杰出贡献 | ✅ | 🔲 | 🔲 |
 | 1903 | Svante Arrhenius (斯万特·阿伦尼乌斯) | Swedish | 表彰他因提出电离理论而对化学进步所作出的杰出贡献 | ✅ | 🔲 | 🔲 |
-| 1904 | William Ramsay (威廉·拉姆齐) | British | 表彰他发现空气中的惰性气体元素，并确定它们在元素周期表中的位置 | 🔲 | 🔲 | 🔲 |
+| 1904 | William Ramsay (威廉·拉姆齐) | British | 表彰他发现空气中的惰性气体元素，并确定它们在元素周期表中的位置 | ✅ | 🔲 | 🔲 |
 | 1905 | Adolf von Baeyer (阿道夫·冯·拜尔) | German | 表彰他通过对有机染料和氢化芳香族化合物的研究，推动有机化学和化学工业的发展 | ✅ | 🔲 | 🔲 |
 | 1906 | Henri Moissan (亨利·莫瓦桑) | French | 表彰他研究并分离出元素氟所作出的巨大贡献，以及他为科学服务而采用以他名字命名的电炉 | ✅ | 🔲 | 🔲 |
 | 1907 | Eduard Buchner (爱德华·布赫纳) | German | 表彰他的生物化学研究，以及他发现无细胞发酵 | ✅ | 🔲 | 🔲 |
@@ -163,7 +163,7 @@
 
 | 年份 | 人物 | 国籍 | 遗珠缘由 | 立传 | Review | 社会关系入库 |
 |:--:|------|------|------|:--:|:--:|:--:|
-| 1905–1907 | Dmitri Mendeleev (德米特里·伊万诺维奇·门捷列夫) | Russian Empire | 非得主：1905/1906/1907 三年 9 次提名；1906 年化学委员会正式推荐其获奖，全院大会因 Klason 提名 Moissan、Arrhenius 力主否决，以一票之差落选；1907 再遭否。元素周期律的立法者，公认的最大遗珠。 | 🔲 | 🔲 | 🔲 |
+| 1905–1907 | Dmitri Mendeleev (德米特里·伊万诺维奇·门捷列夫) | Russian Empire | 非得主：1905/1906/1907 三年 9 次提名；1906 年化学委员会正式推荐其获奖，全院大会因 Klason 提名 Moissan、Arrhenius 力主否决，以一票之差落选；1907 再遭否。元素周期律的立法者，公认的最大遗珠。 | ✅ | 🔲 | 🔲 |
 
 ---
 
@@ -174,7 +174,7 @@
 - **获奖年份跨度**：1901–2000
 - **获奖总项数**：135 项
 - **获奖总人数**：134 位
-- **已立传**：10 位（Adolf von Baeyer、Eduard Buchner、Ernest Rutherford、Frederick Sanger、Henri Moissan、Hermann Emil Fischer、Jacobus Henricus van 't Hoff、Otto Wallach、Svante Arrhenius、Wilhelm Ostwald）
+- **已立传**：11 位（Adolf von Baeyer、Eduard Buchner、Ernest Rutherford、Frederick Sanger、Henri Moissan、Hermann Emil Fischer、Jacobus Henricus van 't Hoff、Otto Wallach、Svante Arrhenius、Wilhelm Ostwald、William Ramsay）
 - **已 Review**：1 位（Frederick Sanger）
 - **社会关系已入库**：1 位（Frederick Sanger）
 - **特别篇（遗珠）**：1 位（Dmitri Mendeleev）

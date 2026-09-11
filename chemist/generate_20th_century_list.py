@@ -23,6 +23,7 @@ BIOGRAPHIES_DONE = {
     "Jacobus Henricus van 't Hoff",
     "Hermann Emil Fischer",
     "Svante Arrhenius",
+    "William Ramsay",
     "Adolf von Baeyer",
     "Henri Moissan",
     "Eduard Buchner",
@@ -56,7 +57,9 @@ SPECIAL_MENTIONS = [
 ]
 
 # 特别篇中已立传者
-SPECIAL_BIOS_DONE = set()
+SPECIAL_BIOS_DONE = {
+    "Dmitri Mendeleev",
+}
 
 # 特别篇中已完成两轮 Review 者
 SPECIAL_REVIEWS_DONE = set()

@@ -162,16 +162,18 @@
 
 ## 10. 终审清单
 
-- [ ] 生卒 1834-02-08（O.S. 01-27）/ 1907-02-02（O.S. 01-20），享年 72，出生地 Verkhnie Aremzyani、去世地圣彼得堡（流感）
-- [ ] 全篇无「诺贝尔奖得主」表述；1906 委员会推荐 / 一票之差 / Arrhenius 反对（含转述属性）表述准确
-- [ ] 提名分解 3+4+2=9 次准确；1907 两次均被否
-- [ ] eka 系对应准确：eka-aluminium→Ga(1875)、eka-silicon→Ge(1886)、eka-boron→Sc
-- [ ] Newlands/Meyer 先驱地位不抹杀；门捷列夫独特处=预言+纠错
-- [ ] 伏特加神话不出现（或以辟谣形式出现）；梦/临终语/石油警句均带转述或存疑注记
-- [ ] 兄弟排行写「17 个孩子中最小」，不写精确存活数
-- [ ] 引语全部可在 page.md 找到原文（母亲教诲、梦中表、Chugaev 评语、临终语——后两处带属性注记）
-- [ ] 正文采用标杆式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误，vbox≤10pt、hbox≤50pt
+- [x] 生卒 1834-02-08（O.S. 01-27）/ 1907-02-02（O.S. 01-20），享年 72，出生地 Verkhnie Aremzyani、去世地圣彼得堡（流感）
+- [x] 全篇无「诺贝尔奖得主」表述；1906 委员会推荐 / 一票之差 / Arrhenius 反对（含转述属性）表述准确
+- [x] 提名分解 3+4+2=9 次准确；1907 两次均被否
+- [x] eka 系对应准确：eka-aluminium→Ga(1875)、eka-silicon→Ge(1886)、eka-boron→Sc
+- [x] Newlands/Meyer 先驱地位不抹杀；门捷列夫独特处=预言+纠错
+- [x] 伏特加神话不出现（或以辟谣形式出现）；梦/临终语/石油警句均带转述或存疑注记
+- [x] 兄弟排行写「17 个孩子中最小」，不写精确存活数
+- [x] 引语全部可在 page.md 找到原文（母亲教诲、梦中表、Chugaev 评语、临终语——后两处带属性注记）
+- [x] 正文采用标杆式：身份信息页 + 时间线页 + 表格语义化 + 公式框 + 气泡背景 + 品牌 OpenMathAI
+- [x] `make distclean && make` 编译通过，0 错误，vbox≤10pt、hbox≤50pt
+
+> **执行记录（2026-09-11，bios-mendeleev）**：Beamer 已产出——15 页 PDF（00 首页 + 14 帧），0 error，仅 2 处 Overfull vbox（时间线页 5.8pt、石油页 1.6pt，均 ≤10pt），无 hbox 超标、无缺字。肖像 Kramskoi 1878（500px Commons 下载，`file` 验证 JPEG）、Repin 1885 用于遗产页；西里尔本名 Helvetica Neue 直出无缺字。`Dmitri_Mendeleev_zh.mp4`（9.4 MB，Cinematic Experience BGM）已生成。无新增事实修正，§5 无改动。
 
 ## 11. Review 流程规范（两轮 Review）
 
