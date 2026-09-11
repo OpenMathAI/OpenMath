@@ -1,0 +1,523 @@
+% =============================================================
+%  结构化编程之父：艾兹赫尔·W·戴克斯特拉 (Edsger W. Dijkstra)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：有向图节点与最短路径线段 —— 呼应"最短路径"的视觉语言
+%  资料来源：turing/pages/1972/Edsger W. Dijkstra/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Dijkstra 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeAlg}{HTML}{2E5A9E}     % 算法与系统 — 蓝
+\definecolor{badgeConc}{HTML}{1E8E8E}    % 并发 — 青绿
+\definecolor{badgeStruct}{HTML}{D9A441}  % 结构化编程 — 琥珀
+\definecolor{badgeEssay}{HTML}{C0395B}   % 思想与文风（EWD 手稿）— 玫瑰
+\definecolor{algpanel}{RGB}{228,233,246}
+\definecolor{concpanel}{RGB}{222,240,238}
+\definecolor{structpanel}{RGB}{249,240,224}
+\definecolor{essaypanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 有向图背景母题：节点与最短路径线段
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \draw[badgeAlg!22, line width=0.5pt] ([xshift=2.0cm,yshift=-2.0cm]current page.north west) -- ([xshift=-2.4cm,yshift=2.0cm]current page.south east);
+  \draw[badgeStruct!25, line width=0.5pt] ([xshift=-3.2cm,yshift=-2.4cm]current page.north east) -- ([xshift=2.8cm,yshift=2.2cm]current page.south west);
+  \draw[badgeEssay!25, line width=0.5pt] ([xshift=2.0cm,yshift=-2.0cm]current page.north west) -- ([xshift=-3.2cm,yshift=-2.4cm]current page.north east);
+  \fill[badgeAlg!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeConc!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeStruct!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[badgeAlg!45] ([xshift=2.0cm,yshift=-2.0cm]current page.north west) circle (2.4pt);
+  \fill[badgeEssay!45] ([xshift=-3.2cm,yshift=-2.4cm]current page.north east) circle (2.4pt);
+  \fill[badgeStruct!50] ([xshift=2.8cm,yshift=2.2cm]current page.south west) circle (2.4pt);
+  \fill[badgeConc!50] ([xshift=-2.4cm,yshift=2.0cm]current page.south east) circle (2.4pt);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{project-diagram}\enspace 结构化编程之父\enspace·\enspace 荷兰};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {艾兹赫尔·W·戴克斯特拉};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Edsger W. Dijkstra\enspace·\enspace 1930 — 2002};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {结构化编程之父 · 最短路径算法 · 1972 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAlg] at (-5.05,0)
+        {算法与系统\\Algorithms \& Systems\par\scriptsize 最短路径 · THE 系统};
+      \node[badge, fill=badgeConc] at (-1.68,0)
+        {并发计算\\Concurrency\par\scriptsize 信号量 · 自稳定};
+      \node[badge, fill=badgeStruct] at (1.68,0)
+        {结构化编程\\Structured Programming\par\scriptsize Go To 有害论};
+      \node[badge, fill=badgeEssay] at (5.05,0)
+        {思想与文风\\EWD Essays\par\scriptsize 1300+ 篇手稿};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12.5cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"We must not forget that it is not our business to make programs, it is our business to design classes of computations that will display a desired behaviour." —— 1972 图灵奖演讲 The Humble Programmer};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Edsger_Dijkstra_1994.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Edsger_Dijkstra_1994.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Edsger W. Dijkstra};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 荷兰\enspace|\enspace \faIcon{university}\enspace MC Amsterdam · TU Eindhoven · UT Austin\enspace|\enspace Turing 1972};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{戴克斯特拉 - 从鹿特丹到结构化编程之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Edsger_Dijkstra_1994.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Edsger_Dijkstra_1994.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Edsger W. Dijkstra};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1930-05-11 — 2002-08-06\\[2pt]\lab{本名}\quad Edsger Wybe Dijkstra\\[2pt]\lab{国籍}\quad 荷兰};
+  \node[infob, fill=concpanel, draw=badgeConc!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Leiden 数学与理论物理\\[2pt]
+     \quad Amsterdam PhD 1959\\[2pt]
+     \lab{师承}\quad Adriaan van Wijngaarden（导师）};
+  \node[infob, fill=algpanel, draw=badgeAlg!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 鹿特丹 · 荷兰\\[2pt]\lab{去世地}\quad Nuenen · 荷兰\\[2pt]\lab{任职}\quad MC Amsterdam · TU Eindhoven\\[2pt]\quad Burroughs · UT Austin};
+  \node[infob, fill=structpanel, draw=badgeStruct!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1972 · Dijkstra Prize\\[2pt]
+     \quad 荷兰皇家科学院院士 1971\\[2pt]
+     \lab{核心领域}\quad 结构化编程 · 并发计算\\[2pt]
+     \quad 最短路径 · 形式化方法};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{戴克斯特拉的一生}{1930 — 2002 · 从鹿特丹少年到结构化编程之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1930/生于鹿特丹，化学家与数学家之子,
+    2.3/1952/成为荷兰第一位"程序员"（数学中心）,
+    1.6/1956/为 ARMAC 揭幕演示构思最短路径算法,
+    0.9/1959/Amsterdam 博士 · 最短路径论文发表,
+    0.2/1960/与 Zonneveld 完成首个 ALGOL 60 编译器,
+    -0.5/1962/任 Eindhoven 教授 · THE 多程序系统,
+    -1.2/1968/发表 Go To Statement Considered Harmful,
+    -1.9/1972/获图灵奖 · 演讲 The Humble Programmer,
+    -2.6/1984/出任 UT Austin 讲座教授（Burroughs 自 1973）,
+    -2.8/2002/逝于 Nuenen，享年 72
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：鹿特丹的律师梦与理论物理 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：律师梦与理论物理 (1930–1952)}{鹿特丹 · Gymnasium Erasmianum · 莱顿数理 · 联合国之梦}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1930} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{生于鹿特丹；父为化学家、中学校长级教师，母为数学家（从未正式任职）} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{理性与公式的家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1948} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{Gymnasium Erasmianum 毕业；曾想学法律，梦想代表荷兰进联合国} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{少年的律师梦} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1948 起} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{入 Leiden 大学攻读数学与物理，后转向理论物理} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{数理根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1952} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{经导师 Haantjes 引荐，受雇于 van Wijngaarden} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{命运的转折} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个梦想进联合国的鹿特丹少年，最终改写了整个编程世界的范式。}
+\end{center}
+\end{frame}}
+
+% --- 5. 荷兰第一位程序员 ---
+\newcommand{\firstprogrammerslide}{\begin{frame}\plainbar\sectiontitle{荷兰第一位"程序员" (1952–1959)}{数学中心 · X1 博士论文 · 一个被拒绝的职业}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1952-03} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{受雇于阿姆斯特丹数学中心，成为荷兰官方承认的第一位 programmer} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{一个职业的诞生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1957} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{与 Maria "Ria" C. Debets 结婚；婚姻登记时报"职业：程序员"竟被当局拒绝——荷兰当时尚不存在这个职业} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{时代的注脚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1959} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{Amsterdam 博士：论文 \textit{Communication with an Automatic Computer}——为荷兰首台商用计算机 X1 设计的汇编语言} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{程序设计的学术起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1957 · 婚姻登记表上的职业一栏}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{职业：程序员} $\rightarrow$ \textcolor{badgeEssay}{被驳回}——"荷兰不存在这个职业"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 最短路径算法 ---
+\newcommand{\shortestpathslide}{\begin{frame}\plainbar\sectiontitle{最短路径算法 (1956 构思 · 1959 发表)}{为 ARMAC 揭幕而生 · 写进每一本教科书}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1956} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{为 ARMAC 计算机正式揭幕演示而构思并解决最短路径问题} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{探路者的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1959} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{发表 \textit{A Note on Two Problems in Connexion with Graphs}（\textit{Numerische Mathematik}）——因当时无自动计算期刊，迟至三年后才发表} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{经典正式定名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{传承} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{今为 CS 本科必修内容；OSPF、IS-IS 路由协议的核心} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{教科书级的经典} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Dijkstra 算法 —— 松弛步骤}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{dist}[v] = \min\big(\mathrm{dist}[v],\ \mathrm{dist}[u] + w(u,v)\big)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 首个 ALGOL 60 编译器 ---
+\newcommand{\algolslide}{\begin{frame}\plainbar\sectiontitle{首个 ALGOL 60 编译器 (1960-08)}{与 Jaap Zonneveld · 结构化编程的摇篮}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1960-08} & \cellcolor{structpanel}\textcolor{badgeStruct!82!black}{与同事 Jaap Zonneveld 合作完成首个 ALGOL 60 编译器} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{快人一步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{速度} & \cellcolor{structpanel}\textcolor{badgeStruct!82!black}{比另一组实现早一年多} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{工程实力的证明} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{structpanel}\textcolor{badgeStruct!82!black}{ALGOL 60 是结构化编程兴起的关键一步} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{语言史的里程碑} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1960-08 · 第一个完整的 ALGOL 60 编译器}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Dijkstra \& Zonneveld} —— 为结构化编程时代铺平道路}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. THE 多程序系统 ---
+\newcommand{\thesystemslide}{\begin{frame}\plainbar\sectiontitle{THE 多程序系统 (1960s 末)}{分层操作系统 · 软件分页虚拟内存}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{设计}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{以所在大学 Technische Hogeschool Eindhoven 命名} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{一所大学的系统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{分层结构} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{分层（layers）操作系统设计的早期典范} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{系统结构的范式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{虚拟内存} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{基于软件的分页虚拟内存} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{影响后世系统设计} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} THE 多程序系统 —— 设计要点}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{THE 系统} $=$ \textit{分层操作系统} $+$ \textit{软件分页虚拟内存}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 信号量与并发原语 ---
+\newcommand{\semaphoreslide}{\begin{frame}\plainbar\sectiontitle{信号量与并发原语 (1965)}{Cooperating Sequential Processes · 银行家算法}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{原语}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{奠基文献} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{\textit{Cooperating Sequential Processes}（EWD-123, 1965）——多进程协作的奠基之作} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{并发计算的源头} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{信号量} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{信号量（semaphore）用于多进程协调；互斥问题解法（1965）} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{同步原语的标准形态} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{银行家算法} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{资源分配的死锁避免方法} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{资源管理的经典} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 信号量 P-V 操作}\\[2pt]
+  {\fontsize{9.5}{12}\selectfont\color{coverprimary!88!black}$P(S):\ S \leftarrow S-1\ \ $\textcolor{badgeConc}{等待若 $S<0$}\quad $V(S):\ S \leftarrow S+1\ \ $\textcolor{badgeConc}{唤醒若 $S\le 0$}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. Go To Statement Considered Harmful ---
+\newcommand{\gotoslide}{\begin{frame}\plainbar\sectiontitle{"Go To Statement Considered Harmful" (1968)}{一封致 CACM 编辑的信 · 一场大辩论}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968} & \cellcolor{structpanel}\textcolor{badgeStruct!82!black}{致 \textit{CACM} 编辑的信 \textit{Go To Statement Considered Harmful}} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{一封信的力量} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{辩论} & \cellcolor{structpanel}\textcolor{badgeStruct!82!black}{引发大辩论——结构化编程运动的号角} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{编程范式的分水岭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{遗产} & \cellcolor{structpanel}\textcolor{badgeStruct!82!black}{现代程序员普遍遵循结构化范式} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{理念成为常识} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1968 · \textit{Communications of the ACM}}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Go To Statement Considered Harmful} —— 号角吹响，范式转向}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 图灵奖 1972 与 The Humble Programmer ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1972 与 The Humble Programmer}{"for fundamental contributions to developing structured programming languages"}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{获奖理由} & \cellcolor{essaypanel}\textcolor{badgeEssay!82!black}{for fundamental contributions to developing structured programming languages} & \cellcolor{structpanel}\textcolor{badgeStruct!82!black}{结构化编程的加冕} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{图灵演讲} & \cellcolor{essaypanel}\textcolor{badgeEssay!82!black}{\textit{The Humble Programmer}（谦逊的程序员）} & \cellcolor{structpanel}\textcolor{badgeStruct!82!black}{传世的演讲} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同年合著} & \cellcolor{essaypanel}\textcolor{badgeEssay!82!black}{与 Dahl、Hoare 合著 \textit{Structured Programming}（1972）} & \cellcolor{structpanel}\textcolor{badgeStruct!82!black}{运动的集大成} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} The Humble Programmer（1972 图灵奖演讲）}\\[2pt]
+  {\fontsize{9.5}{12.5}\selectfont\color{coverprimary!88!black}\textit{"We must not forget that it is not our business to make programs, it is our business to design classes of computations that will display a desired behaviour."}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. EWD 手稿与个人风格 ---
+\newcommand{\ewdslide}{\begin{frame}\plainbar\sectiontitle{EWD 手稿与个人风格}{Montblanc 钢笔 · 1300+ 篇手稿 · 拒绝平庸}
+\vspace{-0.62cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.88}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{传统}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{EWD 系列} & \cellcolor{essaypanel}\textcolor{badgeEssay!82!black}{以姓名缩写编号的技术手稿：40 年跨度、编号至 EWD1318（2002-04-14），逾 1300 篇扫描存档（UT Austin）} & \cellcolor{structpanel}\textcolor{badgeStruct!82!black}{一个人的文集} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Burroughs 十年} & \cellcolor{essaypanel}\textcolor{badgeEssay!82!black}{十年近 500 篇；1972 年后几乎全为手写（Montblanc 大师级钢笔）} & \cellcolor{structpanel}\textcolor{badgeStruct!82!black}{笔耕不辍} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{特立独行} & \cellcolor{essaypanel}\textcolor{badgeEssay!82!black}{书著无参考文献（"neither explanation nor apology"）；多年拒用计算机写作；61 位撰稿人各得手写感谢信；强反对教 BASIC；称软件工程 "The Doomed Discipline"；虚构 "Mathematics, Inc." 随笔} & \cellcolor{structpanel}\textcolor{badgeStruct!82!black}{锋芒与风骨} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.42cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 一句名言}\\[1pt]
+  {\fontsize{9.5}{12}\selectfont\color{coverprimary!88!black}\textit{"A picture may be worth a thousand words, a formula is worth a thousand pictures."}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. Burroughs 与 UT Austin ---
+\newcommand{\burroughsslide}{\begin{frame}\plainbar\sectiontitle{Burroughs 与 UT Austin (1973–1999)}{唯一 research fellow · Tuesday Afternoon Club}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1973} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{加入 Burroughs Corporation，任公司唯一的 research fellow；在 Nuenen 书房工作，偶尔赴美} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{在家办公的研究员} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Tuesday Afternoon Club} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{大学只留每周一天，周二固定研讨班在那一日举行；1984 年后在 Austin 延续出分部} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{思想交流的沙龙} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1984–1999} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{UT Austin Schlumberger Centennial Chair；1999 年 11 月退休} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{执教生涯的收官} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Eindhoven 的书房到 Austin 的讲堂，他始终以笔为伴。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1972 · Dijkstra Prize 命名}\vspace{-0.38cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1972）\item 荷兰皇家艺术与科学院院士 · BCS 首位 Distinguished Fellow（1971）\item Harry H. Goode Award（1974）· ACM Fellow（1994）\item C\&C Prize（2002，家人代领）\end{itemize}} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{生前身后的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Dijkstra Prize} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{因自稳定（self-stabilization, 1974）获 ACM PODC Influential-Paper Award（2002，去世前不久）；次年奖项更名 Dijkstra Prize} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{以他命名的荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{门生与影响} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{博士生 Nico Habermann、Jan van de Snepscheut；最短路径、信号量、结构化编程成为领域基石} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{学术谱系深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.08cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 结构化编程之父之名，因严谨与远见而愈发闪耀。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.7cm]current page.center) {优雅，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.6cm]current page.center) {是程序员唯一不可妥协的美德。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.3cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.3cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{8.5}{11}\selectfont\itshape, text=muteddark] at ([yshift=-1.05cm]current page.center) {"想在 Austin 退休，但要在荷兰去世。" —— 他如是说，也如是走完 72 岁的一生};
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.85cm]current page.center) {— 致敬 Edsger W. Dijkstra};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.6cm]current page.center) {艾兹赫尔·W·戴克斯特拉\quad Edsger W. Dijkstra\quad 1930 — 2002\quad ·\quad 结构化编程范式的永久遗产};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{project-diagram}\enspace Turing 1972 · Dijkstra Prize\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\firstprogrammerslide
+\shortestpathslide
+\algolslide
+\thesystemslide
+\semaphoreslide
+\gotoslide
+\turingslide
+\ewdslide
+\burroughsslide
+\honorsslide
+\closingslide
+\end{document}

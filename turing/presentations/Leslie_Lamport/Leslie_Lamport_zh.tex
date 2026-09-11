@@ -1,0 +1,298 @@
+% =============================================================
+%  分布式系统理论奠基人之一：莱斯利·兰波特 (Leslie Barry Lamport)
+%  Beamer 源码 —— OpenTuring 图灵奖得主立传
+%  设计母题：分布式秩序 / 时间与因果 (Order out of Chaos)
+%  资料来源：本地 Wikipedia (turing/pages/2013/Leslie Lamport/index.html)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Lamport 专属四分类色：分布式/共识/时序逻辑/文档排版 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeDist}{HTML}{2E5A9E}       % 分布式系统 — 蓝
+\definecolor{badgeConsensus}{HTML}{D9A441}  % 共识算法 — 琥珀
+\definecolor{badgeTemporal}{HTML}{1E8E8E}   % 时序逻辑 — 青绿
+\definecolor{badgeDocs}{HTML}{C0395B}       % 文档排版 — 玫瑰
+\definecolor{distpanel}{RGB}{228,233,246}
+\definecolor{conspanel}{RGB}{249,240,224}
+\definecolor{temppanel}{RGB}{222,240,238}
+\definecolor{docspanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条（内容页使用）
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景（封面/结尾使用）：以离散圆点与连线意象呼应「时间、因果与共识」
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeDist!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeTemporal!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeConsensus!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题：{主标题}{副标题}
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签（身份信息页使用）
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{clock}\enspace 分布式系统理论奠基人之一\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {莱斯利·兰波特};
+  \node[anchor=center, font=\fontsize{11}{14}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {莱斯利·巴里·兰波特（音译）\enspace·\enspace Leslie Lamport\enspace·\enspace 1941 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {Paxos 共识算法作者 · TLA/TLA+ 创立者 · LaTeX 初始开发者 · 2013 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeDist] at (-5.05,0)
+        {分布式系统\\Distributed\par\scriptsize 逻辑时钟 · 因果};
+      \node[badge, fill=badgeConsensus] at (-1.68,0)
+        {共识算法\\Consensus\par\scriptsize Paxos · 拜占庭};
+      \node[badge, fill=badgeTemporal] at (1.68,0)
+        {时序逻辑\\Temporal Logic\par\scriptsize TLA · TLA+};
+      \node[badge, fill=badgeDocs] at (5.05,0)
+        {文档排版\\LaTeX\par\scriptsize 基于 TeX 的宏包};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.55cm]current page.center)
+    {"for fundamental contributions to the theory and practice of distributed and concurrent systems, notably the invention of concepts such as causality and logical clocks, safety and liveness, replicated state machines, and sequential consistency." —— 2013 图灵奖获奖理由};
+  % 头像（条件包含：有 Lamport.jpg 则显示，否则占位框）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Lamport.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Lamport.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center)
+    {Leslie Lamport};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Microsoft Research\enspace|\enspace Turing 2013 · von Neumann 2008};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 早年：布鲁克林少年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：布鲁克林少年 (1941–1972)}{犹太移民家庭 · Bronx Science · 数学博士}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=distpanel, draw=badgeDist!55] at (0,2.55) {\textbf{1941 · 生于纽约市布鲁克林。}出身犹太家庭，父 Benjamin Lamport 自俄罗斯帝国沃尔科维斯克（今白俄罗斯）移民，母 Hannah Lamport née Lasser 自奥匈帝国（今波兰东南部）移民。};
+\node[item, fill=temppanel, draw=badgeTemporal!45] at (0,1.05) {\textbf{Bronx High School of Science 毕业。}随后入读麻省理工学院（MIT），1960 年获数学学士（BS）。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{Brandeis 数学博士。}1963 年获 MA、1972 年获 PhD，师从 Richard Palais；博士论文《The analytic Cauchy problem with singular data》研究解析偏微分方程的奇点。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 数学出身、形式化思维，为他日后「用数学驯服并发」埋下伏笔。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 身份信息页（★ 图灵奖硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{莱斯利·兰波特 - 为混沌建立秩序}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=8pt, inner ysep=7pt, text width=5.0cm,
+      font=\fontsize{6.8}{8.6}\selectfont, align=left}
+  ]
+  % 左侧头像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Lamport.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Lamport.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Leslie Lamport (2008)};
+  % 右侧 2×2 信息网格：上面两卡上边缘对齐，下面两卡下边缘对齐
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1941-02-07 —（在世）\\[2pt]\lab{本名}\quad Leslie Barry Lamport\\[2pt]\lab{国籍}\quad 美国\\[2pt]\lab{出生地}\quad 纽约市 · 布鲁克林};
+  \node[infob, fill=temppanel, draw=badgeTemporal!45, anchor=north] at (3.8,2.35)
+    {\lab{师承}\quad Richard Palais（博士导师）\\[2pt]
+     \lab{任职}\quad SRI 1977–1985\\[2pt]
+     \quad DEC/Compaq 1985–2001\\[2pt]
+     \quad Microsoft Research 2001–2025};
+  \node[infob, fill=distpanel, draw=badgeDist!50, anchor=south] at (-1.8,-2.01)
+    {\lab{教育}\quad MIT BS 1960\\[2pt]\quad Brandeis MA 1963\\[2pt]\quad Brandeis PhD 1972};
+  \node[infob, fill=conspanel, draw=badgeConsensus!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2013 · von Neumann 2008\\[2pt]
+     \quad Dijkstra 2000 · 2005 · 2014\\[2pt]
+     \quad NAE 1991 · NAS 2011\\[2pt]
+     \lab{核心领域}\quad 分布式系统 · 共识算法\\[2pt]
+     \quad 时序逻辑 · LaTeX};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{为混沌建立秩序}{分布式系统 · 共识算法 · 时序逻辑 · 文档排版}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=8pt, font=\fontsize{7.6}{9.4}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=distpanel, draw=badgeDist!50, text=badgeDist!85!black] (a) at (-5.7,1.05) {分布式系统\\2013 图灵奖\\[2pt]逻辑时钟 · 因果};
+\node[nodebox, fill=conspanel, draw=badgeConsensus!60, text=coveraccent!85!black] (b) at (-1.9,1.05) {共识算法\\Paxos · 拜占庭\\[2pt]复制状态机};
+\node[nodebox, fill=temppanel, draw=badgeTemporal!50, text=badgeTemporal!85!black] (c) at (1.9,1.05) {时序逻辑\\TLA · TLA+\\[2pt]safety / liveness};
+\node[nodebox, fill=docspanel, draw=badgeDocs!50, text=badgeDocs!85!black] (d) at (5.7,1.05) {文档排版\\LaTeX\\[2pt]基于 TeX 的宏包};
+\node[draw=coverprimary!60, fill=silverpanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他以数学的方式，让「看起来混乱」的分布式计算变得可定义、可推理、可验证。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 从数学到计算机 ---
+\newcommand{\careerslide}{\begin{frame}\plainbar\sectiontitle{从数学到计算机 (1970–1985)}{Massachusetts Computer Associates · SRI}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=distpanel, draw=badgeDist!55] at (0,2.55) {\textbf{1970 · 进入计算机行业。}在 Massachusetts Computer Associates 担任计算机科学家（1970–1977），从数学转向并发与系统。};
+\node[item, fill=temppanel, draw=badgeTemporal!45] at (0,1.05) {\textbf{1977 · 加入 SRI International。}在斯坦福研究所（1977–1985）研究分布式系统，开启了他最具影响力的十年。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.25) {\textbf{数学工具登场。}他带着解析偏微分方程训练出的形式化思维，开始为消息传递、并发与故障建模。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从数学到计算机，他找到了一生的问题：并发系统中的秩序从何而来？}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Time, Clocks ---
+\newcommand{\clocksslide}{\begin{frame}\plainbar\sectiontitle{时间、时钟与事件次序 (1978)}{逻辑时钟 · happened-before · 因果}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=distpanel, draw=badgeDist!60] at (0,2.55) {\textbf{1978 · 提出逻辑时钟。}论文《Time, Clocks, and the Ordering of Events in a Distributed System》定义「先于发生」(happened-before) 关系。};
+\node[item, fill=temppanel, draw=badgeTemporal!45] at (0,0.85) {\textbf{因果次序。}无需物理时钟同步，用逻辑时钟给分布式事件排序，把「先后」变成可证明的因果链。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{2000 · PODC Influential Paper Award。}该论文获 PODC 影响力论文奖，即 2000 年 Dijkstra Prize 获奖论文。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 这是分布式系统理论的基石——也是他 2013 图灵奖的第一个关键词。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 顺序一致性 ---
+\newcommand{\seqconsslide}{\begin{frame}\plainbar\sectiontitle{顺序一致性 (1979)}{多处理器 · 内存模型 · 正确性定义}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=distpanel, draw=badgeDist!60] at (0,2.55) {\textbf{1979 · 定义顺序一致性。}论文《How to Make a Multiprocessor Computer That Correctly Executes Multiprocess Programs》给出多处理器正确执行的标准。};
+\node[item, fill=temppanel, draw=badgeTemporal!45] at (0,0.85) {\textbf{内存模型基石。}「顺序一致性」成为共享内存多处理器系统的经典正确性概念，影响处理器与编程语言内存模型设计。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{图灵奖关键词。}该概念被列入 2013 图灵奖官方获奖理由，与因果、逻辑时钟并列。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 面对并发的不确定，他先给出「什么是正确」的精确答案。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 拜占庭将军 ---
+\newcommand{\byzantineslide}{\begin{frame}\plainbar\sectiontitle{拜占庭将军问题 (1982)}{与 Shostak、Pease · 拜占庭容错}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=conspanel, draw=badgeConsensus!60] at (0,2.55) {\textbf{1982 · 将军寓言。}与 Robert Shostak、Marshall Pease 发表《The Byzantine Generals Problem》，刻画组件可能故障甚至「撒谎」的容错场景。};
+\node[item, fill=distpanel, draw=badgeDist!55] at (0,0.85) {\textbf{拜占庭容错。}即使部分节点行为任意，系统仍须达成一致——这是分布式共识最严峻的敌手模型。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{2005 · 相关论文获奖。}三人此前《Reaching Agreement in the Presence of Faults》(1980) 获 Dijkstra Prize。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从「将军的背叛」到「节点的故障」，他为可信分布式系统划定了边界。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Paxos ---
+\newcommand{\paxosslide}{\begin{frame}\plainbar\sectiontitle{Paxos：兼职议会 (1998 发表)}{共识算法 · 复制状态机}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=conspanel, draw=badgeConsensus!60] at (0,2.55) {\textbf{共识算法 Paxos。}论文《The Part-Time Parliament》用爱琴海「兼职议会」寓言，描述一组机器如何在故障中达成一致。};
+\node[item, fill=distpanel, draw=badgeDist!55] at (0,0.85) {\textbf{1998 · 正式发表。}发表于 ACM Transactions on Computer Systems；今日已成为分布式系统共识的事实标准之一。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{复制状态机。}Paxos 支撑复制状态机（replicated state machine），让多副本像单机一样有序推进。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 一个寓言式的议会，成为现代分布式数据库与系统的基石。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 以 Lamport 命名 ---
+\newcommand{\eponymousslide}{\begin{frame}\plainbar\sectiontitle{更多以 Lamport 命名的成果}{面包店算法 · Chandy–Lamport · Lamport 签名}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=distpanel, draw=badgeDist!55] at (0,2.55) {\textbf{面包店算法。}不用硬件原子指令的互斥算法——像面包店发号叫号，公平地解决多线程共享资源的竞争。};
+\node[item, fill=temppanel, draw=badgeTemporal!45] at (0,0.85) {\textbf{Chandy–Lamport 快照。}与 K. Mani Chandy 提出分布式快照算法，用于确定分布式系统的一致全局状态，2014 年获 Dijkstra Prize。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{Lamport 签名。}数字签名的原型之一，为后来密码学中的签名构造提供早期思想。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他的名字，散落在并发、快照、共识与密码学的多个角落。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- LaTeX ---
+\newcommand{\latexslide}{\begin{frame}\plainbar\sectiontitle{LaTeX：基于 TeX 的文档排版 (1983–1989)}{宏包 · 第一本手册 · LaTeX3 团队}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=docspanel, draw=badgeDocs!55] at (0,2.55) {\textbf{继承 TeX，开发宏包。}1980 年代初 Knuth 开始发布 TeX，Lamport 为写书所需，在 TeX 之上开发了一套宏包——这就是 LaTeX。};
+\node[item, fill=conspanel, draw=badgeConsensus!45] at (0,0.85) {\textbf{1983 · 编辑提议出书。}Addison-Wesley 编辑 Peter Gordon 建议他把用户手册写成书；1986 年《LaTeX: A Document Preparation System》出版，销量数十万册。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{1989 · 移交维护。}在斯坦福 TeX 用户组会议同意移交 Frank Mittelbach；LaTeX3 团队于 1994 年发布 LaTeX 2e，延续至今。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} TeX 是引擎，LaTeX 是宏包——Lamport 让排版变得易用，学术写作因此改变。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- TLA / TLA+ ---
+\newcommand{\tlaslide}{\begin{frame}\plainbar\sectiontitle{TLA / TLA+：时序逻辑与形式化规格}{safety / liveness · Specifying Systems}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=temppanel, draw=badgeTemporal!55] at (0,2.55) {\textbf{TLA（行为时序逻辑）。}用 safety（安全性）与 liveness（活性）等性质描述并发与反应式系统的行为。};
+\node[item, fill=distpanel, draw=badgeDist!55] at (0,0.85) {\textbf{TLA+ 规格语言。}为硬件与软件工程师设计的可推理语言，著作《Specifying Systems》系统介绍其思想与工具。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{数学规格化。}他自述这是「一场征服工程师对数学的反感的堂吉诃德式尝试」。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 用数学取代含糊的自然语言，让系统设计在编码之前即可验证。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- DEC/Compaq -> Microsoft ---
+\newcommand{\microsoftslide}{\begin{frame}\plainbar\sectiontitle{职业生涯：DEC/Compaq $\rightarrow$ Microsoft Research (1985–2025)}{从工业界到研究院 · 2025 年退休}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=distpanel, draw=badgeDist!55] at (0,2.55) {\textbf{1985–2001 · DEC 与 Compaq。}先后任职 Digital Equipment Corporation 与 Compaq，继续深耕分布式与并发系统。};
+\node[item, fill=temppanel, draw=badgeTemporal!45] at (0,0.85) {\textbf{2001 · 加入 Microsoft Research。}在加州微软研究院工作，推动形式化方法在工业系统中的应用。};
+\node[item, fill=goldpanel, draw=coveraccent!40] at (0,-0.65) {\textbf{2025 · 1 月退休。}以逾半个世纪的学术与工业生涯，见证分布式系统从边缘走向基础设施核心。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他的理论，最终运行在今天每一个数据中心里。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 荣誉 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与认可}{Turing 2013 · von Neumann 2008 · Dijkstra 三次}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=goldpanel, draw=coveraccent!55] at (0,2.55) {\textbf{2013 · 图灵奖。}因「对分布式与并发系统理论与实践的奠基性贡献」获计算机科学最高荣誉。};
+\node[item, fill=distpanel, draw=badgeDist!55] at (0,0.85) {\textbf{重要奖章。}IEEE John von Neumann Medal 2008\\[2pt]IEEE Emanuel R. Piore Award 2004\\[2pt]Dijkstra Prize 2000/2005/2014。};
+\node[item, fill=temppanel, draw=badgeTemporal!45] at (0,-0.65) {\textbf{院士与荣誉博士。}NAE 1991 · NAS 2011 · ACM Fellow 2014 · 欧洲五所大学荣誉博士（2003–2007）。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 2020 年，Solana 把最小货币单位命名为 lamport——致敬这位共识算法的奠基人之一。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：为分布式系统「建立秩序」}{因果 · 逻辑时钟 · 共识 · 可验证规格}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=8pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=distpanel, draw=badgeDist!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDist} 因果与时钟}\\[3pt]happened-before\\[2pt]逻辑时钟};
+\node[leg, fill=conspanel, draw=badgeConsensus!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{coveraccent} 共识}\\[3pt]Paxos\\[2pt]拜占庭容错};
+\node[leg, fill=temppanel, draw=badgeTemporal!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeTemporal} 可验证规格}\\[3pt]TLA\\[2pt]TLA+};
+\node[leg, fill=docspanel, draw=badgeDocs!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDocs} 文档排版}\\[3pt]LaTeX\\[2pt]基于 TeX};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 分布式系统，不再只是「看起来混乱」。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 逻辑时钟 $\rightarrow$ 共识 $\rightarrow$ TLA+ $\rightarrow$ LaTeX\\[2pt]他的思想，仍在云计算与分布式系统的每一层延续。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{20}{26}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {用数学驯服并发，};
+\node[font=\fontsize{20}{26}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {为混沌建立秩序。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Leslie Barry Lamport};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {莱斯利·兰波特\quad Leslie Lamport\quad 1941 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{clock}\enspace Turing 2013 · von Neumann 2008 · 分布式系统\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+% --- 彩蛋：真正用的是 LaTeX ---
+\newcommand{\eastereggslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+  at ([yshift=2.6cm]current page.center) {\faIcon{star}\enspace 一个彩蛋};
+\node[font=\fontsize{17}{22}\selectfont\bfseries, text=coverprimary!90!black, align=center, text width=14cm]
+  at ([yshift=1.3cm]current page.center) {这份文档，真正用的是 \LaTeX};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=0.3cm, xshift=-4.2cm]current page.center) -- ([yshift=0.3cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{10}{13}\selectfont, text=coverprimary!68!black, align=center, text width=13cm]
+  at ([yshift=-0.45cm]current page.center) {底层排版引擎是 Knuth 创造的 \TeX；Lamport 在 \TeX 之上开发了 \LaTeX 宏包。\\[2pt]本系列 Beamer 幻灯片，连同这份立传，都由 XeLaTeX + Beamer 编译——\\[2pt]我们用 Lamport 开发的 \LaTeX，讲述他本人的故事。};
+\node[font=\fontsize{7.5}{9.5}\selectfont, text=coverdark!45, align=center, text width=12cm]
+  at ([yshift=-1.9cm]current page.center) {\TeX 是引擎 · \LaTeX 是宏包 · 本页由 Beamer 排版};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{clock}\enspace OpenMathAI · OpenTuring\enspace|\enspace Compiled with \LaTeX};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\earlyslide
+\profileslide
+\hookslide
+\careerslide
+\clocksslide
+\seqconsslide
+\byzantineslide
+\paxosslide
+\eponymousslide
+\latexslide
+\tlaslide
+\microsoftslide
+\honorsslide
+\legacyslide
+\closingslide
+\eastereggslide
+\end{document}

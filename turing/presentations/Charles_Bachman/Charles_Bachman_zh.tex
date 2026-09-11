@@ -1,0 +1,492 @@
+% =============================================================
+%  数据库奠基人：查尔斯·W·巴赫曼 (Charles W. Bachman)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：网状节点连线（record-set 环形小圈相连）—— 呼应 CODASYL 网状模型
+%  资料来源：turing/pages/1973/Charles Bachman/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Bachman 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeDB}{HTML}{2E5A9E}     % 数据库 — 蓝
+\definecolor{badgeNet}{HTML}{1E8E8E}    % 网状模型 — 青绿
+\definecolor{badgeInd}{HTML}{D9A441}    % 工业生涯 — 琥珀
+\definecolor{badgeSE}{HTML}{C0395B}     % 软件工程 CASE — 玫瑰
+\definecolor{dbpanel}{RGB}{228,233,246}
+\definecolor{netpanel}{RGB}{222,240,238}
+\definecolor{indpanel}{RGB}{249,240,224}
+\definecolor{sepanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 网状节点背景（record-set 环形小圈相连母题）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeDB!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeNet!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeInd!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \draw[badgeNet!45, line width=0.7pt] ([xshift=-5.6cm,yshift=3.4cm]current page.center)
+    -- ([xshift=-4.6cm,yshift=2.4cm]current page.center)
+    -- ([xshift=-3.4cm,yshift=3.2cm]current page.center)
+    -- ([xshift=-5.6cm,yshift=3.4cm]current page.center);
+  \fill[badgeNet!60] ([xshift=-5.6cm,yshift=3.4cm]current page.center) circle (2.4pt);
+  \fill[badgeNet!60] ([xshift=-4.6cm,yshift=2.4cm]current page.center) circle (2.4pt);
+  \fill[badgeNet!60] ([xshift=-3.4cm,yshift=3.2cm]current page.center) circle (2.4pt);
+  \draw[badgeDB!40, line width=0.7pt] ([xshift=4.8cm,yshift=-2.6cm]current page.center)
+    -- ([xshift=5.8cm,yshift=-1.6cm]current page.center);
+  \fill[badgeDB!60] ([xshift=4.8cm,yshift=-2.6cm]current page.center) circle (2.2pt);
+  \fill[badgeDB!60] ([xshift=5.8cm,yshift=-1.6cm]current page.center) circle (2.2pt);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{database}\enspace 数据库奠基人\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {查尔斯·巴赫曼};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Charles W. Bachman\enspace·\enspace 1924 — 2017};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {数据库技术先驱 · 网状模型 · 1973 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeDB] at (-5.05,0)
+        {数据库\\Database\par\scriptsize IDS · 1963};
+      \node[badge, fill=badgeNet] at (-1.68,0)
+        {网状模型\\Bachman 图\par\scriptsize 导航式数据库};
+      \node[badge, fill=badgeInd] at (1.68,0)
+        {工业生涯\\Dow · GE · Honeywell\par\scriptsize 终生业界};
+      \node[badge, fill=badgeSE] at (5.05,0)
+        {软件工程\\CASE\par\scriptsize BACHMAN/Data Analyst};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his outstanding contributions to database technology" —— 1973 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Charles_Bachman_2012.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Charles_Bachman_2012.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Charles W. Bachman};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Dow · GE · Honeywell · Cullinet\enspace|\enspace Turing 1973 · NMT 2012};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{巴赫曼 - 从堪萨斯到数据库奠基人}{生卒 · 本名 · 国籍 · 教育 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Charles_Bachman_2012.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Charles_Bachman_2012.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Charles W. Bachman（2012）};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1924-12-11 — 2017-07-13\\[2pt]\lab{本名}\quad Charles William Bachman III\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=netpanel, draw=badgeNet!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Michigan State 机械工程 BS 1948\\[2pt]
+     \quad Penn 机械工程 MS 1950\\[2pt]
+     \lab{师承}\quad 无学术导师记载（业界出身）};
+  \node[infob, fill=dbpanel, draw=badgeDB!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Manhattan · 堪萨斯州\\[2pt]\lab{去世地}\quad Lexington · 马萨诸塞\\[2pt]\lab{任职}\quad Dow · GE · Honeywell · Cullinet};
+  \node[infob, fill=indpanel, draw=badgeInd!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1973 · DFBCS 1977\\[2pt]
+     \quad National Medal of Technology 2012\\[2pt]
+     \lab{核心领域}\quad 数据库管理系统 · 网状模型\\[2pt]
+     \quad 导航式数据库 · 软件工程};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{巴赫曼的一生}{1924 — 2017 · 从堪萨斯少年到数据库奠基人}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.72);
+  \foreach \y/\year/\txt in {
+    3.0/1924/生于堪萨斯州 Manhattan,
+    2.48/1944/二战入伍 · 太平洋战场火控计算机,
+    1.96/1948/Michigan State 机械工程 BS,
+    1.44/1950/Penn 机械工程 MS · 入职 Dow,
+    0.92/1957/Dow 首任 data processing manager,
+    0.40/1960/加入 General Electric,
+    -0.12/1963/开发 IDS —— 最早的 DBMS 之一,
+    -0.64/1970/GE 计算机业务并入 Honeywell,
+    -1.16/1973/获图灵奖,
+    -1.68/1983/创办 Bachman Information Systems,
+    -2.20/2012/获国家技术创新奖章,
+    -2.72/2017/逝于 Lexington（享年 92 岁）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：橄榄球教练之子与太平洋战场 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：橄榄球教练之子与太平洋战场}{1924–1946 · Kansas · 陆军防空炮兵 · 火控计算机初体验}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1924} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{生于 Manhattan, Kansas；父 Charles Bachman Jr. 为橄榄球主教练（1933–1946 执教 Michigan State College）} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{随父在 East Lansing 长大} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1944-03} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{应征入伍，加入美国陆军防空炮兵部队（Anti-Aircraft Artillery Corps）} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{二战服役} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1944–1946} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{驻西南太平洋战场（新几内亚、澳大利亚、菲律宾），操作 90mm 火炮的火控计算机} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{人生第一次接触计算机} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1946-02} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{退伍} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{转入工程师之路} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从高炮火控计算机到数据库领航员，故事始于太平洋战场。}
+\end{center}
+\end{frame}}
+
+% --- 5. 工程师的养成 ---
+\newcommand{\eduslide}{\begin{frame}\plainbar\sectiontitle{工程师的养成 (1946–1950)}{Michigan State · Penn · Wharton}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{本科} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{Michigan State College 机械工程 BS（1948），Tau Beta Pi 荣誉学会成员} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{工程根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{硕士} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{University of Pennsylvania 机械工程 MS（1950）} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{深造机电传统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{商科} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{修完 Wharton School MBA 三分之二的学分（未获 MBA 学位）} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{技术 + 管理视野} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{1949 年年中与 Connie Hadley 结婚} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{成家立业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 机械工程出身、又修管理——为他"工程师 + 经理"的业界生涯埋下伏笔。}
+\end{center}
+\end{frame}}
+
+% --- 6. Dow Chemical：首任数据处理经理 ---
+\newcommand{\dowslide}{\begin{frame}\plainbar\sectiontitle{Dow Chemical：首任数据处理经理}{1950–1960 · SHARE · 9PAC · 数据处理生涯起点}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1950} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{加入 Dow Chemical，开启数据处理生涯} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{业界起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1957} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{成为 Dow 首任 data processing manager} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{管理者身份确立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{SHARE} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{与 IBM 用户组 SHARE 合作开发新版报表生成器 9PAC} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{用户协作开发模式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{结局} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{IBM 709 订单取消，9PAC 计划终止} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{转向下一站 GE} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 十年 Dow 岁月，让他从机械工程师蜕变为数据处理的行家。}
+\end{center}
+\end{frame}}
+
+% --- 7. IDS：最早的数据库管理系统之一 ---
+\newcommand{\idsslide}{\begin{frame}\plainbar\sectiontitle{IDS：最早的数据库管理系统之一 (1963)}{GE · MIACS · 导航式模型}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{诞生} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{在 GE 期间，于 MIACS（Manufacturing Information And Control System）产品中开发 IDS} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{最早的 DBMS 之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{模型} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{采用后来被称为"导航式（navigational）数据库"的模型} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{网状模型的源头之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{数据管理从"报表生成"走向"数据库"的关键一步} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{1973 图灵奖核心贡献} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 网状模型的 record-set 结构（IDS 的数据组织方式）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{owner record} $\Rightarrow$ \textit{set} $\Rightarrow$ \textit{member records}\qquad 记录经"系"相互连接成网}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. WEYCOS 与早期 OLTP ---
+\newcommand{\weycosslide}{\begin{frame}\plainbar\sectiontitle{WEYCOS 与早期 OLTP (1965)}{Weyerhaeuser · 多程序网络访问 · dataBasic}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{项目}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{WEYCOS} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{1965 年为客户 Weyerhaeuser Lumber 开发} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{定制工业系统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首创} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{首个对 IDS 数据库的多程序网络访问} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{早期在线事务处理（OLTP）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{dataBasic} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{在 GE 开发，为 Basic 语言分时用户提供数据库支持} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{分时 + 数据库结合} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在"在线事务处理"成为术语之前，他已在实践它。}
+\end{center}
+\end{frame}}
+
+% --- 9. Bachman 图 ---
+\newcommand{\diagramslide}{\begin{frame}\plainbar\sectiontitle{Bachman 图：数据库设计的经典语言}{Data Structure Diagrams (1969) · 分层架构以其命名}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{Bachman 的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{奠基论文} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{1969 年发表 \textit{Data Structure Diagrams}} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{数据结构图奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{以其命名} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{分层架构（layered architecture）技术以他命名为"Bachman 图"} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{经典表达工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{用途} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{用记录型与"系"直观刻画数据之间的网状联系} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{数据库设计影响至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{8.3cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 导航式 CODASYL 数据库模型的基本结构}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}记录（record）经"系（set）"连接，\\构成可"导航"的网状结构}
+  \end{minipage}%
+}\enspace
+\includegraphics[width=3.2cm,height=2.35cm,keepaspectratio]{CodasylB.png}
+\end{center}
+\end{frame}}
+
+% --- 10. GE→Honeywell→Cullinet ---
+\newcommand{\transitionslide}{\begin{frame}\plainbar\sectiontitle{GE $\rightarrow$ Honeywell $\rightarrow$ Cullinet (1970–1981)}{IDMS 与 IBM 大型机 · 网状数据库的商业生命力}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1970} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{GE 计算机业务出售给 Honeywell，举家从 Phoenix 搬到 Lexington, Massachusetts} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{生涯转折} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1970–1981} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{供职 Honeywell Information Systems——1973 年获图灵奖时所在机构} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{获奖时职位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1981} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{加入 Cullinane Information Systems（后 Cullinet）} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{再启程} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IDMS} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{其 IDS 版本 IDMS 支持 IBM 大型机} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{网状数据库商业生命力延续} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 GE 到 Honeywell 再到 Cullinet，网状数据库在商业世界生生不息。}
+\end{center}
+\end{frame}}
+
+% --- 11. 图灵奖 1973 ---
+\newcommand{\turingawardslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1973}{业界图灵奖得主的罕见样本}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{项目}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{获奖理由} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{"for his outstanding contributions to database technology"（对数据库技术的杰出贡献）} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{数据库进入最高殿堂} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{图灵奖演讲} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{\textit{The Programmer as Navigator}（《作为领航员的程序员》，CACM 1973-11）} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{程序员的领航员宣言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{独特背景} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{终生是"practicing software engineer or manager in industry"} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{罕见的纯工业背景得主} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} ACM Turing Award 1973}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{"for his outstanding contributions to database technology"}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. Bachman Information Systems ---
+\newcommand{\bisslide}{\begin{frame}\plainbar\sectiontitle{Bachman Information Systems}{1983–1996 · CASE · BACH 上市 · Cayenne 合并}
+\vspace{-0.4cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.8cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1983} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{创办 Bachman Information Systems，投身 CASE（计算机辅助软件工程）} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{创业者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{核心产品} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{BACHMAN/Data Analyst——为 Bachman 图的创建维护提供图形支持} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{技术以图延续} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{上市} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{1991 年 NASDAQ 上市（代码 BACH）；1992-02 高点 \$37.75，1995 跌至 \$1.75} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{资本市场起伏} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1996} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{与 Cadre Technology 合并为 Cayenne Software，任总裁一年后退休至 Tucson（后任董事长至 1998 年被 Sterling Software 收购）} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{生涯谢幕} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 IDS 到 CASE，他把一生都押在"让软件开发更可视化"上。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与晚年 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与晚年}{图灵奖 1973 · 国家技术创新奖章 2012}\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.58}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要荣誉} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{\begin{itemize}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1973）\item British Computer Society 杰出会士 DFBCS（1977）\item National Medal of Technology and Innovation（2012）\item ACM Fellow（2014）· CHM Fellow（2015）\end{itemize}} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{业界与学界的共同公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国家奖章理由} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{"for fundamental inventions in database management, transaction processing, and software engineering"} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{三大领域一体肯定} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{晚年与档案} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{2002 CHM 讲座、2004 ACM 口述史、2011 IEEE 口述史；个人档案藏于 Charles Babbage Institute（明尼苏达大学）} & \cellcolor{netpanel}\textcolor{badgeNet!82!black}{为历史留下证词} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.45cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 晚年的他，转身成为早期软件工业史的守护者。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：数据世界的领航员}{IDS · 网状模型 · Bachman 图 · CASE}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=dbpanel, draw=badgeDB!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDB} 数据库管理}\\[3pt]IDS（1963）\\[2pt]最早的 DBMS 之一};
+\node[leg, fill=netpanel, draw=badgeNet!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeNet} 网状模型}\\[3pt]导航式数据库\\[2pt]Bachman 图};
+\node[leg, fill=indpanel, draw=badgeInd!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeInd} 工业生涯}\\[3pt]Dow · GE · Honeywell\\[2pt]业界图灵奖样本};
+\node[leg, fill=sepanel, draw=badgeSE!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSE} 软件工程}\\[3pt]CASE\\[2pt]BACHMAN/Data Analyst};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 在关系模型登场之前，是网状模型率先让"数据库"成为一门工程。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} IDS $\rightarrow$ Bachman 图 $\rightarrow$ 早期 OLTP $\rightarrow$ CASE\\[2pt]数据库技术奠基者的足迹，仍在每一次数据建模中被踏上。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {从 90mm 火炮到 IDS，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {程序员始终是领航员。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Charles W. Bachman};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {查尔斯·巴赫曼\quad Charles W. Bachman\quad 1924 — 2017};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{database}\enspace Turing 1973 · National Medal of Technology 2012\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\eduslide
+\dowslide
+\idsslide
+\weycosslide
+\diagramslide
+\transitionslide
+\turingawardslide
+\bisslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

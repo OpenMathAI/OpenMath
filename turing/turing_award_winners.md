@@ -40,10 +40,10 @@
 | 1967 | Maurice V. Wilkes | 1913-2010 | 英国 | University of Cambridge | 早期存储程序计算机 EDSAC、微程序设计。 | — | ✅ | 🔲 | 🔲 |
 | 1968 | Richard Hamming | 1915-1998 | 美国 | Bell Labs | 数值方法、自动编码系统，纠错码（汉明码）奠基。 | 数值与信息论。 | ✅ | 🔲 | 🔲 |
 | 1969 | Marvin Minsky | 1927-2016 | 美国 | MIT | 人工智能、框架理论、神经网络早期研究。 | AI 奠基人之一。 | ✅ | 🔲 | 🔲 |
-| 1970 | James H. Wilkinson | 1919-1986 | 英国 | National Physical Laboratory | 数值分析、舍入误差分析、线性代数算法。 | — | 🔲 | 🔲 | 🔲 |
-| 1971 | John McCarthy | 1927-2011 | 美国 | Stanford University | 人工智能、Lisp 语言、“人工智能”一词提出者。 | AI 奠基人之一。 | 🔲 | 🔲 | 🔲 |
-| 1972 | Edsger W. Dijkstra | 1930-2002 | 荷兰 | Eindhoven University of Technology | 结构化编程、最短路径算法（Dijkstra 算法）、并发原语。 | 程序设计方法论。 | 🔲 | 🔲 | 🔲 |
-| 1973 | Charles W. Bachman | 1924-2017 | 美国 | — | 数据库系统、CODASYL 网状数据库模型。 | 数据库奠基。 | 🔲 | 🔲 | 🔲 |
+| 1970 | James H. Wilkinson | 1919-1986 | 英国 | National Physical Laboratory | 数值分析、舍入误差分析、线性代数算法。 | — | ✅ | 🔲 | 🔲 |
+| 1971 | John McCarthy | 1927-2011 | 美国 | Stanford University | 人工智能、Lisp 语言、“人工智能”一词提出者。 | AI 奠基人之一。 | ✅ | 🔲 | 🔲 |
+| 1972 | Edsger W. Dijkstra | 1930-2002 | 荷兰 | Eindhoven University of Technology | 结构化编程、最短路径算法（Dijkstra 算法）、并发原语。 | 程序设计方法论。 | ✅ | 🔲 | 🔲 |
+| 1973 | Charles W. Bachman | 1924-2017 | 美国 | Honeywell Information Systems | 数据库系统、CODASYL 网状数据库模型。 | 数据库奠基。获奖时供职 Honeywell（GE 计算机业务 1970 并入）。 | ✅ | 🔲 | 🔲 |
 | 1974 | Donald E. Knuth | 1938- | 美国 | Stanford University | 《计算机程序设计艺术》（TAOCP）、算法分析、TeX 排版系统。 | 算法大师。 | ✅ | ✅ | 🔲 |
 | 1975 | Allen Newell | 1927-1992 | 美国 | Carnegie Mellon University | 人工智能、认知科学、逻辑理论机。 | 与 Simon 共获。 | 🔲 | 🔲 | 🔲 |
 | 1975 | Herbert A. Simon | 1916-2001 | 美国 | Carnegie Mellon University | 人工智能、认知科学、有限理性决策。 | 另获诺贝尔经济学奖 1978。 | 🔲 | 🔲 | 🔲 |

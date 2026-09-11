@@ -13,6 +13,8 @@
 3. **数据来源**：维基百科「List of mathematicians」列表及《世纪分类标准》
 
 > 列说明：「**立传**」= 是否已生成 Beamer 演示文稿成品（tex/pdf；mp4 视频待配乐后另行统一制作）；「**Review**」= 是否已完成两轮史实终审与结构优化；「**社会关系入库**」= 是否已将社会关系与研究领域写入 greatminds 数据库（people/person_relation/person_field）。
+>
+> **核验记录（2026-09-11）**：依据各提示词 §7 清单完成 14 人社会关系补缺入库（新增 39 条关系，覆盖师生/合作/通信/论战/亲子网络），合并重复人物 2 组（Gérard/Girard Desargues、Gilles Personne de Roberval/Gilles de Roberval）；`has_biography` 全部置 1。立传与社会关系入库标志经核验无误。
 
 ---
 

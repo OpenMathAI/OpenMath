@@ -1,0 +1,492 @@
+% =============================================================
+%  数值分析奠基人：詹姆斯·H·威尔金森 (James H. Wilkinson)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：误差、精度、计算表 —— 稀疏细网格呼应数值的严谨
+%  资料来源：turing/pages/1970/James H. Wilkinson/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Wilkinson 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeNA}{HTML}{2E5A9E}     % 数值分析 — 蓝
+\definecolor{badgeEA}{HTML}{1E8E8E}     % 误差分析 — 青绿
+\definecolor{badgeLA}{HTML}{D9A441}     % 线性代数 — 琥珀
+\definecolor{badgeLG}{HTML}{C0395B}     % 传承 — 玫瑰
+\definecolor{napanel}{RGB}{228,233,246}
+\definecolor{eapanel}{RGB}{222,240,238}
+\definecolor{lapanel}{RGB}{249,240,224}
+\definecolor{lgpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 细网格背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \draw[coverprimary!14, line width=0.3pt] ([xshift=-6.9cm, yshift=2.6cm]current page.center) grid[step=0.55cm] ([xshift=6.9cm, yshift=-2.6cm]current page.center);
+  \fill[badgeNA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeEA!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeLA!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.35cm, yshift=3.15cm]current page.center) {\faIcon{square-root-alt}\enspace 数值分析奠基人\enspace·\enspace 英国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {詹姆斯·H·威尔金森};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {James H. Wilkinson\enspace·\enspace 1919 — 1986};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {Senior Wrangler · 向后误差分析 · 1970 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeNA] at (-5.05,0)
+        {数值分析\\Numerical Analysis\par\scriptsize NPL · 终身};
+      \node[badge, fill=badgeEA] at (-1.68,0)
+        {误差分析\\Error Analysis\par\scriptsize 向后误差分析};
+      \node[badge, fill=badgeLA] at (1.68,0)
+        {线性代数\\Linear Algebra\par\scriptsize 特征值计算};
+      \node[badge, fill=badgeLG] at (5.05,0)
+        {传承\\Legacy\par\scriptsize 两个以他命名的奖};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"numerical analysis to facilitate the use of the high-speed digital computer" —— 1970 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/James_H._Wilkinson.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{James_H._Wilkinson.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {James H. Wilkinson};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国\enspace|\enspace \faIcon{university}\enspace National Physical Laboratory\enspace|\enspace Turing 1970 · FRS 1969};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{威尔金森 - 从 Strood 到数值分析奠基人}{生卒 · 本名 · 国籍 · 教育 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/James_H._Wilkinson.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{James_H._Wilkinson.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {James H. Wilkinson};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1919-09-27 — 1986-10-05\\[2pt]\lab{本名}\quad James Hardy Wilkinson\\[2pt]\lab{国籍}\quad 英国};
+  \node[infob, fill=eapanel, draw=badgeEA!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Sir Joseph Williamson's 数学学校\\[2pt]
+     \quad Trinity College, Cambridge（BA）\\[2pt]
+     \lab{名次}\quad Senior Wrangler（Tripos 第一名）};
+  \node[infob, fill=napanel, draw=badgeNA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Strood · 英格兰\\[2pt]\lab{去世地}\quad Teddington · 英格兰\\[2pt]\lab{任职}\quad NPL（1946 起，终身）};
+  \node[infob, fill=lgpanel, draw=badgeLG!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1970 · FRS 1969\\[2pt]
+     \quad DFBCS 1974 · Chauvenet 1987\\[2pt]
+     \lab{核心领域}\quad 数值分析 · 数值线性代数};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{威尔金森的一生}{1919 — 1986 · 从 Strood 少年到数值分析奠基人}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1919/生于英格兰 Strood,
+    2.3/——/奖学金入读 Sir Joseph Williamson's 数学学校,
+    1.6/——/{Trinity College, Cambridge · Senior Wrangler},
+    0.9/1940/战时弹道学工作,
+    0.2/1946/转入 NPL · 与图灵共事 ACE 项目,
+    -0.5/1963/出版 Rounding Errors in Algebraic Processes,
+    -1.2/1965/出版 The Algebraic Eigenvalue Problem,
+    -1.9/1969/当选皇家学会院士（FRS）,
+    -2.3/1970/获图灵奖 · SIAM von Neumann Lecture,
+    -2.6/1971/与 Reinsch 合编 Handbook（Linear Algebra）,
+    -2.9/1986/逝于 Teddington
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：Strood 少年与剑桥榜首 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：Strood 少年与剑桥榜首 (1919–1940)}{奖学金中学 · Trinity College · Senior Wrangler}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1919} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{生于英格兰 Strood} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{泰晤士河畔的少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{凭 Foundation Scholarship 入读 Sir Joseph Williamson's Mathematical School（Rochester）} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{数学天赋初显} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{剑桥} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{入 Trinity College，修读 Cambridge Mathematical Tripos} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{进入英国数学正统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{毕业} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{以 Senior Wrangler（数学荣誉学位考试第一名）毕业，获 BA} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{传奇名次} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} Senior Wrangler——剑桥数学 Tripos 榜首，英国数学界最负盛名的名次。}
+\end{center}
+\end{frame}}
+
+% --- 5. 战时弹道与 NPL ---
+\newcommand{\warlivslide}{\begin{frame}\plainbar\sectiontitle{战时弹道与 NPL (1940–1946)}{弹道计算 · 1946 转入 National Physical Laboratory}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1940–1946} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{从事弹道学战时工作} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{与计算结缘} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1945} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{与 Heather Ware 结婚} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{家庭生活开始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1946} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{转入 National Physical Laboratory（NPL）} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{终身机构确立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{此后} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{直至去世始终在 NPL 工作} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{四十年数值生涯} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从战时弹道到 NPL，一条通往"让计算机算得准"的路由此展开。}
+\end{center}
+\end{frame}}
+
+% --- 6. 与图灵共事 ACE ---
+\newcommand{\aceslide}{\begin{frame}\plainbar\sectiontitle{与图灵共事 ACE (1946–)}{NPL 同事 · Pilot ACE · 历史见证者}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同事} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{1946 年转入 NPL 后，与 Alan Turing 同在 ACE 计算机项目工作} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{"图灵的同事"，非师承} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Pilot ACE} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{参与 Pilot ACE 的建造时代} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{早期电子计算机实践} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1980} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{撰写关于 Turing 在 NPL 工作与 Pilot ACE 建造的历史回顾文章} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{第一手历史文献} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 图灵奖得主中的"图灵同事"}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{NPL ACE 项目} —— 与图灵并肩，把数学装进早期电子计算机}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 向后误差分析 ---
+\newcommand{\backwardslide}{\begin{frame}\plainbar\sectiontitle{向后误差分析：标志性的贡献}{舍入误差 = 输入扰动 · 稳定性的严格证明}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{视角}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{思想} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{把浮点舍入误差解释为"对输入的扰动"} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{换一个方向看误差} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{证明} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{使数值算法的稳定性可以严格证明} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{从经验走向理论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{表彰} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{1970 图灵奖理由特别点名 "'backward' error analysis"} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{以一词载入获奖理由} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 向后误差分析：把算错的问题，看成算对了另一个问题}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$A x = b$ 的计算解 $\hat{x}$，可视为扰动问题 $(A+\Delta A)\,\hat{x} = b+\Delta b$ 的\textbf{精确解}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 矩阵特征值计算 ---
+\newcommand{\eigenslide}{\begin{frame}\plainbar\sectiontitle{矩阵特征值计算}{computations in linear algebra · 以他命名的矩阵}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方面}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{算法} & \cellcolor{lapanel}\textcolor{badgeLA!82!black}{在线性代数计算（尤其特征值问题）上发现许多重要算法} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{数值线性代数的中坚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{lapanel}\textcolor{badgeLA!82!black}{特征值方法时代的奠基人物之一} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{开一代先河} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名} & \cellcolor{lapanel}\textcolor{badgeLA!82!black}{Wilkinson matrix（威尔金森矩阵）以其命名} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{著名病态实例} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 特征值问题（线性代数计算的核心）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$A v = \lambda v\qquad$ 求矩阵 $A$ 的特征值 $\lambda$ 与特征向量 $v$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Wilkinson 多项式与病态问题 ---
+\newcommand{\polymslide}{\begin{frame}\plainbar\sectiontitle{Wilkinson 多项式与病态问题}{The Perfidious Polynomial (1984) · "奸诈的多项式"}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{Wilkinson 多项式（Wilkinson's polynomial）以其命名} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{数值分析著名实例} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1984 论文} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{\textit{The Perfidious Polynomial}（"奸诈的多项式"）讲多项式求根的病态性} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{晚年的警世之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{回响} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{该文使他获得 1987 年 MAA Chauvenet Prize} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{身后获奖的渊源} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 病态（ill-conditioned）：根对系数的微小扰动极端敏感}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$p(x)\ \to\ p(x)+\varepsilon\ \Longrightarrow\ $ 根的位置剧烈变化}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 两本经典专著 ---
+\newcommand{\booksslide}{\begin{frame}\plainbar\sectiontitle{两本经典专著}{REAP 1963 · AEP 1965 · Handbook 1971}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1963} & \cellcolor{lapanel}\textcolor{badgeLA!82!black}{\textit{Rounding Errors in Algebraic Processes}（REAP）} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{舍入误差研究的奠基之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1965} & \cellcolor{lapanel}\textcolor{badgeLA!82!black}{\textit{The Algebraic Eigenvalue Problem}（AEP，牛津 Clarendon）} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{数值线性代数的圣经} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1971} & \cellcolor{lapanel}\textcolor{badgeLA!82!black}{与 Christian Reinsch 合编 \textit{Handbook for Automatic Computation, Vol. II: Linear Algebra}（Springer）} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{算法与软件的桥梁} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} REAP 与 AEP——至今仍是数值分析家案头必备的两座里程碑。}
+\end{center}
+\end{frame}}
+
+% --- 11. 图灵奖 1970 ---
+\newcommand{\turingawardslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1970}{数值分析 · 线性代数计算 · "backward" error analysis}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{数值分析} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{促进高速数字计算机的使用} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{让计算机算得准} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{线性代数} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{computations in linear algebra} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{特征值算法的中坚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{误差分析} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{"'backward' error analysis"（向后误差分析）} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{标志性贡献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同年} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{获邀作 SIAM John von Neumann Lecture} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{双荣誉之年} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 获奖理由原文（ACM）}\\[2pt]
+  {\fontsize{8.6}{11.6}\selectfont\color{coverprimary!88!black}\textit{"for his research in numerical analysis to facilitate the use of the high-speed digital computer, having received special recognition for his work in computations in linear algebra and 'backward' error analysis"}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉}{FRS 1969 · Heriot-Watt 1973 · DFBCS 1974 · Chauvenet 1987}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{荣誉}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{FRS——当选皇家学会院士} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{英国科学界最高认可之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1973} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{Heriot-Watt University 荣誉博士} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{学界致敬} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1974} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{Distinguished Fellow of the British Computer Society（DFBCS）} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{表彰计算机科学开创性工作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1987} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{Chauvenet Prize（MAA，因 1984 年论文 \textit{The Perfidious Polynomial}）} & \cellcolor{eapanel}\textcolor{badgeEA!82!black}{先卒后奖，著作长存} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从皇家学会到英国计算机学会，数学与计算的双重认可。}
+\end{center}
+\end{frame}}
+
+% --- 13. 以他命名的奖项 ---
+\newcommand{\prizesslide}{\begin{frame}\plainbar\sectiontitle{以他命名的奖项}{数值分析界的青年学者荣誉传承}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{奖项}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1982} & \cellcolor{lgpanel}\textcolor{badgeLG!82!black}{SIAM 设立 James H. Wilkinson Prize in Numerical Analysis and Scientific Computing} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{青年数值分析家的荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1991} & \cellcolor{lgpanel}\textcolor{badgeLG!82!black}{设立 J. H. Wilkinson Prize for Numerical Software} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{数值软件的传承} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 两个以他命名的奖项}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Wilkinson Prize} —— 数值分析界的青年学者荣誉传承}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：数值分析的基石}{数值分析 · 误差分析 · 数值线性代数 · 传承}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=napanel, draw=badgeNA!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeNA} 数值分析}\\[3pt]NPL 终身\\[2pt]高速计算机之友};
+\node[leg, fill=eapanel, draw=badgeEA!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeEA} 误差分析}\\[3pt]向后误差分析\\[2pt]REAP};
+\node[leg, fill=lapanel, draw=badgeLA!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLA} 数值线性代数}\\[3pt]AEP\\[2pt]特征值算法};
+\node[leg, fill=lgpanel, draw=badgeLG!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLG} 传承}\\[3pt]Wilkinson 奖\\[2pt]Wilkinson 矩阵·多项式};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 把舍入误差当作对输入的扰动——数值算法由此可以严格证明。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 向后误差分析 $\rightarrow$ 数值线性代数 $\rightarrow$ 病态问题的警示\\[2pt]他为高速数字计算机奠定的数值基石，至今支撑着每一次科学计算。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {误差不是失败，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {而是被理解的输入扰动。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {致敬 James H. Wilkinson};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {詹姆斯·H·威尔金森\quad 1919 — 1986\quad 享年 67};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{square-root-alt}\enspace Turing 1970 · FRS 1969 · 数值分析奠基人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\warlivslide
+\aceslide
+\backwardslide
+\eigenslide
+\polymslide
+\booksslide
+\turingawardslide
+\honorsslide
+\prizesslide
+\legacyslide
+\closingslide
+\end{document}

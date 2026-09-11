@@ -1,0 +1,288 @@
+% =============================================================
+%  理论计算机科学奠基人之一：姚期智 (Andrew Chi-Chih Yao)
+%  Beamer 源码 —— OpenTuring 图灵奖得主立传
+%  设计母题：用复杂性丈量计算与信息的边界 (Measuring Information by Complexity)
+%  资料来源：本地 Wikipedia (turing/pages/2000/Andrew Yao/index.html)
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Yao 专属四分类色：计算理论 / 密码学 / 通信复杂性 / 伪随机性 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeTheory}{HTML}{2E5A9E}       % 计算理论 — 蓝
+\definecolor{badgeCrypto}{HTML}{D9A441}       % 密码学 — 琥珀
+\definecolor{badgeComm}{HTML}{1E8E8E}         % 通信复杂性 — 青绿
+\definecolor{badgePseudo}{HTML}{C0395B}       % 伪随机性 — 玫瑰
+\definecolor{theorypanel}{RGB}{228,233,246}
+\definecolor{cryptopanel}{RGB}{249,240,224}
+\definecolor{commpanel}{RGB}{222,240,238}
+\definecolor{pseudopanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条（内容页使用）
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景（封面/结尾使用）：以离散圆点与连线意象呼应概率、通信与电路
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeTheory!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeComm!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeCrypto!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题：{主标题}{副标题}
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}\\[3pt]
+  \textcolor{coveraccent}{\rule{2.6cm}{1.6pt}}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签（身份信息页使用）
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{microchip}\enspace 理论计算机科学奠基人之一\enspace·\enspace 中国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {姚期智};
+  \node[anchor=center, font=\fontsize{11}{14}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Andrew Chi-Chih Yao\enspace·\enspace 1946 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {通信复杂性开创者 · 密码学先驱 · 首位华人图灵奖得主 · 2000 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeTheory] at (-5.05,0)
+        {计算理论\\\scriptsize Theory\par\scriptsize Yao's principle};
+      \node[badge, fill=badgeCrypto] at (-1.68,0)
+        {密码学\\\scriptsize Cryptography\par\scriptsize 混淆电路 · 百万富翁};
+      \node[badge, fill=badgeComm] at (1.68,0)
+        {通信复杂性\\\scriptsize Communication\par\scriptsize 信息下界};
+      \node[badge, fill=badgePseudo] at (5.05,0)
+        {伪随机性\\\scriptsize Pseudorandom\par\scriptsize 混合论证};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"in recognition of his fundamental contributions to the theory of computation, including the complexity-based theory of pseudorandom number generation, cryptography, and communication complexity." —— 2000 图灵奖获奖理由};
+  % 头像（条件包含：有 Andrew_Yao.jpg 则显示，否则占位框）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=4pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Andrew_Yao.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Andrew_Yao.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.4cm]current page.center)
+    {Andrew Yao (2015)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 中国/美国\enspace|\enspace \faIcon{university}\enspace 清华大学\enspace|\enspace Turing 2000 · Kyoto 2021};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：从上海到物理学 (1946–1975)}{建国中学 · 台湾大学物理 · 哈佛理论物理}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=theorypanel, draw=badgeTheory!55] at (0,2.55) {\textbf{1946 · 生于上海。}本名 Andrew Chi-Chih Yao，中文名姚期智；后随父母移居香港、台湾，在台北成长。};
+\node[item, fill=commpanel, draw=badgeComm!45] at (0,1.05) {\textbf{台湾大学物理学士。}就读台北市立建国高级中学，1967 年获台大物理 BS；随后赴美读物理。};
+\node[item, fill=cryptopanel, draw=badgeCrypto!40] at (0,-0.25) {\textbf{哈佛理论物理。}1969 年获 MA、1972 年获 PhD，师从 1979 年诺贝尔物理学奖得主 Sheldon Glashow。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 物理出身的严格训练，为他日后转向理论计算机科学埋下伏笔。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 身份信息页（★ 图灵奖硬性要求） ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{姚期智 - 用复杂性丈量计算}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=8pt, inner ysep=7pt, text width=5.0cm,
+      font=\fontsize{6.8}{8.6}\selectfont, align=left}
+  ]
+  % 左侧头像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Andrew_Yao.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Andrew_Yao.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Andrew Yao (2015)};
+  % 右侧 2×2 信息网格：上面两卡上边缘对齐，下面两卡下边缘对齐
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1946-12-24 —（在世）\\[2pt]\lab{本名}\quad Andrew Chi-Chih Yao\\[2pt]\lab{国籍}\quad 中华民国 / 美国 / 中华人民共和国\\[2pt]\lab{出生地}\quad 上海};
+  \node[infob, fill=commpanel, draw=badgeComm!45, anchor=north] at (3.8,2.35)
+    {\lab{师承}\quad Sheldon Glashow（哈佛物理）\\[2pt]
+     \quad Chung Laung Liu（UIUC CS）\\[2pt]
+     \lab{任职}\quad Stanford · Berkeley · Princeton\\[2pt]
+     \quad 清华大学 IIIS 院长（2010—）};
+  \node[infob, fill=theorypanel, draw=badgeTheory!50, anchor=south] at (-1.8,-2.01)
+    {\lab{教育}\quad 台大物理 BS 1967\\[2pt]\quad 哈佛 MA 1969 / PhD 1972\\[2pt]\quad UIUC CS PhD 1975};
+  \node[infob, fill=cryptopanel, draw=badgeCrypto!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2000 · Knuth 1996\\[2pt]
+     \quad Kyoto 2021 · Pólya 1987\\[2pt]
+     \lab{核心领域}\quad 计算理论 · 密码学\\[2pt]
+     \quad 通信复杂性 · 伪随机性};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 核心贡献概览 ---
+\newcommand{\hookslide}{\begin{frame}\plainbar\sectiontitle{用复杂性丈量计算与信息}{计算理论 · 密码学 · 通信复杂性 · 伪随机性}
+\begin{center}\begin{tikzpicture}[nodebox/.style={rounded corners=5pt, inner xsep=9pt, inner ysep=8pt, font=\fontsize{7.6}{9.4}\selectfont\bfseries, align=center}]
+\node[nodebox, fill=theorypanel, draw=badgeTheory!50, text=badgeTheory!85!black] (a) at (-5.7,1.05) {计算理论\\Yao's principle\\[2pt]复杂性下界};
+\node[nodebox, fill=cryptopanel, draw=badgeCrypto!60, text=coveraccent!85!black] (b) at (-1.9,1.05) {密码学\\混淆电路 · 百万富翁\\[2pt]Dolev–Yao};
+\node[nodebox, fill=commpanel, draw=badgeComm!50, text=badgeComm!85!black] (c) at (1.9,1.05) {通信复杂性\\信息交流代价\\[2pt]通信下界};
+\node[nodebox, fill=pseudopanel, draw=badgePseudo!50, text=badgePseudo!85!black] (d) at (5.7,1.05) {伪随机性\\复杂性理论\\[2pt]混合论证};
+\node[draw=coverprimary!60, fill=silverpanel, rounded corners=5pt, inner sep=12pt, text width=13.0cm, align=center] at (0,-1.35) {{\fontsize{9.4}{11.6}\selectfont\bfseries\color{coverdark!88} 他用最坏情形与概率，为「安全、随机与高效交流」建立可证明的边界。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 从物理到计算 ---
+\newcommand{\careerslide}{\begin{frame}\plainbar\sectiontitle{从物理到计算 (1967–1975)}{哈佛理论物理博士 $\rightarrow$ UIUC 计算机科学博士}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=theorypanel, draw=badgeTheory!55] at (0,2.55) {\textbf{哈佛物理博士。}在 Sheldon Glashow 指导下完成博士论文《Internal Symmetries and Positivity》，受粒子物理训练。};
+\node[item, fill=commpanel, draw=badgeComm!45] at (0,1.05) {\textbf{1975 · UIUC 计算机博士。}仅用两年，以 NSF Fellow 身份在伊利诺伊大学取得第二个博士学位，导师 Chung Laung Liu。};
+\node[item, fill=cryptopanel, draw=badgeCrypto!40] at (0,-0.25) {\textbf{第二篇博士论文。}《A Study of Concrete Computational Complexity》标志他从物理转向计算复杂性。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=5pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-1.8) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 物理给了他对称性与严格证明，计算机给了他需要证明的极限问题。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- Yao's principle ---
+\newcommand{\yaoprincipleslide}{\begin{frame}\plainbar\sectiontitle{Yao's principle：随机算法的 minimax (1977)}{随机算法下界 · 博弈论视角}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=theorypanel, draw=badgeTheory!60] at (0,2.55) {\textbf{minimax 原理。}用博弈论中的极小极大定理，把随机算法的期望代价与最坏输入分布联系起来。};
+\node[item, fill=commpanel, draw=badgeComm!45] at (0,0.85) {\textbf{随机算法下界。}要证明随机算法的最坏情形代价高，可构造一个困难的输入分布，使任何确定性算法在该分布上的期望代价高。};
+\node[item, fill=cryptopanel, draw=badgeCrypto!40] at (0,-0.65) {\textbf{广泛应用。}这一原理成为随机算法、在线算法与通信复杂性下界证明的基本工具。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 他把博弈论带进算法分析，也让「随机」第一次可以被严格下界。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 通信复杂性 ---
+\newcommand{\commcomplexslide}{\begin{frame}\plainbar\sectiontitle{通信复杂性：信息交流的代价 (1979)}{分布式计算 · 通信下界 · 信息代价}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=commpanel, draw=badgeComm!60] at (0,2.55) {\textbf{开创通信复杂性。}他提出衡量两方或多方协作求解问题时，需要交换多少比特信息。};
+\node[item, fill=theorypanel, draw=badgeTheory!55] at (0,0.85) {\textbf{信息下界。}通信复杂性把「计算代价」转化为「交流代价」，为分布式算法与 VLSI 电路下界提供统一框架。};
+\node[item, fill=cryptopanel, draw=badgeCrypto!40] at (0,-0.65) {\textbf{应用广泛。}这一框架延伸至数据流算法、流式证明与安全协议，成为衡量信息交换代价的通用标尺。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 信息不只是内容，交流它本身也有不可回避的代价。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 伪随机性 ---
+\newcommand{\pseudorandomslide}{\begin{frame}\plainbar\sectiontitle{伪随机性：无法被快速区分 (1982)}{复杂度理论 · 伪随机数生成 · 混合论证}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=pseudopanel, draw=badgePseudo!60] at (0,2.55) {\textbf{基于复杂性的伪随机性。}他给出「计算不可区分」的严格定义，使伪随机数生成成为复杂性理论可研究的问题。};
+\node[item, fill=theorypanel, draw=badgeTheory!55] at (0,0.85) {\textbf{混合论证。}通过逐步替换的混合分布，证明伪随机输出与真随机输出对多项式时间算法不可区分。};
+\node[item, fill=cryptopanel, draw=badgeCrypto!40] at (0,-0.65) {\textbf{现代密码学的基石。}这一框架为加密方案、承诺与零知识证明的安全性证明提供核心工具。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 「看起来随机」可以有一个精确的数学定义。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 密码学 ---
+\newcommand{\cryptoslide}{\begin{frame}\plainbar\sectiontitle{密码学：从百万富翁到安全计算}{混淆电路 · 百万富翁问题 · Dolev–Yao 模型}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=cryptopanel, draw=badgeCrypto!60] at (0,2.55) {\textbf{姚氏百万富翁问题。}两个百万富翁想在不说出财富多少的前提下比较谁更富有——这是安全多方计算的经典思想实验。};
+\node[item, fill=pseudopanel, draw=badgePseudo!55] at (0,0.85) {\textbf{混淆电路。}用电路加密实现安全计算，让参与方在保护输入隐私的同时完成联合计算。};
+\node[item, fill=commpanel, draw=badgeComm!45] at (0,-0.65) {\textbf{Dolev–Yao 模型。}与 Danny Dolev 提出密码协议分析中的抽象敌手模型，成为安全协议形式化分析的基础。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 隐私与协作并不必然冲突——这是现代安全多方计算的思想源头之一。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 更多以 Yao 命名 ---
+\newcommand{\eponymousslide}{\begin{frame}\plainbar\sectiontitle{更多以 Yao 命名的成果}{Yao's test · Yao graph}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=pseudopanel, draw=badgePseudo!60] at (0,2.55) {\textbf{Yao's test。}以概率判定区分真随机与伪随机输出的检验思想，进入伪随机性理论术语体系。};
+\node[item, fill=commpanel, draw=badgeComm!45] at (0,0.85) {\textbf{Yao graph。}以 Yao 命名的几何图概念，出现在计算几何与空间网络的相关研究中。};
+\node[item, fill=theorypanel, draw=badgeTheory!55] at (0,-0.65) {\textbf{命名即影响。}一个学者的名字散落在多个子领域，意味着他的定义已成为后人工作的基础设施。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从复杂性到几何，他的足迹跨越理论计算机科学的多个角落。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 学术生涯 ---
+\newcommand{\academicslide}{\begin{frame}\plainbar\sectiontitle{学术生涯：MIT $\rightarrow$ Stanford $\rightarrow$ Berkeley $\rightarrow$ Princeton (1975–2004)}{从助理教授到冠名教授}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=theorypanel, draw=badgeTheory!55] at (0,2.55) {\textbf{1975–1982 · MIT 与 Stanford。}先后任 MIT 助理教授、Stanford 助理教授，后任 UC Berkeley 教授。};
+\node[item, fill=commpanel, draw=badgeComm!45] at (0,0.85) {\textbf{1982–1986 · Stanford 正教授。}在斯坦福继续推进复杂性、通信与密码理论。};
+\node[item, fill=cryptopanel, draw=badgeCrypto!40] at (0,-0.65) {\textbf{1986–2004 · Princeton。}任 William and Edna Macaleer Professor of Engineering and Applied Science，深耕算法与复杂性。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 美国顶尖学府三十年间，他的理论成为一代又一代计算机科学家的共同语言。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 清华 ---
+\newcommand{\tsinghuaslide}{\begin{frame}\plainbar\sectiontitle{回到中国：清华交叉信息研究院 (2004–)}{CASTU · ITCS · IIIS}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+  \node[item, fill=commpanel, draw=badgeComm!45] at (0,2.55) {\textbf{2004 · 加入清华。}任清华大学高等研究中心（CASTU）教授、理论计算机科学研究中心（ITCS）主任。};
+\node[item, fill=theorypanel, draw=badgeTheory!55] at (0,0.85) {\textbf{2010 · 出任 IIIS 院长。}出任交叉信息研究院（IIIS）院长，并倡议创办 ITCS 理论计算机创新会议。};
+\node[item, fill=cryptopanel, draw=badgeCrypto!40] at (0,-0.65) {\textbf{香港中文大学。}同时任 Distinguished Professor-at-Large，推动两地理论计算机科学的交流。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 从普林斯顿到清华，他把「研究复杂性」带回中国，也把中国带回理论计算机的前沿。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 荣誉 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与认可}{Turing 2000 · Knuth 1996 · Kyoto 2021 · Pólya 1987}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[item/.style={rounded corners=4pt, inner xsep=10pt, inner ysep=5pt, text width=12.4cm, font=\fontsize{7.0}{9.0}\selectfont, align=left}]
+\node[item, fill=goldpanel, draw=coveraccent!55] at (0,2.55) {\textbf{2000 · 图灵奖。}因「对计算理论的根本性贡献，包括基于复杂性的伪随机数生成理论、密码学与通信复杂性」获计算机科学最高荣誉。};
+\node[item, fill=theorypanel, draw=badgeTheory!55] at (0,0.85) {\textbf{重要奖项。}George Pólya Prize 1987\\[2pt]Knuth Prize 1996\\[2pt]Kyoto Prize in Advanced Technology 2021。};
+\node[item, fill=commpanel, draw=badgeComm!45] at (0,-0.65) {\textbf{学术身份。}美国国家科学院院士 · 美国艺术与科学院院士 · AAAS/ACM Fellow · 中国科学院院士。};
+\node[draw=coverprimary!55, fill=silverpanel, rounded corners=6pt, inner sep=6pt, text width=12.4cm, align=center] at (0,-2.0) {{\fontsize{8.0}{10.0}\selectfont\bfseries\color{coverdark!88} 2022 年入选 Asian Scientist 100，其学术影响跨越太平洋两岸。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：为计算与信息立界}{Yao's principle · 通信复杂性 · 密码学 · 伪随机性}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=8pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=theorypanel, draw=badgeTheory!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeTheory} 计算理论}\\[3pt]Yao's principle\\[2pt]复杂性下界};
+\node[leg, fill=cryptopanel, draw=badgeCrypto!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{coveraccent} 密码学}\\[3pt]混淆电路\\[2pt]百万富翁问题};
+\node[leg, fill=commpanel, draw=badgeComm!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeComm} 通信复杂性}\\[3pt]信息下界\\[2pt]通信矩阵};
+\node[leg, fill=pseudopanel, draw=badgePseudo!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePseudo} 伪随机性}\\[3pt]混合论证\\[2pt]计算不可区分};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 首位华人图灵奖得主。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 物理 $\rightarrow$ 计算复杂性 $\rightarrow$ 密码学 $\rightarrow$ 通信复杂性\\[2pt]他的思想，仍在现代密码、分布式计算与理论计算机科学中延续。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{20}{26}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {用数学丈量计算，};
+\node[font=\fontsize{20}{26}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {为信息与安全立界。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Andrew Chi-Chih Yao};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {姚期智\quad Andrew Chi-Chih Yao\quad 1946 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{microchip}\enspace Turing 2000 · 理论计算机科学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+% --- 彩蛋 ---
+\newcommand{\eastereggslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{14}{18}\selectfont\bfseries, text=coveraccent!85!black]
+  at ([yshift=2.6cm]current page.center) {\faIcon{star}\enspace 一个彩蛋};
+\node[font=\fontsize{17}{22}\selectfont\bfseries, text=coverprimary!90!black, align=center, text width=14cm]
+  at ([yshift=1.3cm]current page.center) {两个博士学位，跨过物理与计算机};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=0.3cm, xshift=-4.2cm]current page.center) -- ([yshift=0.3cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{10}{13}\selectfont, text=coverprimary!68!black, align=center, text width=13cm]
+  at ([yshift=-0.45cm]current page.center) {姚期智的哈佛物理导师 Sheldon Glashow，是 1979 年诺贝尔物理学奖得主。\\[2pt]他的妻子 Frances Yao 也是理论计算机科学家——\\[2pt]这一家人，把「理论」写进了两种科学。};
+\node[font=\fontsize{7.5}{9.5}\selectfont, text=coverdark!45, align=center, text width=12cm]
+  at ([yshift=-1.9cm]current page.center) {物理给世界对称性 · 计算机给世界复杂性};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{star}\enspace OpenMathAI · OpenTuring\enspace|\enspace Compiled with \LaTeX};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\earlyslide
+\profileslide
+\hookslide
+\careerslide
+\yaoprincipleslide
+\commcomplexslide
+\pseudorandomslide
+\cryptoslide
+\eponymousslide
+\academicslide
+\tsinghuaslide
+\honorsslide
+\legacyslide
+\closingslide
+\eastereggslide
+\end{document}
