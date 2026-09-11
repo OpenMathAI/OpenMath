@@ -1,0 +1,528 @@
+% =============================================================
+%  元素周期的立法者：德米特里·门捷列夫 (Dmitri Mendeleev)
+%  特别篇 · 诺贝尔奖遗珠 —— Beamer 演示
+%  （参照同项目标杆 Frederick Sanger 立传版式：
+%    表格语义化 tabularx + 公式展示框 + 时间线页 + 气泡背景）
+%  资料来源：chemist/presentations/20th_century/pages/Dmitri_Mendeleev
+%  设计母题：元素落位 —— 每个元素在表中各有其位
+%  ★ 特别篇红线：门捷列夫从未获得诺贝尔奖，全篇禁写「诺贝尔奖得主」
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenChemist 项目首页（定义 coverprimary/coveraccent/coverdark/covermuted/goldpanel + \openchemistslide）
+\input{../../cover/openchemist_page.tex}
+
+% ===== Mendeleev 专属配色：帝国深紫（梦中见表的预言气质）+ 香槟金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{deepviolet}{HTML}{452C63}    % 帝国深紫 — 主色
+\definecolor{badgeTable}{HTML}{2E5A9E}    % 周期律 — 蓝
+\definecolor{badgePredict}{HTML}{1B7A43}  % 预言应验 — 绿
+\definecolor{badgePetro}{HTML}{D97B29}    % 工业与石油 — 琥珀
+\definecolor{badgeNobel}{HTML}{C0395B}    % 诺奖之争 — 玫瑰
+\definecolor{titlecolor}{RGB}{26,18,42}
+\definecolor{muteddark}{RGB}{76,68,96}
+\definecolor{tablepanel}{RGB}{228,233,246}
+\definecolor{predpanel}{RGB}{222,240,230}
+\definecolor{petropanel}{RGB}{249,236,222}
+\definecolor{nobelpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「元素在周期表格子中的落位」
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coveraccent!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeTable!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgePredict!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePetro!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% ========================= SLIDES =========================
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=deepviolet!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{flask}\enspace 元素周期的立法者\enspace·\enspace 俄罗斯帝国};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=deepviolet!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {德米特里·门捷列夫};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=deepviolet!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Dmitri Mendeleev\enspace·\enspace 1834 — 1907};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {把元素排成一张表的人 · 特别篇 · 诺贝尔奖遗珠};
+  \draw[coveraccent!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeTable] at (-5.05,0)
+        {周期律\\Periodic Law\par\scriptsize 1869 年表};
+      \node[badge, fill=badgePredict] at (-1.68,0)
+        {eka 大预言\\Predictions\par\scriptsize Ga · Ge · Sc};
+      \node[badge, fill=badgePetro] at (1.68,0)
+        {石油与工业\\Industry\par\scriptsize 炼油 · 米制};
+      \node[badge, fill=badgeNobel] at (5.05,0)
+        {诺奖之争\\Nobel 1905--07\par\scriptsize 9 次提名};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {三年 9 次提名 · 1906 年化学委员会正式推荐 · 一票之差 —— 他从未获得诺贝尔奖，却比许多得主更该获得它。};
+  % 肖像（Kramskoi 1878 油画）
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{Kramskoy_Mendeleev_01.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Dmitri Mendeleev, by I. Kramskoi, 1878};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 俄罗斯帝国\enspace|\enspace \faIcon{university}\enspace 圣彼得堡大学 · 度量衡总局\enspace|\enspace Davy 1882 · Copley 1905};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{德米特里·门捷列夫 - 从西伯利亚到元素帝国}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Kramskoy_Mendeleev_01.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Dmitri Mendeleev (1834–1907)};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1834-02-08 — 1907-02-02\\[2pt]\lab{本名}\quad Дмитрий Иванович Менделеев\\[2pt]\lab{国籍}\quad 俄罗斯帝国};
+  \node[infob, fill=tablepanel, draw=badgeTable!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad Tobolsk 文理中学 · Main Pedagogical Institute · 圣彼得堡大学\\[2pt]
+     \lab{博士}\quad Doctor of Science 1865\\[2pt]\lab{师承}\quad Alexander Voskresensky};
+  \node[infob, fill=predpanel, draw=badgePredict!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 西伯利亚 · Verkhnie Aremzyani\\[2pt]\lab{去世地}\quad 圣彼得堡（流感）\\[2pt]\lab{享年}\quad 72 岁};
+  \node[infob, fill=nobelpanel, draw=badgeNobel!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 周期律 · 物理化学 · 石油 · 度量衡\\[2pt]
+     \lab{身份}\quad 化学家 · 度量衡局局长\\[2pt]
+     \lab{荣誉}\quad Davy 1882 · Copley 1905 · ForMemRS 1892};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 门捷列夫的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{门捷列夫的一生}{1834 — 1907 · 从西伯利亚孤儿到元素周期的立法者}
+\vspace{-0.45cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{8.6}\selectfont, align=left, text width=8.6cm},
+  yr/.style={font=\fontsize{8}{9.6}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.2) -- (0,-3.2);
+  \foreach \y/\year/\txt in {
+    3.2/1834/生于西伯利亚 Tobolsk 附近 Verkhnie Aremzyani，17 个孩子中最小,
+    2.58/1850/母亲携其千里求学；入圣彼得堡 Main Pedagogical Institute,
+    1.96/1861/自海德堡归来，出版《Organic Chemistry》获 Demidov 奖,
+    1.34/1865/圣彼得堡大学 Doctor of Science；同年任大学教授,
+    0.72/1869/3 月 6 日向俄国化学会宣读周期律论文,
+    0.10/1871/把圣彼得堡建成国际公认的化学研究中心,
+    -0.52/1875–86/镓与锗相继发现，eka 系预言全部应验,
+    -1.14/1890/因学生待遇问题辞去圣彼得堡大学教授,
+    -1.76/1893/出任俄国度量衡总局局长（至去世）,
+    -2.38/1905–07/三年 9 次诺奖提名，1906 年一票之差,
+    -3.2/1907/流感逝于圣彼得堡，享年 72 岁
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 西伯利亚少年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{西伯利亚少年 (1834–1850)}{Verkhnie Aremzyani · 父盲厂毁 · 千里求学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepviolet}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1834} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{生于 Verkhnie Aremzyani，17 个孩子中最小（各源记载的存活数有争议）；父 Ivan 为中学教师，母 Maria 出身 Tobolsk 商人家族} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{西伯利亚之子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1847 前后} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{父亲失明失业、去世；母亲重开的玻璃厂毁于火——13 岁入 Tobolsk 文理中学} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{少年坎坷} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1849–1850} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{母亲携其横穿俄罗斯赴莫斯科求学，被莫斯科大学拒绝；母子转赴圣彼得堡，入父亲母校 Main Pedagogical Institute} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{千里求学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{母亲教诲} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{"patiently search divine and scientific truth"——encouraging him as she raised him Orthodox} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{一生信条} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 父盲厂毁、千里求学——这段母亲教诲，成了他一生的底色。}
+\end{center}
+\end{frame}}
+
+% --- 5. 求学与漂泊 ---
+\newcommand{\wanderslide}{\begin{frame}\plainbar\sectiontitle{求学与漂泊 (1850–1865)}{师范学院 · 肺结核与克里米亚 · 海德堡 · 博士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepviolet}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1850–1855} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{入 Main Pedagogical Institute；毕业后患肺结核，1855 年赴克里米亚半岛疗养} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{病中不改其志} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1855–1857} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{任 Simferopol 第一文理中学科学教师；1857 年痊愈返回圣彼得堡} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{重返科学中心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1859–1861} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{在海德堡研究液体毛细作用与分光镜；1861 年出版教科书《Organic Chemistry》} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{获 Demidov 奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1864–1865} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{1864 任技术学院教授、1865 任国立大学教授；以《On the Combinations of Water with Alcohol》获 Doctor of Science} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{1865 博士学位} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从西伯利亚到海德堡，疾病与流亡没有拦住他。}
+\end{center}
+\end{frame}}
+
+% --- 6. 周期律的诞生 ---
+\newcommand{\periodicslide}{\begin{frame}\plainbar\sectiontitle{周期律的诞生 (1868–1871)}{《Principles of Chemistry》 · 1869-03-06 俄国化学会 · 梦的传说}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.2cm}}
+\toprule
+\rowcolor{deepviolet}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{背景}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{为课程编写教科书} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{撰写《Principles of Chemistry》（1868–1870 两卷）时按化学性质分类元素，发现模式} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{教科书里诞生的定律} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1869-03-06} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{向俄国化学会宣读《The Dependence between the Properties of the Atomic Weights of the Elements》} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{周期律正式发表} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.28cm}
+\begin{center}
+\begin{minipage}{5.6cm}
+\centering
+{\fontsize{7.5}{9.5}\selectfont\bfseries\color{badgeTable} 1869 年原始片段：三行原子量}\\[2pt]
+{\fontsize{7.5}{9.5}\selectfont\color{deepviolet!88!black}%
+\begin{tabular}{ccc}
+Cl 35.5 & K 39 & Ca 40\\
+Br 80 & Rb 85 & Sr 88\\
+I 127 & Cs 133 & Ba 137\\
+\end{tabular}}
+\end{minipage}%
+\begin{minipage}{6.4cm}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{5.9cm}
+  {\fontsize{8}{10}\selectfont\bfseries\color{coveraccent!85!black} 周期律要点（1869，节选）}\\[1pt]
+  {\fontsize{7.2}{9.2}\selectfont\color{deepviolet!88!black}
+  按原子量排列，性质呈明显周期性；\\
+  原子量的大小决定元素的性质；\\
+  预期将发现许多未知元素（铝、硅的类似物）；\\
+  可据相邻元素修正原子量（如碲应在 123–126）。}
+  \end{minipage}%
+}
+\end{minipage}
+\end{center}
+\vspace{-0.1cm}
+\begin{center}
+{\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} "I saw in a dream a table where all elements fell into place as required." —— 梦的传说（据 Inostrantzev 转述）}
+\end{center}
+\end{frame}}
+
+% --- 7. 大预言：eka 系 ---
+\newcommand{\ekaslide}{\begin{frame}\plainbar\sectiontitle{大预言：eka 系 (1869–1886)}{梵文前缀命名缺位 · 预言全部应验 · 铀值修正}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.4cm}}
+\toprule
+\rowcolor{deepviolet}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{缺位}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{预言名与性质}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{应验}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{铝之下} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{eka-aluminium（梵文"一"）} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{镓 Ga · 1875 发现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{硅之下} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{eka-silicon} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{锗 Ge · 1886 发现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{硼之下} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{eka-boron} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{钪 Sc} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 纠正已知值：铀（U）}\\[2pt]
+  {\fontsize{10.5}{13}\selectfont\color{deepviolet!88!black}$\mathrm{U}:\ \text{化合价 } 3 \rightarrow 6,\qquad \text{原子量 } 120 \rightarrow 240\ \ (\text{今值 } 238)$}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} 梵文前缀 eka/dvi/tri（一、二、三）致敬古印度文法传统——他是梵文学家 Otto von Böhtlingk 的挚友。}
+\end{center}
+\end{frame}}
+
+% --- 8. 先驱与同行 ---
+\newcommand{\peersslide}{\begin{frame}\plainbar\sectiontitle{先驱与同行}{Newlands 八音律 · Lothar Meyer · 独特之处何在}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{4.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepviolet}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{与门捷列夫关系}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{John Newlands} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{1864 提出八音律（Law of Octaves），1865 年发表，指出按原子量的周期性，并提出新元素（如锗）存在的可能} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{先驱；1887 年才获承认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Lothar Meyer} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{1864 年发表 28 元素分类表（按化合价），无预言；门捷列夫之后数月发表几乎相同的表} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{同期独立的同行} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 门捷列夫的独特之处}\\[2pt]
+  {\fontsize{8.5}{11}\selectfont\color{deepviolet!88!black}不是"第一个发现周期性"，而是\textbf{预言未知元素}并\textbf{纠正已知原子量}——让周期表从分类工具变成预测工具}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 圣彼得堡学派与多面手 ---
+\newcommand{\polymslide}{\begin{frame}\plainbar\sectiontitle{圣彼得堡学派与多面手 (1864–1890)}{教科书 · 溶液 · 临界温度 · 学会建设}
+\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepviolet}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{化学教育} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{1867 年接替 Voskresensky 无机化学讲席并获终身教职；《Principles of Chemistry》成为一代经典教科书} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{时代的权威教材} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{物理化学} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{研究溶液等不确定化合物的本质；1861 年以绝对沸点定义预见 Andrews 的临界温度概念；研究液体热膨胀} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{超越时代的眼光} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学会建设} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{1868 年共同创建俄国化学会；至 1871 年把圣彼得堡建成国际公认的化学研究中心} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{学派奠基人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{科学与信仰} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{公开批判唯灵论，斥其为迷信；后脱离教会，转向一种浪漫化的自然神论（其子 Ivan 追述）} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{独立的思想者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 讲席、教科书与学会——圣彼得堡因他而成为化学之都。}
+\end{center}
+\end{frame}}
+
+% --- 10. 石油与工业 ---
+\newcommand{\petroslide}{\begin{frame}\plainbar\sectiontitle{石油与工业}{无机成因 · 第一座炼油厂 · pyrocollodion · 米制}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepviolet}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主张}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{石油从哪里来？} & \cellcolor{petropanel}\textcolor{badgePetro!82!black}{主张碳氢化合物深部无机成因："The capital fact to note is that petroleum was born in the depths of the earth."} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{无机成因论的先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{石油如何用好？} & \cellcolor{petropanel}\textcolor{badgePetro!82!black}{助建俄国第一座炼油厂；指出石油作为化工原料的价值（转述警句：拿石油当燃料烧，如同拿钞票烧厨房炉灶）} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{俄国石油工业的推手} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{火药} & \cellcolor{petropanel}\textcolor{badgePetro!82!black}{发明硝化棉基无烟火药 pyrocollodion；1892 年组织生产——但俄海军最终未采用} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{未被采用的发明} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{度量与贸易} & \cellcolor{petropanel}\textcolor{badgePetro!82!black}{把米制引入俄国；1891 年说服财政部实行临时关税，扶持幼工业} & \cellcolor{predpanel}\textcolor{badgePredict!82!black}{国家现代化的参与者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从油田到关税表，他把化学写进了俄国的工业版图。}
+\end{center}
+\end{frame}}
+
+% --- 11. 度量衡与晚年 ---
+\newcommand{\metroslide}{\begin{frame}\plainbar\sectiontitle{度量衡与晚年 (1890–1907)}{辞去教授 · 度量衡总局 · 至死在任}
+\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{deepviolet}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1890-08-17} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{因教育部官员对待学生的方式发生争执，辞去圣彼得堡大学教授职位} & \cellcolor{petropanel}\textcolor{badgePetro!82!black}{为辞职护学生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1892–1893} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{先执掌中央度量衡档案局，1893 年改建为度量衡总局并任局长——标准化基准器与测量程序，建立检验体系} & \cellcolor{petropanel}\textcolor{badgePetro!82!black}{俄国计量的奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1882 婚变余波} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{与 Anna Popova 再婚时，离婚手续未满教会七年要求——此争议被指是他落选俄国科学院的原因之一；次女 Lyubov 后嫁诗人 Alexander Blok} & \cellcolor{petropanel}\textcolor{badgePetro!82!black}{故国的冷遇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1907-02-02} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{流感逝于圣彼得堡，享年 72 岁；葬 Literatorskie Mostki 公墓。对医生说："Doctor, you have science, I have faith."（此语可能是 Jules Verne 语录，存疑）} & \cellcolor{petropanel}\textcolor{badgePetro!82!black}{至死在任} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 讲堂容不下他，但他把度量衡总局做到了生命的最后一天。}
+\end{center}
+\end{frame}}
+
+% --- 12. 诺奖之争 ---
+\newcommand{\nobelslide}{\begin{frame}\plainbar\sectiontitle{诺奖之争 (1905–1907)}{三年 9 次提名 · 1906 委员会正式推荐 · 一票之差}
+\vspace{-0.72cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.2cm}}
+\toprule
+\rowcolor{deepviolet}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{提名}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1905} & \cellcolor{nobelpanel}\textcolor{badgeNobel!82!black}{3 次提名；同年当选瑞典皇家科学院院士} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{未获奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1906} & \cellcolor{nobelpanel}\textcolor{badgeNobel!82!black}{4 次提名；化学委员会正式推荐他因发现周期系统获奖，化学分部支持——按惯例全院大会几应通过} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{一票之差败给 Moissan} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1907} & \cellcolor{nobelpanel}\textcolor{badgeNobel!82!black}{2 次提名} & \cellcolor{tablepanel}\textcolor{badgeTable!82!black}{再次被否决} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1906：戏剧性的一票}\\[2pt]
+  {\fontsize{7.8}{10}\selectfont\color{deepviolet!88!black}
+  全院大会上，委员会异议者 Peter Klason 转而提名 Henri Moissan；Svante Arrhenius（非化学委员会成员但在院内影响巨大）
+  力主否决，公开理由是周期系统已太旧。激辩之后，多数票以\textbf{一票之差}选择了 Moissan。}
+  \end{minipage}%
+}
+\end{center}
+\vspace{-0.08cm}
+\begin{center}
+{\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} 据同时代人转述，Arrhenius 的反对另有积怨——门捷列夫曾批评他的电离理论。1907 年两次提名再被其绝对反对所挫。}
+\end{center}
+\end{frame}}
+
+% --- 13. 遗产与纪念 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产与纪念}{mendelevium · 矿物 · 环形山 · 金质奖章}
+\vspace{-0.3cm}
+\begin{center}
+\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=2.85cm, font=\fontsize{6.8}{8.8}\selectfont, align=center}]
+\node[leg, fill=tablepanel, draw=badgeTable!50, line width=0.7pt] (a) at (-5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeTable} 101 号元素}\\[3pt]mendelevium (Md)\\[2pt]以他命名的合成元素};
+\node[leg, fill=predpanel, draw=badgePredict!50, line width=0.7pt] (b) at (-1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePredict} 矿物命名}\\[3pt]mendeleevite-Ce\\[2pt]2010 年命名};
+\node[leg, fill=petropanel, draw=badgePetro!50, line width=0.7pt] (c) at (1.75,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePetro} 月球环形山}\\[3pt]Mendeleev\\[2pt]月球背面};
+\node[leg, fill=nobelpanel, draw=badgeNobel!50, line width=0.7pt] (d) at (5.2,1.15)
+  {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeNobel} 金质奖章}\\[3pt]俄科院 Mendeleev Medal\\[2pt]1965 年起颁发};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.45cm}
+\begin{center}
+\begin{minipage}{2.2cm}
+\centering
+\fcolorbox{coveraccent!50}{white}{\includegraphics[width=1.9cm,height=2.2cm,keepaspectratio]{Medeleeff_by_repin.jpg}}\\[1pt]
+{\fontsize{5}{6}\selectfont\itshape\color{covermuted} by I. Repin, 1885}
+\end{minipage}%
+\begin{minipage}{9.7cm}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{9.0cm}
+  {\fontsize{7.8}{10}\selectfont\itshape\color{deepviolet!88!black}
+  "a chemist of genius, first-class physicist, a fruitful researcher in the fields of hydrodynamics, meteorology, geology \ldots\ and an original thinker in the field of economy \ldots"\\[1pt]
+  \upshape —— Lev Chugaev（化学家与科学史家）对门捷列夫的评语}
+  \end{minipage}%
+}
+\end{minipage}
+\end{center}
+\vspace{0.05cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 2016 年 2 月 8 日，他 182 岁生日以 Google doodle 致敬——元素各有其位，他也一样。}
+\end{center}
+\end{frame}}
+
+% --- 14. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {元素各有其位，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {而历史终究为他留了位置。};
+\draw[coveraccent!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，不只是周期表，而是一种预言物质世界的方法。};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {德米特里·门捷列夫\quad Dmitri Mendeleev\quad 1834 — 1907\quad 特别篇 · 诺奖遗珠};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{flask}\enspace 周期律 1869 · Davy 1882 · Copley 1905\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openchemistslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\wanderslide
+\periodicslide
+\ekaslide
+\peersslide
+\polymslide
+\petroslide
+\metroslide
+\nobelslide
+\legacyslide
+\closingslide
+\end{document}

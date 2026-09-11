@@ -20,6 +20,15 @@ OUT = ROOT / "presentations" / "20th_century" / "OpenChemist_20th_Century_Nobel_
 # 新增立传时在此补充姓名。
 BIOGRAPHIES_DONE = {
     "Frederick Sanger",
+    "Jacobus Henricus van 't Hoff",
+    "Hermann Emil Fischer",
+    "Svante Arrhenius",
+    "Adolf von Baeyer",
+    "Henri Moissan",
+    "Eduard Buchner",
+    "Ernest Rutherford",
+    "Wilhelm Ostwald",
+    "Otto Wallach",
 }
 
 # 已完成 Review（两轮事实核查）的化学家（姓名需与获奖者名单精确匹配）。
@@ -33,6 +42,24 @@ REVIEWS_DONE = {
 SOCIAL_DONE = {
     "Frederick Sanger",
 }
+
+# 特别篇 · 诺贝尔奖遗珠（非得主，作为特别篇立传）。
+# 姓名与下列条目精确匹配；立传完成后置 ✅。
+SPECIAL_MENTIONS = [
+    {
+        "name": "Dmitri Mendeleev",
+        "zh": "德米特里·伊万诺维奇·门捷列夫",
+        "country": "Russian Empire",
+        "year": "1905–1907",
+        "note": "非得主：1905/1906/1907 三年 9 次提名；1906 年化学委员会正式推荐其获奖，全院大会因 Klason 提名 Moissan、Arrhenius 力主否决，以一票之差落选；1907 再遭否。元素周期律的立法者，公认的最大遗珠。",
+    },
+]
+
+# 特别篇中已立传者
+SPECIAL_BIOS_DONE = set()
+
+# 特别篇中已完成两轮 Review 者
+SPECIAL_REVIEWS_DONE = set()
 
 # 获奖者英文名 → 中文名（诺贝尔化学奖得主常用中译）。
 NAME_ZH = {
@@ -448,13 +475,34 @@ def main() -> int:
         lines.append("| %d | %s | %s | %s | %s | %s | %s |" % (r["year"], name_display, country, citation, bio, review, social))
 
     lines.append("\n---\n")
-    lines.append("\n## 二、统计说明\n")
+    lines.append("\n## 二、特别篇 · 诺贝尔奖遗珠\n")
+    lines.append(
+        "\n> 以下人物虽未获得诺贝尔化学奖，但其贡献与影响足以与任何得主并肩，作为**特别篇**立传。"
+        "「立传 / Review / 社会关系入库」三列语义与上表一致。\n"
+    )
+    lines.append("\n| 年份 | 人物 | 国籍 | 遗珠缘由 | 立传 | Review | 社会关系入库 |")
+    lines.append("|:--:|------|------|------|:--:|:--:|:--:|")
+    for m in SPECIAL_MENTIONS:
+        bio = "✅" if m["name"] in SPECIAL_BIOS_DONE else "🔲"
+        review = "✅" if m["name"] in SPECIAL_REVIEWS_DONE else "🔲"
+        social = "🔲"
+        lines.append(
+            "| %s | %s (%s) | %s | %s | %s | %s | %s |"
+            % (m["year"], m["name"], m["zh"], m["country"], m["note"], bio, review, social)
+        )
+
+    lines.append("\n---\n")
+    lines.append("\n## 三、统计说明\n")
     lines.append("\n- **获奖年份跨度**：1901–2000")
     lines.append("- **获奖总项数**：%d 项" % total_items)
     lines.append("- **获奖总人数**：%d 位" % len(unique_people))
     lines.append("- **已立传**：%d 位（%s）" % (done_count, "、".join(sorted(BIOGRAPHIES_DONE)) if BIOGRAPHIES_DONE else "暂无"))
     lines.append("- **已 Review**：%d 位（%s）" % (review_count, "、".join(sorted(REVIEWS_DONE)) if REVIEWS_DONE else "暂无"))
     lines.append("- **社会关系已入库**：%d 位（%s）" % (social_count, "、".join(sorted(SOCIAL_DONE)) if SOCIAL_DONE else "暂无"))
+    lines.append("- **特别篇（遗珠）**：%d 位（%s）" % (
+        len(SPECIAL_MENTIONS),
+        "、".join(m["name"] for m in SPECIAL_MENTIONS) if SPECIAL_MENTIONS else "暂无",
+    ))
     if double:
         lines.append("- **两度获奖者**：" + "、".join(sorted(double)) + "（唯一两度获诺贝尔化学奖者）")
     if women:
