@@ -1,0 +1,519 @@
+% =============================================================
+%  RSA 的 A：伦纳德·阿德曼 (Leonard Adleman)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：DNA 双螺旋链段 —— DNA 作为计算介质的视觉语言
+%  资料来源：turing/pages/2002/Leonard Adleman/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Adleman 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeRSA}{HTML}{2E5A9E}     % 公钥密码 RSA — 蓝
+\definecolor{badgeDNA}{HTML}{1E8E8E}     % DNA 计算 — 青绿
+\definecolor{badgeNT}{HTML}{D9A441}      % 数论与算法 — 琥珀
+\definecolor{badgeCult}{HTML}{C0395B}    % 文化切面 — 玫瑰
+\definecolor{rsapanel}{RGB}{228,233,246}
+\definecolor{dnapanel}{RGB}{222,240,238}
+\definecolor{ntpanel}{RGB}{249,240,224}
+\definecolor{cultpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 双螺旋链段背景（两串小圆点链 + 柔和圆）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeRSA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeDNA!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeNT!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \foreach \i in {0,...,5} {
+    \fill[badgeDNA!30] ($(current page.north east)+(-1.0-\i*0.35,-1.2-\i*0.5)$) circle (0.12cm);
+    \fill[badgeDNA!30] ($(current page.north east)+(-0.3-\i*0.35,-1.5-\i*0.5)$) circle (0.12cm);
+    \draw[badgeDNA!22, line width=0.5pt] ($(current page.north east)+(-1.0-\i*0.35,-1.2-\i*0.5)$) -- ($(current page.north east)+(-0.3-\i*0.35,-1.5-\i*0.5)$);
+  }
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{dna}\enspace RSA 的 A · DNA 计算之父\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {伦纳德·阿德曼};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Leonard Adleman\enspace·\enspace 1945 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {RSA 共同创造者 · DNA 计算之父 · 2002 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeRSA] at (-5.05,0)
+        {公钥密码\\RSA\par\scriptsize RSA 的 A};
+      \node[badge, fill=badgeDNA] at (-1.68,0)
+        {DNA 计算\\Computing\par\scriptsize 1994 首例};
+      \node[badge, fill=badgeNT] at (1.68,0)
+        {数论算法\\Number Theory\par\scriptsize APR 素性测试};
+      \node[badge, fill=badgeCult] at (5.05,0)
+        {文化切面\\Beyond Research\par\scriptsize virus 命名 · 电影};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for their ingenious contribution to making public-key cryptography useful in practice." —— 2002 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Len-mankin-pic.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Len-mankin-pic.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Leonard Adleman};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace USC · UC Berkeley\enspace|\enspace Turing 2002};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{阿德曼 - 从旧金山到 DNA 计算}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Len-mankin-pic.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Len-mankin-pic.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Leonard Adleman};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1945-12-31 —（在世）\\[2pt]\lab{本名}\quad Leonard Max Adleman\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=dnapanel, draw=badgeDNA!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Berkeley 数学 BA 1968\\[2pt]
+     \quad Berkeley EECS PhD 1976\\[2pt]
+     \lab{师承}\quad Manuel Blum（导师）};
+  \node[infob, fill=rsapanel, draw=badgeRSA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 旧金山 · 加利福尼亚\\[2pt]\lab{家庭}\quad 犹太家庭 · 祖辈自明斯克地区移民\\[2pt]\lab{任职}\quad USC 计算机科学教授};
+  \node[infob, fill=ntpanel, draw=badgeNT!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2002 · Kanellakis 1996\\[2pt]
+     \quad NAE · NAS · AAAS · ACM Fellow\\[2pt]
+     \lab{核心领域}\quad 密码学 · DNA 计算\\[2pt]
+     \quad 计算复杂性};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{阿德曼的一生}{1945 — · 从旧金山少年到 DNA 计算之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1945/生于旧金山（犹太家庭）,
+    2.3/1968/Berkeley 数学学士,
+    1.6/1976/Berkeley EECS 博士（Blum 门下）,
+    0.9/1978/RSA 论文发表于 CACM,
+    0.2/1994/DNA 计算首例（Science）,
+    -0.5/1996/当选 NAE 院士 · 共获 Kanellakis 奖,
+    -1.2/2002/与 Rivest · Shamir 共享图灵奖,
+    -1.9/2006/当选 AAAS Fellow,
+    -2.6/2017/致力于 Strata 的数学理论,
+    -2.8/2021/当选 ACM Fellow
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1945–1976)}{旧金山犹太家庭 · Berkeley 数学与 EECS}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1945} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{生于旧金山，出身犹太家庭} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{加州少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{渊源} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{家族原从今白俄罗斯的明斯克（Minsk）地区移民美国} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{移民家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{获 UC Berkeley 数学学士（BA）} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{数学根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1976} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{获 Berkeley EECS 博士，论文 \textit{Number-Theoretic Aspects of Computational Complexity}} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{复杂性底色} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 旧金山的犹太少年，最终在数论与试管之间架起计算之桥。}
+\end{center}
+\end{frame}}
+
+% --- 5. Blum 门下 ---
+\newcommand{\blumslide}{\begin{frame}\plainbar\sectiontitle{Blum 门下：数论与计算复杂性}{师从 Manuel Blum（1995 图灵奖得主）}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{ntpanel}\textcolor{badgeNT!82!black}{师从 Manuel Blum（1995 年图灵奖得主）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{师徒皆图灵奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{ntpanel}\textcolor{badgeNT!82!black}{\textit{Number-Theoretic Aspects of Computational Complexity}（1976）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{数论 × 复杂性} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{底色} & \cellcolor{ntpanel}\textcolor{badgeNT!82!black}{数论与计算复杂性的训练，为日后 RSA 与 APR 埋下伏笔} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{跨界的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 数论的底色，让他在密码学中找到了最好的舞台。}
+\end{center}
+\end{frame}}
+
+% --- 6. RSA 的 A ---
+\newcommand{\rsaslide}{\begin{frame}\plainbar\sectiontitle{RSA 的 A (1977–1978)}{与 Rivest · Shamir 共同创造公钥密码}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1977} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{与 Ron Rivest、Adi Shamir 共同发明 RSA 算法（1978 年 CACM 论文发表）} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{三人共同创造} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{口径} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{页面表述 "one of the creators of the RSA encryption algorithm"} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{分工无载勿编} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2002} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{三人共享图灵奖：1977 年共同发明 · 1978 年论文 · 2002 年加冕} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{密码学的最高认可} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} RSA 公钥密码体制（Rivest–Shamir–Adleman）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$c=m^{e}\bmod n$，\ $m=c^{d}\bmod n$，\ $n=pq$\quad 公钥 $(e,n)$ 与私钥 $(d,n)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. APR 素性测试 ---
+\newcommand{\aprslide}{\begin{frame}\plainbar\sectiontitle{APR 素性测试}{Adleman–Pomerance–Rumely · 数论算法贡献}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{测试} & \cellcolor{ntpanel}\textcolor{badgeNT!82!black}{Adleman–Pomerance–Rumely（APR）素性测试的原始发现者之一} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{数论算法贡献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{作用} & \cellcolor{ntpanel}\textcolor{badgeNT!82!black}{为大数的素性判定提供算法工具} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{数论 × 算法} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{呼应} & \cellcolor{ntpanel}\textcolor{badgeNT!82!black}{与 RSA 的数论底色一脉相承} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{公钥密码的地基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} APR 素性测试}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}判定 $n$ 是否为素数\quad --- 密码学安全的数论底色}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 1994：DNA 计算诞生 ---
+\newcommand{\dnabirthslide}{\begin{frame}\plainbar\sectiontitle{1994：DNA 计算诞生}{Science 论文 · 7 节点哈密顿图 · "Father of DNA Computing"}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{1994 年 \textit{Molecular Computation of Solutions to Combinatorial Problems}（Science, 266(5187)）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{DNA 作为计算介质} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{实验} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{用 DNA 求解 7 节点的哈密顿图问题（NP 完全，类似旅行商问题）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{类似问题而非同一问题} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{7 节点实例的解本身平凡，但这是已知首次成功用 DNA 执行算法} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{解平凡 · 首例} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{称号} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{被广泛称为 "Father of DNA Computing"} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{跨界开创者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} DNA 计算：试管里的算法}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}DNA 链编码候选解\ $\Rightarrow$\ 生化筛选\ $\Rightarrow$\ 读出正确解}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 2002：DNA 求解 3-SAT ---
+\newcommand{\dnasatslide}{\begin{frame}\plainbar\sectiontitle{2002：DNA 求解 3-SAT}{20 变量 · 百万候选解 · 生化淘洗}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.64}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{步骤}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{问题} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{20 变量 3-SAT 问题，超过 100 万个候选解} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{非平凡实例} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{编码} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{合成逻辑上代表解空间的 DNA 链混合物} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{解空间的生化编码} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{筛选} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{用生化技术"淘洗"掉不满足约束的链} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{约束即过滤器} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{读出} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{测序剩余的链即得正确解} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{DNA 给出答案} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.45cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} DNA 求解 3-SAT：百万候选解的生化淘洗}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}8 年之后，DNA 计算从首例走向非平凡问题}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. "computer virus" 的命名者 ---
+\newcommand{\viruslide}{\begin{frame}\plainbar\sectiontitle{"computer virus" 的命名者}{Fred Cohen 1984 论文的 credit}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{术语} & \cellcolor{cultpanel}\textcolor{badgeCult!82!black}{"computer virus" 一词：Fred Cohen 在 1984 年论文 \textit{Experiments with Computer Viruses} 中把它归于 Adleman 首创} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{术语传承} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{口径} & \cellcolor{cultpanel}\textcolor{badgeCult!82!black}{写作"由 Cohen 记载归于 Adleman"的转述表述，而非 Adleman 自己发表论文定义病毒} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{术语归属勿夸大} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "computer virus" --- 一个改变时代的词汇}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}首创者：Adleman（经 Fred Cohen 1984 年论文记载）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 好莱坞与拳台 ---
+\newcommand{\cultureslide}{\begin{frame}\plainbar\sectiontitle{好莱坞与拳台}{Sneakers 数学顾问 · 与世界冠军过招的教授}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{切面}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{好莱坞} & \cellcolor{cultpanel}\textcolor{badgeCult!82!black}{电影 \textit{Sneakers}（1992，密码学题材）的数学顾问} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{学界触达银幕} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{拳台} & \cellcolor{cultpanel}\textcolor{badgeCult!82!black}{业余拳击手，曾与世界冠军 James Toney 过招（sparred）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{教授的另一面} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{口径} & \cellcolor{cultpanel}\textcolor{badgeCult!82!black}{sparred 为过招/陪练，非比赛战胜；一笔带过不渲染} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{事实边界} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从银幕到拳台，他的人生远不止于论文。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉之殿 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉之殿}{Turing 2002 · Kanellakis 1996 · NAE/NAS/AAAS/ACM}\vspace{-0.3cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.66}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际大奖} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（2002，与 Rivest/Shamir 共享）\item Paris Kanellakis Theory and Practice Award（1996，三人共享）\end{itemize}} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{公钥密码的加冕} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术院会} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{NAE 院士（1996，"for contributions to the theory of computation and cryptography"）· NAS 院士 · AAAS Fellow（2006）· ACM Fellow（2021）} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{跨学科的双重认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣誉边界} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{infobox Awards 仅列 Turing Award --- 本篇荣誉页以正文实载为准} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{宁缺勿错} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{7.8}{10}\selectfont\bfseries\color{coverdark!88} 页面称图灵奖 "often called the Nobel Prize of Computer Science"。}
+\end{center}
+\end{frame}}
+
+% --- 13. 晚期研究 ---
+\newcommand{\strataslide}{\begin{frame}\plainbar\sectiontitle{晚期研究：Strata 的数学理论}{USC 在任 · 一位密码学家的纯数学探索}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{在任} & \cellcolor{ntpanel}\textcolor{badgeNT!82!black}{截至 2017 年仍在 University of Southern California 计算机科学教授任上} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{数十年如一日} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{研究} & \cellcolor{ntpanel}\textcolor{badgeNT!82!black}{致力于 Strata 的数学理论} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{晚期研究方向} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Strata --- 晚年的纯数学探索}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}从密码学到计算生物学，再到纯粹的结构理论}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 三人组对照页 ---
+\newcommand{\trioslide}{\begin{frame}\plainbar\sectiontitle{RSA 三人组：同一发明，三种人生}{Rivest · Shamir · Adleman --- 共享与侧重}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成员}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{侧重}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{口径}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Ron Rivest} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{RC 系列 · 算法与协议} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{另一篇立传侧重} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Adi Shamir} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{密码分析 · 秘密共享} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{另一篇立传侧重} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Leonard Adleman} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{DNA 计算 · 数论算法} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{本篇侧重} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共同} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{1977 年共同发明 RSA · 1978 年 CACM 论文 · 2002 年三人共享图灵奖} & \cellcolor{dnapanel}\textcolor{badgeDNA!82!black}{三篇口径一致} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 同一项发明，三种人生的打开方式。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {一支试管，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {也能计算。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Leonard Adleman};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {伦纳德·阿德曼\quad Leonard Adleman\quad 1945 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{dna}\enspace Turing 2002 · RSA · DNA 计算之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\blumslide
+\rsaslide
+\aprslide
+\dnabirthslide
+\dnasatslide
+\viruslide
+\cultureslide
+\honorsslide
+\strataslide
+\trioslide
+\closingslide
+\end{document}

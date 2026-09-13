@@ -1,0 +1,508 @@
+% =============================================================
+%  量子密码学之父：吉尔·布拉萨德 (Gilles Brassard)
+%  Beamer 源码 —— 参考 Minsky 模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：北国与密钥 —— 极光横带呼应「密钥在噪声中浮现」
+%  资料来源：turing/pages/2025/Gilles Brassard/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== 主色 / 强调色别名（与品牌色一致） =====
+\definecolor{mainclr}{HTML}{5B2D8E}
+\definecolor{accentclr}{HTML}{B03A2E}
+
+% ===== Brassard 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeA}{HTML}{2E5A9E}     % 经典密码学 — 蓝
+\definecolor{badgeB}{HTML}{1E8E8E}     % BB84 量子密码 — 青绿
+\definecolor{badgeC}{HTML}{D9A441}     % 量子算法 — 琥珀
+\definecolor{badgeD}{HTML}{C0395B}     % 量子纠缠与传态 — 玫瑰
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{key}\enspace 量子密码学之父\enspace·\enspace 加拿大};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {吉尔·布拉萨德};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Gilles Brassard\enspace·\enspace 1955 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {BB84 共同发明者 · 量子密码学奠基 · 2025 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {经典密码\\Cryptography\par\scriptsize Cornell 博士};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {量子密码\\BB84 · Cascade\par\scriptsize 量子密码学奠基};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {量子算法\\Amplitude Ampl.\par\scriptsize BHT · 下界};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {纠缠传态\\Teleportation\par\scriptsize 蒸馏 · 传态};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"one of the earliest pioneers of quantum information science in the world" —— 世界上最早的量子信息科学开创者之一};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Gilles_Brassard_2019.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Gilles_Brassard_2019.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Gilles Brassard (2019)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 加拿大\enspace|\enspace \faIcon{university}\enspace Université de Montréal\enspace|\enspace Turing 2025 · Wolf 2018};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{布拉萨德 - 从蒙特利尔到量子密码学之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Gilles_Brassard_2019.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Gilles_Brassard_2019.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Gilles Brassard};
+  \node[infob, fill=panelC, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1955-04-20 —（在世）\\[2pt]\lab{本名}\quad Gilles Brassard\\[2pt]\lab{国籍}\quad 加拿大};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Université de Montréal BSc · MSc\\[2pt]
+     \quad Cornell PhD 1979\\[2pt]
+     \lab{师承}\quad John Hopcroft（导师）};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 蒙特利尔 · 魁北克 · 加拿大\\[2pt]\lab{任职}\quad Université de Montréal\\[2pt]\lab{家庭}\quad 妻 Lise Raymond};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2025 · Herzberg 2010\\[2pt]
+     \quad Wolf 2018 · FRS 2013\\[2pt]
+     \lab{核心领域}\quad 量子密码学 · 量子计算\\[2pt]
+     \quad 密码学};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{布拉萨德的一生}{1955 —至今 · 从魁北克少年到量子密码学之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1955/生于魁北克蒙特利尔,
+    2.3/1979/Cornell 计算机科学 PhD（Hopcroft）,
+    1.6/1984/与 Bennett 共同发明 BB84,
+    0.9/1988/任 Université de Montréal 正教授,
+    0.2/1991/出任 Journal of Cryptology 主编（至 1998）,
+    -0.5/1993/量子远程传态 PRL 六作者论文,
+    -1.2/2000/Prix Marie-Victorin（魁北克最高科学奖）,
+    -1.9/2010/Herzberg Canada Gold Medal,
+    -2.6/2013/FRS · 加拿大勋章官佐,
+    -2.8/2026/获颁 2025 图灵奖（与 Bennett）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 蒙特利尔少年与 Cornell 密码学博士 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{蒙特利尔少年与 Cornell 密码学博士 (1955–1979)}{UdeM 本硕 · Hopcroft 门下 · Relativized Cryptography}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1955} & \cellcolor{panelA}\textcolor{badgeA!82!black}{4 月 20 日生于魁北克省蒙特利尔} & \cellcolor{panelB}\textcolor{badgeB!82!black}{魁北克本地成长} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{UdeM} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Université de Montréal 本科（BSc）与硕士（MSc）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{本地完成基础学业} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1979} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Cornell University 计算机科学 PhD，方向密码学，导师 John Hopcroft，论文 \textit{Relativized Cryptography}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{密码学出身} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 密码学出身的魁北克少年，日后把量子变成"可用的密码系统"。}
+\end{center}
+\end{frame}}
+
+% --- 5. 一生一校：蒙特利尔大学 ---
+\newcommand{\udemslide}{\begin{frame}\plainbar\sectiontitle{一生一校：Université de Montréal (1988–)}{正教授 1988 · Canada Research Chair 2001}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1988} & \cellcolor{panelA}\textcolor{badgeA!82!black}{任 Université de Montréal 正教授（Full Professor）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{执教一生一校} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{2001} & \cellcolor{panelA}\textcolor{badgeA!82!black}{获聘 Canada Research Chair（加拿大研究讲席）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{国家层面认可的讲席} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{门生} & \cellcolor{panelA}\textcolor{badgeA!82!black}{博士生 Anne Broadbent（infobox 实载）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学术谱系延续} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从蒙特利尔出发，回到蒙特利尔——他把量子信息的火种留在了母校。}
+\end{center}
+\end{frame}}
+
+% --- 6. BB84：与 Bennett 发明量子密码 ---
+\newcommand{\qcryptslide}{\begin{frame}\plainbar\sectiontitle{BB84：与 Bennett 发明量子密码 (1984)}{共同发明 · 不确定性原理 · 无预共享秘密}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{共同发明} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1984 年，与 IBM 的 Charles H. Bennett 共同发明量子密码协议 BB84} & \cellcolor{panelA}\textcolor{badgeA!82!black}{量子密码学的开端} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{原理} & \cellcolor{panelB}\textcolor{badgeB!82!black}{利用不确定性原理——任何窃听必然引入扰动} & \cellcolor{panelA}\textcolor{badgeA!82!black}{物理定律保证安全} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{能力} & \cellcolor{panelB}\textcolor{badgeB!82!black}{让初始不共享任何秘密信息的双方实现安全通信} & \cellcolor{panelA}\textcolor{badgeA!82!black}{无预共享密钥的密码学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} BB84 四态偏振示意（1984，Bennett--Brassard）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$|0\rangle,\ |1\rangle$（直线基）\quad$\times$\quad$|{+}\rangle,\ |{-}\rangle$（对角基）\quad 两组基不可同时精确测量}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Cascade 与隐私放大 ---
+\newcommand{\cascadeslide}{\begin{frame}\plainbar\sectiontitle{Cascade 与隐私放大}{纠错协议 · Generalized Privacy Amplification (1995)}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{Cascade} & \cellcolor{panelB}\textcolor{badgeB!82!black}{将 BB84 工作扩展至 Cascade 纠错协议——对窃听在量子密码信号中造成的噪声进行高效检测与纠正} & \cellcolor{panelA}\textcolor{badgeA!82!black}{BB84 从理念走向可用} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{隐私放大} & \cellcolor{panelB}\textcolor{badgeB!82!black}{与 Bennett、Crépeau、Maurer 合著 \textit{Generalized privacy amplification}（IEEE Trans. Inf. Theory 41, 1915, 1995）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{提名词列为主要发现} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 从协议到可用密钥的完整流水线}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{BB84}\ \xrightarrow{\ \text{Cascade 纠错}\ }\ \text{一致密钥}\ \xrightarrow{\ \text{privacy amplification}\ }\ \text{安全密钥}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 量子密码的理论骨架 (1992) ---
+\newcommand{\nobellslide}{\begin{frame}\plainbar\sectiontitle{量子密码的理论骨架 (1992)}{Quantum Cryptography without Bell's Theorem}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelB}\textcolor{badgeB!82!black}{与 Bennett、Mermin 合著 \textit{Quantum cryptography without Bell's theorem}（Physical Review Letters 68, 557, 1992）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{PRL 理论论文} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{贡献} & \cellcolor{panelB}\textcolor{badgeB!82!black}{证明量子密码的安全性论证可以不依赖 Bell 定理} & \cellcolor{panelA}\textcolor{badgeA!82!black}{理论骨架的重要一环} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 安全性不系于一根柱子}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{量子密码的安全性} $\neq$ \textit{Bell 不等式}（PRL 68, 557--559, 1992）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 量子远程传态 (1993) ---
+\newcommand{\teleportslide}{\begin{frame}\plainbar\sectiontitle{量子远程传态 (1993)}{PRL 六作者论文 · 双通道方案}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelD}\textcolor{badgeD!82!black}{\textit{Teleporting an unknown quantum state via dual classical and Einstein-Podolsky-Rosen channels}（Physical Review Letters 70, 1895--1899, 1993）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{学科奠基论文} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{六作者} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Bennett · Brassard · Crépeau · Jozsa · Peres · Wootters} & \cellcolor{panelA}\textcolor{badgeA!82!black}{六人共同署名} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{机制} & \cellcolor{panelD}\textcolor{badgeD!82!black}{未知量子态经"纯经典信息 + EPR 关联"两条信道传输，在异地重组} & \cellcolor{panelA}\textcolor{badgeA!82!black}{双通道方案} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 提名词评价（FRS nomination, 2013）}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}\textit{quantum cryptography} 与 \textit{quantum teleportation} —— "universally recognized as fundamental cornerstones of the entire discipline"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 纠缠蒸馏 (1996) ---
+\newcommand{\distillslide}{\begin{frame}\plainbar\sectiontitle{纠缠蒸馏 (1996)}{Purification of Noisy Entanglement · 忠实传态}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelD}\textcolor{badgeD!82!black}{\textit{Purification of Noisy Entanglement and Faithful Teleportation via Noisy Channels}（Physical Review Letters 76, 722, 1996）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{PRL 六作者论文} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{署名} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Bennett · Brassard · Popescu · Schumacher · Smolin · Wootters} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 Bennett 篇分工互补} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{贡献} & \cellcolor{panelD}\textcolor{badgeD!82!black}{噪声信道上的忠实传态——量子纠缠蒸馏} & \cellcolor{panelA}\textcolor{badgeA!82!black}{提名词列为主要发现} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 纠缠蒸馏：以量取胜，以纯换杂}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{大量噪声 EPR 对}\ \xrightarrow{\ \text{蒸馏}\ }\ \text{少量高保真 EPR 对}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 量子算法 ---
+\newcommand{\algoslide}{\begin{frame}\plainbar\sectiontitle{量子算法与理论下界}{Amplitude Amplification · Quantum Counting · BHT}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{振幅放大} & \cellcolor{panelC}\textcolor{badgeC!82!black}{amplitude amplification（振幅放大）—— Known for 实载} & \cellcolor{panelA}\textcolor{badgeA!82!black}{搜索类量子算法的引擎} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{计数与碰撞} & \cellcolor{panelC}\textcolor{badgeC!82!black}{quantum counting algorithm 与 BHT algorithm（量子碰撞搜索）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Known for 实载} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{理论下界} & \cellcolor{panelC}\textcolor{badgeC!82!black}{the first lower bound on the power of quantum computers（首个量子计算能力下界）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{提名词实载} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{伪传态} & \cellcolor{panelC}\textcolor{badgeC!82!black}{quantum pseudo-telepathy 与纠缠的经典模拟} & \cellcolor{panelA}\textcolor{badgeA!82!black}{研究兴趣实载} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 量子算法的另一位奠基人}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{振幅放大}\ \cdot\ \text{量子计数}\ \cdot\ \text{BHT 碰撞搜索}\ \cdot\ \text{首个下界}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 主编与学会 ---
+\newcommand{\editorslide}{\begin{frame}\plainbar\sectiontitle{主编与学会}{Journal of Cryptology · IACR Fellow 2006}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{角色}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{主编} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1991–1998 年任密码学旗舰期刊 \textit{Journal of Cryptology} 主编} & \cellcolor{panelB}\textcolor{badgeB!82!black}{密码学共同体的中枢} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{IACR Fellow} & \cellcolor{panelA}\textcolor{badgeA!82!black}{2006 年当选国际密码学研究协会（IACR）Fellow——the first Canadian to be so honored} & \cellcolor{panelB}\textcolor{badgeB!82!black}{首位获此荣誉的加拿大人} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{其他} & \cellcolor{panelA}\textcolor{badgeA!82!black}{commitment scheme（承诺方案）列于 Known for} & \cellcolor{panelB}\textcolor{badgeB!82!black}{密码学基础原语} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从经典密码学到量子密码学，他始终站在共同体的中心。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2025 · 从魁北克到世界的公认}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.55}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.2cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.2cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{奖项}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{国际大奖} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Turing Award 2025（与 Bennett 共享）\newline Wolf Prize in Physics 2018 · Micius Prize 2019 \newline BBVA Frontiers of Knowledge 2019 \newline Breakthrough Prize 2023 届（2022-09 公布）\newline Eduard Rhein Prize in Technology 2023} & \cellcolor{panelB}\textcolor{badgeB!82!black}{世界级奖项的公认} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{加拿大荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Prix Marie-Victorin 2000（魁北克最高科学奖）\newline Herzberg Gold Medal 2010（加拿大最高科学荣誉）\newline Order of Canada 官佐 2013-12-30（总督宣布）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{从省到国的认可} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{学会} & \cellcolor{panelA}\textcolor{badgeA!82!black}{FRS（伦敦皇家学会）· FRSC（加拿大皇家学会）\newline IACR Fellow 2006 —— 首位获此荣誉的加拿大人} & \cellcolor{panelB}\textcolor{badgeB!82!black}{三大学会的认可} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从蒙特利尔出发的思想，最终赢得了整个世界的注目。}
+\end{center}
+\end{frame}}
+
+% --- 14. 2025 图灵奖 ---
+\newcommand{\turingawardslide}{\begin{frame}\plainbar\sectiontitle{2025 ACM 图灵奖}{与 Charles H. Bennett 共享 · 2026 年 3 月公布}
+\vspace{-0.1cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} ACM Citation（整句）}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}\textit{"for work on the foundations of quantum information science and secure communication and computing"}}\\[3pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{muteddark} —— ACM A.M. Turing Award 2025}
+  \end{minipage}%
+}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coverprimary!60}{panelB}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{badgeB!82!black} Royal Society 提名词（FRS nomination, 2013）}\\[2pt]
+  {\fontsize{8.6}{11.2}\selectfont\color{coverprimary!88!black}\textit{"Through his visionary thinking and groundbreaking research, Professor Brassard has played a pivotal role in transforming the field of quantum information science from what was initially perceived to be merely a fringe pursuit into an area of vigorous and dynamic international activity."}}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从"边缘爱好"到国际热潮——这块奖牌是那场转变的注脚。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {从边缘爱好，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {到国际热潮。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Gilles Brassard};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {吉尔·布拉萨德\quad Gilles Brassard\quad b. 1955};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{key}\enspace Turing 2025 · BB84 · Quantum Cryptography\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\udemslide
+\qcryptslide
+\cascadeslide
+\nobellslide
+\teleportslide
+\distillslide
+\algoslide
+\editorslide
+\honorsslide
+\turingawardslide
+\closingslide
+\end{document}

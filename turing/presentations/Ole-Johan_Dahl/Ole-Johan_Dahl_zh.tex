@@ -1,0 +1,480 @@
+% =============================================================
+%  Simula 之父：奥利-约翰·达尔 (Ole-Johan Dahl)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：类的层级树 / 对象的自包含结构 —— 稀疏气泡
+%  资料来源：turing/pages/2001/Ole-Johan Dahl/index.html
+%  批次分工：本篇侧重 Simula 实现与语言规范；OO 思想推广与政治活动归 Nygaard 篇
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Dahl 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeSim}{HTML}{2E5A9E}    % Simula 语言 — 蓝
+\definecolor{badgeOO}{HTML}{1E8E8E}     % 面向对象概念 — 青绿
+\definecolor{badgeFM}{HTML}{D9A441}     % 程序结构与形式化 — 琥珀
+\definecolor{badgeNCC}{HTML}{C0395B}    % 挪威计算中心时代 — 玫瑰
+\definecolor{simpanel}{RGB}{228,233,246}
+\definecolor{oopanel}{RGB}{222,240,238}
+\definecolor{fmpanel}{RGB}{249,240,224}
+\definecolor{nccpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeSim!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeOO!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeFM!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{sitemap}\enspace Simula 之父\enspace·\enspace 挪威};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {奥利-约翰·达尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Ole-Johan Dahl\enspace·\enspace 1931 — 2002};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {Simula 实现者 · 面向对象奠基人之一 · 2001 图灵奖（与 Nygaard 共享）};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeSim] at (-5.05,0)
+        {Simula 语言\\Simula I \& 67\par\scriptsize ALGOL 60 超集};
+      \node[badge, fill=badgeOO] at (-1.68,0)
+        {面向对象\\Object Oriented\par\scriptsize 类 · 继承};
+      \node[badge, fill=badgeFM] at (1.68,0)
+        {程序结构\\Structured Programming\par\scriptsize 形式化方法};
+      \node[badge, fill=badgeNCC] at (5.05,0)
+        {挪威计算中心\\NCC\par\scriptsize 仿真语言基地};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{11.5}\selectfont\itshape, text=muteddark, align=center, text width=12.4cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"For ideas fundamental to the emergence of object oriented programming, through their design of the programming languages Simula I and Simula 67." —— 2001 图灵奖 citation（与 Kristen Nygaard 共享）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Ole-Johan_Dahl.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Ole-Johan_Dahl.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Ole-Johan Dahl};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 挪威\enspace|\enspace \faIcon{university}\enspace NCC · University of Oslo\enspace|\enspace Turing 2001 · von Neumann 2002};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{达尔 - 从 Mandal 到面向对象}{生卒 · 本名 · 国籍 · 教育 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Ole-Johan_Dahl.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Ole-Johan_Dahl.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Ole-Johan Dahl};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1931-10-12 — 2002-06-29\\[2pt]\lab{本名}\quad Ole-Johan Dahl\\[2pt]\lab{国籍}\quad 挪威};
+  \node[infob, fill=simpanel, draw=badgeSim!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad University of Oslo\\[2pt]
+     \quad 数值数学 BS · MS\\[2pt]
+     \lab{师承}\quad ——（页面未载，无 PhD）};
+  \node[infob, fill=oopanel, draw=badgeOO!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Mandal · 挪威\\[2pt]\lab{去世地}\quad Asker · 挪威\\[2pt]\lab{任职}\quad NCC · University of Oslo};
+  \node[infob, fill=fmpanel, draw=badgeFM!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2001（共享）\\[2pt]
+     \quad von Neumann Medal 2002（共享）\\[2pt]
+     \lab{核心领域}\quad Simula · 面向对象\\[2pt]
+     \quad 程序结构 · 形式化方法};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{达尔的一生}{1931 — 2002 · 从挪威南海岸到面向对象}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1931/生于挪威 Mandal,
+    2.3/1944/13 岁，二战德占期间随家逃往瑞典,
+    1.6/1952/Oslo 大学数值数学 BS · MS,
+    0.9/1957/首篇论文：Ferranti Mercury 上的多重变址计数,
+    0.2/1961/挪威计算中心，Simula I 研发开始,
+    -0.5/1966/Simula 论文发表于 CACM,
+    -1.2/1967/IFIP 会议定义类与子类声明,
+    -1.9/1968/Simula 67 Common Base Language,
+    -2.4/1972/《Structured Programming》出版,
+    -2.8/2002/逝于 Asker
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：Mandal 与战争流亡 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：Mandal 与战争流亡 (1931--1945)}{Drammen 少年 · 战后 Oslo 数值数学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1931} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{生于挪威南端的 Mandal；7 岁随家迁往 Drammen；父 Finn Dahl，母 Ingrid Othilie Kathinka Pedersen} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{南海岸少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1944} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{13 岁时，二战德占期间全家逃往瑞典} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{战争流亡的一代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{战后} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{入 University of Oslo 研究数值数学，获 BS 与 MS 学位} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{数学根基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个经历战争流亡的挪威少年，日后为软件世界定义了"类"。}
+\end{center}
+\end{frame}}
+
+% --- 5. Ferranti Mercury 起点 ---
+\newcommand{\mercuryslide}{\begin{frame}\plainbar\sectiontitle{Ferranti Mercury 起点 (1957--1963)}{FFI 时代 · 从军事计算到计算中心}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1957 首篇} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{"Multiple index countings on the Ferranti Mercury computer"——由挪威国防研究院（NDA/FFI）出版} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{学术生涯的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1958} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{与 Jan V. Garwick 合著 Ferranti Mercury 手册} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{同代计算者的协作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1963} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{Simscript 实现报告（与 Vic Bell，NCC 出版）} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{仿真语言实践的积累} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Mercury 机器码到仿真语言，实现功夫在进入 NCC 前已然练成。}
+\end{center}
+\end{frame}}
+
+% --- 6. 挪威计算中心 ---
+\newcommand{\nccslide}{\begin{frame}\plainbar\sectiontitle{挪威计算中心：与 Nygaard 的合作开端}{Norsk Regnesentral · 仿真语言项目}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{基地} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{挪威计算中心（Norwegian Computing Center，NCC/Norsk Regnesentral）} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{Simula 的诞生地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{搭档} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{与 Kristen Nygaard 合作：Nygaard 提出仿真语言构想，Dahl 是实现与语言规范的核心工程师} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{Credits co-inventor 口径} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{任务} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{面向离散事件仿真的编程语言——最初的定位是 ALGOL 60 的扩展变体} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{从仿真需求出发} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在奥斯陆的计算中心里，一门新语言开始生长。}
+\end{center}
+\end{frame}}
+
+% --- 7. Simula I ---
+\newcommand{\simulaislide}{\begin{frame}\plainbar\sectiontitle{Simula I (1961--1965)}{ALGOL 60 超集 · 离散事件仿真}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{语言定位} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{Simula I（1961--1965）：ALGOL 60 的扩展变体与超集} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{站在 ALGOL 的肩膀上} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{应用领域} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{面向离散事件仿真——系统建模的核心工具} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{仿真驱动的语言设计} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{孵化} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{过程中的抽象机制，孕育了后来"对象"的概念雏形} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{通向 Simula 67 的桥梁} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Simula 双阶段（开发期年份）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}Simula I：1961--1965\qquad Simula 67：1965--1968}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 1966 CACM 论文 ---
+\newcommand{\cacmslide}{\begin{frame}\plainbar\sectiontitle{1966 CACM：Simula 的公开定义}{Dahl \& Nygaard · 奠基文献}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{Dahl \& Nygaard，"Simula: an ALGOL-based simulation language"，\textit{Communications of the ACM} 9(9): 671--678} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{Simula 的奠基文献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{口径} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{二人联名发表——语言的构想与实现共同署名} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{co-inventor 的文献证据} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{传播} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{经 CACM 面向国际学界公开，Simula 走出挪威} & \cellcolor{nccpanel}\textcolor{badgeNCC!82!black}{影响力扩散的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} ALGOL $\rightarrow$ Simula 的概念扩展}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{ALGOL 60（过程 + 块）}\ \xrightarrow{\ \text{仿真对象化}\ }\ \text{Simula}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Simula 67：类与子类 ---
+\newcommand{\simulasevenslide}{\begin{frame}\plainbar\sectiontitle{Simula 67：类与子类的定名}{1967 IFIP 论文 · 1968 Common Base Language}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1967 IFIP} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{Dahl 任 IFIP 仿真编程语言工作会议主席，发表论文 "Class and subclass declarations"，定义类与子类声明} & \cellcolor{oopanel}\textcolor{badgeOO!82!black}{OO 概念定名的关键节点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968 语言标准} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{Dahl、Bjørn Myhrhaug、Nygaard 三人合著 Simula 67 Common Base Language 报告} & \cellcolor{oopanel}\textcolor{badgeOO!82!black}{语言规范的正式确立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{角色} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{Dahl 是语言实现与规范的核心工程师} & \cellcolor{oopanel}\textcolor{badgeOO!82!black}{本篇叙事重心} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Common Base Language（1968）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}Dahl $\cdot$ Myhrhaug $\cdot$ Nygaard\quad ——三人署名的语言标准}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. OO 范式的四大概念 ---
+\newcommand{\ooslide}{\begin{frame}\plainbar\sectiontitle{面向对象的四大概念}{class · subclass · inheritance · dynamic object creation}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首创口径} & \cellcolor{oopanel}\textcolor{badgeOO!82!black}{"first to develop"——页面实载：Dahl 与 Nygaard 二人并列首次发展了这些概念，勿写成 Dahl 独创} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{两人并列的口径} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{四大概念} & \cellcolor{oopanel}\textcolor{badgeOO!82!black}{class（类）· subclass（子类，允许隐式信息隐藏）· inheritance（继承）· dynamic object creation（动态对象创建）} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{OO 范式的核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{今日回望} & \cellcolor{oopanel}\textcolor{badgeOO!82!black}{OO 方法现已遍及现代软件开发，包括 C++ 与 Java 等广泛使用的命令式语言} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{范式级的影响} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 类的层级：封装与复用的结构}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{class}\ \Leftarrow\ \mathrm{subclass}\ \text{（隐式信息隐藏）}\ \Rightarrow\ \text{inheritance}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. Structured Programming ---
+\newcommand{\structuredslide}{\begin{frame}\plainbar\sectiontitle{《Structured Programming》(1972)}{与 Hoare 的合章 · 与 Dijkstra 三人书}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合章} & \cellcolor{fmpanel}\textcolor{badgeFM!82!black}{"Hierarchical Program Structures"——与 C.A.R. Hoare 合著，大概是其影响最大的论文} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{层级化程序结构} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三人书} & \cellcolor{fmpanel}\textcolor{badgeFM!82!black}{收录于 Dahl、Dijkstra、Hoare 三人的 \textit{Structured Programming}（1972）} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{三大师的合著} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{fmpanel}\textcolor{badgeFM!82!black}{页面原文明示："1970 年代最知名的软件学术著作"} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{时代的坐标} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Structured Programming（1972）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}Dahl $\cdot$ Dijkstra $\cdot$ Hoare\quad ——三署名的学术经典}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. Oslo 大学与形式化方法 ---
+\newcommand{\osloslide}{\begin{frame}\plainbar\sectiontitle{Oslo 大学与形式化方法 (1968--2002)}{正教授 · gifted teacher · 走向数学严格性}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968 教职} & \cellcolor{fmpanel}\textcolor{badgeFM!82!black}{1968 年起任 University of Oslo 正教授，直至逝世} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{从 NCC 到讲席} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教学} & \cellcolor{fmpanel}\textcolor{badgeFM!82!black}{页面实载："a gifted teacher as well as researcher"——以教学天赋著称} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{师者的一面} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{后期转向} & \cellcolor{fmpanel}\textcolor{badgeFM!82!black}{职业生涯后期日益投入形式化方法（formal methods），以数学严格性论证（例如）面向对象的有效性} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{从实践到形式数学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从语言实现者到形式化方法的倡导者，全谱系的计算机科学家。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2001（共享）· Dahl-Nygaard Prize}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{图灵奖} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{2001 年与 Kristen Nygaard 共享 ACM 图灵奖——奖励通过设计 Simula I 与 Simula 67 为面向对象编程的兴起奠基的思想} & \cellcolor{oopanel}\textcolor{badgeOO!82!black}{共享的至高荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{挪威与国际} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{Commander of the Royal Norwegian Order of St. Olav（2000）；IEEE von Neumann Medal（2002，与 Nygaard 共享）} & \cellcolor{oopanel}\textcolor{badgeOO!82!black}{王冠与学会的双重承认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{身后命名} & \cellcolor{simpanel}\textcolor{badgeSim!82!black}{AITO 以二人之名设立 Dahl-Nygaard Prize，每年在 ECOOP 颁发（senior + junior 两席）} & \cellcolor{oopanel}\textcolor{badgeOO!82!black}{以名字延续的传承} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 St. Olav 勋章到图灵奖，挪威为他记入了科学史册。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：面向对象的基石}{Simula · 程序结构 · 形式化方法}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=simpanel, draw=badgeSim!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSim} Simula 语言}\\[3pt]Simula I \& 67\\[2pt]CACM 1966};
+\node[leg, fill=oopanel, draw=badgeOO!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeOO} 面向对象概念}\\[3pt]类 · 子类 · 继承\\[2pt]动态对象创建};
+\node[leg, fill=fmpanel, draw=badgeFM!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeFM} 程序结构}\\[3pt]Structured\\[2pt]Programming 1972};
+\node[leg, fill=nccpanel, draw=badgeNCC!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeNCC} 形式化方法}\\[3pt]数学严格性\\[2pt]后期转向};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} C++ 与 Java 时代的每一行面向对象代码里，都有 Simula 的基因。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 他被广泛承认为挪威最伟大的计算机科学家（"Norway's foremost computer scientist"，页面实载）\\[2pt]从 Ferranti Mercury 的实现功夫，到 Simula 的语言规范，再到形式化方法的严格论证——一条完整的轨迹。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {先有类，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {而后万物皆可为对象。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Ole-Johan Dahl};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {奥利-约翰·达尔\quad Ole-Johan Dahl\quad 1931 — 2002};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{sitemap}\enspace Turing 2001 · Simula 之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\mercuryslide
+\nccslide
+\simulaislide
+\cacmslide
+\simulasevenslide
+\ooslide
+\structuredslide
+\osloslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

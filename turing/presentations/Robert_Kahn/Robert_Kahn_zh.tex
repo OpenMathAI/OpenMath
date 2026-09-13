@@ -1,0 +1,507 @@
+% =============================================================
+%  互联网之父：罗伯特·卡恩 (Robert E. Kahn)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：网关节点拓扑 —— 稀疏圆点 + 连线，呼应「网关转发、无单点故障」
+%  资料来源：turing/pages/2004/Robert Kahn (computer scientist)/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Kahn 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeNET}{HTML}{2E5A9E}     % ARPANET 与网络架构 — 蓝
+\definecolor{badgeTCP}{HTML}{1E8E8E}     % TCP/IP 协议设计 — 青绿
+\definecolor{badgeSCI}{HTML}{D9A441}     % DARPA 与战略计算 — 琥珀
+\definecolor{badgeCNRI}{HTML}{C0395B}    % CNRI 与数字对象 — 玫瑰
+\definecolor{netpanel}{RGB}{228,233,246}
+\definecolor{tcppanel}{RGB}{222,240,238}
+\definecolor{scipanel}{RGB}{249,240,224}
+\definecolor{cnripanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 网关节点拓扑背景（稀疏圆点 + 连线）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeNET!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeTCP!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeSCI!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \draw[coverprimary!25, line width=0.5pt] ([xshift=2.0cm,yshift=-2.0cm]current page.north west) -- ([xshift=-2.4cm,yshift=2.0cm]current page.south east);
+  \draw[coverprimary!20, line width=0.5pt] ([xshift=2.0cm,yshift=-2.0cm]current page.north west) -- ([xshift=-3.2cm,yshift=-2.4cm]current page.north east);
+  \fill[coverprimary!40] ([xshift=2.0cm,yshift=-2.0cm]current page.north west) circle (1.8pt);
+  \fill[coverprimary!40] ([xshift=-2.4cm,yshift=2.0cm]current page.south east) circle (1.8pt);
+  \fill[coverprimary!40] ([xshift=-3.2cm,yshift=-2.4cm]current page.north east) circle (1.8pt);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 互联网之父\enspace·\enspace ARPANET 架构师\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {罗伯特·卡恩};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Robert Elliot "Bob" Kahn\enspace·\enspace 1938 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {TCP/IP 共同发明人 · 2004 图灵奖（与 Vint Cerf 共享）};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeNET] at (-5.05,0)
+        {ARPANET\\网络架构\par\scriptsize BBN 主要设计者};
+      \node[badge, fill=badgeTCP] at (-1.68,0)
+        {TCP 构想\\TCP/IP\par\scriptsize 网关 · 无单点故障};
+      \node[badge, fill=badgeSCI] at (1.68,0)
+        {战略计算\\IPTO 主任\par\scriptsize 十亿美元级计划};
+      \node[badge, fill=badgeCNRI] at (5.05,0)
+        {数字对象\\CNRI\par\scriptsize 数字图书馆};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for pioneering work on internetworking ... and for inspired leadership in networking." —— 2004 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Bob_Kahn.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Bob_Kahn.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Bob Kahn · 2013};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace BBN · DARPA · CNRI\enspace|\enspace Turing 2004 · NMT 1997};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{卡恩 - 从布鲁克林到互联网之父}{生卒 · 本名 · 国籍 · 教育 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Bob_Kahn.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Bob_Kahn.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Robert E. Kahn};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1938-12-23 —（在世）\\[2pt]\lab{本名}\quad Robert Elliot Kahn\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=tcppanel, draw=badgeTCP!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad CCNY 电机工程 BS 1960\\[2pt]
+     \quad Princeton MA 1962 · PhD 1964\\[2pt]
+     \lab{师承}\quad Bede Liu（博士导师）};
+  \node[infob, fill=netpanel, draw=badgeNET!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 纽约市 · 布鲁克林\\[2pt]\lab{任职}\quad BBN · DARPA IPTO · CNRI\\[2pt]\lab{家庭}\quad 妻 Patrice Ann Lyons};
+  \node[infob, fill=scipanel, draw=badgeSCI!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2004 · NMT 1997\\[2pt]
+     \quad 总统自由勋章 2005\\[2pt]
+     \lab{核心领域}\quad 电信 · 计算机网络\\[2pt]
+     \quad TCP/IP · 数字对象};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{卡恩的一生}{1938 — · 从布鲁克林少年到互联网架构师}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.85);
+  \foreach \y/\year/\txt in {
+    3.0/1938/生于纽约布鲁克林，阿什肯纳兹犹太家庭,
+    2.3/1960/获 City College of New York 电机工程学士,
+    1.6/1964/Princeton 电机工程博士（导师 Bede Liu）,
+    0.9/BBN/任 ARPANET 主要设计者,
+    0.2/1972/ICCC 公开展示 ARPANET · 加入 DARPA IPTO,
+    -0.5/1973/Vint Cerf 加入 TCP 项目（次年发表奠基论文）,
+    -1.2/1986/创立 CNRI,
+    -1.9/1992/与 Cerf 共同创立 Internet Society,
+    -2.45/2004/获图灵奖（与 Cerf 共享）,
+    -2.85/2024/获 IEEE 荣誉奖章
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1938–1964)}{布鲁克林犹太家庭 · CCNY 电机 · Princeton 博士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1938} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{生于纽约市布鲁克林；Beatrice Pauline 与 Lawrence Kahn 之子，阿什肯纳兹犹太家庭} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{父系亲缘及于未来学家 Herman Kahn} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1960} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{获 City College of New York 电机工程学士（BS）} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{工程根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1962} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{入 Princeton University，获文学硕士（MA）} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{电机工程深造} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1964} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{获 Princeton 电机工程博士；导师 Bede Liu；论文 \textit{Some problems in the sampling and modulation of signals}} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{信号采样与调制} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从布鲁克林的犹太家庭到普林斯顿的信号博士，架构师的底色是工程。}
+\end{center}
+\end{frame}}
+
+% --- 5. Bell Labs → MIT → BBN ---
+\newcommand{\careerstartslide}{\begin{frame}\plainbar\sectiontitle{Bell Labs $\rightarrow$ MIT $\rightarrow$ BBN}{进入 ARPANET 主战场}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Bell Labs} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{博士毕业后先任职于贝尔实验室} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{工业界起步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{MIT} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{随后任职于 MIT} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{学术与工程并进} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{BBN} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{加入 Bolt Beranek and Newman（BBN），投身 ARPANET 工程} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{进入网络主战场} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 三段履历汇入同一条主线：把计算机连成网络。}
+\end{center}
+\end{frame}}
+
+% --- 6. ARPANET 首席架构师 ---
+\newcommand{\arpanslide}{\begin{frame}\plainbar\sectiontitle{ARPANET 首席架构师（BBN 时期）}{项目管理 · 系统架构}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{角色}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{principal designer} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{在 BBN 任 ARPANET 的主要设计者（principal designer，页面原文）} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{首席架构师底色} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{全程参与} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{从提案撰写、投身实现，到主持公开演示（口述史口径）} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{管理与架构兼备} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{承前启后} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{为 1972 年 ICCC 的公开展示奠定基础} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{走向世界舞台} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} ARPANET —— Kahn 是它的 principal designer}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{项目管理} $\xrightarrow{\text{系统架构}}$ \textit{分组交换网络的第一张蓝图}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 1972 ICCC：分水岭时刻 ---
+\newcommand{\icccslide}{\begin{frame}\plainbar\sectiontitle{1972 ICCC：分水岭时刻}{20 台机器的公开展示}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1972 年秋} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{在国际计算机通信大会（ICCC）上公开展示 ARPANET} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{首次大规模公开亮相} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{20 台} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{连接 20 台不同的计算机} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{分组交换的实证} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{回响} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{业界"突然意识到分组交换是真实可用的技术"} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{分水岭时刻} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9.5}{12.5}\selectfont\itshape\color{coverprimary!88!black} "the watershed event that made people suddenly realize that packet switching was a real technology."}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{covermuted} —— 1972 年 ICCC 展示 ARPANET（页面实载引语，本篇唯一直接引语）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. TCP 的最初构想 ---
+\newcommand{\tcpslide}{\begin{frame}\plainbar\sectiontitle{TCP 的最初构想（SATNET 期）}{取代 NCP · 网关转发 · 无单点故障}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{设计}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{缘起} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{在 SATNET 卫星分组网络项目期间提出 TCP 最初构想，意在取代 ARPANET 的 NCP 协议} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{跨网互联的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{网关转发} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{子网之间经只转发分组的专用计算机互联（初称 gateway，今称 router）；网络任何一段都不成为单点故障、不受单一控制} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{去中心化架构} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{可靠传输} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{序列号排序与丢包检测 · ACK 确认 · 超时重传 · 校验和} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{端到端可靠} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} TCP/IP 的分层：协议后来拆分为两层}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{TCP（主机到主机）} + \text{IP（网际互联）} = \text{TCP/IP}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 与 Cerf 的双引擎 ---
+\newcommand{\cerfslide}{\begin{frame}\plainbar\sectiontitle{与 Cerf 的双引擎 (1973–)}{1973 春加入 · 1974 奠基论文 · TCP/IP}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1973 年春} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{Vint Cerf 加入 TCP 项目，两人共同完成早期 TCP 版本} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{双引擎启动} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1974-05} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{与 Cerf 在 IEEE Transactions on Communications 发表 \textit{A Protocol for Packet Network Intercommunication}} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{TCP 奠基论文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{拆分} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{协议拆分为两层：TCP 管主机到主机通信，IP 管网际互联通信} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{现代互联网的基础} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1973 年的会合，让 TCP 从构想走向协议。}
+\end{center}
+\end{frame}}
+
+% --- 10. DARPA IPTO 主任 ---
+\newcommand{\iptoslide}{\begin{frame}\plainbar\sectiontitle{DARPA IPTO 主任与战略计算计划}{1972 加入 · 十亿美元级联邦项目}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1972} & \cellcolor{scipanel}\textcolor{badgeSCI!82!black}{加入 DARPA 信息处理技术办公室（IPTO），后出任主任} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{从架构师到管理者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{TCP/IP} & \cellcolor{scipanel}\textcolor{badgeSCI!82!black}{推动 TCP/IP 协议的后续发展，连接异构的计算机网络} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{互联网的技术路线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{战略计算计划} & \cellcolor{scipanel}\textcolor{badgeSCI!82!black}{任 IPTO 主任期间启动 Strategic Computing Initiative —— 美国联邦政府迄今所承担的最大计算机研发项目} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{十亿美元级工程} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{13 年} & \cellcolor{scipanel}\textcolor{badgeSCI!82!black}{在 DARPA 供职十三年后离开} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{1986 年创立 CNRI} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 ARPANET 的架构师，到联邦最大计算计划的掌舵人。}
+\end{center}
+\end{frame}}
+
+% --- 11. CNRI 与数字对象 ---
+\newcommand{\cnrislide}{\begin{frame}\plainbar\sectiontitle{CNRI 与数字对象 (1986–)}{数字图书馆 · 数字对象基础设施}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1986} & \cellcolor{cnripanel}\textcolor{badgeCNRI!82!black}{创立 Corporation for National Research Initiatives（CNRI）} & \cellcolor{scipanel}\textcolor{badgeSCI!82!black}{事业新篇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{早期推动} & \cellcolor{cnripanel}\textcolor{badgeCNRI!82!black}{数字图书馆（Digital Libraries）、Knowledge Robots、千兆网络} & \cellcolor{scipanel}\textcolor{badgeSCI!82!black}{数字基础设施} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{数字对象} & \cellcolor{cnripanel}\textcolor{badgeCNRI!82!black}{数字对象架构（Digital Object Architecture）；2003 年以此获 Digital ID World 奖} & \cellcolor{scipanel}\textcolor{badgeSCI!82!black}{数字身份行业的认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{至今} & \cellcolor{cnripanel}\textcolor{badgeCNRI!82!black}{截至 2022 年仍任 CNRI 董事长、CEO 兼总裁} & \cellcolor{scipanel}\textcolor{badgeSCI!82!black}{逾三十年执掌} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} ACM Fellow（2001）表彰语中的关键词}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{数字图书馆} \Rightarrow \text{数字对象基础设施} \Rightarrow \text{数字知识产权保护}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. ISOC 与互联网治理 ---
+\newcommand{\isocslide}{\begin{frame}\plainbar\sectiontitle{ISOC 与互联网治理 (1992)}{共同创立 · 标准 · 教育 · 政策}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1992} & \cellcolor{cnripanel}\textcolor{badgeCNRI!82!black}{与 Vint Cerf 共同创立 Internet Society（ISOC）} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{互联网治理的制度舞台} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{使命} & \cellcolor{cnripanel}\textcolor{badgeCNRI!82!black}{为互联网相关的标准、教育与政策提供领导力} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{超越技术的公共事业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首任主席} & \cellcolor{cnripanel}\textcolor{badgeCNRI!82!black}{由 Cerf 出任} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{治理侧的分工} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 从协议到治理}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{TCP/IP（技术根基）} \Rightarrow \text{标准}\ \cdot\ \text{教育}\ \cdot\ \text{政策}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉之殿}{图灵奖 2004 · 从 SIGCOMM 到 IEEE 荣誉奖章}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际大奖} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{Turing Award 2004（与 Cerf 共享）· Marconi Prize 1994\newline 国家技术奖章 1997 · 总统自由勋章 2005} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{互联网先驱的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{工程与奖章} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{Draper Prize 2001（共同获奖者页面未详列）· Queen Elizabeth Prize 2013（首届五位）\newline IEEE Medal of Honor 2024 · IEEE Bell 奖章 1997} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{工程界的最高认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学会与其他} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{IEEE Fellow 1981 · NAE 院士 1987 · AAAI 创始会士 1990 · ACM Fellow 2001\newline SIGCOMM 1993 · Prince of Asturias 2002 · 发明家名人堂 2006 · Internet Hall of Fame 2012} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{学界与行业的铭记} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 ICCC 的 20 台机器，到 IEEE 荣誉奖章——半个世纪的互联网人生。}
+\end{center}
+\end{frame}}
+
+% --- 14. 双雄对照 ---
+\newcommand{\duoslide}{\begin{frame}\plainbar\sectiontitle{双雄对照：Kahn 与 Cerf}{共享的荣誉 · 各自的侧重}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}X}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{Robert Kahn（本篇侧重）}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{Vint Cerf（Cerf 篇侧重）}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{网络开端} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{BBN 任 ARPANET 主要设计者} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{1973 年春加入 TCP 项目} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{TCP/IP} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{提出 TCP 最初构想（SATNET 期，意在取代 NCP）；共同完成早期 TCP} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{共同完成早期 TCP；1974 年 IEEE 奠基论文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{生涯后半} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{IPTO 主任 · 战略计算计划 · CNRI 数字对象} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{协议规范与互联网治理（详见 Cerf 篇）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共享荣誉} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{ISOC 1992 · Turing 2004 · 总统自由勋章 2005 · Japan Prize 2008} & \cellcolor{tcppanel}\textcolor{badgeTCP!82!black}{同左（共享）} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 构想与管理在 Kahn，规范与治理在 Cerf——共享的荣誉，各有侧重。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {架起一张网，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {让世界彼此相连。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {—— 致敬 Robert E. Kahn};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {罗伯特·卡恩\enspace·\enspace 1938 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{globe}\enspace Turing 2004 · NMT 1997 · IEEE Medal of Honor 2024 · 互联网之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\careerstartslide
+\arpanslide
+\icccslide
+\tcpslide
+\cerfslide
+\iptoslide
+\cnrislide
+\isocslide
+\honorsslide
+\duoslide
+\closingslide
+\end{document}

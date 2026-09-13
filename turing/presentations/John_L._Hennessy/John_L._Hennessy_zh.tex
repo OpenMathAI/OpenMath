@@ -1,0 +1,506 @@
+% =============================================================
+%  RISC 先驱：约翰·轩尼诗 (John L. Hennessy)
+%  Beamer 源码 —— 高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：流水线节拍 / 学术行政阶梯 —— 稀疏水平条呼应指令流水线
+%  资料来源：turing/pages/2017/John L. Hennessy/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== 品牌主色别名（与 coverprimary/coveraccent 同值）=====
+\definecolor{mainclr}{HTML}{5B2D8E}   % 主色（图灵紫）
+\definecolor{accentclr}{HTML}{B03A2E} % 强调色（图灵奖红）
+% ===== Hennessy 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeA}{HTML}{2E5A9E}     % RISC 与 MIPS — 蓝
+\definecolor{badgeB}{HTML}{1E8E8E}     % 定量方法 — 青绿
+\definecolor{badgeC}{HTML}{D9A441}     % 斯坦福校长 — 琥珀
+\definecolor{badgeD}{HTML}{C0395B}     % 硅谷产业 — 玫瑰
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 背景母题：流水线节拍 / 阶梯块（稀疏水平条）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!10] ([xshift=-8.2cm, yshift=-2.9cm]current page.center) rectangle ++(4.6,0.32);
+  \fill[badgeB!10] ([xshift=-6.6cm, yshift=-2.25cm]current page.center) rectangle ++(4.6,0.32);
+  \fill[badgeC!12] ([xshift=-5.0cm, yshift=-1.6cm]current page.center) rectangle ++(4.6,0.32);
+  \fill[badgeD!10] ([xshift=2.4cm, yshift=2.9cm]current page.center) rectangle ++(5.6,0.30);
+  \fill[badgeA!8]  ([xshift=2.4cm, yshift=2.35cm]current page.center) rectangle ++(4.2,0.30);
+  \fill[badgeB!8]  ([xshift=2.4cm, yshift=1.8cm]current page.center) rectangle ++(3.0,0.30);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{microchip}\enspace RISC 先驱 · 斯坦福第 10 任校长\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {约翰·轩尼诗};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {John L. Hennessy\enspace·\enspace 1952 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {计算机体系结构宗师 · MIPS 与 Atheros 创始人 · 2017 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {RISC 与 MIPS\\MIPS Project\par\scriptsize 1981 项目 · 1984 公司};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {定量方法\\Quantitative\par\scriptsize 设计与评估学派};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {斯坦福校长\\President\par\scriptsize 第 10 任 · 2000--2016};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {硅谷产业\\Alphabet\par\scriptsize 2018 起董事长};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.2}{11}\selectfont\itshape, text=muteddark, align=center, text width=13.2cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for pioneering a systematic, quantitative approach to the design and evaluation of computer architectures with enduring impact on the microprocessor industry" —— 2017 图灵奖（ACM 表述，与 Patterson 共享）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/John_L._Hennessy_2024.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{John_L._Hennessy_2024.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {John L. Hennessy in 2024};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Stanford · MIPS · Alphabet\enspace|\enspace Turing 2017 · IEEE MoH 2012};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{轩尼诗 - 从长岛少年到体系结构宗师}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/John_L._Hennessy_2024.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{John_L._Hennessy_2024.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {John L. Hennessy};
+  \node[infob, fill=panelC, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1952-09-22 —（在世）\\[2pt]\lab{本名}\quad John Leroy Hennessy\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Villanova 电机工程 BS\\[2pt]
+     \quad Stony Brook CS MS/PhD 1977\\[2pt]
+     \lab{师承}\quad Richard Kieburtz（导师）};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 纽约州亨廷顿 · 美国\\[2pt]\lab{任职}\quad Stanford · MIPS · Alphabet\\[2pt]\lab{教席}\quad 1987 Bell 讲席教授};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2017 · IEEE MoH 2012\\[2pt]
+     \quad Draper 2022 · BBVA 2020\\[2pt]
+     \lab{核心领域}\quad 计算机体系结构\\[2pt]
+     \quad 定量设计与评估方法};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{轩尼诗的一生}{1952 — · 从长岛少年到硅谷教父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.85);
+  \foreach \y/\year/\txt in {
+    3.0/1952/生于纽约州亨廷顿，六兄妹之一,
+    2.4/1977/Stony Brook 博士（Kieburtz 门下）· 任教 Stanford,
+    1.8/1981/启动 MIPS 项目（跟随 Berkeley 先行研究）,
+    1.2/1984/休假年创办 MIPS Computer Systems,
+    0.6/1988/与 Patterson 动笔《Computer Architecture: A Quantitative Approach》,
+    0.0/1999/出任 Stanford 教务长,
+    -0.6/2000/就任斯坦福第 10 任校长,
+    -1.2/2016/卸任校长 · 共同创办 Knight-Hennessy Scholars,
+    -1.8/2017/与 Patterson 共获图灵奖,
+    -2.4/2018/出任 Alphabet 董事长,
+    -2.85/2022/与 Patterson 等共获 Draper Prize
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：纽约长岛少年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：纽约长岛的少年 (1952–1973)}{六兄妹之家 · 爱尔兰移民后代 · Villanova}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1952} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于纽约州亨廷顿（Huntington, New York），在长岛长大，是六兄妹之一} & \cellcolor{panelB}\textcolor{badgeB!82!black}{大家庭长子岁月} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{panelA}\textcolor{badgeA!82!black}{父亲是航空工程师，母亲在育儿前是教师} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工程与教育并重的家风} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{血脉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{爱尔兰天主教移民后代，部分先祖于 19 世纪大饥荒期间抵美} & \cellcolor{panelB}\textcolor{badgeB!82!black}{移民家庭的美国梦} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{本科} & \cellcolor{panelA}\textcolor{badgeA!82!black}{获 Villanova University 电机工程学士学位} & \cellcolor{panelB}\textcolor{badgeB!82!black}{通往计算机体系的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 长岛的工程师之家，走出了一位定义微处理器时代的学者。}
+\end{center}
+\end{frame}}
+
+% --- 5. Stony Brook 博士 ---
+\newcommand{\stonybrookslide}{\begin{frame}\plainbar\sectiontitle{Stony Brook 博士 (1973–1977)}{Kieburtz 门下 · 实时语言 · 奔赴 Stanford}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{深造} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在 Stony Brook University 攻读计算机科学，先后获硕士与博士学位} & \cellcolor{panelB}\textcolor{badgeB!82!black}{从电机转向计算机科学} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{导师} & \cellcolor{panelA}\textcolor{badgeA!82!black}{博士导师 Richard Kieburtz} & \cellcolor{panelB}\textcolor{badgeB!82!black}{系统与语言方向的训练} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\textit{A real-time language for small processors: design, definition and implementation}（1977）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{小型处理器的实时语言} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{去向} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1977 年起任 Stanford 大学计算机科学系教师} & \cellcolor{panelB}\textcolor{badgeB!82!black}{斯坦福四十余年的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 实时语言博士的底色，日后化作对体系结构性能的极致追求。}
+\end{center}
+\end{frame}}
+
+% --- 6. Stanford 与 MIPS 项目 ---
+\newcommand{\mipsslide}{\begin{frame}\plainbar\sectiontitle{Stanford 与 MIPS 项目 (1977–1987)}{跟随 Berkeley 先行研究 · 休假年创业}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1977} & \cellcolor{panelA}\textcolor{badgeA!82!black}{成为 Stanford 计算机科学系教师} & \cellcolor{panelB}\textcolor{badgeB!82!black}{斯坦福学术生涯开启} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1981} & \cellcolor{panelA}\textcolor{badgeA!82!black}{启动 MIPS 项目研究 RISC 处理器——页面明载是 "following preliminary investigations at Berkeley by David A. Patterson"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Berkeley 在先、Stanford 随行} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1984} & \cellcolor{panelA}\textcolor{badgeA!82!black}{利用休假年（sabbatical）创办 MIPS Computer Systems Inc.，商业化研究成果} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学术走向产业的典范} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1987} & \cellcolor{panelA}\textcolor{badgeA!82!black}{成为 Willard and Inez Kerr Bell 电机工程与计算机科学讲席教授} & \cellcolor{panelB}\textcolor{badgeB!82!black}{斯坦福讲席的认可} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} MIPS：从斯坦福实验室走向微处理器产业}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{MIPS 项目（1981）} $\xrightarrow{\text{休假年创业}}$ \textit{MIPS Computer Systems（1984）}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 学术创业双例 ---
+\newcommand{\startupslide}{\begin{frame}\plainbar\sectiontitle{学术创业：MIPS 与 Atheros}{从实验室成果到产业公司}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{公司}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{MIPS Computer Systems} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1984 年利用休假年创办，将斯坦福 MIPS 项目的 RISC 技术商业化；Hennessy 是创始人之一} & \cellcolor{panelB}\textcolor{badgeB!82!black}{RISC 商业化先驱} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{Atheros} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Atheros Communications 共同创始人（无线通信芯片）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{第二次学术创业} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{董事会} & \cellcolor{panelA}\textcolor{badgeA!82!black}{先后任职 Google（后 Alphabet）、Cisco Systems、Atheros、Gordon and Betty Moore Foundation 董事会} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学界与产业的桥梁} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他两次把斯坦福实验室的成果，变成了改变产业的公司。}
+\end{center}
+\end{frame}}
+
+% --- 8. 定量方法与教科书 ---
+\newcommand{\quantslide}{\begin{frame}\plainbar\sectiontitle{定量方法与教科书革命 (1988–)}{与 Patterson 三年之功 · DLX · MMIX}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成果}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{教科书} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1988 年与 Patterson 开始三年之功写成 \textit{Computer Architecture: A Quantitative Approach} 第一版；另有 \textit{Computer Organization and Design}（1994）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1990 年起全球标准教材} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{教学架构} & \cellcolor{panelB}\textcolor{badgeB!82!black}{书中引入 DLX RISC 教学架构，描述 RISC 指令集与成本-性能权衡} & \cellcolor{panelA}\textcolor{badgeA!82!black}{教学即传承} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{MMIX} & \cellcolor{panelB}\textcolor{badgeB!82!black}{参与把 Donald Knuth 的 MIX 更新为 MMIX——两位图灵奖得主的连接} & \cellcolor{panelA}\textcolor{badgeA!82!black}{TAOCP 的现代模型机} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 定量方法的示意：性能可以度量，设计才有依据}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{CPU\ Time}=\text{指令数}\times\mathrm{CPI}\times T_{\mathrm{clock}}\qquad$ 设计 $\Rightarrow$ 度量 $\Rightarrow$ 改进}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. DASH/FLASH 与共享内存 ---
+\newcommand{\dashslide}{\begin{frame}\plainbar\sectiontitle{DASH/FLASH：共享内存多处理器}{目录式 cache 一致性 · 存储一致性}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{DASH} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1990 年发表 DASH 多处理器的目录式 cache 一致性协议（ISCA）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{可扩展共享内存的奠基} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{存储一致性} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1990 年发表可扩展共享内存多处理器的存储一致性与事件排序研究} & \cellcolor{panelA}\textcolor{badgeA!82!black}{一致性模型的理论支柱} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{FLASH} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1994 年发表 Stanford FLASH 多处理器} & \cellcolor{panelA}\textcolor{badgeA!82!black}{DASH 思想的延续} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{荣誉回响} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1989 年合著的高性能多级 cache 层次论文获 2004 年 ISCA Influential Paper Award} & \cellcolor{panelA}\textcolor{badgeA!82!black}{影响力跨越十五年} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 DASH 到 FLASH，共享内存多处理器的蓝图由他铺就。}
+\end{center}
+\end{frame}}
+
+% --- 10. 斯坦福行政阶梯 ---
+\newcommand{\ladderslide}{\begin{frame}\plainbar\sectiontitle{斯坦福行政阶梯 (1989–1999)}{CSL 主任 $\rightarrow$ 系主任 $\rightarrow$ 院长 $\rightarrow$ 教务长}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{任期}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{职务}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1989–93} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Stanford 计算机系统实验室（CSL）主任} & \cellcolor{panelB}\textcolor{badgeB!82!black}{研究组织者} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1994–96} & \cellcolor{panelA}\textcolor{badgeA!82!black}{计算机科学系主任} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学科掌舵} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1996–99} & \cellcolor{panelA}\textcolor{badgeA!82!black}{工学院院长（Dean of the School of Engineering）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学院管理者} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1999–2000} & \cellcolor{panelA}\textcolor{badgeA!82!black}{教务长（Provost），由校长 Gerhard Casper 任命接任 Condoleezza Rice} & \cellcolor{panelB}\textcolor{badgeB!82!black}{通往校长之阶} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 一级一级的阶梯，通向校长办公室}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{CSL 主任} $\rightarrow$ \textit{系主任} $\rightarrow$ \textit{院长} $\rightarrow$ \textit{教务长} $\rightarrow$ \textit{校长}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 校长十年 ---
+\newcommand{\presidentslide}{\begin{frame}\plainbar\sectiontitle{校长十年 (2000–2016)}{斯坦福第 10 任校长 · Knight-Hennessy Scholars}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事项}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{就任与离任} & \cellcolor{panelC}\textcolor{badgeC!82!black}{2000-09-01 就任斯坦福第 10 任校长（继 Gerhard Casper），2016-08-31 离任，继任 Marc Tessier-Lavigne} & \cellcolor{panelA}\textcolor{badgeA!82!black}{十六年掌舵斯坦福} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{KH Scholars} & \cellcolor{panelC}\textcolor{badgeC!82!black}{2016 年共同创办 Knight-Hennessy Scholars 并任首任所长；\$750M 捐赠全额资助研究生} & \cellcolor{panelA}\textcolor{badgeA!82!black}{面向全球的人才工程} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{首届学者} & \cellcolor{panelC}\textcolor{badgeC!82!black}{首届 51 名学者来自 21 国，2018 年秋入学} & \cellcolor{panelA}\textcolor{badgeA!82!black}{教育的国际视野} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{著述} & \cellcolor{panelC}\textcolor{badgeC!82!black}{2018 年出版 \textit{Leading Matters: Lessons from My Journey}（Stanford University Press）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{领导力的总结} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 十六年校长岁月，把斯坦福推向新的高度。}
+\end{center}
+\end{frame}}
+
+% --- 12. Alphabet 董事长 ---
+\newcommand{\alphabetslide}{\begin{frame}\plainbar\sectiontitle{Alphabet 董事长与"硅谷教父" (2018–)}{从学界领袖到科技巨头掌舵人}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事项}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{2018-02} & \cellcolor{panelD}\textcolor{badgeD!82!black}{接替 Eric Schmidt 出任 Google 母公司 Alphabet Inc. 董事长} & \cellcolor{panelA}\textcolor{badgeA!82!black}{学界通向产业之巅} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{董事会履历} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Google（后 Alphabet）、Cisco Systems、Atheros、Gordon and Betty Moore Foundation} & \cellcolor{panelA}\textcolor{badgeA!82!black}{深耕产业治理} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{评测} & \cellcolor{panelD}\textcolor{badgeD!82!black}{2013 年起担任首届 Queen Elizabeth Prize for Engineering 评委，并连任后续各届} & \cellcolor{panelA}\textcolor{badgeA!82!black}{全球工程界的公信力} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "the godfather of Silicon Valley" —— Marc Andreessen 评语}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{他是硅谷公认的教父——学者、校长与产业领袖的三重身份。}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉大满贯 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉大满贯}{图灵奖 2017 · IEEE 奖章 2012 · Draper 2022}\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{至高荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{-1pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item ACM Turing Award（2017，与 Patterson 共享）\item IEEE Medal of Honor（2012）\item Draper Prize（2022，四人共享）\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{体系结构宗师的公认} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{学术院院士} & \cellcolor{panelA}\textcolor{badgeA!82!black}{NAE（1992）· NAS（2002）· ACM Fellow（1997）· FREng（2017）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{多院院士加身} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{其他奖项} & \cellcolor{panelA}\textcolor{badgeA!82!black}{BBVA（2020）· Clark Kerr（2020）· 日本 Computer \& Communication 奖（2005，与 Patterson 共享）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{荣誉遍及学界产业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从图灵奖到 Draper Prize，荣誉见证一个体系结构的时代。}
+\end{center}
+\end{frame}}
+
+% --- 14. 桃李与传承 ---
+\newcommand{\studentslide}{\begin{frame}\plainbar\sectiontitle{桃李与传承}{门生遍天下 · 教科书育人}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{著名博士生} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Anant Agarwal、Lawrence Paulson、Josep Torrellas、Norman Jouppi} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学术谱系深远} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{同侪双雄} & \cellcolor{panelA}\textcolor{badgeA!82!black}{David Patterson——教科书合著者，共享图灵奖（2017）、Draper Prize（2022）、BBVA（2020）与日本 Computer \& Communication 奖（2005）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{四奖共享的伙伴} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{产业回响} & \cellcolor{panelA}\textcolor{badgeA!82!black}{RISC 架构现已用于 99\% 的新计算机芯片（页面实载）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{思想跑进每颗芯片} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他教出的学生与写下的书，正在延续体系结构的血脉。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {度量，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {让体系结构成为一门科学。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 John L. Hennessy};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {约翰·轩尼诗\quad John L. Hennessy\quad 1952 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{microchip}\enspace Turing 2017 · IEEE MoH 2012 · 斯坦福第 10 任校长\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\stonybrookslide
+\mipsslide
+\startupslide
+\quantslide
+\dashslide
+\ladderslide
+\presidentslide
+\alphabetslide
+\honorsslide
+\studentslide
+\closingslide
+\end{document}

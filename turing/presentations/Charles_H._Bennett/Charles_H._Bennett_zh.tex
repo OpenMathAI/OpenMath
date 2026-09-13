@@ -1,0 +1,518 @@
+% =============================================================
+%  量子信息奠基人：查尔斯·贝内特 (Charles H. Bennett)
+%  Beamer 源码 —— 参考 Minsky 模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：物理 × 信息 —— 干涉条纹呼应偏振态叠加与不确定性原理
+%  资料来源：turing/pages/2025/Charles H. Bennett (physicist)/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== 主色 / 强调色别名（与品牌色一致） =====
+\definecolor{mainclr}{HTML}{5B2D8E}
+\definecolor{accentclr}{HTML}{B03A2E}
+
+% ===== Bennett 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeA}{HTML}{2E5A9E}     % 可逆计算与热力学 — 蓝
+\definecolor{badgeB}{HTML}{1E8E8E}     % 量子密码 BB84 — 青绿
+\definecolor{badgeC}{HTML}{D9A441}     % 算法信息论 — 琥珀
+\definecolor{badgeD}{HTML}{C0395B}     % 量子态操控 — 玫瑰
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{atom}\enspace 量子信息奠基人\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {查尔斯·贝内特};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Charles H. Bennett\enspace·\enspace 1943 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {可逆计算 · BB84 · 量子远程传态 · 2025 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {可逆计算\\Reversible Computing\par\scriptsize Landauer 路线};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {量子密码\\Quantum Cryptography\par\scriptsize BB84 · 演示};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {算法信息论\\Logical Depth\par\scriptsize acceptance ratio};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {量子传态\\Teleportation\par\scriptsize EPR 双通道};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"one of the founding fathers of modern quantum information theory" —— 现代量子信息理论奠基人};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Dr_Charles_Bennett_IBM_Fellow.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Dr_Charles_Bennett_IBM_Fellow.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Charles H. Bennett};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace IBM Research · TJ Watson\enspace|\enspace Turing 2025 · Wolf 2018};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{贝内特 - 从纽约到量子信息奠基人}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Dr_Charles_Bennett_IBM_Fellow.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Dr_Charles_Bennett_IBM_Fellow.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Charles H. Bennett};
+  \node[infob, fill=panelC, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1943 —（在世）\\[2pt]\lab{本名}\quad Charles Henry Bennett\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Brandeis 化学 BS 1964\\[2pt]
+     \quad Harvard PhD 1970\\[2pt]
+     \lab{师承}\quad Turnbull · Alder（双导师）};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 纽约市 · 美国\\[2pt]\lab{任职}\quad IBM Research · TJ Watson\\[2pt]\lab{早期}\quad Argonne 博士后};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2025 · Wolf 2018\\[2pt]
+     \quad Breakthrough 2023\\[2pt]
+     \lab{核心领域}\quad 量子信息 · 量子密码\\[2pt]
+     \quad 可逆计算 · 算法信息论};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{贝内特的一生}{1943 —至今 · 从纽约化学学士到量子信息奠基人}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1943/生于纽约市,
+    2.3/1964/Brandeis 化学 BS,
+    1.6/1970/Harvard PhD：分子动力学（Turnbull · Alder）,
+    0.9/1972/加入 IBM Research（TJ Watson）,
+    0.2/1982/重释 Maxwell's demon,
+    -0.5/1984/与 Brassard 提出 BB84,
+    -1.2/1989/世界首个量子密码工作演示（与 Smolin）,
+    -1.9/1993/共同发现量子远程传态,
+    -2.6/2018/Wolf Prize · 次年 BBVA 与 Shannon Award,
+    -2.8/2026/获颁 2025 图灵奖（与 Brassard）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：纽约与 Brandeis 化学 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：纽约与 Brandeis 化学 (1943–1964)}{化学学士的起点 · 物理 × 信息的底色}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1943} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于纽约市（New York City）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{美国物理学家之路的起点} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1964} & \cellcolor{panelA}\textcolor{badgeA!82!black}{获 Brandeis University 化学 BS} & \cellcolor{panelB}\textcolor{badgeB!82!black}{化学学位出身的"物理学家"} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{底色} & \cellcolor{panelA}\textcolor{badgeA!82!black}{本科读化学，博士转向分子动力学的计算机模拟} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算与物理的交叉训练} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个化学学士出身的纽约客，最终成为现代量子信息理论的奠基人。}
+\end{center}
+\end{frame}}
+
+% --- 5. Harvard 博士与 Watson/Argonne 岁月 ---
+\newcommand{\gradslide}{\begin{frame}\plainbar\sectiontitle{Harvard 博士与 Watson/Argonne 岁月 (1964–1972)}{分子动力学 · 双导师 · 遗传密码助教}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{博士} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1970 年 Harvard PhD：分子动力学（分子运动的计算机模拟）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算模拟的训练} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{双导师} & \cellcolor{panelA}\textcolor{badgeA!82!black}{David Turnbull 与 Berni Alder 两人共同指导} & \cellcolor{panelB}\textcolor{badgeB!82!black}{infobox 实载双导师} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{Watson 助教} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在 Harvard 为 James Watson 做一年助教（遗传密码方向）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{曾为其助教，非师承} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{Argonne} & \cellcolor{panelA}\textcolor{badgeA!82!black}{随 Aneesur Rahman 继续该研究两年（University of Chicago 运营）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{博士后阶段成型} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 用计算机模拟分子运动——这条路径预示了他"物理 × 信息"的一生。}
+\end{center}
+\end{frame}}
+
+% --- 6. IBM 与 Landauer：可逆计算 ---
+\newcommand{\ibmslide}{\begin{frame}\plainbar\sectiontitle{IBM 与 Landauer：可逆计算 (1972–)}{逻辑与热力学上可逆的通用计算}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1972} & \cellcolor{panelA}\textcolor{badgeA!82!black}{加入 IBM Research（Thomas J. Watson Research Center）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{此后一生 IBM} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{可逆计算} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在 IBM 的 Rolf Landauer 工作基础上，证明通用计算可由逻辑与热力学上可逆的装置完成} & \cellcolor{panelB}\textcolor{badgeB!82!black}{可逆计算的开山贡献} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1995} & \cellcolor{panelA}\textcolor{badgeA!82!black}{获评 IBM Fellow} & \cellcolor{panelB}\textcolor{badgeB!82!black}{IBM 最高技术荣誉} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 可逆计算：信息不销毁，则不付热力学代价}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{Input}\ \xrightarrow{\text{可逆幺正门 } U}\ \text{Output}$\quad 逻辑可逆 $\Leftrightarrow$ 热力学可逆}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Maxwell's demon 重释 ---
+\newcommand{\demonslide}{\begin{frame}\plainbar\sectiontitle{Maxwell's demon 重释 (1982)}{摧毁信息的热力学成本 · 计算的热力学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{重释} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1982 年提出对 Maxwell's demon 的新诠释} & \cellcolor{panelB}\textcolor{badgeB!82!black}{信息 × 热力学经典} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{机制} & \cellcolor{panelA}\textcolor{badgeA!82!black}{妖无法打破第二定律，归因于摧毁（而非获取）信息的热力学成本} & \cellcolor{panelB}\textcolor{badgeB!82!black}{第二定律的信息论根基} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{综述} & \cellcolor{panelA}\textcolor{badgeA!82!black}{同领域重要论文 \textit{The thermodynamics of computation---a review}（Int. J. Theor. Phys. 21, 905, 1982）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{领域奠基文献} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 妖为何失败：擦除不是免费的}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{获取信息（测量）}\ \neq\ \text{摧毁信息}\ \Rightarrow\ \text{热力学成本不可免}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. Bennett acceptance ratio 与逻辑深度 ---
+\newcommand{\depthslide}{\begin{frame}\plainbar\sectiontitle{Acceptance Ratio 与逻辑深度}{自由能差估计 · 物理状态的内在复杂性}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{Bennett 的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{acceptance ratio} & \cellcolor{panelC}\textcolor{badgeC!82!black}{估计两系统自由能差的重要方法（Bennett acceptance ratio）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{分子模拟领域的实载成果} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{logical depth} & \cellcolor{panelC}\textcolor{badgeC!82!black}{以通用计算机从随机初态模拟出该物理状态演化所需的时间，定义物理状态的内在复杂性} & \cellcolor{panelA}\textcolor{badgeA!82!black}{信息与随机性的计算刻画} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{算法信息论} & \cellcolor{panelC}\textcolor{badgeC!82!black}{信息与随机性以通用计算机的输入输出关系发展} & \cellcolor{panelA}\textcolor{badgeA!82!black}{另一个研究方向} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 逻辑深度（logical depth）：内在复杂性的定义}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{Depth}(x)=T\big(\text{通用计算机}:\ \text{随机初态}\to x\big)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. BB84：量子密码的诞生 ---
+\newcommand{\qcryptslide}{\begin{frame}\plainbar\sectiontitle{BB84：量子密码的诞生 (1984)}{与 Brassard 合作 · Wiesner 理念 · 不确定性原理}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{合作} & \cellcolor{panelB}\textcolor{badgeB!82!black}{与 Université de Montréal 的 Gilles Brassard 合作发展量子密码系统，建立在 Stephen Wiesner 的理念之上} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首个实用量子密码协议} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{原理} & \cellcolor{panelB}\textcolor{badgeB!82!black}{利用不确定性原理（uncertainty principle）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{物理定律保证安全} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{能力} & \cellcolor{panelB}\textcolor{badgeB!82!black}{让初始不共享任何秘密信息的双方实现安全通信} & \cellcolor{panelA}\textcolor{badgeA!82!black}{无预共享密钥的密码学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} BB84 四态偏振示意（1984）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$|0\rangle,\ |1\rangle$（直线基）\quad$\times$\quad$|{+}\rangle,\ |{-}\rangle$（对角基）\quad 两组基不可同时精确测量}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 1989：世界首个工作演示 ---
+\newcommand{\demoslide}{\begin{frame}\plainbar\sectiontitle{1989：世界首个量子密码工作演示}{与 John Smolin · 从协议到装置}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1989} & \cellcolor{panelB}\textcolor{badgeB!82!black}{在 John Smolin 协助下，建成世界首个量子密码工作演示（world's first working demonstration）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{BB84 从纸面走向实验} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{合作者} & \cellcolor{panelB}\textcolor{badgeB!82!black}{John Smolin} & \cellcolor{panelA}\textcolor{badgeA!82!black}{后续噪声信道合作的开端} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 量子密码的第一次"点亮"}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{协议} $\xrightarrow{\text{1989 演示}}$ \textit{装置}：量子密码从此可被建造}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 量子远程传态 (1993) ---
+\newcommand{\teleportslide}{\begin{frame}\plainbar\sectiontitle{量子远程传态 (1993)}{经典信道 + EPR 关联双通道 · 原态销毁}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{共同发现} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1993 年 Bennett 与 Brassard 联合他人共同发现量子远程传态（quantum teleportation）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{效应与方案，非单方独创} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{分解} & \cellcolor{panelD}\textcolor{badgeD!82!black}{未知量子态的完整信息被分解为纯经典信息与纯非经典的 EPR 关联} & \cellcolor{panelA}\textcolor{badgeA!82!black}{两类信息各走一条信道} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{重组} & \cellcolor{panelD}\textcolor{badgeD!82!black}{经两条独立信道传输后，在异地重组出原量子态的精确副本；原态在发送过程中被销毁} & \cellcolor{panelA}\textcolor{badgeA!82!black}{不违背不可克隆} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 量子远程传态的双通道机制}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$|\psi\rangle\ \to\ \underbrace{\text{纯经典信息}}_{\text{信道一}}\ +\ \underbrace{\text{EPR 关联}}_{\text{信道二}}\ \to\ |\psi\rangle_{\text{副本}}$（原态销毁）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 噪声信道与纠缠蒸馏 ---
+\newcommand{\noisyslide}{\begin{frame}\plainbar\sectiontitle{噪声信道与纠缠蒸馏 (1995–1997)}{Smolin · Wootters · DiVincenzo 合作}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{噪声信道} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1995–1997 与 Smolin、Wootters、DiVincenzo 等合作，提出经典与量子信息经噪声信道忠实传输的多种技术} & \cellcolor{panelA}\textcolor{badgeA!82!black}{量子信息与计算理论的一部分} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{纠缠蒸馏} & \cellcolor{panelD}\textcolor{badgeD!82!black}{与他人共同提出纠缠蒸馏（entanglement distillation）概念} & \cellcolor{panelA}\textcolor{badgeA!82!black}{量子中继与纠错的思想源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 噪声不末端：让信息穿过噪声完好抵达}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{噪声信道}\ \xrightarrow{\ \text{忠实传输技术 / 纠缠蒸馏}\ }\ \text{可靠的经典与量子信息}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2025 · 跨越物理与计算两界}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.58}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{奖项}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{国际大奖} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Turing Award 2025（与 Brassard 共享）\newline Wolf Prize in Physics 2018 · Dirac Medal（ICTP）2017 \newline BBVA Frontiers of Knowledge 2019 · Shannon Award 2019 \newline Breakthrough Prize 2023 届（2022-09 公布）\newline Eduard Rhein Prize in Technology 2023} & \cellcolor{panelB}\textcolor{badgeB!82!black}{世界级奖项的公认} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{学会称号} & \cellcolor{panelA}\textcolor{badgeA!82!black}{IBM Fellow（1995）· APS Fellow · NAS 院士} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学术共同体的认可} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{其他奖项} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Harvey Prize 2008（Technion）· Rank Prize（opto-electronics）2006} & \cellcolor{panelB}\textcolor{badgeB!82!black}{信息论与光电子领域} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从可逆计算到量子信息，他的荣誉横跨物理与计算两个世界。}
+\end{center}
+\end{frame}}
+
+% --- 14. 2025 图灵奖 ---
+\newcommand{\turingawardslide}{\begin{frame}\plainbar\sectiontitle{2025 ACM 图灵奖}{与 Gilles Brassard 共享 · 2026 年 3 月公布}
+\vspace{-0.1cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} ACM Citation（整句）}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}\textit{"for work on the foundations of quantum information science and secure communication and computing"}}\\[3pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{muteddark} —— ACM A.M. Turing Award 2025}
+  \end{minipage}%
+}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{共享结构} & \cellcolor{panelA}\textcolor{badgeA!82!black}{2025 图灵奖由 Bennett 与 Brassard 共享，表彰其在量子信息科学的工作} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算科学的最高荣誉} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{基石成果} & \cellcolor{panelA}\textcolor{badgeA!82!black}{BB84（1984，与 Brassard）与量子远程传态（1993，共同发现）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学科的两块基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{7.2}{9}\selectfont\color{muteddark} 兼趣：与 Steve Flammia、Aram Harrow 合写博客 \textit{The Quantum Pontiff}（Dave Bacon 托管）。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {物理与信息，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {在量子世界汇流。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Charles H. Bennett};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {查尔斯·贝内特\quad Charles H. Bennett\quad b. 1943};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{atom}\enspace Turing 2025 · BB84 · Quantum Teleportation\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\gradslide
+\ibmslide
+\demonslide
+\depthslide
+\qcryptslide
+\demoslide
+\teleportslide
+\noisyslide
+\honorsslide
+\turingawardslide
+\closingslide
+\end{document}

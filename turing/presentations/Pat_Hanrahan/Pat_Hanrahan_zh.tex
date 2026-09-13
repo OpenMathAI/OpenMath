@@ -1,0 +1,488 @@
+% =============================================================
+%  RenderMan 之父：帕特·汉拉汉 (Pat Hanrahan)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：光线追踪射线束 —— 稀疏散射细线呼应「渲染 = 光的模拟」
+%  资料来源：turing/pages/2019/Pat Hanrahan/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Hanrahan 专属基础色 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{mainclr}{HTML}{2E5A9E}     % 渲染架构 — 蓝（RenderMan / 着色语言）
+\definecolor{accentclr}{HTML}{1E8E8E}   % 图形学奖坛 — 青绿（三座奥斯卡 / Coons Award）
+\definecolor{badgeC}{HTML}{D9A441}      % 可视化创业 — 琥珀（Tableau / DHS 中心）
+\definecolor{badgeD}{HTML}{C0395B}      % 教学传承 — 玫瑰（斯坦福教学线 / 桃李满门）
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 射线束背景（光线追踪母题：细线从一点散射）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \foreach \a in {18,38,58,78,98,118,138,158} {
+    \draw[mainclr!16, line width=0.6pt] ([xshift=2.0cm, yshift=1.7cm]current page.south west) -- ++(\a:7.8cm);
+  }
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!8] (current page.south east) ++(-2.4,2.0) circle (2.6cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{film}\enspace 渲染大师\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {帕特·汉拉汉};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Patrick M. Hanrahan\enspace·\enspace 1955 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {RenderMan 之父 · 数据可视化 · 2019 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=mainclr] at (-5.05,0)
+        {渲染架构\\RenderMan\par\scriptsize 接口规范 · 着色语言};
+      \node[badge, fill=accentclr] at (-1.68,0)
+        {奥斯卡科技奖\\Academy Sci-Tech\par\scriptsize 1993 · 2004 · 2014};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {数据可视化\\Tableau\par\scriptsize 联合创始人};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {图形学教学\\Stanford\par\scriptsize 三获教学奖};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for their pioneering efforts on computer-generated imagery" —— 2019 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Pat_Hanrahan_Tableau_2009.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Pat_Hanrahan_Tableau_2009.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Pat Hanrahan (2009)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace UW–Madison · Pixar · Princeton · Stanford · Tableau\enspace|\enspace Turing 2019};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{汉拉汉 - 从核工程到渲染大师}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Pat_Hanrahan_Tableau_2009.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Pat_Hanrahan_Tableau_2009.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Pat Hanrahan};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1955-05-08 —（在世）\\[2pt]\lab{本名}\quad Patrick M. Hanrahan\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=panelB, draw=accentclr!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad UW–Madison 核工程 BS 1977\\[2pt]
+     \quad UW–Madison 生物物理 PhD 1985\\[2pt]
+     \lab{师承}\quad Antony Stretton（导师）};
+  \node[infob, fill=panelA, draw=mainclr!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Milwaukee · 威斯康星\\[2pt]\lab{成长地}\quad Green Bay · 威斯康星\\[2pt]\lab{任职}\quad Stanford · Pixar · Tableau};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2019 · 三座奥斯卡科技奖\\[2pt]
+     \quad Coons Award 2003\\[2pt]
+     \lab{核心领域}\quad 渲染算法 · GPU\\[2pt]
+     \quad 科学插画与可视化};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{汉拉汉的一生}{1955 — · 从绿湾少年到图灵奖得主}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1955/生于威斯康星州密尔沃基，在 Green Bay 长大,
+    2.3/1977/UW–Madison 核工程学士（BS）,
+    1.6/1981/研究生期间开设并讲授新设图形学课程,
+    0.9/1985/UW–Madison 生物物理学博士,
+    0.2/1986/Pixar 创始员工 · 参与 RenderMan 设计,
+    -0.5/1989/入 Princeton 教职（1995 转 Stanford）,
+    -1.2/2003/联合创办 Tableau · 获 Coons Award,
+    -1.9/2014/第三座奥斯卡科技奖（PBR）,
+    -2.6/2018/入选 ACM SIGGRAPH Academy 创始班,
+    -2.8/2019/与 Catmull 共享图灵奖
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：绿湾与核工程 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：绿湾少年与核工程 (1955–1977)}{威斯康星 · 跨界的起点}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1955} & \cellcolor{panelA}\textcolor{mainclr!82!black}{生于威斯康星州 Milwaukee，在 Green Bay 长大} & \cellcolor{panelB}\textcolor{accentclr!82!black}{五大湖畔的少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1977} & \cellcolor{panelA}\textcolor{mainclr!82!black}{获 UW–Madison 核工程学士（B.S.），并继续留校深造} & \cellcolor{panelB}\textcolor{accentclr!82!black}{核工程的工科根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{求学线} & \cellcolor{panelA}\textcolor{mainclr!82!black}{从核工程本科到生物物理博士，图形学是中途闯入的领域} & \cellcolor{panelB}\textcolor{accentclr!82!black}{跨界学者的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个学核工程的威斯康星少年，最终改写了电影的渲染方式。}
+\end{center}
+\end{frame}}
+
+% --- 5. 1981：研究生上讲台 ---
+\newcommand{\gradslide}{\begin{frame}\plainbar\sectiontitle{1981：研究生上讲台}{新设图形学课程 · Donna Cox · 生物物理博士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1981} & \cellcolor{panelA}\textcolor{mainclr!82!black}{作为研究生，开设并讲授一门新的计算机图形学课程} & \cellcolor{panelB}\textcolor{accentclr!82!black}{在讲台上入门图形学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首批学生} & \cellcolor{panelA}\textcolor{mainclr!82!black}{艺术系研究生 Donna Cox——今艺术与科学可视化名家} & \cellcolor{panelB}\textcolor{accentclr!82!black}{艺术×科学的交汇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1985} & \cellcolor{panelA}\textcolor{mainclr!82!black}{回 UW–Madison 完成生物物理学 PhD（导师 Antony Stretton）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{核工程 $\to$ 图形学 $\to$ 生物物理} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在讲台上学会图形学的人，后来站上了图形学的最高讲坛。}
+\end{center}
+\end{frame}}
+
+% --- 6. NYIT 与 DEC：Catmull 麾下 ---
+\newcommand{\nyitslide}{\begin{frame}\plainbar\sectiontitle{NYIT 与 DEC：Catmull 麾下 (1980s)}{进入图形工业的心脏}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{去处}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1980s} & \cellcolor{panelA}\textcolor{mainclr!82!black}{进入 New York Institute of Technology 计算机图形实验室} & \cellcolor{panelB}\textcolor{accentclr!82!black}{图形工业的心脏} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同期} & \cellcolor{panelA}\textcolor{mainclr!82!black}{任职 Digital Equipment Corporation（DEC）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{工业界双重历练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{归属} & \cellcolor{panelA}\textcolor{mainclr!82!black}{两处工作均在 Edwin Catmull 麾下（页面原文 under Catmull）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{与未来同事的相遇} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在 Catmull 麾下的历练，为 Pixar 的创业埋下伏笔。}
+\end{center}
+\end{frame}}
+
+% --- 7. Pixar 创始员工：RenderMan ---
+\newcommand{\pixarslide}{\begin{frame}\plainbar\sectiontitle{Pixar 创始员工：RenderMan (1986–1989)}{接口规范 + 着色语言 双基石}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{角色}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创始员工} & \cellcolor{panelA}\textcolor{mainclr!82!black}{1986–1989 作为 Pixar Animation Studios 创始员工} & \cellcolor{panelB}\textcolor{accentclr!82!black}{早期核心成员} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{双基石} & \cellcolor{panelA}\textcolor{mainclr!82!black}{参与设计 RenderMan Interface Specification 与 RenderMan Shading Language} & \cellcolor{panelB}\textcolor{accentclr!82!black}{影业标准渲染基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{署名} & \cellcolor{panelA}\textcolor{mainclr!82!black}{The Magic Egg（1984）、Tin Toy（1988）、Toy Story（1995）片尾致谢在列} & \cellcolor{panelB}\textcolor{accentclr!82!black}{作品进入影史} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} RenderMan —— 电影工业的渲染标准}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{RenderMan}=\text{接口规范}+\text{着色语言}$\qquad 让"怎么上色"成为通用标准}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 着色语言论文 ---
+\newcommand{\shadingslide}{\begin{frame}\plainbar\sectiontitle{着色语言论文 (1990)}{SIGGRAPH 1990 · 与 Jim Lawson}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelA}\textcolor{mainclr!82!black}{1990-08 与 Jim Lawson 发表 "A language for shading and lighting calculations"（SIGGRAPH 1990）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{着色语言奠基文献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主题} & \cellcolor{panelA}\textcolor{mainclr!82!black}{为着色与光照计算设计形式化描述语言} & \cellcolor{panelB}\textcolor{accentclr!82!black}{RenderMan 着色语言的学术侧写} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{panelA}\textcolor{mainclr!82!black}{日后 GPU 着色语言的思想源头（页面仅载论文事实，延伸从克制）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{思想影响深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Shading Language：把"上色"写进程序}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{表面}\ \xrightarrow{\text{shader}}\ \text{颜色与光照}$\qquad 渲染从固定流程走向可编程}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Princeton → Stanford ---
+\newcommand{\academiaslide}{\begin{frame}\plainbar\sectiontitle{Princeton $\to$ Stanford：学界深耕 (1989–)}{Canon USA 讲席教授}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1989} & \cellcolor{panelA}\textcolor{mainclr!82!black}{加入 Princeton University 教职} & \cellcolor{panelB}\textcolor{accentclr!82!black}{转向学界} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1995} & \cellcolor{panelA}\textcolor{mainclr!82!black}{转 Stanford University 至今} & \cellcolor{panelB}\textcolor{accentclr!82!black}{深耕西海岸} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{头衔} & \cellcolor{panelA}\textcolor{mainclr!82!black}{计算机科学与电气工程 Canon USA 讲席教授（计算机图形学实验室）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{图形学重镇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{研究} & \cellcolor{panelA}\textcolor{mainclr!82!black}{渲染算法 · 图形处理器（GPU）· 科学插画与可视化} & \cellcolor{panelB}\textcolor{accentclr!82!black}{学术版图} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Princeton 到 Stanford，他把图形学做成了三十年长跑。}
+\end{center}
+\end{frame}}
+
+% --- 10. Tableau 与可视化 ---
+\newcommand{\tableauslide}{\begin{frame}\plainbar\sectiontitle{Tableau 与国家级可视化平台 (2003–)}{首席科学家 · DHS 中心 · Intel 中心}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2003} & \cellcolor{panelC}\textcolor{badgeC!82!black}{联合创办 Tableau Software，至今任首席科学家（页面原话 remains）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{学术创业样本} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2005-02} & \cellcolor{panelC}\textcolor{badgeC!82!black}{斯坦福被美国国土安全部选为首个区域可视化与分析中心（信息可视化/可视分析）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{国家级平台} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2011-05} & \cellcolor{panelC}\textcolor{badgeC!82!black}{Intel 资助视觉计算中心，与 Intel 的 Jim Hurley 共同领导} & \cellcolor{panelB}\textcolor{accentclr!82!black}{产学联动} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Tableau —— 数据可视化巨头的学术源头}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{数据}\ \xrightarrow{\text{可视化}}\ \text{洞察}$\qquad 图形学研究的另一种落地}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 三座奥斯卡科技奖 ---
+\newcommand{\oscarsslide}{\begin{frame}\plainbar\sectiontitle{三座奥斯卡科技奖 (1993 / 2004 / 2014)}{皆为科学技术奖（Sci-Tech）}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{奖项与理由}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1993} & \cellcolor{panelB}\textcolor{accentclr!82!black}{科学与工程奖：RenderMan（与其他 Pixar 创始员工共享）} & \cellcolor{panelA}\textcolor{mainclr!82!black}{工业标准获认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2004} & \cellcolor{panelB}\textcolor{accentclr!82!black}{技术成就奖：半透明材质次表面散射模拟（与 Stephen R. Marschner、Henrik Wann Jensen 共享）} & \cellcolor{panelA}\textcolor{mainclr!82!black}{材质研究突破} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2014} & \cellcolor{panelB}\textcolor{accentclr!82!black}{技术成就奖：Physically Based Rendering 的概念形式化与参考实现（与 Matt Pharr、Greg Humphreys 共享）} & \cellcolor{panelA}\textcolor{mainclr!82!black}{PBR 时代基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 三座奥斯卡，皆为科学技术奖——渲染研究的工业回响。}
+\end{center}
+\end{frame}}
+
+% --- 12. SIGGRAPH 荣誉 ---
+\newcommand{\siggraphslide}{\begin{frame}\plainbar\sectiontitle{SIGGRAPH 荣誉}{Achievement 1993 · Coons 2003 · Academy 2018}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{荣誉}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1993} & \cellcolor{panelB}\textcolor{accentclr!82!black}{SIGGRAPH Computer Graphics Achievement Award} & \cellcolor{panelA}\textcolor{mainclr!82!black}{早期成就认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2003} & \cellcolor{panelB}\textcolor{accentclr!82!black}{Steven A. Coons Award，理由 "leadership in rendering algorithms, graphics architectures and systems, and new visualization methods for computer graphics"} & \cellcolor{panelA}\textcolor{mainclr!82!black}{终身创意贡献最高奖之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2018} & \cellcolor{panelB}\textcolor{accentclr!82!black}{入选 ACM SIGGRAPH Academy 创始班} & \cellcolor{panelA}\textcolor{mainclr!82!black}{同代公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2006} & \cellcolor{panelB}\textcolor{accentclr!82!black}{IEEE VGTC 可视化研究职业成就奖} & \cellcolor{panelA}\textcolor{mainclr!82!black}{可视化领域认可} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从成就奖到 Coons 奖，SIGGRAPH 见证了他三十年渲染之路。}
+\end{center}
+\end{frame}}
+
+% --- 13. 桃李满门 ---
+\newcommand{\studentsslide}{\begin{frame}\plainbar\sectiontitle{桃李满门}{渲染 · 可视化 · 计算摄影的中坚}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博士生} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Maneesh Agrawala、Ren Ng、Matt Pharr、Tamara Munzner、Peter Schröder} & \cellcolor{panelB}\textcolor{accentclr!82!black}{诸领域中坚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教学} & \cellcolor{panelD}\textcolor{badgeD!82!black}{三获斯坦福大学教学奖} & \cellcolor{panelB}\textcolor{accentclr!82!black}{讲台上的大师} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{早期学生} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Donna Cox——1981 年图形学课上的艺术系研究生，今科学可视化名家} & \cellcolor{panelB}\textcolor{accentclr!82!black}{一门课的回响} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一门 1981 年的研究生课程，走出了几代图形学人。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉年表 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉年表}{三大院士 · 图灵奖 2019（与 Catmull 共享）}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三大院士} & \cellcolor{panelB}\textcolor{accentclr!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 美国国家工程院院士（1999）\item 美国艺术与科学院院士（2007）\item ACM Fellow（2008）\end{itemize}} & \cellcolor{panelA}\textcolor{mainclr!82!black}{三大学术共同体} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{图灵奖} & \cellcolor{panelB}\textcolor{accentclr!82!black}{2019 ACM A.M. Turing Award，与 Edwin Catmull 共享——"computer-generated imagery 的开创性努力"（2020-03 宣布）} & \cellcolor{panelA}\textcolor{mainclr!82!black}{计算机科学最高荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{工业荣誉} & \cellcolor{panelB}\textcolor{accentclr!82!black}{三座奥斯卡科技奖（1993/2004/2014）· Coons Award（2003）· SIGGRAPH Academy（2018）} & \cellcolor{panelA}\textcolor{mainclr!82!black}{学术与工业双冠} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 渲染大师之名，因标准与传承而愈发闪耀。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {"Curiosity and passion};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {determine success."};
+\node[font=\fontsize{9}{12}\selectfont, text=muteddark] at ([yshift=-0.75cm]current page.center) {好奇心与热情，决定成功。—— 页面 Quotes 栏};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-1.45cm, xshift=-4.2cm]current page.center) -- ([yshift=-1.45cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-2.15cm]current page.center) {— 致敬 Pat Hanrahan};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.95cm]current page.center) {帕特·汉拉汉\quad Patrick M. Hanrahan\quad 1955 —（在世）};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{film}\enspace Turing 2019 · 三座奥斯卡科技奖 · RenderMan\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\gradslide
+\nyitslide
+\pixarslide
+\shadingslide
+\academiaslide
+\tableauslide
+\oscarsslide
+\siggraphslide
+\studentsslide
+\honorsslide
+\closingslide
+\end{document}

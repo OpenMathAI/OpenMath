@@ -1,0 +1,469 @@
+% =============================================================
+%  首台现代个人计算机设计者：查尔斯·撒克尔 (Charles P. Thacker)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：一台桌面机器点亮整个图形时代 —— 柔和气泡
+%  资料来源：turing/pages/2009/Charles P. Thacker/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Thacker 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgePC}{HTML}{2E5A9E}     % 个人计算机 — 蓝
+\definecolor{badgeNET}{HTML}{1E8E8E}    % 网络 — 青绿
+\definecolor{badgeAR}{HTML}{D9A441}     % 体系结构 — 琥珀
+\definecolor{badgePP}{HTML}{C0395B}     % 打印与外设 — 玫瑰
+\definecolor{pcpanel}{RGB}{228,233,246}
+\definecolor{netpanel}{RGB}{222,240,238}
+\definecolor{arpanel}{RGB}{249,240,224}
+\definecolor{pppanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgePC!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgePP!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeAR!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{microchip}\enspace 首台现代个人计算机设计者\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {查尔斯·撒克尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Charles P. Thacker\enspace·\enspace 1943 — 2017};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {Xerox Alto · Ethernet · Tablet PC · 2009 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgePC] at (-5.05,0)
+        {个人计算机\\Xerox Alto\par\scriptsize project leader};
+      \node[badge, fill=badgeNET] at (-1.68,0)
+        {局域网\\Ethernet\par\scriptsize co-inventor};
+      \node[badge, fill=badgeAR] at (1.68,0)
+        {体系结构\\分时系统\par\scriptsize SDS 940 · BCC};
+      \node[badge, fill=badgePP] at (5.05,0)
+        {平板与外设\\Tablet PC\par\scriptsize 激光打印机};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"pioneering design and realization of the Alto, the first modern personal computer" —— 2009 图灵奖（ACM citation）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Chuckthacker_cropped_.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Chuckthacker_cropped_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Charles P. Thacker};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Xerox PARC · DEC SRC · Microsoft\enspace|\enspace Turing 2009 · Draper Prize 2004};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{撒克尔 - 从 Pasadena 到个人计算先驱}{生卒 · 本名 · 国籍 · 教育 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Chuckthacker_cropped_.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Chuckthacker_cropped_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Charles P. Thacker};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1943-02-26 — 2017-06-12\\[2pt]\lab{本名}\quad Charles Patrick "Chuck" Thacker\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=netpanel, draw=badgeNET!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad UC Berkeley 物理 BS 1967\\[2pt]
+     \lab{师承}\quad 无研究生学位\\[2pt]
+     \quad（最高学历院校 UC Berkeley）};
+  \node[infob, fill=pcpanel, draw=badgePC!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Pasadena · 加州 · 美国\\[2pt]\lab{去世地}\quad Palo Alto · 加州\\[2pt]\lab{任职}\quad Xerox PARC · DEC SRC · Microsoft};
+  \node[infob, fill=arpanel, draw=badgeAR!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2009 · Draper 2004\\[2pt]
+     \quad von Neumann Medal 2007\\[2pt]
+     \lab{核心领域}\quad 体系结构 · 个人计算机\\[2pt]
+     \quad Ethernet · 平板计算机};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{撒克尔的一生}{1943 — 2017 · 从 Pasadena 少年到个人计算先驱}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    3.0/1943/生于加州 Pasadena,
+    2.3/1967/获 UC Berkeley 物理学 BS,
+    1.6/1968/加入 Project Genie（SDS 940 分时系统）,
+    0.9/1970s/BCC 设计处理器与存储 · 核心班底入 PARC,
+    0.2/1970s/Xerox Alto 项目负责人 · Ethernet 共同发明,
+    -0.5/1983/DEC Systems Research Center 创始人,
+    -1.2/1997/加入 Microsoft Research · 协建 MSR Cambridge,
+    -1.9/2004/获 Draper Prize（四人共享）,
+    -2.4/2009/获图灵奖（2010 年公布）,
+    -2.9/2017/逝于 Palo Alto
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：Pasadena 与 Berkeley 物理 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：Pasadena 与 Berkeley 物理 (1943--1967)}{工程师之子 · 唯一的学位}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1943} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{生于 Pasadena；父亲 Ralph Scott Thacker 为航空业电气工程师（Caltech 1928 届）} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{工程世家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{母亲（Mattie）Fern Cheek 早年独立抚养两个儿子} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{独立坚韧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1967} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{获 UC Berkeley 物理学 BS —— 他唯一的学位，此后再无硕士与博士} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{本科出身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{注} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{页面无任何师承记载} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{实干路线} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一位物理本科出身的工程师，将亲手定义个人计算机。}
+\end{center}
+\end{frame}}
+
+% --- 5. Project Genie：分时系统的洗礼 ---
+\newcommand{\genieslide}{\begin{frame}\plainbar\sectiontitle{Project Genie：分时系统的洗礼 (1968--)}{SDS 940 · Berkeley Timesharing System}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{加入 UC Berkeley 的 "Project Genie"} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{技术起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{系统} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{参与开发开创性的 Berkeley Timesharing System（SDS 940 之上）} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{分时先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{底座} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{分时系统经验成为 Alto 之前的技术底座} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{厚积薄发} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 分时系统的洗礼，锻造出未来的系统设计者。}
+\end{center}
+\end{frame}}
+
+% --- 6. BCC：处理器与存储的设计者 ---
+\newcommand{\bccslide}{\begin{frame}\plainbar\sectiontitle{BCC：处理器与存储的设计者 (1970s 初)}{与 Lampson 同行 · 败而聚才}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{角色}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{建制} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{与 Butler Lampson 等人离开 Berkeley，组建 Berkeley Computer Corporation（BCC）} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{核心团队} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{职责} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{Thacker 在 BCC 设计处理器与存储系统} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{硬件设计者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{去向} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{BCC 商业上不成功，但这批人成为 Xerox PARC 计算机系统实验室的核心技术班底} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{败而聚才} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} BCC 虽败，班底犹在 —— PARC 传奇即将开场。}
+\end{center}
+\end{frame}}
+
+% --- 7. Xerox Alto：第一台现代个人计算机 ---
+\newcommand{\altoslide}{\begin{frame}\plainbar\sectiontitle{Xerox Alto：第一台现代个人计算机 (1970s)}{project leader · 鼠标驱动 GUI}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{关键词}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{项目} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{1970s--1980s 在 PARC，任 Xerox Alto 个人计算机系统的 project leader} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{项目负责人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首创} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{Alto 是首台使用鼠标驱动图形用户界面（GUI）的计算机} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{GUI 开山} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{ACM citation 称其为 "the first modern personal computer"} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{图灵奖核心} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Xerox Alto —— Thacker 的设计与实现}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{Alto}=\text{鼠标驱动 GUI 的计算机}$\quad 即 "the first modern personal computer"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. Ethernet：共同发明局域网 ---
+\newcommand{\ethernetslide}{\begin{frame}\plainbar\sectiontitle{Ethernet：共同发明局域网}{co-inventor of the Ethernet LAN}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发明} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{1970s 在 PARC 与他人共同发明以太局域网（Ethernet LAN）} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{co-inventor} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{机理} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{多台计算机共享一条广播信道，彼此通信} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{LAN 的雏形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{格局} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{个人计算机 + 局域网：PARC 的双引擎} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{图灵奖理由之二} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Ethernet：让 Alto 们彼此相连}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{多台计算机}\ \xrightarrow{\text{共享广播信道}}\ \text{局域网（LAN）}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. PARC 的更多奇迹 ---
+\newcommand{\parcslide}{\begin{frame}\plainbar\sectiontitle{PARC 的更多奇迹}{首台激光打印机等诸多项目}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{项目}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{打印机} & \cellcolor{pppanel}\textcolor{badgePP!82!black}{参与诸多项目，其中包括世界首台激光打印机（参与贡献）} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{广度惊人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{实验室} & \cellcolor{pppanel}\textcolor{badgePP!82!black}{PARC Computer Systems Laboratory 的核心人物} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{技术班底核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发明群} & \cellcolor{pppanel}\textcolor{badgePP!82!black}{GUI 个人机、以太网、激光打印机 —— PARC 的发明改变时代} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{黄金年代} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} Alto 与 Ethernet 之外，他的名字还写在 PARC 的更多奇迹里。}
+\end{center}
+\end{frame}}
+
+% --- 10. DEC SRC 与 Lectrice ---
+\newcommand{\srcslide}{\begin{frame}\plainbar\sectiontitle{DEC SRC（1983）与 Lectrice}{再建实验室 · 笔式手持机}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1983} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{DEC Systems Research Center（SRC）创始人之一} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{再建实验室} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Lectrice} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{在 DEC SRC 设计笔式手持计算机 Lectrice} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{平板前奏} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{经验线} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{PARC 的 "interim Dynabook" 经验与 Lectrice，日后汇入 Tablet PC} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{灵感脉络} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 PARC 到 DEC，他把实验室建到哪儿，创新就跟到哪儿。}
+\end{center}
+\end{frame}}
+
+% --- 11. Microsoft（1997--）---
+\newcommand{\msftslide}{\begin{frame}\plainbar\sectiontitle{Microsoft（1997--）}{MSR Cambridge · Tablet PC · Technical Fellow}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1997} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{加入 Microsoft Research，帮助建立 MSR Cambridge（英国剑桥）} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{跨洋建院} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Tablet PC} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{回美后设计 Microsoft Tablet PC 硬件} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{图灵奖理由之三} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣衔} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{Microsoft Technical Fellow} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{顶级技术职} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Tablet PC：三十年平板梦想的落地}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{interim Dynabook（PARC）}+\text{Lectrice（DEC SRC）}\Rightarrow\text{Tablet PC}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. RAMP 与 RISC-V 渊源 ---
+\newcommand{\rampslide}{\begin{frame}\plainbar\sectiontitle{RAMP 与 RISC-V 渊源 (2006--2010)}{BEE FPGA 平台 · 开源处理器的间接推手}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{项目}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{RAMP} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{2006--2010 任 Berkeley RAMP（BEE FPGA 平台）研究贡献者} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{大规模模拟} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{BEE2/BEE3} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{为后续 BEE 平台提供建议与咨询，并用于自己的研究探索} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{软硬兼施} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{RISC-V} & \cellcolor{arpanel}\textcolor{badgeAR!82!black}{RAMP 缺少开源处理器设计正是 RISC-V 的动因 —— Thacker "played a role"} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{间接渊源} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一位硬件设计师的手，间接推动了开源指令集的未来。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2009 · PARC 同侪}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（2009，2010 年公布）\item Draper Prize（2004，四人共享）\item von Neumann Medal（2007）\item Eckert--Mauchly Award（2017，身后追授）\end{itemize}} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{荣誉等身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同侪} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{Draper Prize 与 Alan C. Kay、Butler W. Lampson、Robert W. Taylor 四人共享} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{PARC 同侪} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{其他} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{ACM Fellow（1994）· Computer History Museum Fellow（2007）· UC Berkeley 杰出校友（1996）· ETH 荣誉博士} & \cellcolor{netpanel}\textcolor{badgeNET!82!black}{公认与尊重} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Alto 到 Ethernet，荣誉折射出一位工程师的分量。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：三项关键词的当代回响}{个人计算机 · 以太网 · 平板电脑}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=pcpanel, draw=badgePC!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePC} 个人计算机}\\[3pt]Xerox Alto\\[2pt]Tablet PC};
+\node[leg, fill=netpanel, draw=badgeNET!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeNET} 局域网}\\[3pt]Ethernet\\[2pt]co-inventor};
+\node[leg, fill=arpanel, draw=badgeAR!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAR} 体系结构}\\[3pt]分时系统 · BCC\\[2pt]RAMP};
+\node[leg, fill=pppanel, draw=badgePP!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePP} 外设与打印}\\[3pt]首台激光打印机\\[2pt]Lectrice};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.2cm, align=center] at (0,-1.6) {{\fontsize{8.2}{10.5}\selectfont\bfseries\color{coverprimary!90!black} "leading development of the Xerox PARC Alto, and for innovations in networked personal computer systems and laser printing technologies"}\\[2pt]{\fontsize{7.2}{9.2}\selectfont\color{coverdark!85} —— Computer History Museum（2007）\\[2pt]GUI 个人机 $\rightarrow$ 以太网 $\rightarrow$ 平板电脑：三项图灵奖关键词仍在当代计算中回响。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {一台 Alto，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {点亮了整个图形时代。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Charles P. Thacker};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {查尔斯·撒克尔\quad Charles P. Thacker\quad 1943 — 2017};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{microchip}\enspace Turing 2009 · Draper Prize 2004\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\genieslide
+\bccslide
+\altoslide
+\ethernetslide
+\parcslide
+\srcslide
+\msftslide
+\rampslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

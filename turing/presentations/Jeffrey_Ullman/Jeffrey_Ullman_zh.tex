@@ -1,0 +1,492 @@
+% =============================================================
+%  数据库理论奠基人：杰弗里·厄尔曼 (Jeffrey Ullman)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：规整数据表网格 —— 稀疏细线表格呼应「数据库理论与教材」
+%  资料来源：turing/pages/2020/Jeffrey Ullman/index.html（无肖像 → 装饰圆占位）
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Ullman 专属基础色 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{mainclr}{HTML}{2E5A9E}     % 数据库理论 — 蓝（奠基人 / DB 教材）
+\definecolor{accentclr}{HTML}{1E8E8E}   % 自动机与语言理论 — 青绿（灰姑娘书 / von Neumann Medal）
+\definecolor{badgeC}{HTML}{D9A441}      % 编译器教材 — 琥珀（龙书三部曲）
+\definecolor{badgeD}{HTML}{C0395B}      % 教育与传承 — 玫瑰（桃李 / Gradiance / Stanford Online）
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 数据表网格背景（数据库母题：稀疏细线表格网格）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \foreach \x in {2.2,5.0,7.8,10.6,13.4} {
+    \draw[mainclr!10, line width=0.6pt] ([xshift=\x cm, yshift=0.8cm]current page.south west) -- ([xshift=\x cm, yshift=6.4cm]current page.south west);
+  }
+  \foreach \y in {2.0,3.4,4.8} {
+    \draw[mainclr!8, line width=0.6pt] ([xshift=1.2cm, yshift=\y cm]current page.south west) -- ([xshift=14.8cm, yshift=\y cm]current page.south west);
+  }
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!8] (current page.south east) ++(-2.4,2.0) circle (2.6cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{database}\enspace 数据库理论奠基人\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {杰弗里·厄尔曼};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Jeffrey David Ullman\enspace·\enspace 1942 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {龙书三版合著者 · 灰姑娘书 · 数据库理论 · 2020 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=mainclr] at (-5.05,0)
+        {数据库理论\\Database Theory\par\scriptsize 奠基人之一};
+      \node[badge, fill=accentclr] at (-1.68,0)
+        {自动机与语言\\Cinderella Book\par\scriptsize 灰姑娘书};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {编译器教材\\Dragon Books\par\scriptsize 绿·红·紫龙};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {教育与传承\\Online Education\par\scriptsize Gradiance};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"Innovators Who Shaped the Foundations of Programming Language Compilers and Algorithms" —— 2020 图灵奖（ACM 新闻标题）};
+  \node[circle, draw=coveraccent!50, line width=1.2pt, fill=panelA, minimum size=2.5cm]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {{\fontsize{30}{34}\selectfont\color{mainclr!75}\faIcon{database}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.55cm]current page.center) {Jeffrey D. Ullman};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Stanford · Princeton · Bell Labs\enspace|\enspace Turing 2020};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{厄尔曼 - 从工程数学到数据库理论}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[circle, draw=coveraccent!55, line width=1.2pt, fill=panelA, minimum size=3.3cm]
+    at (-6.15,0.15) {{\fontsize{40}{44}\selectfont\color{mainclr!75}\faIcon{database}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.0) {Jeffrey David Ullman（页面未载肖像）};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1942-11-22 —（在世）\\[2pt]\lab{本名}\quad Jeffrey David Ullman\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=panelB, draw=accentclr!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Columbia 工程数学 BS 1963\\[2pt]
+     \quad Princeton 电气工程 PhD 1966\\[2pt]
+     \lab{师承}\quad Bernstein · McKellar（两位）};
+  \node[infob, fill=panelA, draw=mainclr!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 页面未载\\[2pt]\lab{任职}\quad Stanford · Princeton\\[2pt]\quad Bell Labs\\[2pt]\lab{现职}\quad Ascherman 荣休教授};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2020（与 Aho 共享）\\[2pt]
+     \quad von Neumann Medal 2010\\[2pt]
+     \lab{核心领域}\quad 数据库理论 · 编译器教材\\[2pt]
+     \quad 自动机与语言理论};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{厄尔曼的一生}{1942 — · 从工程数学到图灵奖}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1942/生于美国（出生地页面未载）,
+    2.3/1963/Columbia 工程数学 BS,
+    1.6/1966/Princeton 电气工程 PhD（Bernstein 与 McKellar 门下）· 入 Bell Labs,
+    0.9/1969/回 Princeton 任副教授 · 与 Hopcroft 合著自动机开山之作,
+    0.2/1974/Princeton 正教授 · 绿龙书前夜,
+    -0.5/1977/绿龙书（与 Aho）,
+    -1.2/1979/转任 Stanford,
+    -1.9/1988/数据库理论两卷本（1988/1989）,
+    -2.6/2000/Knuth Prize,
+    -2.8/2020/NAS 院士 · 图灵奖（与 Aho 共享，2021-03-31 宣布）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 哥伦比亚工程数学起步 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{哥伦比亚工程数学起步 (1942–1963)}{Engineering Mathematics · Columbia BS}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1942} & \cellcolor{panelA}\textcolor{mainclr!82!black}{1942-11-22 生于美国；出生地 Wikipedia 页面未载，无从补写} & \cellcolor{panelB}\textcolor{accentclr!82!black}{美国计算机科学家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1963} & \cellcolor{panelA}\textcolor{mainclr!82!black}{获 Columbia University 工程数学学士（BS）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{数学与工程并重} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{panelA}\textcolor{mainclr!82!black}{以编译器、自动机、数据结构、数据库教材为后世所知} & \cellcolor{panelB}\textcolor{accentclr!82!black}{教材作家的一生坐标} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 工程数学的底子，日后撑起了从编译器到数据库的一整排教科书。}
+\end{center}
+\end{frame}}
+
+% --- 5. Princeton 电气工程博士 ---
+\newcommand{\princetonslide}{\begin{frame}\plainbar\sectiontitle{Princeton 电气工程博士 (1963–1966)}{Bernstein 与 McKellar 门下 · 纠错码}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学位} & \cellcolor{panelA}\textcolor{mainclr!82!black}{1966 年获 Princeton 电气工程 PhD（infobox 另载 MS）——不是"计算机科学学位"} & \cellcolor{panelB}\textcolor{accentclr!82!black}{电系出身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Synchronization Error Correcting Codes（1966）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{同步纠错码} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Arthur Bernstein 与 Archie McKellar（两位）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{双导师门下} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 同步纠错码（1966 博士论文主题）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{码字同步误差}\ \xrightarrow{\text{编码设计}}\ \text{可纠正的接收序列}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Bell Labs 与 Princeton 任教 ---
+\newcommand{\bellslabslide}{\begin{frame}\plainbar\sectiontitle{Bell Labs 与 Princeton 任教 (1966–1979)}{与 Aho 的长期合作由此起步}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1966–1969} & \cellcolor{panelA}\textcolor{mainclr!82!black}{博士毕业后在 Bell Labs 工作三年} & \cellcolor{panelB}\textcolor{accentclr!82!black}{工业研究历练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969} & \cellcolor{panelA}\textcolor{mainclr!82!black}{回到 Princeton 任副教授} & \cellcolor{panelB}\textcolor{accentclr!82!black}{重返讲台} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1974} & \cellcolor{panelA}\textcolor{mainclr!82!black}{晋升 Princeton 正教授} & \cellcolor{panelB}\textcolor{accentclr!82!black}{学术立足} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{panelA}\textcolor{mainclr!82!black}{与 Alfred Aho 的长期合作由此起步——算法书、龙书、教材皆出于此} & \cellcolor{panelB}\textcolor{accentclr!82!black}{龙书二人组的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 贝尔的三年与普林斯顿的十年，把理论写成了传世的教材。}
+\end{center}
+\end{frame}}
+
+% --- 7. 龙书三部曲 ---
+\newcommand{\dragonslide}{\begin{frame}\plainbar\sectiontitle{龙书三部曲 (1977 / 1986 / 2006)}{绿龙 $\to$ 红龙 $\to$ 紫龙 · 三版全在列}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{版本}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1977} & \cellcolor{panelC}\textcolor{badgeC!82!black}{与 Aho 合著 Principles of Compiler Design——封面绿龙，"the dragon book" 之始} & \cellcolor{panelA}\textcolor{mainclr!82!black}{编译教材开山} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1986} & \cellcolor{panelC}\textcolor{badgeC!82!black}{加入 Ravi Sethi 出新版 Compilers: Principles, Techniques, and Tools——"红龙书"} & \cellcolor{panelA}\textcolor{mainclr!82!black}{传世新版} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2006} & \cellcolor{panelC}\textcolor{badgeC!82!black}{再加入 Monica Lam 出第二版——"紫龙书"；Ullman 是三版全部在列的合著者} & \cellcolor{panelA}\textcolor{mainclr!82!black}{课程与工业标准} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 编译器的前端与后端（龙书的骨架）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{词法分析}\to\text{语法分析}\to\text{语义分析}\to\text{中间代码}\to\text{优化}\to\text{目标代码}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 灰姑娘书：自动机与语言理论 ---
+\newcommand{\cinderellaside}{\begin{frame}\plainbar\sectiontitle{灰姑娘书：自动机与语言理论}{Hopcroft / Ullman / Motwani · 1969/1979/2000}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著作} & \cellcolor{panelB}\textcolor{accentclr!82!black}{与 Hopcroft 合著 Introduction to Automata Theory, Languages, and Computation；第三版（2000）加入 Motwani} & \cellcolor{panelA}\textcolor{mainclr!82!black}{自动机标准教材} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{版本} & \cellcolor{panelB}\textcolor{accentclr!82!black}{1969 / 1979 / 2000 多版迭代，俗称 "the Cinderella book"} & \cellcolor{panelA}\textcolor{mainclr!82!black}{三十年长销} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{领域} & \cellcolor{panelB}\textcolor{accentclr!82!black}{自动机 · 形式语言 · 可计算性——注意与龙书（编译器）是两套书} & \cellcolor{panelA}\textcolor{mainclr!82!black}{理论计算机科学根基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 2010 IEEE John von Neumann Medal（与 Hopcroft 共获）获奖理由}\\[2pt]
+  {\fontsize{8}{10.5}\selectfont\color{coverprimary!88!black}\itshape "For laying the foundations for the fields of automata and language theory and many seminal contributions to theoretical computer science."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 数据库理论的奠基人 ---
+\newcommand{\dbslide}{\begin{frame}\plainbar\sectiontitle{数据库理论的奠基人}{页面明言 "one of the founders of the field of database theory"}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{panelA}\textcolor{mainclr!82!black}{页面明言：数据库理论领域的奠基人之一；其博士学生亦多成为领域中坚} & \cellcolor{panelB}\textcolor{accentclr!82!black}{领域的开创者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{两卷本} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Principles of Database and Knowledge-Base Systems（1988 / 1989，两卷）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{理论定本} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教材} & \cellcolor{panelA}\textcolor{mainclr!82!black}{A First Course in Database Systems（与 Widom）· Database Systems: The Complete Book（与 Garcia-Molina、Widom）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{课堂常青} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 关系代数：数据库理论的形式化基石}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\pi_{L}\big(\sigma_{\theta}(R \bowtie S)\big)\qquad$ 选择 · 投影 · 连接——查询优化理论的语言}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 斯坦福岁月 ---
+\newcommand{\stanfordslide}{\begin{frame}\plainbar\sectiontitle{斯坦福岁月 (1979–2003)}{系主任 · Ascherman 讲席 · 荣休}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1979} & \cellcolor{panelA}\textcolor{mainclr!82!black}{从 Princeton 移席 Stanford University} & \cellcolor{panelB}\textcolor{accentclr!82!black}{西行斯坦福} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1990–1994} & \cellcolor{panelA}\textcolor{mainclr!82!black}{出任系主任（department chair）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{掌系五年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1994} & \cellcolor{panelA}\textcolor{mainclr!82!black}{获颁 Stanford W. Ascherman Professor of Computer Science 讲席} & \cellcolor{panelB}\textcolor{accentclr!82!black}{讲席教授} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2003} & \cellcolor{panelA}\textcolor{mainclr!82!black}{荣休（Emeritus）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{Ascherman 荣休教授} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Princeton 到 Stanford，讲台与教材一起塑造了数据库一代。}
+\end{center}
+\end{frame}}
+
+% --- 11. Brin 的导师与 Google 顾问 ---
+\newcommand{\brinslide}{\begin{frame}\plainbar\sectiontitle{Brin 的导师与 Google 顾问}{博士导师 · 技术顾问委员会}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博士导师} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Sergey Brin——Google 联合创始人之一——的博士导师是 Ullman} & \cellcolor{panelB}\textcolor{accentclr!82!black}{桃李中的传奇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{顾问} & \cellcolor{panelA}\textcolor{mainclr!82!black}{曾任 Google 技术顾问委员会（technical advisory board）成员} & \cellcolor{panelB}\textcolor{accentclr!82!black}{产学之间} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{公共服务} & \cellcolor{panelA}\textcolor{mainclr!82!black}{亦为 TheOpenCode Foundation 顾问委员会成员} & \cellcolor{panelB}\textcolor{accentclr!82!black}{开放社区} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从数据库课堂走出的学生，改写了整个时代的信息检索。}
+\end{center}
+\end{frame}}
+
+% --- 12. 桃李满门 ---
+\newcommand{\studentslide}{\begin{frame}\plainbar\sectiontitle{桃李满门：数据库一代}{十余位博士学生 · 多成为领域中坚}\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}X}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{博士学生（一）}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{博士学生（二）}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{页面实录} & \cellcolor{panelD}\textcolor{badgeD!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Sergey Brin（Google 联合创始人）\item Surajit Chaudhuri · Anna Karlin\item David Maier · Alberto O. Mendelzon\item Mihalis Yannakakis · Ravi Sethi（亦为龙书新版合著者）\end{itemize}} & \cellcolor{panelD}\textcolor{badgeD!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Dan Hirschberg · Kevin Karplus\item Harry Mairson\item Jeffrey F. Naughton\item Anand Rajaraman（亦合著 Mining of Massive Datasets）\item Yehoshua Sagiv\end{itemize}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{谱系} & \cellcolor{panelA}\textcolor{mainclr!82!black}{页面明言：许多博士学生也在数据库领域变得举足轻重} & \cellcolor{panelB}\textcolor{accentclr!82!black}{数据库理论与工业的中坚} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一位导师的名单，几乎就是数据库领域的一段名人录。}
+\end{center}
+\end{frame}}
+
+% --- 13. 在线教育与 Gradiance ---
+\newcommand{\eduslide}{\begin{frame}\plainbar\sectiontitle{在线教育与 Gradiance}{Stanford Online · 数据挖掘教材 · 作业平台}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{在线课程} & \cellcolor{panelD}\textcolor{badgeD!82!black}{在 Stanford Online 平台讲授 automata 与 mining massive datasets 课程} & \cellcolor{panelA}\textcolor{mainclr!82!black}{课堂延伸到线上} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教材} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Mining of Massive Datasets（与 Leskovec、Rajaraman，第二版 2014）} & \cellcolor{panelA}\textcolor{mainclr!82!black}{大规模数据挖掘入门} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创业} & \cellcolor{panelD}\textcolor{badgeD!82!black}{创办 Gradiance Corporation——为高校课程提供作业批改支持} & \cellcolor{panelA}\textcolor{mainclr!82!black}{教育基础设施} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 荣休之后，他把讲台搬到了线上——教材与平台一起继续育人。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉墙与 2020 图灵奖 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉墙与 2020 图灵奖}{与 Alfred Aho 共享 · "Shaped the Foundations..."}\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣誉清单} & \cellcolor{panelC}\textcolor{badgeC!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item ACM Fellow（1994）· Knuth Prize（2000）\item IEEE John von Neumann Medal（2010，与 Hopcroft 共获）\item C\&C Prize（2017，与 Hopcroft、Aho 同获）\item NAS 院士（2020）\end{itemize}} & \cellcolor{panelA}\textcolor{mainclr!82!black}{学术共同体全面认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2020 图灵奖} & \cellcolor{panelA}\textcolor{mainclr!82!black}{与长期合作者 Alfred Aho 共享；2021-03-31 宣布——ACM 新闻标题口径：表彰奠定编程语言编译器与算法的基础} & \cellcolor{panelB}\textcolor{accentclr!82!black}{龙书二人组的最高荣誉} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 图灵奖之外，Knuth Prize（2000）属于 Ullman——两位得主的荣誉墙各有归属。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {把编译器、自动机与数据库，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {写进两代人的教科书。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Jeffrey Ullman};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {杰弗里·厄尔曼\quad Jeffrey David Ullman\quad 1942 —（在世）};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{database}\enspace Turing 2020 · 龙书 · 灰姑娘书 · 数据库理论\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\princetonslide
+\bellslabslide
+\dragonslide
+\cinderellaside
+\dbslide
+\stanfordslide
+\brinslide
+\studentslide
+\eduslide
+\honorsslide
+\closingslide
+\end{document}

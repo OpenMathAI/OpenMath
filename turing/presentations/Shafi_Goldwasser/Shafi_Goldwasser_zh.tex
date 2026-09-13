@@ -1,0 +1,502 @@
+% =============================================================
+%  可证明安全奠基人：沙菲·戈德瓦瑟 (Shafi Goldwasser)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：证明你知道，却不说出你知道 —— 稀疏气泡呼应零知识
+%  资料来源：turing/pages/2012/Shafi Goldwasser/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Goldwasser 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgePE}{HTML}{2E5A9E}     % 概率加密 — 蓝
+\definecolor{badgeZK}{HTML}{1E8E8E}     % 零知识证明 — 青绿
+\definecolor{badgePCP}{HTML}{D9A441}    % 复杂性理论 — 琥珀
+\definecolor{badgeIND}{HTML}{C0395B}    % 产业与前沿 — 玫瑰
+\definecolor{pepanel}{RGB}{228,233,246}
+\definecolor{zkpanel}{RGB}{222,240,238}
+\definecolor{pcppanel}{RGB}{249,240,224}
+\definecolor{indpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgePE!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeZK!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePCP!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{shield-alt}\enspace 可证明安全奠基人\enspace·\enspace 以色列-美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {沙菲·戈德瓦瑟};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Shafi Goldwasser\enspace·\enspace 1959 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {概率加密 · 零知识证明 · 2012 图灵奖（与 Micali 共享）};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgePE] at (-5.05,0)
+        {概率加密\\Probabilistic Encryption\par\scriptsize 与 Micali · 1984};
+      \node[badge, fill=badgeZK] at (-1.68,0)
+        {零知识证明\\Zero-Knowledge\par\scriptsize 证明而不泄露};
+      \node[badge, fill=badgePCP] at (1.68,0)
+        {复杂性理论\\PCP · 难近似性\par\scriptsize Gödel ×2};
+      \node[badge, fill=badgeIND] at (5.05,0)
+        {产业与前沿\\Duality · Simons\par\scriptsize 全同态加密};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"pioneered the field of provable security." —— 2012 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Shafi_Goldwasser.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Shafi_Goldwasser.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Shafi Goldwasser};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 以色列-美国\enspace|\enspace \faIcon{university}\enspace MIT · Weizmann · Berkeley\enspace|\enspace Turing 2012 · Gödel 1993 \& 2001};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{戈德瓦瑟 - 从纽约到可证明安全}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Shafi_Goldwasser.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Shafi_Goldwasser.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Shafi Goldwasser};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1959-11-14 —（在世）\\[2pt]\lab{本名}\quad Shafrira Goldwasser\\[2pt]\lab{国籍}\quad 以色列-美国};
+  \node[infob, fill=pepanel, draw=badgePE!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad CMU 数学与科学 BS 1979\\[2pt]
+     \quad Berkeley MS 1981 · PhD 1984\\[2pt]
+     \lab{师承}\quad Manuel Blum（导师）};
+  \node[infob, fill=zkpanel, draw=badgeZK!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 纽约市 · 美国\\[2pt]\lab{成长地}\quad 特拉维夫 · 以色列\\[2pt]\lab{任职}\quad MIT · Weizmann · Simons};
+  \node[infob, fill=pcppanel, draw=badgePCP!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2012 · Gödel ×2\\[2pt]
+     \quad L'Oréal-UNESCO 2021\\[2pt]
+     \lab{核心领域}\quad 密码学 · 计算复杂性\\[2pt]
+     \quad 计算数论};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{戈德瓦瑟的一生}{1959 — · 从纽约到可证明安全的数学基础}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1959/生于纽约，特拉维夫长大,
+    2.36/1979/获 CMU 数学与科学学士,
+    1.72/1983/加入 MIT（早于博士毕业）,
+    1.08/1984/Berkeley 博士 · 与 Micali 提出概率加密,
+    0.44/1985/与 Micali · Rackoff 提出零知识证明,
+    -0.2/1993/Weizmann 教授 · 首获 Gödel Prize,
+    -0.84/1997/首任 MIT RSA 讲席教授,
+    -1.48/2012/获图灵奖（与 Micali 共享）,
+    -2.12/2018/任 Simons Institute 所长,
+    -2.8/2023/当选英国皇家学会 Fellow
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：纽约与特拉维夫 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：纽约出生 · 特拉维夫长大 (1959--1979)}{跨越大西洋的少年 · CMU 数学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1959} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{生于纽约市，在特拉维夫长大} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{双重文化底色} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{求学} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{回美求学，进入 Carnegie Mellon University} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{扎根数理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1979} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{获 CMU 数学与科学学士学位} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{数学根基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个跨越大西洋的少年，最终为现代密码学写下数学的证明。}
+\end{center}
+\end{frame}}
+
+% --- 5. Berkeley 与 Manuel Blum ---
+\newcommand{\berkeleyslide}{\begin{frame}\plainbar\sectiontitle{Berkeley 与 Manuel Blum (1979--1984)}{师徒双图灵奖 · Blum--Goldwasser 密码系统}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{师承} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{师从 Manuel Blum（1995 图灵奖得主，师徒双图灵奖）} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{大师的门径} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学位} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{MS（1981）与 PhD（1984）均获自 UC Berkeley} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{理论训练完成} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{\textit{Probabilistic Encryption: Theory and Applications}} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{概率加密的理论化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同门成果} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{与导师 Blum 提出 Blum--Goldwasser 密码系统} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{另一经典构造} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在 Blum 门下，密码学从技艺走向可以被证明的科学。}
+\end{center}
+\end{frame}}
+
+% --- 6. 概率加密：一消息多密文 ---
+\newcommand{\probencslide}{\begin{frame}\plainbar\sectiontitle{概率加密：一消息多密文 (1984)}{与 Micali · 抗选择明文攻击 · 公钥方案的基础}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{特性}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{设计}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{概率化} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{同一条消息可概率地加密成多个不同的密文} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{随机性进入加密} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{攻击面} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{对选择明文攻击（chosen-plaintext attacks）更具抵抗力} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{安全性更强} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{已成为大多数公钥密码方案的基础} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{现代公钥的基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 概率加密（Goldwasser--Micali，1984）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$m\ \xrightarrow{\$}\ \{c_1, c_2, \ldots\}\qquad$ 一条消息 $\rightarrow$ 多个随机密文}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 交互式证明：双组平行 ---
+\newcommand{\interpslide}{\begin{frame}\plainbar\sectiontitle{交互式证明：双组平行 (1980s)}{Micali 组 · Babai--Moran · 共享 Gödel Prize}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{概念} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{证明通过回答一系列问题交互式地展开} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{"证明"被重新定义} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{双组平行} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{Micali 组与 Babai--Moran 二人组分别独立发表交互式证明论文} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{同期独立的发现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{公认} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{两组工作共享 1993 年 Gödel Prize} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{双组并列的荣誉} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 交互式证明不是一个人的发明，而是两条平行河流的汇合。}
+\end{center}
+\end{frame}}
+
+% --- 8. 零知识证明：证明而不泄露 ---
+\newcommand{\zkslide}{\begin{frame}\plainbar\sectiontitle{零知识证明：证明而不泄露 (1985)}{与 Micali · Rackoff · 现代密码学的基本原语}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{命题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三人署名} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{论文 \textit{The knowledge complexity of interactive proof-systems}（STOC '85）} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{Goldwasser · Micali · Rackoff} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{核心性质} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{概率性、交互式地证明断言有效，而不泄露任何额外知识} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{证明 $\neq$ 泄露} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{现代密码学的基本原语} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{基础构件} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 零知识证明的承诺}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{证明者}\ \rightleftarrows\ \text{验证者}:\ \text{确证断言}\ \wedge\ \text{不泄露额外知识}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 两次 Gödel Prize ---
+\newcommand{\godelslide}{\begin{frame}\plainbar\sectiontitle{两次 Gödel Prize (1993 / 2001)}{知识复杂性与团难近似 · 两条主线}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{获奖论文}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{共享者}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1993} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{\textit{The knowledge complexity of interactive proof systems}（交互式证明线）} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{Babai · Micali · Moran · Rackoff} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2001} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{\textit{Interactive Proofs and the Hardness of Approximating Cliques}（PCP 线）} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{Arora · Feige · Lund · Lovász · Motwani · Safra · Sudan · Szegedy} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 两次获奖，两条不同的主线}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}1993\ 知识复杂性\quad$\cdot$\quad 2001\ 交互式证明 $\times$ 团的难近似性}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. PCP 与难近似性 ---
+\newcommand{\pcpslide}{\begin{frame}\plainbar\sectiontitle{PCP 与难近似性：复杂性侧翼}{椭圆曲线素性测试 · 委托计算}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{难近似性} & \cellcolor{pcppanel}\textcolor{badgePCP!82!black}{难近似性（hardness of approximation）与交互式证明、PCP 定理的联系} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{复杂性理论主线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{素性测试} & \cellcolor{pcppanel}\textcolor{badgePCP!82!black}{与 Joe Kilian 用椭圆曲线做素性测试} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{计算数论的落地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{委托计算} & \cellcolor{pcppanel}\textcolor{badgePCP!82!black}{为不可信服务器设计计算委托协议（delegating computation）} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{云计算的前奏} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} PCP 视角下的证明}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{验证者只需抽查证明的少数位}\ \Rightarrow\ \text{即可确证整体正确性}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. MIT RSA 教授与 Weizmann ---
+\newcommand{\mitslide}{\begin{frame}\plainbar\sectiontitle{MIT RSA 教授与 Weizmann (1983--)}{首任 RSA 讲席 · 双岸执教}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1983} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{加入 MIT（早于 1984 年博士毕业）} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{入职先于毕业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1993} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{兼任 Weizmann Institute of Science 数学科学教授} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{双岸执教} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1997} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{成为首任 RSA 讲席教授（the first holder of the RSA Professorship）} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{首任讲席} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{至今} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{MIT CSAIL 理论计算组成员} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{理论重镇} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Cambridge 到 Rehovot，理论计算机科学的两岸灯火。}
+\end{center}
+\end{frame}}
+
+% --- 12. 产业与 Simons ---
+\newcommand{\industryslide}{\begin{frame}\plainbar\sectiontitle{产业与 Simons：从论文到机构}{Duality · 顾问 · Simons 所长}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{角色}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2016-11} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{与 Vinod Vaikuntanathan 等联合创立 Duality Technologies，商业化全同态加密} & \cellcolor{pcppanel}\textcolor{badgePCP!82!black}{FHE 走向产业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{科学顾问} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{QED-it（零知识区块链）与 Algorand 的科学顾问} & \cellcolor{pcppanel}\textcolor{badgePCP!82!black}{零知识生态} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2018--2024} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{任 Simons Institute for the Theory of Computing 所长（2018-01 至 2024-08）} & \cellcolor{pcppanel}\textcolor{badgePCP!82!black}{理论计算的灯塔} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Duality —— 全同态加密的产业化}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{密文上直接计算}\ \Rightarrow\ \text{数据可用而不可见}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. Project CETI ---
+\newcommand{\cetislide}{\begin{frame}\plainbar\sectiontitle{Project CETI：从密码学到鲸语}{解读抹香鲸通信的跨学科计划}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{面向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{计划} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{跨学科计划 Project CETI，解读抹香鲸（sperm whales）的通信} & \cellcolor{pcppanel}\textcolor{badgePCP!82!black}{海洋之外的远方} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{角色} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{负责人之一} & \cellcolor{pcppanel}\textcolor{badgePCP!82!black}{跨界领导力} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{视角} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{以通信与信息的眼光看待自然界的信息传递} & \cellcolor{pcppanel}\textcolor{badgePCP!82!black}{密码学家的跨界} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 从证明安全到听懂鲸语}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{密码学}\ \rightarrow\ \text{抹香鲸的通信：信息的一切都值得解读}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2012 · 门生成林}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（2012，与 Micali 共享）\item Gödel Prize（1993 · 2001）\item Hopper Award 1996 · BBVA 2018（四人共享）\item L'Oréal-UNESCO 2021 · 皇家学会 2023\end{itemize}} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{可证明安全的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{Johan Håstad、Yael Tauman Kalai、Salil Vadhan、Vinod Vaikuntanathan 等} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{学术谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{长期合作} & \cellcolor{pepanel}\textcolor{badgePE!82!black}{与 Silvio Micali 合作（1984 概率加密 · 1985 零知识），同获 2012 图灵奖} & \cellcolor{zkpanel}\textcolor{badgeZK!82!black}{从 Berkeley 同窗到共享图灵奖} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从门生到机构，可证明安全的传统正在被一代代人延续。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {安全，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是可以被证明的。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Shafi Goldwasser};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {沙菲·戈德瓦瑟\quad Shafi Goldwasser\quad 1959 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{shield-alt}\enspace Turing 2012 · Gödel ×2 · 可证明安全奠基人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\berkeleyslide
+\probencslide
+\interpslide
+\zkslide
+\godelslide
+\pcpslide
+\mitslide
+\industryslide
+\cetislide
+\honorsslide
+\closingslide
+\end{document}

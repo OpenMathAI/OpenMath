@@ -1,0 +1,486 @@
+% =============================================================
+%  计算理论英雄：莱斯利·瓦利安特 (Leslie Valiant)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：大概正确（PAC）—— 稀疏气泡呼应概率式视觉语言
+%  资料来源：turing/pages/2010/Leslie Valiant/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Valiant 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgePAC}{HTML}{2E5A9E}    % 计算学习理论 — 蓝
+\definecolor{badgeSharp}{HTML}{1E8E8E}  % 计数复杂性 — 青绿
+\definecolor{badgeBSP}{HTML}{D9A441}    % 并行计算 — 琥珀
+\definecolor{badgeNeuro}{HTML}{C0395B}  % 算法与神经科学 — 玫瑰
+\definecolor{pacpanel}{RGB}{228,233,246}
+\definecolor{sharppanel}{RGB}{222,240,238}
+\definecolor{bsppanel}{RGB}{249,240,224}
+\definecolor{neuropanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgePAC!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeSharp!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeBSP!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{brain}\enspace 计算理论英雄\enspace·\enspace 英裔美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {莱斯利·瓦利安特};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Leslie Valiant\enspace·\enspace 1949 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {PAC 学习 · \#P 完备 · 2010 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgePAC] at (-5.05,0)
+        {计算学习理论\\PAC Learning\par\scriptsize 大概正确};
+      \node[badge, fill=badgeSharp] at (-1.68,0)
+        {计数复杂性\\\#P-Completeness\par\scriptsize 积和式};
+      \node[badge, fill=badgeBSP] at (1.68,0)
+        {并行计算\\BSP Model\par\scriptsize 统一模型};
+      \node[badge, fill=badgeNeuro] at (5.05,0)
+        {算法与神经\\Holographic\par\scriptsize 计算神经科学};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"a heroic figure in theoretical computer science" —— 2010 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Leslie_Valiant.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Leslie_Valiant.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Leslie Valiant};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英裔美国\enspace|\enspace \faIcon{university}\enspace Harvard · Warwick · Cambridge\enspace|\enspace Turing 2010 · Nevanlinna 1986};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{瓦利安特 - 从布达佩斯到计算理论英雄}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Leslie_Valiant.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Leslie_Valiant.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Leslie Valiant};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1949-03-28 —（在世）\\[2pt]\lab{本名}\quad Leslie Gabriel Valiant\\[2pt]\lab{国籍}\quad 英裔美国人};
+  \node[infob, fill=sharppanel, draw=badgeSharp!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Cambridge BA · Imperial MS\\[2pt]
+     \quad Warwick 计算机科学 PhD 1974\\[2pt]
+     \lab{师承}\quad Mike Paterson（Warwick）};
+  \node[infob, fill=pacpanel, draw=badgePAC!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 布达佩斯 · 匈牙利\\[2pt]\lab{任职}\quad Harvard（1982 起）\\[2pt]
+     \quad 此前 CMU · Leeds · Edinburgh};
+  \node[infob, fill=bsppanel, draw=badgeBSP!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2010 · Knuth 1997\\[2pt]
+     \quad Nevanlinna 1986 · FRS 1991\\[2pt]
+     \lab{核心领域}\quad PAC 学习 · \#P 完备\\[2pt]
+     \quad BSP 并行模型 · 理论神经科学};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{瓦利安特的一生}{1949 — · 从布达佩斯少年到计算理论英雄}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.0/1949/生于布达佩斯,
+    2.3/1974/Warwick 计算机科学博士（Paterson）,
+    1.6/1975/CFL 最快识别算法 · 通信复杂性先驱,
+    0.9/1977/提出 \#P 完备（1979 论文发表）,
+    0.2/1982/执教 Harvard,
+    -0.5/1984/提出 PAC 学习模型,
+    -1.2/1986/Valiant–Vazirani 定理 · Nevanlinna 奖,
+    -1.9/1989/提出 BSP 并行模型,
+    -2.6/2010/获图灵奖,
+    -3.05/2013/出版 Probably Approximately Correct
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：布达佩斯与英伦求学 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：布达佩斯与英伦求学 (1949–1974)}{化工工程师与翻译家之子 · 三校求学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1949} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{生于布达佩斯；父为化学工程师、母为翻译家} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{知识家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{本科·硕士} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{King's College Cambridge 数学 BA \newline Imperial College London MS} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{英伦两校根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1974} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{University of Warwick 计算机科学博士} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{转向计算理论} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从布达佩斯到英伦，一位横跨大西洋的计算理论远行者。}
+\end{center}
+\end{frame}}
+
+% --- 5. Warwick 博士与下推自动机 ---
+\newcommand{\warwickslide}{\begin{frame}\plainbar\sectiontitle{Warwick 博士与下推自动机 (1974)}{Paterson 门下 · 判定程序论文}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{师从 Mike Paterson（University of Warwick）} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{infobox 明载师承} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{\textit{Decision Procedures for Families of Deterministic Pushdown Automata}} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{1974 年博士毕业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方向} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{自动机理论与判定程序的复杂性分析} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{复杂性之路的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 博士论文的严谨底色，孕育了日后横跨诸多领域的理论创造。}
+\end{center}
+\end{frame}}
+
+% --- 6. CFL 最快算法与通信复杂性 ---
+\newcommand{\cflslide}{\begin{frame}\plainbar\sectiontitle{CFL 最快算法与通信复杂性 (1975 前后)}{Royal Society 提名词的双亮点}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成果}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{最快算法} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{上下文无关语言识别的渐近最快算法} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{至今仍为最快} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{通信复杂性} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{开创用图的通信性质分析计算} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{先驱性工作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{出处} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{两语均出自 Royal Society 提名词} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{早期声誉的注脚} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Royal Society 提名词（1975 前后早期工作）}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}"the asymptotically fastest algorithm known for recognising context-free languages"\\[2pt]"pioneered the use of communication properties of graphs for analysing computations"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. \#P 完备性 ---
+\newcommand{\sharpslide}{\begin{frame}\plainbar\sectiontitle{\#P 完备性：计数问题的复杂性 (1977/1979)}{积和式 · 枚举与可靠性问题}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1977 提出} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{定义 \#P-completeness（"Sharp-P completeness"）} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{Royal Society 提名词口径} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1979 发表} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{SIAM J. Comput. 论文 \textit{The Complexity of Enumeration and Reliability Problems}} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{发表载体} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首个应用} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{计数匹配（矩阵积和式 permanent）} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{解释计数问题难解} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 积和式：\#P 完备性的第一个应用}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{per}(A)=\sum_{\sigma\in S_n}\prod_{i=1}^{n} a_{i,\sigma(i)}\qquad$ 计数为何与判定一样难}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. Valiant–Vazirani 定理 ---
+\newcommand{\vvslide}{\begin{frame}\plainbar\sectiontitle{Valiant–Vazirani 定理 (1986)}{唯一解与 NP · 随机归约}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定理} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{\textit{NP is as easy as detecting unique solutions}} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{复杂性经典结果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{与 Vijay Vazirani 合作的随机归约} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{随机化的桥梁} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{含义} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{一般 NP 问题与"唯一解检测"难度相当} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{深化 NP 难度理解} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Valiant–Vazirani 归约（1986）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{NP}\ \xrightarrow{\text{随机归约}}\ \text{Unique-SAT}$\qquad 通用问题 $\approx$ 唯一解问题}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. PAC 学习 ---
+\newcommand{\pacslide}{\begin{frame}\plainbar\sectiontitle{PAC 学习：可学习的理论 (1984)}{A theory of the learnable · 计算学习理论的诞生}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{\textit{A theory of the learnable}（CACM 27(11)\newline 1984）} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{理论起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{模型} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{Probably Approximately Correct 学习模型} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{"大概正确"框架} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{开创} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{计算学习理论成为独立领域} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{图灵奖核心理由之一} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} PAC 可学习性（1984）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\Pr[\ \text{误差}\le\varepsilon\ ]\ \ge\ 1-\delta$\qquad 以高概率"大概正确"地学}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 从 PAC 到自然界 ---
+\newcommand{\natureslide}{\begin{frame}\plainbar\sectiontitle{从 PAC 到自然界 (2013)}{进化的算法视角 · 大众向著作}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著作} & \cellcolor{neuropanel}\textcolor{badgeNeuro!82!black}{\textit{Probably Approximately Correct: Nature's Algorithms for Learning and Prospering in a Complex World}} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{大众向延伸} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{延伸} & \cellcolor{neuropanel}\textcolor{badgeNeuro!82!black}{把 PAC 思想延伸到自然界的算法与学习} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{跨领域视野} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{神经科学} & \cellcolor{neuropanel}\textcolor{badgeNeuro!82!black}{关注记忆与学习的理论理解} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{理论神经科学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{coveraccent!85!black} 2013 年书中的进化速率论证（完整立场：证据可信 · 现有理论解释力不足）}\\[2pt]
+  {\fontsize{8.8}{11.4}\selectfont\color{coverprimary!88!black}"The evidence for Darwin's general schema for evolution being essentially correct is convincing to the great majority of biologists... All this, however, does not mean the current theory of evolution is adequately explanatory."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. BSP：并行的统一模型 ---
+\newcommand{\bspslide}{\begin{frame}\plainbar\sectiontitle{BSP：并行的统一模型 (1989)}{类比 von Neumann · 工业界大规模采用}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{模型} & \cellcolor{bsppanel}\textcolor{badgeBSP!82!black}{Bulk Synchronous Parallel 处理模型} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{并行的统一抽象} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{类比} & \cellcolor{bsppanel}\textcolor{badgeBSP!82!black}{如同单机世界的 von Neumann 模型} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{并行计算的设计语言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{采用} & \cellcolor{bsppanel}\textcolor{badgeBSP!82!black}{Google 大规模采用（MapReduce 等）\newline Facebook 超 1 万亿边图分析} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{工业界现实影响} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} BSP 的一个 superstep}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{本地计算}+\text{全局通信}+\text{栅栏同步}$\qquad 简洁而普适的并行节拍}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 全息算法与计算神经科学 ---
+\newcommand{\holoslide}{\begin{frame}\plainbar\sectiontitle{全息算法与计算神经科学}{受量子启发的算法创造 · 记忆与学习}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{全息算法} & \cellcolor{neuropanel}\textcolor{badgeNeuro!82!black}{受量子计算模型启发的概念创造} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{算法设计新视角} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{理论神经科学} & \cellcolor{neuropanel}\textcolor{badgeNeuro!82!black}{关注记忆与学习的理论理解} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{PAC 思想的延伸} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共同气质} & \cellcolor{neuropanel}\textcolor{badgeNeuro!82!black}{不断开辟新的理论疆域} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{广度的注脚} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从全息算法到计算神经科学，"广度"是他与"深度"并列的名片。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2010 · 门生与一门三理论家}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要荣誉} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（2010）\item Nevanlinna Prize（1986）· Knuth Prize（1997）\item FRS（1991）· NAS 院士（2001）\end{itemize}} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{荣誉等身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{门生} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{Mark Jerrum · Michael Kearns · Dan Roth} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{学习理论谱系} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家族} & \cellcolor{pacpanel}\textcolor{badgePAC!82!black}{两子 Gregory 与 Paul 均为理论计算机科学家} & \cellcolor{sharppanel}\textcolor{badgeSharp!82!black}{一门三理论家} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Nevanlinna 到图灵奖，理论计算机科学的功勋簿上刻着他的名字。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：可学习与可计算的世界}{PAC · \#P · BSP · 理论神经科学}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=pacpanel, draw=badgePAC!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePAC} 计算学习理论}\\[3pt]PAC 学习\\[2pt]1984};
+\node[leg, fill=sharppanel, draw=badgeSharp!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSharp} 计数复杂性}\\[3pt]\#P 完备\\[2pt]积和式};
+\node[leg, fill=bsppanel, draw=badgeBSP!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeBSP} 并行计算}\\[3pt]BSP 模型\\[2pt]1989};
+\node[leg, fill=neuropanel, draw=badgeNeuro!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeNeuro} 理论神经科学}\\[3pt]记忆与学习\\[2pt]全息算法};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 机器学习的理论基座，并行计算的设计语言。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} PAC 学习 $\rightarrow$ 计算学习理论 $\rightarrow$ 机器学习时代\\[2pt]BSP 模型 $\rightarrow$ Google 与开源生态的大规模并行实践\\[2pt]他的思想，仍在可学习与可计算的疆域中流动。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {以深度与广度，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {丈量可计算与可学习的世界。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Leslie Valiant};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {莱斯利·瓦利安特\quad Leslie Valiant\quad 1949 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{brain}\enspace Turing 2010 · Nevanlinna Prize 1986\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\warwickslide
+\cflslide
+\sharpslide
+\vvslide
+\pacslide
+\natureslide
+\bspslide
+\holoslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

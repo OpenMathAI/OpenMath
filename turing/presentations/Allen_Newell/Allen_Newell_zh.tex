@@ -1,0 +1,497 @@
+% =============================================================
+%  AI 奠基者：艾伦·纽厄尔 (Allen Newell)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：符号搜索 / 推理即搜索 —— 柔和节点连线
+%  资料来源：turing/pages/1975/Allen Newell/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Newell 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeAI}{HTML}{2E5A9E}     % 人工智能 — 蓝
+\definecolor{badgeSym}{HTML}{1E8E8E}    % 符号与推理 — 青绿
+\definecolor{badgeSoar}{HTML}{D9A441}   % 认知架构 — 琥珀
+\definecolor{badgeCog}{HTML}{C0395B}    % 认知心理学 — 玫瑰
+\definecolor{aipanel}{RGB}{228,233,246}
+\definecolor{sympanel}{RGB}{222,240,238}
+\definecolor{soarpanel}{RGB}{249,240,224}
+\definecolor{cogpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 节点连线背景（符号搜索 / 推理即搜索）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAI!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeSym!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeSoar!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \draw[badgeAI!30, line width=0.5pt] ([xshift=1.2cm,yshift=-1.2cm]current page.north west)
+    -- ([xshift=2.6cm,yshift=-2.8cm]current page.north west) -- ([xshift=4.4cm,yshift=-1.8cm]current page.north west);
+  \draw[badgeSym!30, line width=0.5pt] ([xshift=-1.0cm,yshift=1.4cm]current page.south east)
+    -- ([xshift=-2.6cm,yshift=2.8cm]current page.south east) -- ([xshift=-4.2cm,yshift=1.6cm]current page.south east);
+  \fill[badgeAI!45] ([xshift=1.2cm,yshift=-1.2cm]current page.north west) circle (1.8pt);
+  \fill[badgeAI!45] ([xshift=2.6cm,yshift=-2.8cm]current page.north west) circle (1.8pt);
+  \fill[badgeAI!45] ([xshift=4.4cm,yshift=-1.8cm]current page.north west) circle (1.8pt);
+  \fill[badgeSym!45] ([xshift=-1.0cm,yshift=1.4cm]current page.south east) circle (1.8pt);
+  \fill[badgeSym!45] ([xshift=-2.6cm,yshift=2.8cm]current page.south east) circle (1.8pt);
+  \fill[badgeSym!45] ([xshift=-4.2cm,yshift=1.6cm]current page.south east) circle (1.8pt);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{microchip}\enspace AI 奠基者\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {艾伦·纽厄尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Allen Newell\enspace·\enspace 1927 — 1992};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {Logic Theorist · GPS · Soar · 1975 图灵奖（与 Simon 共享）};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAI] at (-5.05,0)
+        {人工智能\\Logic Theorist\par\scriptsize GPS · Dartmouth};
+      \node[badge, fill=badgeSym] at (-1.68,0)
+        {符号与推理\\Means-Ends Analysis\par\scriptsize 手段-目的分析};
+      \node[badge, fill=badgeSoar] at (1.68,0)
+        {认知架构\\Soar\par\scriptsize 统一认知理论};
+      \node[badge, fill=badgeCog] at (5.05,0)
+        {认知心理学\\Cognitive Psychology\par\scriptsize 信息处理};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for their contributions to artificial intelligence and the psychology of human cognition" —— 1975 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Allen_Newell.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Allen_Newell.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Allen Newell};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace RAND · Carnegie Mellon\enspace|\enspace Turing 1975};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{纽厄尔 - 从旧金山到认知架构}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Allen_Newell.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Allen_Newell.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Allen Newell};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1927-03-19 — 1992-07-19\\[2pt]\lab{本名}\quad Allen Newell\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=sympanel, draw=badgeSym!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Stanford 物理 BS 1949\\[2pt]
+     \quad Princeton 数学研究生 1949--50\\[2pt]
+     \quad Carnegie Mellon MS · PhD\\[2pt]
+     \lab{师承}\quad Herbert A. Simon（导师）};
+  \node[infob, fill=aipanel, draw=badgeAI!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 旧金山 · 加利福尼亚\\[2pt]\lab{去世地}\quad 匹兹堡 · 宾夕法尼亚\\[2pt]\lab{任职}\quad RAND Corporation · CMU};
+  \node[infob, fill=soarpanel, draw=badgeSoar!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1975 · NMS 1992\\[2pt]
+     \quad NAS 院士 1972 · IJCAI 1989\\[2pt]
+     \lab{核心领域}\quad 人工智能 · 认知架构\\[2pt]
+     \quad 认知心理学 · 信息处理};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{纽厄尔的一生}{1927 — 1992 · 从物理学生到认知架构之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{6.6}{8.6}\selectfont, align=left, text width=9.2cm},
+  yr/.style={font=\fontsize{8.0}{10.0}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-3.15);
+  \foreach \y/\year/\txt in {
+    3.0/1927/生于旧金山,
+    2.45/1949/获 Stanford 物理学学士,
+    1.9/1949-50/Princeton 数学研究生一年（受博弈论冲击转向）,
+    1.35/1950/加入 RAND Corporation（空军后勤问题研究组）,
+    0.8/1952/空军预警站机组组织实验（获空军资助建模拟器）,
+    0.25/1954/参加 Selfridge 研讨会，相信可造出含智能的系统,
+    -0.3/1955/撰写《The Chess Machine》,
+    -0.85/1956/Logic Theorist 完成 · Dartmouth 会议展示 · IPL,
+    -1.4/1957/General Problem Solver（GPS）,
+    -1.95/1975/与 Herbert A. Simon 共获 ACM 图灵奖,
+    -2.5/1990/出版统一认知理论（Unified Theories of Cognition）,
+    -3.05/1992/逝于匹兹堡，享年 65
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.0pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：旧金山少年与斯坦福物理 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：旧金山少年与斯坦福物理 (1927--1949)}{物理学学士 · 博弈论的初遇}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1927} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{生于旧金山（San Francisco, California）} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{美国西海岸起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1949} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{完成斯坦福大学物理学学士（BS）} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{科学训练的底色} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1947} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 Noel McKenna 结婚} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{家庭生活开始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1949--1950} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{在 Princeton 大学读数学研究生，仅一年，未获学位} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{转向的前奏} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个受过物理与数学训练的年轻人，即将闯入一片尚不存在的领域。}
+\end{center}
+\end{frame}}
+
+% --- 5. Princeton 一年与 RAND 岁月 ---
+\newcommand{\randslide}{\begin{frame}\plainbar\sectiontitle{Princeton 一年与 RAND 岁月 (1949--1954)}{博弈论的冲击 · 空军后勤 · 机组组织实验}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博弈论冲击} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{因接触博弈论与数学研究的经历，确信自己更偏好实验与理论结合的研究，遂离开 Princeton} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{研究取向的确立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1950 入 RAND} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{加入 Santa Monica 的 RAND Corporation，效力于"a group that was studying logistics problems of the Air Force"} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{空军后勤问题研究组} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{组织理论} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 Joseph Kruskal 的合作产生了两项成果：组织理论模型与组织理论中精确概念的表述} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{进入组织研究} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{机组实验} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 Kennedy、Chapman、Biel 在空军预警站研究机组组织过程；1952 年获空军资助建造模拟器} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{信息处理是组织的中心活动} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 小组决策的实验室实验，让他确信：组织的中枢是信息处理。}
+\end{center}
+\end{frame}}
+
+% --- 6. 转折点：Selfridge 研讨会与 The Chess Machine ---
+\newcommand{\chessmachineslide}{\begin{frame}\plainbar\sectiontitle{转折点：Selfridge 研讨会与《The Chess Machine》(1954--1955)}{一个运行中的学习程序 · 类人下棋的设想}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1954-09} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{参加 Oliver Selfridge 的研讨会：他"described a running computer program that learned to recognize letters and other patterns"} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{信念的转折点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{新信念} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{从此相信：可以被造出的系统可以包含智能、并具备自适应能力} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{AI 之路的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1955} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{写出《The Chess Machine: An Example of Dealing with a Complex Task by Adaptation》：以"类人方式"下棋的程序设想} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{引起 Herbert A. Simon 注意} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} The Chess Machine（1955）—— 复杂任务的自适应处理}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{让程序以类人的方式下棋} $\longrightarrow$ 未来的诺奖得主 Simon 由此注意到他}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Logic Theorist ---
+\newcommand{\logictheoristslide}{\begin{frame}\plainbar\sectiontitle{Logic Theorist：第一个真正的 AI 程序 (1956)}{与 Simon · Shaw 的三人组}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三人组} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 Herbert A. Simon、程序员 J. C. (Cliff) Shaw 共同开发} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{RAND 三人组} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{通常被认为是第一个真正的 AI 程序\textdagger\ —— Newell 在此程序上的工作奠定了这一领域的基础} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{AI 的起点之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三大发明} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{list processing（此后 AI 最重要的编程范式）；把 means-ends analysis 应用于一般推理（"reasoning as search"）；用 heuristics 限制搜索空间} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{AI 方法学奠基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.05cm}
+\begin{center}
+{\fontsize{6.8}{8.8}\selectfont\color{muteddark}\textdagger\ 页面脚注：Logic Theorist 通常被认为是第一个真正的 AI 程序，但 Arthur Samuel 的跳棋程序发布更早；Christopher Strachey 也在 1951 年写过跳棋程序。}
+\end{center}
+\end{frame}}
+
+% --- 8. Dartmouth 会议与 IPL ---
+\newcommand{\dartmouthslide}{\begin{frame}\plainbar\sectiontitle{Dartmouth 会议与 IPL (1956)}{AI 的"诞生地" · 列表处理语言}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Dartmouth 1956} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{在会上展示 Logic Theorist；这是一个对"用机器模拟智能"感兴趣的学者的非正式聚会} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{如今被广泛视为 AI 的诞生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{与会者} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{会议影响巨大，与会者成为此后二十年 AI 研究的领袖，Newell 位列其中} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{奠基一代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IPL (1956)} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 Simon、Shaw 共同贡献 Information Processing Language} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{AI 编程的载体} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "birth of artificial intelligence" —— 1956 年 Dartmouth 会议}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Newell 是这场"诞生"的参与者与展示者之一。}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. GPS 与手段-目的分析 ---
+\newcommand{\gpsslide}{\begin{frame}\plainbar\sectiontitle{GPS 与手段-目的分析 (1957)}{General Problem Solver · reasoning as search}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{持续合作} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 Simon 形成长期伙伴关系（lasting partnership），在 1950 年代末至 1960 年代产出一系列重要程序与理论洞见} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{CMU AI 实验室的根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{GPS (1957)} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{General Problem Solver —— means-ends analysis 的高影响力实现} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{通用问题求解} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{推理范式} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{把推理看成搜索："reasoning as search"，以启发式约束搜索空间} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{AI 的经典范式} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 手段-目的分析（means-ends analysis）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{当前状态}\neq\text{目标}\ \Rightarrow\ \text{选择最大削减差异的算子}\ \Rightarrow\ \text{递归求解子目标}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 物理符号系统假说 ---
+\newcommand{\symbolslide}{\begin{frame}\plainbar\sectiontitle{物理符号系统假说}{与 Simon · 一个有争议的哲学主张}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{命题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主张} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{一切智能行为都可以还原为 Newell 的程序所演示的那种符号操作} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{符号主义的理论纲领} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{争议性} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{页面明载：这是一个"有争议的哲学主张"（controversial philosophical assertion）} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{至今仍被讨论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{提出者} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{由 Newell 与 Simon 共同提出，是两人合作的又一理论高峰} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{认知科学基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 物理符号系统假说（Physical Symbol Systems Hypothesis）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{智能行为}\ \Longleftrightarrow\ \text{符号操作}\qquad$ （争议性主张，非公论）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. Soar 与统一认知理论 ---
+\newcommand{\soarslide}{\begin{frame}\plainbar\sectiontitle{Soar 与统一认知理论 (1990)}{认知架构 · 毕生事业的顶点}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Soar} & \cellcolor{soarpanel}\textcolor{badgeSoar!82!black}{Newell 的工作以认知架构 Soar 的发展而达到顶点} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{认知架构的开创} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1990} & \cellcolor{soarpanel}\textcolor{badgeSoar!82!black}{出版统一认知理论（Unified Theories of Cognition）；其改进是他直至去世的努力目标} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{毕生志业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{领域延续} & \cellcolor{soarpanel}\textcolor{badgeSoar!82!black}{他所开创的认知架构领域，至今在人工智能与计算认知科学社区仍然活跃} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{活的研究传统} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Soar 认知架构 —— 统一认知理论（1990）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{Soar}:\ \text{一套认知架构}\ \rightarrow\ \text{统一解释人类认知的理论目标}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. CMU 学派 ---
+\newcommand{\cmuslide}{\begin{frame}\plainbar\sectiontitle{CMU 学派：导师 Simon 与门生成林}{ lasting partnership · 卡内基梅隆的 AI 谱系}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{关系}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博士导师} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Herbert A. Simon —— Newell 在 CMU（时为 Carnegie Tech，现 Tepper 商学院）获 PhD，导师正是这位 1978 年诺贝尔经济学奖得主} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{师生共创的佳话} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{长期合作} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 Simon 形成长期伙伴关系，共同在 CMU 创立人工智能实验室} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{1975 年共享图灵奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Hans Berliner · Stuart Card · John E. Laird · Frank Ritter · Milind Tambe} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{学术谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{机构} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{任职于 CMU 计算机学院、Tepper 商学院与心理学系} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{跨学科任职} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 学生、合作者、共享获奖者 —— Newell 与 Simon 的名字始终连在一起。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1975 · 国家科学奖章 1992}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Turing Award（1975，与 Simon 共享）\newline National Medal of Science（1992）\newline Harry Goode Memorial Award（1971）\newline IJCAI Research Excellence（1989）\newline IEEE Piore Award（1990）· Levy Medal（1992）} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{跨学科的最高公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术身份} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{NAS 院士（1972）· 美国艺术与科学院 Fellow（1972）· NAE 院士（1980）；AAAI 首任主席（1980）；IEEE Computer Pioneer Award 首届得主（1981）} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{三院院士} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名奖项} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{ACM--AAAI Allen Newell Award 与 CMU 计算机学院 Award for Research Excellence 均以其命名} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{以名字激励后人} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从空军预警站到认知架构，荣誉记录了一条开创者之路。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：AI 与认知科学的交汇}{人工智能 · 列表处理 · 认知架构 · 认知科学}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=aipanel, draw=badgeAI!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAI} 人工智能}\\[3pt]Logic Theorist\\[2pt]GPS · Dartmouth};
+\node[leg, fill=sympanel, draw=badgeSym!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSym} 列表处理}\\[3pt]IPL · list processing\\[2pt]means-ends analysis};
+\node[leg, fill=soarpanel, draw=badgeSoar!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSoar} 认知架构}\\[3pt]Soar\\[2pt]统一认知理论};
+\node[leg, fill=cogpanel, draw=badgeCog!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCog} 认知科学}\\[3pt]物理符号系统假说\\[2pt]信息处理范式};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他开创的认知架构领域，至今仍在人工智能与计算认知科学中活跃。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} RAND $\rightarrow$ Logic Theorist $\rightarrow$ GPS $\rightarrow$ Soar\\[2pt]一条从程序实现通往统一认知理论的道路。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {推理即搜索，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {智能自符号操作中涌现。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Allen Newell};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {艾伦·纽厄尔\quad Allen Newell\quad 1927 — 1992};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{microchip}\enspace Turing 1975 · National Medal of Science 1992\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\randslide
+\chessmachineslide
+\logictheoristslide
+\dartmouthslide
+\gpsslide
+\symbolslide
+\soarslide
+\cmuslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

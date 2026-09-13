@@ -1,0 +1,502 @@
+% =============================================================
+%  ALGOL 60 定义者：彼得·诺尔 (Peter Naur)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：细线语法网络 —— 稀疏节点连线，呼应「BNF 产生式 / ALGOL 语法定义」
+%  资料来源：turing/pages/2005/Peter Naur/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Naur 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeALG}{HTML}{2E5A9E}     % 程序语言 — 蓝
+\definecolor{badgeBNF}{HTML}{1E8E8E}     % 语法记法 — 青绿
+\definecolor{badgeSE}{HTML}{D9A441}      % 软件工程 — 琥珀
+\definecolor{badgeDATA}{HTML}{C0395B}    % datalogy 与认知 — 玫瑰
+\definecolor{algpanel}{RGB}{228,233,246}
+\definecolor{bnfpanel}{RGB}{222,240,238}
+\definecolor{sepanel}{RGB}{249,240,224}
+\definecolor{datapanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 细线语法网络背景（稀疏节点连线）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeALG!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeBNF!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeSE!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \draw[coverprimary!25, line width=0.5pt] ([xshift=2.0cm,yshift=-2.0cm]current page.north west) -- ([xshift=-2.4cm,yshift=2.0cm]current page.south east);
+  \draw[coverprimary!20, line width=0.5pt] ([xshift=2.0cm,yshift=-2.0cm]current page.north west) -- ([xshift=-3.2cm,yshift=-2.4cm]current page.north east);
+  \draw[coverprimary!20, line width=0.5pt] ([xshift=-2.4cm,yshift=2.0cm]current page.south east) -- ([xshift=2.8cm,yshift=2.2cm]current page.south west);
+  \fill[coverprimary!40] ([xshift=2.0cm,yshift=-2.0cm]current page.north west) circle (1.8pt);
+  \fill[coverprimary!40] ([xshift=-2.4cm,yshift=2.0cm]current page.south east) circle (1.8pt);
+  \fill[coverprimary!40] ([xshift=-3.2cm,yshift=-2.4cm]current page.north east) circle (1.8pt);
+  \fill[coverprimary!40] ([xshift=2.8cm,yshift=2.2cm]current page.south west) circle (1.8pt);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{code}\enspace ALGOL 60 定义者\enspace·\enspace 丹麦};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {彼得·诺尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Peter Naur\enspace·\enspace 1928 — 2016};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {计算机科学先驱 · ALGOL 60 报告编辑 · 2005 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeALG] at (-5.05,0)
+        {ALGOL 60\\语言定义\par\scriptsize 报告编辑};
+      \node[badge, fill=badgeBNF] at (-1.68,0)
+        {BNF\\语法记法\par\scriptsize 报告开创性使用};
+      \node[badge, fill=badgeSE] at (1.68,0)
+        {软件工程\\Garmisch\par\scriptsize 1968 会议文献};
+      \node[badge, fill=badgeDATA] at (5.05,0)
+        {datalogy\\学科命名\par\scriptsize 认知与思维};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his work on defining the programming language ALGOL 60." —— 2005 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Peternaur.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Peternaur.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Peter Naur · 2008};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 丹麦\enspace|\enspace \faIcon{university}\enspace Regnecentralen · Copenhagen\enspace|\enspace Turing 2005 · Pioneer 1986};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{诺尔 - 从天文学家到语言定义者}{生卒 · 本名 · 国籍 · 教育 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Peternaur.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Peternaur.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Peter Naur};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1928-10-25 — 2016-01-03\\[2pt]\lab{本名}\quad Peter Naur\\[2pt]\lab{国籍}\quad 丹麦};
+  \node[infob, fill=bnfpanel, draw=badgeBNF!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad University of Copenhagen\\[2pt]
+     \quad BS · MS · PhD（1957，天文学）\\[2pt]
+     \lab{师承}\quad 博士导师页面未载};
+  \node[infob, fill=algpanel, draw=badgeALG!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Frederiksberg · 丹麦\\[2pt]\lab{去世地}\quad Herlev · 丹麦（87 岁）\\[2pt]\lab{任职}\quad Regnecentralen · Copenhagen};
+  \node[infob, fill=datapanel, draw=badgeDATA!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2005 · Pioneer 1986\\[2pt]
+     \quad 唯一获图灵奖的丹麦人\\[2pt]
+     \lab{核心领域}\quad 程序语言 · 软件工程\\[2pt]
+     \quad datalogy · 认知理论};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{诺尔的一生}{1928 — 2016 · 从星空到语法}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1928/生于 Frederiksberg（丹麦）,
+    2.44/1957/哥本哈根大学天文学博士,
+    1.88/1959/入职 Regnecentralen,
+    1.32/1960/任 ALGOL 60 报告 editor,
+    0.76/1963/修订报告编辑 · BIT 论文,
+    0.2/1969/哥本哈根大学计算机教授,
+    -0.36/1985/Programming as Theory Building,
+    -0.92/1986/IEEE CS 计算机先驱奖,
+    -1.48/1992/Computing: A Human Activity,
+    -2.04/2005/获图灵奖,
+    -2.6/2016/逝于 Herlev，享年 87
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：哥本哈根的天文学家 ---
+\newcommand{\astronomerslide}{\begin{frame}\plainbar\sectiontitle{早年：哥本哈根的天文学家 (1928–1957)}{Frederiksberg · 小行星 51 Nemausa}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1928} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{生于丹麦 Frederiksberg} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{哥本哈根近郊} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{求学} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{University of Copenhagen 依次获 BS、MS、PhD} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{本硕博一校} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1957} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{天文学博士：论文 \textit{Minor planet 51 Nemausa and the fundamental system of declinations}} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{小行星 51 Nemausa 与赤纬基本系统} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他的第一份职业是天文学家——星空是学术生涯的起点。}
+\end{center}
+\end{frame}}
+
+% --- 5. 转行：与计算机相遇 ---
+\newcommand{\switchslide}{\begin{frame}\plainbar\sectiontitle{转行：与计算机相遇 (1957–1959)}{encounter with computers · 换一种追问方式}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1957} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{天文学博士毕业，以此为职业起点} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{天文学家身份} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{相遇} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{与计算机的相遇促成职业转变（页面口径：encounter with computers led to a change of profession）} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{从星空到计算} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1959} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{进入丹麦计算公司 Regnecentralen} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{计算机生涯开启} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 一次职业的转变}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{天文学（1957）} \Rightarrow \text{计算机（1959）}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Regnecentralen 十年 ---
+\newcommand{\regnslide}{\begin{frame}\plainbar\sectiontitle{Regnecentralen 十年 (1959–1969)}{丹麦计算公司 · 产学研并行}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1959–1969} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{就职于 Regnecentralen —— 丹麦的计算公司} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{丹麦计算工业核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{讲学} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{同时在 Niels Bohr Institute 与丹麦技术大学（DTU）讲学} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{产学研并行} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{传统} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{自 Regnecentralen 与哥本哈根大学起步，发展出"哥本哈根传统"：与应用及其他知识领域紧密联系、课程中大量项目实践} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{教学即实践} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 十年公司生涯，孕育了丹麦计算机科学的"哥本哈根传统"。}
+\end{center}
+\end{frame}}
+
+% --- 7. ALGOL 60 报告 ---
+\newcommand{\algolslide}{\begin{frame}\plainbar\sectiontitle{ALGOL 60 报告 (1960)}{editor 角色 · 开创性使用 BNF}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1960-05} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{任《Report on the Algorithmic Language ALGOL 60》的 editor（Comm. ACM 3(5): 299–314）} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{图灵奖核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{记法} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{报告开创性地使用 BNF 描述语法} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{语法描述的新范式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1963} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{再任《Revised Report on the Algorithmic Language ALGOL 60》编辑} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{报告的维护者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8}{10.5}\selectfont\bfseries\color{coveraccent!85!black} ALGOL 60 报告编辑名单（Naur 任 editor）}\\[1pt]
+  {\fontsize{7.2}{9.2}\selectfont\color{coverprimary!88!black} Backus · Wegstein · van Wijngaarden · Woodger · Bauer · Green · Katz · McCarthy · Perlis · Rutishauser · Samelson · Vauquois}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. BNF：被冠名的遗憾 ---
+\newcommand{\bnfslide}{\begin{frame}\plainbar\sectiontitle{BNF：被冠名的遗憾}{Backus–Naur form · 定义者的本意}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{并名} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{与 John Backus 一道被铭记于 Backus–Naur form（BNF）之名} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{语法记法的两位标志人物} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{归名} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{"N" 之名系 Donald Knuth 归名的结果（页面口径：attributed to him by Donald Knuth）} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{后世的命名史} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{本意} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{Naur 本人不喜欢与 BNF 关联，更愿称之为 "Backus normal form"} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{定义者的本意} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} BNF 产生式示意}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\langle \text{句子} \rangle ::= \langle \text{主语} \rangle\ \langle \text{谓语} \rangle$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. IFIP WG 2.1 与 BIT ---
+\newcommand{\ifipslide}{\begin{frame}\plainbar\sectiontitle{IFIP WG 2.1 与 BIT 编委}{ALGOL 的守护者 · 33 年编委}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IFIP WG 2.1} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{International Federation for Information Processing 下算法语言与演算工作组成员——负责 specification、支持与维护 ALGOL 60 与 ALGOL 68} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{ALGOL 的守护者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{BIT 编委} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{1960–1993 任《BIT Numerical Mathematics》编委，数值分析期刊，共 33 年} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{长期公共事业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1963} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{在 BIT 发表《Go to statements and good Algol style》} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{ALGOL 风格的早期论述} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从工作组到期刊编委，他用三十年维护学科的公共基础设施。}
+\end{center}
+\end{frame}}
+
+% --- 10. datalogy：为学科命名 ---
+\newcommand{\datalogyslide}{\begin{frame}\plainbar\sectiontitle{datalogy：为学科命名}{不喜欢 "computer science" 的人}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主张}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{异议} & \cellcolor{datapanel}\textcolor{badgeDATA!82!black}{不喜欢 "computer science" 一词} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{命名异议者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{datalogy} & \cellcolor{datapanel}\textcolor{badgeDATA!82!black}{倡议改称 datalogy —— 被丹麦与瑞典采纳为 datalogi；自 1960 年代中期起，丹麦的学科实践即以其术语展开} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{北欧的学科地基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{data science} & \cellcolor{datapanel}\textcolor{badgeDATA!82!black}{同时倡议 data science —— 但该词后来用于指数据分析（含统计与数据库）} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{与今日"数据科学"无涉} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 术语的去向}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}$\text{computer science} \Rightarrow \text{datalogy}\quad \text{data science} \Rightarrow \text{数据分析}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 反形式主义 ---
+\newcommand{\antiformslide}{\begin{frame}\plainbar\sectiontitle{反形式主义：《Computing: A Human Activity》(1992)}{拒绝把编程视为数学的分支}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1992} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{出版《Computing: A Human Activity》（ACM Press）——其计算机科学贡献的文集} & \cellcolor{datapanel}\textcolor{badgeDATA!82!black}{思想的合集} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{立场} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{拒绝把编程视为数学分支的形式主义学派} & \cellcolor{datapanel}\textcolor{badgeDATA!82!black}{反形式主义} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{关切} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{主要研究领域：计算机程序与算法的设计、结构、性能；软件工程与软件架构的先驱} & \cellcolor{datapanel}\textcolor{badgeDATA!82!black}{从语言到工程} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 编程不是数学的分支——这是他一生坚持的立场。}
+\end{center}
+\end{frame}}
+
+% --- 12. 经验主义与思维理论 ---
+\newcommand{\cognitionslide}{\begin{frame}\plainbar\sectiontitle{经验主义与思维理论}{只依据可观察事实 · Synapse-State}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{经验主义} & \cellcolor{datapanel}\textcolor{badgeDATA!82!black}{晚年立场可归入经验主义（empiricist）学派：只依据可观察的事实，不寻求事物之间更深层的联系} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{科学观的底色} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{批评} & \cellcolor{datapanel}\textcolor{badgeDATA!82!black}{由此批评哲学与心理学的某些流派} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{独树一帜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{思维理论} & \cellcolor{datapanel}\textcolor{badgeDATA!82!black}{提出"心智生活的突触-状态理论"（Synapse-State Theory of Mental Life）} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{从程序到心智} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从语法到心智，他始终追问"认识"本身。}
+\end{center}
+\end{frame}}
+
+% --- 13. Theory Building 与 Garmisch ---
+\newcommand{\theoryslide}{\begin{frame}\plainbar\sectiontitle{《Programming as Theory Building》与 Garmisch}{1985 论文标题 · 1968 软件工程会议}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1985} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{发表《Programming as Theory Building》} & \cellcolor{datapanel}\textcolor{badgeDATA!82!black}{页面仅载标题与年份} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{与 Brian Randell、J.N. Buxton 合编《The Conference on Software Engineering, 7–11 October 1968》（Garmisch 会议文献）} & \cellcolor{datapanel}\textcolor{badgeDATA!82!black}{软件工程先驱的一环} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{先驱} & \cellcolor{sepanel}\textcolor{badgeSE!82!black}{在软件工程与软件架构方向有开创性贡献（页面口径：pioneered in software engineering and software architecture）} & \cellcolor{datapanel}\textcolor{badgeDATA!82!black}{从语言到工程} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 两份文献，一个方向}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Programming as Theory Building}（1985）\quad·\quad \textit{Garmisch 1968}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2005 · 唯一获图灵奖的丹麦人}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{实载荣誉} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{Turing Award（2005，ACM）\newline IEEE Computer Society Computer Pioneer Award（1986）} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{仅两项页面实载} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{获奖理由} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{defining the programming language ALGOL 60——尤其是作为影响深远的 ALGOL 60 报告 editor 的角色，及其开创性的 BNF 使用} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{编辑角色为核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{丹麦人与传承} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{the only Dane to have won the Turing Award（页面明载）\newline IFIP WG 2.1 · BIT 编委 33 年 · "哥本哈根传统" · datalogy} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{学科公共事业的长期建设者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 两座奖杯之外，是三十年的编委、一个术语与一种传统。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {从星空到语法，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {他为程序语言写下最初的定义。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.9cm]current page.center) -- ([yshift=-0.5cm, xshift=4.9cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {—— 致敬 Peter Naur};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {彼得·诺尔\enspace·\enspace 1928 — 2016};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{globe}\enspace Turing 2005 · Computer Pioneer 1986 · 唯一获图灵奖的丹麦人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\astronomerslide
+\switchslide
+\regnslide
+\algolslide
+\bnfslide
+\ifipslide
+\datalogyslide
+\antiformslide
+\cognitionslide
+\theoryslide
+\honorsslide
+\closingslide
+\end{document}

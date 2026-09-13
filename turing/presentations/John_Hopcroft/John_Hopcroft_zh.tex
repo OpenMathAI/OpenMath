@@ -1,0 +1,475 @@
+% =============================================================
+%  约翰·霍普克洛夫特 (John Hopcroft)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：稀疏状态节点与转移箭头（自动机状态图）
+%  资料来源：turing/pages/1986/John Hopcroft/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Hopcroft 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeAlgo}{HTML}{2E5A9E}   % 算法设计与分析 — 蓝
+\definecolor{badgeAuto}{HTML}{1E8E8E}   % 自动机与形式语言 — 青绿
+\definecolor{badgeEdu}{HTML}{D9A441}    % 计算机教育 — 琥珀
+\definecolor{badgeChina}{HTML}{C0395B}  % 国际化与中国 — 玫瑰
+\definecolor{algopanel}{RGB}{228,233,246}
+\definecolor{autopanel}{RGB}{222,240,238}
+\definecolor{edupanel}{RGB}{249,240,224}
+\definecolor{chinapanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 自动机状态图背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAlgo!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeAuto!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeEdu!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{book}\enspace 算法与自动机理论教育家\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {约翰·霍普克洛夫特};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {John Hopcroft\enspace·\enspace 1939 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {算法与自动机理论教育家 · "Cinderella book" · 1986 图灵奖（与 Tarjan 共享）};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAlgo] at (-5.05,0)
+        {算法与数据结构\\Algorithms\par\scriptsize 设计与分析};
+      \node[badge, fill=badgeAuto] at (-1.68,0)
+        {自动机与形式语言\\Automata\par\scriptsize Cinderella book};
+      \node[badge, fill=badgeEdu] at (1.68,0)
+        {计算机教育\\Education\par\scriptsize Karlstrom 2008};
+      \node[badge, fill=badgeChina] at (5.05,0)
+        {国际化与中国\\China Centers\par\scriptsize 友谊奖 2016};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for fundamental achievements in the design and analysis of algorithms and data structures" —— 1986 图灵奖理由（与 Tarjan 共享）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Hopcroft.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Hopcroft.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {John Hopcroft};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Cornell · Stanford · Princeton\enspace|\enspace Turing 1986};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{霍普克洛夫特 - 从西雅图到 Cornell 讲席}{生卒 · 本名 · 国籍 · 教育 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Hopcroft.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Hopcroft.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {John Hopcroft};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1939-10-07 —（在世）\\[2pt]\lab{本名}\quad John Edward Hopcroft\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=autopanel, draw=badgeAuto!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Seattle U 电机工程 BS 1961\\[2pt]
+     \quad Stanford 电机 MS 1962 · PhD 1964\\[2pt]
+     \lab{师承}\quad Richard Mattson（导师）};
+  \node[infob, fill=algopanel, draw=badgeAlgo!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 西雅图 · 华盛顿州\\[2pt]\lab{任职}\quad Cornell 荣休教授\\[2pt]
+     \quad 早年 Princeton 三年};
+  \node[infob, fill=edupanel, draw=badgeEdu!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1986 · Karlstrom 2008\\[2pt]
+     \quad von Neumann Medal 2010\\[2pt]
+     \lab{核心领域}\quad 算法 · 自动机 · 教育};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{霍普克洛夫特的一生}{1939 — · 从西雅图少年到一代人的教材作者}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1939/生于西雅图，外祖父创办 Seattle-Tacoma Box Company,
+    2.3/1961/Seattle University 电机工程学士,
+    1.6/1964/Stanford 电机工程博士（Mattson 门下）,
+    0.9/1969/与 Ullman 合著 Formal Languages 开启教材之路,
+    0.2/1973/与 Karp 提出二分图匹配 Hopcroft--Karp 算法,
+    -0.5/1986/与 Tarjan 共享图灵奖,
+    -1.2/2008/获 Karlstrom 杰出教育者奖,
+    -1.9/2010/与 Ullman 同获 IEEE von Neumann 奖章,
+    -2.6/2016/获中国友谊奖；次年交大设立 Hopcroft 中心，现于三校有中心
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：西雅图的少年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：西雅图的少年 (1939--1961)}{实业家庭 · Seattle University 电机系}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1939} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{生于西雅图；外祖父 Jacob Nist 于 1889 年创办 Seattle-Tacoma Box Company} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{实业家庭出身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{少年--1961} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{就读 Seattle University 电气工程系} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{工程根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1961} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{获 Seattle University 电气工程学士（BS）} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{北上 Stanford} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个西雅图电机系少年，日后写出了影响两代人的教材。}
+\end{center}
+\end{frame}}
+
+% --- 5. Stanford 电机工程三级跳 ---
+\newcommand{\stanfordslide}{\begin{frame}\plainbar\sectiontitle{Stanford 电机工程三级跳 (1961--1964)}{硕士 1962 · 博士 1964 · Mattson 门下}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1962} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{获 Stanford 电气工程硕士（MS in EE）} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{学位均为电气工程} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{师从 Richard Mattson} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{严谨的工程训练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1964} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{获 Stanford 电气工程博士（PhD in EE），论文 \textit{Synthesis of Threshold Logic Networks}} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{阈值逻辑起步} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 阈值逻辑网络（博士论文的主题）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$y=\mathrm{sign}\big(\sum_{i} w_i x_i-\theta\big)\qquad$ 从逻辑综合走向算法理论}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Princeton 三年与 Cornell 起点 ---
+\newcommand{\cornellslide}{\begin{frame}\plainbar\sectiontitle{Princeton 三年与 Cornell 起点}{博士后三年 · 长期执教 Cornell}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Princeton} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{博士毕业后在 Princeton University 工作三年} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{学术生涯起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Cornell} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{此后长期任教 Cornell University，现为荣休教授} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{一生学术主阵地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教学与研究} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{算法、自动机与形式语言课程与教材在此成形} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{学科标准的确立} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} Princeton 三年落脚，Cornell 一生耕耘。}
+\end{center}
+\end{frame}}
+
+% --- 7. 与 Aho、Ullman 的教材三部曲 ---
+\newcommand{\trilogyslide}{\begin{frame}\plainbar\sectiontitle{与 Aho、Ullman 的教材三部曲 (1969--1983)}{Formal Languages · Design and Analysis · Data Structures}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.2cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{作者}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{\textit{Formal Languages and Their Relation to Automata}} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{与 Ullman} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1974} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{\textit{The Design and Analysis of Computer Algorithms}} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{Aho·Hopcroft·Ullman} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1983} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{\textit{Data Structures and Algorithms}} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{Aho·Hopcroft·Ullman} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "co-authoring field-defining texts" —— Karlstrom 奖理由原文}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}三部教材，把算法与理论变成了一门可教的学科}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. Cinderella book ---
+\newcommand{\cinderellaside}{\begin{frame}\plainbar\sectiontitle{"Cinderella book"：计算理论的标准}{Introduction to Automata Theory, Languages, and Computation}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教材} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{\textit{Introduction to Automata Theory, Languages, and Computation}——通称 "Cinderella book"} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{领域通称} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{版本} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{2001 年第二版作者为 Hopcroft·Motwani·Ullman（与 1969 年初版书名作者逐版对表）} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{持续更新} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{其计算理论与数据结构教材 "are regarded as standards in their fields"（页面原文）} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{领域标准} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一本被整个领域唤作 "Cinderella book" 的教材，定义了计算理论的教学。}
+\end{center}
+\end{frame}}
+
+% --- 9. Hopcroft–Karp 二分图匹配 ---
+\newcommand{\hkarpslide}{\begin{frame}\plainbar\sectiontitle{Hopcroft--Karp 二分图匹配 (1973)}{与 Richard M. Karp 的合作}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{问题} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{二分图最大基数匹配（maximum matchings in bipartite graphs）} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{组合优化核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{与 Richard M. Karp 合作提出 Hopcroft--Karp 算法} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{以合作叙事} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{页面表述为当时 "fastest known method"} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{经典算法} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Hopcroft--Karp 算法的运行时间}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathcal{O}\big(E\sqrt{V}\big)\qquad$ 增广路径按最短分层分批寻找}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 图灵奖 1986 ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1986：与 Tarjan 共享}{同一 citation · 同一份荣耀}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共享} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{1986 年与 Robert Tarjan \textbf{共同}获得 ACM 图灵奖——两人同年、同一获奖理由} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{共享结构必须写明} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{侧重} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{本篇侧重 Hopcroft 的算法与自动机理论、教材与教育；数据结构深水区见 Tarjan 篇} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{两篇互为补充} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{平面图合作} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{"along with his work with Tarjan on planar graphs"——与 Tarjan 的平面图合作（首个线性时间平面性判定，详见 Tarjan 篇）} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{collaborator 关系} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1986 图灵奖理由（整句引用）}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}"for fundamental achievements in the design and analysis of algorithms and data structures"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 教育家 ---
+\newcommand{\educatorslide}{\begin{frame}\plainbar\sectiontitle{教育家：三个奖项的理由}{Karlstrom 2008 · Goode 2005 · von Neumann Medal 2010}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.8cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{奖项}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{理由（引语）}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{年份}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Karlstrom} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{"for his vision of and impact on computer science, including co-authoring field-defining texts on theory and algorithms \ldots"} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{2008} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Goode} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{"for fundamental contributions to the study of algorithms and their applications in information processing"} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{2005} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{von Neumann Medal} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{"laying the foundations for the fields of automata and language theory and many seminal contributions to theoretical computer science"——与 Jeffrey Ullman \textbf{共同}获得} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{2010} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} "continue to influence students 40 years later"——教材与课堂，是他最长的影子。}
+\end{center}
+\end{frame}}
+
+% --- 12. 与中国 ---
+\newcommand{\chinaside}{\begin{frame}\plainbar\sectiontitle{与中国：友谊奖与三地中心}{2016 友谊奖 · 交大 2017 · 港中深 2020}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2016} & \cellcolor{chinapanel}\textcolor{badgeChina!82!black}{获中国友谊奖（Friendship Award）} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{国际贡献的认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2017} & \cellcolor{chinapanel}\textcolor{badgeChina!82!black}{上海交通大学设立 John Hopcroft Center for Computer Science} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{以他命名 } \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2020} & \cellcolor{chinapanel}\textcolor{badgeChina!82!black}{港中深设立 Hopcroft Institute for Advanced Information Sciences，聘其为 Einstein 教授} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{教育理念南延} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{任职} & \cellcolor{chinapanel}\textcolor{badgeChina!82!black}{北京大学计算与数字智能交叉学科研究中心联合主任；华中科技大学 Hopcroft 计算中心主任} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{三地联动} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 把"教好计算机科学"这件事，从 Ithaca 带到了北京、上海与深圳。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与门生 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与门生}{NAE 1989 · NSB 1992 提名 · 门生遍天下}\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣誉} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item NAE 院士（1989）——理由：计算机算法的根本贡献与杰出 CS 教材\item NSB 1992（由老布什提名进入 National Science Board）\item ACM Fellow（1994）· 荣誉博士 Sydney 2005 / ITMO 2009\end{itemize}} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{院士与提名并录} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{Alfred Aho、Gilles Brassard、Cynthia Dwork、Zvi Galil、Daniela L. Rus 等（infobox 实载）} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{学术谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{院士身份} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{NAS、NAE、中国科学院外籍院士、AAAS（艺术与科学院）与 IEEE Fellow 等} & \cellcolor{autopanel}\textcolor{badgeAuto!82!black}{跨国界的公认} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 教材塑造两代人，门生又各自开枝散叶。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：把理论写成教科书}{算法 · 自动机 · 教育 · 数据科学}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=algopanel, draw=badgeAlgo!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAlgo} 算法与数据结构}\\[3pt]1974·1983 教材\\[2pt]Hopcroft--Karp};
+\node[leg, fill=autopanel, draw=badgeAuto!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAuto} 自动机与形式语言}\\[3pt]Cinderella book\\[2pt]领域标准};
+\node[leg, fill=edupanel, draw=badgeEdu!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeEdu} 计算机教育}\\[3pt]Karlstrom 2008\\[2pt]门生传承};
+\node[leg, fill=chinapanel, draw=badgeChina!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeChina} 数据科学与中国}\\[3pt]Foundations of Data Science\\[2pt]三地中心};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 好的教材，是一代代人递下去的火种。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 算法 $\rightarrow$ 自动机 $\rightarrow$ 教育 $\rightarrow$ 数据科学\\[2pt]他的书仍在课堂里被翻开，他的中心仍在培养学生。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {好的教材，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是一代代人递下去的火种。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {致敬 John Hopcroft};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {John Hopcroft · 1939 — · 在世};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{book}\enspace Turing 1986 · Karlstrom 2008 · von Neumann Medal 2010\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\stanfordslide
+\cornellslide
+\trilogyslide
+\cinderellaside
+\hkarpslide
+\turingslide
+\educatorslide
+\chinaside
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

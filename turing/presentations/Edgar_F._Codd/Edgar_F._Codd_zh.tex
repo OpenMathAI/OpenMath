@@ -1,0 +1,513 @@
+% =============================================================
+%  关系数据库之父：埃德加·科德 (Edgar F. Codd)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：关系即集合 —— 柔和气泡呼应表格化数据美学
+%  资料来源：turing/pages/1981/Edgar F. Codd/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Codd 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeRel}{HTML}{2E5A9E}    % 关系模型 — 蓝
+\definecolor{badgeNorm}{HTML}{1E8E8E}   % 数据库规范化 — 青绿
+\definecolor{badgeIBM}{HTML}{D9A441}    % IBM 内部博弈 — 琥珀
+\definecolor{badgeCA}{HTML}{C0395B}     % 元胞自动机与 OLAP — 玫瑰
+\definecolor{relpanel}{RGB}{228,233,246}
+\definecolor{normpanel}{RGB}{222,240,238}
+\definecolor{ibmpanel}{RGB}{249,240,224}
+\definecolor{capanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeRel!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeNorm!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeIBM!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{database}\enspace 关系数据库之父\enspace·\enspace 英国 $\rightarrow$ 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {埃德加·科德};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Edgar F. Codd\enspace·\enspace 1923 — 2003};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {关系模型奠基人 · "A Relational Model of Data" · 1981 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeRel] at (-5.05,0)
+        {关系模型\\Relational Model\par\scriptsize 1970 开山论文};
+      \node[badge, fill=badgeNorm] at (-1.68,0)
+        {数据库规范化\\Normalization\par\scriptsize BCNF · 12 rules};
+      \node[badge, fill=badgeIBM] at (1.68,0)
+        {IBM 博弈\\System R · SQL\par\scriptsize SEQUEL $\rightarrow$ SQL};
+      \node[badge, fill=badgeCA] at (5.05,0)
+        {元胞自动机与 OLAP\\CA · OLAP\par\scriptsize 8 状态 · 十二法则};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"For his fundamental and continuing contributions to the theory and practice of database management systems." —— 1981 图灵奖（ACM citation）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Edgar_F_Codd.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Edgar_F_Codd.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Edgar F. Codd};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国 $\rightarrow$ 美国\enspace|\enspace \faIcon{university}\enspace IBM\enspace|\enspace Turing 1981};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{科德 - 从多塞特到关系数据库之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Edgar_F_Codd.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Edgar_F_Codd.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Edgar F. Codd};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1923-08-19 — 2003-04-18\\[2pt]\lab{本名}\quad Edgar Frank "Ted" Codd\\[2pt]\lab{国籍}\quad 英国出生 · 长期居美\\[2pt]\quad（ACM 记 United States）};
+  \node[infob, fill=normpanel, draw=badgeNorm!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Oxford Exeter College 数学与化学 B.A.\\[2pt]
+     \quad Michigan M.A. · Ph.D. 1965\\[2pt]
+     \lab{师承}\quad John Henry Holland（导师）};
+  \node[infob, fill=relpanel, draw=badgeRel!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Fortuneswell · 多塞特 · 英格兰\\[2pt]\lab{去世地}\quad Williams Island · 佛州 · 美国\\[2pt]\lab{任职}\quad IBM（纽约 · 渥太华 · San Jose）};
+  \node[infob, fill=ibmpanel, draw=badgeIBM!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1981 · IBM Fellow 1976\\[2pt]
+     \quad ACM Fellow 1994\\[2pt]
+     \lab{核心领域}\quad 关系模型 · 数据库管理\\[2pt]
+     \quad 元胞自动机 · OLAP};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{科德的一生}{1923 — 2003 · 从波特兰岛少年到关系数据库之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.6);
+  \foreach \y/\year/\txt in {
+    3.0/1923/生于英格兰多塞特 Fortuneswell（波特兰岛）,
+    2.5/1940s/牛津 Exeter College 攻读数学与化学,
+    2.0/二战/RAF 海防总队飞行员，驾驶 Sunderlands,
+    1.5/1948/移居纽约，加入 IBM 任数学程序员,
+    1.0/1953/因麦卡锡时代移居加拿大渥太华,
+    0.5/1957/返回美国，再入 IBM,
+    0.0/1965/获密歇根大学博士（师从 Holland）,
+    -0.5/1970/发表关系模型开山论文（CACM）,
+    -1.0/1976/获任 IBM Fellow,
+    -1.5/1981/荣获 ACM 图灵奖,
+    -2.0/1994/当选 ACM Fellow,
+    -2.6/2003/4 月 18 日逝于佛罗里达家中
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：多塞特少年与牛津 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：多塞特少年与牛津 (1923–1940s)}{Fortuneswell · Poole Grammar · Exeter College}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1923} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{生于 Fortuneswell，多塞特郡波特兰岛（Isle of Portland）} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{英格兰西南的海岛少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{就读 Poole Grammar School} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{数理根基自此打起} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1940s} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{入牛津 Exeter College，攻读数学与化学（B.A.）} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{牛津的数学与化学双修} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从波特兰岛到牛津，一个英国少年正走向改变数据世界之路。}
+\end{center}
+\end{frame}}
+
+% --- 5. RAF 飞行员岁月 ---
+\newcommand{\rafslide}{\begin{frame}\plainbar\sectiontitle{RAF 飞行员岁月（二战）}{Coastal Command · Sunderlands · Flight Lieutenant}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{服役} & \cellcolor{capanel}\textcolor{badgeCA!82!black}{志愿服役，加入英国皇家空军海防总队（RAF Coastal Command）} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{战时保家卫国} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{座机} & \cellcolor{capanel}\textcolor{badgeCA!82!black}{驾驶 Sunderland 水上飞机执行海上任务} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{海防巡逻的中坚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{军衔} & \cellcolor{capanel}\textcolor{badgeCA!82!black}{升至 flight lieutenant（空军上尉）} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{飞行员生涯的注脚} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 从云端到机房：战后转行计算机}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{RAF 飞行员} $\rightarrow$ 1948 年跨越大西洋，成为 IBM 的\textit{数学程序员}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. IBM 早年与麦卡锡时代 ---
+\newcommand{\ibmearlyslide}{\begin{frame}\plainbar\sectiontitle{IBM 早年与麦卡锡时代 (1948–1957)}{SSEC · IBM 701/702 · 渥太华插曲}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1948} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{移居纽约，加入 IBM，任数学程序员} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{职业起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{早期} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{先参与 SSEC（Selective Sequence Electronic Calculator）项目，后参与 IBM 701、702 的开发} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{早期计算机的亲历者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1953} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{因对参议员 Joseph McCarthy 的失望，移居加拿大渥太华} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{麦卡锡时代的抉择} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1957} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{返回美国，再度加入 IBM} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{重返 IBM 体系} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 纽约、渥太华、重返美国——十年辗转，未改其志。}
+\end{center}
+\end{frame}}
+
+% --- 7. 密歇根博士：元胞自动机 ---
+\newcommand{\michiganslide}{\begin{frame}\plainbar\sectiontitle{密歇根博士：元胞自动机 (1961–1965)}{Holland 门下 · 8 状态自复制 · 扩展冯·诺依曼}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{在职读博} & \cellcolor{capanel}\textcolor{badgeCA!82!black}{1961–1965 在职攻读，1965 年获密歇根大学（Ann Arbor）博士学位} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{工作与研究并行} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{capanel}\textcolor{badgeCA!82!black}{师从 John Henry Holland（遗传算法之父）} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{名师引路} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{capanel}\textcolor{badgeCA!82!black}{\textit{Propagation, Computation, and Construction in Two-dimensional cellular spaces}——元胞自动机中的自复制，扩展冯·诺依曼的工作} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{自复制理论的推进} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 8 个状态的通用构造机（Codd's cellular automaton）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{8 个状态} \Rightarrow \text{通用计算与构造}$\quad 自复制设计直到 2010 年才被实现}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. San Jose 与 1970 关系模型论文 ---
+\newcommand{\relationalslide}{\begin{frame}\plainbar\sectiontitle{San Jose 与 1970 关系模型论文}{A Relational Model of Data for Large Shared Data Banks}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1967} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{博士两年后移居加州圣何塞，加入 IBM San Jose 研究实验室，工作至 1980 年代} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{关系理论诞生地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{正式发表前一年，已有 IBM 内部报告先行} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{思想的内部酝酿} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1970} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{发表 \textit{A Relational Model of Data for Large Shared Data Banks}（CACM 13(6)）} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{关系数据库的理论基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 关系模型：把数据组织为"关系"的集合}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$R \subseteq D_1 \times D_2 \times \cdots \times D_n$\quad 数据即表，查询即集合运算}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. IBM 内部博弈 ---
+\newcommand{\ibmbattleslide}{\begin{frame}\plainbar\sectiontitle{IBM 内部博弈：从 IMS 到 SQL}{层级数据库 · System R · SEQUEL $\rightarrow$ SQL · Oracle 抢跑}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{收入考量} & \cellcolor{ibmpanel}\textcolor{badgeIBM!82!black}{IBM 为保住 IMS/DB（层级数据库）收入，迟迟不实现关系模型} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{商业利益压过远见} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{System R} & \cellcolor{ibmpanel}\textcolor{badgeIBM!82!black}{交由不熟悉科德思想开发者负责，并将团队与科德隔离；最终未采用其 Alpha 语言，造出非关系式起点的 SEQUEL} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{内部阻隔的代价} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Oracle 抢跑} & \cellcolor{ibmpanel}\textcolor{badgeIBM!82!black}{SEQUEL 远超前关系系统：1979 年 Larry Ellison 依 Relational Software Inc 会议论文复制进 Oracle Database，先于 IBM SQL/DS 上市} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{后来者反而领先} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} SEQUEL $\rightarrow$ SQL}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}因原名已处商标专有状态，SEQUEL 被迫更名为 \textit{SQL}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 规范化与 12 rules ---
+\newcommand{\normslide}{\begin{frame}\plainbar\sectiontitle{规范化与 12 rules 之战}{BCNF · Codd's theorem · relational veneer · 与 Chris Date 离开 IBM}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{科德的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{规范化} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{提出数据库规范化（normalization）；Boyce–Codd 范式以其命名} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{良好表设计的准则} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{纯化之战} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{1980s 初，为阻止厂商给旧技术披"关系外衣"（relational veneer），发表 12 rules 定义何为真关系数据库；此举使其在 IBM 处境艰难，遂与 Chris Date 等离开创办咨询公司} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{为纯粹性而战} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Codd's theorem（出自其关系模型开山工作）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{关系代数（RA）} \equiv \text{关系演算（RC）}$\quad 表达力等价}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 图灵奖 1981 ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1981}{ACM 表彰 · 图灵讲座 1982}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{项目}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{内容}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1981} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{荣获 ACM 图灵奖（ACM 记录：United States – 1981）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{图灵讲座} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{\textit{Relational Database: A Practical Foundation for Productivity}（CACM 25(2): 109–117, 1982）} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1981 图灵奖 citation（ACM 原文）}\\[2pt]
+  {\fontsize{7.5}{10}\selectfont\itshape\color{coverprimary!88!black}
+  "For his fundamental and continuing contributions to the theory and practice of database management systems."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. OLAP 与撤稿争议 ---
+\newcommand{\olapslide}{\begin{frame}\plainbar\sectiontitle{OLAP 与撤稿争议}{术语创造 · 十二法则 · 赞助风波}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{术语创造} & \cellcolor{capanel}\textcolor{badgeCA!82!black}{创造 OLAP（Online analytical processing，联机分析处理）术语，并写下"OLAP 十二法则"} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{分析型数据库的概念坐标} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1993 论文} & \cellcolor{capanel}\textcolor{badgeCA!82!black}{\textit{Providing OLAP to User-Analysts: An IT Mandate}（与 S. B. Codd、C. T. Salley 合著）} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{OLAP 的奠基文献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{争议} & \cellcolor{capanel}\textcolor{badgeCA!82!black}{该论文后被发现由 Arbor Software 赞助且未披露利益冲突，Computerworld 撤稿} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{保留争议的实载} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} OLAP — Online Analytical Processing}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{操作型数据} \xrightarrow{\text{多维分析}} \text{决策洞察}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1981 · SIGMOD 更名致敬}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣誉} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1981）\item IBM Fellow（1976）\item ACM Fellow（1994）\end{itemize}} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{数据库理论家的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{身后致敬} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{2004 年 SIGMOD 将其最高奖更名为 SIGMOD Edgar F. Codd Innovations Award，以志纪念} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{以他的名字命名创新} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著作} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{\textit{Cellular Automata}（1968）、\textit{The Relational Model for Database Management}（Version 2, 1990）} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{理论体系的文字沉淀} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个模型对抗整个产业惯性，最终成为行业标准。}
+\end{center}
+\end{frame}}
+
+% --- 14. 晚年 ---
+\newcommand{\laterslide}{\begin{frame}\plainbar\sectiontitle{晚年与身后}{健康恶化 · 2003 逝世 · 关系数据库永续}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1980s 后} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{离开 IBM 后与 Chris Date 等长期合作，继续扩展关系模型} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{理论生命不止} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1990s} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{健康状况恶化，停止工作} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{渐别一线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2003} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{4 月 18 日因心力衰竭逝于佛罗里达 Williams Island 家中，享年 79 岁} & \cellcolor{normpanel}\textcolor{badgeNorm!82!black}{一代宗师谢幕} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1923 — 2003}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}他留下的关系模型，至今仍是全球数据库的地基}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {数据，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {本应归于关系。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Edgar F. Codd};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {埃德加·科德\quad Edgar F. Codd\quad 1923 — 2003};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{database}\enspace Turing 1981 · 关系数据库之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\rafslide
+\ibmearlyslide
+\michiganslide
+\relationalslide
+\ibmbattleslide
+\normslide
+\turingslide
+\olapslide
+\honorsslide
+\laterslide
+\closingslide
+\end{document}

@@ -1,0 +1,494 @@
+% =============================================================
+%  事务处理巨擘：吉姆·格雷 (Jim Gray)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：数据之海与帆船 Tenacious —— 稀疏气泡呼应苍茫远航
+%  资料来源：turing/pages/1998/Jim Gray (computer scientist)/index.html
+%  P0 红线：全程"失踪/缺席宣告死亡"口径（2007-01-28 失踪，2012-01-28
+%           declared dead in absentia），正文禁用任何推定性死因措辞。
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Gray 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeDB}{HTML}{2E5A9E}     % 数据库系统 — 蓝
+\definecolor{badgeTP}{HTML}{1E8E8E}     % 事务处理 — 青绿
+\definecolor{badgeDW}{HTML}{D9A441}     % 数据仓库与存储 — 琥珀
+\definecolor{badgeES}{HTML}{C0395B}     % eScience 与地球之窗 — 玫瑰
+\definecolor{dbpanel}{RGB}{228,233,246}
+\definecolor{tppanel}{RGB}{222,240,238}
+\definecolor{dwpanel}{RGB}{249,240,224}
+\definecolor{espanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeDB!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeTP!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeDW!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{database}\enspace 事务处理巨擘\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {吉姆·格雷};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Jim Gray\enspace·\enspace 1944 — 2007（海上失踪）};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {数据库与事务处理先驱 · 两阶段提交 · 1998 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeDB] at (-5.05,0)
+        {数据库系统\\Database Systems\par\scriptsize System R · SQL};
+      \node[badge, fill=badgeTP] at (-1.68,0)
+        {事务处理\\Transaction Processing\par\scriptsize 两阶段提交};
+      \node[badge, fill=badgeDW] at (1.68,0)
+        {数据仓库与存储\\OLAP · Storage\par\scriptsize 五分钟法则};
+      \node[badge, fill=badgeES] at (5.05,0)
+        {eScience\\TerraServer\par\scriptsize Skyserver · 地图};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"数据库与事务处理研究的开创性贡献，以及系统实现的技术领导力" —— 1998 图灵奖授奖理由（ACM）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Jim_Gray_2006.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Jim_Gray_2006.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Jim Gray · 2006};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace IBM · Tandem · DEC · Microsoft\enspace|\enspace Turing 1998};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{格雷 - 从旧金山到数据库世界的仲裁者}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Jim_Gray_2006.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Jim_Gray_2006.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Jim Gray · 2006};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1944-01-12 生于旧金山\\[2pt]\lab{失踪}\quad 2007-01-28（2012 宣告）\\[2pt]\lab{本名}\quad James Nicholas Gray};
+  \node[infob, fill=tppanel, draw=badgeTP!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Berkeley BS 1966 · PhD 1969\\[2pt]
+     \quad NYU Courant MS（Bell Labs 期间）\\[2pt]
+     \lab{师承}\quad Michael A. Harrison};
+  \node[infob, fill=dbpanel, draw=badgeDB!50, anchor=south] at (-1.8,-2.01)
+    {\lab{国籍}\quad 美国\\[2pt]\lab{状态}\quad 缺席宣告死亡（2012）\\[2pt]\lab{任职}\quad IBM · Tandem · DEC · Microsoft};
+  \node[infob, fill=dwpanel, draw=badgeDW!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1998\\[2pt]
+     \quad Charles Babbage Award 1998\\[2pt]
+     \lab{核心领域}\quad 数据库 · 事务处理\\[2pt]
+     \quad 存储与数据仓库};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{格雷的一生}{1944 — 2012 · 从旧金山到未归的航程}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.85);
+  \foreach \y/\year/\txt in {
+    3.0/1944/生于旧金山，幼年随家在罗马度过,
+    2.35/1961/入读 UC Berkeley,
+    1.7/1966/获工程数学（Math and Statistics）学士,
+    1.05/1969/获程序设计语言博士（Harrison），后入 IBM 博士后,
+    0.4/1970s/在 IBM San Jose 参与 System R——引入 SQL 的原型关系数据库,
+    -0.25/随后/先后于 Tandem、DEC 从事事务处理研究,
+    -0.9/1995/加入 Microsoft，任 Technical Fellow,
+    -1.55/1998/获 ACM 图灵奖与 Charles Babbage Award,
+    -2.2/2007-01-28/独驾帆船 Tenacious 出海失踪,
+    -2.85/2012-01-28/被法院缺席宣告死亡
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：罗马学语的少年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：罗马学语的少年 (1944–1961)}{陆军父亲 · 意大利语第一语言 · 空军学院落榜}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1944} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{生于旧金山；父 James Able Gray（美国陆军出身、业余发明家），母 Ann Emma Sanbrailo（教师）} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{工程师之家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{幼年} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{随家迁罗马度过人生最初三年余——先学会说意大利语，后学英语} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{双语童年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{迁居} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{父母离异后随母回旧金山；父亲的打字机色带匣专利带来可观的专利收入} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{发明家父亲的遗产} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1961} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{报考 Air Force Academy 被拒后，作为新生入读 UC Berkeley} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{伯克利之路开启} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个先说意大利语的旧金山少年，后来成了数据库世界的仲裁者。}
+\end{center}
+\end{frame}}
+
+% --- 5. Berkeley 本科与 Bell Labs ---
+\newcommand{\undergradslide}{\begin{frame}\plainbar\sectiontitle{Berkeley 本科与 Bell Labs (1961–1966)}{工程数学 · "dreadful" 的工业经历 · Multics 仿真}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{半工半读} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{为付学费在 General Dynamics 做 co-op，学会使用 Monroe 计算器} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{工业界初体验} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{波折} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{因化学成绩不佳离校半年，转做工业界——他后来把那段经历描述为 "dreadful"} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{重返校园} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1966} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{获 UC Berkeley 工程数学（Math and Statistics）学士（BS）} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{数学根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Bell Labs} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{与妻子 Loretta 迁新泽西；在 Bell Labs 做 Multics 数字仿真，每周三天工作、两天在 NYU Courant Institute 读硕士} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{系统经验累积} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Monroe 计算器到 Multics——他早早摸到了操作系统的脉搏。}
+\end{center}
+\end{frame}}
+
+% --- 6. Berkeley 博士 ---
+\newcommand{\phdslide}{\begin{frame}\plainbar\sectiontitle{Berkeley 博士 (1966–1969)}{Harrison 门下 · 程序设计语言 · IBM 博士后}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{回伯克利} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{旅行数月后重返 Berkeley，进入研究生院} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{学术生涯启航} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{师从 Michael A. Harrison} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{师承明确实载} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{获程序设计语言（programming languages）方向博士学位} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{转向数据库前夜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博士后} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{毕业后为 IBM 做两年博士后工作；在 Berkeley 期间与 Loretta 育有一女（后离异），第二任妻子为 Donna Carnes} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{走向工业界} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 程序设计语言出身的博士，最终改写了数据库的历史。}
+\end{center}
+\end{frame}}
+
+% --- 7. System R 与 SQL ---
+\newcommand{\systemrslide}{\begin{frame}\plainbar\sectiontitle{System R 与 SQL}{IBM San Jose · 原型关系数据库}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{机构} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{IBM 博士后之后，于 IBM San Jose Research Laboratory 参与 System R 研发} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{数据库圣殿} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{系统} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{System R——引入 SQL 的原型关系数据库系统} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{SQL 的摇篮} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{System R 成为后来商业关系数据库产品的基础} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{改变整个行业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} System R：从原型到商业世界的路径}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{System R（原型）} \rightarrow \text{SQL} \rightarrow \text{商业关系数据库产品}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 两阶段提交协议 ---
+\newcommand{\twopcslide}{\begin{frame}\plainbar\sectiontitle{两阶段提交协议 (Two-Phase Commit)}{分布式事务的基石 · 最著名成就之一}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{问题} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{跨多个节点的分布式事务，如何让所有参与者就"提交还是回滚"达成一致} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{分布式的一致性} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方案} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{两阶段提交协议（two-phase commit protocol）：先询问表决，再统一执行} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{原子提交协议} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{其最著名的成就之一，成为分布式事务处理的基石} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{教科书级贡献} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 2PC：两阶段的原子提交}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{Phase 1: prepare \& vote}\ \Rightarrow\ \text{all yes}: \textbf{COMMIT};\ \ \text{any no}: \textbf{ABORT}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 粒度锁与五分钟法则 ---
+\newcommand{\locksminslide}{\begin{frame}\plainbar\sectiontitle{粒度锁与五分钟法则}{并发控制 · 存储分配的经典经验}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成就}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{粒度锁} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{粒度数据库锁（granular database locking）——数据库并发控制的关键贡献} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{多粒度并发} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{五分钟法则} & \cellcolor{dwpanel}\textcolor{badgeDW!82!black}{五分钟法则（five-minute rule）——存储页在内存与磁盘间分配的经典经验法则} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{存储经济的标尺} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{要义} & \cellcolor{dwpanel}\textcolor{badgeDW!82!black}{以"再次访问的间隔"权衡：访问足够频繁的页，值得常驻内存而非留在磁盘} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{至今仍在引用} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 五分钟法则（five-minute rule）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{一页的再访问间隔} < 5\ \text{分钟}\ \Rightarrow\ \text{留在内存}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. OLAP cube 与缺陷刻画 ---
+\newcommand{\olapslide}{\begin{frame}\plainbar\sectiontitle{OLAP cube 与缺陷刻画}{数据仓库算子 · 软件可靠性 · 1993 教科书}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{数据仓库} & \cellcolor{dwpanel}\textcolor{badgeDW!82!black}{OLAP cube 算子——数据仓库（data warehousing）的关键算子} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{多维分析的标准件} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{可靠性} & \cellcolor{dwpanel}\textcolor{badgeDW!82!black}{对软件缺陷类型（software bug types）的系统刻画；另有 "Why do computers stop and what can be done about it?"（1986）} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{系统可靠性的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教科书} & \cellcolor{dwpanel}\textcolor{badgeDW!82!black}{Transaction Processing: Concepts and Techniques（1993，与 Andreas Reuter 合著）} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{领域标准教程} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} OLAP cube：数据仓库的多维分析算子}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{Fact} \times \text{Dimensions}\ \Rightarrow\ \text{Cube（切片 · 切块 · 上卷 · 下钻）}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. Tandem → DEC → Microsoft ---
+\newcommand{\industryslide}{\begin{frame}\plainbar\sectiontitle{Tandem $\rightarrow$ DEC $\rightarrow$ Microsoft (1995)}{Technical Fellow · TerraServer · 中立的仲裁者}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{轨迹} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{离开 IBM 后，先后在 Tandem Computers 与 DEC 从事事务处理研究} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{工业界深耕} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1995} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{加入 Microsoft，任 Technical Fellow——直至 2007 年海上失踪} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{生涯的最后一站} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地球之窗} & \cellcolor{espanel}\textcolor{badgeES!82!black}{为 Microsoft 做 TerraServer-USA 与 Skyserver；协助开发 Virtual Earth——把数据库用于地图与科学数据} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{eScience 的实践} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术组织} & \cellcolor{espanel}\textcolor{badgeES!82!black}{CIDR（Conference on Innovative Data Systems Research）共同创始人；Roger Sippl 称其为业界 "technical gods in this industry" 之一、标准委员会中受敬重的中立仲裁者} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{同行的敬重} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 System R 到 Virtual Earth——他把数据库写进了整个星球。}
+\end{center}
+\end{frame}}
+
+% --- 12. 2007：海上失踪 ---
+\newcommand{\disappearanceslide}{\begin{frame}\plainbar\sectiontitle{2007：海上失踪}{Tenacious · Farallon Islands · 一次全球众包搜救}
+\vspace{-0.42cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{事件}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2007-01-28} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{独驾 40 英尺帆船 Tenacious 前往旧金山近海的 Farallon Islands 撒母亲骨灰，未归——天气晴好，无求救信号，船载 EPIRB 亦无反应；海岸警卫队四日海空搜索无果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2007-02} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{DigitalGlobe 卫星扫描影像上传 Amazon Mechanical Turk；全球学生、同事与志愿者组成 "Jim Gray Group" 逐图搜寻——2 月 16 日暂停，5 月 31 日水下搜索结束} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2012-01-28} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{妻子 Donna Carnes 提请法院后，Gray 被缺席宣告死亡（declared dead in absentia）——死因从未被证实，本篇不采用任何推定性死因} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.05cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  \begin{minipage}[c]{3.0cm}
+    \IfFileExists{images/500px-Jim_Gray_on_Tenacious_2006.jpg}{\includegraphics[width=3.0cm,height=1.6cm,keepaspectratio]{500px-Jim_Gray_on_Tenacious_2006.jpg}}{\textcolor{covermuted}{\faIcon{ship}\enspace Tenacious}}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{7.9cm}
+  {\fontsize{8}{10.5}\selectfont\color{coverprimary!88!black}\textit{Jim Gray on his yacht Tenacious in 2006（页面原照）}\\[2pt]计算机史上最著名的众包搜救，终究未能带回这位水手。}
+  \end{minipage}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1998 · 授奖理由整句}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{最高荣誉} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item ACM Turing Award（1998）\item IEEE Computer Society Charles Babbage Award（1998）\end{itemize}} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{同为 1998，年份勿错开} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{授奖理由} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{"for seminal contributions to database and transaction processing research and technical leadership in system implementation"——数据库与事务处理研究的开创性贡献，及系统实现的技术领导力} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{ACM citation 原文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术组织} & \cellcolor{dbpanel}\textcolor{badgeDB!82!black}{CIDR 会议共同创始人；长期在标准委员会中担任受敬重的中立仲裁者} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{行业的黏合剂} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 事务处理巨擘之名，因开创与领导力而愈发闪耀。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：以他为名的航标}{Gray Systems Lab · SIGMOD · eScience}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=dbpanel, draw=badgeDB!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDB} Gray Systems Lab}\\[3pt]2008 · Madison\\[2pt]Microsoft Research};
+\node[leg, fill=tppanel, draw=badgeTP!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeTP} SIGMOD 论文奖}\\[3pt]Jim Gray Doctoral\\[2pt]Dissertation Award};
+\node[leg, fill=dwpanel, draw=badgeDW!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDW} eScience Award}\\[3pt]Microsoft Research\\[2pt]每年颁发};
+\node[leg, fill=espanel, draw=badgeES!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeES} WorldWide Telescope}\\[3pt]Microsoft 软件题献\\[2pt]给他};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 两阶段提交仍在每个分布式事务里运转。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} System R $\rightarrow$ 两阶段提交 $\rightarrow$ 粒度锁与五分钟法则 $\rightarrow$ OLAP cube $\rightarrow$ eScience\\[2pt]他的名字，仍在每年 SIGMOD 的博士论文奖中回响。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {他把秩序留给了数据库，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {把苍茫留给了大海。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Jim Gray};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {吉姆·格雷\quad Jim Gray\quad 1944 —（2007-01-28 出海失踪，2012 缺席宣告死亡）};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{database}\enspace Turing 1998 · Charles Babbage Award 1998 · 事务处理巨擘\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\undergradslide
+\phdslide
+\systemrslide
+\twopcslide
+\locksminslide
+\olapslide
+\industryslide
+\disappearanceslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

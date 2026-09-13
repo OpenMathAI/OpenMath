@@ -1,0 +1,497 @@
+% =============================================================
+%  深度学习教父：杨立昆 (Yann LeCun)
+%  Beamer 源码 —— 参考明斯基模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：卷积感受野 —— 稀疏方格与滑窗，呼应「卷积扫描图像」
+%  资料来源：turing/pages/2018/Yann LeCun/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== LeCun 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{mainclr}{HTML}{5B2D8E}      % 主色 — OpenTuring 图灵紫
+\definecolor{accentclr}{HTML}{B03A2E}    % 强调色 — 尊崇 / 图灵奖
+\definecolor{badgeA}{HTML}{2E5A9E}       % 卷积网络 — 蓝
+\definecolor{badgeB}{HTML}{1E8E8E}       % 识别落地 — 青绿
+\definecolor{badgeC}{HTML}{D9A441}       % 压缩与工程 — 琥珀
+\definecolor{badgeD}{HTML}{C0395B}       % 世界模型 — 玫瑰
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 卷积感受野背景（稀疏方格 + 滑窗）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12, rounded corners=2pt] ([xshift=0.8cm,yshift=-0.8cm]current page.north west) rectangle ++(2.6,-2.6);
+  \draw[badgeA!35, line width=0.6pt, rounded corners=2pt] ([xshift=1.5cm,yshift=-1.5cm]current page.north west) rectangle ++(1.2,-1.2);
+  \fill[badgeB!10, rounded corners=2pt] ([xshift=-1.0cm,yshift=1.0cm]current page.south east) rectangle ++(-3.0,3.0);
+  \fill[badgeC!12] ([xshift=-3.2cm,yshift=-2.4cm]current page.north east) rectangle ++(-1.6,-1.6);
+  \fill[accentclr!10] ([xshift=2.8cm,yshift=2.2cm]current page.south west) rectangle ++(1.2,1.2);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{brain}\enspace AI 教父\enspace·\enspace 法国/美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {杨立昆};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Yann LeCun\enspace·\enspace 1960 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {深度学习先驱 · 卷积网络 LeNet · 2018 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {卷积网络\\Convolutional Nets\par\scriptsize LeNet · CNN};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {识别落地\\Handwriting · OCR\par\scriptsize 邮编 · 支票};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {压缩与工程\\DjVu · Lush\par\scriptsize AT\&T Labs};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {世界模型\\World Models\par\scriptsize FAIR $\rightarrow$ AMI Labs};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12.5cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"conceptual and engineering breakthroughs that have made deep neural networks a critical component of computing." —— 2018 图灵奖（ACM 表述，与 Bengio/Hinton 共享）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Yann_LeCun_2024.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Yann_LeCun_2024.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Yann LeCun · 2024};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法国/美国\enspace|\enspace \faIcon{university}\enspace Bell Labs · NYU · Meta · AMI Labs\enspace|\enspace Turing 2018};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{杨立昆 - 从巴黎郊区到 AI 教父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Yann_LeCun_2024.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Yann_LeCun_2024.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Yann LeCun};
+  \node[infob, fill=panelC, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1960-07-08 —（在世）\\[2pt]\lab{本名}\quad Yann André Le Cun\\[2pt]\lab{国籍}\quad 法国 / 美国};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad ESIEE Paris 工程师文凭 1983\\[2pt]
+     \quad UPMC（今索邦）PhD 1987\\[2pt]
+     \lab{师承}\quad Maurice Milgram（导师）};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Soisy-sous-Montmorency\\[2pt]
+     \quad 巴黎郊区 · 法国\\[2pt]\lab{任职}\quad Bell Labs · NYU · Meta};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2018 · QE Prize 2025\\[2pt]
+     \quad Asturias 2022 · 军团骑士 2023\\[2pt]
+     \lab{核心领域}\quad 深度学习 · 计算机视觉\\[2pt]
+     \quad 机器人学 · 图像压缩};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{杨立昆的一生}{1960 — 在世 · 从巴黎郊区到深度学习教父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1960/生于巴黎郊区 Soisy-sous-Montmorency,
+    2.36/1983/获 ESIEE Paris 工程师文凭,
+    1.72/1987/UPMC 计算机科学博士（早期形式反向传播）,
+    1.08/1988/加入 AT\&T Bell Labs，发展 LeNet,
+    0.44/1989/手写邮编识别论文（Zip Code）,
+    -0.2/1998/LeNet 综述论文（Proceedings of the IEEE）,
+    -0.84/2003/加入 NYU，Schwartz 讲席教授,
+    -1.48/2013/出任 Meta FAIR 首任主任,
+    -2.12/2018/与 Hinton、Bengio 共享图灵奖,
+    -2.76/2025/离开 Meta，创办 AMI Labs
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 布列塔尼的姓氏与巴黎郊区童年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{布列塔尼的姓氏与巴黎郊区童年 (1960–)}{Le Cunff 渊源 · Guingamp · 凯尔特之名}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1960} & \cellcolor{panelA}\textcolor{badgeA!82!black}{7 月 8 日生于 Soisy-sous-Montmorency（巴黎郊区，法国）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{法兰西少年} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{姓氏} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Le Cun 源自古布列塔尼体 Le Cunff，来自北部布列塔尼 Guingamp 地区} & \cellcolor{panelB}\textcolor{badgeB!82!black}{布列塔尼渊源} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{名字} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Yann 是 Jean 的布列塔尼形式（Jean 即法语 John）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{凯尔特之名} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{拼写} & \cellcolor{panelA}\textcolor{badgeA!82!black}{本名两词 Le Cun，惯用拼写 LeCun} & \cellcolor{panelB}\textcolor{badgeB!82!black}{两种写法并存} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个背着布列塔尼古姓的巴黎郊区少年，后来让机器学会了"看"。}
+\end{center}
+\end{frame}}
+
+% --- 5. ESIEE、索邦博士与多伦多博后 ---
+\newcommand{\doctorateslide}{\begin{frame}\plainbar\sectiontitle{索邦博士与多伦多博后 (1983–1988)}{Milgram 门下 · 早期形式反向传播 · Hinton 指导}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{工程师文凭} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1983 年获 ESIEE Paris 工程师文凭（Diplôme d'Ingénieur）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工程根基} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{博士论文} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\textit{Modeles connexionnistes de l'apprentissage}（连接主义学习模型，1987）· 导师 Maurice Milgram} & \cellcolor{panelB}\textcolor{badgeB!82!black}{连接主义博士} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{早期探索} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1985 年发表非对称阈值网络学习方案（Cognitiva 85）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{前奏之作} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{博后} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1987 年起在 Toronto 受 Geoffrey Hinton 指导一年；1988 年加入 Bell Labs} & \cellcolor{panelB}\textcolor{badgeB!82!black}{谱系的交汇} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 博士期间提出"早期形式"的反向传播（an early form of backpropagation）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$w \leftarrow w - \eta\,\dfrac{\partial E}{\partial w}\qquad$ 梯度逐层回传——早期形式，而非发明人}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Bell Labs：LeNet 的诞生 ---
+\newcommand{\belllabslide}{\begin{frame}\plainbar\sectiontitle{Bell Labs：LeNet 的诞生 (1988–1996)}{Jackel 部门 · CNN · Optimal Brain Damage}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{入职} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1988 年加入 AT\&T Bell Labs 自适应系统研究部（Holmdel, NJ），部门主任 Lawrence D. Jackel} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工业研究的殿堂} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{LeNet} & \cellcolor{panelA}\textcolor{badgeA!82!black}{发展受生物学启发的图像识别模型——卷积神经网络（LeNet）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{CNN 的奠基} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{新方法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{提出 "Optimal Brain Damage" 正则化方法与 Graph Transformer Networks（类似条件随机场）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{剪枝与序列学习} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{应用} & \cellcolor{panelA}\textcolor{badgeA!82!black}{应用于手写识别与光学字符识别（OCR）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{走向实用} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 卷积——局部感受野与权值共享}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$y = \sigma\big(W * x + b\big)\qquad$ 滑窗扫描图像，同一组权重处处复用}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 手写数字与支票识别 ---
+\newcommand{\zipcodeslide}{\begin{frame}\plainbar\sectiontitle{手写数字与支票识别 (1989–)}{Zip Code 论文 · NCR 部署 · 首次大规模商用}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1989 年 \textit{Backpropagation Applied to Handwritten Zip Code Recognition}（与 Boser、Denker 等，Neural Computation）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{CNN 的首批实绩} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{落地} & \cellcolor{panelB}\textcolor{badgeB!82!black}{协助开发的银行支票识别系统被 NCR 等公司广泛部署} & \cellcolor{panelA}\textcolor{badgeA!82!black}{神经网络第一次大规模商用之一} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{意义} & \cellcolor{panelB}\textcolor{badgeB!82!black}{反向传播驱动真实工业系统，连接学界与产业} & \cellcolor{panelA}\textcolor{badgeA!82!black}{从论文到支票机} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 手写数字识别流水线（Zip Code 系统）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{32}\times\text{32 输入} \rightarrow \text{卷积} \rightarrow \text{下采样} \rightarrow \text{全连接} \rightarrow \text{0--9}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. LeNet 论文 ---
+\newcommand{\lenetslide}{\begin{frame}\plainbar\sectiontitle{LeNet 经典论文 (1998)}{Gradient-based Learning · Proceedings of the IEEE}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{发表} & \cellcolor{panelA}\textcolor{badgeA!82!black}{"Gradient-based learning applied to document recognition"，Proceedings of the IEEE, 86(11): 2278--2324} & \cellcolor{panelB}\textcolor{badgeB!82!black}{CNN 经典文献} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{作者} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 Léon Bottou、Yoshua Bengio、Patrick Haffner 合著} & \cellcolor{panelB}\textcolor{badgeB!82!black}{长期合作者同聚} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{地位} & \cellcolor{panelA}\textcolor{badgeA!82!black}{梯度学习 + 卷积网络的标准引文，深度学习复兴的伏笔} & \cellcolor{panelB}\textcolor{badgeB!82!black}{被引半个世纪} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} LeNet —— 梯度学习应用于文档识别}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Gradient-Based Learning Applied to Document Recognition} —— 卷积网络由此成为范式。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. DjVu 与 Lush ---
+\newcommand{\djvuslide}{\begin{frame}\plainbar\sectiontitle{DjVu 与 Lush：压缩与工程 (1996–)}{图像处理研究部主任 · Internet Archive · Lush}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{转岗} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1996 年加入 AT\&T Labs-Research，任图像处理研究部主任（隶属 Lawrence Rabiner 的语音与图像处理实验室）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{从识别转向压缩} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{DjVu} & \cellcolor{panelC}\textcolor{badgeC!82!black}{与 Léon Bottou、Patrick Haffner 同为主要创建者的扫描文档压缩格式} & \cellcolor{panelA}\textcolor{badgeA!82!black}{被 Internet Archive 用于数字化文本分发} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{Lush} & \cellcolor{panelC}\textcolor{badgeC!82!black}{与 Bottou 共同开发 Lush 编程语言；AT\&T 时期合作者还有 Vladimir Vapnik} & \cellcolor{panelA}\textcolor{badgeA!82!black}{工程多面手} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从让机器认字到让文档变轻，他把研究一次次做成了可用的系统。}
+\end{center}
+\end{frame}}
+
+% --- 11. NYU 与数据科学 ---
+\newcommand{\nyuslide}{\begin{frame}\plainbar\sectiontitle{NYU 与数据科学 (2003–)}{Schwartz 讲席 · 能量基模型 · CDS 创始主任}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{入职} & \cellcolor{panelA}\textcolor{badgeA!82!black}{2003 年加入 NYU（此前短暂任 NEC Research Institute Fellow），任 Courant 研究所 Jacob T. Schwartz 计算机科学与神经科学讲席教授} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算与神经科学交汇} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{研究} & \cellcolor{panelA}\textcolor{badgeA!82!black}{能量基模型（energy-based models）、计算机视觉特征学习、移动机器人} & \cellcolor{panelB}\textcolor{badgeB!82!black}{监督与无监督学习} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{建制} & \cellcolor{panelA}\textcolor{badgeA!82!black}{2012 年创办 NYU Center for Data Science 并任创始主任（2014 年初卸任）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数据科学建制化} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{讲席} & \cellcolor{panelA}\textcolor{badgeA!82!black}{2016 年任法兰西公学院年度讲席访问教授；2023 年成为 NYU 首任 Jacob T. Schwartz 讲席教授} & \cellcolor{panelB}\textcolor{badgeB!82!black}{法美两界声誉} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在 Courant 的数学土壤里，他为深度学习保留了学术的根据地。}
+\end{center}
+\end{frame}}
+
+% --- 12. Meta/FAIR 十年 ---
+\newcommand{\fairslide}{\begin{frame}\plainbar\sectiontitle{Meta/FAIR 十年 (2013–2025)}{首席 AI 科学家 · FAIR 首任主任}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{加入} & \cellcolor{panelD}\textcolor{badgeD!82!black}{2013 年加入 Facebook（今 Meta Platforms），任首席 AI 科学家} & \cellcolor{panelA}\textcolor{badgeA!82!black}{产业 AI 旗手} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{FAIR} & \cellcolor{panelD}\textcolor{badgeD!82!black}{2013-12-09 成为 Meta AI Research（FAIR）首任主任，领导公司 AI 实验室} & \cellcolor{panelA}\textcolor{badgeA!82!black}{FAIR 的建立者} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{社区} & \cellcolor{panelD}\textcolor{badgeD!82!black}{与 Yoshua Bengio 共同创办 ICLR（2013）；1986--2012 年主持雪鸟 "Learning Workshop"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{学术社区建设} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{旁职} & \cellcolor{panelD}\textcolor{badgeD!82!black}{CIFAR "Learning in Machines \& Brains" 项目联合主任；法国研究组 Kyutai 科学顾问} & \cellcolor{panelA}\textcolor{badgeA!82!black}{学术网络} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 十年首席 AI 科学家，他把深度学习从论文推进了产业产品的主航道。}
+\end{center}
+\end{frame}}
+
+% --- 13. AMI Labs：世界模型 ---
+\newcommand{\amislide}{\begin{frame}\plainbar\sectiontitle{AMI Labs：世界模型 (2025–)}{离开 Meta · \$1.03B 融资 · LLM 之辩}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{转身} & \cellcolor{panelD}\textcolor{badgeD!82!black}{2025-11-19 确认离开 Meta，创办专注世界模型（world models）架构与"类人智能"的公司} & \cellcolor{panelA}\textcolor{badgeA!82!black}{十年后再出发} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{公司} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Advanced Machine Intelligence Labs（AMI Labs）：CEO Alex LeBrun，LeCun 任执行主席} & \cellcolor{panelA}\textcolor{badgeA!82!black}{世界模型路线} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{融资} & \cellcolor{panelD}\textcolor{badgeD!82!black}{2026-03 完成融资 \$1.03B，投前估值 \$3.5B（Cathay Innovation、Greycroft、Bezos Expeditions 等共同领投）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{资本下注} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{新职} & \cellcolor{panelD}\textcolor{badgeD!82!black}{2026-01 出任 Logical Intelligence 技术研究委员会创始主席（能量基推理系统）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{能量基路线延伸} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8}{10.5}\selectfont\itshape\color{coverprimary!88!black}"I'm sure there's a lot of people at Meta who would like me to NOT tell the world that LLMs basically are a dead end when it comes to superintelligence."}\\[1pt]
+  {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coveraccent!85!black} —— 2025 年《金融时报》专访}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与共享的荣耀 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与共享的荣耀}{图灵奖 2018（与 Bengio/Hinton 共享） · 三院院士}\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.52}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{-3pt}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（2018，与 Bengio/Hinton 共享）\item Princess of Asturias（2022，与 Bengio/Hinton/Hassabis）\item VinFuture 大奖（2024）· QE Prize for Engineering（2025）\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{AI 教父的公认} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{院士与勋章} & \cellcolor{panelA}\textcolor{badgeA!82!black}{美国国家科学院（2021）· 国家工程院 · 法国科学院——三院院士；法国荣誉军团骑士（2023）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{法美两界的承认} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{同行与讲席} & \cellcolor{panelA}\textcolor{badgeA!82!black}{IEEE Neural Network Pioneer（2014）· PAMI 杰出研究者（2015）· IRI Medal（2018）· Harold Pender（2018）· Golden Plate（2019）；荣誉博士五所（IPN/EPFL/Côte d'Azur/Siena/HKUST）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{荣誉密度极高} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从巴黎郊区的少年到三院院士，荣誉背后是一条坚持了四十年的路线。}
+\end{center}
+\end{frame}}
+
+% --- 15. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：从卷积到世界模型}{CNN · 识别落地 · 压缩工程 · 世界模型}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=panelA, draw=badgeA!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeA} 卷积网络}\\[3pt]CNN · LeNet\\[2pt]权值共享};
+\node[leg, fill=panelB, draw=badgeB!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeB} 识别落地}\\[3pt]Zip Code\\[2pt]支票识别};
+\node[leg, fill=panelC, draw=badgeC!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeC} 压缩工程}\\[3pt]DjVu\\[2pt]Lush};
+\node[leg, fill=panelD, draw=badgeD!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeD} 世界模型}\\[3pt]AMI Labs\\[2pt]理解物理世界};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 从让机器认字，到让模型理解世界。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 卷积网络 $\rightarrow$ 识别落地 $\rightarrow$ 压缩工程 $\rightarrow$ 世界模型\\[2pt]他的路线，仍在向前延伸。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 16. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {卷积网络，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {让机器第一次学会了看。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Yann LeCun};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {杨立昆\quad Yann LeCun\quad 1960 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{brain}\enspace Turing 2018 · CNN · World Models\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\doctorateslide
+\belllabslide
+\zipcodeslide
+\lenetslide
+\djvuslide
+\nyuslide
+\fairslide
+\amislide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

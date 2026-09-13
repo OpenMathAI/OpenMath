@@ -1,0 +1,490 @@
+% =============================================================
+%  WWW: Tim Berners-Lee / Tim Berners-Lee
+%  Gaussian layout: tabularx + fcolorbox + timeline
+%  Source: turing/pages/2016/Tim Berners-Lee/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+\input{../cover/openturing_page.tex}
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeA}{HTML}{2E5A9E}
+\definecolor{badgeB}{HTML}{1E8E8E}
+\definecolor{badgeC}{HTML}{D9A441}
+\definecolor{badgeD}{HTML}{C0395B}
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+% --- 1. titleslide ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{link}\enspace WWW 发明者\enspace·\enspace 英国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {蒂姆·伯纳斯-李};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Tim Berners-Lee\enspace·\enspace 1955 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {World Wide Web · HTML · URL · HTTP 发明者 · 2016 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {万维网\\World Wide Web\par\scriptsize 1989 提案};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {三要素\\HTML·HTTP·URL\par\scriptsize Web 三支柱};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {开放治理\\W3C\par\scriptsize 1994 · royalty-free};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {Web 的未来\\Solid · Inrupt\par\scriptsize 2018 · 数据自主};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"This is for everyone." —— 2012 伦敦奥运开幕式（页面实载）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Tim_Berners-Lee.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Tim_Berners-Lee.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Tim Berners-Lee};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国\enspace|\enspace \faIcon{university}\enspace CERN · MIT · W3C\enspace|\enspace Turing 2016 · OM 2007};
+\end{tikzpicture}
+\end{frame}
+}
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{伯纳斯-李 - 从伦敦到万维网}{生卒 · 本名 · 国籍 · 家庭 · 教育 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Tim_Berners-Lee.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Tim_Berners-Lee.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Tim Berners-Lee};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1955-06-08 —（在世）\\[2pt]\lab{本名}\quad Timothy John Berners-Lee\\[2pt]\lab{国籍}\quad 英国};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Emanuel School\par\quad 牛津 Queen's College 物理一等 1976\par\lab{家庭}\quad 父母皆数学家·计算机科学家\par\quad 双亲曾参与 Ferranti Mark 1};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad London, England\par\lab{任职}\quad CERN · MIT · W3C\par\quad Southampton · Oxford\par\lab{核心领域}\quad 计算机科学 · Web};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2016 · 骑士 2004\par\quad OM 2007 · QE Prize 2013\par\quad FRS 2001\par\lab{身份}\quad WWW 发明者 · W3C 创始人};
+\end{tikzpicture}\end{center}\end{frame}}
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{伯纳斯-李的一生}{1955 — · 从伦敦少年到万维网发明者}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-3.05);
+  \foreach \y/\year/\txt in {
+    3.0/1955/生于伦敦 · 双亲供职 Ferranti Mark 1,
+    2.3/1976/牛津 Queen's College 物理一等,
+    1.6/1980/首入 CERN · 建原型系统 ENQUIRE,
+    0.9/1984/重返 CERN 任 fellow,
+    0.2/1989/3 月提出信息管理提案,
+    -0.5/1990/12 月 20 日发布首个网站,
+    -1.2/1991/8 月 6 日 Usenet 公开邀约,
+    -1.9/1994/创立 W3C · 标准免版税,
+    -2.6/2016/获图灵奖 · 加入牛津,
+    -3.05/至今/在世 · Solid 与 Inrupt 探索 Web 未来
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+% --- 4. 家庭与少年时代 ---
+\newcommand{\familyslide}{\begin{frame}\plainbar\sectiontitle{家庭与少年时代 (1955--1976)}{Ferranti Mark 1 · 火车模型 · 旧电视攒机}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1955} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于伦敦 · 父 Mary Lee Woods 母 Conway Berners-Lee 均为数学家与计算机科学家} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算世家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{双亲} & \cellcolor{panelA}\textcolor{badgeA!82!black}{都来自伯明翰 · 曾共同参与建造 Ferranti Mark 1——首台商用计算机} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工程耳濡目染} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{少年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{痴迷火车时刻 · 从摆弄火车模型学习电子学} & \cellcolor{panelB}\textcolor{badgeB!82!black}{动手启蒙} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Sheen Mount 小学后入 Emanuel School（1969--1973）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{文法学校} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1976} & \cellcolor{panelA}\textcolor{badgeA!82!black}{牛津 Queen's College 物理一等学位 · 在校用旧电视购自修理店攒出一台计算机} & \cellcolor{panelB}\textcolor{badgeB!82!black}{物理与攒机双修} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在一台旧电视攒出的计算机上，少年第一次摸到了计算的门槛。}
+\end{center}
+\end{frame}}
+% --- 5. 早期职业生涯 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早期职业生涯 (1976--1984)}{Plessey · D.G. Nash · ENQUIRE · Image Computer Systems}
+\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1976} & \cellcolor{panelA}\textcolor{badgeA!82!black}{毕业后任电信公司 Plessey 工程师（Poole, Dorset）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工程起步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1978} & \cellcolor{panelA}\textcolor{badgeA!82!black}{加入 D. G. Nash（Ferndown）· 协助开发打印机排版软件} & \cellcolor{panelB}\textcolor{badgeB!82!black}{软件历练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1980} & \cellcolor{panelA}\textcolor{badgeA!82!black}{6--12 月以独立承包人身份首入 CERN（日内瓦）· 建超文本原型 ENQUIRE} & \cellcolor{panelB}\textcolor{badgeB!82!black}{超文本首试} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1980--84} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Image Computer Systems（Bournemouth）· 主技术三年 · 积累计算机网络经验} & \cellcolor{panelB}\textcolor{badgeB!82!black}{网络经验} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1984} & \cellcolor{panelA}\textcolor{badgeA!82!black}{重返 CERN 任 fellow} & \cellcolor{panelB}\textcolor{badgeB!82!black}{命运的回归} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{coveraccent!85!black} ENQUIRE（1980 · CERN）}\\[0.5pt]
+  {\fontsize{9.5}{12}\selectfont\color{coverprimary!88!black}\textit{以概念（节点）与文件（链接）相连的超文本原型}——十年后 Web 的序章}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+% --- 6. 1989：提案 ---
+\newcommand{\proposalslide}{\begin{frame}\plainbar\sectiontitle{1989：一份改变世界的提案}{3 月 12 日 · 信息管理 · vague but exciting}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{背景} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1989 年 CERN 是欧洲最大的 Internet 节点 · 伯纳斯-李看到把超文本与 Internet 相连的机会} & \cellcolor{panelB}\textcolor{badgeB!82!black}{时机成熟} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1989-03} & \cellcolor{panelA}\textcolor{badgeA!82!black}{3 月 12 日提出 information management system 提案 · 1990 年重新分发} & \cellcolor{panelB}\textcolor{badgeB!82!black}{WWW 诞生起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主管批语} & \cellcolor{panelA}\textcolor{badgeA!82!black}{主管 Mike Sendall 批准 · 批语 \textit{vague, but exciting}（模糊但令人兴奋）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{史上著名批语} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{伙伴} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Robert Cailliau 曾独立向 CERN 提出超文本系统项目 · 随后作为伙伴加入共同推动} & \cellcolor{panelB}\textcolor{badgeB!82!black}{并肩推广} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 信息管理提案（1989-03-12）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{超文本} $\cdot$ \textit{TCP} $\cdot$ \textit{DNS} —— 拼图恰好齐全，只差把它们连起来}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+% --- 7. 1990 冬：实现 ---
+\newcommand{\winterslide}{\begin{frame}\plainbar\sectiontitle{1990 冬：第一个 Web 的诞生}{NeXT 计算机 · 浏览器 · 服务器 · 首个网站}
+\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{里程碑}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1990-11} & \cellcolor{panelA}\textcolor{badgeA!82!black}{11 月中旬 HTTP 客户端与服务器首次成功通信} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Web 第一次对话} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{浏览器} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首个 Web 浏览器+编辑器 \textit{WorldWideWeb}（NeXTSTEP）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{读写一体的 Web} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{服务器} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首个 Web 服务器 \textit{CERN httpd} · 跑在一台 NeXT 计算机上} & \cellcolor{panelB}\textcolor{badgeB!82!black}{馆藏在 CERN} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1990-12-20} & \cellcolor{panelA}\textcolor{badgeA!82!black}{发布首个网站 · 介绍 Web 项目本身} & \cellcolor{panelB}\textcolor{badgeB!82!black}{info.cern.ch} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1991-08-06} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在 Usenet 发帖 · 公开邀请全世界参与 WorldWideWeb 项目} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Web 向全人类敞开} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{coveraccent!85!black} 创造 Web 确实是一种绝望之举（an act of desperation）}\\[0.5pt]
+  {\fontsize{9.5}{12}\selectfont\color{coverprimary!88!black}——超文本、Internet、多字体文本对象都已被发明，\textit{我只是把它们连在一起}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+% --- 8. 三要素 ---
+\newcommand{\pillarslide}{\begin{frame}\plainbar\sectiontitle{三要素：HTML · HTTP · URL}{内容 · 传输 · 地址 —— Web 的三根支柱}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{角色}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{HTML} & \cellcolor{panelA}\textcolor{badgeA!82!black}{超文本标记语言 · 描述文档与超链接的内容格式} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Web 的内容} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{HTTP} & \cellcolor{panelA}\textcolor{badgeA!82!black}{超文本传输协议 · 客户端与服务器之间取回文档的通信规则} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Web 的传输} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{URL} & \cellcolor{panelA}\textcolor{badgeA!82!black}{统一资源定位符 · 给网络上的每一份文档一个独一无二的地址} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Web 的地址} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Web 的三根支柱}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black} HTML（内容） $+$ HTTP（传输） $+$ URL（地址） $=$ 一个可普世的超文本空间}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+% --- 9. W3C 与免版税 ---
+\newcommand{\consortiumslide}{\begin{frame}\plainbar\sectiontitle{免版税的抉择：W3C (1994)}{标准治理 · royalty-free · emeritus director}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1994} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在 MIT 创立 World Wide Web Consortium（W3C）· Web 标准的全球治理之家} & \cellcolor{panelB}\textcolor{badgeB!82!black}{标准的中立之家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{抉择} & \cellcolor{panelA}\textcolor{badgeA!82!black}{关键决策：Web 核心标准免专利、免版税（royalty-free）——任何人皆可实施而不必付费} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Web 得以普世} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发展} & \cellcolor{panelA}\textcolor{badgeA!82!black}{HTML、CSS 等 Web 标准在此协商制定 · 全球分部协同} & \cellcolor{panelB}\textcolor{badgeB!82!black}{生态繁荣} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{现状} & \cellcolor{panelA}\textcolor{badgeA!82!black}{创始人 · 现任 emeritus director（荣休董事）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{从治理者到守望者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1994 的抉择}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{让标准无人可独占}——royalty-free 是 Web 属于每一个人的制度保证}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+% --- 10. 学术三站 ---
+\newcommand{\academiaslide}{\begin{frame}\plainbar\sectiontitle{学术三站：MIT · Southampton · Oxford}{3Com founders chair · 语义网教席 · 重返母校}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{站点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{职务与研究}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{MIT} & \cellcolor{panelA}\textcolor{badgeA!82!black}{CSAIL · 3Com founders 讲席教授 · Decentralized Information Group · Solid 项目} & \cellcolor{panelB}\textcolor{badgeB!82!black}{长期大本营} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Southampton} & \cellcolor{panelA}\textcolor{badgeA!82!black}{2004 年计算机科学教席 · 语义网（Semantic Web）研究} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Web 走向语义} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Oxford} & \cellcolor{panelA}\textcolor{badgeA!82!black}{2016 年起计算机系 professorial research fellow · Christ Church fellow} & \cellcolor{panelB}\textcolor{badgeB!82!black}{重返母校} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 CERN 的临时工位，到三所大学的三把椅子。}
+\end{center}
+\end{frame}}
+% --- 11. 开放 Web 的守护者 ---
+\newcommand{\openslide}{\begin{frame}\plainbar\sectiontitle{开放 Web 的守护者 (2009--2019)}{WWWF · 开放数据 · 网络契约}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{行动}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2009} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 Rosemary Leith 共创 World Wide Web Foundation（WWWF）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Web 的社会议程} \\
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2010} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 Nigel Shadbolt 推动 data.gov.uk · 政府数据开放上网} & \cellcolor{panelB}\textcolor{badgeB!82!black}{开放数据} \\
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2012} & \cellcolor{panelA}\textcolor{badgeA!82!black}{共创 Open Data Institute（ODI）· 任 president} & \cellcolor{panelB}\textcolor{badgeB!82!black}{开放数据制度化} \\
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2013} & \cellcolor{panelA}\textcolor{badgeA!82!black}{领导 A4AI（可负担互联网联盟）· 让更多人连上网} & \cellcolor{panelB}\textcolor{badgeB!82!black}{连接的普惠} \\
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2019} & \cellcolor{panelA}\textcolor{badgeA!82!black}{发布 Contract for the Web（网络契约）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数字世界的公共议程} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 网络中立（net neutrality）}\\[1pt]
+  {\fontsize{10.5}{13}\selectfont\color{coverprimary!88!black}\textit{Connectivity with no strings attached}——连接，不附带任何条件}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+% --- 12. Solid 与 Inrupt ---
+\newcommand{\solidslide}{\begin{frame}\plainbar\sectiontitle{重造 Web：Solid 与 Inrupt (2016--2018)}{数据所有权 · 去中心化 · 第二幕}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{痛点} & \cellcolor{panelA}\textcolor{badgeA!82!black}{个人数据被平台圈占 · 用户失去对自身数据的控制} & \cellcolor{panelB}\textcolor{badgeB!82!black}{集中化的代价} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Solid} & \cellcolor{panelA}\textcolor{badgeA!82!black}{去中心化数据存储规范 · 个人数据存于用户自主掌控的空间} & \cellcolor{panelB}\textcolor{badgeB!82!black}{所有权归还用户} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2018-09-30} & \cellcolor{panelA}\textcolor{badgeA!82!black}{创办开源公司 Inrupt · 推动 Solid 生态落地} & \cellcolor{panelB}\textcolor{badgeB!82!black}{从规范到产品} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{愿景} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Web 发明者重造 Web——把数据自主补进当年缺失的一环} & \cellcolor{panelB}\textcolor{badgeB!82!black}{第二幕开启} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 当初许下的读写 Web，还欠一块数据主权}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}Solid 想把这块\textit{补上}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+% --- 13. 争议与信仰 ---
+\newcommand{\controversyslide}{\begin{frame}\plainbar\sectiontitle{争议与信仰：一笔带过}{EME/DRM (2017) · 理性主义的底色}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事实}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{语境}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2017} & \cellcolor{panelA}\textcolor{badgeA!82!black}{作为 W3C director 批准 EME（加密媒体扩展 · DRM）规范} & \cellcolor{panelB}\textcolor{badgeB!82!black}{版权与开放的冲突} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2017-09} & \cellcolor{panelA}\textcolor{badgeA!82!black}{EME 成为 W3C 正式推荐标准 · EFF 反对并上诉 · 未果} & \cellcolor{panelB}\textcolor{badgeB!82!black}{治理的现实考验} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{信仰} & \cellcolor{panelA}\textcolor{badgeA!82!black}{被问及信仰时答："Not in the sense of most people. I'm atheist and Unitarian Universalist."} & \cellcolor{panelB}\textcolor{badgeB!82!black}{理性主义的底色} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 发明者也要在理想与现实中做取舍。}
+\end{center}
+\end{frame}}
+% --- 14. 荣誉与大众时刻 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与大众时刻}{图灵奖 2016 · 从实验室到广场}\vspace{-0.65cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.52}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.4cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.6cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{图灵奖} & \cellcolor{panelA}\textcolor{badgeA!82!black}{ACM Turing Award（2016 · 2017-04-04 授予）——\textit{"for inventing the World Wide Web, the first web browser, and the fundamental protocols and algorithms allowing the Web to scale"}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Web 发明者的加冕} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item ACM Software System Award（1995）· FRS（2001）· NAE（2007）· NAS 外籍院士（2009）\item 骑士 Bachelor（2004）· Order of Merit（2007 · 限 24 位在世成员）· 首届 Queen Elizabeth Prize for Engineering（2013）\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学界与国家的双重认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{大众时刻} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Time 100（1999）· 2012 伦敦奥运开幕式现场致意 · Web 源码 NFT \$5,434,500（2021-06 · Sotheby's）· 回忆录 \textit{This Is for Everyone}（2025）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{从实验室到广场} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {"This is for everyone."};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {万维网，属于每一个人。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Tim Berners-Lee};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {蒂姆·伯纳斯-李\quad Tim Berners-Lee\quad 1955 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{link}\enspace Turing 2016 · OM 2007 · WWW 发明者\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\familyslide
+\earlyslide
+\proposalslide
+\winterslide
+\pillarslide
+\consortiumslide
+\academiaslide
+\openslide
+\solidslide
+\controversyslide
+\honorsslide
+\closingslide
+\end{document}

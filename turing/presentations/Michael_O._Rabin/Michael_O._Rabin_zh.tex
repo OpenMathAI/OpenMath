@@ -1,0 +1,501 @@
+% =============================================================
+%  非确定性自动机之父：迈克尔·拉宾 (Michael O. Rabin)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：非确定性 —— 稀疏分支节点呼应"一个状态多条出路"
+%  资料来源：turing/pages/1976/Michael O. Rabin/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Rabin 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeA}{HTML}{2E5A9E}     % 自动机理论 — 蓝
+\definecolor{badgeB}{HTML}{1E8E8E}     % 复杂度与逻辑 — 青绿
+\definecolor{badgeC}{HTML}{D9A441}     % 随机算法 — 琥珀
+\definecolor{badgeD}{HTML}{C0395B}     % 密码学 — 玫瑰
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 分支节点背景（非确定性母题：一个状态多条出路）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeC!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeD!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \draw[badgeA!30, line width=0.8pt] ([xshift=2.0cm,yshift=-2.0cm]current page.north west) -- ++(2.2,-1.3);
+  \draw[badgeA!30, line width=0.8pt] ([xshift=4.2cm,yshift=-3.3cm]current page.north west) -- ++(1.7,0.4) -- ++(1.2,-1.5);
+  \draw[badgeC!28, line width=0.8pt] ([xshift=-2.4cm,yshift=2.0cm]current page.south east) -- ++(-1.9,1.1) -- ++(-1.3,-0.7);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{project-diagram}\enspace 非确定性自动机之父\enspace·\enspace 以色列};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {迈克尔·拉宾};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Michael O. Rabin\enspace·\enspace 1931 — 2026};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {非确定性机器 · 复杂度与随机算法 · 密码学 · 1976 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {非确定性自动机\\Automata Theory\par\scriptsize Rabin–Scott 1959};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {复杂度理论\\Complexity\par\scriptsize 多项式时间 1966};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {随机算法\\Randomized\par\scriptsize Miller–Rabin 1975};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {密码学\\Cryptography\par\scriptsize 签名 · OT · Rabin–Karp};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12.6cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"an enormously valuable concept." —— 1976 图灵奖 citation（与 Dana Scott 共享）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/M_O_Rabin.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{M_O_Rabin.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Michael O. Rabin};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 以色列\enspace|\enspace \faIcon{university}\enspace Hebrew University · Harvard\enspace|\enspace Turing 1976 · Israel Prize 1995};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{拉宾 - 从布雷斯劳到耶路撒冷与哈佛}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/M_O_Rabin.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{M_O_Rabin.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Michael O. Rabin};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1931-09-01 — 2026-04-14\\[2pt]\lab{本名}\quad Michael Oser Rabin\\[2pt]\lab{国籍}\quad 以色列};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Hebrew Reali 海法 1948\\[2pt]
+     \quad Hebrew University BS/MS\\[2pt]
+     \quad Princeton PhD 1956\\[2pt]
+     \lab{师承}\quad Alonzo Church（导师）};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Breslau（今 Wrocław）\\[2pt]\lab{去世地}\quad 耶路撒冷 · 享年 94\\[2pt]\lab{任职}\quad Hebrew University · Harvard};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1976 · Israel Prize 1995\\[2pt]
+     \quad Kanellakis 2003 · Dan David 2010\\[2pt]
+     \lab{核心领域}\quad 自动机 · 复杂度\\[2pt]
+     \quad 随机算法 · 密码学};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{拉宾的一生}{1931 — 2026 · 从布雷斯劳到耶路撒冷与哈佛}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1931/生于布雷斯劳（今波兰弗罗茨瓦夫）,
+    2.44/1935/随家移居委任统治时期巴勒斯坦,
+    1.88/1949/退伍入学希伯来大学,
+    1.32/1956/Princeton 博士（Church 门下）,
+    0.76/1959/与 Scott 合著非确定性自动机论文,
+    0.20/1960/概率自动机 · McCarthy 谜题与复杂度之源,
+    -0.36/1969/无限树自动机 · S2S 可判定性,
+    -0.92/1975/Miller–Rabin 素性测试（MIT）,
+    -1.48/1976/图灵奖（与 Dana Scott 共享）,
+    -2.04/1981/Harvard Gordon McKay 讲席教授,
+    -2.6/2026/逝于耶路撒冷
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 布雷斯劳到海法：拉比之子 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{布雷斯劳到海法：拉比之子 (1931–1948)}{拉比家庭 · 迁徙 · 海法最好的中学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1931} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于布雷斯劳（Breslau，今波兰弗罗茨瓦夫）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{拉比之子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1935} & \cellcolor{panelA}\textcolor{badgeA!82!black}{随家移居委任统治时期巴勒斯坦} & \cellcolor{panelB}\textcolor{badgeB!82!black}{童年迁徙} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{少年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{父亲送他进海法最好的中学，受教于数学家 Elisha Netanyahu（时任中学教师）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数学天资早露} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1948} & \cellcolor{panelA}\textcolor{badgeA!82!black}{自 Hebrew Reali School 毕业，随即遇上 1948 年阿以战争} & \cellcolor{panelB}\textcolor{badgeB!82!black}{投笔从戎} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个拉比之子，最终成为非确定性自动机的奠基者。}
+\end{center}
+\end{frame}}
+
+% --- 5. 战火中的大学路 ---
+\newcommand{\warslide}{\begin{frame}\plainbar\sectiontitle{战火中的大学路 (1948–1949)}{入伍 · Fraenkel 说情 · 希伯来大学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1948} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1948 年阿以战争爆发，被征入伍} & \cellcolor{panelB}\textcolor{badgeB!82!black}{大学之路中断} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{说情} & \cellcolor{panelA}\textcolor{badgeA!82!black}{耶路撒冷数学教授 Abraham Fraenkel 亲自向军方说情} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数学家惜才} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1949} & \cellcolor{panelA}\textcolor{badgeA!82!black}{退伍，得以入学希伯来大学} & \cellcolor{panelB}\textcolor{badgeB!82!black}{重返课堂} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学位} & \cellcolor{panelA}\textcolor{badgeA!82!black}{获 Hebrew University of Jerusalem M.Sc.（infobox 载 BS、MS）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数理根基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一位数学家的说情，为计算科学留住了一位未来的奠基人。}
+\end{center}
+\end{frame}}
+
+% --- 6. Princeton：Church 门下 ---
+\newcommand{\princetonslide}{\begin{frame}\plainbar\sectiontitle{Princeton：Church 门下 (1956)}{递归不可解性 · Alonzo Church}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{研究生} & \cellcolor{panelA}\textcolor{badgeA!82!black}{先入 University of Pennsylvania 攻读研究生} & \cellcolor{panelB}\textcolor{badgeB!82!black}{负笈美国} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{panelA}\textcolor{badgeA!82!black}{师从 Alonzo Church} & \cellcolor{panelB}\textcolor{badgeB!82!black}{逻辑学重镇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\textit{Recursive Unsolvability of Group Theoretic Problems}（1957）——群论问题的递归不可解性} & \cellcolor{panelB}\textcolor{badgeB!82!black}{可计算性视角} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1956} & \cellcolor{panelA}\textcolor{badgeA!82!black}{获 Princeton University 博士学位（时年 25 岁）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学术起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 递归不可解性的论文，预示了他一生与"可计算"较量的底色。}
+\end{center}
+\end{frame}}
+
+% --- 7. Lamb Estate 之夏：与 Scott 的 1959 论文 ---
+\newcommand{\lambslide}{\begin{frame}\plainbar\sectiontitle{Lamb Estate 之夏：与 Scott 的 1959 论文}{IBM 邀请 · 非确定性机器 · 图灵奖之源}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{背景}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{受邀} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1950 年代末受 IBM 邀请，至纽约州 Westchester County 的 Lamb Estate 与一批青年数学家共研} & \cellcolor{panelB}\textcolor{badgeB!82!black}{IBM 之夏} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合著} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 Dana Scott 合著 "Finite Automata and Their Decision Problems"（IBM Journal 3(2), 114–125, 1959）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{传世论文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{重证} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以非确定性自动机重新证明 Kleene 的结果：有限状态机恰接受正则语言} & \cellcolor{panelB}\textcolor{badgeB!82!black}{旧定理新光} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8}{10.5}\selectfont\bfseries\color{coveraccent!85!black} 1976 ACM Turing Award Citation（与 Dana Scott 共享）}\\[2pt]
+  {\fontsize{7.0}{9.2}\selectfont\itshape\color{coverprimary!88!black}"For their joint paper 'Finite Automata and Their Decision Problems,' which introduced the idea of nondeterministic machines, which has proved to be an enormously valuable concept. Their (Scott \& Rabin) [sic] classic paper has been a continuous source of inspiration for subsequent work in this field."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. McCarthy 谜题与多项式时间 ---
+\newcommand{\mccarthyslide}{\begin{frame}\plainbar\sectiontitle{McCarthy 谜题与多项式时间 (1960/1966)}{复杂度理论之源 · Cobham 与 Edmonds 稍早独立提出}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{重返} & \cellcolor{panelA}\textcolor{badgeA!82!black}{翌年夏天重返 Lamb Estate} & \cellcolor{panelB}\textcolor{badgeB!82!black}{再度受邀} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{谜题} & \cellcolor{panelA}\textcolor{badgeA!82!black}{John McCarthy 提出间谍—警卫—口令谜题} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算难度的困惑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1960} & \cellcolor{panelA}\textcolor{badgeA!82!black}{写出 "Degree of Difficulty of Computing a Function and Hierarchy of Recursive Sets"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{复杂度理论之源} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1966} & \cellcolor{panelA}\textcolor{badgeA!82!black}{引入多项式时间概念（Cobham 与 Edmonds 独立且稍早提出）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{P/NP 的描述核心} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 非确定性机器：复杂度理论的关键概念}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{非确定性机器}\ \Rightarrow\ \text{复杂度类 P 与 NP 描述的核心}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 概率自动机 ---
+\newcommand{\probslide}{\begin{frame}\plainbar\sectiontitle{概率自动机 (1960, Bell Labs)}{掷硬币的状态转移 · 指数级缩减}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{受邀} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1960 年受 Edward F. Moore 邀请至 Bell Labs 工作} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工业研究实验室} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{思想} & \cellcolor{panelA}\textcolor{badgeA!82!black}{引入以掷硬币决定状态转移的概率自动机} & \cellcolor{panelB}\textcolor{badgeB!82!black}{随机进入自动机} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{效果} & \cellcolor{panelA}\textcolor{badgeA!82!black}{展示某些正则语言状态数巨大，概率自动机可将其指数级缩减} & \cellcolor{panelB}\textcolor{badgeB!82!black}{状态数瘦身} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 概率自动机：以掷硬币选择状态转移}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\delta(q,a,q')\in[0,1]\qquad$ 正则语言的状态数获得指数级缩减}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 无限树自动机与 S2S 可判定性 ---
+\newcommand{\treeslide}{\begin{frame}\plainbar\sectiontitle{无限树自动机与 S2S 可判定性 (1969)}{无限树 · parity games 的 determinacy}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{构造} & \cellcolor{panelA}\textcolor{badgeA!82!black}{引入无限树自动机（infinite-tree automata）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{从词到树的跨越} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定理} & \cellcolor{panelA}\textcolor{badgeA!82!black}{证明 $n$ 个后继的一元二阶理论可判定（$n=2$ 时即 S2S）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{逻辑可判定性} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{关键} & \cellcolor{panelA}\textcolor{badgeA!82!black}{证明的关键部分隐含给出 parity games 的 determinacy（位于 Borel 层级第三层）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{博弈论伏笔} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 一元二阶理论的可判定性（Rabin, 1969）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{S2S}\ \text{可判定}\qquad$ 一次证明，同时照亮自动机、逻辑与博弈论}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. Miller–Rabin 素性测试 ---
+\newcommand{\millerslide}{\begin{frame}\plainbar\sectiontitle{Miller–Rabin 素性测试 (1975, MIT)}{无需广义黎曼假设 · Kanellakis Award 2003}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{契机与基础} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1975 年结束希伯来大学 Rector 任期赴 MIT 访问；基于 Gary Miller 的确定性工作（依赖广义黎曼假设）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{站在 Miller 肩上} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{突破} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Rabin 版本无需该假设：快速判定素性，错误概率极小} & \cellcolor{panelB}\textcolor{badgeB!82!black}{随机化之力} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{意义} & \cellcolor{panelA}\textcolor{badgeA!82!black}{快速素性测试是公钥密码实现的关键；2003 年与 Miller、Solovay、Strassen 获 Paris Kanellakis Award} & \cellcolor{panelB}\textcolor{badgeB!82!black}{密码学的基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Miller–Rabin 素性测试（1975）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}随机基底 $a$ 的强伪素性检验 $\Rightarrow$ 素性判定（错误概率极小）}
+  \end{minipage}%
+}
+\end{center}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1976 年在 CMU 演讲，Joseph Traub 称之为 "revolutionary"。}
+\end{center}
+\end{frame}}
+
+% --- 12. 密码学三连 ---
+\newcommand{\cryptoslide}{\begin{frame}\plainbar\sectiontitle{密码学三连 (1978/1981/1987)}{Rabin 签名 · 不经意传输 · Rabin–Karp}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1978} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Rabin 签名算法：首个安全性等价于大整数分解困难性的非对称密码系统} & \cellcolor{panelB}\textcolor{badgeB!82!black}{可证安全} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1981} & \cellcolor{panelA}\textcolor{badgeA!82!black}{不经意传输（oblivious transfer）：再造 Wiesner 以 "multiplexing" 之名的弱变体} & \cellcolor{panelB}\textcolor{badgeB!82!black}{密码学原语} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1987} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 Richard Karp 合创 Rabin–Karp 字符串搜索算法，以 rolling hash 闻名} & \cellcolor{panelB}\textcolor{badgeB!82!black}{随机化搜索} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Rabin 函数：平方根与因数分解同样困难}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\sigma^2 \equiv m \pmod{n}\qquad$ 签名安全性 $\Leftrightarrow$ 大整数分解的困难性}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉满贯 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉满贯}{图灵奖 1976 · Israel Prize 1995 · 五院院士}\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{顶级荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1976，与 Dana Scott 共享）\item Israel Prize（1995，计算机科学）\item Paris Kanellakis Award（2003）\item Dan David Prize（2010，"Future" 类，与 Kleinrock、G. Moore 共享）\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{国家级与学科最高公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{五院院士} & \cellcolor{panelA}\textcolor{badgeA!82!black}{美国国家科学院（外籍）· 美国哲学学会 · 美国艺术与科学院 · 法国科学院 · 英国皇家学会（外籍）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{跨越五国的学术席位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{讲席与演说} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Harvey Prize 1980 · Gibbs Lecture 1985 · EMET Prize 2004 · Gödel Lecture 2004 · Dijkstra Prize 2015 · Harvard 荣誉博士 2017} & \cellcolor{panelB}\textcolor{badgeB!82!black}{荣誉满贯} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从海法到哈佛，以色列国家奖与世界学术殿堂共同致敬。}
+\end{center}
+\end{frame}}
+
+% --- 14. 传承 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{传承：从自动机到密码学}{自动机 · 随机算法 · 密码学 · 学术世家}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=panelA, draw=badgeA!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeA} 自动机理论}\\[3pt]非确定性机器\\[2pt]Rabin automaton · pumping lemma};
+\node[leg, fill=panelB, draw=badgeB!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeB} 复杂度与随机}\\[3pt]多项式时间 1966\\[2pt]Miller–Rabin 1975};
+\node[leg, fill=panelC, draw=badgeC!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeC} 密码学}\\[3pt]Rabin 签名 · OT\\[2pt]Rabin–Karp · fingerprint};
+\node[leg, fill=panelD, draw=badgeD!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeD} 学术世家}\\[3pt]女儿 Tal Rabin\\[2pt]双聘荣休 · 计算机安全};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 一个状态多条出路——非确定性改变了计算的可能性。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} Harvard Thomas J. Watson Sr. 荣休教授 $\rightarrow$ 希伯来大学荣休教授\\[2pt]女儿 Tal Rabin 亦是杰出计算机科学家，学术与家风一脉相承。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {非确定性，让计算看见可能性；};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {随机与密码，让计算值得信赖。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Michael O. Rabin};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {迈克尔·拉宾\quad Michael O. Rabin\quad 1931 — 2026};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{project-diagram}\enspace Turing 1976 · Israel Prize 1995 · 非确定性自动机之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\warslide
+\princetonslide
+\lambslide
+\mccarthyslide
+\probslide
+\treeslide
+\millerslide
+\cryptoslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

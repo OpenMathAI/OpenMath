@@ -1,0 +1,479 @@
+% =============================================================
+%  时态逻辑之父：阿米尔·普努利 (Amir Pnueli)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：柔和气泡 —— 时间在逻辑中流动（时态逻辑）
+%  资料来源：turing/pages/1996/Amir Pnueli/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Pnueli 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeTL}{HTML}{2E5A9E}     % 时态逻辑 — 蓝
+\definecolor{badgeMC}{HTML}{1E8E8E}     % 模型检验 — 青绿
+\definecolor{badgeFA}{HTML}{D9A441}     % 并发与公平性 — 琥珀
+\definecolor{badgeVF}{HTML}{C0395B}     % 程序与系统验证 — 玫瑰
+\definecolor{tlpanel}{RGB}{228,233,246}
+\definecolor{mcpanel}{RGB}{222,240,238}
+\definecolor{fapanel}{RGB}{249,240,224}
+\definecolor{vfpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景（时间在逻辑中流动）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeTL!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeMC!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeFA!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{clock}\enspace 时态逻辑之父\enspace·\enspace 以色列};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {阿米尔·普努利};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Amir Pnueli\enspace·\enspace 1941 — 2009};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {时态逻辑 · 模型检验 · 1996 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeTL] at (-5.05,0)
+        {时态逻辑\\Temporal Logic\par\scriptsize 引入计算科学};
+      \node[badge, fill=badgeMC] at (-1.68,0)
+        {模型检验\\Model Checking\par\scriptsize 验证基石};
+      \node[badge, fill=badgeFA] at (1.68,0)
+        {并发公平性\\Fairness\par\scriptsize concurrent systems};
+      \node[badge, fill=badgeVF] at (5.05,0)
+        {系统验证\\Verification\par\scriptsize program \& systems};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{11.5}\selectfont\itshape, text=muteddark, align=center, text width=12.6cm]
+    at ([yshift=-2.42cm]current page.center)
+    {"for seminal work introducing temporal logic into computing science and for outstanding contributions to program and systems verification" —— 1996 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Amir_Pnueli.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Amir_Pnueli.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Amir Pnueli};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 以色列\enspace|\enspace \faIcon{university}\enspace Technion · Weizmann · Tel Aviv · NYU\enspace|\enspace Turing 1996};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{普努利 - 从 Nahalal 到时态逻辑}{生卒 · 本名 · 国籍 · 教育 · 转型 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Amir_Pnueli.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Amir_Pnueli.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Amir Pnueli};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1941-04-22 — 2009-11-02\\[2pt]\lab{本名}\quad Amir Pnueli\\[2pt]\lab{国籍}\quad 以色列};
+  \node[infob, fill=tlpanel, draw=badgeTL!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Technion 数学 BS（Haifa）\\[2pt]
+     \quad Weizmann 应用数学 MS·PhD\\[2pt]
+     \lab{转型}\quad Stanford 博士后转 CS};
+  \node[infob, fill=mcpanel, draw=badgeMC!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Nahalal · 托管巴勒斯坦\\[2pt]\lab{去世地}\quad 纽约 · 美国（脑出血）\\[2pt]\lab{任职}\quad Tel Aviv · Weizmann · NYU};
+  \node[infob, fill=fapanel, draw=badgeFA!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1996 · Israel Prize 2000\\[2pt]
+     \quad NAE 外籍院士 1999\\[2pt]
+     \lab{核心领域}\quad 时态逻辑 · 模型检验\\[2pt]
+     \quad 并发公平性 · 验证};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{普努利的一生}{1941 — 2009 · 从 Nahalal 少年到时态逻辑之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1941/生于 Nahalal，英国托管巴勒斯坦,
+    2.3/中学/就读 Tel Aviv 的 Tichon Hadash 高中,
+    1.6/Technion/获 Haifa 的 Technion 数学学士,
+    0.9/1967/Weizmann 应用数学博士：海洋潮汐计算,
+    0.2/Stanford/博士后期间转向计算机科学,
+    -0.5/Tel Aviv/创建计算机系：创始人与首任系主任,
+    -1.2/1981/任 Weizmann 计算机科学教授,
+    -1.9/1996/获图灵奖：时态逻辑引入计算科学,
+    -2.6/1999/NAE 外籍院士 · NYU 兼任至去世,
+    -2.8/2009/逝于纽约（脑出血），享年 68
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：Nahalal 的少年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：Nahalal 的少年 (1941– )}{托管巴勒斯坦 · Tichon Hadash · Technion 数学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1941} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{4 月 22 日生于 Nahalal，时为英国托管巴勒斯坦（今以色列）} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{生于动荡年代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{就读 Tel Aviv 的 Tichon Hadash 高中} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{少年时代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Technion} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{获 Haifa 的 Technion（以色列理工学院）数学学士} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{数学根基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Nahalal 的乡村少年，到 Technion 的数学学子。}
+\end{center}
+\end{frame}}
+
+% --- 5. Weizmann 应用数学博士 ---
+\newcommand{\phdslide}{\begin{frame}\plainbar\sectiontitle{Weizmann 应用数学博士 (--1967)}{海洋潮汐计算 · 非 CS 的起点}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{院校} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{Weizmann Institute of Science，应用数学 MS 与 PhD} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{应用数学科班} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{"Calculation of Tides in the Ocean"（海洋潮汐计算）} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{1967 年获 PhD} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{关键} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{这是应用数学论文——与计算机科学尚无交集} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{人生起点在海洋} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 博士论文（Weizmann 应用数学，1967）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Calculation of Tides in the Ocean} —— 计算海洋的潮汐}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Stanford 转折 ---
+\newcommand{\turnaroundslide}{\begin{frame}\plainbar\sectiontitle{Stanford 转折 (1967 年后)}{博士后 · 由应用数学转向计算机科学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博士后} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{Stanford University 博士后（post-doctoral fellow）} & \cellcolor{fapanel}\textcolor{badgeFA!82!black}{跨洋深造} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转向} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{在博士后期间转向计算机科学} & \cellcolor{fapanel}\textcolor{badgeFA!82!black}{研究方向大转折} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{此后} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{聚焦时态逻辑与模型检验，并发系统的公平性性质} & \cellcolor{fapanel}\textcolor{badgeFA!82!black}{一生主题就此展开} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 一次转型：从海洋潮汐到计算科学}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{应用数学（潮汐）} $\Rightarrow$ \textit{计算机科学（时态逻辑）}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 时态逻辑进入计算科学 ---
+\newcommand{\temporalslide}{\begin{frame}\plainbar\sectiontitle{时态逻辑进入计算科学}{图灵奖理由 · 时间成为逻辑的一部分}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{开创} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{seminal work：将时态逻辑（temporal logic）引入计算科学} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{图灵奖第一句} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{表达} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{用时态算子刻画程序随时间演化的性质} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{时间的形式语言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{成为程序与系统验证的逻辑基础} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{验证时代的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 时态逻辑的基本算子（形式化表达）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\Box\,\varphi$ 永远成立\quad$\Diamond\,\varphi$ 终将成立\quad$\Box\Diamond\,\varphi$ 永远终将（活性）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 并发系统的公平性 ---
+\newcommand{\fairnessslide}{\begin{frame}\plainbar\sectiontitle{并发系统的公平性}{concurrent systems · fairness properties}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{对象} & \cellcolor{fapanel}\textcolor{badgeFA!82!black}{并发系统（concurrent systems）——多进程交错的执行} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{难以捉摸的交错} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{性质} & \cellcolor{fapanel}\textcolor{badgeFA!82!black}{公平性（fairness properties）：并发系统正确性的关键性质} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{研究核心主题} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{贡献} & \cellcolor{fapanel}\textcolor{badgeFA!82!black}{以时态逻辑刻画并验证并发系统的公平性} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{研究重点所在} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 公平性的时态逻辑表达（示例）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\Box\Diamond\,\mathrm{req}\rightarrow\Box\Diamond\,\mathrm{ack}$：请求永现，则响应永至}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 模型检验与程序验证 ---
+\newcommand{\verificationslide}{\begin{frame}\plainbar\sectiontitle{模型检验与程序验证}{model checking · program and systems verification}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方法} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{model checking：对系统状态空间机械地检验时态性质} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{自动化的验证} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{目标} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{program and systems verification：outstanding contributions 所指} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{图灵奖第二句} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{结合} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{以时态逻辑为语言、以模型检验为手段检验程序与系统} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{两大主题合流} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 模型检验（形式化表达）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$M,s\models\varphi$：在结构 $M$ 的状态 $s$ 上，时态公式 $\varphi$ 成立}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. Tel Aviv：从零建系 ---
+\newcommand{\tauavivslide}{\begin{frame}\plainbar\sectiontitle{Tel Aviv：从零建系}{创始人 · 首任系主任}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{归国} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{以研究者身份回到以色列} & \cellcolor{vfpanel}\textcolor{badgeVF!82!black}{学术报国} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{建系} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{创建 Tel Aviv University 计算机科学系} & \cellcolor{vfpanel}\textcolor{badgeVF!82!black}{从零到一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{职务} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{创始人与首任系主任（founder and first chair）} & \cellcolor{vfpanel}\textcolor{badgeVF!82!black}{开系之功} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一间新系，为一个国家的计算机科学立起门面。}
+\end{center}
+\end{frame}}
+
+% --- 11. Weizmann 与 NYU 双城记 ---
+\newcommand{\dualcityslide}{\begin{frame}\plainbar\sectiontitle{Weizmann 与 NYU 双城记 (1981–2009)}{以色列 · 纽约 · 多机构履历}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1981} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{任 Weizmann Institute of Science 计算机科学教授} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{以色列基地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1999--2009} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{自 1999 年起兼任 NYU 计算机科学系教授，直至去世} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{双城穿梭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{早年} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{曾任 University of Pennsylvania 与 Joseph Fourier University 副教授} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{多机构履历} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 以色列与纽约之间，一位学者三十年的双城记。}
+\end{center}
+\end{frame}}
+
+% --- 12. 创业者与师者 ---
+\newcommand{\startupslide}{\begin{frame}\plainbar\sectiontitle{创业者与师者}{两家初创公司 · 六位博士学生}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{面向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创业} & \cellcolor{fapanel}\textcolor{badgeFA!82!black}{职业生涯中创办两家科技初创公司} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{学以致用} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{门生} & \cellcolor{fapanel}\textcolor{badgeFA!82!black}{Mordechai Ben-Ari · Dana Fisman · Nissim Francez · Doron A. Peled · Ofer Strichman · Lenore Zuck} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{六位博士学生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{传承} & \cellcolor{fapanel}\textcolor{badgeFA!82!black}{学生的研究多延续形式化方法与验证的路线} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{谱系延续} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 理论、创业与育人，三线并行的学术人生。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{Turing 1996 · Israel Prize 2000}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣誉序列} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1996）\item Uppsala University 荣誉博士（1997-05-30）\item NAE 外籍院士（1999）· ACM Fellow（2007）\item Israel Prize（2000，计算机科学）\end{itemize}} & \cellcolor{vfpanel}\textcolor{badgeVF!82!black}{以国与国际的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{身后纪念} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{Weizmann Institute 以其名设立纪念讲座系列} & \cellcolor{vfpanel}\textcolor{badgeVF!82!black}{精神延续} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术影响} & \cellcolor{tlpanel}\textcolor{badgeTL!82!black}{时态逻辑与模型检验成为验证领域的基石} & \cellcolor{vfpanel}\textcolor{badgeVF!82!black}{思想长存} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从图灵奖到 Israel Prize，一位以色列学者的双重荣光。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：时间的逻辑}{时态逻辑 · 模型检验 · 验证基石}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=tlpanel, draw=badgeTL!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeTL} 时态逻辑}\\[3pt]引入计算科学\\[2pt]时间即逻辑};
+\node[leg, fill=mcpanel, draw=badgeMC!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeMC} 模型检验}\\[3pt]model checking\\[2pt]自动化验证};
+\node[leg, fill=fapanel, draw=badgeFA!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeFA} 并发公平性}\\[3pt]fairness\\[2pt]concurrent systems};
+\node[leg, fill=vfpanel, draw=badgeVF!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeVF} 系统验证}\\[3pt]program \& systems\\[2pt]verification};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他让时间进入逻辑，也让逻辑守住系统的正确。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 时态逻辑 $\rightarrow$ 模型检验 $\rightarrow$ 程序与系统验证\\[2pt]每一次系统的正确运行，都有他的逻辑在守护。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {时间进入了逻辑，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {逻辑守住了系统的正确。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Amir Pnueli};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {阿米尔·普努利\quad Amir Pnueli\quad 1941 — 2009};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{clock}\enspace Turing 1996 · Israel Prize 2000 · 时态逻辑之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\phdslide
+\turnaroundslide
+\temporalslide
+\fairnessslide
+\verificationslide
+\tauavivslide
+\dualcityslide
+\startupslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

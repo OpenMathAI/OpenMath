@@ -1,0 +1,471 @@
+% =============================================================
+%  浮点之父：威廉·卡亨 (William Kahan)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：浮点 / 舍入误差 —— 极淡的数字与舍入符号散点（克制）
+%  资料来源：turing/pages/1989/William Kahan/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Kahan 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeFP}{HTML}{2E5A9E}     % 浮点标准 — 蓝
+\definecolor{badgeNA}{HTML}{1E8E8E}     % 数值分析 — 青绿
+\definecolor{badgePM}{HTML}{D9A441}     % 纯数学 — 琥珀
+\definecolor{badgeEE}{HTML}{C0395B}     % 工程与教育 — 玫瑰
+\definecolor{fppanel}{RGB}{228,233,246}
+\definecolor{napanel}{RGB}{222,240,238}
+\definecolor{pmpanel}{RGB}{249,240,224}
+\definecolor{eepanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 浮点背景母题（极淡的数字与舍入符号散点）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeFP!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeNA!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePM!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \node[font=\fontsize{7}{8}\selectfont, text=coverprimary!16] at ([xshift=-5.6cm, yshift=1.8cm]current page.center) {$1.00\times10^{0}$};
+  \node[font=\fontsize{7}{8}\selectfont, text=coverprimary!14] at ([xshift=5.9cm, yshift=-1.4cm]current page.center) {$\mathrm{RN}(x)$};
+  \node[font=\fontsize{7}{8}\selectfont, text=coverprimary!13] at ([xshift=5.2cm, yshift=1.9cm]current page.center) {$\varepsilon_{\mathrm{mach}}$};
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-1.1cm, yshift=3.55cm]current page.center) {\faIcon{microchip}\enspace 浮点之父\enspace·\enspace 加拿大};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {威廉·卡亨};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {William Kahan\enspace·\enspace 1933 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {数值分析大师 · IEEE 754 总架构师 · 1989 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeNA] at (-5.05,0)
+        {数值分析\\Numerical Analysis\par\scriptsize 误差分析};
+      \node[badge, fill=badgeFP] at (-1.68,0)
+        {浮点标准\\IEEE 754\par\scriptsize 总架构师};
+      \node[badge, fill=badgePM] at (1.68,0)
+        {Kahan 求和\\Compensated Sum\par\scriptsize 补偿求和};
+      \node[badge, fill=badgeEE] at (5.05,0)
+        {工程与教育\\Paranoia · HP\par\scriptsize 浮点斗士};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his fundamental contributions to numerical analysis" —— 1989 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/William_Kahan_2008.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{William_Kahan_2008.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {William Kahan (2008)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 加拿大\enspace|\enspace \faIcon{university}\enspace Toronto · UC Berkeley\enspace|\enspace Turing 1989};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{卡亨 - 从多伦多到浮点之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/William_Kahan_2008.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{William_Kahan_2008.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {William Kahan (2008)};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1933-06-05 —（在世）\\[2pt]\lab{本名}\quad William Morton Kahan\\[2pt]\lab{国籍}\quad 加拿大};
+  \node[infob, fill=napanel, draw=badgeNA!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad University of Toronto 数学\\[2pt]
+     \quad BS 1954 · MS 1956 · PhD 1958\\[2pt]
+     \lab{师承}\quad Byron Griffith（博士导师）};
+  \node[infob, fill=fppanel, draw=badgeFP!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Toronto · Ontario · 加拿大\\[2pt]\lab{任职}\quad UC Berkeley（荣休教授）\\[2pt]\lab{身份}\quad 数学家 · 计算机科学家};
+  \node[infob, fill=pmpanel, draw=badgePM!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1989 · ACM Fellow 1994\\[2pt]
+     \quad IEEE Piore Award 2000 · NAE 2005\\[2pt]
+     \lab{核心领域}\quad 数值分析 · 浮点运算};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{卡亨的一生}{1933 — 在世 · 从多伦多少年到浮点之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1933/生于 Toronto，加拿大犹太家庭,
+    2.3/1954/获 University of Toronto 数学学士,
+    1.6/1956/获 Toronto 数学硕士,
+    0.9/1958/数学博士（Gauss--Seidel 迭代法论文，导师 Griffith）,
+    0.2/1970s/与 HP 合作改进 HP-35 计算器超越函数精度,
+    -0.5/1980s/发布 Paranoia 浮点测试程序,
+    -1.2/1985/IEEE 754 二进制浮点标准发布（总架构师）,
+    -1.9/1989/获图灵奖（数值分析的根本性贡献）,
+    -2.6/2000/获 IEEE Emanuel R. Piore Award,
+    -2.8/2005/入选美国国家工程院（NAE）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：多伦多与数学三学位 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：多伦多的犹太少年 (1933--1958)}{加拿大犹太家庭 · 数学三学位 · Gauss--Seidel 论文}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1933} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{生于 Toronto（加拿大），成长于加拿大犹太家庭} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{加拿大数学少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1954--1958} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{University of Toronto 一站式三学位，全部为数学：学士（1954）、硕士（1956）、博士（1958）} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{数学根基深厚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1958} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{博士论文 \textit{Gauss--Seidel Methods of Solving Large Systems of Linear Equations}} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{从线性方程组起步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{师承} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{博士导师 Byron Griffith（University of Toronto）} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{数值分析的正统训练} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个多伦多的数学博士，最终为全世界计算机定下了算术。}
+\end{center}
+\end{frame}}
+
+% --- 5. 数值分析的根基与数学家人的一面 ---
+\newcommand{\numericslide}{\begin{frame}\plainbar\sectiontitle{数值分析根基与数学家的一面}{误差分析 · Davis--Kahan--Weinberger 膨胀定理}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{面向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{数值分析} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{从线性方程组求解到浮点误差分析：研究有限精度算术下算法的可靠与可控} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{图灵奖的核心领域} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{纯数学} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{Davis--Kahan--Weinberger 膨胀定理：Hilbert 空间算子膨胀理论的里程碑结果，已应用于多个领域} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{数学 PhD 出身的印记} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{两条根脉} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{膨胀定理与浮点工作分属两域：前者是纯数学，后者是数值计算——他两面兼修} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{数学家 + 计算机科学家} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他既是数值分析的工程师，也是 Hilbert 空间里的数学家。}
+\end{center}
+\end{frame}}
+
+% --- 6. Berkeley 岁月 ---
+\newcommand{\berkeleyslide}{\begin{frame}\plainbar\sectiontitle{Berkeley 岁月：数学与 EECS 双聘}{University of California, Berkeley · 荣休教授}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{双聘} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{UC Berkeley 数学与电机工程及计算机科学（EECS）双聘} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{跨学科的天然位置} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣休} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{现为 UC Berkeley 荣休教授（professor emeritus）} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{学术生涯的长期深耕} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{传承} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{门生 James Demmel（infobox 实载博士生），Berkeley 数值计算领军者} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{谱系延续至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Toronto 到 Berkeley，数学与计算机在他身上合流。}
+\end{center}
+\end{frame}}
+
+% --- 7. IEEE 754：给全世界计算机定算术 ---
+\newcommand{\ieeeslide}{\begin{frame}\plainbar\sectiontitle{IEEE 754：给全世界计算机定算术 (1985)}{总架构师 · IEEE 854 · 标准修订}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{角色}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{总架构师} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{IEEE 754-1985 二进制浮点运算标准的 primary architect，"instrumental in creating the original IEEE 754 specification"} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{一人定义世界算术} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{进制无关} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{与进制无关的后继标准 IEEE 854 亦出自其手} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{超越二进制的视野} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{持续演进} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{后又持续贡献于 IEEE 754 修订（现行标准）} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{数十年不辍} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} IEEE 754：二进制浮点数与四种舍入方向}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$x=\pm\,m\times2^{e}$（$m\in[1,2)$）\qquad 就近取偶 · 趋零 · $+\infty$ · $-\infty$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. Kahan 求和算法 ---
+\newcommand{\kahansumslide}{\begin{frame}\plainbar\sectiontitle{Kahan 求和算法}{补偿求和 · 最小化浮点累加误差}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{问题} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{有限精度浮点数逐项累加时，小数被大数"吞噬"，误差持续累积} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{数值计算的隐形陷阱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{思想} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{用一个补偿量 $c$ 记下"丢失的低位"，下一步再加回去（补偿求和）} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{教科书级经典算法} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{最小化浮点数序列求和误差的重要算法} & \cellcolor{fppanel}\textcolor{badgeNA!82!black}{以他命名的传世算法} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Kahan 求和（补偿求和，$s=0,\ c=0$ 起步）}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}$y=x_i-c,\quad t=s+y,\quad c=(t-s)-y,\quad s=t$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Paranoia：浮点的体检程序 ---
+\newcommand{\paranoiaslide}{\begin{frame}\plainbar\sectiontitle{Paranoia：浮点的体检程序 (1980s)}{检测大范围潜在浮点缺陷的基准程序}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{Paranoia：检测大范围潜在浮点缺陷的基准程序（1980s）} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{浮点实现的"体检工具"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{检查对象} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{算术运算、舍入行为等浮点实现是否偏离预期} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{让缺陷无所遁形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{与 IEEE 754 推广相辅相成：标准立规矩，Paranoia 验收规矩} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{浮点正确性的守门人} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他不仅定标准，还为全世界造了一台浮点"体检仪"。}
+\end{center}
+\end{frame}}
+
+% --- 10. Table-maker's dilemma ---
+\newcommand{\dilemmaslide}{\begin{frame}\plainbar\sectiontitle{Table-maker's dilemma：他命名的难题}{超越函数正确舍入的未知代价}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名者} & \cellcolor{pmpanel}\textcolor{badgePM!82!black}{Table-maker's dilemma 这一术语由他创造（coined）} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{以术语留下印记} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{难题} & \cellcolor{pmpanel}\textcolor{badgePM!82!black}{超越函数（如 $\exp$、$\sin$）计算结果按预定精度正确舍入所需的代价，事先未知} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{数学表制作的根本困境} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{回响} & \cellcolor{pmpanel}\textcolor{badgePM!82!black}{该难题至今仍是超越函数库设计者绕不开的议题} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{影响延续至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Table-maker's dilemma —— 正确舍入的未知代价}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$f(x)\ \to\ \mathrm{RN}\big(f(x)\big)$：要保证舍入正确，需要算到多精确？——无人知晓}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. HP 计算器幕后功臣 ---
+\newcommand{\hpslide}{\begin{frame}\plainbar\sectiontitle{HP 计算器的幕后功臣}{HP-35 精度改进 · Voyager 系列算法与手册}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{合作}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{HP-35} & \cellcolor{eepanel}\textcolor{badgeEE!82!black}{HP-35 袖珍科学计算器超越函数精度欠佳时，HP 与他深度合作，大幅改进算法精度（\textit{Hewlett-Packard Journal} 有载）} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{工程落地的典范} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Voyager 系列} & \cellcolor{eepanel}\textcolor{badgeEE!82!black}{实质性贡献 HP Voyager 系列计算器的算法设计} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{掌中算术的精度} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{撰写手册} & \cellcolor{eepanel}\textcolor{badgeEE!82!black}{并撰写部分中高级手册} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{从算法到用户文档} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从会议室到衬衫口袋，浮点的严谨被他装进了计算器。}
+\end{center}
+\end{frame}}
+
+% --- 12. 直言的浮点斗士 ---
+\newcommand{\advocateslide}{\begin{frame}\plainbar\sectiontitle{直言的浮点斗士}{浮点教育倡导者 · 公开批评损害浮点的设计}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{面向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教育倡导} & \cellcolor{eepanel}\textcolor{badgeEE!82!black}{他是面向普通计算人群的浮点议题更好教育的直言倡导者（outspoken advocate）} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{科普与教育的执念} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{公开批评} & \cellcolor{eepanel}\textcolor{badgeEE!82!black}{经常公开抨击他认为损害浮点运算的计算机与编程语言设计决策} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{不肯妥协的技术底线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{代表檄文} & \cellcolor{eepanel}\textcolor{badgeEE!82!black}{如 \textit{How Java's Floating-Point Hurts Everyone Everywhere}——对语言设计的直率批评} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{个性鲜明的人物} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 为了浮点的正确性，他从不吝惜直言。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1989 · 门生与谱系}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要荣誉} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1989）\item ACM Fellow（1994）\item IEEE Emanuel R. Piore Award（2000）\item 美国国家工程院 NAE（2005）\end{itemize}} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{数值分析大师的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{门生} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{James Demmel（infobox 实载博士生），Berkeley 数值计算领军者} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{学术谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术影响} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{IEEE 754、Kahan 求和、Paranoia、Table-maker's dilemma 成为领域基石} & \cellcolor{napanel}\textcolor{badgeNA!82!black}{思想延续至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 获奖理由是数值分析的整体贡献，而 IEEE 754 是其中最著名的一笔。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：无处不在我定的算术}{IEEE 754 · Kahan 求和 · 纯数学 · 工程与教育}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=fppanel, draw=badgeFP!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeFP} 浮点标准}\\[3pt]IEEE 754 · 854\\[2pt]总架构师};
+\node[leg, fill=napanel, draw=badgeNA!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeNA} 数值分析}\\[3pt]Kahan 求和\\[2pt]补偿求和};
+\node[leg, fill=pmpanel, draw=badgePM!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePM} 纯数学}\\[3pt]Davis--Kahan--\\[2pt]Weinberger 定理};
+\node[leg, fill=eepanel, draw=badgeEE!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeEE} 工程与教育}\\[3pt]HP 计算器\\[2pt]Paranoia};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 从智能手机到超级计算机，都在运行他定下的算术规则。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 数值分析 $\rightarrow$ IEEE 754 $\rightarrow$ Kahan 求和 $\rightarrow$ Paranoia\\[2pt]他的遗产，藏在每一次浮点运算的舍入里。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {他让每一台计算机，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {都遵守同一套算术。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 William Kahan};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {威廉·卡亨\quad William Kahan\quad 1933 —（在世）};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{microchip}\enspace Turing 1989 · IEEE 754 · "The Father of Floating Point"\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\numericslide
+\berkeleyslide
+\ieeeslide
+\kahansumslide
+\paranoiaslide
+\dilemmaslide
+\hpslide
+\advocateslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

@@ -1,0 +1,498 @@
+% =============================================================
+%  AI 教父：约书亚·本吉奥 (Yoshua Bengio)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：词向量星云 —— 稀疏小圆点渐次连线，呼应词嵌入/序列对齐
+%  资料来源：turing/pages/2018/Yoshua Bengio/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 coverprimary=#5B2D8E + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Bengio 专属基础色（主色/强调色与 OpenTuring 品牌色同值）=====
+\definecolor{mainclr}{HTML}{5B2D8E}      % 主色 —— 图灵紫
+\definecolor{accentclr}{HTML}{B03A2E}    % 强调色 —— 尊崇/图灵奖
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+
+% ===== 四分类色（语义命名）=====
+\definecolor{badgeA}{HTML}{2E5A9E}     % 深度学习先驱 / Mila — 蓝
+\definecolor{badgeB}{HTML}{1E8E8E}     % 序列与注意力 / 神经语言模型 — 青绿
+\definecolor{badgeC}{HTML}{D9A441}     % 表示与教材 / 词嵌入·GAN 师承 — 琥珀
+\definecolor{badgeD}{HTML}{C0395B}     % AI 安全与治理 / LawZero — 玫瑰
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 词向量星云背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{brain}\enspace AI 教父\enspace·\enspace 加拿大};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {约书亚·本吉奥};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Yoshua Bengio\enspace·\enspace 1964 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {深度学习先驱 · 神经语言模型 · 2018 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {深度学习\\Deep Learning\par\scriptsize Mila 创立者};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {序列与注意力\\Sequence · Attention\par\scriptsize 神经语言模型};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {表示与教材\\Word Embeddings\par\scriptsize 《Deep Learning》};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {AI 安全治理\\AI Safety\par\scriptsize LawZero};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"conceptual and engineering breakthroughs that have made deep neural networks a critical component of computing." —— 2018 图灵奖（与 Hinton、LeCun 共享）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Yoshua_Bengio_SD2025.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Yoshua_Bengio_SD2025.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Yoshua Bengio};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 加拿大\enspace|\enspace \faIcon{university}\enspace McGill · Université de Montréal · Mila\enspace|\enspace Turing 2018};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{本吉奥 - 从巴黎到蒙特利尔的深度学习先驱}{生卒 · 国籍 · 出生地 · 教育 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Yoshua_Bengio_SD2025.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Yoshua_Bengio_SD2025.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Yoshua Bengio};
+  \node[infob, fill=panelC, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1964-03-05 —（在世）\\[2pt]\lab{国籍}\quad 加拿大（生于法国）\\[2pt]\lab{出生地}\quad 巴黎 · 法国};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad McGill 计算机工程 BEng\\[2pt]
+     \quad 计算机科学 MSc · PhD 1991\\[2pt]
+     \lab{师承}\quad Renato De Mori（导师）};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{任职}\quad Université de Montréal\\[2pt]\quad Mila 创始人 · 科学主任\\[2pt]\quad CIFAR 联合主任};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2018 · Asturias 2022\\[2pt]
+     \quad QE Prize 2025\\[2pt]
+     \lab{核心领域}\quad 深度学习 · 神经语言模型\\[2pt]
+     \quad AI 安全 · 治理};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{本吉奥的一生}{1964 — · 从巴黎少年到 AI 教父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1964/生于巴黎，摩洛哥犹太移民家庭,
+    2.3/1991/McGill 计算机科学博士（De Mori）,
+    1.6/1993/任教 Université de Montréal 至今,
+    0.9/2003/神经概率语言模型（JMLR）· 词嵌入,
+    0.2/2014/神经机器翻译的注意力机制（Bahdanau/Cho）,
+    -0.5/2016/《Deep Learning》教科书 · 创立 Element AI,
+    -1.2/2018/与 Hinton、LeCun 共享图灵奖,
+    -1.9/2023/签署暂停公开信 · 国际 AI 安全报告主席,
+    -2.6/2025/创立 LawZero · Google Scholar 引用破百万,
+    -2.8/2026/任联合国 AI 独立国际科学专家小组联席主席
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：从巴黎到蒙特利尔 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：从巴黎到蒙特利尔 (1964–)}{摩洛哥犹太移民家庭 · 剧作家之父 · 演员之母}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1964} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于巴黎；摩洛哥犹太移民家庭，先移民法国、后迁加拿大} & \cellcolor{panelB}\textcolor{badgeB!82!black}{跨文化成长} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{panelA}\textcolor{badgeA!82!black}{父 Carlo Bengio 是药剂师兼剧作家（经营塞法迪剧团），母 Célia Moreno 是戏剧演员} & \cellcolor{panelB}\textcolor{badgeB!82!black}{人文与科学并重} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{弟弟} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Samy Bengio 亦是神经网络领域有影响力的计算机科学家（Apple AI/ML 研究高级总监）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{兄弟同行} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个出生于巴黎的移民之子，最终成为深度学习的奠基者之一。}
+\end{center}
+\end{frame}}
+
+% --- 5. McGill 求学与序列识别博士 ---
+\newcommand{\mcgillslide}{\begin{frame}\plainbar\sectiontitle{McGill 求学与序列识别博士 (–1991)}{De Mori 门下 · 神经网络用于序列识别}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{求学} & \cellcolor{panelA}\textcolor{badgeA!82!black}{McGill University：计算机工程学士（BEng）$\rightarrow$ 计算机科学硕士（MSc）$\rightarrow$ 博士} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工程与科学兼修} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{导师} & \cellcolor{panelA}\textcolor{badgeA!82!black}{师从 Renato De Mori} & \cellcolor{panelB}\textcolor{badgeB!82!black}{语音与序列识别传统} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\textit{Artificial Neural Networks and their Application to Sequence Recognition}（1991）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{序列建模的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 博士论文便瞄准"序列"，这条主线贯穿了他此后的全部工作。}
+\end{center}
+\end{frame}}
+
+% --- 6. MIT 与 Bell Labs 博后 ---
+\newcommand{\postdocslide}{\begin{frame}\plainbar\sectiontitle{MIT 与 Bell Labs 博士后 (1991–1993)}{Michael I. Jordan 指导 · 机器学习淬炼}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{MIT} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在 MIT 从事博士后研究，导师为 Michael I. Jordan} & \cellcolor{panelB}\textcolor{badgeB!82!black}{机器学习重镇} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{Bell Labs} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在 AT\&T Bell Labs 继续博士后研究} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工业界视野} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{积淀} & \cellcolor{panelA}\textcolor{badgeA!82!black}{由序列识别走向机器学习与神经网络的系统性研究} & \cellcolor{panelB}\textcolor{badgeB!82!black}{深度学习前夜} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 两年博士后，把序列识别的博士训练淬炼成机器学习的体系功夫。}
+\end{center}
+\end{frame}}
+
+% --- 7. 扎根蒙特利尔与 Mila ---
+\newcommand{\milaslide}{\begin{frame}\plainbar\sectiontitle{扎根蒙特利尔与 Mila (1993–)}{Université de Montréal · 魁北克 AI 研究所}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1993} & \cellcolor{panelA}\textcolor{badgeA!82!black}{获 Université de Montréal 教职，任教至今} & \cellcolor{panelB}\textcolor{badgeB!82!black}{三十余年深耕} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{Mila} & \cellcolor{panelA}\textcolor{badgeA!82!black}{创立魁北克 AI 研究所 Mila（Montreal Institute for Learning Algorithms），任科学主任至 2025} & \cellcolor{panelB}\textcolor{badgeB!82!black}{全球深度学习重镇} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{CIFAR} & \cellcolor{panelA}\textcolor{badgeA!82!black}{兼任 CIFAR "Learning in Machines \& Brains" 项目联合主任} & \cellcolor{panelB}\textcolor{badgeB!82!black}{加拿大 AI 战略支点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从一间实验室到一座"AI 谷"，蒙特利尔因他而成为深度学习之都。}
+\end{center}
+\end{frame}}
+
+% --- 8. 神经概率语言模型与词嵌入 ---
+\newcommand{\nplmslide}{\begin{frame}\plainbar\sectiontitle{神经概率语言模型与词嵌入 (2003)}{JMLR · 分布式表示克服维度灾难}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{模型} & \cellcolor{panelB}\textcolor{badgeB!82!black}{神经概率语言模型（JMLR 2003）：用神经网络学习词的分布式表示} & \cellcolor{panelA}\textcolor{badgeA!82!black}{序列建模奠基} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{词嵌入} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以相似词在向量空间相邻的表示，化解 NLP 的"维度灾难"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{词向量时代开启} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{谱系} & \cellcolor{panelB}\textcolor{badgeB!82!black}{此后 Word2Vec、预训练语言模型皆由此延伸} & \cellcolor{panelA}\textcolor{badgeA!82!black}{通往大模型的源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 神经概率语言模型：条件概率由嵌入与网络联合给出}\\[2pt]
+  {\fontsize{9.5}{12.5}\selectfont\color{coverprimary!88!black}$\hat{P}(w_t\mid w_{t-n+1},\dots,w_{t-1})=\mathrm{softmax}\big(b+Wx+U\tanh(d+Hx)\big)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 注意力机制的先声 ---
+\newcommand{\attentionslide}{\begin{frame}\plainbar\sectiontitle{注意力机制的先声 (2014)}{Bahdanau · Cho · Bengio · 神经机器翻译对齐}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelB}\textcolor{badgeB!82!black}{\textit{Neural Machine Translation by Jointly Learning to Align and Translate}（arXiv 1409.0473）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{NMT 里程碑} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{机制} & \cellcolor{panelB}\textcolor{badgeB!82!black}{解码时对源序列软对齐：按相关性加权聚合编码状态} & \cellcolor{panelA}\textcolor{badgeA!82!black}{注意力思想的成型} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{归属} & \cellcolor{panelB}\textcolor{badgeB!82!black}{与两位学生/合作者 Bahdanau、Cho 共同提出} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Transformer 的先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 加性注意力：对齐权重与上下文向量}\\[2pt]
+  {\fontsize{9.5}{12.5}\selectfont\color{coverprimary!88!black}$\alpha_{tj}=\dfrac{\exp(e_{tj})}{\sum_k \exp(e_{tk})},\qquad c_t=\sum_j \alpha_{tj} h_j$\qquad（$e_{tj}=a(s_{t-1},h_j)$）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 教科书与学派 ---
+\newcommand{\schoolslide}{\begin{frame}\plainbar\sectiontitle{教科书与学派：Deep Learning 与门生}{2016 教科书 · GAN 的师承}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{教科书} & \cellcolor{panelC}\textcolor{badgeC!82!black}{2016 年与 Ian Goodfellow、Aaron Courville 合著《Deep Learning》（MIT Press）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{领域标准教材} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{GAN 师承} & \cellcolor{panelC}\textcolor{badgeC!82!black}{学生 Ian Goodfellow 是生成对抗网络（GAN）的发明人；Bengio 是导师与领域标签的载体} & \cellcolor{panelA}\textcolor{badgeA!82!black}{门生改变领域} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{学派} & \cellcolor{panelC}\textcolor{badgeC!82!black}{Hugo Larochelle、David Krueger 等门生遍布机器学习界} & \cellcolor{panelA}\textcolor{badgeA!82!black}{蒙特利尔学派成型} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 《Deep Learning》（2016，MIT Press）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{一本教科书，为一个时代的教学定下坐标。}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. Element AI 创业 ---
+\newcommand{\elementslide}{\begin{frame}\plainbar\sectiontitle{Element AI：研究产业化的一课 (2016–2020)}{蒙特利尔 AI 孵化器 · 售予 ServiceNow}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{2016-10} & \cellcolor{panelA}\textcolor{badgeA!82!black}{联合创立蒙特利尔 AI 孵化器 Element AI，把 AI 研究转化为现实应用} & \cellcolor{panelB}\textcolor{badgeB!82!black}{产学研桥梁} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{2020-11} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Element AI 业务出售予 ServiceNow，Bengio 留任顾问} & \cellcolor{panelB}\textcolor{badgeB!82!black}{产业一课} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{回归} & \cellcolor{panelA}\textcolor{badgeA!82!black}{此后重心回到研究与 AI 安全} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学者本色} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 创业不是他的主场，却让他更清楚地看见了技术的去向。}
+\end{center}
+\end{frame}}
+
+% --- 12. 引用之王 ---
+\newcommand{\citationslide}{\begin{frame}\plainbar\sectiontitle{引用之王}{全球最被引的计算机科学家}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{口径}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事实（页面原话）}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{计算机科学} & \cellcolor{panelA}\textcolor{badgeA!82!black}{全球最被引的计算机科学家：总引用与 h-index 双第一} & \cellcolor{panelB}\textcolor{badgeB!82!black}{影响力之最} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{全领域} & \cellcolor{panelA}\textcolor{badgeA!82!black}{全领域在世科学家中总引用第一（most-cited living scientist）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{跨越学科} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{里程碑} & \cellcolor{panelA}\textcolor{badgeA!82!black}{2025 年 11 月：首位 Google Scholar 引用破百万的 AI 研究者} & \cellcolor{panelB}\textcolor{badgeB!82!black}{史无前例} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 一百万次引用}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{一位在世学者的影响力刻度。}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. AI 安全旗手 ---
+\newcommand{\safetyslide}{\begin{frame}\plainbar\sectiontitle{AI 安全旗手 (2023–)}{暂停公开信 · 国际报告 · LawZero · 联合国小组}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{行动}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{2023-03} & \cellcolor{panelD}\textcolor{badgeD!82!black}{签署 FLI 暂停 GPT-4 级训练的公开信；2023-05 BBC 访谈自陈对毕生工作的方向感到 "lost"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{先驱的自我叩问} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{2023–2025} & \cellcolor{panelD}\textcolor{badgeD!82!black}{主导国际 AI 安全报告（2023-11 委托、2025-01 全文发布并持续任主席）；2025-06 创立 LawZero，构建 "Scientist AI" 护栏} & \cellcolor{panelA}\textcolor{badgeA!82!black}{从警示到建制} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{2026-02} & \cellcolor{panelD}\textcolor{badgeD!82!black}{获任联合国 AI 独立国际科学专家小组 Co-Chair（与 Maria Ressa 共同领导）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{全球治理舞台} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "the risk of catastrophe is real enough that action is needed now."}\\[1pt]
+  {\fontsize{8.5}{11}\selectfont\color{coverprimary!88!black}\textit{—— 《The Economist》撰文（2023-07）}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与共享的荣耀 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与共享的荣耀}{图灵奖 2018（三人共享）· 门生与领域}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item ACM A.M. Turing Award（2018，与 Hinton、LeCun 共享）\item Princess of Asturias Award（2022）\item Queen Elizabeth Prize for Engineering（2025）\item Officer of the Order of Canada（2017）· FRS（2020）\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{三杰并称 "Godfathers of AI"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Ian Goodfellow（GAN 发明人）、Hugo Larochelle、David Krueger} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学术谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术影响} & \cellcolor{panelA}\textcolor{badgeA!82!black}{词嵌入、神经机器翻译、注意力机制塑造了今日的语言模型} & \cellcolor{panelB}\textcolor{badgeB!82!black}{序列建模的血脉} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 与 Hinton、LeCun 并肩而立，共享深度学习的最高荣誉。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {深度学习教会了机器语言，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {如今他守护着语言背后的未来。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Yoshua Bengio};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {约书亚·本吉奥\quad Yoshua Bengio\quad 1964 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{brain}\enspace Turing 2018 · Mila · LawZero\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\mcgillslide
+\postdocslide
+\milaslide
+\nplmslide
+\attentionslide
+\schoolslide
+\elementslide
+\citationslide
+\safetyslide
+\honorsslide
+\closingslide
+\end{document}

@@ -1,0 +1,498 @@
+% =============================================================
+%  模型检验开创者：埃德蒙·克拉克 (Edmund M. Clarke)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：状态迁移图（圆角状态节点 + 标注迁移边）
+%  资料来源：turing/pages/2007/Edmund M. Clarke/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Clarke 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeMC}{HTML}{2E5A9E}      % 模型检验 — 蓝
+\definecolor{badgeBDD}{HTML}{1E8E8E}     % 符号模型检验 — 青绿
+\definecolor{badgeTP}{HTML}{D9A441}      % 定理证明 — 琥珀
+\definecolor{badgeInd}{HTML}{C0395B}     % 产业与交叉应用 — 玫瑰
+\definecolor{mcpanel}{RGB}{228,233,246}
+\definecolor{bddpanel}{RGB}{222,240,238}
+\definecolor{tppanel}{RGB}{249,240,224}
+\definecolor{indpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 状态迁移图背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeMC!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeBDD!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeTP!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \begin{scope}[opacity=0.35]
+    \node[circle, draw=badgeMC, line width=0.7pt, inner sep=1.4pt, fill=white] (sa) at ([xshift=1.0cm,yshift=7.9cm]current page.south west) {};
+    \node[circle, draw=badgeMC, line width=0.7pt, inner sep=1.4pt, fill=white] (sb) at ([xshift=1.8cm,yshift=8.4cm]current page.south west) {};
+    \node[circle, draw=badgeMC, line width=0.7pt, inner sep=1.4pt, fill=white] (sc) at ([xshift=0.9cm,yshift=8.6cm]current page.south west) {};
+    \draw[badgeMC, line width=0.7pt, -{Stealth}] (sa) -- (sb);
+    \draw[badgeMC, line width=0.7pt, -{Stealth}] (sb) -- (sc);
+  \end{scope}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{project-diagram}\enspace 模型检验开创者\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {埃德蒙·克拉克};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Edmund M. Clarke\enspace·\enspace 1945 — 2020};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {模型检验开创者之一 · 有限状态系统验证 · 2007 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeMC] at (-5.05,0)
+        {模型检验\\Model Checking\par\scriptsize 1981 · 与 Emerson};
+      \node[badge, fill=badgeBDD] at (-1.68,0)
+        {符号模型检验\\Symbolic MC\par\scriptsize BDD · McMillan};
+      \node[badge, fill=badgeTP] at (1.68,0)
+        {定理证明\\Theorem Proving\par\scriptsize 并行归结 · 符号计算};
+      \node[badge, fill=badgeInd] at (5.05,0)
+        {产业与交叉\\Applications\par\scriptsize 硬件验证 · CMACS};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.45cm]current page.center)
+    {"for their role in developing Model-Checking into a highly effective verification technology that is widely adopted in the hardware and software industries." —— 2007 图灵奖 citation（与 Emerson · Sifakis 共享）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Edmund_Clarke_FLoC_2006.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Edmund_Clarke_FLoC_2006.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Edmund M. Clarke};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Cornell · Harvard · CMU\enspace|\enspace Turing 2007};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{克拉克 - 从"证明不可能"到检验一切}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Edmund_Clarke_FLoC_2006.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Edmund_Clarke_FLoC_2006.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Edmund M. Clarke};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1945-07-27 — 2020-12-22\\[2pt]\lab{本名}\quad Edmund Melson Clarke, Jr.\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=mcpanel, draw=badgeMC!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad 数学 BA 1967 · Virginia\\[2pt]
+     \quad 数学 MA 1968 · Duke\\[2pt]
+     \quad 计算机科学 PhD 1976 · Cornell\\[2pt]
+     \lab{师承}\quad Robert Lee Constable};
+  \node[infob, fill=bddpanel, draw=badgeBDD!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Newport News · 弗吉尼亚\\[2pt]\lab{去世地}\quad Pittsburgh · 宾夕法尼亚\\[2pt]\lab{任职}\quad CMU · Harvard · Duke};
+  \node[infob, fill=tppanel, draw=badgeTP!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2007 · Herbrand 2008\\[2pt]
+     \quad NAE 2005 · Bower 2014\\[2pt]
+     \lab{核心领域}\quad 模型检验 · 形式验证};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{克拉克的一生}{1945 — 2020 · 从"证明不可能"到检验一切}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.95);
+  \foreach \y/\year/\txt in {
+    3.0/1945/生于弗吉尼亚州 Newport News,
+    2.3/1967/Virginia 数学 BA（1968 再获 Duke 数学 MA）,
+    1.6/1976/Cornell 计算机科学 PhD（Constable 门下）,
+    0.9/1978/Harvard 应用科学部助理教授,
+    0.2/1981/与博士生 Emerson 提出模型检验,
+    -0.5/1982/加入 CMU 计算机科学系,
+    -1.2/1995/首任 FORE Systems 讲席教授,
+    -1.9/1999/获 ACM Kanellakis 奖,
+    -2.5/2007/与 Emerson/Sifakis 共享图灵奖,
+    -2.95/2020/逝于 Pittsburgh（75 岁）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与数学训练 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与数学训练 (1945–1968)}{Newport News · Virginia BA · Duke MA}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1945} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{生于弗吉尼亚州 Newport News} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{战后一代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1967} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{University of Virginia, Charlottesville 数学 BA} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{数学起步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{Duke University, Durham NC 数学 MA} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{数学深造} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{训练} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{两度数学训练，为日后"用数学驯服系统"作准备} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{伏笔} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 两度数学训练，让他先学会了"证明"，再去质疑"证明"。}
+\end{center}
+\end{frame}}
+
+% --- 5. Cornell 博士：证明"不可能" ---
+\newcommand{\cornellslide}{\begin{frame}\plainbar\sectiontitle{Cornell 博士：证明"不可能" (1976)}{Constable 门下 · Hoare 式公理系统的不完备}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{Robert Lee Constable（Cornell，infobox 明载）} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{名师门下} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{《Completeness and Incompleteness Theorems for Hoare-Like Axiom Systems》} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{1976 PhD} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{结果} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{证明某些程序语言控制结构没有好的 Hoare 式证明系统} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{否定性结果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{伏笔} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{此消彼长，引出"换一条验证路线"的新思路} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{路线转折} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Hoare 三元组：$\{P\}\ C\ \{Q\}$}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}完备的公理系统并不存在 —— "证明不可能"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Duke 与 Harvard ---
+\newcommand{\dukemslide}{\begin{frame}\plainbar\sectiontitle{Duke 与 Harvard (1976–1982)}{初执教鞭 · 应用科学部 · 转向匹兹堡}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1976–1978} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{Duke University 计算机科学系任教两年（PhD 之后）} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{初执教鞭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1978–1982} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{Harvard Division of Applied Sciences 助理教授（assistant professor）} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{应用科学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1982} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{南下匹兹堡，加入 Carnegie Mellon 计算机科学系} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{落脚 CMU} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Durham 到 Cambridge，再到匹兹堡——CMU 的四十年即将开始。}
+\end{center}
+\end{frame}}
+
+% --- 7. 1981：模型检验的诞生 ---
+\newcommand{\birthslide}{\begin{frame}\plainbar\sectiontitle{1981：模型检验的诞生}{与博士生 Emerson · 有限状态并发系统}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{提出} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{1981 年与博士生 E. Allen Emerson first proposed 模型检验} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{开创时刻} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{对象} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{作为有限状态并发系统（finite-state concurrent systems）的验证技术} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{有限状态} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{synchronization skeletons 论文：工作于 1981，LNCS 131 出版于 1982} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{两个年份} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 模型检验的核心判定}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathcal{M} \models \varphi\qquad$ 系统 $M$ 是否满足规格 $\varphi$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 落脚 CMU ---
+\newcommand{\cmuslide}{\begin{frame}\plainbar\sectiontitle{落脚 CMU (1982–)}{FORE Systems 讲席 · 四十年生涯}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1982} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{加入 CMU 计算机科学系} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{扎根} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1989} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{晋升正教授} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{学术成熟} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1995} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{成为 FORE Systems 计算机科学讲席的首位获得者（first recipient）} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{讲席之始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2008/2015} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{2008 年 university professor；2015 年荣休（emeritus）} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{荣誉与谢幕} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} FORE Systems 讲席、university professor、荣休——CMU 四十年的完整轨迹。}
+\end{center}
+\end{frame}}
+
+% --- 9. 硬件验证的先驱 ---
+\newcommand{\hwslide}{\begin{frame}\plainbar\sectiontitle{硬件验证的先驱}{研究组开创 · 从论文到产业}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{开创} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{他的研究组开创了模型检验在硬件验证中的应用} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{从论文到芯片} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{产业} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{验证技术被硬件与软件产业广泛采用（widely adopted）} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{产业标准} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{团队} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{CMU 模型检验团队成为该方向的重镇} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{工程化摇篮} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 模型检验从学术论文，长成了芯片产业的质检工序。}
+\end{center}
+\end{frame}}
+
+% --- 10. 符号模型检验与 BDD ---
+\newcommand{\bddslide}{\begin{frame}\plainbar\sectiontitle{符号模型检验与 BDD}{二元决策图 · McMillan 博士论文}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{BDD} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{二元决策图（binary decision diagrams, BDD）} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{关键数据结构} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{团队} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{使用 BDD 的符号模型检验由他的团队发展} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{团队之功} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{McMillan} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{这是 Kenneth L. McMillan 博士论文的主题；该论文获 ACM Doctoral Dissertation Award} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{博士论文} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} BDD：布尔函数的紧凑规范表示}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$f\ \rightarrow\ \text{BDD}\ \rightarrow$ 符号化遍历状态空间}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 定理证明的另一条腿 ---
+\newcommand{\tpslide}{\begin{frame}\plainbar\sectiontitle{定理证明的另一条腿}{Parthenon · Analytica}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工具}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Parthenon} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{团队开发的首个并行归结定理证明器} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{并行归结} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Analytica} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{基于符号计算系统的定理证明器} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{符号计算} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{两面} & \cellcolor{tppanel}\textcolor{badgeTP!82!black}{"验证"两条腿：模型检验与定理证明兼备} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{互为补充} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 检验有限状态的世界，也证明逻辑的世界——两条腿走路。}
+\end{center}
+\end{frame}}
+
+% --- 12. CMACS：走向生物与嵌入式 ---
+\newcommand{\cmacsslide}{\begin{frame}\plainbar\sectiontitle{CMACS：走向生物与嵌入式 (2009)}{NSF 中心 · 抽象解释 + 模型检验}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创建} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{2009 年主持创建 NSF 资助的 CMACS 中心} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{NSF 中心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{全称} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{Computational Modeling and Analysis of Complex Systems} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{复杂系统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方法} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{多校团队把抽象解释与模型检验用于生物与嵌入式系统} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{交叉应用} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 验证技术离开芯片，开始为生命科学与嵌入式系统建模。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与谱系 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与谱系}{Kanellakis 1999 · Herbrand 2008 · 一门两代图灵奖}\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.55}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.6cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{奖项} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（2007，与 Emerson/Sifakis 共享）\item Kanellakis Award（1999，符号模型检验，四人同获）\item Herbrand（2008）· Harry H. Goode（2004）\item NAE（2005）· AAAS（2011）· Bower（2014）· TU Wien 荣誉博士（2012）\end{itemize}} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{年份勿互串} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{授奖语} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{{\fontsize{6.5}{8.2}\selectfont"his role in the invention of model checking and his sustained leadership in the area for more than two decades"}} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{实载引文\newline Herbrand 2008} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{E. Allen Emerson（2007 共享图灵奖）· Bhubaneswar Mishra · David L. Dill · Kenneth L. McMillan（BDD 路线）} & \cellcolor{bddpanel}\textcolor{badgeBDD!82!black}{学术谱系深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 14. 2007 图灵奖 ---
+\newcommand{\turslide}{\begin{frame}\plainbar\sectiontitle{2007 图灵奖：三人共享}{与 Emerson · Sifakis · 师徒同获}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共享} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{与 E. Allen Emerson、Joseph Sifakis 三人共享 2007 图灵奖} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{三位先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{师徒} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{Emerson 是他的博士生——师徒同年同获图灵奖} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{一段佳话} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{模型检验成为硬件与软件产业的通用验证技术} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{产业基座} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\color{coverprimary!88!black}"for their role in developing Model-Checking into a highly effective verification technology that is widely adopted in the hardware and software industries."}\\[2pt]
+  {\fontsize{8}{10}\selectfont\color{coveraccent!85!black}—— 2007 图灵奖 citation（2007 共享 citation，经同批 Emerson 页面实载）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {让每一块芯片，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {在出厂前先经过数学的检验。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Edmund M. Clarke};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {埃德蒙·克拉克\quad Edmund M. Clarke\quad 1945 — 2020};
+\node[font=\fontsize{6.5}{8.5}\selectfont, text=coverdark!55] at ([yshift=-2.75cm]current page.center) {2020-12-22，逝于 Pittsburgh（75 岁，COVID-19）；\enspace 模型检验从一篇论文，走进了整个芯片产业。};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{project-diagram}\enspace Turing 2007 · Model Checking\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\cornellslide
+\dukemslide
+\birthslide
+\cmuslide
+\hwslide
+\bddslide
+\tpslide
+\cmacsslide
+\honorsslide
+\turslide
+\closingslide
+\end{document}

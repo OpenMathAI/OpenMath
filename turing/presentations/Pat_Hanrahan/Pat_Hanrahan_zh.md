@@ -149,14 +149,14 @@
 - [ ] 无家庭信息（无载禁写）；引语仅 "Curiosity and passion determine success" 一句
 - [ ] 国籍用「美国」，封面底部状态栏 `美国 | UW–Madison · Pixar · Princeton · Stanford · Tableau | Turing 2019`
 - [ ] 正文采用高斯版式：表格语义化 + 公式框 + 时间线 + 身份信息页 + 品牌 OpenMathAI
-- [ ] 头像使用 `images/500px-Pat_Hanrahan_Tableau_Customer_Conference_2009.jpg`（500px 真实肖像）
+- [ ] 头像使用 `images/Pat_Hanrahan_Tableau_2009.jpg`（500px 真实肖像，文件名以目录实际为准）
 - [ ] `make distclean && make` 编译通过，0 错误
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `turing/pages/2019/Pat Hanrahan/index.html` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：使用 Tableau 2009 肖像（`images/500px-Pat_Hanrahan_Tableau_Customer_Conference_2009.jpg`）
+- [ ] **头像**：使用 Tableau 2009 肖像（`images/Pat_Hanrahan_Tableau_2009.jpg`）
 - [ ] **国籍**：封面顶部徽章明示美国
 - [ ] **引语核对**：引语必须在 Wikipedia 原文找到
 - [ ] **编译验证**：`make distclean && make`

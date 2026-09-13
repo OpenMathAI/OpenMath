@@ -1,0 +1,505 @@
+% =============================================================
+%  Fortran 与 BNF 之父：约翰·巴科斯 (John Backus)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：BNF 产生式 / 打孔卡时代 —— 稀疏浅色 :: 与 | 字符散点
+%  资料来源：turing/pages/1977/John Backus/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Backus 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeFort}{HTML}{2E5A9E}   % Fortran 与 IBM — 蓝
+\definecolor{badgeBNF}{HTML}{1E8E8E}    % 语言规范 — 青绿
+\definecolor{badgeFP}{HTML}{D9A441}     % 函数级编程 — 琥珀
+\definecolor{badgeLife}{HTML}{C0395B}   % 工程人生 — 玫瑰
+\definecolor{fortpanel}{RGB}{228,233,246}
+\definecolor{bnfpanel}{RGB}{222,240,238}
+\definecolor{fppanel}{RGB}{249,240,224}
+\definecolor{lifepanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 等宽字形背景（:: 与 | 字符散点，呼应 BNF 产生式 / 打孔卡时代）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \node[text=badgeFort!15, font=\fontsize{26}{26}\selectfont\sffamily\bfseries]
+    at ([xshift=-5.6cm, yshift=4.3cm]current page.center) {::};
+  \node[text=badgeBNF!14, font=\fontsize{20}{20}\selectfont\sffamily\bfseries]
+    at ([xshift=5.9cm, yshift=3.5cm]current page.center) {|};
+  \node[text=badgeFP!15, font=\fontsize{22}{22}\selectfont\sffamily\bfseries]
+    at ([xshift=6.2cm, yshift=-3.6cm]current page.center) {::};
+  \node[text=badgeLife!12, font=\fontsize{18}{18}\selectfont\sffamily\bfseries]
+    at ([xshift=-6.5cm, yshift=-4.1cm]current page.center) {|};
+  \node[text=coverdark!9, font=\fontsize{16}{16}\selectfont\sffamily\bfseries]
+    at ([xshift=-4.3cm, yshift=1.7cm]current page.center) {::=};
+  \node[text=coverdark!8, font=\fontsize{14}{14}\selectfont\sffamily\bfseries]
+    at ([xshift=4.8cm, yshift=1.0cm]current page.center) {|::|};
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{code}\enspace Fortran 与 BNF 之父\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {约翰·巴科斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {John Backus\enspace·\enspace 1924 — 2007};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {Fortran 之父 · Backus--Naur Form · 1977 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeFort] at (-5.05,0)
+        {Fortran\\FORTRAN\par\scriptsize 高级语言先驱};
+      \node[badge, fill=badgeBNF] at (-1.68,0)
+        {语言规范\\BNF · ALGOL\par\scriptsize 形式记法};
+      \node[badge, fill=badgeFP] at (1.68,0)
+        {函数级编程\\FP · FL\par\scriptsize 图灵演讲 1977};
+      \node[badge, fill=badgeLife] at (5.05,0)
+        {工程人生\\IBM 1950--1991\par\scriptsize 一生唯一任职};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his development of FORTRAN, contributions to computer systems theory and software project management." —— Computer History Museum Fellow Award 1997};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/John_Backus_2.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{John_Backus_2.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {John Backus, 1989};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace IBM\enspace|\enspace Turing 1977};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{巴科斯 - 从费城退学生到 IBM 传奇}{生卒 · 本名 · 国籍 · 教育 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/John_Backus_2.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{John_Backus_2.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {John Backus, 1989};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1924-12-03 — 2007-03-17\\[2pt]\lab{本名}\quad John Warner Backus\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=fortpanel, draw=badgeFort!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Columbia 数学 BS 1949\\[2pt]
+     \quad Columbia 数学 MS 1950\\[2pt]
+     \lab{师承}\quad 页面无载};
+  \node[infob, fill=lifepanel, draw=badgeLife!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 费城 · 宾夕法尼亚\\[2pt]\lab{去世地}\quad 阿什兰 · 俄勒冈\\[2pt]\lab{任职}\quad IBM（1950--1991）};
+  \node[infob, fill=fppanel, draw=badgeFP!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1977 · NMS 1975\\[2pt]
+     \quad Draper 1993 · McDowell 1967\\[2pt]
+     \lab{核心领域}\quad 编程语言设计 · BNF\\[2pt]
+     \quad 函数级编程};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{巴科斯的一生}{1924 — 2007 · 从被开除的化学学生到 Fortran 之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1924/生于宾夕法尼亚州费城,
+    2.3/1943/弗吉尼亚大学化学退学，二战入伍,
+    1.6/1946/光荣退役，战后入哥伦比亚大学,
+    0.9/1949/Columbia 数学学士（1950 年硕士）,
+    0.2/1950/加入 IBM，SSEC 上计算月球位置,
+    -0.5/1953/Speedcoding：IBM 计算机首个高级语言,
+    -1.2/1954/组建 FORTRAN 团队（IBM 704）,
+    -1.9/1958/BNF 载入 UNESCO 的 ALGOL 58 报告,
+    -2.3/1977/获图灵奖 · 发表 FP 演讲,
+    -2.8/2007/逝于俄勒冈州阿什兰
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：被开除的化学学生 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{费城到弗吉尼亚：被开除的化学学生 (1924--1943)}{The Hill School · 弗吉尼亚大学 · 第一段弯路}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1924} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{12 月 3 日生于宾夕法尼亚州费城} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{美国东岸少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{The Hill School（Pottstown, PA）——"apparently not a diligent student"，似非勤勉学生} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{少年时期的散漫} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1943} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{入弗吉尼亚大学读化学，不到一年因缺课被开除} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{学业的第一次断裂} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个被开除的化学学生，日后将重写计算机语言的历史。}
+\end{center}
+\end{frame}}
+
+% --- 5. 二战与颅骨肿瘤：医学梦碎 ---
+\newcommand{\warslide}{\begin{frame}\plainbar\sectiontitle{二战与颅骨肿瘤：医学梦碎 (1943--1946)}{Fort Stewart 下士 · 两次手术 · 自设计金属板}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.86}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{2.9cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{转折}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{入伍} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{二战加入美国陆军，最高军衔下士，在佐治亚州 Fort Stewart 指挥高射炮台} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{军旅生涯} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{改学工程} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{军方 aptitude 测试高分，被派往 University of Pittsburgh 学工程} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{理性的萌芽} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{预医} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{Haverford College 预医；医院实习时查出颅骨骨瘤，手术成功，头部植入金属板} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{医学梦受挫} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{退学} & \cellcolor{lifepanel}\textcolor{badgeLife!82!black}{Flower and Fifth Avenue Medical School 九个月后觉得无趣退学；随后自行设计金属板，完成第二次置换手术} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{亲历工程之用} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1946 年光荣退役——医学梦碎，数学的大门即将打开。}
+\end{center}
+\end{frame}}
+
+% --- 6. 哥伦比亚数学与 IBM 入职 ---
+\newcommand{\columbiaslide}{\begin{frame}\plainbar\sectiontitle{哥伦比亚数学与 IBM 入职 (1949--1950)}{无线电技师到数学 · SSEC · 月球位置}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转轨} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{在纽约当无线电技师后对数学产生兴趣} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{找到真正方向} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1949/1950} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{Columbia University 数学学士（1949）与硕士（1950）} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{数学根基补齐} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1950} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{加入 IBM；前三年在 Selective Sequence Electronic Calculator（SSEC）上工作} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{一生唯一任职机构} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首个大项目} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{编写计算月球位置（the moon's position）的程序} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{科学计算的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从计算月球位置开始，他要让机器听懂人的语言。}
+\end{center}
+\end{frame}}
+
+% --- 7. Speedcoding ---
+\newcommand{\speedcodingslide}{\begin{frame}\plainbar\sectiontitle{Speedcoding：IBM 计算机上的第一个高级语言 (1953)}{IBM 701 · 解释性系统}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{目标机器} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{为 IBM 701 开发} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{从机器码中解放} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{历史定位} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{第一个为 IBM 计算机创造（created for an IBM computer）的高级语言} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{先于 FORTRAN 的尝试} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{目标} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{让编程免于逐条手写机器指令的煎熬} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{"编程太难"的第一次回应} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Speedcoding (1953) —— IBM 计算机上的第一个高级语言}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\texttt{speedcoding} $\longrightarrow$ \texttt{701 machine code}\qquad 限定词：\textbf{for an IBM computer}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. FORTRAN ---
+\newcommand{\fortranslide}{\begin{frame}\plainbar\sectiontitle{FORTRAN：让科学家人人可编程 (1954--1957)}{组建团队 · IBM 704 · 第一个广泛使用的高级语言}
+\vspace{-0.7cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1954} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{Backus 组建团队（assembled a team），为 IBM 704 定义并开发 FORTRAN} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{软件工程的先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{第一个被广泛使用（first widely used）的高级编程语言，让计算机成为科学家人人可用的机器} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{高级语言时代的开端} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  \begin{minipage}{1.7cm}\centering
+    \IfFileExists{images/Fortran_logo.svg.png}{\includegraphics[width=1.3cm]{Fortran_logo.svg.png}}{}
+  \end{minipage}\hspace{0.5cm}%
+  \begin{minipage}{9.5cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} FORTRAN (1957) —— 第一个被广泛使用的高级语言}\\[2pt]
+  {\fontsize{7.2}{9.2}\selectfont\itshape\color{coverprimary!88!black}"This widely used language made computers practical and accessible machines for scientists and others without requiring them to have deep knowledge of the machinery."}
+  \end{minipage}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. ALGOL 与 BNF ---
+\newcommand{\bnfslide}{\begin{frame}\plainbar\sectiontitle{ALGOL 与 BNF：给语言立规矩 (1958--1960)}{ALGOL 58 / 60 委员会 · UNESCO 报告 · 上下文无关}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{ALGOL} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{服务于开发 ALGOL 58 与极具影响的 ALGOL 60 的国际委员会；后者迅速成为发表算法的 de facto 世界标准} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{国际协作的语言设计} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{BNF} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{发明 Backus--Naur form（BNF），发表于 UNESCO 的 ALGOL 58 报告；能描述任何上下文无关程序设计语言的形式记法} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{编译器发展的基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{标准化} & \cellcolor{bnfpanel}\textcolor{badgeBNF!82!black}{到 1970 年代，随 yacc 等编译器生成器的发展成为标准} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{沿用至今的记法} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Backus--Naur Form —— 产生式记法示例}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}\texttt{<expr> ::= <term> | <expr> "+" <term>}\qquad 描述任何\textbf{上下文无关}语言}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 图灵奖演讲 ---
+\newcommand{\turingtalkslide}{\begin{frame}\plainbar\sectiontitle{图灵奖演讲：摆脱冯·诺依曼风格 (1977)}{"Can Programming Be Liberated from the von Neumann Style?"}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{演讲} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{"Can Programming Be Liberated from the von Neumann Style?"——提出 FP 函数级编程语言} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{向冯·诺依曼结构宣战} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{"有时被视为巴科斯为创造 Fortran 的'道歉'"（Wikipedia 表述，commentary）} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{自我反思的演讲} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{误读} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{此演讲更多点燃了函数式编程整体研究而非 FP 语言本身；其信息常被误读为与传统函数式语言相同} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{影响大于语言本身} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{coveraccent!85!black} 1977 图灵奖 citation（ACM 整句）}\\[2pt]
+  {\fontsize{7.6}{10}\selectfont\color{coverprimary!88!black}"for profound, influential, and lasting contributions to the design of practical high-level programming systems, notably through his work on FORTRAN, and for publication of formal procedures for the specification of programming languages"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. FP 与 FL ---
+\newcommand{\fpfllslide}{\begin{frame}\plainbar\sectiontitle{FP 与 FL：函数级编程的探索}{APL 血统 · 4.2BSD · J 语言的归宿}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{血统} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{FP 受 Kenneth E. Iverson 的 APL 强烈启发（连非标准字符集都承袭）} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{站在 APL 肩上} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发行} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{FP 解释器曾随 4.2BSD Unix 发行；实现很少，多用于教学} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{曲高和寡} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{FL} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{后半生开发 FL（Function Level，FP 后继）：IBM 内部研究项目，项目结束即停，源码未公开} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{未竟的探索} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{归宿} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{FL 的许多思想现已在 J 语言（Iverson 的 APL 后继）中实现} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{思想得以延续} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} FP 的组合子语言}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$f \circ g$\ （复合）\qquad $[f, g]$\ （构造）\qquad $\alpha$\ （apply-to-all）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{IBM Fellow · McDowell · NMS · Draper · CHM}\vspace{-0.35cm}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=5.5cm,
+      font=\fontsize{7.4}{9.8}\selectfont, align=left}
+  ]
+  \node[infob, fill=fortpanel, draw=badgeFort!50, anchor=north] at (-3.15,2.1)
+    {\lab{早期荣誉}\\[3pt]
+     IBM Fellow（1963）\\
+     IEEE W. W. McDowell Award（1967，因 FORTRAN 的开发）\\
+     National Medal of Science（1975）\\
+     Turing Award（1977）};
+  \node[infob, fill=fppanel, draw=badgeFP!50, anchor=north] at (3.15,2.1)
+    {\lab{后期荣誉}\\[3pt]
+     美国艺术与科学院 Fellow（1985）\\
+     Université Henri-Poincaré 荣誉博士（1989）\\
+     Charles Stark Draper Prize（1993）\\
+     Computer History Museum Fellow Award（1997）};
+  \node[draw=coveraccent!70, fill=goldpanel, rounded corners=6pt, inner sep=10pt, text width=11.8cm, align=center] at (0,-1.75)
+    {{\fontsize{8}{10.5}\selectfont\bfseries\color{coveraccent!85!black} CHM Fellow Award 1997 授奖词}\\[3pt]
+     {\fontsize{8.4}{11}\selectfont\itshape\color{coverprimary!88!black}"for his development of FORTRAN, contributions to computer systems theory and software project management."}};
+\end{tikzpicture}\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} Fortran 之父之名，因开创与坚持而愈发闪耀。}
+\end{center}
+\end{frame}}
+
+% --- 13. 遗产：三线汇流 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：三条线，一部语言史}{高级语言 · 语言规范 · 函数式编程}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=fortpanel, draw=badgeFort!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeFort} 高级语言}\\[3pt]FORTRAN 1957\\[2pt]科学计算的普及};
+\node[leg, fill=bnfpanel, draw=badgeBNF!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeBNF} 语言规范}\\[3pt]BNF · ALGOL\\[2pt]编译器时代的基石};
+\node[leg, fill=fppanel, draw=badgeFP!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeFP!88!black} 函数级编程}\\[3pt]FP · FL\\[2pt]点燃函数式研究};
+\node[leg, fill=lifepanel, draw=badgeLife!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLife} 工程管理}\\[3pt]IBM 软件项目\\[2pt]CHM 授奖词所载};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 让计算机成为科学家人人可用的机器。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} Speedcoding $\rightarrow$ FORTRAN $\rightarrow$ BNF $\rightarrow$ FP $\rightarrow$ FL $\rightarrow$ J\\[2pt]从打孔卡时代到函数式思潮，他的名字刻在语言的血脉里。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 14. 晚年与纪念 ---
+\newcommand{\laterslide}{\begin{frame}\plainbar\sectiontitle{晚年与纪念：小行星 Johnbackus}{1991 退休 · 2007 谢世 · 天上的名字}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{注记}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1991} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{自 IBM 退休——41 年间，IBM 是他一生唯一的任职机构} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{一生一站} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{两段婚姻：Marjorie Jamison（1947--1966）、Barbara Una（1968 结婚，2004 去世）；子女 2 人} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{个人生活一笔带过} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2007} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{3 月 17 日逝于俄勒冈州阿什兰（Ashland）家中，享年 82（死因页面未载）} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{寿终正寝} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2007-06-01} & \cellcolor{fortpanel}\textcolor{badgeFort!82!black}{小行星 6830 以他的名字命名：Johnbackus} & \cellcolor{fppanel}\textcolor{badgeFP!82!black}{天上的纪念} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 夜空之中，有一颗小行星，名叫 Johnbackus。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {让编程，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {从机器的细节中解放出来。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 John Backus};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {约翰·巴科斯\quad John Backus\quad 1924 — 2007};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{code}\enspace Turing 1977 · Fortran 与 BNF 之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\warslide
+\columbiaslide
+\speedcodingslide
+\fortranslide
+\bnfslide
+\turingtalkslide
+\fpfllslide
+\honorsslide
+\legacyslide
+\laterslide
+\closingslide
+\end{document}

@@ -1,0 +1,492 @@
+% =============================================================
+%  Pascal 之父：尼克劳斯·维尔特 (Niklaus Wirth)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：简化谱系 —— 稀疏同心圆环呼应 Pascal → Modula → Oberon 的嵌套递归
+%  资料来源：turing/pages/1984/Niklaus Wirth/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Wirth 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeLang}{HTML}{2E5A9E}   % 程序设计语言 — 蓝
+\definecolor{badgeSW}{HTML}{1E8E8E}     % 软件工程 — 青绿
+\definecolor{badgeSys}{HTML}{D9A441}    % 系统构建 — 琥珀
+\definecolor{badgePhl}{HTML}{C0395B}    % 工程哲学 — 玫瑰
+\definecolor{langpanel}{RGB}{228,233,246}
+\definecolor{swpanel}{RGB}{222,240,238}
+\definecolor{syspanel}{RGB}{249,240,224}
+\definecolor{phlpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 同心圆环背景（递归/嵌套结构）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \draw[badgeLang!14, line width=1.6pt] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \draw[badgeLang!10, line width=1.2pt] (current page.north west) ++(2.0,-2.0) circle (1.9cm);
+  \draw[badgeSW!13, line width=1.4pt] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \draw[badgeSW!9, line width=1.0pt] (current page.south east) ++(-2.4,2.0) circle (2.2cm);
+  \fill[badgeSys!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{code}\enspace Pascal 之父\enspace·\enspace 瑞士};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {尼克劳斯·维尔特};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Niklaus Wirth\enspace·\enspace 1934 — 2024};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {程序设计语言大师 · 软件工程先驱 · 1984 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeLang] at (-5.05,0)
+        {程序设计语言\\Programming Languages\par\scriptsize Pascal · Oberon};
+      \node[badge, fill=badgeSW] at (-1.68,0)
+        {软件工程\\Software Engineering\par\scriptsize 渐进求精};
+      \node[badge, fill=badgeSys] at (1.68,0)
+        {系统构建\\Systems\par\scriptsize Lilith · Oberon};
+      \node[badge, fill=badgePhl] at (5.05,0)
+        {工程哲学\\Lean Software\par\scriptsize Wirth's law};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=muteddark, align=center, text width=13.4cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for developing a sequence of innovative computer languages." —— 1984 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Niklaus_Wirth_UrGU.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Niklaus_Wirth_UrGU.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Niklaus Wirth, 2005};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 瑞士\enspace|\enspace \faIcon{university}\enspace ETH Zürich · Stanford · Berkeley\enspace|\enspace Turing 1984 · Benoist 1989};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{维尔特 - 从温特图尔到 Pascal 之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Niklaus_Wirth_UrGU.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Niklaus_Wirth_UrGU.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Niklaus Wirth, 2005};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1934-02-15 — 2024-01-01\\[2pt]\lab{本名}\quad Niklaus Emil Wirth\\[2pt]\lab{国籍}\quad 瑞士};
+  \node[infob, fill=swpanel, draw=badgeSW!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad ETH Zürich 电子工程 B.S. 1958\\[2pt]
+     \quad Laval M.Sc. 1960 · Berkeley PhD 1963\\[2pt]
+     \lab{师承}\quad Harry Huskey（正文明载；infobox 另列 Feigenbaum）};
+  \node[infob, fill=langpanel, draw=badgeLang!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 瑞士 · 温特图尔\\[2pt]\lab{去世地}\quad 瑞士 · 苏黎世\\[2pt]\lab{任职}\quad ETH Zürich · Stanford};
+  \node[infob, fill=syspanel, draw=badgeSys!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1984 · Piore 1983\\[2pt]
+     \quad Benoist 1989 · CHM Fellow 2004\\[2pt]
+     \lab{核心领域}\quad 程序设计语言 · 软件工程\\[2pt]
+     \quad 编译器 · 操作系统};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{维尔特的一生}{1934 — 2024 · 从温特图尔少年到 Pascal 之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1934/生于瑞士温特图尔,
+    2.35/1958/ETH 电子工程学士,
+    1.7/1963/Berkeley EECS 博士（Huskey）,
+    1.05/1966/Euler · PL360 · ALGOL W,
+    0.4/1970/发表 Pascal,
+    -0.25/1971/渐进求精论文（CACM）,
+    -0.9/1978/Modula-2 与 A+DS=P 名著,
+    -1.55/1984/获 ACM 图灵奖,
+    -2.2/1987/Oberon 语言与 Oberon 系统,
+    -2.8/2024/元旦辞世于苏黎世
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：温特图尔与 ETH 求学 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{温特图尔的少年与 ETH 求学 (1934–1960)}{中学教师之子 · ETH 电子工程 · Laval 硕士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1934} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{生于瑞士温特图尔；父 Walter 为中学教师，母 Hedwig（née Keller）} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{教师家庭出身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1954–1958} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{就读 ETH Zürich 电子工程，获 B.S. 学位} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{工程与硬件根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1960} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{赴加拿大魁北克 Université Laval，获 M.Sc. 学位} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{跨越大西洋求学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个瑞士教师家庭的孩子，此后四十年只做一件事：把语言做简单。}
+\end{center}
+\end{frame}}
+
+% --- 5. Berkeley 博士与 ALGOL 结缘 ---
+\newcommand{\berkeleyslide}{\begin{frame}\plainbar\sectiontitle{Berkeley 博士与 ALGOL 结缘 (1960–1963)}{Huskey 门下 · 论文 A Generalization of Algol}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{师从计算机设计先驱 Harry Huskey（正文明载；infobox 另列 Edward Feigenbaum）} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{两说并存，勿断言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{A Generalization of Algol（1963）} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{与 ALGOL 结下终生之缘} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学位} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{获 UC Berkeley 电气工程与计算机科学（EECS）博士} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{语言与系统并修} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 博士论文 —— A Generalization of Algol（1963）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{从 ALGOL 出发} $\xrightarrow{\text{一生}}$ \textit{自建一套语言谱系}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Stanford / Zürich 助理教授与 IFIP WG 2.1 ---
+\newcommand{\ifipslide}{\begin{frame}\plainbar\sectiontitle{IFIP WG 2.1 与标准之争 (1963–1968)}{Stanford / Zürich 助理教授 · 委员会失望 · 个人语言路线}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1963–1967} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{任 Stanford University 与 University of Zürich 助理教授} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{跨美欧两地执教} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IFIP WG 2.1} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{作为工作组成员参与 ALGOL 60 / ALGOL 68 标准的制定与维护} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{深入国际标准现场} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{失望转身} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{因对标准委员会的讨论感到失望，后续语言改为以个人工作发表} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{"简化哲学"的起源} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1965–1966} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{首席设计 Euler（1965）、PL360（1966）、ALGOL W（1966）} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{谱系的第一环} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 从标准之争到个人语言}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{委员会的挫败} $\Longrightarrow$ \textit{Pascal、Modula-2、Oberon 皆以个人工作问世}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Pascal 诞生 ---
+\newcommand{\pascalslide}{\begin{frame}\plainbar\sectiontitle{Pascal 诞生 (1970)}{个人语言路线 · 教学与实现的基石}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1970} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{发表 Pascal —— 其代表作，以个人工作问世} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{谱系的巅峰之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1974} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{与 Kathleen Jensen 合著 The Pascal User Manual and Report} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{众多实现的蓝本} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{传播} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{成为 1970–80 年代欧美教学与语言实现的基础（如 BSD Pascal）} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{一代人的入门语言} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Pascal —— 一门为教学与实现而生的语言（1970）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{结构化} $+$ \textit{简洁} $=$ \textit{影响一代程序员的教学语言}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 渐进求精 ---
+\newcommand{\stepwiseslide}{\begin{frame}\plainbar\sectiontitle{渐进求精 (1971)}{Program Development by Stepwise Refinement}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{Program Development by Stepwise Refinement（CACM 1971 年 4 月）} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{软件工程经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方法} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{最早正式提出程序设计的自顶向下方法} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{自顶向下的源头} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{回响} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{被 Fred Brooks 在《人月神话》中讨论；ACM 图灵奖小传称之为 "seminal"} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{经典中的经典} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 逐步求精（Stepwise Refinement）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{问题} \Rightarrow \text{子问题} \Rightarrow \text{子子问题} \Rightarrow \cdots \Rightarrow \text{可编码的程序}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. ETH 教授与 Modula-2 ---
+\newcommand{\ethslide}{\begin{frame}\plainbar\sectiontitle{ETH 教授与 Modula-2 (1968–1980s)}{ETH 信息学教授 · Modula 谱系 · 名著传世}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{任 ETH Zürich 信息学教授，直至 1999 年退休} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{三十余年的大本营} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1975} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{发表 Modula} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{模块化的尝试} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1978} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{发表 Modula-2} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{模块化语言的成熟} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1975} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{出版 Algorithms + Data Structures = Programs，广受认可} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{1986/2004 修订易题，示例依次换为 Modula-2 与 Oberon} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 算法 $+$ 数据结构 $=$ 程序 —— 书名本身就是一句流传至今的格言。}
+\end{center}
+\end{frame}}
+
+% --- 10. 系统构建：Lilith 与 Oberon ---
+\newcommand{\systemsslide}{\begin{frame}\plainbar\sectiontitle{系统构建：Lilith 与 Oberon (1983–1995)}{Medos-2 · Ceres · Project Oberon · Lola}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{系统}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Lilith / Medos-2} & \cellcolor{syspanel}\textcolor{badgeSys!82!black}{Medos-2（1983）是 Lilith 工作站的操作系统，出自 Knudsen 的博士论文，Wirth 概念统筹} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{语言与整机一体} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Oberon 系统} & \cellcolor{syspanel}\textcolor{badgeSys!82!black}{Oberon 操作系统（1987）配 Ceres 工作站；与语言 Oberon 同名而身份不同} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{极简操作系统的典范} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Project Oberon} & \cellcolor{syspanel}\textcolor{badgeSys!82!black}{1992 年与 Jürg Gutknecht 出版 Oberon 操作系统完整文档；另与 Martin Reiser 合著编程指南} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{系统设计全公开} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Lola} & \cellcolor{syspanel}\textcolor{badgeSys!82!black}{Lola（1995）数字硬件设计与模拟系统} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{下探到硬件层} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他不只是设计语言 —— 从编译器到整机，他造的是完整的系统。}
+\end{center}
+\end{frame}}
+
+% --- 11. 图灵奖 1984 ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1984}{"a sequence of innovative computer languages" · PARC 学术休假背景}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{内容}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{获奖背景} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{获奖前后的 1984–1985，正值其在 Xerox PARC 的第二次学术休假（第一次为 1976–1977）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{颁奖对象} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{因"开发这一系列语言"整体获奖 —— Euler、Pascal、Modula-2、Oberon 皆在谱系之内，而非仅 Pascal 一门} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.30cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1984 ACM 图灵奖 —— 获奖理由整句}\\[2pt]
+  {\fontsize{9.5}{12.5}\selectfont\color{coverprimary!88!black}\textit{"for developing a sequence of innovative computer languages"}}\\[2pt]
+  {\fontsize{7.4}{9.6}\selectfont\color{muteddark}图灵奖被普遍公认为计算机科学界的最高荣誉。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. Wirth's law 与 Lean Software ---
+\newcommand{\lawslide}{\begin{frame}\plainbar\sectiontitle{Wirth's law 与 Lean Software (1995)}{A Plea for Lean Software · 转述 Martin Reiser}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{phlpanel}\textcolor{badgePhl!82!black}{1995 年论文 A Plea for Lean Software（为精简软件请命）} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{工程哲学的宣言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{出处} & \cellcolor{phlpanel}\textcolor{badgePhl!82!black}{维尔特定律这句名言是他在文中转述并流行化了 Martin Reiser 的说法 —— 并非其原创} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{转述者与流行化者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{哲学} & \cellcolor{phlpanel}\textcolor{badgePhl!82!black}{软件应保持精简、快速与可理解，警惕臃肿膨胀} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{一生"简化"的注脚} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Wirth's law（转述 Martin Reiser）}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}\textit{"Software is getting slower more rapidly than hardware becomes faster."}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1984 · 小行星 21655 · 门生}\vspace{-0.25cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.58}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item IEEE Piore Award（1983）\item Turing Award（1984）\item Marcel Benoist Prize（1989）\item ACM Fellow（1994）\end{itemize}} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{语言大师的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{后续荣誉} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item ACM SIGSOFT ORA（1999）\item SIGPLAN PL Achievement Award\item CHM Fellow（2004）\end{itemize}} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{CHM 理由含五大语言；小行星 21655 Niklauswirth 以其命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{Martin Odersky（Scala 设计者）、Michael Franz（infobox 实载两名）} & \cellcolor{swpanel}\textcolor{badgeSW!82!black}{谱系延续至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 ETH 的讲台到天上的小行星，"简单"二字随他长存。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：一脉相承的简化谱系}{Pascal $\rightarrow$ Modula $\rightarrow$ Oberon · 软件工程 · 系统构建}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=langpanel, draw=badgeLang!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLang} 语言谱系}\\[3pt]Pascal · Modula\\[2pt]Oberon · Oberon-07};
+\node[leg, fill=swpanel, draw=badgeSW!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSW} 软件工程}\\[3pt]渐进求精\\[2pt]自顶向下};
+\node[leg, fill=syspanel, draw=badgeSys!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSys} 系统构建}\\[3pt]Lilith · Ceres\\[2pt]Oberon 系统 · Lola};
+\node[leg, fill=phlpanel, draw=badgePhl!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePhl} 工程哲学}\\[3pt]Lean Software\\[2pt]Wirth's law};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 一条"简化"主线，贯穿四十余年的语言谱系。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} Euler $\rightarrow$ Pascal $\rightarrow$ Modula-2 $\rightarrow$ Oberon\\[2pt]他的语言，仍在一代代程序员的启蒙课上被写下。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {简单，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是他留给程序世界的遗产。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Niklaus Wirth};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {尼克劳斯·维尔特\quad Niklaus Wirth\quad 1934 — 2024};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{code}\enspace Turing 1984 · Pascal 之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\berkeleyslide
+\ifipslide
+\pascalslide
+\stepwiseslide
+\ethslide
+\systemsslide
+\turingslide
+\lawslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

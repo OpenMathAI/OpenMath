@@ -1,0 +1,522 @@
+% =============================================================
+%  RSA 的 S：阿迪·沙米尔 (Adi Shamir)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：秘密共享的门限重组 —— 一个圆分裂为多份份额再聚合
+%  资料来源：turing/pages/2002/Adi Shamir/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\newfontfamily\hebrewfont{Times New Roman}
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Shamir 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeRSA}{HTML}{2E5A9E}     % 公钥密码 RSA — 蓝
+\definecolor{badgeCrypto}{HTML}{1E8E8E}  % 密码分析 — 青绿
+\definecolor{badgeSecret}{HTML}{D9A441}  % 秘密共享与协议 — 琥珀
+\definecolor{badgeTheory}{HTML}{C0395B}  % 理论前沿 — 玫瑰
+\definecolor{rsapanel}{RGB}{228,233,246}
+\definecolor{cryptopanel}{RGB}{222,240,238}
+\definecolor{secretpanel}{RGB}{249,240,224}
+\definecolor{theorypanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 拆分碎片背景（份额圆 + 聚合的小碎片）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeRSA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeCrypto!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeSecret!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[badgeSecret!25] (current page.center) ++(-7.2,3.4) circle (0.42cm);
+  \fill[badgeSecret!25] (current page.center) ++(-6.3,3.8) circle (0.42cm);
+  \fill[badgeSecret!25] (current page.center) ++(-6.6,2.9) circle (0.42cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{key}\enspace RSA 的 S · 密码分析大师\enspace·\enspace 以色列};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {阿迪·沙米尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Adi Shamir\enspace·\enspace 1952 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {公钥密码学奠基人之一 · 秘密共享 · 2002 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeRSA] at (-5.05,0)
+        {公钥密码\\RSA\par\scriptsize RSA 的 S};
+      \node[badge, fill=badgeCrypto] at (-1.68,0)
+        {密码分析\\Cryptanalysis\par\scriptsize 差分 · A5/1 · FMS};
+      \node[badge, fill=badgeSecret] at (1.68,0)
+        {秘密共享\\Secret Sharing\par\scriptsize 门限重组};
+      \node[badge, fill=badgeTheory] at (5.05,0)
+        {理论前沿\\Theory\par\scriptsize IP = PSPACE};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{11}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for their ingenious contribution to making public-key cryptography useful in practice." —— 2002 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Adi_Shamir_Royal_Society.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Adi_Shamir_Royal_Society.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Adi Shamir · 2018};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 以色列\enspace|\enspace \faIcon{university}\enspace Weizmann · MIT · ENS\enspace|\enspace Turing 2002};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{沙米尔 - 从特拉维夫到密码分析大师}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Adi_Shamir_Royal_Society.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Adi_Shamir_Royal_Society.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Adi Shamir};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1952-07-06 —（在世）\\[2pt]\lab{本名}\quad Adi Shamir（{\hebrewfont עדי שמיר}）\\[2pt]\lab{国籍}\quad 以色列};
+  \node[infob, fill=cryptopanel, draw=badgeCrypto!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Tel Aviv 数学 BSc 1973\\[2pt]
+     \quad Weizmann MSc 1975 · PhD 1977\\[2pt]
+     \lab{师承}\quad Zohar Manna（导师）};
+  \node[infob, fill=rsapanel, draw=badgeRSA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 特拉维夫 · 以色列\\[2pt]\lab{任职}\quad Weizmann 教授\\[2pt]
+     \quad MIT 研究 · ENS 特邀教授};
+  \node[infob, fill=secretpanel, draw=badgeSecret!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2002 · Israel Prize 2008\\[2pt]
+     \quad Japan Prize 2017 · Wolf Prize 2024\\[2pt]
+     \lab{核心领域}\quad 密码学 · 密码分析};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{沙米尔的一生}{1952 — · 从特拉维夫少年到密码分析大师}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1952/生于特拉维夫,
+    2.3/1973/Tel Aviv 大学数学学士,
+    1.6/1977/Weizmann 博士（Manna 门下）,
+    0.9/1978/与 Rivest · Adleman 发表 RSA 论文,
+    0.2/1980/回以色列加入 Weizmann,
+    -0.5/1984/提出身份基密码,
+    -1.2/1986/Fiat–Shamir 启发式,
+    -1.9/1992/在前人工作基础上证明 IP = PSPACE,
+    -2.6/2002/与 Rivest · Adleman 共享图灵奖,
+    -2.8/2024/获 Wolf Prize（数学）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1952–1977)}{特拉维夫出身 · 数学与计算机科学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1952} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{生于以色列特拉维夫} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{特拉维夫少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1973} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{获 Tel Aviv University 数学学士（BSc）} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{数学根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1975} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{获 Weizmann Institute 计算机科学硕士} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{转向计算} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1977} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{获 Weizmann 计算机科学博士，论文 \textit{The fixedpoints of recursive definitions}} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{师承 Zohar Manna} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从特拉维夫到 Weizmann，数学与计算的底色铺就了密码学之路。}
+\end{center}
+\end{frame}}
+
+% --- 5. MIT 岁月与 RSA ---
+\newcommand{\rsaslide}{\begin{frame}\plainbar\sectiontitle{MIT 岁月与 RSA (1977–1980)}{与 Rivest · Adleman 的合作 · 公钥密码落地}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Warwick} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{博士毕业后于 Warwick 大学从事一年博士后研究} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{远赴英伦} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1977–1980} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{在 MIT 从事研究，与 Ron Rivest、Leonard Adleman 共事} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{三人组合成形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1977} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{与 Rivest、Adleman 共同发明 RSA 算法（1978 年 CACM 论文）} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{公钥密码落地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{产业} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{与 Rivest、Adleman 共同创立 RSA Security（RSA Conference 自 1991 年每年举办）} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{学界与产业桥梁} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} RSA 公钥密码体制（Rivest–Shamir–Adleman）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$c=m^{e}\bmod n$，\ $m=c^{d}\bmod n$，\ $n=pq$\quad 公钥 $(e,n)$ 与私钥 $(d,n)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Shamir 秘密共享 ---
+\newcommand{\secretshareslide}{\begin{frame}\plainbar\sectiontitle{Shamir 秘密共享：门限拆分与重组}{秘密不再依赖单点保管}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{拆分} & \cellcolor{secretpanel}\textcolor{badgeSecret!82!black}{把秘密拆分成多份份额（shares），分发给不同参与者} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{单点失效不再致命} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{门限} & \cellcolor{secretpanel}\textcolor{badgeSecret!82!black}{凑齐门限数量的份额才能还原秘密} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{少于门限则零泄露} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{secretpanel}\textcolor{badgeSecret!82!black}{infobox "Known for" 与正文均实载的贡献} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{多方信任的基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Shamir 秘密共享 --- 门限重组}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$f(0)=s$\quad 任意 $t$ 份可插值重建秘密，$t-1$ 份零信息泄露}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 攻破背包体制 ---
+\newcommand{\knapsackslide}{\begin{frame}\plainbar\sectiontitle{攻破背包体制}{Merkle–Hellman knapsack 的破译}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{目标体制} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{Merkle–Hellman 背包公钥密码体制（knapsack cryptosystem）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{公钥密码早期代表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{破译} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{实现对该体制的破译（breaking of the Merkle–Hellman knapsack cryptosystem）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{该体制不再安全} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{意义} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{密码分析实力的早期展示，攻击者视角自此贯穿其研究生涯} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{密码分析大师起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 构造密码的人，也最懂如何审视密码。}
+\end{center}
+\end{frame}}
+
+% --- 8. 差分密码分析 ---
+\newcommand{\differentialslide}{\begin{frame}\plainbar\sectiontitle{差分密码分析 (1980 年代末)}{与 Eli Biham 共同发现 · 分组密码的通用攻击}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发现} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{1980 年代末（late 1980s）与 Eli Biham 共同发现差分密码分析} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{门生即合作者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方法} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{攻击分组密码的通用方法：追踪明文差分的概率传播} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{密码分析新范式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{后来曝光} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{后来曝光 IBM 与 NSA 早已知晓并保密} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{独立发现的分量} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 差分密码分析的形式化视角}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\Pr[\Delta P \to \Delta C]=p$\quad 高概率差分特征揭示密钥信息}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 身份基密码与 Fiat–Shamir ---
+\newcommand{\ibcryptoslide}{\begin{frame}\plainbar\sectiontitle{身份基密码与 Fiat–Shamir (1984–1986)}{公钥从身份导出 · 交互变签名}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1984} & \cellcolor{secretpanel}\textcolor{badgeSecret!82!black}{提出身份基密码（identity-based cryptography）：公钥可从邮箱地址等唯一标识直接导出} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{免证书的公钥体系} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1986} & \cellcolor{secretpanel}\textcolor{badgeSecret!82!black}{与 Amos Fiat 共同设计 Fiat–Shamir 启发式：把交互式验证协议转化为数字签名方案} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{广泛使用的方法} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方案} & \cellcolor{secretpanel}\textcolor{badgeSecret!82!black}{与 Uriel Feige、Amos Fiat 的 Feige–Fiat–Shamir 身份识别方案（infobox 实载）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{三人组合的结晶} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 身份基密码：公钥即身份}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{pk}=F(\text{身份标识})$\quad 邮箱地址即可成为公钥}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 实时破译 A5/1 与 FMS 攻击 ---
+\newcommand{\realtimeslide}{\begin{frame}\plainbar\sectiontitle{实时破译 A5/1 与 FMS 攻击 (2000–2001)}{GSM 流密码 · RC4/WEP 的实际弱点}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{攻击}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2000} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{与 Alex Biryukov、David Wagner 提出 GSM 手机通信流密码 A5/1 的实时密码分析} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{手机通信的警报} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2001} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{与 Scott Fluhrer、Itsik Mantin 发表 FMS 攻击：对 RC4 流密码的密钥恢复攻击} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{与 Rivest 的 RC4 呼应} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{后果} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{暴露当时 Wi-Fi 的 WEP 协议的实际弱点（a practical weakness in the WEP protocol）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{协议用法之弊} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} FMS 攻击：从 RC4 到 WEP}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}流密码密钥恢复攻击\ $\Rightarrow$\ WEP 协议实际弱点被实证}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 声学密码分析与侧信道 ---
+\newcommand{\acousticslide}{\begin{frame}\plainbar\sectiontitle{声学密码分析与侧信道 (2014)}{听声提取密钥 · 物理与数字的边界}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2014} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{与 Daniel Genkin、Eran Tromer 演示通过笔记本解密时发出的声音，提取完整 4096 位 RSA 密钥} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{声学侧信道攻击} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{扩展} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{发展 cache attack 等一系列侧信道攻击} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{侧信道攻击谱系} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{视角} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{物理世界与数字安全的边界被打通} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{安全不止于数学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 声学密码分析：听声辨钥}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}解密之声\ $\Rightarrow$\ 完整 4096 位 RSA 密钥}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 密码学之外 ---
+\newcommand{\beyondslide}{\begin{frame}\plainbar\sectiontitle{密码学之外}{2-SAT · IP = PSPACE · 视觉密码学 · 环签名 · ML 安全}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{贡献}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2-SAT} & \cellcolor{theorypanel}\textcolor{badgeTheory!82!black}{给出 2-satisfiability 的首个线性时间算法（Even/Itai/Shamir 1976）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IP = PSPACE} & \cellcolor{theorypanel}\textcolor{badgeTheory!82!black}{1992 年（JACM）基于 Lund/Fortnow/Karloff/Nisan 的工作证明交互式证明系统的能力上限} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发明} & \cellcolor{theorypanel}\textcolor{badgeTheory!82!black}{视觉密码学（visual cryptography）与 TWINKLE/TWIRL 因子分解设备（页面实载）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{环签名} & \cellcolor{theorypanel}\textcolor{badgeTheory!82!black}{2001 年与 Rivest、Yael Tauman 提出，论文 \textit{How to Leak a Secret}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{ML 安全} & \cellcolor{theorypanel}\textcolor{badgeTheory!82!black}{2010 年代末起研究对抗样本（"Dimpled Manifold Model"）；EUROCRYPT 2024 演示神经网络参数的密码分析提取} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他的好奇心从不止步于密码学本身。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉之殿 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉之殿}{图灵奖 2002 · Israel Prize · Japan Prize · Wolf Prize}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际大奖} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（2002，与 Rivest/Adleman 共享）\item Paris Kanellakis Award（1996，三人共享）\item Israel Prize（2008）· Japan Prize（2017）\item Wolf Prize in Mathematics（2024）\end{itemize}} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{密码学巨匠的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术会士} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{ForMemRS（2018）· NAS 外籍院士（2005）· 以色列科学院院士（1998）} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{跨国界的学术认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣誉之年} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{2002 图灵奖三要素：1977 年共同发明 · 1978 年 CACM 论文 · 三人共享} & \cellcolor{cryptopanel}\textcolor{badgeCrypto!82!black}{公钥密码的加冕} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从以色列到世界，密码学刻着他的名字。}
+\end{center}
+\end{frame}}
+
+% --- 14. 门生与传承 ---
+\newcommand{\studentslide}{\begin{frame}\plainbar\sectiontitle{门生与传承}{Biham · Feige · Fiat --- 门生即合作者}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{门生}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{合作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Eli Biham} & \cellcolor{secretpanel}\textcolor{badgeSecret!82!black}{共同发现差分密码分析（1980 年代末）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{分组密码分析} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Amos Fiat} & \cellcolor{secretpanel}\textcolor{badgeSecret!82!black}{共同设计 Fiat–Shamir 启发式（1986）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{交互变签名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Uriel Feige} & \cellcolor{secretpanel}\textcolor{badgeSecret!82!black}{三人共同提出 Feige–Fiat–Shamir 身份识别方案} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{身份识别方案} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 教学相长：他的门生，正是他最重要的合作者。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {构造者，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {也是破译者。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Adi Shamir};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {阿迪·沙米尔\quad Adi Shamir\quad 1952 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{key}\enspace Turing 2002 · RSA · Shamir 秘密共享\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\rsaslide
+\secretshareslide
+\knapsackslide
+\differentialslide
+\ibcryptoslide
+\realtimeslide
+\acousticslide
+\beyondslide
+\honorsslide
+\studentslide
+\closingslide
+\end{document}

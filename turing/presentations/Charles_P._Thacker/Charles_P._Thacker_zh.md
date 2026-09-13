@@ -146,7 +146,7 @@
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `turing/pages/2009/Charles P. Thacker/index.html` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：使用 2008 年肖像（`images/500px-Chuckthacker_cropped_.jpg`，已就绪）
+- [ ] **头像**：使用 2008 年肖像（`images/Chuckthacker_cropped_.jpg`，已就绪；原文写 500px-Chuckthacker_cropped_.jpg 与实际文件名不符，执行时已按实际文件纠正）
 - [ ] **国籍**：封面顶部徽章明示美国
 - [ ] **引语核对**：仅 Alan Kay 评价语可引用（WSJ），Thacker 本人无直接引语
 - [ ] **编译验证**：`make distclean && make`

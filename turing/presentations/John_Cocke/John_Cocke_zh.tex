@@ -1,0 +1,485 @@
+% =============================================================
+%  RISC 架构之父：约翰·科克 (John Cocke)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：稀疏指令方块阵列 —— 以少胜多的 RISC 哲学
+%  资料来源：turing/pages/1987/John Cocke (computer scientist)/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Cocke 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeARCH}{HTML}{2E5A9E}   % RISC 体系结构 — 蓝
+\definecolor{badgeOPT}{HTML}{1E8E8E}    % 优化编译器 — 青绿
+\definecolor{badgeSTAT}{HTML}{D9A441}   % 统计方法 — 琥珀
+\definecolor{badgeIBM}{HTML}{C0395B}    % IBM 殿堂 — 玫瑰
+\definecolor{archpanel}{RGB}{228,233,246}
+\definecolor{optpanel}{RGB}{222,240,238}
+\definecolor{statpanel}{RGB}{249,240,224}
+\definecolor{ibmpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 指令方块背景（稀疏指令流水线母题）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeARCH!10] ([xshift=1.1cm,yshift=-2.1cm]current page.north west) rectangle ++(1.5,0.7);
+  \fill[badgeARCH!8]  ([xshift=3.0cm,yshift=-2.7cm]current page.north west) rectangle ++(1.0,0.5);
+  \fill[badgeOPT!11]  ([xshift=-3.7cm,yshift=1.9cm]current page.south east) rectangle ++(1.3,0.6);
+  \fill[badgeSTAT!13] ([xshift=3.3cm,yshift=-1.5cm]current page.north east) rectangle ++(1.1,0.55);
+  \fill[badgeIBM!11]  ([xshift=2.7cm,yshift=1.7cm]current page.south west) rectangle ++(1.2,0.6);
+  \fill[coveraccent!9] ([xshift=2.6cm,yshift=2.4cm]current page.south west) rectangle ++(0.8,0.45);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{microchip}\enspace RISC 架构之父\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {约翰·科克};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {John Cocke\enspace·\enspace 1925 — 2002};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {体系结构与编译器大师 · IBM 801 · 1987 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeARCH] at (-5.05,0)
+        {RISC 体系结构\\Architecture\par\scriptsize IBM 801 · Stretch};
+      \node[badge, fill=badgeOPT] at (-1.68,0)
+        {优化编译器\\Optimizing Compilers\par\scriptsize 基本变换系统化};
+      \node[badge, fill=badgeSTAT] at (1.68,0)
+        {统计方法\\Statistical Methods\par\scriptsize CYK · trigram};
+      \node[badge, fill=badgeIBM] at (5.05,0)
+        {IBM 殿堂\\IBM Legacy\par\scriptsize IBM Fellow 1972};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"a Chip Wizard From I.B.M." —— 《纽约时报》讣告标题（2002）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/John_Cocke.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{John_Cocke.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {John Cocke};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Duke · IBM\enspace|\enspace Turing 1987 · NMT 1991};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{科克 - 从夏洛特到 RISC 之父}{生卒 · 本名 · 国籍 · 教育 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/John_Cocke.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{John_Cocke.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {John Cocke};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1925-05-30 — 2002-07-16\\[2pt]\lab{本名}\quad John Cocke\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=archpanel, draw=badgeARCH!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Duke 机械工程 BS 1946\\[2pt]
+     \quad MS · 数学 PhD 1956\\[2pt]
+     \lab{任职}\quad IBM（1950 年代中期—1992）};
+  \node[infob, fill=optpanel, draw=badgeOPT!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 夏洛特 · 北卡罗来纳\\[2pt]\lab{去世地}\quad 瓦尔哈拉 · 纽约\\[2pt]\lab{机构}\quad IBM · IBM Fellow 1972};
+  \node[infob, fill=statpanel, draw=badgeSTAT!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1987 · NMS 1994\\[2pt]
+     \quad NMT 1991 · Franklin 2000\\[2pt]
+     \lab{核心领域}\quad 体系结构 · 优化编译器\\[2pt]
+     \quad 语音识别 · 机器翻译};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{科克的一生}{1925 — 2002 · 从夏洛特少年到 RISC 之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.6);
+  \foreach \y/\year/\txt in {
+    3.0/1925/生于北卡罗来纳州夏洛特,
+    2.3/1946/获 Duke 机械工程 BS,
+    1.6/1956/Duke 数学 PhD · 加入 IBM（1950 年代中期）,
+    0.9/1950s/Stretch（IBM 7030）：流水线 · ECC · 指令调度,
+    0.2/1960s/ACS 项目：超标量 · 分支预测的前身,
+    -0.5/1972/出任 IBM Fellow,
+    -1.2/1975/领导 IBM 801：RISC 之源,
+    -1.9/1987/获图灵奖,
+    -2.6/2002/逝于瓦尔哈拉 · 享年 77
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：夏洛特到杜克 ---
+\newcommand{\dukeslide}{\begin{frame}\plainbar\sectiontitle{夏洛特到杜克 (1925–1956)}{机械工程 BS · 数学 PhD · 家庭页面未载}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1925} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{生于北卡罗来纳州夏洛特（Charlotte）；父母/配偶/子女页面未载，勿考} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{南方少年北上求学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1946} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{获 Duke 大学机械工程 BS} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{工程训练打底} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{其后} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{续读 MS（具体方向页面未详述）} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{转向数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1956} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{获 Duke 数学 PhD（年份以 Wikipedia 信息框 1956 为准；ACM 页正文另有 1953/1956 两说）} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{同年开启 IBM 岁月} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从机械工程到数学，杜克三学位为他铺就通往 IBM 的路。}
+\end{center}
+\end{frame}}
+
+% --- 5. 加入 IBM 与 Stretch ---
+\newcommand{\stretchslide}{\begin{frame}\plainbar\sectiontitle{加入 IBM 与 Stretch 项目 (1950s)}{IBM 7030 · 流水线 · ECC · System/360 原型}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{入职} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{1950 年代中期加入 IBM（Wikipedia 信息框作 1956；ACM 传记作 1954），服务至 1992} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{传奇起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Stretch} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{参与 IBM 7030 "Stretch" 共同设计：指令流水线、纠错码（ECC）、指令调度、寄存器分配} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{大型系统的练兵场} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{遗产} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{Stretch 的经验直接哺育后续大型机设计} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{System/360 的原型} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在 Stretch 的流水线与纠错码里，埋下了日后 RISC 的种子。}
+\end{center}
+\end{frame}}
+
+% --- 6. ACS 项目与超前瞻 ---
+\newcommand{\acsslide}{\begin{frame}\plainbar\sectiontitle{ACS 项目与超前瞻 (1960s)}{超标量 · 存储缓冲区 · 分支预测的前身}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{ACS 的探索}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{超标量处理} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{提出超标量处理思想的前身：多条指令并行发射的雏形} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{先于时代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{存储缓冲区} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{提出存储缓冲区概念的前身，缓解访存瓶颈} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{访存优化先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{分支预测} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{提出分支预测概念的前身，减少流水线停顿} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{现代 CPU 的标配} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1960 年代的 ACS，预示了此后数十年处理器的演进方向。}
+\end{center}
+\end{frame}}
+
+% --- 7. IBM Fellow 与编译器系统化 ---
+\newcommand{\compilerslide}{\begin{frame}\plainbar\sectiontitle{优化编译器的系统化者 (1972 起)}{IBM Fellow · 基本变换 · 与 Schwartz 合著}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IBM Fellow} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{1972 年出任 IBM Fellow，公司最高技术荣誉} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{技术权威的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发现与系统化} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{发现并系统化众多现代优化编译器的基本变换（见下方清单）} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{图灵奖核心之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专著} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{与 Jacob T. Schwartz（NYU）合著最早的综合性编译器优化研究} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{学科奠基之作} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 优化编译器基本变换（citation 枚举顺序）}\\[2pt]
+  {\fontsize{9.5}{12.5}\selectfont\color{coverprimary!88!black}算符强度削减 $\rightarrow$ 公共子表达式消除 $\rightarrow$ 寄存器分配 $\rightarrow$ 常量传播 $\rightarrow$ 死代码消除}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 区间分析：与 Frances Allen ---
+\newcommand{\intervalslide}{\begin{frame}\plainbar\sectiontitle{区间分析：与 Frances Allen 的合作}{控制流图归约 · 程序分析}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作双方} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{与 Frances Allen（IBM 同事，2006 图灵奖得主）共同开发区间分析} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{同事 + 合作者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方法} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{基于控制流图归约的程序分析技术} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{数据流分析基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{为编译优化的程序分析提供系统框架} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{沿用至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 区间分析（Interval Analysis）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{控制流图}\ \xrightarrow{\text{归约}}\ \text{区间}\ \Rightarrow\ \text{数据流方程高效求解}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. IBM 801 与 RISC 诞生 ---
+\newcommand{\riscslide}{\begin{frame}\plainbar\sectiontitle{IBM 801 与 RISC 诞生 (1975 起)}{紧耦合设计 · PL.8 编译器 · 以简驭繁}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{项目} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{1975 年起领导 IBM 801 项目——其创新最受瞩目的项目，被视为第一台 RISC 机器} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{RISC 之源} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{紧耦合} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{硬件与编译器紧耦合、同步开发的设计理念} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{软硬一体的哲学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{PL.8 编译器} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{首次完整实现寄存器分配器（避免内存访问延迟）与指令调度器（隐藏分支延迟）} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{编译器即架构} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} RISC 设计理念：指令集与编译器实际生成的指令相匹配}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}对比 Stretch 的 735 条指令 $\Rightarrow$ 精简指令集，低成本高性能}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. "RISC 架构之父" ---
+\newcommand{\fatherslide}{\begin{frame}\plainbar\sectiontitle{"RISC 架构之父"}{公论之誉 · 更少指令 · 极快执行}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{命题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{誉称} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{被许多人誉为 "the father of RISC architecture"} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{公论而非官衔} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{理念} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{"使用更少指令，但设计能极快执行简单指令的芯片"（《卫报》讣告转述）} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{以简驭繁} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{IBM 801 "被视为第一台 RISC 机器"（believed to be the first）} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{历史坐标} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} RISC 哲学：以少胜多}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{更少指令}\ \times\ \text{极快执行简单指令}\ \Rightarrow\ \text{低成本高性能}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 图灵奖 1987 ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1987}{编译器 · 大型系统体系结构 · RISC}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.9cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} ACM Turing Award Citation（1987）}\\[3pt]
+  {\fontsize{7.2}{9.6}\selectfont\itshape\color{coverprimary!90!black}\raggedright
+  "For significant contributions in the design and theory of compilers, the architecture of large systems and the development of reduced instruction set computers (RISC); for discovering and systematizing many fundamental transformations now used in optimizing compilers including reduction of operator strength, elimination of common subexpressions, register allocation, constant propagation, and dead code elimination."\par}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{获奖维度}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{内容}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三条主线} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{编译器的设计与理论 · 大型系统体系结构 · RISC 精简指令集计算机} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{一个身份} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{优化编译器基本变换的发现者与系统化者——citing 中逐一列举的五大变换} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 12. 统计方法的远见 ---
+\newcommand{\statslide}{\begin{frame}\plainbar\sectiontitle{统计方法的远见}{CYK · 语音识别 · trigram 语言模型}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{CYK 算法} & \cellcolor{statpanel}\textcolor{badgeSTAT!82!black}{Cocke--Younger--Kasami 算法共同发明者——科克正是 "C"（上下文无关句法分析）} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{句法分析经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{语音与翻译} & \cellcolor{statpanel}\textcolor{badgeSTAT!82!black}{参与 IBM 1970--80 年代语音识别与机器翻译的先驱性统计方法研究} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{统计 NLP 先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{trigram} & \cellcolor{statpanel}\textcolor{badgeSTAT!82!black}{被 Frederick Jelinek 归功于提出在语音识别中使用三元组语言模型的想法} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{归功方向：Jelinek $\rightarrow$ Cocke} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Cocke--Younger--Kasami（CYK）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{句子}\ \Rightarrow\ \text{上下文无关文法句法分析}\quad$ 三位共同命名者中的 "C"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 产业遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{产业遗产：从 801 到 RISC 世界}{RS/6000 · PowerPC · Blue Gene/L}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=archpanel, draw=badgeARCH!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeARCH} IBM RS/6000}\\[3pt]RISC 工作站\\[2pt]技术直接催生};
+\node[leg, fill=ibmpanel, draw=badgeIBM!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeIBM} PowerPC}\\[3pt]Apple · IBM · Motorola\\[2pt]联盟架构};
+\node[leg, fill=silverpanel, draw=coverprimary!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{coverprimary} Blue Gene/L}\\[3pt]超级计算机\\[2pt]血脉延续};
+\node[leg, fill=statpanel, draw=badgeSTAT!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSTAT} RISC 世界}\\[3pt]Sun · MIPS · Intel\\[2pt]Motorola · HP};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 更少的指令，更快的芯片。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} IBM 801 $\rightarrow$ RS/6000 $\rightarrow$ PowerPC $\rightarrow$ Blue Gene/L\\[2pt]他的指令集哲学，仍奔跑在每一颗追求性能的芯片里。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 14. 荣誉与晚年 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与晚年}{图灵奖 1987 · 殿堂级认可}\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{奖项矩阵} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{\begin{itemize}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item IEEE von Neumann Medal（1984）· Eckert--Mauchly 奖（1985）\item Turing Award（1987）· Computer Pioneer 奖（1989）\item National Medal of Technology（1991）· National Medal of Science（1994）\item Cray 计算机工程奖（1999）· Franklin Medal（2000）· CHM Fellow（2002）\end{itemize}} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{殿堂级公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术会员} & \cellcolor{archpanel}\textcolor{badgeARCH!82!black}{NAS · 美国艺术与科学院 · 美国哲学会会员；IBM Fellow（1972）；20 余项专利} & \cellcolor{optpanel}\textcolor{badgeOPT!82!black}{一生耕耘 IBM} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 von Neumann Medal 到 CHM Fellow，"Chip Wizard" 实至名归。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {性能，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是指令集与编译器的合奏。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 John Cocke};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {约翰·科克\quad John Cocke\quad 1925 — 2002};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{microchip}\enspace Turing 1987 · NMT 1991 · RISC 架构之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\dukeslide
+\stretchslide
+\acsslide
+\compilerslide
+\intervalslide
+\riscslide
+\fatherslide
+\turingslide
+\statslide
+\legacyslide
+\honorsslide
+\closingslide
+\end{document}

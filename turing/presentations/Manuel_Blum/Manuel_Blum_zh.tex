@@ -1,0 +1,494 @@
+% =============================================================
+%  计算复杂性理论奠基人：曼努埃尔·布卢姆 (Manuel Blum)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：嵌套同心方块 —— 层层抽象向上收敛（公理化复杂性）
+%  资料来源：turing/pages/1995/Manuel Blum/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Blum 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeAX}{HTML}{2E5A9E}     % 公理复杂性 — 蓝
+\definecolor{badgeCR}{HTML}{1E8E8E}     % 理论密码学 — 青绿
+\definecolor{badgeAL}{HTML}{D9A441}     % 算法 — 琥珀
+\definecolor{badgeED}{HTML}{C0395B}     % 人机验证与教育 — 玫瑰
+\definecolor{axpanel}{RGB}{228,233,246}
+\definecolor{crpanel}{RGB}{222,240,238}
+\definecolor{alpanel}{RGB}{249,240,224}
+\definecolor{edpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 嵌套同心方块背景（层层抽象向上收敛）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAX!10] ([xshift=1.0cm,yshift=-1.0cm]current page.north west) rectangle ([xshift=5.2cm,yshift=-5.2cm]current page.north west);
+  \fill[badgeAX!16] ([xshift=1.8cm,yshift=-1.8cm]current page.north west) rectangle ([xshift=4.4cm,yshift=-4.4cm]current page.north west);
+  \fill[badgeAX!24] ([xshift=2.6cm,yshift=-2.6cm]current page.north west) rectangle ([xshift=3.6cm,yshift=-3.6cm]current page.north west);
+  \fill[badgeCR!10] ([xshift=-1.0cm,yshift=1.0cm]current page.south east) rectangle ([xshift=-4.6cm,yshift=4.6cm]current page.south east);
+  \fill[badgeCR!16] ([xshift=-1.8cm,yshift=1.8cm]current page.south east) rectangle ([xshift=-3.8cm,yshift=3.8cm]current page.south east);
+  \fill[coveraccent!10] ([xshift=-2.4cm,yshift=2.4cm]current page.south east) rectangle ([xshift=-3.2cm,yshift=3.2cm]current page.south east);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{project-diagram}\enspace 计算复杂性理论奠基人\enspace·\enspace 委内瑞拉裔·美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {曼努埃尔·布卢姆};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Manuel Blum\enspace·\enspace 1938 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {公理化复杂性 · 理论密码学 · 1995 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAX] at (-5.05,0)
+        {公理复杂性\\Blum Axioms\par\scriptsize 加速定理};
+      \node[badge, fill=badgeCR] at (-1.68,0)
+        {理论密码学\\Cryptography\par\scriptsize BBS 生成器};
+      \node[badge, fill=badgeAL] at (1.68,0)
+        {算法经典\\Selection\par\scriptsize median of medians};
+      \node[badge, fill=badgeED] at (5.05,0)
+        {人机验证\\CAPTCHA\par\scriptsize 用难题筑防线};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{11.5}\selectfont\itshape, text=muteddark, align=center, text width=12.6cm]
+    at ([yshift=-2.42cm]current page.center)
+    {"In recognition of his contributions to the foundations of computational complexity theory and its application to cryptography and program checking." —— 1995 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Blum_manuel_lenore_avrim.jpg}{\includegraphics[width=2.3cm,height=2.8cm,keepaspectratio]{Blum_manuel_lenore_avrim.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.8}\selectfont\itshape, text=covermuted, align=center, text width=3.0cm]
+    at ([xshift=6.86cm, yshift=1.50cm]current page.center) {1973 年与妻子 Lenore、\\儿子 Avrim 合影};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 委内瑞拉裔·美国\enspace|\enspace \faIcon{university}\enspace MIT · UC Berkeley · CMU\enspace|\enspace Turing 1995};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{布卢姆 - 从加拉加斯到公理复杂性}{生卒 · 本名 · 国籍 · 教育 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Blum_manuel_lenore_avrim.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Blum_manuel_lenore_avrim.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.8}\selectfont\itshape, text=covermuted, align=center, text width=3.4cm]
+    at (-6.15,-2.2) {Manuel Blum（左）\\与家人 · 1973};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1938-04-26 —（在世）\\[2pt]\lab{本名}\quad Manuel Blum\\[2pt]\lab{国籍}\quad 委内瑞拉裔·美国};
+  \node[infob, fill=crpanel, draw=badgeCR!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad MIT 电气工程 BS 1959\\[2pt]
+     \quad MIT 电气工程 MS 1961\\[2pt]
+     \quad MIT 数学 PhD 1964\\[2pt]
+     \lab{师承}\quad Marvin Minsky（导师）};
+  \node[infob, fill=axpanel, draw=badgeAX!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 加拉加斯 · 委内瑞拉\\[2pt]\lab{家庭}\quad 妻 Lenore · 子 Avrim\\[2pt]\lab{任职}\quad UC Berkeley · CMU};
+  \node[infob, fill=alpanel, draw=badgeAL!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1995 · NAS 2002\\[2pt]
+     \quad NAE 2006\\[2pt]
+     \lab{核心领域}\quad 计算复杂性 · 密码学\\[2pt]
+     \quad 程序检验 · 归纳推理};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{布卢姆的一生}{1938 — · 从加拉加斯少年到公理复杂性奠基人}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1938/生于加拉加斯，委内瑞拉犹太家庭,
+    2.3/1959/获 MIT 电气工程学士,
+    1.6/1961/获 MIT 电气工程硕士 · 与 McCulloch 合作,
+    0.9/1964/MIT 数学博士（导师 Minsky）,
+    0.2/1960s/公理化复杂性理论 · Blum 公理与加速定理,
+    -0.5/1973/median of medians 线性时间选择,
+    -1.2/1986/Blum Blum Shub 伪随机生成器,
+    -1.9/1995/获图灵奖,
+    -2.6/2001/转任 CMU Bruce Nelson 讲席教授,
+    -2.8/2018/与妻子 Lenore 一同从 CMU 辞职
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：加拉加斯到 MIT ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：加拉加斯到 MIT (1938–1959)}{委内瑞拉犹太家庭 · 电气工程本科}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1938} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{4 月 26 日生于委内瑞拉加拉加斯，犹太家庭} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{多元文化起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{赴美} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{进入 Massachusetts Institute of Technology 求学} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{电机工程起步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1959} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{获 MIT 电气工程学士（BS）} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{工程根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1961} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{获 MIT 电气工程硕士（MS）} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{转向研究前沿} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从加拉加斯到剑桥，一位工程师底色的未来理论家。}
+\end{center}
+\end{frame}}
+
+% --- 5. McCulloch 与神经网络 ---
+\newcommand{\mccullochslide}{\begin{frame}\plainbar\sectiontitle{McCulloch 与神经网络 (1959–1961)}{硕士期间 · 多输入神经元模型}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{引荐} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{在 MIT 被引荐给 Warren S. McCulloch} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{跨入神经科学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{合作研究神经网络中的若干数学问题} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{数学与神经交汇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{"Properties of a neuron with many inputs"（1961）} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{多输入神经元模型} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} McCulloch 是合作者与引荐人（非博士导师）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{神经元数学} $\xrightarrow{\text{抽象}}$ \textit{计算的本质问题}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Minsky 门下博士 ---
+\newcommand{\minskyslide}{\begin{frame}\plainbar\sectiontitle{Minsky 门下博士 (1961–1964)}{机器无关复杂性理论 · 与导师篇互证}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{师从 Marvin Minsky（1969 图灵奖得主）} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{AI 之父的门生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{A Machine-Independent Theory of the Complexity of Recursive Functions} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{复杂性理论的奠基之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学位} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{1964 年获 MIT 数学 PhD（本硕为电气工程）} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{由工程转向数学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 博士论文（1964）：递归函数复杂性的机器无关理论}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{不依赖具体机器} $\Rightarrow$ \textit{刻画一切机器的复杂性}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Blum 公理与加速定理（核心页） ---
+\newcommand{\axiomslide}{\begin{frame}\plainbar\sectiontitle{Blum 公理与加速定理}{Gödel 编号 · 公理化复杂性 · 从公理到定理}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{基础} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{基于 Gödel numberings（Gödel 编号）} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{编码一切可计算函数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{公理} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{Blum 公理：不依赖任何具体机器模型的复杂性测度} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{机器无关的公理化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定理} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{压缩定理 · 间隙定理 · 诚实性定理 · Blum 加速定理} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{从抽象公理到具体结果} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Blum 公理与加速定理（形式化表达）}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}$\mathrm{dom}(\Phi)=\mathrm{dom}(\varphi)$\ \ 且\ \ $\Phi(x)$ 可计算\qquad$\Rightarrow$\quad 存在"几乎处处更快"的程序}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 线性时间选择 ---
+\newcommand{\selectionslide}{\begin{frame}\plainbar\sectiontitle{线性时间选择 (1973)}{与 Floyd/Pratt/Rivest/Tarjan · median of medians}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合著} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{Blum · Floyd · Pratt · Rivest · Tarjan，五位作者联名} & \cellcolor{alpanel}\textcolor{badgeAL!82!black}{巨头合署的经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{Time bounds for selection（J. Comput. Syst. Sci., 1973）} & \cellcolor{alpanel}\textcolor{badgeAL!82!black}{选择问题的界} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{算法} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{median of medians：线性时间选择算法} & \cellcolor{alpanel}\textcolor{badgeAL!82!black}{算法课的经典一课} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} median of medians（中位数的中位数）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{分组取中位} $\Rightarrow$ \textit{好的主元} $\Rightarrow$ $T(n)=O(n)$ 线性时间选择}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 夫妻合作的归纳推理 ---
+\newcommand{\inductiveslide}{\begin{frame}\plainbar\sectiontitle{夫妻合作的归纳推理 (1975)}{与 Lenore Blum · Information and Control}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作者} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{妻子 Lenore Blum（数学家、CMU 计算机科学教授）} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{夫妻同研} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{Toward a mathematical theory of inductive inference} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{归纳推理的数学化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发表} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{Information and Control（1975）} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{学习理论先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 把"从经验中学习"写成数学——归纳推理理论的先驱之作。}
+\end{center}
+\end{frame}}
+
+% --- 10. Blum Blum Shub ---
+\newcommand{\bbsslide}{\begin{frame}\plainbar\sectiontitle{Blum Blum Shub：伪随机生成器 (1986)}{与 Lenore Blum、Michael Shub · 密码学一整廊}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合著} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{与 Lenore Blum、Michael Shub 合著（1986）} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{夫妻与同僚合璧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{A Simple Unpredictable Pseudo-Random Number Generator} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{理论密码学基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{密码一整廊} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{Blum integer（列名）· Blum--Goldwasser 密码系统 · Blum--Micali 算法 · 承诺方案 · 电话掷硬币协议} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{以复杂性换安全} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} BBS —— Simple Unpredictable Pseudo-Random Number Generator}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{不可预测性}：多项式时间观察者无法预测下一比特}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. CAPTCHA ---
+\newcommand{\captchaslide}{\begin{frame}\plainbar\sectiontitle{CAPTCHA：用难题筑防线 (2003)}{与 von Ahn · 把困难 AI 问题变成安全工具}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{CAPTCHA: Using Hard AI Problems for Security（EUROCRYPT 2003）} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{安全的新思路} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{与门生 Luis von Ahn、N. J. Hopper、J. Langford 合著} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{师生同题} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{思想} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{把"机器难以解决"的 AI 问题变成人机区分的安全工具} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{逆向思维典范} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Known for} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{infobox 列出 CAPTCHA 与 reCAPTCHA} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{影响深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} CAPTCHA —— Using Hard AI Problems for Security}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{困难 AI 问题} $\Rightarrow$ \textit{人机区分的安全工具}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 传奇博导 ---
+\newcommand{\advisorslide}{\begin{frame}\plainbar\sectiontitle{传奇博导}{谱系墙 · 三大教学奖}\vspace{-0.3cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博士门生} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Leonard Adleman · Goldwasser · Micali\item Sipser · Miller · Naor · Rudich\item von Ahn · Williams 等\end{itemize}} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{门下群星} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{谱系} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{门生横跨密码学 · 复杂性 · 算法 · 计算生物学} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三大教学奖} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Berkeley Distinguished Teaching（1977）\item Sigma Xi Monie A. Ferst（1991）\item CMU Simon Teaching Award（2007）\end{itemize}} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{教学与科研同辉} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一位导师的谱系，写着密码学与复杂性理论的大半部历史。}
+\end{center}
+\end{frame}}
+
+% --- 13. Berkeley–CMU 双院岁月 ---
+\newcommand{\careerslide}{\begin{frame}\plainbar\sectiontitle{Berkeley--CMU 双院岁月}{UC Berkeley · CMU · 双院院士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Berkeley} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{UC Berkeley 计算机科学教授（至 2001）} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{长期深耕} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{CMU} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{2001--2018 任 Bruce Nelson 讲席教授，与妻子 Lenore 同校执教} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{夫妻同院} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{双院} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{NAS 院士（2002）· NAE 院士（2006，理由含抽象复杂性理论、归纳推理、密码协议、程序检验器）} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{双料院士} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2018} & \cellcolor{axpanel}\textcolor{badgeAX!82!black}{因 Project Olympus 管理变更及对 Lenore 的性别歧视待遇，与妻子一同辞职} & \cellcolor{crpanel}\textcolor{badgeCR!82!black}{抗议离去} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从伯克利到匹兹堡，教学与研究同辉的四十余年。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：公理之上的大厦}{复杂性理论 · 密码学 · 程序检验}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=axpanel, draw=badgeAX!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAX} 公理复杂性}\\[3pt]Blum 公理\\[2pt]加速定理};
+\node[leg, fill=crpanel, draw=badgeCR!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCR} 理论密码学}\\[3pt]BBS\\[2pt]Blum--Goldwasser};
+\node[leg, fill=alpanel, draw=badgeAL!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAL} 算法经典}\\[3pt]median of medians\\[2pt]线性时间选择};
+\node[leg, fill=edpanel, draw=badgeED!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeED} 人机验证}\\[3pt]CAPTCHA\\[2pt]reCAPTCHA};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 不依赖任何具体机器，却刻画了所有机器的复杂性。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 公理复杂性 $\rightarrow$ 理论密码学 $\rightarrow$ 算法经典 $\rightarrow$ 人机验证\\[2pt]他的公理，仍在复杂性与密码学的血脉中流动。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {公理之上，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {时间与机器皆可超越。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Manuel Blum};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {曼努埃尔·布卢姆\quad Manuel Blum\quad 1938 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{project-diagram}\enspace Turing 1995 · 计算复杂性理论奠基人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\mccullochslide
+\minskyslide
+\axiomslide
+\selectionslide
+\inductiveslide
+\bbsslide
+\captchaslide
+\advisorslide
+\careerslide
+\legacyslide
+\closingslide
+\end{document}

@@ -1,0 +1,500 @@
+% =============================================================
+%  模型检验与嵌入式系统：Joseph Sifakis（约瑟夫·斯法基斯）
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：时间轴-时钟语义（时间自动机的时钟约束意象）
+%  资料来源：turing/pages/2007/Joseph Sifakis/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Sifakis 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeEU}{HTML}{2E5A9E}     % 模型检验欧洲线 — 蓝
+\definecolor{badgeSC}{HTML}{1E8E8E}     % 安全关键系统 — 青绿
+\definecolor{badgeEmb}{HTML}{D9A441}    % 嵌入式与自主系统 — 琥珀
+\definecolor{badgeTime}{HTML}{C0395B}   % 时序与混合系统 — 玫瑰
+\definecolor{eupanel}{RGB}{228,233,246}
+\definecolor{scpanel}{RGB}{222,240,238}
+\definecolor{embpanel}{RGB}{249,240,224}
+\definecolor{timepanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 时间轴-时钟背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeEU!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeSC!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeEmb!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{microchip}\enspace 模型检验与嵌入式系统\enspace·\enspace 希腊-法国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {约瑟夫·斯法基斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Joseph Sifakis\enspace·\enspace 1946 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {VERIMAG 创始人 · CAV 共同创办人 · 嵌入式系统领军 · 2007 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeEU] at (-5.05,0)
+        {模型检验\\Model Checking\par\scriptsize 欧洲独立研究线};
+      \node[badge, fill=badgeSC] at (-1.68,0)
+        {安全关键系统\\Safety Critical\par\scriptsize VERIMAG · SCADE};
+      \node[badge, fill=badgeEmb] at (1.68,0)
+        {嵌入式系统\\Embedded Systems\par\scriptsize ARTIST · BIP};
+      \node[badge, fill=badgeTime] at (5.05,0)
+        {时序与混合系统\\Timed / Hybrid\par\scriptsize Kronos · 综合};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his work on model checking." —— 2007 图灵奖（页面表述；共享 citation 见本批次 Emerson 篇）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Joseph_Sifakis_2018.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Joseph_Sifakis_2018.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Joseph Sifakis, 2018};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 希腊-法国\enspace|\enspace \faIcon{university}\enspace VERIMAG · CNRS · EPFL\enspace|\enspace Turing 2007};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{斯法基斯 - 从克里特到阿尔卑斯}{生卒 · 本名 · 国籍 · 教育 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Joseph_Sifakis_2018.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Joseph_Sifakis_2018.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Joseph Sifakis};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1946-12-26 生（在世）\\[2pt]\lab{本名}\quad Joseph Sifakis\\[2pt]\lab{国籍}\quad 希腊-法国（Greek-French）};
+  \node[infob, fill=eupanel, draw=badgeEU!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad 雅典国立技术大学 电气工程 BS\\[2pt]
+     \quad Grenoble 计算机科学 MS · PhD\\[2pt]
+     \quad 工程博士 1974 · 国家博士 1979};
+  \node[infob, fill=scpanel, draw=badgeSC!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 伊拉克利翁 · 克里特 · 希腊\\[2pt]\lab{现居}\quad 法国\\[2pt]\lab{任职}\quad CNRS 荣誉研究总监 · VERIMAG 创始人};
+  \node[infob, fill=embpanel, draw=badgeEmb!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2007 · 荣誉军团指挥官 2011\\[2pt]
+     \quad 中科院外籍院士 2019\\[2pt]
+     \lab{核心领域}\quad 模型检验 · 嵌入式系统\\[2pt]
+     \quad 时序与混合系统 · 形式验证};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{斯法基斯的一生}{1946 — · 从克里特岛到形式验证的欧洲旗帜}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-3.0);
+  \foreach \y/\year/\txt in {
+    3.0/1946/生于希腊克里特岛伊拉克利翁,
+    2.25/1974/格勒诺布尔工程博士（Modèles temporels）,
+    1.5/1979/国家博士：研究"后来被称为 model checking 的算法化验证方法",
+    0.75/1982/Queille 博士论文中开发 CESAR 验证工具,
+    0/1989/与 Clarke、Pnueli 共同创办 CAV 会议（首届格勒诺布尔）,
+    -0.75/2007/获图灵奖（与 Clarke、Emerson 共享）,
+    -1.5/2011/荣誉军团指挥官；赴 EPFL 任全职教授,
+    -2.25/2019/当选中国科学院外籍院士,
+    -3.0/2024/当选美国国家科学院院士（现居法国）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：克里特与雅典 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：克里特与雅典 (1946–)}{Heraklion 出生 · 雅典国立技术大学电气工程}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1946} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{12 月 26 日生于希腊克里特岛伊拉克利翁（Heraklion）} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{地中海的少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{雅典} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{入 National Technical University of Athens 攻读电气工程（BS）} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{工程训练的底色} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{配偶 Olga Ioannidi（infobox 实载）} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{页面实载} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从爱琴海出发的电气工程学生，最终把严谨带进了系统设计。}
+\end{center}
+\end{frame}}
+
+% --- 5. 赴法：格勒诺布尔 ---
+\newcommand{\grenobleslide}{\begin{frame}\plainbar\sectiontitle{赴法：格勒诺布尔 (1970s)}{法国奖学金 · 计算机科学 · 工程博士 1974}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{求学} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{获法国奖学金，赴格勒诺布尔大学攻读计算机科学（MS、PhD）} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{从雅典到阿尔卑斯} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1974} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{获工程博士（doctorat d'ingénieur），论文《Modèles temporels des systèmes logiques》（Joseph-Fourier 大学，1974-03-22）} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{逻辑系统的时间模型} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{起点} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{从"系统的时间模型"起步，走向系统验证} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{一生主线的发端} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 第一篇博士论文写的正是"时间"，此后一生都在驯服系统的时间。}
+\end{center}
+\end{frame}}
+
+% --- 6. 国家博士与模型检验的雏形 ---
+\newcommand{\statedocslide}{\begin{frame}\plainbar\sectiontitle{国家博士与模型检验的雏形 (1979)}{doctorat d'état · 欧洲独立研究线的源头}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1979} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{获国家博士（doctorat d'état），论文《Le contrôle des systèmes asynchrones》（INPG \& Joseph-Fourier，1979-06-25）} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{异步系统的控制} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{核心} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{在国家博士中研究"后来被称为 model checking 的算法化验证方法"的原理} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{欧洲独立研究线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{制度注} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{当时的法国有两级博士制：国家博士是任教授的必要条件，后被 habilitation 取代} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{1974/1979 勿互串} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 验证即判定：系统是否满足规格}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}$M \models \varphi$\quad 算法化地回答"是/否"——它就是后来的 model checking}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. CESAR：欧洲的第一件工具 ---
+\newcommand{\cesarslide}{\begin{frame}\plainbar\sectiontitle{CESAR：欧洲的第一件工具 (1982)}{Queille 博士论文 · 模型检验的工具化落地}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1982} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{该验证技术在 Jean-Pierre Queille 的博士论文中得到应用} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{从方法到实现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{CESAR} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{由此开发出 CESAR 验证工具} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{欧洲第一件模型检验工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{谱系} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{与 Clarke / Emerson 的美式线并行——三条线在 2007 图灵奖合流} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{同期同奖的三条线} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1979 年的方法 $\rightarrow$ 1982 年的工具}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}方法（state doctorate）$\xrightarrow{\text{Queille 博士论文}}$ CESAR 验证工具（1982）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 创立 VERIMAG ---
+\newcommand{\verimagslide}{\begin{frame}\plainbar\sectiontitle{创立 VERIMAG}{混合产业实验室 · 14 年台长 · Airbus / SCADE}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创办} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{在格勒诺布尔附近创办 VERIMAG 实验室，任台长 14 年} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{创始人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{属性} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{初期为 CNRS 与 Verilog SA 的混合产业实验室；现为 CNRS、Joseph Fourier 大学、Grenoble-INP 联合实验室} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{产学合体} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{产业} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{与 Airbus、Schneider Electric 合作开发安全关键系统方法与工具，尤其是基于 Lustre 语言的 SCADE 同步编程环境} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{飞进飞机的验证} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从实验室到空客驾驶舱：形式方法真的在飞。}
+\end{center}
+\end{frame}}
+
+% --- 9. CAV 会议的诞生 ---
+\newcommand{\cavslide}{\begin{frame}\plainbar\sectiontitle{CAV 会议的诞生 (1989)}{与 Clarke、Pnueli 共同创办 · 首届格勒诺布尔}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创办人} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{与 Edmund M. Clarke、Amir Pnueli（1996 图灵奖得主）共同创办 CAV 会议} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{三位缔造者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首届} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{首届 1989 年在格勒诺布尔举办} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{Computer Aided Verification} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{CAV 成为计算机辅助验证领域的旗舰会议} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{学界的年度舞台} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} CAV —— Computer Aided Verification（1989，格勒诺布尔）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}Sifakis $\times$ Clarke $\times$ Pnueli\quad 三个姓氏，一个领域的主会场}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 时序与混合系统 ---
+\newcommand{\timedslide}{\begin{frame}\plainbar\sectiontitle{时序与混合系统}{与 Henzinger / Pnueli / Maler · Kronos · 抽象对爆炸}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{验证} & \cellcolor{timepanel}\textcolor{badgeTime!82!black}{与 Thomas Henzinger 合作研究时序与混合系统（timed and hybrid systems）的验证} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{为实时系统引入时钟} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{综合} & \cellcolor{timepanel}\textcolor{badgeTime!82!black}{与 Amir Pnueli、Oded Maler 研究时序系统的综合（如 1995 STACS 时序控制器综合论文）} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{从验证到自动构造} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{工具} & \cellcolor{timepanel}\textcolor{badgeTime!82!black}{参与开发 IF toolset、Kronos、CADP、TGV 等验证工具} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{工具谱系成林} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{理论} & \cellcolor{timepanel}\textcolor{badgeTime!82!black}{发展用抽象技术应对状态爆炸（state explosion）的理论} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{可扩展性的钥匙} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 时间自动机的时钟约束}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$x \le c\ \wedge\ y > d$\quad 真实系统不仅有状态，还有"几点钟"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 从 BIP 到可信自主系统 ---
+\newcommand{\bipslide}{\begin{frame}\plainbar\sectiontitle{从 BIP 到可信自主系统}{严谨组件化设计 · 自动驾驶}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{近二十年} & \cellcolor{embpanel}\textcolor{badgeEmb!82!black}{工作聚焦基于 BIP 组件框架的严谨组件化设计（rigorous component-based design）} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{构件即真理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{近年} & \cellcolor{embpanel}\textcolor{badgeEmb!82!black}{转向可信自主系统（trustworthy autonomous systems）的设计，尤其是自动驾驶} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{验证驶上公路} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著述} & \cellcolor{embpanel}\textcolor{badgeEmb!82!black}{著《Understanding and Changing the World》（Springer，2022 年 5 月）} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{书名点题} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从验证飞机到验证汽车：他让"可信"跟上了机器的速度。}
+\end{center}
+\end{frame}}
+
+% --- 12. 跨界：ARTIST 与学界 ---
+\newcommand{\crossslide}{\begin{frame}\plainbar\sectiontitle{跨界：从欧洲网络到中国讲席}{ARTIST · EPFL · 清华 / SUSTech · 希腊科委会}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{任职}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2004–2012} & \cellcolor{embpanel}\textcolor{badgeEmb!82!black}{欧洲嵌入式系统卓越网络 ARTIST 的协调人} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{欧洲嵌入式旗舰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2008–2011} & \cellcolor{embpanel}\textcolor{badgeEmb!82!black}{INRIA-Schneider 产业讲席} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{产学之桥} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2011–2016} & \cellcolor{embpanel}\textcolor{badgeEmb!82!black}{EPFL 计算与通信科学学院全职教授、"Rigorous System Design Laboratory" 主任} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{洛桑岁月} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中国} & \cellcolor{embpanel}\textcolor{badgeEmb!82!black}{清华大学访问教授（2011–2012）；南方科技大学 SUSTech 访问教授（2019）} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{与中国紧密相连} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2014–2016} & \cellcolor{embpanel}\textcolor{badgeEmb!82!black}{希腊国家研究与技术委员会主席} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{反哺祖国} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 实验室、企业、院校与国家科委——他在每一种制度里都留下了方法。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉：两枚勋章与多国科学院}{法国之荣 · 跨越大西洋的承认}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{法国勋章} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{National Order of Merit 大军官（2008）\newline Legion of Honor 指挥官（2011）} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{共和国的礼遇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{科学院} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{法国工程院 2008 · Academia Europaea 2008\newline 法国科学院 2010 · da Vinci Medal 2012\newline 美国艺术与科学院 2015 · 美国工程院 2017\newline 中科院外籍院士 2019 · 美国科学院 2024} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{四大洲的院士} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{最高奖} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{A.M. Turing Award（2007）\newline 与 Clarke、Emerson 共享} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{计算机科学的顶点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 两枚法国勋章、四个大洲的科学院——每一项年份都经得起逐条核对。}
+\end{center}
+\end{frame}}
+
+% --- 14. 2007 图灵奖 ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{2007 图灵奖}{与 Clarke、Emerson 三人共享 · model checking}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共享} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{与 Edmund M. Clarke、E. Allen Emerson 三人共享 2007 图灵奖} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{三大洲三条线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{理由} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{页面表述："for his work on \mbox{model checking}"} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{以其毕生工作为由} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{侧重} & \cellcolor{eupanel}\textcolor{badgeEU!82!black}{本篇侧重 VERIMAG / CESAR / 嵌入式与欧洲独立研究线（开创归 Clarke 篇、CTL 归 Emerson 篇）} & \cellcolor{scpanel}\textcolor{badgeSC!82!black}{三篇侧重不重复} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{7.8}{10.2}\selectfont\color{coverprimary!88!black}\itshape "for their role in developing Model-Checking into a highly effective verification technology that is widely adopted in the hardware and software industries."}\\[2pt]
+  {\fontsize{7.2}{9}\selectfont\color{muteddark} —— 2007 图灵奖共享 citation（本页无载全文，引自本批次 Emerson 篇页面实载）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {让每一台关键机器，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {都经得起证明。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Joseph Sifakis};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {约瑟夫·斯法基斯\quad Joseph Sifakis\quad 1946 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{microchip}\enspace Turing 2007 · VERIMAG · CAV\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\grenobleslide
+\statedocslide
+\cesarslide
+\verimagslide
+\cavslide
+\timedslide
+\bipslide
+\crossslide
+\honorsslide
+\turingslide
+\closingslide
+\end{document}

@@ -1,0 +1,521 @@
+% =============================================================
+%  首位女性图灵奖得主：弗朗西丝·艾伦 (Frances E. Allen)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：流图（控制流图的节点-有向边网络）
+%  资料来源：turing/pages/2006/Frances Allen/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Allen 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeOpt}{HTML}{2E5A9E}     % 编译器优化 — 蓝
+\definecolor{badgeFlow}{HTML}{1E8E8E}    % 流分析 — 青绿
+\definecolor{badgePar}{HTML}{D9A441}     % 并行计算 — 琥珀
+\definecolor{badgeWomen}{HTML}{C0395B}   % 女性先驱 — 玫瑰
+\definecolor{optpanel}{RGB}{228,233,246}
+\definecolor{flowpanel}{RGB}{222,240,238}
+\definecolor{parpanel}{RGB}{249,240,224}
+\definecolor{womenpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 流图背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeOpt!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeFlow!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePar!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \begin{scope}[opacity=0.35]
+    \node[circle, draw=badgeOpt, line width=0.7pt, inner sep=1.4pt, fill=white] (fa) at ([xshift=1.0cm,yshift=7.9cm]current page.south west) {};
+    \node[circle, draw=badgeOpt, line width=0.7pt, inner sep=1.4pt, fill=white] (fb) at ([xshift=1.8cm,yshift=8.4cm]current page.south west) {};
+    \node[circle, draw=badgeOpt, line width=0.7pt, inner sep=1.4pt, fill=white] (fc) at ([xshift=0.9cm,yshift=8.6cm]current page.south west) {};
+    \draw[badgeOpt, line width=0.7pt, -{Stealth}] (fa) -- (fb);
+    \draw[badgeOpt, line width=0.7pt, -{Stealth}] (fa) -- (fc);
+  \end{scope}
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{microchip}\enspace 优化编译器先驱\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {弗朗西丝·艾伦};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Frances E. Allen\enspace·\enspace 1932 — 2020};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {首位女性图灵奖得主 · 优化编译器与并行计算 · 2006 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeOpt] at (-5.05,0)
+        {编译器优化\\Optimizing Compilers\par\scriptsize Fortran · Watson};
+      \node[badge, fill=badgeFlow] at (-1.68,0)
+        {流分析\\Control Flow Analysis\par\scriptsize intervals · 数据流};
+      \node[badge, fill=badgePar] at (1.68,0)
+        {并行计算\\Parallel Computing\par\scriptsize PTRAN · Blue Gene};
+      \node[badge, fill=badgeWomen] at (5.05,0)
+        {女性先驱\\First Woman\par\scriptsize 首位 · 1989 · 2006};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.45cm]current page.center)
+    {"Both alone and in joint work with John Cocke, she introduced many of the abstractions, algorithms, and implementations that laid the groundwork for automatic program optimization technology." —— 2006 图灵奖 citation（ACM）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Allen_mg_2528-3750K-b.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Allen_mg_2528-3750K-b.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Frances E. Allen};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace IBM Research · Watson\enspace|\enspace Turing 2006 · 首位女性得主};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{艾伦 - 从纽约州农场到图灵奖}{生卒 · 本名 · 国籍 · 教育 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Allen_mg_2528-3750K-b.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Allen_mg_2528-3750K-b.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Frances E. Allen};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1932-08-04 — 2020-08-04\\[2pt]\lab{本名}\quad Frances Elizabeth Allen\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=optpanel, draw=badgeOpt!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad 数学 BS 1954 · Albany（州立教师学院）\\[2pt]
+     \quad 数学 MS 1957 · Michigan\\[2pt]
+     \lab{任职}\quad IBM Research 1957–2002};
+  \node[infob, fill=flowpanel, draw=badgeFlow!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Peru · 纽约州（农场）\\[2pt]\lab{去世地}\quad Schenectady · 纽约州\\[2pt]\lab{身份}\quad 优化编译器先驱};
+  \node[infob, fill=parpanel, draw=badgePar!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2006\\[2pt]
+     \quad IBM Fellow 1989 · NAE 1987\\[2pt]
+     \lab{核心领域}\quad 优化编译器 · 并行计算};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{艾伦的一生}{1932 — 2020 · 从农场少女到首位女性图灵奖得主}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.95);
+  \foreach \y/\year/\txt in {
+    3.0/1932/生于纽约州 Peru 的农场家庭,
+    2.3/1954/Albany（州立教师学院）数学 BS,
+    1.6/1957/Michigan 数学 MS · 入职 IBM,
+    0.9/1959/主持 Harvest 与 Stretch 编译器优化团队,
+    0.2/1962/转至 Watson · 与 John Cocke 合作,
+    -0.5/1966/《Program Optimization》图论结构,
+    -1.2/1971/《A Catalogue of Optimizing Transformations》,
+    -1.9/1989/首位女性 IBM Fellow,
+    -2.5/2006/首位女性图灵奖得主,
+    -2.95/2020/逝于 Schenectady（88 岁生日当天）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：农场与单人教室校舍 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：农场与单人教室校舍 (1932–1954)}{Peru, 纽约州 · 六子女之长 · 数学教师之路}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1932} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{生于 Peru, New York（近 Lake Champlain）的农场，六个孩子中的最长者} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{农家长女} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{父为农民、母为小学教师} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{重视教育的家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{小学} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{就读离家一英里的单人教室校舍（one-room school house）} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{乡村求学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1954} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{The New York State College for Teachers（今 University at Albany, SUNY）数学 BS} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{数学根基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个农场里的长女，后来走进了计算机系统的心脏。}
+\end{center}
+\end{frame}}
+
+% --- 5. 数学学位与讲台 ---
+\newcommand{\mastersslide}{\begin{frame}\plainbar\sectiontitle{数学学位与讲台 (1954–1957)}{从代数到三角 · Michigan 硕士 · 命运转折}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1954} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{毕业后回 Peru 教书，科目从代数到三角} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{站上讲台} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{动机} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{为取得教师资格证需要硕士学位} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{深造契机} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1957} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{University of Michigan 数学 MS} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{学位达成} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转折} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{因学生贷款所迫加入 IBM Research，原计划还清贷款后回校教书} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{命运的岔路} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 本想还清贷款就回到讲台，她却在 IBM 留下了四十五年。}
+\end{center}
+\end{frame}}
+
+% --- 6. IBM：从教 Fortran 开始 ---
+\newcommand{\ibmslide}{\begin{frame}\plainbar\sectiontitle{IBM：从教 Fortran 开始 (1957)}{Poughkeepsie · 读源码自学 · 回击"不可能"}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{入职} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{IBM Research（Poughkeepsie）任程序员} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{1957 起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Fortran} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{入职时 Fortran 才发布两个月，靠读编译器源码自学} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{自学成才} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{常识} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{当时研究者认为编译语言性能不可能匹敌汇编} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{正面回击} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{志向} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{由此萌生对设计编译器的终身研究兴趣} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{终身事业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Fortran（1957）：优化编译器的起点}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{编译语言} \rightarrow \text{优化} \rightarrow \text{匹敌汇编的性能}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Harvest 与 Stretch ---
+\newcommand{\harvestslide}{\begin{frame}\plainbar\sectiontitle{Harvest 与 Stretch (1959)}{与 NSA 合作的保密项目 · Alpha 语言 · 优化团队}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{项目}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Harvest} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{被派入与国家安全局（NSA）合作的保密代码破译项目} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{保密任务} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Alpha} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{在项目中工作于编程语言 Alpha} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{语言实践} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Stretch} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{同时管理更早的 Stretch 项目} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{双线并进} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{团队} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{管理 Harvest 与 Stretch 两个项目的编译器优化团队} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{优化主帅} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 保密的 Harvest 岁月，磨出了她编译器优化的真功夫。}
+\end{center}
+\end{frame}}
+
+% --- 8. Watson 与 John Cocke ---
+\newcommand{\watsonslide}{\begin{frame}\plainbar\sectiontitle{Watson 与 John Cocke (1962–)}{ACS-1 · PL/I · Fortran 优化编译器}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1962} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{转至 Thomas J. Watson Research Center} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{新舞台} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{项目} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{参与 ACS-1 项目；1970 年代参与 PL/I} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{体系与语言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{与 John Cocke 写下优化编译器的一系列开创性论文} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{奠基合作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{成果} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{为 Fortran 打造优化编译器（后支持 Autocoder 与 Alpha）} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{落地成果} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} Cocke 是 1978 年图灵奖得主——艾伦比她的合作者晚 19 年获奖。}
+\end{center}
+\end{frame}}
+
+% --- 9. Program Optimization ---
+\newcommand{\optslide}{\begin{frame}\plainbar\sectiontitle{《Program Optimization》(1966)}{图论结构编码程序 · 系统性分析与变换}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{citation} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{图灵奖 citation 明载：奠定程序系统性分析与变换的概念基础} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{概念奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{图论} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{引入图论结构编码程序内容} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{结构化语言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{推导} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{自动、高效地推导关系、发现优化机会} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{优化之钥} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 《Program Optimization》（1966）：程序的图论表达}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{程序} \rightarrow$ 图论结构 $G=(V,E)\ \rightarrow$ 自动发现优化机会}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. Control Flow Analysis 与 intervals ---
+\newcommand{\flowslide}{\begin{frame}\plainbar\sectiontitle{《Control Flow Analysis》与 intervals (1970)}{数据流分析与优化的语境}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{双篇} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{《Control Flow Analysis》与《A Basis for Program Optimization》} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{系列奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{intervals} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{确立 "intervals" 作为高效数据流分析与优化的语境} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{分析框架} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{成为数据流分析的基础语汇} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{深远影响} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} intervals：流图的区间分解}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$G=(V,E)\ \rightarrow\ I_1, I_2, \dots, I_k\qquad$ 数据流分析的高效语境}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. A Catalogue of Optimizing Transformations ---
+\newcommand{\catalogueslide}{\begin{frame}\plainbar\sectiontitle{《A Catalogue of Optimizing Transformations》(1971)}{与 Cocke 合著 · 优化变换的首次系统化}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合著} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{与 John Cocke 合著} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{再度联手} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首次} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{首个对优化变换的描述与系统化（first description and systematization）} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{系统化起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{技术} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{过程内联 · 循环展开 · 公共子表达式消除 · 代码移动 · 窥孔优化} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{技术清单} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{年份} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{ACM citation 作 1971，正文叙述作 1972（正式出版 1971）——以 1971 为准} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{年份注记} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Catalogue：优化变换的系统化目录}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{program} \mapsto \text{program}'\qquad$ 语义等价 · 更高效}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. PTRAN 与程序依赖图 ---
+\newcommand{\ptranslide}{\begin{frame}\plainbar\sectiontitle{PTRAN 与程序依赖图 (1980–1995)}{自动并行化 · Blue Gene · IBM Academy}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转向} & \cellcolor{parpanel}\textcolor{badgePar!82!black}{领导 IBM 并行计算方向（1980–1995）} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{迈向并行} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{PTRAN} & \cellcolor{parpanel}\textcolor{badgePar!82!black}{主持 PTRAN（Parallel Translator）：按程序的依赖图把顺序程序自动变换为高效并行程序} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{自动并行化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{PDG} & \cellcolor{parpanel}\textcolor{badgePar!82!black}{团队提出程序依赖图（program dependence graph）——多数并行化编译器的基本结构方法} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{结构性贡献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Blue Gene} & \cellcolor{parpanel}\textcolor{badgePar!82!black}{为 IBM Blue Gene 项目贡献软件；1995 年任 IBM Academy 主席} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{大兵团岁月} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 程序依赖图（PDG）：并行化的基本结构}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$G_{dep}=(V, E_{dep})\qquad$ 依赖关系 $\rightarrow$ 自动并行化}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 首位女性图灵奖 ---
+\newcommand{\turslide}{\begin{frame}\plainbar\sectiontitle{首位女性图灵奖 (2006)}{40 年历史首位女性 · 计算的"诺贝尔奖"}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首位} & \cellcolor{womenpanel}\textcolor{badgeWomen!82!black}{图灵奖 40 年历史上首位女性得主} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{破界时刻} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{womenpanel}\textcolor{badgeWomen!82!black}{该奖被视为计算的"诺贝尔奖"级荣誉} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{至高荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{期望} & \cellcolor{womenpanel}\textcolor{badgeWomen!82!black}{获奖后她希望这能给女性带来更多 "opportunities for women in science, computing, and engineering"} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{榜样之光} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\color{coverprimary!88!black}"Both alone and in joint work with John Cocke, she introduced many of the abstractions, algorithms, and implementations that laid the groundwork for automatic program optimization technology."}\\[2pt]
+  {\fontsize{8}{10}\selectfont\color{coveraccent!85!black}—— 2006 图灵奖 citation（ACM）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2006 · 首位女性 IBM Fellow · 女性从科的推动者}\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.8cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（2006，首位女性）\item IBM Fellow（1989，首位女性）\item NAE 1987 · NAS 2010\item CHM Fellow 2000 · Ada Lovelace 2002 · Computer Pioneer 2004\end{itemize}} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{两个"首位"分开记} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{以她命名} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{IBM Allen Women in Technology Mentoring Award（2000 设立）；IEEE Allen Medal（2022 首颁，第二枚以女性命名的 IEEE 奖章）} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{身后影响} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{传承} & \cellcolor{optpanel}\textcolor{badgeOpt!82!black}{1970–80 年代 IBM 编译器团队半数为女性；Anita Borg 研究生阶段唯一的女性教授；长期参与 mentor 计划} & \cellcolor{flowpanel}\textcolor{badgeFlow!82!black}{女性从科的推动者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 推动更多女性走进计算，是她与编译器同样厚重的遗产。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {教会机器自我优化，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {也为后来者推开了那扇门。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Frances E. Allen};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {弗朗西丝·艾伦\quad Frances E. Allen\quad 1932 — 2020};
+\node[font=\fontsize{6.5}{8.5}\selectfont, text=coverdark!55] at ([yshift=-2.75cm]current page.center) {2020-08-04，88 岁生日当天逝于 Schenectady；\enspace 另一面：美国阿尔卑斯俱乐部成员，曾在 Ellesmere Island 开辟新路线。};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{microchip}\enspace Turing 2006 · 首位女性图灵奖得主\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\mastersslide
+\ibmslide
+\harvestslide
+\watsonslide
+\optslide
+\flowslide
+\catalogueslide
+\ptranslide
+\turslide
+\honorsslide
+\closingslide
+\end{document}

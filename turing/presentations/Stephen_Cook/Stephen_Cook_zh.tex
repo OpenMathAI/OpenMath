@@ -1,0 +1,515 @@
+% =============================================================
+%  计算复杂性之父之一：斯蒂芬·库克 (Stephen A. Cook)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：可验证与可求解之界 —— 柔和气泡呼应计算复杂性美学
+%  资料来源：turing/pages/1982/Stephen Cook/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Cook 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeNP}{HTML}{2E5A9E}     % NP 完全性 — 蓝
+\definecolor{badgePV}{HTML}{1E8E8E}     % P vs NP — 青绿
+\definecolor{badgePC}{HTML}{D9A441}     % 证明复杂度 — 琥珀
+\definecolor{badgeCL}{HTML}{C0395B}     % 复杂度类与传承 — 玫瑰
+\definecolor{nppanel}{RGB}{228,233,246}
+\definecolor{pvpanel}{RGB}{222,240,238}
+\definecolor{pcpanel}{RGB}{249,240,224}
+\definecolor{clpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeNP!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgePV!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePC!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{project-diagram}\enspace 计算复杂性之父之一\enspace·\enspace 美国/加拿大};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {斯蒂芬·库克};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Stephen A. Cook\enspace·\enspace 1939 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {NP 完全性 · Cook–Levin 定理 · 1982 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeNP] at (-5.05,0)
+        {NP 完全性\\NP-Completeness\par\scriptsize SAT · 1971 STOC};
+      \node[badge, fill=badgePV] at (-1.68,0)
+        {P vs NP\\P vs. NP\par\scriptsize 千禧年难题};
+      \node[badge, fill=badgePC] at (1.68,0)
+        {证明复杂度\\{\scriptsize Proof Complexity}\par\scriptsize PV · p-simulation};
+      \node[badge, fill=badgeCL] at (5.05,0)
+        {复杂度类\\NC · SC · $\mathrm{AC^0}$\par\scriptsize 命名者};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"laid the foundations for the theory of NP-Completeness." —— 1982 图灵奖（ACM citation）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Prof.Cook.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Prof.Cook.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Stephen A. Cook（2008）};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace University of Toronto\enspace|\enspace Turing 1982};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{库克 - 从布法罗到复杂性理论奠基人}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Prof.Cook.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Prof.Cook.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Stephen A. Cook（2008）};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1939-12-14 出生（在世）\\[2pt]\lab{本名}\quad Stephen Arthur Cook\\[2pt]\lab{国籍}\quad 美裔加拿大\\[2pt]\quad（American-Canadian）};
+  \node[infob, fill=pvpanel, draw=badgePV!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Michigan B.A. 1961\\[2pt]
+     \quad Harvard 数学 MA 1962 · PhD 1966\\[2pt]
+     \lab{师承}\quad Hao Wang 王浩（导师）};
+  \node[infob, fill=nppanel, draw=badgeNP!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Buffalo · 纽约州 · 美国\\[2pt]\lab{现居}\quad 多伦多 · 加拿大\\[2pt]\lab{任职}\quad University of Toronto\\[2pt]\quad（计算机科学与数学系）};
+  \node[infob, fill=pcpanel, draw=badgePC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1982 · Herzberg 2012\\[2pt]
+     \quad 加拿大勋章军官 2015\\[2pt]
+     \lab{核心领域}\quad 计算复杂性理论\\[2pt]
+     \quad 命题证明复杂度};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{库克的一生}{1939 — · 从布法罗少年到复杂性理论奠基人}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.6);
+  \foreach \y/\year/\txt in {
+    3.0/1939/生于纽约州布法罗（Buffalo）,
+    2.5/1961/获密歇根大学学士,
+    2.0/1962/获哈佛大学数学硕士,
+    1.5/1966/获哈佛大学数学博士（师从王浩）,
+    1.0/1966/入职 UC Berkeley 数学系,
+    0.5/1970/未获连任，转赴多伦多大学,
+    0.0/1971/STOC 论文：证明 SAT 是 NP 完全的,
+    -0.5/1975/引入等式理论 PV,
+    -1.0/1979/与 Reckhow 形式化 p-simulation,
+    -1.5/1982/荣获 ACM 图灵奖,
+    -2.0/2012/获 Herzberg 金奖,
+    -2.6/今/University Professor Emeritus，仍在世
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：Buffalo 与 Michigan ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：Buffalo 与 Michigan (1939–1961)}{纽约州出生 · 密歇根打底 · 乘法的复杂度}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1939} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{12 月 14 日生于纽约州布法罗（Buffalo, New York）} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{美国东部的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1961} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{获 University of Michigan 学士（B.A.）} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{学术之路的第一级台阶} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博士期} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{研究函数的复杂度，主要是乘法（multiplication）} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{计算复杂度的早期命题} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从布法罗到安阿伯，一个追问"计算有多难"的头脑正在成形。}
+\end{center}
+\end{frame}}
+
+% --- 5. Harvard：王浩门下 ---
+\newcommand{\harvardslide}{\begin{frame}\plainbar\sectiontitle{Harvard：王浩门下 (1962–1966)}{数学系硕博 · 逻辑与计算的交叉}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学位} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{1962 年获 Harvard 数学硕士，1966 年获数学系博士（非 CS 学位）} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{数学系的逻辑底色} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{师从 Hao Wang（王浩），数理逻辑学家} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{逻辑与计算的交汇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方向} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{博士阶段研究函数的复杂度，主要是乘法} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{复杂性视角的萌芽} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 博士论文（1966）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{On the Minimum Computation Time of Functions}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Berkeley 之憾 ---
+\newcommand{\berkeleyslide}{\begin{frame}\plainbar\sectiontitle{Berkeley 之憾 (1966–1970)}{数学系助理教授 · 未获连任 · Karp 之感言}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1966} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{入职 UC Berkeley 数学系，任助理教授} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{教学生涯的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1970} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{未获连任（denied reappointment），离开 Berkeley} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{计算机科学史的著名遗憾} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Karp 三十年后的感言（Berkeley EECS 三十周年演讲 · Karp 语）}\\[2pt]
+  {\fontsize{8}{10.5}\selectfont\itshape\color{coverprimary!88!black}
+  "It is to our everlasting shame that we were unable to persuade the math department to give him tenure."
+  \;\textcolor{coveraccent!85!black}{—— Richard Karp}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 多伦多新家 ---
+\newcommand{\torontoslide}{\begin{frame}\plainbar\sectiontitle{多伦多新家 (1970– )}{CS + 数学双系 · 从副教授到 University Professor Emeritus}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1970} & \cellcolor{clpanel}\textcolor{badgeCL!82!black}{加入 University of Toronto 计算机科学与数学系，任副教授} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{学术生涯的新大陆} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1975} & \cellcolor{clpanel}\textcolor{badgeCL!82!black}{晋升教授} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{理论重镇的基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1985} & \cellcolor{clpanel}\textcolor{badgeCL!82!black}{任 Distinguished Professor；现为 university professor emeritus} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{荣休而不辍} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 现与妻子居于多伦多，两子之一 Gordon Cook 是奥运帆船运动员。}
+\end{center}
+\end{frame}}
+
+% --- 8. 1971 STOC 论文 ---
+\newcommand{\stocslide}{\begin{frame}\plainbar\sectiontitle{1971 STOC 论文：SAT 是 NP 完全的}{The Complexity of Theorem Proving Procedures}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{\textit{The Complexity of Theorem Proving Procedures}（1971 ACM SIGACT STOC）} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{奠基之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{归约} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{形式化多项式时间归约（Cook reduction）与 NP 完全性} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{难度的传递标尺} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首证} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{证明 SAT（布尔可满足性）是 NP 完全的} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{NP 完全问题存在性的首个证明} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} SAT 的 NP 完全性}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\forall\, Q \in \mathrm{NP}:\ Q \le_p \mathrm{SAT}$\quad 一个具体问题，统摄整个 NP}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Cook–Levin 定理 ---
+\newcommand{\cooklevinslide}{\begin{frame}\plainbar\sectiontitle{Cook–Levin 定理}{双雄并立 · Levin 在苏联独立证明}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{独立证明} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{同一结果由苏联的 Leonid Levin 独立证明（independently）} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{东西方的同时抵达} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{因此得名 Cook–Levin theorem——共享命名} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{学术史的美谈} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{复杂性理论的基石定理之一} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{NP 完全性的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Cook–Levin 定理}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{SAT}$ 是 NP 完全的\quad（Cook 1971 · Levin 独立证明）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. P vs NP ---
+\newcommand{\pvnpslide}{\begin{frame}\plainbar\sectiontitle{P vs NP：最著名的问题}{可高效验证 $\Rightarrow$ 可高效求解？}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{面向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{提出} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{同一篇 1971 论文提出了"计算机科学最著名的问题"——P vs. NP} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{半个世纪的悬念} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{非形式化} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{答案可被高效验证的判定问题，是否都可被高效求解？} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{直指计算的本质边界} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{猜想} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{Cook 猜想 $\mathrm{P} \neq \mathrm{NP}$；该猜想至今未解，是七大 Millennium Prize Problems 之一} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{悬而未决的圣杯} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 计算机科学最著名的问题}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{coverprimary!88!black}$\mathrm{P} \overset{?}{=} \mathrm{NP}$\quad 若正面成立，将有深远的实践与哲学后果}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 证明复杂度 ---
+\newcommand{\proofslide}{\begin{frame}\plainbar\sectiontitle{证明复杂度的开创}{PV 1975 · Reckhow 1979 · p-simulation}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1975} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{\textit{Feasibly Constructive Proofs and the Propositional Calculus}：引入等式理论 PV（Polynomial-time Verifiable）} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{只用多项式时间概念形式化证明} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1979} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{与学生 Robert A. Reckhow 合著 \textit{The Relative Efficiency of Propositional Proof Systems}：形式化 p-simulation 与高效命题证明系统} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{开创命题证明复杂度领域} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专著} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{与学生 Phuong The Nguyen 合著 \textit{Logical Foundations of Proof Complexity}} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{领域的系统化} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 短证明系统的存在性刻画}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\exists$ 每个真公式都有短证明的证明系统\ $\iff\ \mathrm{NP} = \mathrm{coNP}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 复杂度类的命名 ---
+\newcommand{\classslide}{\begin{frame}\plainbar\sectiontitle{复杂度类的命名与 KMP 渊源}{NC · SC · $\mathrm{AC^0}$ · 回文自动机}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对象}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{NC} & \cellcolor{clpanel}\textcolor{badgeCL!82!black}{以 Nick Pippenger 的名字命名复杂度类 NC} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{Nick's class} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{SC} & \cellcolor{clpanel}\textcolor{badgeCL!82!black}{复杂度类 SC 以他命名（"Steve's class"）} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{名字写进复杂度层级} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{$\mathrm{AC^0}$} & \cellcolor{clpanel}\textcolor{badgeCL!82!black}{$\mathrm{AC^0}$ 及 AC 层级的定义亦由他引入} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{电路复杂度的坐标} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{KMP 渊源} & \cellcolor{clpanel}\textcolor{badgeCL!82!black}{据 Don Knuth 所言，KMP 算法的灵感来自 Cook 的"线性时间识别拼接回文"的自动机} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{间接启发的三项贡献} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 命名者与被命名}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}NC（纪念 Pippenger）\quad SC（"Steve's class"）\quad $\mathrm{AC^0}$（引入者）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 图灵奖 1982 ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1982}{ACM 长篇 citation · ACM Fellow 2008}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{项目}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{内容}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1982} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{荣获 ACM 图灵奖，表彰其对复杂性理论的贡献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2008} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{ACM 授予 Fellow："fundamental contributions to the theory of computational complexity"} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1982 图灵奖 citation（ACM 原文）}\\[2pt]
+  {\fontsize{7}{9.5}\selectfont\itshape\color{coverprimary!88!black}
+  "For his advancement of our understanding of the complexity of computation in a significant and profound way. His seminal paper, The Complexity of Theorem Proving Procedures, presented at the 1971 ACM SIGACT Symposium on the Theory of Computing, laid the foundations for the theory of NP-Completeness. The ensuing exploration of the boundaries and nature of NP-complete class of problems has been one of the most active and important research activities in computer science for the last decade."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{Herzberg 2012 · 加拿大勋章 · 36 名博士}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国家荣誉} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{Herzberg 金奖（2012，加拿大科学与工程最高荣誉）· Order of Ontario 2013 · Officer of the Order of Canada 2015 · BBVA Frontiers of Knowledge Award 2015} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{加拿大学界的最高致敬} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术荣誉} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{Steacie 1977 · Killam 1982 · CRM-Fields-PIMS 1999 · G\"odel Lecture 1999 · Synge 2006 · Bolzano 2008；皇家学会（伦敦/加拿大）、NAS、美国艺术与科学院会士} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{跨学科的广泛公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{门生} & \cellcolor{nppanel}\textcolor{badgeNP!82!black}{36 名博士完成学位，含 Mark Braverman、Toniann Pitassi、Walter Savitch、Arvind Gupta、Anna Lubiw} & \cellcolor{pvpanel}\textcolor{badgePV!82!black}{桃李成行} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个问题悬置半世纪，一门学问因此繁盛。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {可验证与可求解之间，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {横着一道尚未跨越的墙。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Stephen A. Cook};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {斯蒂芬·库克\quad Stephen A. Cook\quad 1939 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{project-diagram}\enspace Turing 1982 · NP 完全性 · P vs NP\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\harvardslide
+\berkeleyslide
+\torontoslide
+\stocslide
+\cooklevinslide
+\pvnpslide
+\proofslide
+\classslide
+\turingslide
+\honorsslide
+\closingslide
+\end{document}

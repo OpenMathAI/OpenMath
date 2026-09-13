@@ -1,0 +1,470 @@
+% =============================================================
+%  计算机图形学之父：伊万·萨瑟兰 (Ivan Sutherland)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：细线框与十字准星 + 节点 —— Sketchpad 的绘图与约束
+%  资料来源：turing/pages/1988/Ivan Sutherland/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Sutherland 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeCG}{HTML}{2E5A9E}     % 计算机图形学 — 蓝
+\definecolor{badgeVR}{HTML}{1E8E8E}     % 交互与 VR — 青绿
+\definecolor{badgeIND}{HTML}{D9A441}    % 产业与公司 — 琥珀
+\definecolor{badgeEDU}{HTML}{C0395B}    % 教育与传承 — 玫瑰
+\definecolor{cgpanel}{RGB}{228,233,246}
+\definecolor{vrpanel}{RGB}{222,240,238}
+\definecolor{indpanel}{RGB}{249,240,224}
+\definecolor{edupanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 绘图与约束背景（细线框 + 十字准星 + 姿态跟踪节点）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \draw[badgeCG!30, line width=0.6pt] ([xshift=1.0cm,yshift=-1.5cm]current page.north west) rectangle ++(1.7,1.1);
+  \draw[badgeCG!40, line width=0.5pt] ([xshift=1.85cm,yshift=-2.05cm]current page.north west) ++(-0.28,0) -- ++(0.56,0);
+  \draw[badgeCG!40, line width=0.5pt] ([xshift=1.85cm,yshift=-2.05cm]current page.north west) ++(0,-0.28) -- ++(0,0.56);
+  \fill[badgeVR!28] ([xshift=-2.0cm,yshift=1.6cm]current page.south east) circle (1.8pt);
+  \fill[badgeVR!20] ([xshift=-2.7cm,yshift=2.1cm]current page.south east) circle (1.4pt);
+  \fill[badgeVR!16] ([xshift=-3.3cm,yshift=1.3cm]current page.south east) circle (1.1pt);
+  \draw[badgeIND!35, line width=0.6pt] ([xshift=3.3cm,yshift=-1.4cm]current page.north east) rectangle ++(1.2,0.8);
+  \fill[badgeEDU!16] ([xshift=2.8cm,yshift=1.8cm]current page.south west) circle (1.7pt);
+  \fill[coveraccent!12] ([xshift=2.3cm,yshift=2.5cm]current page.south west) circle (1.2pt);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{drafting-compass}\enspace 计算机图形学之父\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {伊万·萨瑟兰};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Ivan Sutherland\enspace·\enspace 1938 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {Sketchpad · 图形学奠基人 · 1988 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeCG] at (-5.05,0)
+        {计算机图形学\\Computer Graphics\par\scriptsize Sketchpad};
+      \node[badge, fill=badgeVR] at (-1.68,0)
+        {交互与 VR\\Virtual Reality\par\scriptsize 达摩克利斯之剑};
+      \node[badge, fill=badgeIND] at (1.68,0)
+        {产业与公司\\Industry\par\scriptsize Evans \& Sutherland};
+      \node[badge, fill=badgeEDU] at (5.05,0)
+        {教育与传承\\Mentorship\par\scriptsize Utah 门生天团};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=13.4cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"It is a looking glass into a mathematical wonderland." —— Sutherland 论显示器};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Ivan_Sutherland_at_CHM.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Ivan_Sutherland_at_CHM.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Ivan Sutherland（2008, CHM）};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace MIT · Utah · Evans \& Sutherland · Caltech · Sun\enspace|\enspace Turing 1988 · Kyoto 2012};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{萨瑟兰 - 从内布拉斯加到图形学之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Ivan_Sutherland_at_CHM.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Ivan_Sutherland_at_CHM.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Ivan Sutherland（2008, CHM）};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1938-05-16 —（在世）\\[2pt]\lab{本名}\quad Ivan Edward Sutherland\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=cgpanel, draw=badgeCG!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Carnegie 理工（今 CMU）BS\\[2pt]
+     \quad Caltech MS · MIT EE PhD 1963\\[2pt]
+     \lab{师承}\quad Claude Shannon（导师）};
+  \node[infob, fill=vrpanel, draw=badgeVR!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Hastings · 内布拉斯加\\[2pt]\lab{任职}\quad Utah · Caltech · Sun\\[2pt]\lab{机构}\quad Evans \& Sutherland · Portland State};
+  \node[infob, fill=indpanel, draw=badgeIND!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1988 · Kyoto 2012\\[2pt]
+     \quad NAE 1973 · NAS 1978\\[2pt]
+     \lab{核心领域}\quad 计算机图形学 · 交互计算\\[2pt]
+     \quad 异步系统};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{萨瑟兰的一生}{1938 — · 从内布拉斯加少年到图形学之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.6);
+  \foreach \y/\year/\txt in {
+    3.0/1938/生于内布拉斯加州 Hastings,
+    2.3/—/Carnegie 电机 BS（ROTC）· Caltech MS,
+    1.6/1963/MIT 电机工程博士：Sketchpad 诞生,
+    0.9/1964/接替 Licklider 执掌 ARPA IPTO,
+    0.2/1967/与 Danny Cohen 提出线裁剪算法,
+    -0.5/1968/达摩克利斯之剑 · 共创 Evans \& Sutherland,
+    -1.2/1974/创办 Caltech 计算机科学系,
+    -1.9/1988/获图灵奖,
+    -2.6/2012/获京都奖 · 异步系统研究至今
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：移民家庭与三校求学 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：移民家庭与三校求学 (1938–1963)}{新西兰裔父亲 · 苏格兰裔母亲 · Carnegie/Caltech/MIT}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{父亲来自新西兰、母亲 Anne Sutherland 来自苏格兰；兄 Bert Sutherland 亦是计算机科学研究者} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{工程世家底色} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{本科} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{Carnegie Institute of Technology（今 Carnegie Mellon）电机工程 BS，经 ROTC 服役通道} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{电机工程起步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{硕士} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{California Institute of Technology（Caltech）硕士} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{西行深造} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博士} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{MIT 电机工程博士（1963）} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{图形学元年} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个跨越大洋的移民家庭，走出了"计算机图形学之父"。}
+\end{center}
+\end{frame}}
+
+% --- 5. Shannon 门下：Sketchpad 诞生 ---
+\newcommand{\sketchpadslide}{\begin{frame}\plainbar\sectiontitle{Shannon 门下：Sketchpad 诞生 (1963)}{Lincoln TX-2 · 约束求解 · 窗口与裁剪}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{*Sketchpad, a Man--Machine Graphical Communication System*（1963 博士论文），运行于 Lincoln TX-2；导师 Claude Shannon，Minsky 与 Coons 为委员会成员} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{导师：信息论之父} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{能力} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{可接受约束、绘制水平垂直线并组合成图形；图形可复制/移动/旋转/缩放且保持基本属性} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{交互绘图的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首创} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{含首个窗口绘制程序与裁剪（clipping）算法、支持缩放——GUI 的早期前身} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{图灵奖获奖核心} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Sketchpad 的核心：图形 = 实例 + 约束}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{图形} = \text{基本实例} + \text{约束}\quad$ 1962 年发明 · 1963 年博士论文}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 军旅与 IPTO 岁月 ---
+\newcommand{\iptoslide}{\begin{frame}\plainbar\sectiontitle{军旅与 IPTO 岁月 (1963–1966)}{ROTC 中尉 · 接替 Licklider · ILLIAC IV}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{军旅} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{1963--1965 以 ROTC 军官身份入美国陆军服役，至中尉军衔} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{服役即科研} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IPTO} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{1964 年接替 J. C. R. Licklider，出任美国国防部 ARPA 信息处理技术办公室（IPTO）主任} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{执掌计算研究命脉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{任内项目} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{启动图形与网络、ILLIAC IV、Macromodule 等项目} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{前瞻布局} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 博士毕业即掌 ARPA IPTO——美国计算研究的方向盘交到了他手中。}
+\end{center}
+\end{frame}}
+
+% --- 7. 哈佛岁月与 Cohen–Sutherland ---
+\newcommand{\harvardslide}{\begin{frame}\plainbar\sectiontitle{哈佛岁月与 Cohen--Sutherland}{1965--1968 · 副教授 · 与 Danny Cohen 的经典算法}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{执教} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{1965--1968 任 Harvard 副教授} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{学术新阵地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{与哈佛学生 Danny Cohen 合作开发线裁剪算法（1967）} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{师生共创} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{Cohen--Sutherland 线裁剪成为图形学经典算法} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{教科书常客} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Cohen--Sutherland 线裁剪（1967）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$P_1 P_2\ \cap\ \text{视窗}\ \Rightarrow\ \text{快速剔除或求交}\quad$ 图形学经典算法}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 达摩克利斯之剑 ---
+\newcommand{\vrslide}{\begin{frame}\plainbar\sectiontitle{达摩克利斯之剑：第一个 VR 系统 (1968)}{头戴显示器 · 随姿态实时渲染}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{系统} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{与学生 Bob Sproull、Quintin Foster、Danny Cohen 等造出头戴显示器 "The Sword of Damocles"（达摩克利斯之剑）} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{1968 年横空出世} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{开创点} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{首个能随观察者姿态变化渲染图像的头戴显示器——成为首个虚拟现实系统} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{实时随姿态渲染} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{之别} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{更早的 Sensorama 只能回放静态视频——开创点在"实时随姿态渲染"，而非笼统的"第一台头显"} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{口径精确} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 头部姿态 $\rightarrow$ 实时渲染}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{观察者姿态变化}\ \Rightarrow\ \text{图像实时更新}\quad$ VR 之源}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Evans & Sutherland ---
+\newcommand{\evansslide}{\begin{frame}\plainbar\sectiontitle{共创 Evans \& Sutherland (1968)}{与 David C. Evans · 实时硬件 · Adobe 与 SGI 的源头}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创立} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{1968 与朋友同事 David C. Evans 共同创立 Evans \& Sutherland} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{产学一体} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{业务} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{实时硬件、加速 3D 图形、打印机语言的先驱性工作} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{行业先行者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{辐射} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{前员工中走出 Adobe 创始人 John Warnock 与 Silicon Graphics 创始人 Jim Clark} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{人才的孵化器} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一家公司，孵出了图形与桌面出版时代的两巨头。}
+\end{center}
+\end{frame}}
+
+% --- 10. Utah 传奇 ---
+\newcommand{\utahslide}{\begin{frame}\plainbar\sectiontitle{Utah 传奇：图形学的黄埔军校 (1968–1974)}{一个门下，走出改变行业的一群人}
+\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{执教} & \cellcolor{edupanel}\textcolor{badgeEDU!82!black}{1968--1974 任 University of Utah 教授，与 David C. Evans 的教学共同奠定现代图形学基础} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{传奇教席} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{门生天团} & \cellcolor{edupanel}\textcolor{badgeEDU!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Alan Kay（Smalltalk 发明者）\item Henri Gouraud（Gouraud 着色）· Frank Crow（抗锯齿）\item Jim Clark（Silicon Graphics 创始人）\item Edwin Catmull（Pixar 联合创始人、迪士尼/皮克斯动画工作室总裁）\item Henry Fuchs · Gordon Romney\end{itemize}} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{一家门下，群星闪耀} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从犹他荒原走出的学生，定义了此后半个世纪的图形学版图。}
+\end{center}
+\end{frame}}
+
+% --- 11. Caltech 建系与 Sutherland, Sproull ---
+\newcommand{\caltechslide}{\begin{frame}\plainbar\sectiontitle{Caltech 建系与创业 (1974--1990)}{Fletcher Jones 讲席 · Sutherland, Sproull · 并入 Sun}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Caltech} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{1974--1978 任 Fletcher Jones 计算机科学教授，创办该校计算机科学系并任首任主任} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{建系之功} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创业} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{创办咨询公司 Sutherland, Sproull and Associates} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{研究永不停摆} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{并入 Sun} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{1990 年公司被 Sun Microsystems 收购，成为 Sun Labs 研究部种子；任 Sun Fellow 与副总裁} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{产业新生} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从建系到创业再到 Sun Labs，他把研究开成了"永动机"。}
+\end{center}
+\end{frame}}
+
+% --- 12. 异步系统晚年 ---
+\newcommand{\asyncslide}{\begin{frame}\plainbar\sectiontitle{异步系统晚年 (1990— 在世)}{Berkeley 访问 · Portland State · 60+ 专利}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Berkeley} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{2005--2008 任 UC Berkeley 计算机科学访问学者} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{老骥伏枥} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Portland State} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{2009 年起与妻子 Marly Roncken（2006-05-28 结婚）领导异步系统（Asynchronous Systems）研究} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{夫妻同行} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专利} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{持有 60 余项专利} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{发明家本色} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 图形学功成身退，转身又向异步电路的深水区出发。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1988 · 京都奖 2012}\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{奖项矩阵} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{\begin{itemize}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1988）· Computer Pioneer Award（1985）\item IEEE Emanuel R. Piore Award（1986）· ACM Fellow（1994）\item IEEE von Neumann Medal（1998）· CHM Fellow（2005）\item Kyoto Prize（2012）· NIHF（2016）· Washington Award（2018）· BBVA（2019）\end{itemize}} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{跨领域公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{院士与理由} & \cellcolor{cgpanel}\textcolor{badgeCG!82!black}{NAE（1973）· NAS（1978）；Kyoto 获奖理由 "pioneering achievements in the development of computer graphics and interactive interfaces"} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{两院院士} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从图灵奖到京都奖，"计算机图形学之父"之名，是公论。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：从画布到像素世界}{GUI · CAD · VR 三条血脉}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=cgpanel, draw=badgeCG!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCG} 计算机图形学}\\[3pt]Sketchpad\\[2pt]图形学之父};
+\node[leg, fill=vrpanel, draw=badgeVR!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeVR} 虚拟现实}\\[3pt]达摩克利斯之剑\\[2pt]VR 之源};
+\node[leg, fill=indpanel, draw=badgeIND!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeIND} 产业版图}\\[3pt]E\&S · Sun Labs\\[2pt]Adobe · SGI 源头};
+\node[leg, fill=edupanel, draw=badgeEDU!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeEDU} 传承}\\[3pt]Utah 门生天团\\[2pt]Kay · Clark · Catmull};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} Sketchpad $\rightarrow$ GUI · CAD · VR 三条血脉。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} Cohen--Sutherland · Sutherland--Hodgman · DLT · logical effort\\[2pt]这些以他名字命名的算法与思想，仍在图形学与电路的血脉中流动。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {图形学，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是通往数学仙境的镜子。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Ivan Sutherland};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {伊万·萨瑟兰\quad Ivan Sutherland\quad 1938 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{drafting-compass}\enspace Turing 1988 · Kyoto 2012 · 计算机图形学之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\sketchpadslide
+\iptoslide
+\harvardslide
+\vrslide
+\evansslide
+\utahslide
+\caltechslide
+\asyncslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

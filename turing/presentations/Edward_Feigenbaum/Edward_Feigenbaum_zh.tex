@@ -1,0 +1,499 @@
+% =============================================================
+%  专家系统之父：爱德华·费根鲍姆 (Edward Feigenbaum)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：知识树节点网络 —— 知识库 + 推理机的专家系统视觉语言
+%  资料来源：turing/pages/1994/Edward Feigenbaum/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Feigenbaum 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeES}{HTML}{2E5A9E}     % 专家系统 — 蓝
+\definecolor{badgeCM}{HTML}{1E8E8E}     % 认知建模 — 青绿
+\definecolor{badgeKE}{HTML}{D9A441}     % 知识工程 — 琥珀
+\definecolor{badgeIN}{HTML}{C0395B}     % 产业落地 — 玫瑰
+\definecolor{espanel}{RGB}{228,233,246}
+\definecolor{cmpanel}{RGB}{222,240,238}
+\definecolor{kepanel}{RGB}{249,240,224}
+\definecolor{inpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 知识树节点背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeES!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeCM!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeKE!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{cogs}\enspace 专家系统之父\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {爱德华·费根鲍姆};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Edward Feigenbaum\enspace·\enspace 1936 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {人工智能先驱 · 知识工程 · 1994 图灵奖（与 Raj Reddy 共享）};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeES] at (-5.05,0)
+        {专家系统\\Expert Systems\par\scriptsize DENDRAL · MYCIN};
+      \node[badge, fill=badgeCM] at (-1.68,0)
+        {认知建模\\EPAM\par\scriptsize Simon 门下};
+      \node[badge, fill=badgeKE] at (1.68,0)
+        {知识工程\\Knowledge Engineering\par\scriptsize KSL 创建人};
+      \node[badge, fill=badgeIN] at (5.05,0)
+        {产业落地\\Teknowledge\par\scriptsize 第五代之辩};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"pioneering the design and construction of large scale artificial intelligence systems" —— 1994 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Edward_Feigenbaum_1994.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Edward_Feigenbaum_1994.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Edward Feigenbaum · 1994 官方肖像};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Carnegie Tech · UC Berkeley · Stanford\enspace|\enspace Turing 1994};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{费根鲍姆 - 从新泽西到专家系统之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Edward_Feigenbaum_1994.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Edward_Feigenbaum_1994.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Edward Feigenbaum};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1936-01-20 —（在世）\\[2pt]\lab{本名}\quad Edward Albert Feigenbaum\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=cmpanel, draw=badgeCM!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Carnegie Tech（今 CMU）\\[2pt]
+     \quad 本科 1956 · PhD 1960\\[2pt]
+     \lab{师承}\quad Herbert A. Simon（导师）};
+  \node[infob, fill=espanel, draw=badgeES!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Weehawken · 新泽西\\[2pt]\lab{任职}\quad Stanford · UC Berkeley\\[2pt]\lab{Known for}\quad 专家系统 · EPAM\\[2pt]\quad DENDRAL · Feigenbaum test};
+  \node[infob, fill=kepanel, draw=badgeKE!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1994 · NAE 1986\\[2pt]
+     \quad Feigenbaum Prize 2011\\[2pt]
+     \lab{核心领域}\quad 人工智能 · 专家系统\\[2pt]
+     \quad 知识工程 · 认知建模};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{费根鲍姆的一生}{1936 — · 从新泽西少年到 AAAI 九秩致敬}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1936/生于新泽西 Weehawken,
+    2.3/1956/Carnegie Tech 本科毕业,
+    1.6/1960/PhD（Simon 门下 · EPAM）· 赴 Berkeley,
+    0.9/1965/加入 Stanford · CS 系创建者之一,
+    0.2/1981/共同创办 Teknowledge,
+    -0.5/1994/获图灵奖（与 Raj Reddy 共享）,
+    -1.2/1996/入选 Weehawken High School 名人堂,
+    -1.9/2000/Stanford 荣休教授,
+    -2.45/2011/AAAI 设立 Feigenbaum Prize,
+    -2.85/2026/AAAI 第 40 届年会九秩寿辰致敬
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：新泽西与 Carnegie Tech ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{新泽西少年与 Carnegie Tech (1936–1960)}{Weehawken 岁月 · Simon 的引路 · IBM 701 手册}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1936} & \cellcolor{espanel}\textcolor{badgeES!82!black}{生于 Weehawken, New Jersey，文化意义上的犹太家庭；后迁 North Bergen 至 16 岁} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{工薪家庭的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学} & \cellcolor{espanel}\textcolor{badgeES!82!black}{家乡无中学，入读 Weehawken High School 大学预科项目} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{1996 入选校名人堂} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{引路} & \cellcolor{espanel}\textcolor{badgeES!82!black}{选修 James March 课程被引荐给 Simon；课上听到 Logic Theorist 宣布} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{命运的转折点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1956/1960} & \cellcolor{espanel}\textcolor{badgeES!82!black}{Carnegie Tech（今 CMU）本科（1956）与 PhD（1960）；Simon 赠 IBM 701 手册，一夜读完} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{自称 "born-again experience"} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.05cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{coveraccent!85!black} Simon 在课堂上宣布 Logic Theorist（页面实载原话）}\\[1pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}\textit{"Over the Christmas holidays, Al Newell and I invented a thinking machine."}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. EPAM：机器如何学习 ---
+\newcommand{\epamslide}{\begin{frame}\plainbar\sectiontitle{EPAM：机器如何学习 (1960)}{博士论文 · 与 Simon 合作的认知建模}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{博士论文（1960，师从 Herbert A. Simon）中开发 EPAM} & \cellcolor{espanel}\textcolor{badgeES!82!black}{认知建模开山之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{全名} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{Elementary Perceiver And Memorizer} & \cellcolor{espanel}\textcolor{badgeES!82!black}{感知与记忆的模型} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{最早的"人是如何学习的"计算机模型之一} & \cellcolor{espanel}\textcolor{badgeES!82!black}{AI 认知学派源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} EPAM — Elementary Perceiver And Memorizer（1960）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{感知} \rightarrow \text{记忆} \rightarrow \text{学习}$\qquad 用计算机模拟人类学习}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Fulbright 与 Berkeley ---
+\newcommand{\berkeleyslide}{\begin{frame}\plainbar\sectiontitle{Fulbright 与 Berkeley (1960–1965)}{英国 NPL 访学 · 加州大学商学院执教}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Fulbright} & \cellcolor{espanel}\textcolor{badgeES!82!black}{获 Fulbright fellowship 赴英国国家物理实验室（NPL）访学} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{跨越大西洋的视野} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1960} & \cellcolor{espanel}\textcolor{badgeES!82!black}{入职 UC Berkeley 商业管理学院任教} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{执教生涯开始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转向} & \cellcolor{espanel}\textcolor{badgeES!82!black}{从认知学习模型走向"让机器拥有知识"的新方向} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{专家系统的前夜} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 NPL 到 Berkeley，一个关于"知识"的大问题正在成形。}
+\end{center}
+\end{frame}}
+
+% --- 8. Stanford：CS 系创建者 ---
+\newcommand{\stanfordslide}{\begin{frame}\plainbar\sectiontitle{Stanford：CS 系创建者 (1965)}{创始成员 · 计算中心主任 · 荣休教授}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1965} & \cellcolor{espanel}\textcolor{badgeES!82!black}{加入 Stanford 教员，计算机科学系创建者之一} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{从无到有建学科} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1965–1968} & \cellcolor{espanel}\textcolor{badgeES!82!black}{任 Stanford 计算中心主任} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{校级计算中枢} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创建 KSL} & \cellcolor{espanel}\textcolor{badgeES!82!black}{在 Stanford 创建 Knowledge Systems Laboratory} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{知识工程大本营} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2000} & \cellcolor{espanel}\textcolor{badgeES!82!black}{成为 Stanford 计算机科学荣休教授} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{执教逾三十五载} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从创建计算机科学系，到把斯坦福变成专家系统的世界中心。}
+\end{center}
+\end{frame}}
+
+% --- 9. DENDRAL：专家系统的开端 ---
+\newcommand{\dendralslide}{\begin{frame}\plainbar\sectiontitle{DENDRAL：专家系统的开端}{与 Lederberg 合作 · 分子结构推断}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{espanel}\textcolor{badgeES!82!black}{与 Joshua Lederberg（诺贝尔生理学或医学奖得主）等在 Stanford 开创} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{跨学科的合作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主题} & \cellcolor{espanel}\textcolor{badgeES!82!black}{分子结构推断专家系统（页面 projects 实载 Dendral）} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{科学问题的知识化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{espanel}\textcolor{badgeES!82!black}{首个大规模专家系统的代表，其方法论延伸至医学领域} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{专家系统源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 费根鲍姆范式：知识 + 推理 = 专家系统}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{专家系统} = \text{知识库} + \text{推理机}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 医学专家系统矩阵 ---
+\newcommand{\mycinslide}{\begin{frame}\plainbar\sectiontitle{医学专家系统矩阵}{MYCIN · ACME · SUMEX · 斯坦福医学 AI 群像}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{系统}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{定位}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{系统群} & \cellcolor{espanel}\textcolor{badgeES!82!black}{页面实载 "systems in medicine, as ACME, MYCIN, SUMEX, and Dendral"} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{医学 AI 系统矩阵} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{口径} & \cellcolor{espanel}\textcolor{badgeES!82!black}{页面仅列名——各自的技术细节与开发年份无载，不作展开} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{忠于史料} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{格局} & \cellcolor{espanel}\textcolor{badgeES!82!black}{从化学（DENDRAL）到医学，专家系统的版图持续扩张} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{方法论的复制} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} DENDRAL 之后的斯坦福，让"专家系统"成为一门可以复制的手艺。}
+\end{center}
+\end{frame}}
+
+% --- 11. 知识工程与 KSL ---
+\newcommand{\kslslide}{\begin{frame}\plainbar\sectiontitle{知识工程：一门学科的命名}{Knowledge Systems Laboratory · knowledge engineering}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{Feigenbaum 的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{实验室} & \cellcolor{kepanel}\textcolor{badgeKE!82!black}{创建 Knowledge Systems Laboratory（KSL）} & \cellcolor{espanel}\textcolor{badgeES!82!black}{知识系统研究重镇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名} & \cellcolor{kepanel}\textcolor{badgeKE!82!black}{确立"知识工程"（knowledge engineering）作为领域} & \cellcolor{espanel}\textcolor{badgeES!82!black}{给一门学科命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{范式} & \cellcolor{kepanel}\textcolor{badgeKE!82!black}{把领域专家的知识形式化，交给推理机使用} & \cellcolor{espanel}\textcolor{badgeES!82!black}{知识系统的通用范式} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 知识工程的流水线}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{领域专家} \xrightarrow{\text{知识获取}} \text{知识库} \xrightarrow{\text{推理机}} \text{专家级解答}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 著作与文献奠基 ---
+\newcommand{\bookslide}{\begin{frame}\plainbar\sectiontitle{《Computers and Thought》与 AI 文献奠基}{首部 AI 文集 · Handbook 四卷 · 第五代之辩}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1963} & \cellcolor{kepanel}\textcolor{badgeKE!82!black}{与 Julian Feldman 合编《Computers and Thought》——首部人工智能文集（脚注来源载 "the First Anthology on AI"）} & \cellcolor{espanel}\textcolor{badgeES!82!black}{AI 文献奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1981–1989} & \cellcolor{kepanel}\textcolor{badgeKE!82!black}{《The Handbook of Artificial Intelligence》四卷（与 Barr/Cohen 等）} & \cellcolor{espanel}\textcolor{badgeES!82!black}{AI 百科全书} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1983} & \cellcolor{kepanel}\textcolor{badgeKE!82!black}{与 Pamela McCorduck 合著《The Fifth Generation》——日本第五代计算机的挑战} & \cellcolor{espanel}\textcolor{badgeES!82!black}{畅销著作 · AI 热潮} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1988} & \cellcolor{kepanel}\textcolor{badgeKE!82!black}{《The Rise of the Expert Company》（与 McCorduck/Nii）——企业用 AI 提效} & \cellcolor{espanel}\textcolor{badgeES!82!black}{专家系统入企业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.05cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从文集到手册再到畅销书，他为 AI 写下了自己的教科书。}
+\end{center}
+\end{frame}}
+
+% --- 13. 产业远征：Teknowledge 与 IntelliCorp ---
+\newcommand{\industryslide}{\begin{frame}\plainbar\sectiontitle{产业远征：Teknowledge 与 IntelliCorp}{1981 创业 · 知识系统商业化}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{公司}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事实}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Teknowledge} & \cellcolor{inpanel}\textcolor{badgeIN!82!black}{1981 年 7 月由来自 Stanford、MIT 与 Rand 的 20 位计算机科学家创立（Feigenbaum 共同创办）} & \cellcolor{espanel}\textcolor{badgeES!82!black}{知识系统商业化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{目标} & \cellcolor{inpanel}\textcolor{badgeIN!82!black}{让未受知识工程训练的人也能把该技术用于商业与工业应用} & \cellcolor{espanel}\textcolor{badgeES!82!black}{技术的普及化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IntelliCorp} & \cellcolor{inpanel}\textcolor{badgeIN!82!black}{共同创办的另一家知识系统公司（页面实载）} & \cellcolor{espanel}\textcolor{badgeES!82!black}{产业双线布局} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Teknowledge 员工自述（页面引文，注明为公司自述）}\\[2pt]
+  {\fontsize{9.5}{12.5}\selectfont\color{coverprimary!88!black}\textit{"represent about 1/3 of the world's high-level expertise in the design and development of knowledge systems"}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1994 · 门生遍天下}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{espanel}\textcolor{badgeES!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award 1994（共享）\item NAE 1986 · AAAI Fellow 1990\item USAF 1997 · ACM Fellow 2007\item CHM Fellow 2012 · Pioneer 2013\item Feigenbaum Prize 2011\item AI Hall of Fame 2011\end{itemize}} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{专家系统之父的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{espanel}\textcolor{badgeES!82!black}{Wirth（1984 图灵奖）· Karp · Halevy · Guha} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{学术谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术影响} & \cellcolor{espanel}\textcolor{badgeES!82!black}{专家系统与知识工程 · AI 产业化奠基} & \cellcolor{cmpanel}\textcolor{badgeCM!82!black}{思想延续至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 EPAM 到知识工程，一门学科因他而有了名字与骨架。}
+\end{center}
+\end{frame}}
+
+% --- 15. 九秩寿辰 ---
+\newcommand{\ninetyslide}{\begin{frame}\plainbar\sectiontitle{九秩寿辰：AAAI 2026 的致敬}{AAAI 第 40 届年会 · 新加坡}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt] (photo) at (-4.3,0.15)
+    {\IfFileExists{images/AAAI_Feigenbaum_Reddy.jpg}{\includegraphics[width=4.8cm,height=3.3cm,keepaspectratio]{AAAI_Feigenbaum_Reddy.jpg}}{\textcolor{covermuted}{\faIcon{image}\enspace AAAI 年会}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-4.3,-1.55) {AAAI 年会 · 与 Raj Reddy 同框};
+  \node[draw=espanel, draw=badgeES!50, line width=0.7pt, rounded corners=6pt, inner sep=10pt, text width=6.2cm, align=left, fill=espanel]
+    at (2.9,0.95) {{\fontsize{8.5}{11}\selectfont\color{badgeES!82!black} 2026 年 1 月，AAAI 在第 40 届年会（新加坡）为其庆祝 90 岁生日——\textbf{在世的传奇}。}};
+  \node[draw=cmpanel, draw=badgeCM!50, line width=0.7pt, rounded corners=6pt, inner sep=10pt, text width=6.2cm, align=left, fill=cmpanel]
+    at (2.9,-0.75) {{\fontsize{8.5}{11}\selectfont\color{badgeCM!82!black} 致敬理由：其对专家系统领域的\textbf{奠基性贡献}。}};
+\end{tikzpicture}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 EPAM 到专家系统再到知识工程，九十年仍在被社区致以最高敬意。}
+\end{center}
+\end{frame}}
+
+% --- 16. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {知识，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是让机器思考的血液。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Edward Feigenbaum};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {爱德华·费根鲍姆\quad Edward Feigenbaum\quad 1936 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{cogs}\enspace Turing 1994 · 专家系统之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\epamslide
+\berkeleyslide
+\stanfordslide
+\dendralslide
+\mycinslide
+\kslslide
+\bookslide
+\industryslide
+\honorsslide
+\ninetyslide
+\closingslide
+\end{document}

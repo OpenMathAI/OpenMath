@@ -1,0 +1,483 @@
+% =============================================================
+%  以太网共同发明人：罗伯特·梅特卡夫 (Robert Metcalfe)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：总线拓扑 —— 一条横向总线 + 稀疏垂直节点线
+%  资料来源：turing/pages/2022/Robert Metcalfe/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Metcalfe 专属四分类色 + 基础色 =====
+\definecolor{mainclr}{HTML}{5B2D8E}      % 图灵紫（主色，同 coverprimary）
+\definecolor{accentclr}{HTML}{B03A2E}    % 尊崇红（强调色，同 coveraccent）
+\definecolor{badgeA}{HTML}{2E5A9E}       % 以太网 — 蓝
+\definecolor{badgeB}{HTML}{1E8E8E}       % 分组通信学术线 — 青绿
+\definecolor{badgeC}{HTML}{D9A441}       % 创业商业线 — 琥珀
+\definecolor{badgeD}{HTML}{C0395B}       % 网络思想 — 玫瑰
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 总线拓扑背景：一条横向总线 + 稀疏垂直短节点线
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \draw[coverprimary!28, line width=1.6pt] ([yshift=-1.2cm, xshift=-7.6cm]current page.center) -- ([yshift=-1.2cm, xshift=7.6cm]current page.center);
+  \foreach \x in {-6.4,-4.2,-1.9,0.6,2.9,5.4,7.0}{
+    \draw[coverprimary!22, line width=0.9pt] (\x,-1.2) -- (\x,-1.9);
+    \fill[coverprimary!26] (\x,-1.9) circle (2.4pt);
+  }
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{network-wired}\enspace 以太网共同发明人\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {罗伯特·梅特卡夫};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Robert Metcalfe\enspace·\enspace 1946 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {以太网共同发明人 · 3Com 联合创始人 · 2022 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {以太网\\Ethernet\par\scriptsize 与 Boggs 共同发明};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {分组通信\\Packet Communication\par\scriptsize ARPAnet · ALOHA};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {创业商业\\3Com\par\scriptsize LAN 主导标准};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {网络思想\\Metcalfe's Law\par\scriptsize 节点平方律};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his contributions to the invention of Ethernet technology." —— 2022 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/With_Bob_Metcalfe_cropped_.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{With_Bob_Metcalfe_cropped_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Robert Metcalfe · 2004};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Xerox PARC · 3Com · MIT\enspace|\enspace Turing 2022};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{梅特卡夫 - 从纽约到以太网之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/With_Bob_Metcalfe_cropped_.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{With_Bob_Metcalfe_cropped_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Robert Metcalfe};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1946-04-07 —（在世）\\[2pt]\lab{本名}\quad Robert Melancton Metcalfe\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad MIT EE + 工业管理双 BS 1969\\[2pt]
+     \quad Harvard MS 1970 · PhD 1973\\[2pt]
+     \lab{师承}\quad Jeffrey P. Buzen（导师）};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 纽约市 · 美国\\[2pt]\lab{家庭}\quad 妻 Robyn · 育有二子\\[2pt]\lab{任职}\quad Xerox PARC · 3Com · MIT};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2022 · NMT 2003\\[2pt]
+     \quad IEEE Medal of Honor 1996\\[2pt]
+     \lab{核心领域}\quad 计算机网络 · 以太网\\[2pt]
+     \quad 创新与创业};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{梅特卡夫的一生}{1946 — · 从纽约少年到以太网共同发明人}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1946/生于纽约市，陀螺仪测试技师之子,
+    2.3/1964/Bay Shore High School 毕业,
+    1.6/1969/MIT 两个学士学位（EE + 工业管理）,
+    0.9/1970/Harvard 应用数学硕士,
+    0.2/1973/Harvard 博士 · "Alto Ethernet" 备忘录（5 月 22 日）,
+    -0.5/1979/离开 PARC，联合创办 3Com,
+    -1.2/1990/离开 3Com · 转型 InfoWorld 评论员,
+    -1.9/1996/获 IEEE Medal of Honor,
+    -2.6/2003/获 National Medal of Technology 与 Marconi Prize,
+    -2.8/2022/获 2022 图灵奖（2023 年 3 月宣布）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：纽约与 MIT 双学位 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{纽约少年与 MIT 双学位 (1946–1969)}{陀螺仪技师之子 · 两个学士学位}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1946} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于纽约市；父 Robert 为陀螺仪专业测试技师，母 Ruth 为家庭主妇} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工程师之家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{panelA}\textcolor{badgeA!82!black}{英/爱尔兰/挪威血统（一笔带过）；母亲后任 Bay Shore High School 秘书} & \cellcolor{panelB}\textcolor{badgeB!82!black}{与母校的奇缘} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1964} & \cellcolor{panelA}\textcolor{badgeA!82!black}{毕业于 Bay Shore High School} & \cellcolor{panelB}\textcolor{badgeB!82!black}{求学起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969} & \cellcolor{panelA}\textcolor{badgeA!82!black}{获 MIT 两个学士学位：电气工程（BS）+ 工业管理（BS）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工程与商业双基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 电气工程与工业管理的双学位，预示了他日后"技术 + 商业"的双线人生。}
+\end{center}
+\end{frame}}
+
+% --- 5. Harvard 与 ARPAnet 之门 ---
+\newcommand{\arpanslide}{\begin{frame}\plainbar\sectiontitle{Harvard 与 ARPAnet 之门 (1969–1972)}{哈佛拒绝接入 · Project MAC · 论文被拒}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转机} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Harvard 拒绝为他接入当时新生的 ARPAnet，遂入职 MIT Project MAC} & \cellcolor{panelA}\textcolor{badgeA!82!black}{绝境逢生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{任务} & \cellcolor{panelB}\textcolor{badgeB!82!black}{负责搭建连接 MIT 小型机与 ARPAnet 的部分硬件} & \cellcolor{panelA}\textcolor{badgeA!82!black}{亲手触摸网络} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以 ARPAnet 为博士论文主题，但 Harvard 最初拒绝了这篇论文} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1972 年的挫折} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 哈佛的一次拒绝，把他推向了 MIT 与 ARPAnet 的最前线。}
+\end{center}
+\end{frame}}
+
+% --- 6. ALOHA 转机与博士论文 ---
+\newcommand{\alohaslide}{\begin{frame}\plainbar\sectiontitle{ALOHA 转机与博士论文 (1972–1973)}{PARC 读 ALOHA 论文 · 修复 bug · 论文获接受}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{步骤}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{阅读} & \cellcolor{panelB}\textcolor{badgeB!82!black}{在 Xerox PARC 工作期间，读到夏威夷大学 ALOHA 网络的论文} & \cellcolor{panelA}\textcolor{badgeA!82!black}{灵感到来} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{修复} & \cellcolor{panelB}\textcolor{badgeB!82!black}{找出并修复了 AlohaNet 模型中的若干 bug} & \cellcolor{panelA}\textcolor{badgeA!82!black}{从批评到贡献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{接受} & \cellcolor{panelB}\textcolor{badgeB!82!black}{将成果并入修改后的论文，Harvard 随即接受并授予 PhD（1973）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Packet Communication} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一篇被拒的论文，因 ALOHA 而重生——冲突信道的思想由此成形。}
+\end{center}
+\end{frame}}
+
+% --- 7. 以太网的诞生 ---
+\newcommand{\ethernetslide}{\begin{frame}\plainbar\sectiontitle{以太网的诞生 (1973)}{与 David Boggs 共同发明 · 两个生日}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共同发明} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1973 年在 Xerox PARC，与 David Boggs 共同发明 Ethernet（最初为短距离连接计算机的标准）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{共同发明人并立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{备忘录说} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Metcalfe 主张 1973-05-22：散发 "Alto Ethernet" 备忘录之日（含粗略原理图）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以太网得名之日} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首运行说} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Boggs 主张 1973-11-11：系统首次真正运行之日} & \cellcolor{panelB}\textcolor{badgeB!82!black}{两说并写} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "That is the first time Ethernet appears as a word, as does the idea of using coax as ether"}\\[1pt]
+  {\fontsize{7.5}{9.8}\selectfont\color{coverdark!80} —— Metcalfe 回忆 "Alto Ethernet" 备忘录（1973-05-22）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 公式框：冲突退避与节点平方律 ---
+\newcommand{\lawslide}{\begin{frame}\plainbar\sectiontitle{公式框：以太网与 Metcalfe's Law}{冲突退避 · 节点平方律}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{机制}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{coax as ether} & \cellcolor{panelB}\textcolor{badgeB!82!black}{各参与站点像 AlohaNet 或 ARPAnet 一样，把数据分组注入公共信道（同轴电缆为"以太"）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{共享介质接入} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{冲突与退避} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以兆比特每秒传输；发生冲突则重传并退避（back-off）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{分散重试} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Metcalfe's law} & \cellcolor{panelD}\textcolor{badgeD!82!black}{描述电信网络效应的定律（Marconi 授奖理由：基于节点平方的网络效用律）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{按 Marconi 授奖口径} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 以太网信道机制与 Metcalfe's Law}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{分组注入} \rightarrow \text{冲突} \rightarrow \text{重传} \cdot \text{退避}\qquad V \propto n^{2}\ \text{（网络效用} \propto \text{节点数平方）}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 3Com 创业 ---
+\newcommand{\comslide}{\begin{frame}\plainbar\sectiontitle{3Com 创业 (1979)}{Palo Alto 公寓 · LAN 主导标准}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1979} & \cellcolor{panelC}\textcolor{badgeC!82!black}{离开 PARC，在 Palo Alto 自家公寓联合创办网络设备制造商 3Com} & \cellcolor{panelA}\textcolor{badgeA!82!black}{从实验室到市场} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{壮大} & \cellcolor{panelC}\textcolor{badgeC!82!black}{3Com 成为领先的网络解决方案提供商} & \cellcolor{panelA}\textcolor{badgeA!82!black}{商业成功} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{标准} & \cellcolor{panelC}\textcolor{badgeC!82!black}{以太网成为局域网（LAN）的主导网络标准} & \cellcolor{panelA}\textcolor{badgeA!82!black}{技术赢得时代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1980} & \cellcolor{panelC}\textcolor{badgeC!82!black}{获 ACM Grace Hopper Award（对局域网发展，特别是 Ethernet 的贡献）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{学界认可} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 PARC 的一纸备忘录到 3Com 的商业帝国，以太网照亮了局域网时代。}
+\end{center}
+\end{frame}}
+
+% --- 10. 离开 3Com ---
+\newcommand{\departslide}{\begin{frame}\plainbar\sectiontitle{离开 3Com (1990)}{董事会另任 CEO · 中性表述}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1990} & \cellcolor{panelC}\textcolor{badgeC!82!black}{3Com 董事会任命 Éric Benhamou 出任 CEO 而非 Metcalfe} & \cellcolor{panelA}\textcolor{badgeA!82!black}{实载口径} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{离开} & \cellcolor{panelC}\textcolor{badgeC!82!black}{Metcalfe 随即离开公司} & \cellcolor{panelA}\textcolor{badgeA!82!black}{如实记载} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转身} & \cellcolor{panelD}\textcolor{badgeD!82!black}{此后十年任 InfoWorld 互联网专栏的出版人与评论员} & \cellcolor{panelB}\textcolor{badgeB!82!black}{媒体生涯开启} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 离开自己创办的公司，他把话筒对准了整个互联网行业。}
+\end{center}
+\end{frame}}
+
+% --- 11. 评论员·会议·风投 ---
+\newcommand{\punditslide}{\begin{frame}\plainbar\sectiontitle{评论员 · 会议 · 风投 (1996–2010)}{Pop!Tech · Polaris Venture Partners}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1996} & \cellcolor{panelD}\textcolor{badgeD!82!black}{联合创办 Pop!Tech——面向企业高管的技术会议} & \cellcolor{panelC}\textcolor{badgeC!82!black}{思想舞台} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2001} & \cellcolor{panelD}\textcolor{badgeD!82!black}{成为风险投资人} & \cellcolor{panelC}\textcolor{badgeC!82!black}{资本转身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{其后} & \cellcolor{panelD}\textcolor{badgeD!82!black}{出任 Polaris Venture Partners 普通合伙人（general partner）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{扶持创业者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从发明者到评论者再到投资人，身份在变，对网络的判断力未变。}
+\end{center}
+\end{frame}}
+
+% --- 12. "吃掉自己的话" ---
+\newcommand{\eatingslide}{\begin{frame}\plainbar\sectiontitle{"吃掉自己的话" (1995/1997)}{崩溃预测 · 搅拌机时刻}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1995} & \cellcolor{panelD}\textcolor{badgeD!82!black}{预测互联网将在次年遭遇"灾难性崩溃"（catastrophic collapse），并承诺预言落空则"吃掉自己的话"} & \cellcolor{panelC}\textcolor{badgeC!82!black}{大胆断言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1997} & \cellcolor{panelD}\textcolor{badgeD!82!black}{第六届国际 WWW 大会主题演讲上，把预测专栏打印件放进搅拌机、加入液体打碎后吞下} & \cellcolor{panelC}\textcolor{badgeC!82!black}{兑现承诺} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{插曲} & \cellcolor{panelD}\textcolor{badgeD!82!black}{他曾建议把预言印在一块超大蛋糕上，但观众不接受这种"食言"形式} & \cellcolor{panelC}\textcolor{badgeC!82!black}{自嘲的幽默} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 预测错了互联网，却以一台搅拌机赢得了风度——保留自嘲语境的注脚。}
+\end{center}
+\end{frame}}
+
+% --- 13. 教授与回归 MIT ---
+\newcommand{\utslide}{\begin{frame}\plainbar\sectiontitle{教授与回归 MIT (2011–2022)}{UT Austin · Bernard Price 讲座 · CSAIL}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2011–2021} & \cellcolor{panelC}\textcolor{badgeC!82!black}{任 UT Austin Cockrell 工程学院 innovation and entrepreneurship 教授} & \cellcolor{panelA}\textcolor{badgeA!82!black}{深耕创新教育} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2019} & \cellcolor{panelC}\textcolor{badgeC!82!black}{赴南非作 Bernard Price Memorial Lecture} & \cellcolor{panelA}\textcolor{badgeA!82!black}{国际讲坛} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2022-06} & \cellcolor{panelC}\textcolor{badgeC!82!black}{回归 MIT CSAIL，任 research affiliate 与 computational engineer（与 MIT Julia Lab 合作）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{回到起点之地} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 五十余年后重回 MIT——从搭建 ARPAnet 硬件的青年，到 CSAIL 的计算工程师。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉墙与 2022 图灵奖 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉墙与 2022 图灵奖}{授奖理由整句 · 荣誉集 · 从 Grace Hopper 到图灵奖的荣誉之线}\vspace{-0.6cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.52}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.2cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{1.7cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{图灵奖} & \cellcolor{panelA}\textcolor{badgeA!82!black}{2022 Turing Award（2023 年 3 月宣布）\newline "for his contributions to the invention of Ethernet technology"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以太网奠基的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{授奖理由} & \cellcolor{panelA}\textcolor{badgeA!82!black}{IEEE Medal of Honor（1996）："exemplary and sustained leadership in the development, standardization, and commercialization of Ethernet"\newline National Medal of Technology（2003）："for leadership in the invention, standardization, and commercialization of Ethernet"\newline CHM Fellow Award（2008）："for fundamental contributions to the invention, standardization, and commercialization of Ethernet"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{三条整句引语} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣誉集} & \cellcolor{panelA}\textcolor{badgeA!82!black}{ACM Grace Hopper Award（1980）· IEEE Alexander Graham Bell Medal（1988）· NAE 院士（1997）\newline Marconi Prize（2003）· National Inventors Hall of Fame（2007）· Internet Hall of Fame} & \cellcolor{panelB}\textcolor{badgeB!82!black}{荣誉满贯} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {一条总线，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {连接起整个联网的世界。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Robert Metcalfe};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {罗伯特·梅特卡夫\quad Robert Metcalfe\quad 1946 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{network-wired}\enspace Turing 2022 · IEEE Medal of Honor 1996 · Ethernet\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\arpanslide
+\alohaslide
+\ethernetslide
+\lawslide
+\comslide
+\departslide
+\punditslide
+\eatingslide
+\utslide
+\honorsslide
+\closingslide
+\end{document}

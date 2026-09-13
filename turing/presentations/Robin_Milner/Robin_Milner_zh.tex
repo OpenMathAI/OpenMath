@@ -1,0 +1,492 @@
+% =============================================================
+%  并发理论奠基人：罗宾·米尔纳 (Robin Milner)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：通信演算 / 进程代数 —— 稀疏的通信弧线与通道节点
+%  资料来源：turing/pages/1991/Robin Milner/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Milner 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeLCF}{HTML}{2E5A9E}    % 定理证明 — 蓝
+\definecolor{badgeML}{HTML}{1E8E8E}     % 类型与语言 — 青绿
+\definecolor{badgeCCS}{HTML}{D9A441}    % 并发演算 — 琥珀
+\definecolor{badgeLF}{HTML}{C0395B}     % 学术传承 — 玫瑰
+\definecolor{lcfpanel}{RGB}{228,233,246}
+\definecolor{mlpanel}{RGB}{222,240,238}
+\definecolor{ccspanel}{RGB}{249,240,224}
+\definecolor{lfpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 通信通道节点背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeLCF!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeML!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeCCS!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{project-diagram}\enspace 并发理论奠基人\enspace·\enspace 英国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {罗宾·米尔纳};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Robin Milner\enspace·\enspace 1934 — 2010};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {LCF · ML · CCS 与 $\pi$ 演算 · 1991 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeLCF] at (-5.05,0)
+        {定理证明\\LCF\par\scriptsize 交互式证明鼻祖};
+      \node[badge, fill=badgeML] at (-1.68,0)
+        {类型语言\\ML\par\scriptsize 多态类型推断};
+      \node[badge, fill=badgeCCS] at (1.68,0)
+        {并发演算\\CCS · $\pi$\par\scriptsize 移动性};
+      \node[badge, fill=badgeLF] at (5.05,0)
+        {学术传承\\LFCS · Cambridge\par\scriptsize 门生与奖项};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.5}{11.5}\selectfont\itshape, text=muteddark, align=center, text width=12.4cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"fundamental contributions to computer science, including the development of LCF, ML, CCS, and the $\pi$-calculus" —— NAE 2008 授奖理由};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Robin_Milner.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Robin_Milner.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Robin Milner};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国\enspace|\enspace \faIcon{university}\enspace Cambridge · Edinburgh · LFCS\enspace|\enspace Turing 1991};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{米尔纳 - 从 Yealmpton 到并发理论}{生卒 · 本名 · 国籍 · 教育 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Robin_Milner.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Robin_Milner.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Robin Milner};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1934-01-13 — 2010-03-20\\[2pt]\lab{本名}\quad Arthur John Robin Gorell Milner\\[2pt]\lab{国籍}\quad 英国};
+  \node[infob, fill=mlpanel, draw=badgeML!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Eton（King's Scholarship 1947）\\[2pt]
+     \quad King's College, Cambridge BA 1957\\[2pt]
+     \lab{师承}\quad —（页面未载）};
+  \node[infob, fill=lcfpanel, draw=badgeLCF!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Yealmpton · 英格兰\\[2pt]\lab{去世地}\quad Cambridge · 英格兰\\[2pt]\lab{任职}\quad Edinburgh · Cambridge};
+  \node[infob, fill=ccspanel, draw=badgeCCS!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1991 · FRS 1988\\[2pt]
+     \quad Royal Medal 2004 · NAE 2008\\[2pt]
+     \lab{核心领域}\quad 定理证明 · 类型系统\\[2pt]
+     \quad 并发理论};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{米尔纳的一生}{1934 — 2010 · 从英格兰乡野到并发理论之巅}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1934/生于 Yealmpton（近 Plymouth）军人家庭,
+    2.3/1947/获 King's Scholarship 入伊顿公学,
+    1.6/1957/剑桥国王学院毕业（BA）,
+    0.9/1960s/中学教师 $\rightarrow$ Ferranti 程序员 $\rightarrow$ 进学界,
+    0.2/1973/任教 Edinburgh · LFCS 共同创始人,
+    -0.5/1980/出版 CCS 专著（Springer LNCS 92）,
+    -1.2/1991/获图灵奖（演讲 Elements of Interaction）,
+    -1.9/1995/出任剑桥计算机实验室主任,
+    -2.35/1999/出版 $\pi$ 演算专著（CUP）,
+    -2.85/2010/逝于剑桥（心脏病）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：军人家庭与伊顿岁月 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：军人家庭与伊顿岁月 (1934–1957)}{King's Scholarship · Tomline Prize · 剑桥国王学院}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1934} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{生于 Yealmpton（近 Plymouth，英格兰），出身军人家庭} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{英伦乡野少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1947} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{获 King's Scholarship 进入伊顿公学（Eton College）} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{数学才华初显} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1952} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{获伊顿数学最高奖 Tomline Prize} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{少年成名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{军旅} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{服役于皇家工兵（Royal Engineers），军衔少尉（Second Lieutenant）} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{一晃而过} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1957} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{毕业于 King's College, Cambridge（BA）} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{学术生涯起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从伊顿的数学奖到剑桥的 BA，少年米尔纳一路与数学为伴。}
+\end{center}
+\end{frame}}
+
+% --- 5. 非典型起点：教师与 Ferranti 程序员 ---
+\newcommand{\atypicalslide}{\begin{frame}\plainbar\sectiontitle{非典型起点：教师与 Ferranti 程序员}{中学教师 · Ferranti · City University · Swansea · Stanford}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学教师} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{剑桥毕业后先担任中学教师} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{非典型学术路径} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{程序员} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{随后进入 Ferranti 担任程序员} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{从课堂走进机器} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{进学界} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{先后任教 City University、Swansea，再到 Stanford} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{转向计算机科学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 教师与程序员的经历，成为他日后形式化直觉的养分。}
+\end{center}
+\end{frame}}
+
+% --- 6. LCF：可计算函数的逻辑 ---
+\newcommand{\lcfslide}{\begin{frame}\plainbar\sectiontitle{LCF：可计算函数的逻辑}{Logic for Computable Functions · 最早的自动定理证明工具之一}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{最早的自动定理证明工具之一，以"可计算函数的逻辑"为基础} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{交互式证明的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方式} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{在机器中交互式地构造证明，而非一次性全自动} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{证明与计算结合} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{母体} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{ML 正是为 LCF 开发的元语言（Meta Language）} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{语言与证明器共生} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} LCF —— Logic for Computable Functions}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{命题} $\xrightarrow{\text{交互}}$ \textit{证明}：在可计算函数的逻辑中构造证明}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. ML：为定理证明而生的语言 ---
+\newcommand{\mlslide}{\begin{frame}\plainbar\sectiontitle{ML：为定理证明而生的语言}{元语言 · 多态类型推断 · algorithm W}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{出身} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{ML 最初是为 LCF 开发的元语言（Meta Language）} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{因证明器而生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首创} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{首个具有多态类型推断、类型安全异常处理与自动类型推断系统（algorithm W）的语言} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{三个"首个"缺一不可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{血脉} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{现代类型化函数式语言的共同祖先} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{OCaml · Haskell · F\#} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} algorithm W —— 自动类型推断}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{W}(\Gamma, e) = \tau$\qquad 类型由系统自动推断，无需人工标注}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. Hindley–Milner 类型系统 ---
+\newcommand{\hmslide}{\begin{frame}\plainbar\sectiontitle{Hindley--Milner 类型系统：一次"重新发现"}{rediscovering —— Hindley 在先 · Milner 工程化}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{口径} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{页面明载 "rediscovering the Hindley--Milner type system"——是"重新发现"，Hindley 在先} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{严谨史实} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{内容} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{多态类型与自动类型推断的形式基础} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{类型论基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{落地} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{经 algorithm W 工程化于 ML 语言之中} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{理论成为现实} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Hindley--Milner 类型系统的形式内核}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{W}(\Gamma,e)=\tau$ 主类型推断 —— "重新发现"，而非首创}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. CCS：通信系统演算 ---
+\newcommand{\ccsslide}{\begin{frame}\plainbar\sectiontitle{CCS：通信系统演算 (1980)}{A Calculus of Communicating Systems · 并发第一框架}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专著} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{1980 年出版《A Calculus of Communicating Systems》（Springer LNCS 92）} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{并发理论奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{分析并发系统的第一个理论框架} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{进程代数源头} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{思想} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{以"通信"而非共享内存描述进程之间的交互} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{交互成为一等公民} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} CCS 通信规则（示意）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$a.P \,\mid\, \bar{a}.Q \ \xrightarrow{\;\tau\;}\ P \,\mid\, Q$\qquad 两进程沿通道 $a$ 同步通信}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. π 演算：移动的并发 ---
+\newcommand{\pislide}{\begin{frame}\plainbar\sectiontitle{$\pi$ 演算：移动的并发}{CCS 的后继 · mobility · CUP 1999}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{承继} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{$\pi$ 演算是 CCS 的后继，面向移动性（mobility）} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{并发理论的进化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{能力} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{通道本身可以作为数据传递，连接可动态重构} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{表达移动计算} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专著} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{《Communicating and Mobile Systems: the $\pi$-Calculus》（CUP, 1999）} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{晚年集大成} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} $\pi$ 演算（示意）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$(\nu x)\big(\bar{x}\langle y\rangle.P \,\mid\, x(z).Q\big)$\qquad 通道之上再传通道 —— 移动性}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. bigraphs：最后的战场 ---
+\newcommand{\bigraphslide}{\begin{frame}\plainbar\sectiontitle{bigraphs：最后的战场}{普适计算的形式化 · 未竟的事业}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{愿景} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{面向普适计算（ubiquitous computing）的形式化，意图统一涵盖 CCS 与 $\pi$ 演算} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{一生的收束} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{状态} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{直至去世仍未完成——是一项未竟事业，而非成熟体系} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{严谨口径} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{类比} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{他提出 bigraphs 应成为 "Ubiquitous Abstract Machine"} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{比肩冯·诺依曼机} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "Ubiquitous Abstract Machine"（The Bigraphical Model）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}bigraphs 之于普适计算，如冯·诺依曼机之于顺序计算}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. Edinburgh 与 LFCS · 剑桥岁月 ---
+\newcommand{\lfcsslide}{\begin{frame}\plainbar\sectiontitle{Edinburgh 与 LFCS · 剑桥岁月}{1973 起 · 共同创始人 · 1995 回任实验室主任}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1973} & \cellcolor{lfpanel}\textcolor{badgeLF!82!black}{任教 University of Edinburgh} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{深耕理论计算机科学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{LFCS} & \cellcolor{lfpanel}\textcolor{badgeLF!82!black}{计算机科学基础实验室（LFCS）共同创始人} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{理论研究的重镇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1995} & \cellcolor{lfpanel}\textcolor{badgeLF!82!black}{回归剑桥出任计算机实验室主任，卸任后仍留在实验室} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{回到母校} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2009} & \cellcolor{lfpanel}\textcolor{badgeLF!82!black}{任 SICSA Advanced Research Fellow，兼 Edinburgh 计算机科学讲席（part-time）} & \cellcolor{ccspanel}\textcolor{badgeCCS!82!black}{桑榆未晚} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从爱丁堡到剑桥，他把实验室建成了并发理论的灯塔。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1991 · 门生与以其命名的奖项}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1991）\item FRS 与 DFBCS（均 1988）\item Royal Medal（2004）\item NAE Foreign Associate（2008）\end{itemize}} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{理论家的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{Mads Tofte（1988）· Faron Moller · Chris Tofts · Davide Sangiorgi（1993）} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{学术谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{以其命名} & \cellcolor{lcfpanel}\textcolor{badgeLCF!82!black}{Royal Society Milner Award · ACM SIGPLAN Robin Milner Young Researcher Award} & \cellcolor{mlpanel}\textcolor{badgeML!82!black}{身后荣誉} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 以他命名的奖项，正把并发理论带向下一代研究者。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：类型与并行的双翼}{ML · CCS · $\pi$ 演算 · LCF}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=lcfpanel, draw=badgeLCF!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLCF} 定理证明}\\[3pt]LCF\\[2pt]交互式证明系谱起点};
+\node[leg, fill=mlpanel, draw=badgeML!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeML} 类型血脉}\\[3pt]ML\\[2pt]OCaml · Haskell · F\#};
+\node[leg, fill=ccspanel, draw=badgeCCS!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCCS} 并发理论}\\[3pt]CCS · $\pi$ 演算\\[2pt]进程代数与验证};
+\node[leg, fill=lfpanel, draw=badgeLF!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeLF} 普适计算}\\[3pt]bigraphs\\[2pt]未竟的远征};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 他让类型成为保障，让通信成为语义。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 类型推断 $\rightarrow$ 函数式语言 $\rightarrow$ 进程代数 $\rightarrow$ 移动计算\\[2pt]他的思想，仍在类型系统与并发验证的血脉中流动。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {通信与类型，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是优雅实用主义者留下的双翼。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Robin Milner};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {罗宾·米尔纳\quad Robin Milner\quad 1934 — 2010};
+\node[font=\fontsize{7}{9}\selectfont\itshape, text=covermuted] at ([yshift=-2.65cm]current page.center) {"the elegant pragmatist" —— CACM 讣闻标题};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{project-diagram}\enspace Turing 1991 · LCF · ML · CCS · $\pi$ 演算\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\atypicalslide
+\lcfslide
+\mlslide
+\hmslide
+\ccsslide
+\pislide
+\bigraphslide
+\lfcsslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

@@ -1,0 +1,519 @@
+% =============================================================
+%  APL 之父：肯尼斯·艾弗森 (Kenneth E. Iverson)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：记号即思维工具 —— 稀疏气泡呼应数组语言的极简美学
+%  资料来源：turing/pages/1979/Kenneth E. Iverson/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Iverson 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeAPL}{HTML}{2E5A9E}    % APL 与数组语言 — 蓝
+\definecolor{badgeNot}{HTML}{1E8E8E}    % 数学记号 — 青绿
+\definecolor{badgeSys}{HTML}{D9A441}    % 交互系统实现 — 琥珀
+\definecolor{badgeEdu}{HTML}{C0395B}    % 教育与 J — 玫瑰
+\definecolor{aplpanel}{RGB}{228,233,246}
+\definecolor{notpanel}{RGB}{222,240,238}
+\definecolor{syspanel}{RGB}{249,240,224}
+\definecolor{edupanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAPL!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeNot!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeSys!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{terminal}\enspace APL 之父\enspace·\enspace 加拿大};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {肯尼斯·艾弗森};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Kenneth E. Iverson\enspace·\enspace 1920 — 2004};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {APL 之父 · 数组语言 · 1979 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAPL] at (-5.05,0)
+        {数组语言\\APL · J\par\scriptsize APL$\backslash$360 · System/360};
+      \node[badge, fill=badgeNot] at (-1.68,0)
+        {数学记号\\Iverson Notation\par\scriptsize 记号即思维工具};
+      \node[badge, fill=badgeSys] at (1.68,0)
+        {交互系统\\Interactive Systems\par\scriptsize IVSYS · 时分交互};
+      \node[badge, fill=badgeEdu] at (5.05,0)
+        {教育与 J\\Education · fork\par\scriptsize J 语言};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"Notation as a Tool of Thought" —— 1980 图灵讲座};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Ken_Iverson_1989.png}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Ken_Iverson_1989.png}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Ken Iverson, 1989};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 加拿大\enspace|\enspace \faIcon{university}\enspace Harvard · IBM · I.P. Sharp\enspace|\enspace Turing 1979};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{艾弗森 - 从艾伯塔农场到 APL 之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Ken_Iverson_1989.png}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Ken_Iverson_1989.png}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Ken Iverson, 1989};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1920-12-17 — 2004-10-19\\[2pt]\lab{本名}\quad Kenneth Eugene Iverson\\[2pt]\lab{国籍}\quad 加拿大};
+  \node[infob, fill=notpanel, draw=badgeNot!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Queen's 数学与物理 B.A. 1950（头名）\\[2pt]
+     \quad Harvard M.Sc. 1951 · Ph.D. 1954\\[2pt]
+     \lab{师承}\quad Howard Aiken · Wassily Leontief（双导师）};
+  \node[infob, fill=aplpanel, draw=badgeAPL!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Camrose 附近 · 艾伯塔\\[2pt]\lab{去世地}\quad 多伦多\\[2pt]\lab{任职}\quad IBM · IPSA · Jsoftware};
+  \node[infob, fill=syspanel, draw=badgeSys!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1979 · IBM Fellow 1970\\[2pt]
+     \quad NAE 1979 · Computer Pioneer 1982\\[2pt]
+     \lab{核心领域}\quad 编程语言 · 数学记号\\[2pt]
+     \quad 数组语言（APL、J）};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{艾弗森的一生}{1920 — 2004 · 从艾伯塔农场到 APL 之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1920/生于艾伯塔 Camrose 附近的农场家庭,
+    2.42/1934/九年级辍学回农场（大萧条）,
+    1.84/1950/Queen's 大学数学与物理学士（头名毕业）,
+    1.26/1954/Harvard 应用数学博士（Aiken · Leontief 双导师）,
+    0.68/1955/创办世界首个自动数据处理研究生课程,
+    0.1/1960/转投 IBM，与 Falkoff 开启二十年合作,
+    -0.48/1962/出版 A Programming Language（APL 由此得名）,
+    -1.06/1966/APL$\backslash$360 进入时分交互模式,
+    -1.64/1979/获图灵奖；同年入选美国国家工程院,
+    -2.22/1988/发明 fork，次年 J 语言诞生,
+    -2.8/2004/在开发新 J lab 时中风，三日后逝于多伦多
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：艾伯塔农场少年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{艾伯塔农场少年 (1920–1939)}{单室学校 · 九年级辍学 · 自学微积分}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1920} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{生于艾伯塔 Camrose 附近；父母为从北达科他州迁来的农民，祖辈来自挪威特隆赫姆} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{农场家庭出身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1926} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{入一间单室学校，三个月连跳两级} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{天资早显} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{九年级} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{大萧条深处辍学回农场劳作，无意以教书为业} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{求学之路中断} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{17 岁} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{修 De Forest Training（芝加哥）无线电函授课程，靠教科书自学微积分} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{自学成才的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 受教育之路并非直线——农场少年终将重塑一门数学记号。}
+\end{center}
+\end{frame}}
+
+% --- 5. 战争与 Queen's ---
+\newcommand{\warslide}{\begin{frame}\plainbar\sectiontitle{战争与 Queen's (1939–1950)}{加拿大陆军与皇家空军 · 函授补高中 · 头名毕业}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{二战服役} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{先后服役于加拿大陆军与皇家空军} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{战时历练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{函授补学} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{服役期间以函授课程修完高中文凭课程} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{补回中断的学业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{战后入学} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{借助退伍军人资助进入 Queen's University（Kingston）} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{命运的转折} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1950} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{以数学与物理学士学位应届毕业，成绩全届第一} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{头名毕业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从辍学少年到全届第一——教育的机会终被牢牢抓住。}
+\end{center}
+\end{frame}}
+
+% --- 6. Harvard 双导师 ---
+\newcommand{\harvardslide}{\begin{frame}\plainbar\sectiontitle{Harvard：双导师岁月 (1950–1954)}{Aiken · Leontief · Mark IV 上的经济模型 · 应用数学博士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{双导师} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{Howard Aiken（Harvard Mark I 之父）与 Wassily Leontief（投入产出模型创立者）联合指导} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{"学徒制"学术训练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文工作} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{为 Leontief 的投入产出模型在 Harvard Mark IV 上编写大型矩阵求值程序} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{Leontief 后因此获诺贝尔经济学奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1954} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{获应用数学博士学位（工程与应用物理系）} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{数学与工程的交汇} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 博士论文（1954）}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}\textit{Machine Solutions of Linear Differential Equations}\\[1pt]\textit{— Applications to a Dynamic Economic Model}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 世界首个自动数据处理课程 ---
+\newcommand{\dataprocslide}{\begin{frame}\plainbar\sectiontitle{世界首个自动数据处理课程 (1955–1960)}{Aiken 点将 · 与 Brooks 合著 · 记号成形}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Aiken 点将} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{Aiken 指名让刚博士毕业的 Iverson 开设商业数据处理课程——此前世界上从无此类课程} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{世界首创} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合著教材} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{为教学开发记号，与 Fred Brooks 合著 Automatic Data Processing} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{教学催生记号} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{业界试用} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{1957 年在 McKinsey \& Company 休假六个月，业界实测这套记号} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{记号经实战检验} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Aiken 对 Iverson 说（Brooks 转述）}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}"These machines are going to be immensely important for business, and I want you to prepare and teach a course in business data processing next fall."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 记号是思维的工具 ---
+\newcommand{\notationslide}{\begin{frame}\plainbar\sectiontitle{记号的诞生：融合三大数学传统}{矩阵代数 · 张量分析 · Heaviside 算子}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{渊源}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{"appalled"} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{他"惊恐地"发现传统数学记号无法满足描述数据处理的需要，遂着手扩展} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{问题驱动} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三大来源} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{论文工作中的矩阵代数；张量分析对高维数组系统使用；Heaviside 意义下的算子（函数作用于函数）} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{高阶函数雏形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首篇论文} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{The Description of Finite Sequential Processes——首篇采用该记号的论文} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{Iverson 记号问世} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Iverson 记号的思想来源}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{矩阵代数}+\text{张量分析}+\text{Heaviside 算子}\ \Longrightarrow\ \text{Iverson 记号}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. IBM 与 Falkoff 二十年 ---
+\newcommand{\ibmslide}{\begin{frame}\plainbar\sectiontitle{IBM 与 Falkoff 二十年 (1960–1980)}{A Programming Language · System/360 灰皮书}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1960} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{因 Harvard 未获终身教职而转投 IBM（自述"除了那本小书什么都没发表"，薪水翻倍）} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{生涯转折} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1962} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{与 Adin Falkoff 合著出版 A Programming Language——"APL"由此得名} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{APL 正式命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1964} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{用 Iverson 记号形式化描述 IBM System/360，刊于 IBM Systems Journal 双刊号"灰皮书"} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{记号描述整机} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 二十年的搭档——一本小书给了语言名字，一部灰皮书给了机器形式描述。}
+\end{center}
+\end{frame}}
+
+% --- 10. APL\360：从记号到语言 ---
+\newcommand{\aplslide}{\begin{frame}\plainbar\sectiontitle{APL$\backslash$360：从记号到语言 (1965–1966)}{IVSYS · 时分交互 · Hopper Award 归属}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1965} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{Larry Breed 与 Phil Abrams 在 7090 上造出基于 FORTRAN 的 IVSYS，1965 年秋批处理模式运行} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{记号首次机器化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1966} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{1966 年初进入时分交互模式；Breed、Dick Lathwell、Roger Moore 完成 System/360 实现} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{交互式编程先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1973} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{Grace Murray Hopper Award 授予 Breed、Lathwell、Moore 三人——表彰 APL$\backslash$360 的设计与实现} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{荣誉属于实现者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 命名与里程碑}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}"Iverson notation" 更名 "APL" 由 Falkoff 拍板\quad ·\quad 1966-11-27 保存首个 workspace "1 cleanspace"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. APL 教育运动 ---
+\newcommand{\eduslide}{\begin{frame}\plainbar\sectiontitle{APL 教育运动 (1964–1970s)}{中小学与 NASA Goddard · Philadelphia Scientific Center}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{场所}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{实践}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学课堂} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{1964 年在 Fox Lane High School 开设一学期课程，后推广至 Swarthmore、Hotchkiss 等多所中学} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{记号进入课堂} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{NASA Goddard} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{APL 可用后首个应用：在 NASA Goddard 教系统设计中的形式方法} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{工程界采用} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{痴狂的学生} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{有学校的学生为争抢 APL 机时，深夜潜入已下班的机房} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{热情的注脚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969–1970} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{创建 IBM Philadelphia Scientific Center；1970 年获任 IBM Fellow} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{跨学科合作} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一门记号，让中学生也能与计算机对话。}
+\end{center}
+\end{frame}}
+
+% --- 12. 图灵奖 1979 ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1979}{citation · Notation as a Tool of Thought}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{荣誉}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1979} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{获 ACM 图灵奖；同年入选美国国家工程院（NAE）} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{最高荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1980} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{图灵讲座 Notation as a Tool of Thought 发表于 CACM} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{记号即思维工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{遗产} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{数学中以他命名的 Iverson bracket 传世；2015 年新蛾种 Agdistis iversoni 以其命名} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{跨界的纪念} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{coveraccent!85!black} ACM citation（1979）}\\[1pt]
+  {\fontsize{8.3}{11}\selectfont\color{coverprimary!88!black}"for his pioneering effort in programming languages and mathematical notation resulting in what the computing field now knows as APL; for his contributions to the implementation of interactive systems, to educational uses of APL, and to programming language theory and practice"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. IPSA 与字典 APL ---
+\newcommand{\ipsaslide}{\begin{frame}\plainbar\sectiontitle{IPSA 与字典 APL (1980–1987)}{Whitney 模型 · 9$\times$6 语法表}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1980} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{转投 APL 分时公司 I. P. Sharp Associates（IPSA），继续语言设计与扩展} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{语言演进新阶段} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1981} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{与 Arthur Whitney 用 APL 写出 APL 模型——语法由 11$\times$5 表驱动；Whitney 在此过程中发明 rank 算子} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{表驱动语法} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1987} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{9 月出版 A Dictionary of APL——"字典 APL"由此得名，语法由 9$\times$6 表控制} & \cellcolor{notpanel}\textcolor{badgeNot!82!black}{语法精确定义} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} A Dictionary of APL（1987-09）}\\[1pt]
+  {\fontsize{10.5}{13}\selectfont\color{coverprimary!88!black}$\text{APL 语法}=\text{由 }9\times 6\text{ 表驱动的解析过程}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. fork 与 J ---
+\newcommand{\jslide}{\begin{frame}\plainbar\sectiontitle{fork 与 J：十年求索的终点 (1988–2004)}{APL88 航班 · Roger Hui 第一行代码}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.68}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.4cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.2cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{求索十年} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{为在 APL 中像微积分一样写 $f{+}g$：1978 scalar operators、1982 til、1984 catenate/reshape、1987 union/intersection、1988 yoke，终于 1988 年发明 forks} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{渐进演化非凭空} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1988} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{赴 APL88（悉尼）的长途航班上与 Eugene McDonnell 敲定细节——灵感源自午睡醒来} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{灵光一现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1989} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{Whitney 在 Kiln Farm 一个下午写出单页解释器片段；Roger Hui 于 8 月 27 日写下 J 实现的第一行代码} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{J 诞生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1990} & \cellcolor{aplpanel}\textcolor{badgeAPL!82!black}{儿子 Eric Iverson 创办 Iverson Software Inc.（后更名 Jsoftware）——J 用 ASCII 字符与名词/动词/副词术语} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{家族事业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.5cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{coveraccent!85!black} fork 的定义（1988）}\\[1pt]
+  {\fontsize{10.5}{13}\selectfont\color{coverprimary!88!black}$(f\ g\ h)\ y\ \longleftrightarrow\ (f\,y)\ g\ (h\,y)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {记号，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是思维的工具。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Kenneth E. Iverson};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {肯尼斯·艾弗森\quad Kenneth E. Iverson\quad 1920 — 2004};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{terminal}\enspace Turing 1979 · IBM Fellow 1970 · APL 之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\warslide
+\harvardslide
+\dataprocslide
+\notationslide
+\ibmslide
+\aplslide
+\eduslide
+\turingslide
+\ipsaslide
+\jslide
+\closingslide
+\end{document}

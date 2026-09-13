@@ -1,0 +1,493 @@
+% =============================================================
+%  NP 完全性方法学奠基人：理查德·卡普 (Richard M. Karp)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：归约网络 —— 稀疏节点-边网络呼应 21 个问题汇于 NP 完全性
+%  资料来源：turing/pages/1985/Richard M. Karp/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Karp 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeCx}{HTML}{2E5A9E}     % 计算复杂性 — 蓝
+\definecolor{badgeComb}{HTML}{1E8E8E}   % 组合算法 — 青绿
+\definecolor{badgeInst}{HTML}{D9A441}   % 学术机构与传承 — 琥珀
+\definecolor{badgeX}{HTML}{C0395B}      % 跨领域应用 — 玫瑰
+\definecolor{cxpanel}{RGB}{228,233,246}
+\definecolor{combpanel}{RGB}{222,240,238}
+\definecolor{instpanel}{RGB}{249,240,224}
+\definecolor{xpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 节点-边网络背景（归约箭头）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCx!12] (current page.north west) ++(2.0,-2.0) circle (2.2cm);
+  \fill[badgeComb!10] (current page.south east) ++(-2.4,2.0) circle (2.8cm);
+  \fill[badgeInst!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeX!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \draw[badgeCx!25, line width=1.0pt, -{Stealth[length=5pt]}] ([xshift=-5.6cm, yshift=2.8cm]current page.center) -- ([xshift=-3.4cm, yshift=3.4cm]current page.center);
+  \draw[badgeComb!25, line width=1.0pt, -{Stealth[length=5pt]}] ([xshift=5.8cm, yshift=-3.2cm]current page.center) -- ([xshift=3.6cm, yshift=-2.6cm]current page.center);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{project-diagram}\enspace NP 完全性方法学奠基人\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {理查德·卡普};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Richard M. Karp\enspace·\enspace 1935 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {计算理论家 · 21 个 NP 完全问题 · 1985 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeCx] at (-5.05,0)
+        {计算复杂性\\NP-Completeness\par\scriptsize 21 个问题};
+      \node[badge, fill=badgeComb] at (-1.68,0)
+        {组合算法\\Combinatorial Algo.\par\scriptsize 最大流 · 匹配};
+      \node[badge, fill=badgeInst] at (1.68,0)
+        {机构传承\\Berkeley\par\scriptsize Simons Institute};
+      \node[badge, fill=badgeX] at (5.05,0)
+        {跨域应用\\Applications\par\scriptsize 运筹 · 生物信息};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"Karp introduced the now standard methodology for proving problems to be NP-complete." —— 1985 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Karp_2009.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Karp_2009.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Richard M. Karp, 2009};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace UC Berkeley · IBM Watson · Harvard\enspace|\enspace Turing 1985 · Kyoto 2008};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{卡普 - 从波士顿到 NP 完全性}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Karp_2009.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Karp_2009.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Richard M. Karp, 2009};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1935-01-03 —（在世）\\[2pt]\lab{本名}\quad Richard Manning Karp\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=combpanel, draw=badgeComb!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Harvard BA 1955 · MA 1956\\[2pt]
+     \quad Harvard 应用数学 PhD 1959\\[2pt]
+     \lab{师承}\quad Anthony Oettinger（Harvard）};
+  \node[infob, fill=cxpanel, draw=badgeCx!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 美国 · 波士顿\\[2pt]\lab{去世地}\quad ——（在世留白）\\[2pt]\lab{任职}\quad UC Berkeley · IBM Watson};
+  \node[infob, fill=instpanel, draw=badgeInst!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1985 · Kyoto 2008\\[2pt]
+     \quad NMS 1996 · NAE 1992\\[2pt]
+     \lab{核心领域}\quad 算法理论 · 计算复杂性\\[2pt]
+     \quad 组合优化 · 运筹学};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{卡普的一生}{1935 — · 从波士顿少年到算法理论巨匠}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1935/生于波士顿多切斯特,
+    2.35/1955/Harvard 学士（1956 硕士）,
+    1.7/1959/Harvard 应用数学博士,
+    1.05/1962/Held-Karp 算法（IBM）,
+    0.4/1968/出任 UC Berkeley 教授,
+    -0.25/1971/Edmonds-Karp 最大流,
+    -0.9/1972/21 个 NP 完全问题,
+    -1.55/1985/获 ACM 图灵奖,
+    -2.2/2008/获京都奖（先进技术）,
+    -2.8/2012/创 Simons Institute
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：多切斯特的犹太少年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{多切斯特的犹太少年 (1935–1955)}{波士顿 · 父母均为哈佛毕业生}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1935} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{生于波士顿；父 Abraham、母 Rose，下有弟妹 Robert、David、Carolyn 三人} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{犹太家庭，五个孩子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{成长} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{在波士顿多切斯特（当时以犹太人为主的社区）的小公寓里长大} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{清贫而重视教育} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{父母} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{双亲均为哈佛毕业生：母亲 57 岁经夜课取得学位；父亲因付不起学费弃医从教} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{父亲后任数学教师} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 父母双双从哈佛毕业 —— 这个家庭的下一代把这条路走得更远。}
+\end{center}
+\end{frame}}
+
+% --- 5. 哈佛三级跳 ---
+\newcommand{\harvardslide}{\begin{frame}\plainbar\sectiontitle{哈佛三级跳 (1955–1959)}{学士 · 硕士 · 应用数学博士 · Oettinger 门下}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1955 / 1956} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{Harvard University 学士（BA）、硕士（MA）} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{两年连下两城} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1959} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{应用数学博士（PhD），导师 Anthony Oettinger} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{全程哈佛一门立业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{Some applications of logical syntax to digital computer programming} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{逻辑语法与程序} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 博士论文（1959）}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}\textit{逻辑语法} $\xrightarrow{\text{应用}}$ \textit{数字计算机程序设计}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. IBM Watson 与 Held–Karp ---
+\newcommand{\ibmslide}{\begin{frame}\plainbar\sectiontitle{IBM Watson 研究中心 (1959–1968)}{Held–Karp 算法 · TSP 的精确指数时间解}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{起点} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{博士毕业后入职 IBM Thomas J. Watson 研究中心} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{工业研究的黄金年代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1962} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{与 Michael Held 共同开发 Held--Karp 算法} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{以姓冠名的第一例} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{对象} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{旅行商问题（TSP）的精确指数时间算法} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{动态规划经典} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Held--Karp 动态规划（1962）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$C(S,j)=\min_{i\in S,\,i\neq j}\big[C(S\setminus\{j\},i)+d_{ij}\big]\qquad$ 复杂度 $O(n^2\cdot 2^n)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Edmonds–Karp 最大流 ---
+\newcommand{\edmondsslide}{\begin{frame}\plainbar\sectiontitle{Edmonds--Karp 最大流 (1971)}{与 Jack Edmonds 的合作 · 多项式时间最大流}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1971} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{与 Jack Edmonds 共同开发 Edmonds--Karp 算法} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{网络流里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{问题} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{求解网络上的最大流问题} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{组合优化的核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{思路} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{沿最短增广路径反复推进，保证多项式时间内终止} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{BFS 增广的经典化} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 最大流问题（Edmonds--Karp，1971）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\max \sum_{e\in \delta^+(s)} f(e)\quad \text{s.t.} \ \ \forall v\neq s,t:\ \sum_{\text{in}} f=\sum_{\text{out}} f$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 21 个 NP 完全问题 ---
+\newcommand{\npslide}{\begin{frame}\plainbar\sectiontitle{21 个 NP 完全问题 (1972)}{Reducibility Among Combinatorial Problems · 核心页}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{1972 年发表复杂性理论里程碑论文 Reducibility Among Combinatorial Problems} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{一经发表即成经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{成果} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{证明 21 个自然组合问题为 NP 完全} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{难解性从概念变现实} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方法学} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{确立此后证明 NP 完全性的标准方法 —— 归约链} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{全局通用的证明范式} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 归约：把新问题接上已知的难解之链}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}$P_1\ \leq_p\ P_2\ \leq_p\ \cdots\ \leq_p\ P_{21}\qquad$ 一个 $\leq_p$，锁定一批"计算困难"问题}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Hopcroft–Karp 二分图匹配 ---
+\newcommand{\hopcroftslide}{\begin{frame}\plainbar\sectiontitle{Hopcroft--Karp 二分图匹配 (1973)}{与 1986 图灵奖得主 John Hopcroft 的合作}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1973} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{与 John Hopcroft 共同发表 Hopcroft--Karp 算法} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{两位大师的交集} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{问题} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{二分图最大基数匹配} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{匹配理论的支柱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{页面表述为 "fastest known method"（当时已知最快方法）} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{1986 篇另写其人} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 二分图最大基数匹配（Hopcroft--Karp，1973）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$O\big(\sqrt{|V|}\cdot|E|\big)\qquad$ 分阶段寻找最短增广路径}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 复杂性理论的延伸 ---
+\newcommand{\extensionslide}{\begin{frame}\plainbar\sectiontitle{复杂性理论的延伸}{Karp--Lipton 定理 · Rabin--Karp · 命名算法群像}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成果}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1980} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{与 Richard J. Lipton 证明 Karp--Lipton 定理：若 SAT 可由多项式规模布尔电路求解，则多项式层级坍缩至第二层} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{电路复杂性的分界线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1987} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{与 Michael O. Rabin 共同开发 Rabin--Karp 字符串搜索算法} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{随机化思想的舞台} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{群像} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{Aanderaa--Karp--Rosenberg 猜想、Karmarkar--Karp 算法、vector addition system 等} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{"以姓冠名"的广度} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Karp--Lipton 定理（1980）}\\[1pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}$\text{SAT}\in \text{SIZE}(\mathrm{poly})\ \Longrightarrow\ \text{PH}=\Sigma_2^P$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. Berkeley 与 Simons Institute ---
+\newcommand{\berkeleyslide}{\begin{frame}\plainbar\sectiontitle{Berkeley 与 Simons Institute (1968– )}{首任副系主任 · ICSI · 创始所长}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968} & \cellcolor{instpanel}\textcolor{badgeInst!82!black}{出任 UC Berkeley 计算机、数学与运筹学教授；除华盛顿大学任教 4 年（起止年份页面未载）外始终在 Berkeley} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{一生的大本营} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{建制} & \cellcolor{instpanel}\textcolor{badgeInst!82!black}{EECS 系内 CS Division 的首任副系主任（first associate chair）} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{学科建制奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{ICSI} & \cellcolor{instpanel}\textcolor{badgeInst!82!black}{1988–1995 与 1999 年起任 International Computer Science Institute 研究科学家，主持 Algorithms Group} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{算法组的旗帜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2012} & \cellcolor{instpanel}\textcolor{badgeInst!82!black}{出任 Simons Institute for the Theory of Computing 创始所长（founding director）} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{理论计算的科学圣殿} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 EECS 的副系主任到 Simons Institute 的创始所长，他把 Berkeley 建成理论计算的中心。}
+\end{center}
+\end{frame}}
+
+% --- 12. 图灵奖 1985 ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1985}{ACM citation 整句 · 算法理论的持续贡献}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{内容}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{颁奖年份} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{1985 年获 ACM 图灵奖 —— 表彰其对算法理论的持续贡献} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.30cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1985 ACM 图灵奖 —— 获奖理由整句}\\[2pt]
+  {\fontsize{7.6}{10}\selectfont\color{coverprimary!88!black}\itshape\raggedright
+"For his continuing contributions to the theory of algorithms including the development of efficient algorithms for network flow and other combinatorial optimization problems, the identification of polynomial-time computability with the intuitive notion of algorithmic efficiency, and, most notably, contributions to the theory of NP-completeness. Karp introduced the now standard methodology for proving problems to be NP-complete which has led to the identification of many theoretical and practical problems as being computationally difficult."\par}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{京都奖 2008 · 国家科学奖章 1996 · 门生}
+\vspace{-0.25cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.54}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{\begin{itemize}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Fulkerson Prize（1979）\item Turing Award（1985）\item von Neumann Theory Prize（1990）\item National Medal of Science（1996）\item Kyoto Prize, Advanced Technology（2008）\end{itemize}} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{理论家的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{更多荣誉} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{NAE 院士（1992）· ACM Fellow（1994）· Babbage Award（1995）· Harvey Prize（1998）· EATCS Award（2000）· Franklin Medal（2004）} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{奖项贯穿四十年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{cxpanel}\textcolor{badgeCx!82!black}{Narendra Karmarkar、Rajeev Motwani、Noam Nisan 等（页面 infobox 实载 17 位）} & \cellcolor{combpanel}\textcolor{badgeComb!82!black}{谱系延续至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} NAE 入选理由：NP 完全性理论与应用、高效组合算法、概率方法。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：难解性的通用语}{NP 完全性 · 组合算法 · Berkeley 传承}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=cxpanel, draw=badgeCx!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCx} NP 完全性}\\[3pt]21 个问题\\[2pt]标准方法学};
+\node[leg, fill=combpanel, draw=badgeComb!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeComb} 组合算法}\\[3pt]最大流 · 匹配\\[2pt]TSP · 字符串};
+\node[leg, fill=instpanel, draw=badgeInst!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeInst} Berkeley 传承}\\[3pt]CS Division\\[2pt]Simons Institute};
+\node[leg, fill=xpanel, draw=badgeX!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeX} 跨域应用}\\[3pt]运筹学\\[2pt]生物信息学};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 归约，让千百难解问题连成一张地图。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} NP 完全性方法学 $\rightarrow$ 复杂性理论的通用语\\[2pt]从 1972 年的 21 个问题出发，此后每个"难"的判定都有据可循。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {为最难的问题，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {标定难解性的坐标。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Richard M. Karp};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {理查德·卡普\quad Richard M. Karp\quad 1935 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{project-diagram}\enspace Turing 1985 · Kyoto 2008\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\harvardslide
+\ibmslide
+\edmondsslide
+\npslide
+\hopcroftslide
+\extensionslide
+\berkeleyslide
+\turingslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

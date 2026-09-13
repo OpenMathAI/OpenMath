@@ -1,0 +1,492 @@
+% =============================================================
+%  编译器理论奠基人：阿尔弗雷德·阿霍 (Alfred Aho)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：细密字符流 —— 稀疏竖排短线呼应「模式匹配与文本处理」
+%  资料来源：turing/pages/2020/Alfred Aho/index.html（无肖像 → 装饰圆占位）
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Aho 专属基础色 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{mainclr}{HTML}{2E5A9E}     % 编程语言与编译器 — 蓝（龙书 / 编译理论）
+\definecolor{accentclr}{HTML}{1E8E8E}   % 字符串匹配 — 青绿（正则 / Aho–Corasick / egrep·fgrep）
+\definecolor{badgeC}{HTML}{D9A441}      % 教材传承 — 琥珀（1974 算法书 / 教科书育人线）
+\definecolor{badgeD}{HTML}{C0395B}      % Unix 工具文化 — 玫瑰（awk / lex / yacc）
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 字符流背景（模式匹配母题：稀疏竖排短线）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \foreach \x/\y/\h in {1.6/1.4/1.1, 2.9/2.5/0.7, 4.2/0.8/1.4, 5.6/1.9/0.6, 7.0/3.4/0.9, 8.8/0.6/1.3, 10.4/2.1/0.8, 11.8/1.0/1.5, 13.4/2.6/0.7, 14.6/0.9/1.2} {
+    \draw[mainclr!14, line width=1.1pt] ([xshift=\x cm, yshift=\y cm]current page.south west) -- ++(0,\h);
+  }
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!8] (current page.south east) ++(-2.4,2.0) circle (2.6cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{font}\enspace 编译器理论奠基人\enspace·\enspace 加拿大};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {阿尔弗雷德·阿霍};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Alfred Vaino Aho\enspace·\enspace 1941 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {正则表达式 · AWK · 龙书 · 2020 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=mainclr] at (-5.05,0)
+        {编译理论\\Dragon Books\par\scriptsize 绿·红·紫龙};
+      \node[badge, fill=accentclr] at (-1.68,0)
+        {字符串匹配\\Aho--Corasick\par\scriptsize egrep · fgrep};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {算法经典\\1974 三人组\par\scriptsize 与 Hopcroft/Ullman};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {Unix 工具\\AWK 语言\par\scriptsize "A" for Aho};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"Shaped the Foundations of Programming Language Compilers and Algorithms" —— 2020 图灵奖（ACM 新闻标题）};
+  \node[circle, draw=coveraccent!50, line width=1.2pt, fill=panelA, minimum size=2.5cm]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {{\fontsize{30}{34}\selectfont\color{mainclr!75}\faIcon{font}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.55cm]current page.center) {Alfred V. Aho};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 加拿大\enspace|\enspace \faIcon{university}\enspace Bell Labs · Princeton · Columbia\enspace|\enspace Turing 2020};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{阿霍 - 从多伦多到龙书}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[circle, draw=coveraccent!55, line width=1.2pt, fill=panelA, minimum size=3.3cm]
+    at (-6.15,0.15) {{\fontsize{40}{44}\selectfont\color{mainclr!75}\faIcon{font}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.0) {Alfred Vaino Aho（无公开肖像）};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1941-08-09 —（在世）\\[2pt]\lab{本名}\quad Alfred Vaino Aho\\[2pt]\lab{国籍}\quad 加拿大};
+  \node[infob, fill=panelB, draw=accentclr!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad U Toronto 工程物理 B.A.Sc. 1963\\[2pt]
+     \quad Princeton MA 1965 · PhD 1967\\[2pt]
+     \lab{师承}\quad John Hopcroft（导师）};
+  \node[infob, fill=panelA, draw=mainclr!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Timmins · 安大略 · 加拿大\\[2pt]\lab{任职}\quad Bell Labs · Columbia\\[2pt]\lab{博士学生}\quad Krysta Svore};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2020 · von Neumann Medal\\[2pt]
+     \lab{核心领域}\quad 编程语言 · 编译器\\[2pt]
+     \quad 算法 · 教科书};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{阿霍的一生}{1941 — · 从安大略到图灵奖}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1941/生于安大略省 Timmins（加拿大）,
+    2.3/1963/多伦多大学工程物理 B.A.Sc.,
+    1.6/1965/Princeton 硕士（MA）,
+    0.9/1967/Princeton 博士（Hopcroft 门下）· 加入 Bell Labs,
+    0.2/1975/Aho--Corasick 算法,
+    -0.5/1977/绿龙书（与 Ullman）· 1979 AWK,
+    -1.2/1986/红龙书（加入 Sethi）,
+    -1.9/1995/Columbia Gussman 讲席教授,
+    -2.6/2003/IEEE von Neumann 奖章,
+    -2.8/2020/图灵奖（与 Ullman 共享）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：加拿大少年与多伦多工程物理 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：加拿大少年与多伦多工程物理 (1941–1963)}{Timmins · Engineering Physics}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1941} & \cellcolor{panelA}\textcolor{mainclr!82!black}{生于安大略省 Timmins，加拿大} & \cellcolor{panelB}\textcolor{accentclr!82!black}{加拿大少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1963} & \cellcolor{panelA}\textcolor{mainclr!82!black}{获 University of Toronto 工程物理学士（B.A.Sc.）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{工科根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{panelA}\textcolor{mainclr!82!black}{以编程语言、编译器及相关算法与教材著作闻名} & \cellcolor{panelB}\textcolor{accentclr!82!black}{一生的事业坐标} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从安大略小镇走出的少年，后来为编程世界写下教科书。}
+\end{center}
+\end{frame}}
+
+% --- 5. Princeton 师从 Hopcroft ---
+\newcommand{\princetonslide}{\begin{frame}\plainbar\sectiontitle{Princeton 师从 Hopcroft (1965–1967)}{索引文法 + 嵌套栈自动机}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学位} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Princeton 硕士（M.A. 1965）、博士（EE/CS，1967）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{东行求学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Indexed Grammars: An Extension of Context Free Grammars（JACM 1968 发表）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{索引文法问世} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{panelA}\textcolor{mainclr!82!black}{John Hopcroft（1986 图灵奖得主）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{图灵奖的师承线} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 索引文法与嵌套栈自动机（1968/1969）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{上下文无关语言}\ \xrightarrow{\text{索引文法}}\ \text{表达力}\uparrow+\ \text{可判定性保持}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Bell Labs 与 Unix 文本工具 ---
+\newcommand{\belllabsslide}{\begin{frame}\plainbar\sectiontitle{Bell Labs 与 Unix 文本工具 (1967–1991)}{正则表达式 · egrep · fgrep}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1967–1991} & \cellcolor{panelA}\textcolor{mainclr!82!black}{在 Bell Labs 计算机科学研究中央从事研究} & \cellcolor{panelB}\textcolor{accentclr!82!black}{研究黄金期} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{算法} & \cellcolor{panelB}\textcolor{accentclr!82!black}{设计高效正则表达式与字符串模式匹配算法} & \cellcolor{panelA}\textcolor{mainclr!82!black}{理论落地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{工具} & \cellcolor{panelB}\textcolor{accentclr!82!black}{实现于 Unix 工具 egrep 与 fgrep 的最早版本} & \cellcolor{panelA}\textcolor{mainclr!82!black}{进入日常工具箱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1997–2002} & \cellcolor{panelB}\textcolor{accentclr!82!black}{回任 Bell Labs Computing Sciences Research Center 副总裁} & \cellcolor{panelA}\textcolor{mainclr!82!black}{重返贝尔} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 正则表达式从他手中走进 Unix——也走进了每个程序员的一天。}
+\end{center}
+\end{frame}}
+
+% --- 7. Aho–Corasick 算法 ---
+\newcommand{\ahocorasickslide}{\begin{frame}\plainbar\sectiontitle{Aho--Corasick 算法 (1975)}{与 Margaret J. Corasick · 书目检索}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelB}\textcolor{accentclr!82!black}{1975-06 与 Margaret J. Corasick 发表 CACM 论文 "Efficient String Matching: An Aid to Bibliographic Search"} & \cellcolor{panelA}\textcolor{mainclr!82!black}{经典算法论文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{算法} & \cellcolor{panelB}\textcolor{accentclr!82!black}{fgrep 的算法后来被称为 Aho--Corasick 算法} & \cellcolor{panelA}\textcolor{mainclr!82!black}{多模式匹配} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{应用} & \cellcolor{panelB}\textcolor{accentclr!82!black}{多种书目检索系统及其他字符串搜索应用} & \cellcolor{panelA}\textcolor{mainclr!82!black}{工程常青} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Aho--Corasick：一次扫描，全部匹配}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{模式串集合}\ \to\ \text{自动机}\ \xrightarrow{\text{一次扫描}}\ \text{全部匹配}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. lex 与 yacc ---
+\newcommand{\lexyaccslide}{\begin{frame}\plainbar\sectiontitle{lex 与 yacc：编译器前端的基石}{Johnson · Lesk · Schmidt 与 Aho 算法}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工具}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{归属与算法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{panelD}\textcolor{badgeD!82!black}{与 Steve Johnson、Ullman 共同开发语言分析与翻译的高效算法} & \cellcolor{panelA}\textcolor{mainclr!82!black}{贝尔实验室三人组} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{yacc} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Steve Johnson 用自底向上 LALR 分析创建语法分析器生成器 yacc} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Johnson 名下} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{lex} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Michael E. Lesk 与 Eric Schmidt 用 Aho 的正则匹配算法创建词法分析器生成器 lex} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Aho 算法为核} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} lex 与 yacc 及其衍生工具，成为今日众多编译器前端的基石。}
+\end{center}
+\end{frame}}
+
+% --- 9. 龙书三部曲 ---
+\newcommand{\dragonslide}{\begin{frame}\plainbar\sectiontitle{龙书三部曲 (1977 / 1986 / 2006)}{绿龙 $\to$ 红龙 $\to$ 紫龙}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{版本}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1977} & \cellcolor{panelA}\textcolor{mainclr!82!black}{与 Ullman 合著 Principles of Compiler Design——封面绿龙，"the green dragon book"；此前 1972/1973 已合著两卷 The Theory of Parsing, Translation, and Compiling} & \cellcolor{panelC}\textcolor{badgeC!82!black}{编译理论定本} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1986} & \cellcolor{panelA}\textcolor{mainclr!82!black}{加入 Ravi Sethi 出新版 Compilers: Principles, Techniques, and Tools——"红龙书"（1995 年电影 Hackers 中一闪而过）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{新版传世} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2006} & \cellcolor{panelA}\textcolor{mainclr!82!black}{再加入 Monica Lam 出第二版——"紫龙书"} & \cellcolor{panelC}\textcolor{badgeC!82!black}{大学课程与工业参考} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 绿 $\to$ 红 $\to$ 紫：三本书定义了编译原理的教与学。}
+\end{center}
+\end{frame}}
+
+% --- 10. 1974 算法经典 ---
+\newcommand{\algoslide}{\begin{frame}\plainbar\sectiontitle{1974：算法经典}{与 Hopcroft、Ullman 三人组}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著作} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1974 与 John Hopcroft、Ullman 合著 The Design and Analysis of Computer Algorithms} & \cellcolor{panelA}\textcolor{mainclr!82!black}{三人组经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{panelC}\textcolor{badgeC!82!black}{数十年来计算机科学最高引著作之一} & \cellcolor{panelA}\textcolor{mainclr!82!black}{引用奇迹} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{课程} & \cellcolor{panelC}\textcolor{badgeC!82!black}{推动"算法与数据结构"成为 CS 核心课程} & \cellcolor{panelA}\textcolor{mainclr!82!black}{教育贡献} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一本书，把"算法"变成了计算机科学的必修课。}
+\end{center}
+\end{frame}}
+
+% --- 11. AWK 语言 ---
+\newcommand{\awkslide}{\begin{frame}\plainbar\sectiontitle{AWK：以姓氏首字母命名的语言 (1979/1988)}{Aho · Weinberger · Kernighan}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{语言} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1979 与 Peter J. Weinberger、Brian Kernighan 共同设计 AWK} & \cellcolor{panelA}\textcolor{mainclr!82!black}{三人缺一不可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名} & \cellcolor{panelD}\textcolor{badgeD!82!black}{AWK 的 "A" 就是 Aho} & \cellcolor{panelA}\textcolor{mainclr!82!black}{姓氏首字母} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教材} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1988 三人合著 The AWK Programming Language} & \cellcolor{panelA}\textcolor{mainclr!82!black}{语言配套教材} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} AWK —— 模式扫描与处理语言}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\texttt{pattern \{ action \}}\qquad 逐行扫描 · 模式匹配 · 文本处理}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. Columbia 岁月 ---
+\newcommand{\columbiaslide}{\begin{frame}\plainbar\sectiontitle{Columbia 岁月 (1995–)}{Gussman 讲席 · 双度掌系 · 学术服务}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{讲席} & \cellcolor{panelA}\textcolor{mainclr!82!black}{1995 年起任 Columbia University 计算机科学 Lawrence Gussman 讲席教授} & \cellcolor{panelB}\textcolor{accentclr!82!black}{纽约任教至今} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{系主任} & \cellcolor{panelA}\textcolor{mainclr!82!black}{1995–1997 任系主任，2003 年春季再任} & \cellcolor{panelB}\textcolor{accentclr!82!black}{双度掌系} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{panelA}\textcolor{mainclr!82!black}{论文被引 81,040 次、h-index 66（截至 2019-05-08）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{影响力度量} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{服务} & \cellcolor{panelA}\textcolor{mainclr!82!black}{两度任 NSF CISE 咨询委员会主席、曾任 ACM SIGACT 主席} & \cellcolor{panelB}\textcolor{accentclr!82!black}{学术共同体} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 2010 年起，他的研究兴趣扩展到量子计算。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉墙 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉墙}{von Neumann Medal · 三院 Fellow · C\&C Prize}\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{院士与奖章} & \cellcolor{panelC}\textcolor{badgeC!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item IEEE John von Neumann Medal（2003）\item NAE 院士（1999，"contributions to the fields of algorithms and programming tools"）\item NAS 院士\end{itemize}} & \cellcolor{panelA}\textcolor{mainclr!82!black}{国家级认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Fellow 群体} & \cellcolor{panelC}\textcolor{badgeC!82!black}{Bell Labs Fellow（1984）· AAAS Fellow（1986）· IEEE Fellow（1988）· ACM Fellow（1996）· 美国艺术与科学院 Fellow（2003）} & \cellcolor{panelA}\textcolor{mainclr!82!black}{学术共同体全面认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教学与荣誉博士} & \cellcolor{panelC}\textcolor{badgeC!82!black}{Great Teacher Award（2003，Society of Columbia Graduates）· 荣誉博士：Waterloo、Helsinki、Toronto} & \cellcolor{panelA}\textcolor{mainclr!82!black}{育人有声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 2017 C\&C Prize（NEC），与 Hopcroft、Ullman 三人同获。}
+\end{center}
+\end{frame}}
+
+% --- 14. 2020 图灵奖 ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{2020 图灵奖：与 Ullman 共享}{"龙书二人组"的最高荣誉}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{宣布} & \cellcolor{panelA}\textcolor{mainclr!82!black}{2021-03-31 宣布为 2020 年度图灵奖得主} & \cellcolor{panelB}\textcolor{accentclr!82!black}{与 Ullman 共享} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{理由} & \cellcolor{panelA}\textcolor{mainclr!82!black}{表彰其奠定编程语言编译器与算法的基础（ACM 新闻标题 Honors Innovators Who Shaped the Foundations of Programming Language Compilers and Algorithms 口径）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{基础建设的认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{panelA}\textcolor{mainclr!82!black}{与长期合作者 Jeffrey Ullman 同获——龙书、算法书、文法理论的合著者} & \cellcolor{panelB}\textcolor{accentclr!82!black}{数十年并肩} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 图灵奖（2020）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{编译器}+\text{算法}$\qquad 编程世界最深厚的地基}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {把编译理论，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {写成一代程序员的教科书。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Alfred Aho};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {阿尔弗雷德·阿霍\quad Alfred Vaino Aho\quad 1941 —（在世）};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{font}\enspace Turing 2020 · Aho--Corasick · 龙书\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\princetonslide
+\belllabsslide
+\ahocorasickslide
+\lexyaccslide
+\dragonslide
+\algoslide
+\awkslide
+\columbiaslide
+\honorsslide
+\turingslide
+\closingslide
+\end{document}

@@ -1,0 +1,501 @@
+% =============================================================
+%  数据库宗师：迈克尔·斯通布雷克 (Michael Stonebraker)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：数据块 / 行存与列存 —— 稀疏竖条呼应列存视觉语言
+%  资料来源：turing/pages/2014/Michael Stonebraker/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Stonebraker 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeRel}{HTML}{2E5A9E}     % 关系数据库 — 蓝
+\definecolor{badgeObj}{HTML}{1E8E8E}     % 对象关系 — 青绿
+\definecolor{badgeCol}{HTML}{D9A441}     % 列存与流 — 琥珀
+\definecolor{badgeEnt}{HTML}{C0395B}     % 学术创业 — 玫瑰
+\definecolor{relpanel}{RGB}{228,233,246}
+\definecolor{objpanel}{RGB}{222,240,238}
+\definecolor{colpanel}{RGB}{249,240,224}
+\definecolor{entpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 数据块背景（列状矩形母题）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeRel!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeObj!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeCol!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[badgeRel!7] ([xshift=0.5cm,yshift=1.1cm]current page.south west) rectangle ([xshift=0.9cm,yshift=3.6cm]current page.south west);
+  \fill[badgeCol!9] ([xshift=1.15cm,yshift=1.6cm]current page.south west) rectangle ([xshift=1.55cm,yshift=3.6cm]current page.south west);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{database}\enspace 数据库宗师\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {迈克尔·斯通布雷克};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Michael Stonebraker\enspace·\enspace 1943 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {Ingres · POSTGRES · 列存与流数据 · 2014 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeRel] at (-5.05,0)
+        {关系数据库\\Ingres\par\scriptsize 1973 · 与 System R 并列};
+      \node[badge, fill=badgeObj] at (-1.68,0)
+        {对象关系\\POSTGRES\par\scriptsize post-Ingres};
+      \node[badge, fill=badgeCol] at (1.68,0)
+        {列存与流\\C-Store · StreamBase\par\scriptsize 2005 · 2001};
+      \node[badge, fill=badgeEnt] at (5.05,0)
+        {学术创业\\公司群像\par\scriptsize Vertica · VoltDB 等};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {often described as "the Nobel Prize for computing" —— 2014 图灵奖};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Michael_Stonebraker_P1120062.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Michael_Stonebraker_P1120062.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Michael Stonebraker};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace UC Berkeley · MIT\enspace|\enspace Turing 2014 · von Neumann Medal 2005};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{斯通布雷克 - 从新英格兰到数据库宗师}{生卒 · 本名 · 国籍 · 教育 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Michael_Stonebraker_P1120062.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Michael_Stonebraker_P1120062.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Michael Stonebraker};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1943-10-11 —（在世）\\[2pt]\lab{本名}\quad Michael Ralph Stonebraker\\[2pt]\lab{国籍}\quad 美国\\[2pt]\lab{家庭}\quad 妻子 Beth};
+  \node[infob, fill=relpanel, draw=badgeRel!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Princeton 电机工程 B.S.E. 1965\\[2pt]
+     \quad Michigan M.S. 1967 / Ph.D. 1971\\[2pt]
+     \lab{师承}\quad Arch Waugh Naylor（Michigan 导师）};
+  \node[infob, fill=objpanel, draw=badgeObj!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Newburyport · 马萨诸塞\\[2pt]\lab{成长地}\quad Milton Mills · 新罕布什尔\\[2pt]\lab{任职}\quad UC Berkeley · MIT CSAIL};
+  \node[infob, fill=colpanel, draw=badgeCol!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2014 · von Neumann Medal 2005\\[2pt]
+     \quad NAE 院士 1997\\[2pt]
+     \lab{核心领域}\quad 数据库系统 · 关系与对象关系\\[2pt]
+     \quad 列存与流数据管理};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{斯通布雷克的一生}{1943 — 至今 · Berkeley 与 MIT 的两段旅程}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.95);
+  \foreach \y/\year/\txt in {
+    3.0/1943/生于马萨诸塞州 Newburyport,
+    2.3/1965/获 Princeton 电机工程 B.S.E.,
+    1.6/1971/Michigan 博士（马尔可夫模型论文）,
+    0.9/1973/与 Eugene Wong 启动 Ingres,
+    0.2/1986/POSTGRES 设计论文发表,
+    -0.5/2001/移师 MIT · 开启第二阶段,
+    -1.2/2005/C-Store 与 Vertica 同年落地,
+    -1.9/2008/SciDB 与 Paradigm4,
+    -2.55/2014/获图灵奖（2015 年 3 月公布）,
+    -2.95/至今/Berkeley 荣休 · MIT CSAIL emeritus
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1943–1971)}{Newburyport 出生 · Princeton 与 Michigan}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1943} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{生于马萨诸塞州 Newburyport，在新罕布什尔州 Milton Mills 长大} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{新英格兰少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1965} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{获 Princeton 电机工程学士学位（B.S.E.）} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{电机工程的底子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1967} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{获 University of Michigan 硕士学位（M.S.）} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{深造之路} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1971} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{获 Michigan 博士学位；论文为大尺度随机链马尔可夫模型的约简（非数据库方向），导师 Arch Waugh Naylor} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{控制论出身} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个非数据库方向出身的博士，最终成为数据库版图的重绘者。}
+\end{center}
+\end{frame}}
+
+% --- 5. Codd 的召唤：Ingres 启动 ---
+\newcommand{\ingresslide}{\begin{frame}\plainbar\sectiontitle{Codd 的召唤：Ingres 启动 (1973)}{与 Eugene Wong · 关系模型的可行性证明}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{起点} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{1973 年，与同事 Eugene Wong 读到 Edgar F. Codd 的关系模型论文后启动 Ingres 项目} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{读论文读出的系统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{INteractive Graphics ANd REtrieval System（页面口径）} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{交互式检索} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{与 IBM System R 并列，最早证明关系模型可被高效实用实现的系统之一} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{关系模型落地} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 从论文到系统（1973）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Codd 关系模型} $\xrightarrow{\text{1973 · Ingres}}$ \textit{关系模型可以又对又快}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Ingres 的技术遗产 ---
+\newcommand{\legacyingresslide}{\begin{frame}\plainbar\sectiontitle{Ingres 的技术遗产}{至今通用的思想 · 从 Berkeley 散播开去}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{遗产}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{索引与复制} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{B-trees 索引结构、primary-copy 数据复制} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{至今通用} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{查询重写} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{视图与完整性约束的 query rewrite} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{声明式的关键} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{规则与事务} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{rules / triggers、事务锁系统} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{现代 DBMS 的骨架} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Ingres 的思想遗产}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}B-trees $\cdot$ 复制 $\cdot$ 查询重写 $\cdot$ 规则/触发器 $\cdot$ 事务锁\ —— 至今仍是数据库的通用语汇}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 学术创业第一波 ---
+\newcommand{\startupslide}{\begin{frame}\plainbar\sectiontitle{学术创业第一波}{Relational Technology $\rightarrow$ Actian · Sybase 的渊源}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创办} & \cellcolor{entpanel}\textcolor{badgeEnt!82!black}{与 Berkeley 同事 Larry Rowe、Eugene Wong 共同创办 Relational Technology, Inc.（后称 Ingres Corporation）} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{学者下海} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{归宿} & \cellcolor{entpanel}\textcolor{badgeEnt!82!black}{售予 Computer Associates $\rightarrow$ 2005 年独立 $\rightarrow$ 更名 Actian} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{品牌的沉浮} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{派生} & \cellcolor{entpanel}\textcolor{badgeEnt!82!black}{学生 Robert Epstein 由 Ingres 派生创办 Sybase；其代码后来成为 Microsoft SQL Server 的基础} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{谱系的远播} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 一家公司，几条血脉}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}Ingres Corp $\rightarrow$ Actian\quad；\quad Sybase $\rightarrow$ Microsoft SQL Server 的代码源头}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. POSTGRES ---
+\newcommand{\postgreslide}{\begin{frame}\plainbar\sectiontitle{POSTGRES：超越关系模型}{post-Ingres · 与 Larry Rowe · 1986 设计论文}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方面}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{启动} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{与 Larry Rowe 启动 POSTGRES（"post-Ingres"）项目} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{Berkeley 的第二代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{动机} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{针对关系模型的局限，做对象关系扩展} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{不满即动力} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{1986 年发表 POSTGRES 设计论文} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{系统设计的范本} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} POSTGRES —— POST inGRES}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}关系模型 $+$ \textit{对象关系扩展}：让数据库装下更复杂的现实}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. MIT 时代：Aurora 与 StreamBase ---
+\newcommand{\streamslide}{\begin{frame}\plainbar\sectiontitle{MIT 时代：Aurora 与 StreamBase (2001–)}{两段旅程的转折 · 流数据的"推"模型}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2001} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{移师 MIT（CSAIL），开启职业生涯第二阶段} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{两段旅程的转折点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{项目} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{与 Brandeis / Brown / MIT 同事做流数据管理：Aurora 与 StreamBase} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{新数据形态} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{模型} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{关系系统"拉"数据逐条处理；Aurora 中数据被"推"入系统（行情、新闻、传感器），输出本身是结果流} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{推拉之别} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 拉模型 vs 推模型}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}行系统 $\xleftarrow{\text{拉}}$ 逐条查询\qquad Aurora $\xrightarrow{\text{推}}$ 数据流 $\rightarrow$ 结果流}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. C-Store 与 Vertica ---
+\newcommand{\cstoreslide}{\begin{frame}\plainbar\sectiontitle{C-Store 与 Vertica：列存革命 (2005)}{shared-nothing · 列存 · 数据仓库}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{特性}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{C-Store 的设计}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{架构} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{并行、shared-nothing 的列存 DBMS，面向数据仓库} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{分析型负载} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{优势} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{按列存储减少 I/O、同类数据相邻使压缩率更高} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{列存革命} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{落地} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{2005 年共同创办 Vertica 商业化（项目与公司同年）} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{研究到产品} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 行存 vs 列存}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}行存：Name, Address, Zip, \ldots\qquad 列存：Name, Name, Name, \ldots\ —— 相邻同类数据，压缩更狠}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. SciDB 与科学数据 ---
+\newcommand{\scidbslide}{\begin{frame}\plainbar\sectiontitle{SciDB 与科学数据 (2008)}{与 David DeWitt · Paradigm4}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方面}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{启动} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{2008 年与 David DeWitt 及 Brown / MIT / Portland State / SLAC / UW / UW–Madison 研究者共同启动} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{大兵团作战} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{面向科学应用的开源 DBMS} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{数据库走进实验室} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{产业化} & \cellcolor{colpanel}\textcolor{badgeCol!82!black}{与 Marilyn Matz 创办 Paradigm4（客户含 Novartis、Foundation Medicine、NIH）} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{科学数据的生意} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} SciDB（2008）$\rightarrow$ Paradigm4}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}为科学而生的数据库：从望远镜到基因组的阵列与张量}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 论战者斯通布雷克 ---
+\newcommand{\nosqlslide}{\begin{frame}\plainbar\sectiontitle{论战者斯通布雷克}{批评 NoSQL (2010–2011) · Communications of the ACM}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方面}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论战} & \cellcolor{entpanel}\textcolor{badgeEnt!82!black}{2010–2011 年在 Communications of the ACM 发文批评 NoSQL 运动} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{公开的论战者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{立场} & \cellcolor{entpanel}\textcolor{badgeEnt!82!black}{按页面实载表述，保留其"论战者"语境} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{有据可依} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{一以贯之} & \cellcolor{entpanel}\textcolor{badgeEnt!82!black}{从 Ingres 到 C-Store，四十年间不断对主流方案提出替代路线} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{推倒重来的人} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} CACM（2010–2011）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}NoSQL 运动的公开批评者：潮流面前，他选择讲道理}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2014 · 门生与企业群像}\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.58}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要荣誉} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{\begin{itemize}\setlength{\itemsep}{-2.5pt}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item ACM Turing Award（2014，2015 年 3 月公布）\item IEEE von Neumann Medal（2005）\item 首个 SIGMOD Edgar F. Codd Innovations Award\item ACM Fellow（1994）· NAE 院士（1997）\end{itemize}} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{数据库宗师的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{Joseph M. Hellerstein · Margo Seltzer · Marti Hearst · Sunita Sarawagi 等；学生 Robert Epstein 创办 Sybase} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{学术谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{商业谱系} & \cellcolor{relpanel}\textcolor{badgeRel!82!black}{创办企业 Ingres Corp（Actian）· Illustra · Vertica · StreamBase · VoltDB · Tamr · Paradigm4 · Hopara；曾任 Informix CTO} & \cellcolor{objpanel}\textcolor{badgeObj!82!black}{学而优则商} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 2015 Commonwealth Award（MassTLC）—— 荣誉之外，他仍在写代码、建系统。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：数据库的四十年}{Ingres · POSTGRES · 列存与流 · 学术创业}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=relpanel, draw=badgeRel!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeRel} 关系数据库}\\[3pt]Ingres（1973）\\[2pt]与 System R 并列};
+\node[leg, fill=objpanel, draw=badgeObj!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeObj} 对象关系}\\[3pt]POSTGRES\\[2pt]post-Ingres};
+\node[leg, fill=colpanel, draw=badgeCol!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCol} 列存与流}\\[3pt]C-Store · Aurora\\[2pt]Vertica · StreamBase};
+\node[leg, fill=entpanel, draw=badgeEnt!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeEnt} 学术创业}\\[3pt]公司群像\\[2pt]从 Ingres 到 Tamr};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 数据库的四十年，是一次次推倒重来的四十年。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} Ingres $\rightarrow$ POSTGRES $\rightarrow$ C-Store $\rightarrow$ SciDB / DBOS\\[2pt]Berkeley 与 MIT 的两段旅程，仍在延续。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {数据库的四十年，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是一次次推倒重来的四十年。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Michael Stonebraker};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {迈克尔·斯通布雷克\quad Michael Stonebraker\quad 1943 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{database}\enspace Turing 2014 · von Neumann Medal 2005 · 数据库宗师\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\ingresslide
+\legacyingresslide
+\startupslide
+\postgreslide
+\streamslide
+\cstoreslide
+\scidbslide
+\nosqlslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

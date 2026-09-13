@@ -1,0 +1,498 @@
+% =============================================================
+%  AI 教父：杰弗里·辛顿 (Geoffrey Hinton)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：层叠神经层片 —— 稀疏竖向条纹渐变，呼应多层网络逐层学表示
+%  资料来源：turing/pages/2018/Geoffrey Hinton/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 coverprimary=#5B2D8E + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Hinton 专属基础色（主色/强调色与 OpenTuring 品牌色同值）=====
+\definecolor{mainclr}{HTML}{5B2D8E}      % 主色 —— 图灵紫
+\definecolor{accentclr}{HTML}{B03A2E}    % 强调色 —— 尊崇/图灵奖·诺贝尔
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+
+% ===== 四分类色（语义命名）=====
+\definecolor{badgeA}{HTML}{2E5A9E}     % 反向传播 / 连接主义 — 蓝
+\definecolor{badgeB}{HTML}{1E8E8E}     % 能量模型 / 2024 诺贝尔物理学奖 — 青绿
+\definecolor{badgeC}{HTML}{D9A441}     % 深度学习复兴 / AlexNet·Google — 琥珀
+\definecolor{badgeD}{HTML}{C0395B}     % 风险与警示 / 告别 Google — 玫瑰
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 层叠神经层片背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{brain}\enspace AI 教父\enspace·\enspace 英国/加拿大};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {杰弗里·辛顿};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Geoffrey Everest Hinton\enspace·\enspace 1947 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {连接主义先驱 · 深度学习复兴 · 2018 图灵奖 · 2024 诺贝尔物理学奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {反向传播\\Backpropagation\par\scriptsize 1986 Nature};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {能量模型\\Boltzmann Machines\par\scriptsize 诺贝尔 2024};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {深度学习复兴\\AlexNet 2012\par\scriptsize ImageNet 突破};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {风险警示\\AI Risks\par\scriptsize 告别 Google};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for foundational discoveries and inventions that enable machine learning with artificial neural networks." —— 2024 诺贝尔物理学奖};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Geoffrey_Hinton_in_2026.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Geoffrey_Hinton_in_2026.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Geoffrey Hinton};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国/加拿大\enspace|\enspace \faIcon{university}\enspace Edinburgh · CMU · UCL · Toronto · Google\enspace|\enspace Turing 2018 · Nobel 2024};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{辛顿 - 从温布尔登到多伦多的连接主义旗手}{生卒 · 本名 · 国籍 · 出生地 · 教育 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Geoffrey_Hinton_in_2026.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Geoffrey_Hinton_in_2026.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Geoffrey Hinton};
+  \node[infob, fill=panelC, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1947-12-06 —（在世）\\[2pt]\lab{本名}\quad Geoffrey Everest Hinton\\[2pt]\lab{国籍}\quad 英国/加拿大};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Cambridge 实验心理学 BA 1970\\[2pt]
+     \quad Edinburgh AI PhD 1978\\[2pt]
+     \lab{师承}\quad Christopher Longuet-Higgins};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 伦敦温布尔登 · 英国\\[2pt]\lab{任职}\quad University of Toronto\\[2pt]\quad Google (2013–2023) · Vector};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2018 · Nobel 2024\\[2pt]
+     \quad Companion of the Order of Canada\\[2pt]
+     \lab{核心领域}\quad 机器学习 · 神经网络\\[2pt]
+     \quad 认知科学};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{辛顿的一生}{1947 — · 从寒冬守夜人到诺奖加冕}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1947/生于伦敦温布尔登,
+    2.3/1970/Cambridge 实验心理学 BA,
+    1.6/1978/Edinburgh 人工智能博士,
+    0.9/1985/与 Ackley/Sejnowski 发明 Boltzmann 机,
+    0.2/1986/Nature 反向传播论文（Rumelhart/Williams）,
+    -0.5/1987/任教 University of Toronto · CIFAR 首批 Fellow,
+    -1.2/2012/AlexNet 夺 ImageNet 挑战,
+    -1.9/2018/与 Bengio、LeCun 共享图灵奖,
+    -2.6/2023/公开告别 Google，畅言 AI 风险,
+    -2.8/2024/获诺贝尔物理学奖（与 Hopfield 共享）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 布尔的后代 ---
+\newcommand{\familyslide}{\begin{frame}\plainbar\sectiontitle{布尔的后代}{George Boole 高祖父 · 珠峰的 Everest · 曼哈顿计划的表亲}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{亲缘}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{高祖父母} & \cellcolor{panelA}\textcolor{badgeA!82!black}{逻辑学家 George Boole 与数学家教育家 Mary Everest Boole} & \cellcolor{panelB}\textcolor{badgeB!82!black}{逻辑学的血脉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{高叔祖} & \cellcolor{panelA}\textcolor{badgeA!82!black}{George Everest —— 印度测绘总监，珠峰 Mount Everest 命名来源} & \cellcolor{panelB}\textcolor{badgeB!82!black}{中间名 Everest 的由来} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{父辈} & \cellcolor{panelA}\textcolor{badgeA!82!black}{父 Howard Everest Hinton 是昆虫学家} & \cellcolor{panelB}\textcolor{badgeB!82!black}{博物学家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{表亲} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Joan Hinton 是核物理学家，曼哈顿计划仅有的两名女物理学家之一} & \cellcolor{panelB}\textcolor{badgeB!82!black}{科学的家族传统} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从布尔的逻辑到珠峰的名号，他生来便站在科学的谱系里。}
+\end{center}
+\end{frame}}
+
+% --- 5. 求学歧路 ---
+\newcommand{\studyslide}{\begin{frame}\plainbar\sectiontitle{求学歧路：从剑桥到爱丁堡 (–1978)}{心理学 · 木工一年 · 人工智能博士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{Cambridge} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1967 入 King's College，先后转向自然科学、艺术史、哲学，1970 获实验心理学 BA} & \cellcolor{panelB}\textcolor{badgeB!82!black}{心智的追问} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{间隙} & \cellcolor{panelA}\textcolor{badgeA!82!black}{做过一年木工学徒} & \cellcolor{panelB}\textcolor{badgeB!82!black}{动手的耐心} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{Edinburgh} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1972–1975 研读，1978 获人工智能 PhD，论文 \textit{Relaxation and Its Role in Vision}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{AI 之路启程} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{导师} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Christopher Longuet-Higgins 属符号 AI 学派，与他的神经网络取向相反} & \cellcolor{panelB}\textcolor{badgeB!82!black}{逆流而行的开始} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 辗转四年换过三个专业，最后他选择了一条当时无人看好的路。}
+\end{center}
+\end{frame}}
+
+% --- 6. 寒冬中的连接主义 ---
+\newcommand{\pdpslide}{\begin{frame}\plainbar\sectiontitle{寒冬中的连接主义 (1980s)}{CMU PDP 小组 · 两卷本《Parallel Distributed Processing》}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{辗转} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Sussex / MRC 应用心理学单元 $\rightarrow$ UC San Diego 博后 $\rightarrow$ Carnegie Mellon} & \cellcolor{panelB}\textcolor{badgeB!82!black}{跨学科旅程} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{PDP 小组} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 Sejnowski、Crick、Rumelhart、McClelland 同组，在 AI 寒冬中坚持连接主义} & \cellcolor{panelB}\textcolor{badgeB!82!black}{少数派的坚守} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{路线之争} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与符号主义（symbolists）的路线分歧是当时的背景叙事} & \cellcolor{panelB}\textcolor{badgeB!82!black}{范式之争} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 寒冬里没有人相信神经网络，他和同伴守到了春天。}
+\end{center}
+\end{frame}}
+
+% --- 7. 反向传播 ---
+\newcommand{\backpropslide}{\begin{frame}\plainbar\sectiontitle{反向传播：多层网络的钥匙 (1986)}{Rumelhart · Hinton · Williams · Nature}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 David Rumelhart、Ronald J. Williams 在 Nature 发表 "Learning representations by back-propagating errors"} & \cellcolor{panelB}\textcolor{badgeB!82!black}{多层训练普及} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{澄清} & \cellcolor{panelA}\textcolor{badgeA!82!black}{并非首个提出者（Linnainmaa 1970 反向自动微分、Werbos 1974 提议用于神经网络）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{普及者非首创} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{归属} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Hinton 2018 原话：Rumelhart 提出了基本想法，"so it's his invention."} & \cellcolor{panelB}\textcolor{badgeB!82!black}{诚实的历史口径} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 反向传播：沿误差梯度逐层回传}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\Delta w_{ij}=-\eta\,\dfrac{\partial E}{\partial w_{ij}}$\qquad 逐层求导，让隐藏层学到表示}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. Boltzmann 机 ---
+\newcommand{\boltzmannslide}{\begin{frame}\plainbar\sectiontitle{Boltzmann 机：能量模型 (1985)}{Ackley · Sejnowski · 诺贝尔颁奖词的注脚}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发明} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1985 年与 David Ackley、Terry Sejnowski 共同发明 Boltzmann 机} & \cellcolor{panelA}\textcolor{badgeA!82!black}{能量模型的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{思想} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以统计力学的能量函数刻画网络状态，学习即调整能量景观} & \cellcolor{panelA}\textcolor{badgeA!82!black}{物理与学习的交汇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{加冕} & \cellcolor{panelB}\textcolor{badgeB!82!black}{2024 诺贝尔物理学奖颁奖词明确提及 Boltzmann machine} & \cellcolor{panelA}\textcolor{badgeA!82!black}{四十年后回响} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Boltzmann 机：状态的概率由能量决定}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$P(s)\ \propto\ e^{-E(s)}$\qquad 学习，就是雕刻能量地形}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. AlexNet：ImageNet 2012 ---
+\newcommand{\alexnetslide}{\begin{frame}\plainbar\sectiontitle{AlexNet：深度学习的复兴 (2012)}{Krizhevsky · Sutskever · ImageNet 突破}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2012} & \cellcolor{panelC}\textcolor{badgeC!82!black}{与学生 Alex Krizhevsky、Ilya Sutskever 设计 AlexNet 出战 ImageNet 2012（ILSVRC），计算机视觉突破} & \cellcolor{panelA}\textcolor{badgeA!82!black}{深度学习复兴引爆点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同年} & \cellcolor{panelC}\textcolor{badgeC!82!black}{在 Coursera 开设免费神经网络课程} & \cellcolor{panelA}\textcolor{badgeA!82!black}{播撒火种} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2012–2013} & \cellcolor{panelC}\textcolor{badgeC!82!black}{与两位学生创立 DNNresearch，2013-03 被 Google 以 4400 万美元收购} & \cellcolor{panelA}\textcolor{badgeA!82!black}{人才与技术的定价} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 一场竞赛，改写了计算机视觉的十年}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{GPU + 大数据 + 深层网络 —— 复兴的三要素在此汇合。}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 多伦多学派与 CIFAR ---
+\newcommand{\torontoslide}{\begin{frame}\plainbar\sectiontitle{多伦多学派与 CIFAR}{1987– · NCAP 项目 · 门生满天下}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1987} & \cellcolor{panelA}\textcolor{badgeA!82!black}{任教 University of Toronto，并任 CIFAR 首批 Fellow} & \cellcolor{panelB}\textcolor{badgeB!82!black}{扎根多伦多} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{2004} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在 CIFAR 发起 NCAP（今 Learning in Machines \& Brains）项目并领导十年，Bengio、LeCun 皆在其中} & \cellcolor{panelB}\textcolor{badgeB!82!black}{寒冬中的火种基金} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{门生} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Ilya Sutskever、Alex Krizhevsky、Ruslan Salakhutdinov、Peter Dayan、Zoubin Ghahramani 等；Yann LeCun 列于其博后名单} & \cellcolor{panelB}\textcolor{badgeB!82!black}{AI 版图的谱系} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从一间办公室到整个 AI 版图，多伦多是深度学习的人才源头。}
+\end{center}
+\end{frame}}
+
+% --- 11. 发明长廊 ---
+\newcommand{\inventslide}{\begin{frame}\plainbar\sectiontitle{发明长廊}{分布式表示 · t-SNE · 胶囊网络 · Forward-Forward}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1995} & \cellcolor{panelC}\textcolor{badgeC!82!black}{wake-sleep 算法（Science）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{无监督学习的探索} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2008} & \cellcolor{panelC}\textcolor{badgeC!82!black}{t-SNE（与 van der Maaten），高维数据可视化标准工具} & \cellcolor{panelA}\textcolor{badgeA!82!black}{看得见的表示} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2011/2017} & \cellcolor{panelC}\textcolor{badgeC!82!black}{胶囊网络：提出并推进两篇论文} & \cellcolor{panelA}\textcolor{badgeA!82!black}{另一条视觉路线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2022} & \cellcolor{panelC}\textcolor{badgeC!82!black}{Forward-Forward 算法（NeurIPS）与 "mortal computation"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{仍在开辟新径} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从分布式表示到 Forward-Forward，他的想象力从未退休。}
+\end{center}
+\end{frame}}
+
+% --- 12. 告别 Google ---
+\newcommand{\goodbyeslide}{\begin{frame}\plainbar\sectiontitle{告别 Google：风险警告者 (2023)}{"freely speak out about the risks of AI"}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2023-05} & \cellcolor{panelD}\textcolor{badgeD!82!black}{公开辞去 Google 职务，以便 "freely speak out about the risks of AI"；自陈部分的我如今后悔毕生工作} & \cellcolor{panelA}\textcolor{badgeA!82!black}{先驱的良知} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{担忧} & \cellcolor{panelD}\textcolor{badgeD!82!black}{恶意滥用、技术性失业、AGI 存在性风险；2024-12 称 30 年内 AI 灭绝人类概率 "10 to 20 per cent"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{直白的风险量化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{分歧} & \cellcolor{panelD}\textcolor{badgeD!82!black}{LeCun 公开不同意其灭绝论，认为 AI "could actually save humanity from extinction"} & \cellcolor{panelA}\textcolor{badgeA!82!black}{同行间的诚实分歧} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 创造了它的人，选择站出来提醒世界。}
+\end{center}
+\end{frame}}
+
+% --- 13. 2024 诺贝尔物理学奖 ---
+\newcommand{\nobelslide}{\begin{frame}\plainbar\sectiontitle{2024 诺贝尔物理学奖}{与 John Hopfield 共享 · 机器学习的物理血统}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共享} & \cellcolor{panelB}\textcolor{badgeB!82!black}{与 John Hopfield 共享 2024 诺贝尔物理学奖} & \cellcolor{panelA}\textcolor{badgeA!82!black}{物理与 AI 的联结} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{注脚} & \cellcolor{panelB}\textcolor{badgeB!82!black}{颁奖词明确提及 Boltzmann machine —— 四十年前的能量模型} & \cellcolor{panelA}\textcolor{badgeA!82!black}{基础研究的回响} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{趣闻} & \cellcolor{panelB}\textcolor{badgeB!82!black}{引 Richard Feynman："if I could explain it in a couple of minutes, it wouldn't be worth the Nobel Prize."} & \cellcolor{panelA}\textcolor{badgeA!82!black}{诺奖的重量} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11.5}\selectfont\bfseries\color{coveraccent!85!black} "for foundational discoveries and inventions that enable machine learning with artificial neural networks."}\\[1pt]
+  {\fontsize{8.5}{11}\selectfont\color{coverprimary!88!black}\textit{—— 2024 诺贝尔物理学奖颁奖词}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉年表 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉年表：双奖同辉}{图灵奖 2018 · 诺贝尔物理学奖 2024}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{双冠} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item ACM A.M. Turing Award（2018，与 Bengio、LeCun 共享）\item 诺贝尔物理学奖（2024，与 Hopfield 共享）\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算与科学双巅峰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{其他荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Rumelhart Prize 首位得主（2001）· Herzberg Gold Medal（2011）· Companion of the Order of Canada（2018）· Princess of Asturias（2022）· QE Prize（2025）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{跨学科公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术影响} & \cellcolor{panelA}\textcolor{badgeA!82!black}{反向传播、能量模型与深度信念网络奠定了深度神经网络的根基} & \cellcolor{panelB}\textcolor{badgeB!82!black}{思想延续至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 图灵奖与诺贝尔奖同辉，"the Godfather of AI" 名至实归。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {寒冬守夜四十年，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {终见深度学习燎原。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Geoffrey Hinton};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {杰弗里·辛顿\quad Geoffrey Hinton\quad 1947 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{brain}\enspace Turing 2018 · Nobel 2024 · the Godfather of AI\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\familyslide
+\studyslide
+\pdpslide
+\backpropslide
+\boltzmannslide
+\alexnetslide
+\torontoslide
+\inventslide
+\goodbyeslide
+\nobelslide
+\honorsslide
+\closingslide
+\end{document}

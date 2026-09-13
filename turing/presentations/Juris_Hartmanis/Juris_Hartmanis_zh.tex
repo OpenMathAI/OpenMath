@@ -1,0 +1,507 @@
+% =============================================================
+%  尤里斯·哈特马尼斯 (Juris Hartmanis)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：分层谱系线 —— 呼应时间/空间分层定理的视觉语言
+%  资料来源：turing/pages/1993/Juris Hartmanis/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Hartmanis 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeCX}{HTML}{2E5A9E}     % 计算复杂性 — 蓝
+\definecolor{badgeHier}{HTML}{1E8E8E}   % 分层定理 — 青绿
+\definecolor{badgeAlg}{HTML}{D9A441}    % 代数结构 — 琥珀
+\definecolor{badgeInst}{HTML}{C0395B}   % 学科建设 — 玫瑰
+\definecolor{cxpanel}{RGB}{228,233,246}
+\definecolor{hierpanel}{RGB}{222,240,238}
+\definecolor{algpanel}{RGB}{249,240,224}
+\definecolor{instpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 分层谱系线背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \foreach \i/\w in {0/3.4, 1/2.6, 2/1.9, 3/1.3, 4/0.8}{
+    \draw[badgeHier!\the\numexpr 26 - \i*5\relax, line width=0.7pt]
+      ([yshift=-\i*0.42cm, xshift=-5.6cm]current page.north west) ++(0,-1.1) -- ([yshift=-1.52cm-\i*0.42cm, xshift=5.6cm]current page.north west);
+  }
+  \fill[badgeCX!12] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeInst!10] (current page.south west) ++(2.8,2.2) circle (1.6cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{layer-group}\enspace 计算复杂性理论奠基人\enspace·\enspace 拉脱维亚裔·美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {尤里斯·哈特马尼斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Juris Hartmanis\enspace·\enspace 1928 — 2022};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {1965 奠基论文 · Cornell CS 创始主任 · 1993 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeCX] at (-5.05,0)
+        {计算复杂性\\Complexity Classes\par\scriptsize 复杂度类};
+      \node[badge, fill=badgeHier] at (-1.68,0)
+        {分层定理\\Hierarchy Theorems\par\scriptsize 时间 · 空间};
+      \node[badge, fill=badgeAlg] at (1.68,0)
+        {代数结构\\Algebraic Structure\par\scriptsize 序贯机 · 格论};
+      \node[badge, fill=badgeInst] at (5.05,0)
+        {学科建设\\CS at Cornell\par\scriptsize 创始系主任};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"marks the beginning of the modern era of complexity theory."\newline —— Karp, 1986 图灵奖演讲};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Juris_Hartmanis_2002_.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Juris_Hartmanis_2002_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Juris Hartmanis, 2002};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 拉脱维亚裔·美国\enspace|\enspace \faIcon{university}\enspace GE · Cornell · NSF\enspace|\enspace Turing 1993};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{哈特马尼斯 - 从里加到复杂性理论}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=9pt, text width=4.95cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Juris_Hartmanis_2002_.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Juris_Hartmanis_2002_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Juris Hartmanis, 2002};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1928-07-05 — 2022-07-29\\[2pt]\lab{本名}\quad Juris Hartmanis\\[2pt]\lab{国籍}\quad 拉脱维亚裔·美国};
+  \node[infob, fill=hierpanel, draw=badgeHier!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Marburg 物理同等硕士\\[2pt]
+     \quad Kansas City 应用数学 MS 1951\\[2pt]
+     \quad Caltech 数学 PhD 1955\\[2pt]
+     \lab{师承}\quad Robert P. Dilworth（导师）};
+  \node[infob, fill=cxpanel, draw=badgeCX!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 里加 · 拉脱维亚\\[2pt]\lab{任职}\quad GE · Cornell · Ohio State\\[2pt]
+     \quad NSF CISE 助理主任};
+  \node[infob, fill=algpanel, draw=badgeAlg!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1993 · NAE 1989\\[2pt]
+     \quad NAS 2013 · Grand Medal 2001\\[2pt]
+     \lab{核心领域}\quad 计算复杂性 · 自动机\\[2pt]
+     \quad 代数结构理论};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{哈特马尼斯的一生}{1928 — 2022 · 从里加少年到复杂性理论奠基人}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-3.0);
+  \foreach \y/\year/\txt in {
+    3.0/1928/生于里加（Riga），拉脱维亚陆军将军之子,
+    2.4/1944/二战中随家人离开拉脱维亚，流亡德国,
+    1.8/1951/University of Kansas City 应用数学硕士,
+    1.2/1955/Caltech 数学博士（导师 Robert P. Dilworth）,
+    0.6/1958/加入 General Electric 研究实验室,
+    0.0/1965/奠基论文发表 · Cornell 教授兼 CS 系创始主任,
+    -0.6/1977/与 Berman 提出 NP-完全同构猜想,
+    -1.2/1989/当选 NAE 院士 · 解读 1956 年哥德尔信件,
+    -1.8/1992/主持 NRC 研究，出版 Computing the Future,
+    -2.4/1993/获图灵奖（与 Stearns 共享）
+    -3.0/2022/7 月 29 日谢幕，享年 94 岁
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 里加的将军之子 ---
+\newcommand{\rigaslide}{\begin{frame}\plainbar\sectiontitle{里加的将军之子 (1928--1944)}{拉脱维亚 · 将军家庭 · 诗人姐姐 · 流亡}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{背景}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1928-07-05} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{生于拉脱维亚里加；父亲是拉脱维亚陆军将军 Mārtiņš Hartmanis，母亲为 Irma Marija Hartmane} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{将军之子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{姐姐是诗人 Astrid Ivask，Hartmanis 是家中幼弟} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{文学与军人并立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1940} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{苏联占领拉脱维亚后，父亲被捕并死于狱中} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{家国剧变} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1944} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{二战中，母亲与孩子们惧怕苏联再度占领，作为难民离开拉脱维亚，首先移居德国} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{流亡欧洲} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从里加到德国，流亡少年的人生将在数学与计算中重新扎根。}
+\end{center}
+\end{frame}}
+
+% --- 5. 从物理到数学 ---
+\newcommand{\eduslide}{\begin{frame}\plainbar\sectiontitle{从物理到数学 (1944--1955)}{Marburg · Kansas City · Caltech 格论博士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{德国时期} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{在 Marburg 大学取得物理同等硕士学位（equivalent of a master's degree in physics）} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{流亡中未辍学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1951} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{赴美，获 University of Kansas City（今 University of Missouri–Kansas City）应用数学硕士} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{转向应用数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1955} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{Caltech 数学博士，师从 Robert P. Dilworth，论文关于格的嵌入定理} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{代数结构出身} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.30cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 博士论文（Caltech, 1955）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Some Embedding Theorems for Lattices} —— 格的嵌入定理}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. GE 研究实验室 ---
+\newcommand{\geslide}{\begin{frame}\plainbar\sectiontitle{GE 研究实验室 (1958--1965)}{工业实验室里的理论萌芽}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1958} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{在 Cornell、Ohio State 任数学教职后，加入 General Electric 研究实验室} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{从讲台到工业实验室} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{GE 岁月} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{在 GE 期间发展了计算复杂性理论的许多原理} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{理论在此成形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1964} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{与 Stearns 合著 "Computational complexity of recursive sequences"——奠基工作的前奏} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{双星合作之始} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.30cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 工业实验室里的基础理论}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}基础理论也诞生于工业实验室——复杂性理论成形于 GE 的研究走廊}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 1965 奠基论文 ---
+\newcommand{\foundslide}{\begin{frame}\plainbar\sectiontitle{1965 奠基论文：复杂性理论的现代纪元}{On the Computational Complexity of Algorithms · 图灵奖理由}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{复杂度类} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{定义复杂度类这一基础概念——按求解所需时间对计算问题分类} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{领域的地基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{基本结果} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{证明时间分层定理等多个基本结果} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{塑造领域的定理} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{出处} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{与 Stearns 合著，Transactions of the American Mathematical Society 117: 285--306} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{1993 图灵奖理由} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.30cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "in recognition of their seminal paper which established the foundations for the field of computational complexity theory."}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}1993 图灵奖理由 —— Karp：\textit{"marks the beginning of the modern era of complexity theory."}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 空间复杂度三重奏 ---
+\newcommand{\spaceslide}{\begin{frame}\plainbar\sectiontitle{空间复杂度三重奏}{Hartmanis · Lewis · Stearns · 从时间到空间}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{空间复杂度类} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{与 P.M. Lewis II、Stearns 共同定义基于空间占用的复杂度类} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{资源维度扩展} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{空间分层} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{证明首个空间分层定理} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{从时间到空间} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{CFL 上界} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{证明每个上下文无关语言的确定性空间复杂度为 $(\log n)^2$——其核心思想直接导向 Savitch 定理} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{通向 Savitch 定理} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 上下文无关语言的空间复杂度（1965）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{CFL}\ \subseteq\ \mathrm{DSPACE}\big((\log n)^{2}\big)\qquad$ 核心思想导向 Savitch 定理}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Cornell CS 系创始主任 ---
+\newcommand{\cornellslide}{\begin{frame}\plainbar\sectiontitle{Cornell CS 系创始主任 (1965)}{世界最早的 CS 系之一 · 学科建设的开端}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1965} & \cellcolor{instpanel}\textcolor{badgeInst!82!black}{成为 Cornell 大学教授} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{重返学界} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创始系主任} & \cellcolor{instpanel}\textcolor{badgeInst!82!black}{Cornell 计算机科学系的创建者之一与第一任系主任} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{从零建系} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{历史地位} & \cellcolor{instpanel}\textcolor{badgeInst!82!black}{该系是世界最早的计算机科学系之一（页面脚注明载 Purdue 1962 年创建首个 CS 系）} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{第一批建系者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.30cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 计算机科学作为独立学科的年代}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}1962 Purdue 首建 $\rightarrow$ 1965 前后 Cornell · Stanford · CMU 第一批建系}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. Berman–Hartmanis 猜想 ---
+\newcommand{\bermanslide}{\begin{frame}\plainbar\sectiontitle{Berman--Hartmanis 猜想 (1977)}{NP-完全同构 · Mahaney 定理 · 布尔分层}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{已证} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{与 Leonard Berman 证明：所有自然 NP-完全语言在多项式时间同构} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{1977 年论文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{猜想} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{猜想此同构对全部 NP-完全集成立——至今仍未解决} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{开放问题} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{催生研究} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{引发 NP-完全集结构的大量研究，最终结出 Mahaney 定理（稀疏 NP-完全集不存在）} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{猜想的力量} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{布尔分层} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{与 Cai、Gundermann、Hemachandra 等合作者共同定义布尔分层} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{结构复杂性} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.50cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Berman--Hartmanis 同构猜想（1977）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}自然 NP-完全语言 $\cong$ 多项式时间同构\quad —— 对全部 NP-完全集成立？至今开放}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 哥德尔信件考古 ---
+\newcommand{\godelslide}{\begin{frame}\plainbar\sectiontitle{哥德尔信件的考古 (1989)}{1956-03-20 · 致冯·诺依曼 · P=NP? 的史前史}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{信件} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{1956 年 3 月 20 日哥德尔致冯·诺依曼的信（新近重新发现）} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{历史的信物} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{解读} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{Hartmanis 在 1980 年代末对信件的解读，为复杂性理论的史前史带来新洞见} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{1989 年专文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{关键问题} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{哥德尔在信中首次质疑：与 NP-完全问题等价的问题能否在二次或线性时间内求解——预示 P=NP? 问题} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{先于时代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{视野} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{触及 Turing、Gödel、Church、Post、Kleene 之间的互动} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{学科的先声} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1956-03-20，哥德尔之问}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}NP-完全等价问题能否在二次或线性时间内求解？——预示 $P\overset{?}{=}NP$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 学科建设的国家视野 ---
+\newcommand{\policyslide}{\begin{frame}\plainbar\sectiontitle{学科建设的国家视野}{Computing the Future · NSF CISE}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{职务}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{NRC 研究} & \cellcolor{instpanel}\textcolor{badgeInst!82!black}{主持 National Research Council 研究计划} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{国家层面谋划} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1992 报告} & \cellcolor{instpanel}\textcolor{badgeInst!82!black}{成果为 1992 年报告 \textit{Computing the Future -- A Broad Agenda for Computer Science and Engineering}（与 Herbert Lin 合编）} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{学科路线图} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{建议方向} & \cellcolor{instpanel}\textcolor{badgeInst!82!black}{维持 CS\&E 核心投入、拓宽领域、改进本科教育} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{三大优先事项} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1996--1998} & \cellcolor{instpanel}\textcolor{badgeInst!82!black}{任 NSF 计算机与信息科学工程部（CISE）助理主任} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{从学者到掌舵} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他不只奠基了一个理论，也为整个学科在国家层面擘画未来。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1993 · 门生遍天下}\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.55}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\raggedright\scriptsize\arraybackslash}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{至高荣誉} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{ACM Turing Award 1993（与 Stearns 共享）\newline NAE 院士 1989 · NAS 院士 2013} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{双重院士} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{院士与 Fellow} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{AAAS Fellow 1981 · American Academy 1992\newline ACM Charter Fellow 1994 · AMS 首批 Fellow 2013} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{学界公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{其他荣誉} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{拉脱维亚科学院外籍院士 1990 · Grand Medal 2001\newline Humboldt Research Award 1993 · UMKC 荣誉博士 1999\newline CRA 杰出服务奖 2000 · ACM 杰出服务奖 2013} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{服务与回馈} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{Allan Borodin 1969 · Dexter Kozen 1977\newline Neil Immerman 1980 · Jin-Yi Cai 1986} & \cellcolor{hierpanel}\textcolor{badgeHier!82!black}{谱系深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 奠基者之名，因开创与建设而愈发闪耀。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：度量计算的复杂性}{复杂性理论 · 分层定理 · 学科建设 · 史前史}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=cxpanel, draw=badgeCX!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCX} 复杂性理论}\\[3pt]1965 奠基论文\\[2pt]复杂度类};
+\node[leg, fill=hierpanel, draw=badgeHier!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeHier} 分层定理}\\[3pt]时间 · 空间分层\\[2pt](log n)$^2$ 与 Savitch};
+\node[leg, fill=instpanel, draw=badgeInst!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeInst} 学科建设}\\[3pt]Cornell CS 系\\[2pt]Computing the Future};
+\node[leg, fill=algpanel, draw=badgeAlg!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAlg} 史前史考古}\\[3pt]哥德尔 1956 信件\\[2pt]P=NP? 的先声};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 计算的难度，从此成为可以被严格度量与分层的对象。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 复杂度类 $\rightarrow$ 分层定理 $\rightarrow$ NP-完全结构 $\rightarrow$ 国家议程\\[2pt]从里加流亡少年到 Cornell 奠基者，94 岁人生横跨一个学科的诞生。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {计算，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {由此有了度量复杂性的标尺。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Juris Hartmanis};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {尤里斯·哈特马尼斯\quad Juris Hartmanis\quad 1928 — 2022};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{layer-group}\enspace Turing 1993 · 计算复杂性理论奠基人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\rigaslide
+\eduslide
+\geslide
+\foundslide
+\spaceslide
+\cornellslide
+\bermanslide
+\godelslide
+\policyslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

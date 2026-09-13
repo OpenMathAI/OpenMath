@@ -1,0 +1,472 @@
+% =============================================================
+%  个人计算先驱：巴特勒·兰普森 (Butler W. Lampson)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：GUI / 间接层 / 系统分层 —— 稀疏的窗口矩形与层叠方块
+%  资料来源：turing/pages/1992/Butler Lampson/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Lampson 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgePC}{HTML}{2E5A9E}     % 个人计算 — 蓝
+\definecolor{badgeDS}{HTML}{1E8E8E}     % 分布式系统 — 青绿
+\definecolor{badgePARC}{HTML}{D9A441}   % PARC 技术群 — 琥珀
+\definecolor{badgeIND}{HTML}{C0395B}    % 产业迁徙 — 玫瑰
+\definecolor{pcpanel}{RGB}{228,233,246}
+\definecolor{dspanel}{RGB}{222,240,238}
+\definecolor{parcpanel}{RGB}{249,240,224}
+\definecolor{indpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 窗口与层叠方块背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgePC!12] (current page.north west) ++(1.2,-1.4) rectangle ++(2.4,1.6);
+  \fill[badgeDS!10] (current page.south east) ++(-4.2,1.2) rectangle ++(2.8,1.8);
+  \fill[badgePARC!12] (current page.north east) ++(-3.2,-2.8) rectangle ++(1.8,1.2);
+  \fill[coveraccent!10] (current page.south west) ++(2.0,1.6) rectangle ++(1.6,1.0);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{laptop}\enspace 个人计算先驱\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {巴特勒·兰普森};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Butler W. Lampson\enspace·\enspace 1943 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {个人计算 · 分布式系统 · 1992 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgePC] at (-5.05,0)
+        {个人计算\\Xerox Alto\par\scriptsize "Why Alto?"};
+      \node[badge, fill=badgeDS] at (-1.68,0)
+        {分布式系统\\Two-Phase Commit\par\scriptsize 两阶段提交};
+      \node[badge, fill=badgePARC] at (1.68,0)
+        {PARC 技术群\\Bravo · Ethernet\par\scriptsize 参与研发};
+      \node[badge, fill=badgeIND] at (5.05,0)
+        {产业迁徙\\PARC $\rightarrow$ DEC $\rightarrow$ MSR\par\scriptsize 系统思想家};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8}{10.5}\selectfont\itshape, text=muteddark, align=center, text width=12.6cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"Any problem in computer science can be solved with another level of indirection." —— 常被归于 Lampson，其本人在 1993 年图灵奖演讲中归于 David Wheeler};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Butler_Lampson_Royal_Society_cropped_.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Butler_Lampson_Royal_Society_cropped_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Butler W. Lampson};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Berkeley · Xerox PARC · DEC · Microsoft\enspace|\enspace Turing 1992};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{兰普森 - 从华盛顿到个人计算先驱}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Butler_Lampson_Royal_Society_cropped_.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Butler_Lampson_Royal_Society_cropped_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Butler W. Lampson};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1943-12-23 —（在世）\\[2pt]\lab{本名}\quad Butler W. Lampson\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=pcpanel, draw=badgePC!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Harvard 物理 A.B. 1964\\[2pt]
+     \quad UC Berkeley EECS PhD 1967\\[2pt]
+     \lab{师承}\quad Harry Huskey（导师）};
+  \node[infob, fill=dspanel, draw=badgeDS!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Washington, D.C. · 美国\\[2pt]\lab{任职}\quad Xerox PARC · DEC · Microsoft\\[2pt]\lab{兼职}\quad MIT 兼职教授（1987–）};
+  \node[infob, fill=parcpanel, draw=badgePARC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1992 · Draper 2004\\[2pt]
+     \quad von Neumann Medal 2001\\[2pt]
+     \lab{核心领域}\quad 个人计算 · 分布式系统\\[2pt]
+     \quad 操作系统 · 安全};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{兰普森的一生}{1943 — · 从华盛顿到个人计算与可靠系统}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1943/生于华盛顿特区 Washington D.C.,
+    2.3/1964/Harvard 物理学 A.B.（magna cum laude）,
+    1.6/1965/SDS 940 分时系统（与 Peter Deutsch）,
+    0.9/1967/Berkeley EECS 博士（导师 Huskey）,
+    0.2/1971/加入 Xerox PARC 计算机科学实验室,
+    -0.5/1972/"Why Alto?" 备忘录,
+    -1.2/1973/Xerox Alto 问世,
+    -1.9/1983/随 Taylor 转投 DEC Systems Research Center,
+    -2.35/1995/加入 Microsoft Research,
+    -2.85/2018/当选英国皇家学会外籍院士
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：华盛顿与哈佛物理 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：华盛顿与哈佛物理 (1943–1964)}{Lawrenceville School · Harvard 物理学 A.B.}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1943} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{生于美国首都华盛顿特区（Washington, D.C.）} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{美国首都少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{就读 Lawrenceville School} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{日后获该校最高校友奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1964} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{Harvard 物理学 A.B.（magna cum laude，并获学科最高荣誉）} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{物理学的底色} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 物理学出身的他，最终把整个计算世界变成了自己的实验室。}
+\end{center}
+\end{frame}}
+
+% --- 5. Berkeley 与 Project GENIE ---
+\newcommand{\genieslide}{\begin{frame}\plainbar\sectiontitle{Berkeley 与 Project GENIE (1964–1967)}{Huskey 门下 · 交互式多处理器的调度与保护}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博士} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{UC Berkeley 电机工程与计算机科学 PhD（1967），导师 Harry Huskey} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{交互系统起步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{Scheduling and Protection in an Interactive Multi-Processor System} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{调度与保护并重} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{GENIE} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{1960 年代 UC Berkeley Project GENIE 成员} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{分时系统的摇篮} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{任教} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{Berkeley 助理教授（1967–1970）$\rightarrow$ 副教授（1970–1971）} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{学术与系统并行} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在 Berkeley，他同时读着"系统的博士学位"与"现实的系统"。}
+\end{center}
+\end{frame}}
+
+% --- 6. SDS 940 分时系统 ---
+\newcommand{\sdsslide}{\begin{frame}\plainbar\sectiontitle{SDS 940：Berkeley Timesharing System (1965)}{与 Peter Deutsch · 分时系统的早期里程碑}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{1965 年与 Peter Deutsch 等合作开发} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{早期分时先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{系统} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{为 Scientific Data Systems 的 SDS 940 开发 Berkeley Timesharing System} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{分时系统里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{BCC} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{1969–1971 兼任 Berkeley Computer Corporation 系统开发总监} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{走向工业界的前奏} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 分时（Time-Sharing）的核心思想}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}多用户 $\times$ 时间片轮转 $\Rightarrow$ 人人都仿佛独占一台计算机}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Xerox PARC 创始成员 ---
+\newcommand{\parcslide}{\begin{frame}\plainbar\sectiontitle{Xerox PARC 创始成员 (1971)}{CSL principal scientist · senior research fellow}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{加入} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{1971 年成为 Xerox PARC 计算机科学实验室（CSL）创始成员} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{PARC 黄金时代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{职衔} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{principal scientist（1971–1975）$\rightarrow$ senior research fellow（1975–1983）} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{核心科学家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{平台} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{CSL 是 Alto、Ethernet、激光打印机与 Bravo 共同的摇篮} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{革命性技术群} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在 PARC 的十二年，定义了此后四十年的个人计算。}
+\end{center}
+\end{frame}}
+
+% --- 8. "Why Alto?" 与 Xerox Alto ---
+\newcommand{\altoslide}{\begin{frame}\plainbar\sectiontitle{"Why Alto?" 与 Xerox Alto (1972–1973)}{个人计算愿景备忘录 · 三键鼠标 + 整页显示器}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{备忘录} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{1972 年 "Why Alto?" 备忘录凝聚其个人计算机愿景} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{愿景的蓝图} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{硬件} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{1973 年 Xerox Alto 诞生：三键鼠标 + 整页显示器（硬件由 Thacker 等完成）} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{团队之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{在"canonical" GUI 操作模式意义上被认为是第一台真正的个人计算机} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{限定词完整} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "Why Alto?" —— 个人计算愿景}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}每个人 $\times$ 一台交互式计算机 $\Rightarrow$ GUI 时代的起点}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Wildflower：PARC 机器的总蓝图 ---
+\newcommand{\wildflowerslide}{\begin{frame}\plainbar\sectiontitle{Wildflower：PARC 机器的总蓝图}{Dandelion · Xerox Star · Daybreak 谱系}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{蓝图} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{Alto 之后，PARC 除 Dolphin / Dorado 外的所有机器均遵循 Lampson 写的 "Wildflower" 通用蓝图} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{体系结构定义者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{谱系} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{Dandelion $\rightarrow$ Xerox Star；Dandetiger · Daybreak · Dicentra 系列} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{一脉相承} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{分工} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{Lampson 是 Wildflower 蓝图作者；Alto 硬件出自 Thacker 等之手} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{分工明确} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他不常拧螺丝，但 PARC 的机器都按他的图纸生长。}
+\end{center}
+\end{frame}}
+
+% --- 10. PARC 技术群像 ---
+\newcommand{\techslide}{\begin{frame}\plainbar\sectiontitle{PARC 技术群像：参与研发}{激光打印机 · 两阶段提交 · Bravo · Ethernet · Euclid}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{技术}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{激光打印机} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{参与其设计} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{文档输出革命} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{两阶段提交} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{分布式事务的基石协议（two-phase commit）} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{数据库经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Bravo} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{首个所见即所得（WYSIWYG）文字排版程序} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{文档处理先声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Ethernet} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{参与研发首个高速局域网} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{网络世界地基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Euclid} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{他设计的多个有影响的编程语言之一} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{语言设计功力} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} "helped work on"——页面口径是参与研发，而非独揽发明。}
+\end{center}
+\end{frame}}
+
+% --- 11. 1983 转折：追随 Taylor 去 DEC ---
+\newcommand{\decslide}{\begin{frame}\plainbar\sectiontitle{1983 转折：追随 Taylor 去 DEC}{DEC Systems Research Center · 三段职级年表}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{背景} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{1983 年 CSL 经理 Bob Taylor 愤然离职（acrimonious resignation）} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{PARC 时代落幕} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{迁往} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{Lampson 与 Chuck Thacker 追随 Taylor 加入 DEC Systems Research Center} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{团队再聚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{职级} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{senior consulting engineer（1984–1986）$\rightarrow$ corporate consulting engineer（1986–1993）$\rightarrow$ senior corporate consulting engineer（1993–1995）} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{三段年表} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 换了一间实验室，问题依旧是"如何让计算机为人服务"。}
+\end{center}
+\end{frame}}
+
+% --- 12. Microsoft Research 岁月 ---
+\newcommand{\msslide}{\begin{frame}\plainbar\sectiontitle{Microsoft Research 岁月 (1995–)}{architect $\rightarrow$ distinguished engineer $\rightarrow$ technical fellow}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1995} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{加入 Microsoft Research，任 architect（1995–1999）} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{产业新篇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2000} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{升任 distinguished engineer（2000–2005）} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{职级年表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2005} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{任 technical fellow（2005–至今）} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{至今在任} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1987} & \cellcolor{indpanel}\textcolor{badgeIND!82!black}{同期兼任 MIT 电机工程与计算机科学兼职教授（adjunct professor）至今} & \cellcolor{parcpanel}\textcolor{badgePARC!82!black}{学界不辍} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 PARC 到微软研究院，他始终站在系统研究的最前沿。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1992 · Draper 2004 · 学会与勋章}\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{至高荣誉} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{\begin{itemize}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1992）\item Software System Award（1984，与 Taylor · Thacker 共享，因 Alto）\item Draper Prize（2004，与 Kay · Taylor · Thacker 共享）\end{itemize}} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{个人计算先驱的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{院士与学会} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{NAE（1984）· NAS（2005）· AAAS Fellow（1993）· ACM Fellow（1994）· Royal Society 外籍院士（2018）} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{学界至高认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{其他} & \cellcolor{pcpanel}\textcolor{badgePC!82!black}{von Neumann Medal（2001）· ETH Zürich 荣誉 Sc.D.（1986）· Computer Pioneer（1996）· CHM Fellow（2006）· Cyber Security HoF（2016）} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{荣誉密度极高} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从图灵奖到皇家学会，荣誉的密度印证愿景的重量。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：个人计算与可靠系统的双轨}{Alto · 两阶段提交 · Ethernet · 层次思维}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=pcpanel, draw=badgePC!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePC} 个人计算}\\[3pt]Alto $\rightarrow$ GUI 时代\\[2pt]"Why Alto?" 蓝图};
+\node[leg, fill=dspanel, draw=badgeDS!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDS} 分布式系统}\\[3pt]两阶段提交\\[2pt]分布式数据库基石};
+\node[leg, fill=parcpanel, draw=badgePARC!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePARC} 网络}\\[3pt]Ethernet 参与研发\\[2pt]局域网世界};
+\node[leg, fill=indpanel, draw=badgeIND!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeIND} 层次思维}\\[3pt]间接层名言\\[2pt]归于 Wheeler};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 任何系统问题，都可以再加一个间接层。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 这句话常被归于 Lampson，其本人归于 David Wheeler\\[2pt]Alto $\rightarrow$ GUI $\rightarrow$ 分布式事务 $\rightarrow$ 网络世界，蓝图已成日常}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {计算机系统的答案，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {往往在再高一层。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Butler W. Lampson};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {巴特勒·兰普森\quad Butler W. Lampson\quad 1943 —};
+\node[font=\fontsize{7}{9}\selectfont\itshape, text=covermuted] at ([yshift=-2.65cm]current page.center) {"another level of indirection" —— 其本人归于 David Wheeler（1993 图灵奖演讲）};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{laptop}\enspace Turing 1992 · Draper 2004\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\genieslide
+\sdsslide
+\parcslide
+\altoslide
+\wildflowerslide
+\techslide
+\decslide
+\msslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

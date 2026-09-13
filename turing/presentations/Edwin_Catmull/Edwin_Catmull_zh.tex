@@ -1,0 +1,474 @@
+% =============================================================
+%  图形学先驱：埃德温·卡特穆尔 (Edwin Catmull)
+%  Beamer 源码 —— 参考明斯基模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：胶片帧格与渲染网格 —— 呼应「从像素到电影」
+%  资料来源：turing/pages/2019/Edwin Catmull/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Catmull 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{mainclr}{HTML}{5B2D8E}      % 主色 — OpenTuring 图灵紫
+\definecolor{accentclr}{HTML}{B03A2E}    % 强调色 — 尊崇 / 图灵奖
+\definecolor{badgeA}{HTML}{2E5A9E}       % 图形学发明 — 蓝
+\definecolor{badgeB}{HTML}{1E8E8E}       % 渲染与电影 — 青绿
+\definecolor{badgeC}{HTML}{D9A441}       % 皮克斯创业 — 琥珀
+\definecolor{badgeD}{HTML}{C0395B}       % 管理与文化 — 玫瑰
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 胶片帧格背景（稀疏矩形帧框渐次点亮）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12, rounded corners=3pt] ([xshift=0.8cm,yshift=-0.8cm]current page.north west) rectangle ++(2.8,-2.1);
+  \fill[badgeB!10, rounded corners=3pt] ([xshift=-1.2cm,yshift=1.0cm]current page.south east) rectangle ++(-2.8,2.1);
+  \fill[badgeC!12] ([xshift=-3.4cm,yshift=-2.2cm]current page.north east) rectangle ++(-1.6,-1.2);
+  \fill[accentclr!10] ([xshift=2.8cm,yshift=2.0cm]current page.south west) rectangle ++(1.4,1.05);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{film}\enspace 图形学先驱\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {埃德温·卡特穆尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Edwin Catmull\enspace·\enspace 1945 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {Pixar 联合创始人 · 计算机图形学奠基人 · 2019 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {图形学发明\\Texture · Z-buffer\par\scriptsize 纹理映射 · 细分曲面};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {渲染与电影\\CG on Screen\par\scriptsize Futureworld · Toy Story};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {皮克斯创业\\Pixar Co-founder\par\scriptsize NYIT $\rightarrow$ Lucasfilm};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {管理与文化\\Creativity, Inc.\par\scriptsize 三大工作室};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12.5cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for their pioneering work on computer-generated imagery." —— 2019 图灵奖（ACM 表述，与 Pat Hanrahan 共享）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Ed_Catmull_WebSummit2015.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Ed_Catmull_WebSummit2015.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Ed Catmull · 2015};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Utah · NYIT · Lucasfilm · Pixar · Disney\enspace|\enspace Turing 2019};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{卡特穆尔 - 从盐湖城到皮克斯}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Ed_Catmull_WebSummit2015.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Ed_Catmull_WebSummit2015.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Ed Catmull};
+  \node[infob, fill=panelC, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1945-03-31 —（在世）\\[2pt]\lab{本名}\quad Edwin Earl Catmull\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Utah BS 1969 · MS · PhD 1974\\[2pt]
+     \quad 论文：曲面显示细分算法\\[2pt]
+     \lab{师承}\quad R. E. Stephenson（导师）\\[2pt]
+     \quad Ivan Sutherland 门下};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Parkersburg · 西弗吉尼亚\\[2pt]\lab{家庭}\quad 妻 Susan Anderson，三个孩子\\[2pt]\lab{任职}\quad NYIT · Pixar · Disney};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad 4 项奥斯卡科技奖（1993--2008）\\[2pt]
+     \quad von Neumann Medal 2006\\[2pt]
+     \quad Turing 2019（与 Hanrahan 共享）\\[2pt]
+     \lab{核心领域}\quad 3D 计算机图形学 · 动画};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{卡特穆尔的一生}{1945 — 在世 · 从犹他实验室到皮克斯王国}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1945/生于西弗吉尼亚州 Parkersburg,
+    2.36/1969/获犹他大学物理与计算机科学 BS,
+    1.72/1972/制作《计算机动画的手》,
+    1.08/1974/获博士学位；任 NYIT 图形实验室主任,
+    0.44/1977/发明 2D 中间帧软件 Tween,
+    -0.2/1979/任 Lucasfilm 副总裁，筹建计算机部门,
+    -0.84/1986/乔布斯收购数字部门，共创 Pixar,
+    -1.48/1995/《玩具总动员》Executive Producer,
+    -2.12/2007/统管 Pixar/迪士尼动画/Disneytoon,
+    -2.76/2019/与 Pat Hanrahan 共享图灵奖
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 盐湖城的动画梦 ---
+\newcommand{\dreamslide}{\begin{frame}\plainbar\sectiontitle{盐湖城的动画梦 (1945–1969)}{迪士尼的种子 · 校长之家 · 心像盲的反差}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{童年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{《彼得潘》《木偶奇遇记》点燃动画梦，想当动画师；幼年随家迁居犹他州盐湖城，父先后任 Granite、Taylorsville 高中校长} & \cellcolor{panelB}\textcolor{badgeB!82!black}{迪士尼的种子} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{岔口} & \cellcolor{panelA}\textcolor{badgeA!82!black}{当时没有动画学校；又喜欢数学与物理，遂选科学之路} & \cellcolor{panelB}\textcolor{badgeB!82!black}{命运的岔口} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{习作} & \cellcolor{panelA}\textcolor{badgeA!82!black}{用翻页手绘小书（flip-books）做动画} & \cellcolor{panelB}\textcolor{badgeB!82!black}{手已先行} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{心像盲} & \cellcolor{panelA}\textcolor{badgeA!82!black}{患有 aphantasia——无法在脑中形成心理图像（BBC 专访："my mind's eye is blind"）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{天然的反差} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个看不见画面的人，后来为世界造出了最鲜活的像。}
+\end{center}
+\end{frame}}
+
+% --- 5. 犹他大学与 Sketchpad 门下 ---
+\newcommand{\utahslide}{\begin{frame}\plainbar\sectiontitle{犹他大学与 Sketchpad 门下 (1969–1974)}{Sutherland · DARPA 同窗 · 电影之梦}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{学位} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1969 年获 University of Utah 物理与计算机科学 BS，后获 MS 与 PhD（1974）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{理工并进} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{转折} & \cellcolor{panelA}\textcolor{badgeA!82!black}{本想设计编程语言，遇 Ivan Sutherland（Sketchpad 发明人）后转向数字图像} & \cellcolor{panelB}\textcolor{badgeB!82!black}{命运的相遇} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{同窗} & \cellcolor{panelA}\textcolor{badgeA!82!black}{作为 Sutherland 的学生加入 DARPA 项目，同窗有 James H. Clark、John Warnock、Alan Kay} & \cellcolor{panelB}\textcolor{badgeB!82!black}{群星同窗} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{志向} & \cellcolor{panelA}\textcolor{badgeA!82!black}{从此目标明确：用先进计算机图形学制作电影长片——当时闻所未闻} & \cellcolor{panelB}\textcolor{badgeB!82!black}{电影之梦} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在犹他的 DARPA 项目里，一群人后来各自改写了计算机产业。}
+\end{center}
+\end{frame}}
+
+% --- 6. 两大发现与 Z-buffer ---
+\newcommand{\discoveryslide}{\begin{frame}\plainbar\sectiontitle{两大发现与 Z-buffer (1972–1974)}{纹理映射 · 双三次面片 · 独立发现 Z-buffer}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{两大发现} & \cellcolor{panelA}\textcolor{badgeA!82!black}{学生时代完成两项计算机图形学基础发现：纹理映射（texture mapping）与双三次面片（bicubic patches）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{CG 的地基} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{算法发明} & \cellcolor{panelA}\textcolor{badgeA!82!black}{发明空间抗锯齿算法与细分曲面精化算法（灵感：把 B-splines 用于非四边面）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{持续的创造力} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{Z-buffer} & \cellcolor{panelA}\textcolor{badgeA!82!black}{独立发现（independently discovered）Z-buffering——Wolfgang Straßer 博士论文（TU Berlin，1974-04 提交）早 8 个月描述} & \cellcolor{panelB}\textcolor{badgeB!82!black}{独立发现而非首创} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Z-buffer：按深度保留最近片元}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}if $z < \mathrm{zbuf}(x,y)$: 记录颜色与深度\qquad 独立发现，Straßer 早 8 个月}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 《计算机动画的手》 ---
+\newcommand{\handslide}{\begin{frame}\plainbar\sectiontitle{《计算机动画的手》(1972)}{Fred Parke · Futureworld · 国家电影登记表}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{制作} & \cellcolor{panelB}\textcolor{badgeB!82!black}{与 Fred Parke 在犹他大学制作一分钟左手动画 \textit{A Computer Animated Hand}} & \cellcolor{panelA}\textcolor{badgeA!82!black}{最早的 CG 电影贡献之一} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{上映} & \cellcolor{panelB}\textcolor{badgeB!82!black}{被好莱坞制片人采用，嵌入 1976 年电影《Futureworld》——首部使用 3D 计算机图形的电影} & \cellcolor{panelA}\textcolor{badgeA!82!black}{走进好莱坞} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{注记} & \cellcolor{panelB}\textcolor{badgeB!82!black}{其前作《Westworld》（1973）是首部使用计算机像素化图像的电影} & \cellcolor{panelA}\textcolor{badgeA!82!black}{续集关系不颠倒} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{荣誉} & \cellcolor{panelB}\textcolor{badgeB!82!black}{2011 年 12 月入选美国国会图书馆国家电影登记表（National Film Registry）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{文化史地位} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一分钟的手，改写了电影工业的像素史。}
+\end{center}
+\end{frame}}
+
+% --- 8. NYIT 与 Tween ---
+\newcommand{\nyitslide}{\begin{frame}\plainbar\sectiontitle{NYIT 与 Tween (1974–1979)}{Schure 相邀 · 中间帧软件 · 讲故事短板}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{入职} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1974 年获博士后先入 Applicon；同年 11 月受 Alexander Schure 之邀任纽约理工学院（NYIT）新计算机图形实验室主任} & \cellcolor{panelA}\textcolor{badgeA!82!black}{体制内的图形梦} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{发明} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1977 年发明 Tween——自动生成 2D 动画两帧之间运动帧的软件} & \cellcolor{panelA}\textcolor{badgeA!82!black}{中间帧自动化} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{短板} & \cellcolor{panelC}\textcolor{badgeC!82!black}{团队欠缺用电影讲故事的能力，制作 CG 长片的努力受挫} & \cellcolor{panelA}\textcolor{badgeA!82!black}{叙事之缺} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{求索} & \cellcolor{panelC}\textcolor{badgeC!82!black}{与搭档 Alvy Ray Smith 接洽各制片厂未果，直到引起 Lucasfilm 的 George Lucas 注意} & \cellcolor{panelA}\textcolor{badgeA!82!black}{转机将至} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 实验室里有了工具，还差一个会讲故事的地方。}
+\end{center}
+\end{frame}}
+
+% --- 9. Lucasfilm 与 Pixar ---
+\newcommand{\lucasfilmslide}{\begin{frame}\plainbar\sectiontitle{Lucasfilm 与 Pixar (1979–1986)}{副总裁 · 三项目组 · 乔布斯收购共创}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{相邀} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1979 年 George Lucas 相邀，出任副总裁，在 Lucasfilm 内筹建"计算机部门"；到 1980 年设三个项目组——图形组（Alvy Ray Smith）、音频（Andy Moorer）、非线性剪辑（Ralph Guggenheim）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{数字电影工业} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{银幕} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1982 年《星际迷航 2：可汗之怒》——工业光魔（ILM）的计算机图形有所贡献} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首批数字特效} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{易主} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1986 年 Steve Jobs 收购 Lucasfilm 数字部门创立 Pixar，Catmull 为联合创始人；2006 年 Pixar 被迪士尼收购} & \cellcolor{panelA}\textcolor{badgeA!82!black}{皮克斯诞生与归属} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 从实验室到片厂}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{NYIT} $\rightarrow$ \textit{Lucasfilm} $\rightarrow$ \textit{Pixar} —— 图形学的理想主义有了电影工业的舞台。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 《玩具总动员》 ---
+\newcommand{\toystoryslide}{\begin{frame}\plainbar\sectiontitle{《玩具总动员》(1995)}{Executive Producer · RenderMan 开发}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{署名} & \cellcolor{panelB}\textcolor{badgeB!82!black}{片单署名：Executive Producer 与 RenderMan Software Development（导演并非他，页面未载其执导任何影片）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{管理线里程碑} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{RenderMan} & \cellcolor{panelB}\textcolor{badgeB!82!black}{此前 1993 年因 PhotoRealistic RenderMan 开发获奥斯卡科技奖（与 Thomas K. Porter 共享）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{渲染引擎立功} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{矩阵} & \cellcolor{panelB}\textcolor{badgeB!82!black}{此后 Pixar 片单连年：Toy Story 2、Monsters, Inc.、Finding Nemo 等（Executive Team / Senior Staff 署名）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{长片矩阵} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 科学家在管理线上的胜利：CG 长片从此成为产业。}
+\end{center}
+\end{frame}}
+
+% --- 12. 执掌三大工作室 ---
+\newcommand{\studiosslide}{\begin{frame}\plainbar\sectiontitle{执掌三大工作室 (2007–2018)}{Lasseter 双驾马车 · 三线并进 · 一笔带过的风波}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{共管} & \cellcolor{panelD}\textcolor{badgeD!82!black}{2007-06 与 John Lasseter 共同接管 Disneytoon Studios（分任总裁与首席创意官）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{双驾马车} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{三线} & \cellcolor{panelD}\textcolor{badgeD!82!black}{统管 Pixar、迪士尼动画、Disneytoon 三条产线，各设总经理打理日常（2014-11 两位总经理升总裁后仍向其汇报）；每周至少两天通勤迪士尼动画} & \cellcolor{panelA}\textcolor{badgeA!82!black}{三线并进} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{风波} & \cellcolor{panelD}\textcolor{badgeD!82!black}{High-Tech Employee Antitrust 诉讼中被点名；deposition："While I have responsibility for the payroll, I have responsibility for the long term also."；迪士尼系最终 \$100M 和解} & \cellcolor{panelA}\textcolor{badgeA!82!black}{中性一笔} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 同时管好三条动画产线，靠的是制度而非奇迹。}
+\end{center}
+\end{frame}}
+
+% --- 13. Creativity, Inc. 与退而不休 ---
+\newcommand{\creativityslide}{\begin{frame}\plainbar\sectiontitle{Creativity, Inc. 与退而不休 (2014–)}{管理哲学 · 书作荣誉 · 退休顾问}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{合著} & \cellcolor{panelD}\textcolor{badgeD!82!black}{2014 年与 Amy Wallace 合著《Creativity, Inc.》} & \cellcolor{panelA}\textcolor{badgeA!82!black}{皮克斯管理哲学} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{书誉} & \cellcolor{panelD}\textcolor{badgeD!82!black}{入围 FT \& Goldman Sachs Business Book of the Year（2014）；2015-03 入选扎克伯格读书会选书} & \cellcolor{panelA}\textcolor{badgeA!82!black}{出圈之作} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{退休} & \cellcolor{panelD}\textcolor{badgeD!82!black}{2018-10-23 宣布从 Pixar 与迪士尼动画退休，任顾问至 2019-07} & \cellcolor{panelA}\textcolor{badgeA!82!black}{功成身退} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{再出发} & \cellcolor{panelD}\textcolor{badgeD!82!black}{2022-03 出任 Thatgamecompany 创意文化与战略增长首席顾问} & \cellcolor{panelA}\textcolor{badgeA!82!black}{退而不休} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 把创意管理本身写成了一门学问。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉年表 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉年表}{四座奥斯卡科技奖 · von Neumann Medal · 图灵奖 2019}\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.52}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{奥斯卡科技类} & \cellcolor{panelB}\textcolor{badgeB!82!black}{\begin{itemize}\setlength{\itemsep}{-3pt}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Sci \& Tech Award 1993（RenderMan）\item Sci \& Tech Award 1996（数字图像合成）\item Academy Award 2001（Pixar RenderMan）\item Gordon E. Sawyer Award 2008\end{itemize}} & \cellcolor{panelA}\textcolor{badgeA!82!black}{均为科技奖非竞赛奖；1993 与 T. Porter 共享，2009-02 颁} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{工程与院士} & \cellcolor{panelB}\textcolor{badgeB!82!black}{ACM Fellow（1995）· NAE 院士（2000）· IEEE von Neumann Medal（2006）· CHM Fellow（2013）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{图形学建模/动画/渲染之公认} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{图灵奖} & \cellcolor{panelB}\textcolor{badgeB!82!black}{与 Pat Hanrahan 共享 2019 ACM 图灵奖——"for their pioneering work on computer-generated imagery"（2020-03 宣布）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{CGI 奠基者的加冕} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从奥斯卡到图灵奖，两个世界都为他授勋。}
+\end{center}
+\end{frame}}
+
+% --- 15. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：从像素到电影}{图形学发明 · 渲染与电影 · 皮克斯 · 管理}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=panelA, draw=badgeA!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeA} 图形学发明}\\[3pt]纹理映射\\[2pt]Z-buffer · 细分曲面};
+\node[leg, fill=panelB, draw=badgeB!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeB} 渲染与电影}\\[3pt]动画的手\\[2pt]Futureworld · Toy Story};
+\node[leg, fill=panelC, draw=badgeC!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeC} 皮克斯创业}\\[3pt]NYIT $\rightarrow$ Lucasfilm\\[2pt]Pixar};
+\node[leg, fill=panelD, draw=badgeD!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeD} 管理与文化}\\[3pt]三大工作室\\[2pt]Creativity, Inc.};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 无法在脑中成像的人，为世界造出了最鲜活的像。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 图形学发明 $\rightarrow$ 渲染与电影 $\rightarrow$ 皮克斯创业 $\rightarrow$ 管理与文化\\[2pt]他的像素，仍在每一帧动画里。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 16. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {像素与数学，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {终于长成了电影。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Edwin Catmull};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {埃德温·卡特穆尔\quad Edwin Catmull\quad 1945 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{film}\enspace Turing 2019 · Pixar 联合创始人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\dreamslide
+\utahslide
+\discoveryslide
+\handslide
+\nyitslide
+\lucasfilmslide
+\toystoryslide
+\studiosslide
+\creativityslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

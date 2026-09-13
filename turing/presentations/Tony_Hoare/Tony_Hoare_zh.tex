@@ -1,0 +1,501 @@
+% =============================================================
+%  托尼·霍尔 (Tony Hoare, C.A.R. Hoare)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：公理与进程 —— 稀疏气泡呼应形式语言的秩序化美学
+%  资料来源：turing/pages/1980/Tony Hoare/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Hoare 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeAlg}{HTML}{2E5A9E}    % 算法 — 蓝
+\definecolor{badgeLog}{HTML}{1E8E8E}    % 形式验证 — 青绿
+\definecolor{badgeCon}{HTML}{D9A441}    % 并发计算 — 琥珀
+\definecolor{badgeLang}{HTML}{C0395B}   % 编程语言设计 — 玫瑰
+\definecolor{algpanel}{RGB}{228,233,246}
+\definecolor{logpanel}{RGB}{222,240,238}
+\definecolor{conpanel}{RGB}{249,240,224}
+\definecolor{langpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeAlg!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeLog!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeCon!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{balance-scale}\enspace 编程语言与形式方法大师\enspace·\enspace 英国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {托尼·霍尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Sir Tony Hoare\enspace·\enspace 1934 — 2026};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {Quicksort · Hoare 逻辑 · CSP · 1980 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeAlg] at (-5.05,0)
+        {算法\\Quicksort\par\scriptsize 快速排序 · Quickselect};
+      \node[badge, fill=badgeLog] at (-1.68,0)
+        {形式验证\\Hoare Logic\par\scriptsize 公理基础 1969};
+      \node[badge, fill=badgeCon] at (1.68,0)
+        {并发计算\\CSP · Monitors\par\scriptsize 通信顺序进程};
+      \node[badge, fill=badgeLang] at (5.05,0)
+        {编程语言\\ALGOL · null\par\scriptsize 语言设计与反思};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {从 Quicksort 到"十亿美元错误"——一位公理化者的坦诚一生};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Sir_Tony_Hoare_IMG_5125.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Sir_Tony_Hoare_IMG_5125.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Sir Tony Hoare, 2011};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英国\enspace|\enspace \faIcon{university}\enspace Oxford · Cambridge · Microsoft Research\enspace|\enspace Turing 1980};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{霍尔 - 从科伦坡到形式方法大师}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Sir_Tony_Hoare_IMG_5125.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Sir_Tony_Hoare_IMG_5125.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Sir Tony Hoare, 2011};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1934-01-11 — 2026-03-05\\[2pt]\lab{本名}\quad Charles Antony Richard Hoare\\[2pt]\lab{国籍}\quad 英国};
+  \node[infob, fill=logpanel, draw=badgeLog!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Merton College, Oxford\\[2pt]
+     \quad 古典学与哲学 "Greats" BA 1956\\[2pt]
+     \lab{师承}\quad Andrey Kolmogorov（莫大交换导师）};
+  \node[infob, fill=algpanel, draw=badgeAlg!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 科伦坡 · 英属锡兰\\[2pt]\lab{去世地}\quad 剑桥 · 英格兰\\[2pt]\lab{任职}\quad Oxford · Belfast · Microsoft Research};
+  \node[infob, fill=conpanel, draw=badgeCon!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1980 · Kyoto 2000\\[2pt]
+     \quad FRS 1982 · Royal Medal 2023\\[2pt]
+     \lab{核心领域}\quad 编程语言 · 算法\\[2pt]
+     \quad 形式验证 · 并发计算};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{霍尔的一生}{1934 — 2026 · 从科伦坡到形式方法大师}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1934/生于英属锡兰科伦坡，父亲为殖民地公务员,
+    2.42/1956/牛津 Merton College 古典学与哲学毕业,
+    1.84/1958/返 Oxford 修统计文凭，在 Ferranti Mercury 上初学编程,
+    1.26/1959/莫斯科国立大学交换，随 Kolmogorov 研究机器翻译,
+    0.68/1960/入职 Elliott Brothers，发展出 Quicksort,
+    0.1/1968/任 Queen's University Belfast 计算科学教授,
+    -0.48/1969/发表 An Axiomatic Basis for Computer Programming,
+    -1.06/1977/返 Oxford 接掌 Programming Research Group,
+    -1.64/1980/获图灵奖；1985 年出版 CSP 专著,
+    -2.22/2000/受封爵士、获京都奖，自 Oxford 荣休,
+    -2.8/2026/3 月 5 日逝于剑桥，享年 92 岁
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 锡兰出生与古典学教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{锡兰出生与古典学教育 (1934–1956)}{殖民地公务员之子 · Dragon School · 牛津 Greats}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1934} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{生于英属锡兰（今斯里兰卡）科伦坡；父亲为殖民地公务员，母亲为茶园主之女} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{帝国时代出生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{先后就读牛津 Dragon School 与坎特伯雷 King's School} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{英国式教育} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{牛津 Greats} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{在 Merton College 攻读古典学与哲学（"Greats"），1956 年毕业} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{非理工科出身} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一位古典学学生，日后将成为程序正确性的公理化者。}
+\end{center}
+\end{frame}}
+
+% --- 5. 海军、俄语与统计学 ---
+\newcommand{\navyslide}{\begin{frame}\plainbar\sectiontitle{海军、俄语与统计学 (1956–1958)}{皇家海军服役 · Ferranti Mercury 上第一次编程}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1956–1957} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{毕业后服役于英国皇家海军 18 个月（国民服役），期间学习俄语} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{一门新语言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1958} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{返 Oxford 攻读统计学研究生文凭（postgraduate certificate）} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{重返校园} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{初遇编程} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{由 Leslie Fox 引领，在 Ferranti Mercury 计算机上学习编写 Autocode} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{编程生涯起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 俄语为他打开了莫斯科之门，统计学让他第一次触到计算机。}
+\end{center}
+\end{frame}}
+
+% --- 6. 莫斯科与 Kolmogorov ---
+\newcommand{\moscowslide}{\begin{frame}\plainbar\sectiontitle{莫斯科与 Kolmogorov (1958–1960)}{British Council 交换生 · 机器翻译}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{交换身份} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{以英国文化协会（British Council）交换生身份进入莫斯科国立大学} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{冷战中的学术桥} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{师从 Andrey Kolmogorov，研究机器翻译} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{概率大师门下} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{意外收获} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{在莫斯科期间构思出 Quicksort——一条与机器翻译无关的传奇} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{1959–1960} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 一条"语言"贯穿的主线}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{海军俄语}\ \longrightarrow\ \text{机器翻译}\ \longrightarrow\ \text{编程语言设计}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Quicksort ---
+\newcommand{\quickslide}{\begin{frame}\plainbar\sectiontitle{Quicksort：最著名的排序算法 (1959–1960)}{莫斯科构思 · 分治的优雅}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{面向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{诞生} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{1959–1960 年间发展出排序算法 Quicksort——计算机科学最著名的算法之一} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{算法史经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{姊妹算法} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{另有选择算法 Quickselect，同属其最重要的工作之列} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{排序与选择} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{落地} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{1960 年离开苏联后入职伦敦小型计算机制造商 Elliott Brothers，实现 ALGOL 60 编译器并发展主要算法} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{业界实践} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Quicksort 的分治思想}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{分割（partition）}+\text{递归（recurse）}=\text{平均 }O(n \log n)\text{ 的优雅}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. Elliott 与 IFIP WG 2.1 ---
+\newcommand{\elliottslide}{\begin{frame}\plainbar\sectiontitle{Elliott Brothers 与国际标准 (1960–1968)}{ALGOL 60 编译器 · IFIP WG 2.1}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{面向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{工业界} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{在伦敦小型计算机制造商 Elliott Brothers Ltd 工作八年} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{从学界到工业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{编译器} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{实现 ALGOL 60 编译器，并开始发展主要算法} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{语言实现能力} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IFIP WG 2.1} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{参与 IFIP Working Group 2.1（算法语言与演算）——负责规范、维护 ALGOL 60 与 ALGOL 68 的小组} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{国际标准制定} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 八年工业生涯，奠定他语言设计者的双重身份。}
+\end{center}
+\end{frame}}
+
+% --- 9. Hoare 逻辑 ---
+\newcommand{\logicslide}{\begin{frame}\plainbar\sectiontitle{Hoare 逻辑：程序正确性的公理基础 (1969)}{An Axiomatic Basis for Computer Programming}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{An Axiomatic Basis for Computer Programming（CACM 1969 年 10 月）} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{公理化验证开山} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{思想脉络} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{与 Floyd 1967 年的工作一脉相承——为程序正确性验证给出公理基础} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{承先启后} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{深远影响} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{成为程序验证与形式方法领域的基石之一} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{形式验证根基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Hoare 三元组}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{coverprimary!88!black}$\{P\}\ C\ \{Q\}$\qquad 前置条件 $P$ 下执行命令 $C$，将建立后置条件 $Q$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. Monitors 与 CSP ---
+\newcommand{\cspslide}{\begin{frame}\plainbar\sectiontitle{Monitors 与 CSP (1974–1985)}{并发计算的形式语言 · 操作系统结构化 · 与 Dijkstra 的哲学家就餐问题}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Monitors (1974)} & \cellcolor{conpanel}\textcolor{badgeCon!82!black}{Monitors: An operating system structuring concept——用管程概念结构化操作系统} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{OS 结构化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{CSP (1978/1985)} & \cellcolor{conpanel}\textcolor{badgeCon!82!black}{通信顺序进程——描述并发进程交互的形式语言；1985 年 Prentice Hall 出版专著，后在 occam 等语言中实现} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{并发形式语言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{哲学家就餐} & \cellcolor{conpanel}\textcolor{badgeCon!82!black}{与 Edsger Dijkstra 一起共同表述（formulated）哲学家就餐问题} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{经典问题的共同提出} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} CSP——并发进程交互的形式语言}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{进程}\ P\ \text{与}\ Q\ \text{的通信}$\qquad 1978 论文 · 1985 专著 · occam 实现}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. null 与十亿美元错误 ---
+\newcommand{\nullslide}{\begin{frame}\plainbar\sectiontitle{null 引用与"十亿美元错误" (1965 / 2009)}{ALGOL W 的发明 · 四十四年后的公开道歉}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{面向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1965} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{在设计 ALGOL W 的面向对象引用类型系统时，为求实现简便引入了 null 引用} & \cellcolor{conpanel}\textcolor{badgeCon!82!black}{"难以抗拒的诱惑"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2009} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{在一次软件会议演讲中公开道歉，称之为"我的十亿美元错误"} & \cellcolor{conpanel}\textcolor{badgeCon!82!black}{大师的自我检讨} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\bfseries\color{coveraccent!85!black} "I call it my billion-dollar mistake."（2009）}\\[2pt]
+  {\fontsize{9.5}{12.5}\selectfont\color{coverprimary!88!black}"It was the invention of the null reference in 1965. ... But I couldn't resist the temptation to put in a null reference, simply because it was so easy to implement. This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 图灵奖 1980 ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1980}{The Emperor's Old Clothes · Nashville 颁授}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{面向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{citation} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{"fundamental contributions to the definition and design of programming languages"} & \cellcolor{conpanel}\textcolor{badgeCon!82!black}{语言定义与设计} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{颁授} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{1980-10-27 于 Nashville ACM 年会，由评奖委员会主席 Walter Carlson 颁授} & \cellcolor{conpanel}\textcolor{badgeCon!82!black}{最高荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{图灵讲座} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{The Emperor's Old Clothes（皇帝的新衣），发表于 CACM} & \cellcolor{conpanel}\textcolor{badgeCon!82!black}{一如既往的自省} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} ACM citation（1980）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}"for fundamental contributions to the definition and design of programming languages"}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. Oxford 与 Microsoft Research ---
+\newcommand{\oxfordslide}{\begin{frame}\plainbar\sectiontitle{Oxford 与 Microsoft Research}{Belfast $\rightarrow$ Oxford 三站 · Strachey 讲席 · 形式方法的反思}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968–1977} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{任 Queen's University Belfast 计算科学教授} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{学术生涯三站之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1977} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{Christopher Strachey 去世后，返 Oxford 任 Computing 教授、接掌 Programming Research Group} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{承续 Strachey} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1988–2000} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{成为首任 Christopher Strachey Professor of Computing；2000 年荣休，晚年为 Oxford 荣休教授兼 Microsoft Research（Cambridge）首席研究员} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{讲席与荣休} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1995 反思} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{CSP 与 Z 记号未获业界预期采用，他公开检讨形式方法的原始假设} & \cellcolor{langpanel}\textcolor{badgeLang!82!black}{诚实的自我批判} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} "researchers into formal methods (and I was the most mistaken among them)"——1995。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{骑士 · 京都奖 · Royal Medal}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1980）\item Knighted · Kyoto Prize（2000）\item IEEE von Neumann Medal（2011）\item Royal Medal, Royal Society（2023）\end{itemize}} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{跨半个世纪的承认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术共同体} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{FRS（1982）· FREng（2005）· NAE（2006）；1973 年获 ACM 编程系统与语言论文奖} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{三大院士荣衔} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{algpanel}\textcolor{badgeAlg!82!black}{1962 年与研究团队成员 Jill Pym 结婚，育有 3 个孩子} & \cellcolor{logpanel}\textcolor{badgeLog!82!black}{学术伴侣} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 2026 年 3 月逝世后，ACM 等多方机构发布讣告，致敬这位公理化者。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {公理，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {让程序的正确性可以证明。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Sir Tony Hoare};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {托尼·霍尔\quad Sir Tony Hoare\quad 1934 — 2026};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{balance-scale}\enspace Turing 1980 · Kyoto 2000 · Royal Medal 2023\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\navyslide
+\moscowslide
+\quickslide
+\elliottslide
+\logicslide
+\cspslide
+\nullslide
+\turingslide
+\oxfordslide
+\honorsslide
+\closingslide
+\end{document}

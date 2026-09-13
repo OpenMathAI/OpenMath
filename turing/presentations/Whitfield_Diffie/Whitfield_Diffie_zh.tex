@@ -1,0 +1,504 @@
+% =============================================================
+%  公钥密码学先驱：惠特菲尔德·迪菲 (Whitfield Diffie)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：钥齿 / 网格线 —— 呼应公钥-私钥配对
+%  资料来源：turing/pages/2015/Whitfield Diffie/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Diffie 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgePK}{HTML}{2E5A9E}     % 公钥革命 — 蓝
+\definecolor{badgeKD}{HTML}{1E8E8E}     % 密钥分发与签名 — 青绿
+\definecolor{badgeDESW}{HTML}{D9A441}   % 密钥之战 — 琥珀
+\definecolor{badgePol}{HTML}{C0395B}    % 隐私与政策 — 玫瑰
+\definecolor{pkpanel}{RGB}{228,233,246}
+\definecolor{kdpanel}{RGB}{222,240,238}
+\definecolor{despanel}{RGB}{249,240,224}
+\definecolor{polpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 钥齿背景（交错线段母题）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgePK!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeKD!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeDESW!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \draw[badgePK!18, line width=0.7pt] ([xshift=0.5cm,yshift=1.2cm]current page.south west) -- ([xshift=2.4cm,yshift=3.4cm]current page.south west);
+  \draw[badgeKD!18, line width=0.7pt] ([xshift=0.9cm,yshift=1.2cm]current page.south west) -- ([xshift=2.8cm,yshift=3.4cm]current page.south west);
+  \draw[badgeDESW!18, line width=0.7pt] ([xshift=-0.6cm,yshift=3.4cm]current page.south east) -- ([xshift=1.3cm,yshift=1.2cm]current page.south east);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{key}\enspace 公钥密码学先驱\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {惠特菲尔德·迪菲};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Whitfield Diffie\enspace·\enspace 1944 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {流浪学者 · 《New Directions in Cryptography》· 2015 图灵奖（与 Hellman 共享）};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgePK] at (-5.05,0)
+        {公钥革命\\New Directions\par\scriptsize 1976 · 与 Hellman};
+      \node[badge, fill=badgeKD] at (-1.68,0)
+        {密钥与签名\\Key Distribution\par\scriptsize 公钥 · 数字签名};
+      \node[badge, fill=badgeDESW] at (1.68,0)
+        {密钥之战\\DES Critique\par\scriptsize 56-bit 之争};
+      \node[badge, fill=badgePol] at (5.05,0)
+        {隐私与政策\\Privacy on the Line\par\scriptsize 个人的隐私};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"introduced the ideas of public-key cryptography and digital signatures" —— 2015 图灵奖授奖词};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Whitfield_Diffie_Royal_Society.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Whitfield_Diffie_Royal_Society.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Whitfield Diffie};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Sun · ICANN · Stanford CISAC\enspace|\enspace Turing 2015 · Marconi 2000};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{迪菲 - 从华盛顿到公钥时代}{生卒 · 本名 · 国籍 · 教育 · 影响者 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Whitfield_Diffie_Royal_Society.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Whitfield_Diffie_Royal_Society.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Whitfield Diffie};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1944-06-05 —（在世）\\[2pt]\lab{本名}\quad Bailey Whitfield "Whit" Diffie\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=pkpanel, draw=badgePK!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad MIT 数学 BS 1965\\[2pt]
+     \quad Stanford EE 博士班（1975 入学后辍学，无 PhD）\\[2pt]
+     \lab{影响者}\quad John McCarthy（SAIL 庇护，非师承）};
+  \node[infob, fill=kdpanel, draw=badgeKD!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Washington, D.C. · 美国\\[2pt]\lab{家庭}\quad 妻 Mary Fischer（协助查档）\\[2pt]\lab{任职}\quad Sun · ICANN · Stanford CISAC};
+  \node[infob, fill=despanel, draw=badgeDESW!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2015 · Marconi 2000\\[2pt]
+     \quad ForMemRS 2017 · Hamming Medal 2010\\[2pt]
+     \lab{核心领域}\quad 密码学 · 计算机安全\\[2pt]
+     \quad 隐私政策};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{迪菲的一生}{1944 — 至今 · 从十岁的密码架到公钥时代}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.95);
+  \foreach \y/\year/\txt in {
+    3.0/1944/生于华盛顿特区,
+    2.3/1965/获 MIT 数学 BS,
+    1.6/1969/入职 Stanford AI Lab（LISP 1.6）,
+    0.9/1973/离开 SAIL · 开始独立研究密码学,
+    0.2/1974/初遇 Hellman · 两条思路合流,
+    -0.5/1976/《New Directions in Cryptography》发表,
+    -1.2/1978/入职 Northern Telecom,
+    -1.9/1991/加入 Sun Microsystems（至 2009）,
+    -2.55/2015/获图灵奖（与 Hellman 共享）,
+    -2.95/2017/当选英国皇家学会外籍院士
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 少年与密码学启蒙 ---
+\newcommand{\childhoodslide}{\begin{frame}\plainbar\sectiontitle{少年与密码学启蒙 (1944–1965)}{十岁的密码架 · Queens 高中 · MIT 数学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{10 岁} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{教授父亲把 City College 图书馆的整架密码学书籍搬回家} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{一生的兴趣自此点燃} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{Jamaica High School（Queens）：已凭标准化考试高分获 MIT 录取，未考 Regents，只取 local diploma} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{规则之外的少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1965} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{获 MIT 数学 BS；自认"纯数学家"，兴趣在偏微分方程与拓扑} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{数学的底色} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 十岁搬回家的那架书，最终改写了整个密码学。}
+\end{center}
+\end{frame}}
+
+% --- 5. MITRE 与 MATHLAB ---
+\newcommand{\mitreslide}{\begin{frame}\plainbar\sectiontitle{MITRE 与 MATHLAB (1965–69)}{符号计算 · 反战派的兵役之策}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方面}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{职位} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{MITRE Corporation 研究助理（1965–69）} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{走出校园的第一站} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{工作} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{参与开发 MATHLAB —— 早期符号计算系统，Macsyma 的基础之一} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{符号计算先驱实践} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{背景} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{作为反战派（pacifist），借国防承包商职位得以 avoid the draft（页面实载）} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{时代的注脚} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} MATHLAB（1965–69）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}让机器"做数学"的早期尝试 —— Macsyma 血统的源头之一}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Stanford AI Lab 岁月 ---
+\newcommand{\sailslide}{\begin{frame}\plainbar\sectiontitle{Stanford AI Lab 岁月 (1969–73)}{LISP 1.6 · McCarthy 庇护下的密码学萌芽}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方面}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{入职} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{1969 年 11 月入职 Stanford AI Lab 任研究程序员，1973 年 5 月离开} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{四年的硅谷岁月} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{工作} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{做 LISP 1.6（分发于 PDP-10/TOPS-10）与程序正确性问题} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{系统功底} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{环境} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{在 John McCarthy 庇护（under the aegis of）下工作 —— 是工作环境而非读博师承} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{密码学兴趣萌芽} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} SAIL（1969–1973）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}白天写 LISP，夜里想密码 —— 兴趣在 AI 实验室的角落里生长}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 流浪学者 ---
+\newcommand{\wanderslide}{\begin{frame}\plainbar\sectiontitle{流浪学者 (1973–74)}{离开 SAIL · 图书馆挖手稿 · Mary Fischer 同行}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方面}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{出走} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{1973 年 5 月离开 SAIL，独立研究密码学 —— 当时该领域研究多在 NSA 密级管控之下} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{体制外的选择} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方法} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{到图书馆挖稀有手稿、开车串大学访友} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{自己的"密院"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同行} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{女友（后为妻子）Mary Fischer 协助查档} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{并肩的追寻} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 密级之下无公开学术}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}体制外的流浪学者，把密码学还给图书馆与公路}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 1974 年的会面 ---
+\newcommand{\meetingslide}{\begin{frame}\plainbar\sectiontitle{1974 年的会面}{Konheim 的指点 · 与 Hellman 数小时长谈}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{指点} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{1974 年在 IBM Watson 研究中心遇到 Alan Konheim —— 因保密令不能多说，只指点去找 Martin Hellman} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{一句指点的分量} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{长谈} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{与 Hellman 原定半小时的会面聊了数小时} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{两条思路合流} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{落定} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{1975 年春受聘为 grant-funded 兼职研究员；同年 6 月曾入 Stanford EE 博士班，因未完成体格检查等退学 —— 终无 PhD} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{学位之外的道路} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1974 $\rightarrow$ 1975 $\rightarrow$ 1976}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}会面 $\rightarrow$ 兼职 $\rightarrow$ 论文：命运的三级台阶}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. New Directions in Cryptography ---
+\newcommand{\newdirectionsslide}{\begin{frame}\plainbar\sectiontitle{《New Directions in Cryptography》(1976)}{公钥密码 · 数字签名 · 密钥分发}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方面}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{1976 年与 Martin Hellman 发表《New Directions in Cryptography》} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{密码学的分水岭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{思想} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{提出公钥密码学与数字签名，直击密码学根本难题 —— 密钥分发} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{非对称时代开启} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{直接催生非对称密钥算法的新类别} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{现代安全的基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 双钥体制（1976）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}公钥加密 $\rightarrow$ 私钥解密\qquad 私钥签名 $\rightarrow$ 公钥验证}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{6.8}{8.8}\selectfont\itshape\color{muteddark} 授奖理由（ACM，2015）："For fundamental contributions to modern cryptography. Diffie and Hellman's groundbreaking 1976 paper, 'New Directions in Cryptography', introduced the ideas of public-key cryptography and digital signatures, which are the foundation for most regularly-used security protocols on the internet today."}
+\end{center}
+\end{frame}}
+
+% --- 10. DES 之战 ---
+\newcommand{\desslide}{\begin{frame}\plainbar\sectiontitle{DES 之战 (1975–76)}{56-bit 密钥之短 · 与 Hellman 并肩}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方面}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{批评} & \cellcolor{despanel}\textcolor{badgeDESW!82!black}{1975–76 年与 Hellman 批评 NBS 的 DES：56-bit 密钥过短、难防暴力破解} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{公开的技术异议} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{存证} & \cellcolor{despanel}\textcolor{badgeDESW!82!black}{1976 年 Stanford DES 评审会有录音存世} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{历史的第一现场} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{验证} & \cellcolor{despanel}\textcolor{badgeDESW!82!black}{后来的历史证明其正确：NSA 曾施压缩短密钥长度，短密钥终被 EFF DES cracker 类并行破解机攻破} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{时间站在他们一边} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 56-bit 的质疑}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}密钥空间 $2^{56}$ —— 在并行暴力破解面前，"够用"只是暂时}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 从 Northern Telecom 到 Sun ---
+\newcommand{\industryslide}{\begin{frame}\plainbar\sectiontitle{从 Northern Telecom 到 Sun (1978–2009)}{密钥管理 · 首席安全官 · Sun Fellow}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1978–91} & \cellcolor{despanel}\textcolor{badgeDESW!82!black}{Northern Telecom：Secure Systems Research 经理，为 X.25 网络设计 PDSO 密钥管理架构} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{产业密码学落地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1991–2009} & \cellcolor{despanel}\textcolor{badgeDESW!82!black}{Sun Microsystems：distinguished engineer $\rightarrow$ Chief Security Officer / VP $\rightarrow$ Sun Fellow} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{十八年老兵} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主线} & \cellcolor{despanel}\textcolor{badgeDESW!82!black}{主攻密码学公共政策} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{技术之外的战场} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 二十年的产业密码学}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}从电信网络到互联网 —— 密码学走进公司的日常}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 政策与隐私布道 ---
+\newcommand{\policyslide}{\begin{frame}\plainbar\sectiontitle{政策与隐私布道}{Privacy on the Line · ICANN · CISAC}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方面}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著作} & \cellcolor{polpanel}\textcolor{badgePol!82!black}{《Privacy on the Line》（与 Susan Landau 合著，1998；扩充版 2007）—— 电报窃听与加密的政治} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{写出来的政策战} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{机构} & \cellcolor{polpanel}\textcolor{badgePol!82!black}{ICANN 信息安全与密码学 VP（2010-05 – 2012-10）} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{互联网治理一线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术} & \cellcolor{polpanel}\textcolor{badgePol!82!black}{Stanford CISAC consulting scholar（2009–）；Royal Holloway ISG 访问教授（2008）；浙江大学访问教授（2018）} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{持续的思想在场} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 个人 vs 政府}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}他始终关心个人的隐私，而非政府的机密（Levy 语境的忠实转述）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与共享之年 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与共享之年}{图灵奖 2015 · Marconi 2000 · ForMemRS 2017}\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{顶级荣誉} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item ACM Turing Award（2015，与 Martin Hellman 共享）\item Marconi Prize（2000）\item IEEE Hamming Medal（2010）\item ForMemRS · NAE 院士（2017）\end{itemize}} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{公钥革命的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{早年荣誉} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{IEEE Fink Prize Paper Award（1981，与 Hellman）· ETH 荣誉博士（1992）· ACM Kanellakis Award（1996）· Franklin Institute Levy Medal（1997）} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{跨学科与跨行业的承认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同行者} & \cellcolor{pkpanel}\textcolor{badgePK!82!black}{Martin Hellman（1976 论文与奖项共享）· Ralph Merkle（公钥先驱并列提及）· Susan Landau（合著者）} & \cellcolor{kdpanel}\textcolor{badgeKD!82!black}{一场共同的思想运动} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} CHM Fellow（2011）与 National Inventors Hall of Fame —— 理由中，Merkle 与 Hellman 并列在侧。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：公钥时代的地基}{New Directions · 密钥分发 · DES 之战 · 隐私政策}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=pkpanel, draw=badgePK!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePK} 公钥革命}\\[3pt]New Directions\\[2pt]1976 · 与 Hellman};
+\node[leg, fill=kdpanel, draw=badgeKD!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeKD} 密钥与签名}\\[3pt]密钥分发之解\\[2pt]数字签名};
+\node[leg, fill=despanel, draw=badgeDESW!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDESW} 密钥之战}\\[3pt]DES 56-bit 批评\\[2pt]历史证明正确};
+\node[leg, fill=polpanel, draw=badgePol!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePol} 隐私与政策}\\[3pt]Privacy on the Line\\[2pt]个人的隐私};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 互联网今天使用的绝大多数安全协议，都建立在这份 1976 年的遗产之上。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 公钥密码 $\rightarrow$ 数字签名 $\rightarrow$ 现代安全协议（按授奖理由表述）\\[2pt]垄断终结之后，密码学属于每一个公民。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {垄断终结之后，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {密码学属于每一个公民。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Whitfield Diffie};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {惠特菲尔德·迪菲\quad Whitfield Diffie\quad 1944 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{key}\enspace Turing 2015 · Marconi 2000 · ForMemRS 2017\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\childhoodslide
+\mitreslide
+\sailslide
+\wanderslide
+\meetingslide
+\newdirectionsslide
+\desslide
+\industryslide
+\policyslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

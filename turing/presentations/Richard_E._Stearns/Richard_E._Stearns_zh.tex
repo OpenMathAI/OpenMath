@@ -1,0 +1,473 @@
+% =============================================================
+%  理查德·斯特恩斯 (Richard E. Stearns)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：嵌套方括号层级 —— 呼应分层定理/语法导向转译的形式语言视觉
+%  资料来源：turing/pages/1993/Richard E. Stearns/index.html（stub，事实从简）
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Stearns 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeCX}{HTML}{2E5A9E}     % 计算复杂性 — 蓝
+\definecolor{badgeFL}{HTML}{1E8E8E}     % 形式语言 — 青绿
+\definecolor{badgeCC}{HTML}{D9A441}     % 编译器技术 — 琥珀
+\definecolor{badgeGT}{HTML}{C0395B}     % 博弈论出身 — 玫瑰
+\definecolor{cxpanel}{RGB}{228,233,246}
+\definecolor{flpanel}{RGB}{222,240,238}
+\definecolor{ccpanel}{RGB}{249,240,224}
+\definecolor{gtpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 嵌套方括号背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \draw[badgeFL!30, line width=1.1pt, rounded corners=3pt]
+    ([xshift=-5.2cm, yshift=-1.1cm]current page.north west) rectangle ++(1.9,1.5);
+  \draw[badgeFL!22, line width=0.9pt, rounded corners=3pt]
+    ([xshift=-4.8cm, yshift=-1.5cm]current page.north west) rectangle ++(1.1,0.8);
+  \draw[badgeCX!26, line width=1.0pt, rounded corners=3pt]
+    ([xshift=0.4cm, yshift=0.6cm]current page.south west) rectangle ++(1.9,1.3);
+  \draw[badgeCX!18, line width=0.8pt, rounded corners=3pt]
+    ([xshift=0.8cm, yshift=0.95cm]current page.south west) rectangle ++(1.0,0.7);
+  \draw[badgeGT!24, line width=0.9pt, rounded corners=3pt]
+    ([xshift=1.2cm, yshift=-0.7cm]current page.north east) rectangle ++(1.7,1.3);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{layer-group}\enspace 计算复杂性理论奠基人\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {理查德·斯特恩斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Richard E. Stearns\enspace·\enspace 1936 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {从博弈论到复杂性理论 · LL 解析器 · 1993 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeCX] at (-5.05,0)
+        {计算复杂性\\Complexity Theory\par\scriptsize 1965 奠基论文};
+      \node[badge, fill=badgeFL] at (-1.68,0)
+        {形式语言\\Formal Languages\par\scriptsize DPDA 正则性};
+      \node[badge, fill=badgeCC] at (1.68,0)
+        {编译器技术\\LL Parsers\par\scriptsize Syntax-Directed};
+      \node[badge, fill=badgeGT] at (5.05,0)
+        {博弈论出身\\Game Theory\par\scriptsize Princeton 1961};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"in recognition of their seminal paper which established the foundations for the field of computational complexity theory."\newline —— 1993 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Dick_Stearns.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Dick_Stearns.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Dick Stearns};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Carleton · Princeton · SUNY Albany\enspace|\enspace Turing 1993};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{斯特恩斯 - 从新泽西到复杂性理论}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Dick_Stearns.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Dick_Stearns.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Dick Stearns};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1936-07-05 —（在世）\\[2pt]\lab{本名}\quad Richard Edwin Stearns\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=flpanel, draw=badgeFL!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Carleton 数学 B.A. 1958\\[2pt]
+     \quad Princeton 数学 MA · PhD 1961\\[2pt]
+     \lab{师承}\quad Harold W. Kuhn（导师）};
+  \node[infob, fill=cxpanel, draw=badgeCX!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Caldwell, New Jersey\\[2pt]\lab{任职}\quad University at Albany, SUNY\\[2pt]
+     \quad 杰出荣休教授};
+  \node[infob, fill=ccpanel, draw=badgeCC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1993 · ACM Fellow 1994\\[2pt]
+     \quad Lanchester Prize 1995\\[2pt]
+     \lab{核心领域}\quad 计算复杂性 · 形式语言\\[2pt]
+     \quad 解析算法};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{斯特恩斯的一生}{1936 — · 从博弈论青年到复杂性理论奠基人}
+\vspace{-0.35cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,2.75) -- (0,-2.95);
+  \foreach \y/\year/\txt in {
+    2.75/1936/{生于 Caldwell, New Jersey},
+    2.13/1958/Carleton College 数学学士,
+    1.51/1961/Princeton 数学博士（Kuhn 门下，合作博弈论）,
+    0.89/1963/与 Hartmanis 合作：保正则运算的系统研究,
+    0.27/1965/奠基论文 On the computational complexity of algorithms,
+    -0.35/1967/DPDA 正则性判定：可判定,
+    -0.97/1968/与 Lewis II 引入 LL 解析器,
+    -1.59/1993/获图灵奖（与 Hartmanis 共享）,
+    -2.21/1994/当选 ACM Fellow,
+    -2.83/1995/获 Frederick W. Lanchester Prize
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} 现于 University at Albany（SUNY）任计算机科学杰出荣休教授——在世留白}
+\end{center}
+\end{frame}}
+
+% --- 4. 新泽西与 Carleton ---
+\newcommand{\carletonslide}{\begin{frame}\plainbar\sectiontitle{新泽西与 Carleton (1936--1958)}{Caldwell 出生 · 数学学士 · 从简的起点}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{背景}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1936-07-05} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{生于美国新泽西州 Caldwell；本名 Richard Edwin Stearns，熟人称 "Dick" Stearns} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{美国东岸} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1958} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{毕业于 Carleton College，获数学学士（B.A.）} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{数学根基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.35cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 页面所载止于此——一位数学青年的起点，朴素而清晰。}
+\end{center}
+\end{frame}}
+
+% --- 5. Princeton 博弈论博士 ---
+\newcommand{\princetonslide}{\begin{frame}\plainbar\sectiontitle{Princeton 博弈论博士 (1958--1961)}{Kuhn 门下 · 三人合作博弈 · 复杂性理论家的起点}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{gtpanel}\textcolor{badgeGT!82!black}{师从 Harold W. Kuhn——Princeton 数学家、博弈论家（Kuhn–Tucker 条件之 "Kuhn"）} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{博弈论的严谨} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{gtpanel}\textcolor{badgeGT!82!black}{\textit{Three person cooperative games without side payments}——无单侧支付的三人合作博弈} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{1961 数学 PhD} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转向} & \cellcolor{gtpanel}\textcolor{badgeGT!82!black}{博士背景是博弈论而非自动机——复杂性理论家的起点在博弈论} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{学科交叉的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.30cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 博士论文（Princeton, 1961）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Three Person Cooperative Games without Side Payments}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. GE 研究实验室 ---
+\newcommand{\geslide}{\begin{frame}\plainbar\sectiontitle{GE 研究实验室}{与 Hartmanis 的合作 · 工业实验室出基础理论}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{相遇合作} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{与 Juris Hartmanis 在 General Electric 研究实验室合作} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{双星同处一室} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同事关系} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{两人是同事与合作者——以合著论文共同奠定复杂性理论} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{1993 共享图灵奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{独特视角} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{从工业实验室走出的基础理论——复杂性理论的一段佳话} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{理论与工程交汇} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.30cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 工业实验室里的基础理论}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}GE 研究实验室——复杂性理论奠基论文的诞生地}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 1963 前奏 ---
+\newcommand{\regularslide}{\begin{frame}\plainbar\sectiontitle{1963 前奏：保正则的语言运算}{Regularity Preserving Modifications of Regular Expressions}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{与 Hartmanis 合著 \textit{Regularity preserving modifications of regular expressions}} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{Information and Control 6(1): 55--69} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{贡献} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{首次系统研究保持正则语言的语言运算（"A first systematic study"）} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{形式语言的系统化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{1965 奠基论文的前奏——两位作者合作轨迹的起点} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{合作的序幕} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 保正则运算（regularity preserving）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$L$ 为正则语言 $\Rightarrow$ 运算后的语言仍为正则}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 1965 奠基论文 ---
+\newcommand{\foundslide}{\begin{frame}\plainbar\sectiontitle{1965 奠基论文：从 Stearns 视角}{On the Computational Complexity of Algorithms · 时间分层}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{复杂度类} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{与 Hartmanis 定义复杂度类——按求解所需时间对计算问题分类} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{领域的地基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{时间分层定理} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{论文包含时间分层定理——塑造了计算复杂性理论领域的定理之一} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{奠基性结果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{空间复杂度} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{与 Lewis、Hartmanis 另定义基于空间占用的复杂度类，证明首个空间分层定理} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{三人三重奏} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{出处} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{Transactions of the American Mathematical Society 117: 285--306} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{1993 图灵奖理由} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1993 图灵奖理由（ACM 表述）}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}"\ldots established the foundations for the field of computational complexity theory."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. DPDA 正则性判定 ---
+\newcommand{\dpdaslide}{\begin{frame}\plainbar\sectiontitle{下推自动机的正则性判定 (1967)}{A Regularity Test for Pushdown Machines}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{Stearns 独著 \textit{A Regularity Test for Pushdown Machines}} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{Information and Control 11(3): 323--340} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{基本问题} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{回答确定性下推自动机（DPDA）的一个基本问题} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{自动机理论核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{答案} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{判定给定的 DPDA 是否接受正则语言——是可判定的} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{可判定性结果} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} DPDA 正则性测试（1967）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}给定 DPDA $\mathcal{A}$：$L(\mathcal{A})$ 是否正则？\quad —— 可判定}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. LL 解析器 ---
+\newcommand{\llslide}{\begin{frame}\plainbar\sectiontitle{LL 解析器的引入 (1968)}{Syntax-Directed Transduction · 编译器设计的基石}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{ccpanel}\textcolor{badgeCC!82!black}{与 P.M. Lewis II 合著 \textit{Syntax-Directed Transduction}} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{JACM 15(3): 465--488} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{贡献} & \cellcolor{ccpanel}\textcolor{badgeCC!82!black}{引入 LL 解析器（LL parsers）} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{本篇独有亮点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{ccpanel}\textcolor{badgeCC!82!black}{LL 解析器在编译器设计中扮演重要角色} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{理论的实用馈赠} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 从复杂性理论到编译器}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Syntax-Directed Transduction} $\rightarrow$ LL parsers $\rightarrow$ 编译器设计}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. Albany 执教岁月 ---
+\newcommand{\albanyslide}{\begin{frame}\plainbar\sectiontitle{Albany 执教岁月}{SUNY Albany · 杰出荣休教授 · 门生}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方面}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{任教} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{长期执教于 University at Albany（SUNY 系统成员）} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{学术生涯的归宿} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{现职} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{计算机科学杰出荣休教授（Distinguished Professor Emeritus）} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{在世留白} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{门生} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{Madhav V. Marathe · Thomas O'Connell} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{谱系延续} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.35cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 GE 的研究走廊到 SUNY 的讲台，他把一生留给了计算。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1993 · Fellow · Lanchester Prize}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{至高荣誉} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{ACM Turing Award 1993（与 Hartmanis 共享）——表彰其奠基论文确立了计算复杂性理论领域的基础} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{共享的荣光} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Fellow} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{1994 年当选 ACM Fellow} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{学界公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术奖项} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{Frederick W. Lanchester Prize 1995} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{运筹学著作奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术传承} & \cellcolor{cxpanel}\textcolor{badgeCX!82!black}{门生 Madhav V. Marathe · Thomas O'Connell；合作者 Hartmanis · Lewis II} & \cellcolor{flpanel}\textcolor{badgeFL!82!black}{谱系延续} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 三项荣誉，一项奠基——简洁而分量千钧。}
+\end{center}
+\end{frame}}
+
+% --- 13. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：与 Hartmanis 的双星并立}{复杂性奠基 · 形式语言 · 编译器技术 · 博弈论出身}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=cxpanel, draw=badgeCX!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCX} 复杂性奠基}\\[3pt]1965 奠基论文\\[2pt]时间分层定理};
+\node[leg, fill=flpanel, draw=badgeFL!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeFL} 形式语言}\\[3pt]保正则运算\\[2pt]DPDA 正则性判定};
+\node[leg, fill=ccpanel, draw=badgeCC!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCC} 编译器技术}\\[3pt]LL 解析器\\[2pt]Syntax-Directed};
+\node[leg, fill=gtpanel, draw=badgeGT!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeGT} 博弈论出身}\\[3pt]Princeton 1961\\[2pt]Kuhn 门下};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 从博弈论启程，为复杂性理论奠基，又把馈赠留给编译器。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 复杂度类 $\rightarrow$ 时间分层定理 $\rightarrow$ DPDA 正则性 $\rightarrow$ LL 解析器\\[2pt]与 Hartmanis 双星并立——复杂性理论的现代纪元由两人共同开启。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 14. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {求索，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {自博弈论启程，抵达复杂性的基石。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Richard E. Stearns};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {理查德·斯特恩斯\quad Richard E. Stearns\quad 1936 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{layer-group}\enspace Turing 1993 · 计算复杂性理论奠基人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\carletonslide
+\princetonslide
+\geslide
+\regularslide
+\foundslide
+\dpdaslide
+\llslide
+\albanyslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

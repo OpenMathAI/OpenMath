@@ -1,0 +1,517 @@
+% =============================================================
+%  图灵奖 + 诺贝尔奖双冠：赫伯特·西蒙 (Herbert A. Simon)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：满意化 vs 最优化的抉择 —— 柔和棋盘格淡纹理
+%  资料来源：turing/pages/1975/Herbert A. Simon/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Simon 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeEcon}{HTML}{2E5A9E}   % 决策与经济学 — 蓝
+\definecolor{badgeAI}{HTML}{1E8E8E}     % 人工智能 — 青绿
+\definecolor{badgeCog}{HTML}{D9A441}    % 认知心理学 — 琥珀
+\definecolor{badgeOrg}{HTML}{C0395B}    % 组织理论 — 玫瑰
+\definecolor{econpanel}{RGB}{228,233,246}
+\definecolor{aipanel}{RGB}{222,240,238}
+\definecolor{cogpanel}{RGB}{249,240,224}
+\definecolor{orgpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 棋盘格淡纹理背景（满意化 vs 最优化的抉择 / 棋盘 chunks）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeEcon!12, rounded corners=2pt] ([xshift=-5.6cm,yshift=2.2cm]current page.center) rectangle ([xshift=-4.4cm,yshift=3.4cm]current page.center);
+  \fill[badgeEcon!8, rounded corners=2pt] ([xshift=-4.4cm,yshift=1.0cm]current page.center) rectangle ([xshift=-3.2cm,yshift=2.2cm]current page.center);
+  \fill[badgeCog!12, rounded corners=2pt] ([xshift=5.4cm,yshift=-1.6cm]current page.center) rectangle ([xshift=6.6cm,yshift=-0.4cm]current page.center);
+  \fill[badgeCog!8, rounded corners=2pt] ([xshift=4.2cm,yshift=-2.8cm]current page.center) rectangle ([xshift=5.4cm,yshift=-1.6cm]current page.center);
+  \fill[badgeAI!10, rounded corners=2pt] ([xshift=5.6cm,yshift=2.6cm]current page.center) rectangle ([xshift=6.8cm,yshift=3.8cm]current page.center);
+  \fill[coveraccent!10, rounded corners=2pt] ([xshift=-6.6cm,yshift=-3.0cm]current page.center) rectangle ([xshift=-5.4cm,yshift=-1.8cm]current page.center);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{trophy}\enspace 图灵奖 + 诺贝尔奖双冠\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {赫伯特·西蒙};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Herbert A. Simon\enspace·\enspace 1916 — 2001};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {有限理性 · 满意化 · 1975 图灵奖（与 Newell 共享）· 1978 诺贝尔经济学奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeEcon] at (-5.05,0)
+        {有限理性\\Bounded Rationality\par\scriptsize 满意化 satisficing};
+      \node[badge, fill=badgeOrg] at (-1.68,0)
+        {决策与组织\\Administrative Behavior\par\scriptsize 组织决策};
+      \node[badge, fill=badgeAI] at (1.68,0)
+        {人工智能\\Logic Theorist · GPS\par\scriptsize 与 Newell 共创};
+      \node[badge, fill=badgeCog] at (5.05,0)
+        {认知心理学\\EPAM · chunks\par\scriptsize 专家知识研究};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for his pioneering research into the decision-making process within economic organizations" —— 1978 诺贝尔经济学奖（获奖理由）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Herbert_Simon_1981.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Herbert_Simon_1981.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Herbert A. Simon · c. 1981};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Chicago · CMU\enspace|\enspace Turing 1975 · Nobel 1978};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{西蒙 - 从密尔沃基到双冠加身}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Herbert_Simon_1981.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Herbert_Simon_1981.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Herbert A. Simon · c. 1981};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1916-06-15 — 2001-02-09\\[2pt]\lab{本名}\quad Herbert Alexander Simon\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=econpanel, draw=badgeEcon!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Chicago 政治科学 BA 1936\\[2pt]
+     \quad Chicago 政治科学 PhD 1943\\[2pt]
+     \lab{师承}\quad Henry Schultz（博士导师）\\[2pt]
+     \quad Carnap · Lasswell · Merriam};
+  \node[infob, fill=aipanel, draw=badgeAI!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 密尔沃基 · 威斯康星\\[2pt]\lab{去世地}\quad 匹兹堡 · 宾夕法尼亚\\[2pt]\lab{任职}\quad Carnegie Mellon 1949--2001};
+  \node[infob, fill=cogpanel, draw=badgeCog!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1975 · Nobel 1978\\[2pt]
+     \quad NMS 1986 · von Neumann 1988\\[2pt]
+     \lab{核心领域}\quad 决策 · 有限理性 · AI\\[2pt]
+     \quad 认知心理学 · 组织理论};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{西蒙的一生}{1916 — 2001 · 从密尔沃基到双冠加身}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{6.6}{8.6}\selectfont, align=left, text width=9.2cm},
+  yr/.style={font=\fontsize{8.0}{10.0}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.6);
+  \foreach \y/\year/\txt in {
+    3.0/1916/生于威斯康星州密尔沃基,
+    2.5/1933/入读芝加哥大学（因色盲放弃生物，转向社会科学）,
+    2.0/1936/获芝加哥大学政治科学学士（BA）,
+    1.5/1943/获芝加哥大学政治科学博士（PhD，论文主题：组织决策）,
+    1.0/1947/出版《Administrative Behavior》,
+    0.5/1949/加入 Carnegie Tech，任工业管理系教授兼系主任,
+    0.0/1956/Logic Theory Machine · IPL（与 Newell/Shaw）,
+    -0.5/1957/GPS 问世 · 预言计算机十年内超越人类象棋,
+    -1.0/1975/与 Allen Newell 共获 ACM 图灵奖,
+    -1.5/1978/获诺贝尔经济学奖（组织决策过程的开创性研究）,
+    -2.0/2001/腹部肿瘤手术后并发症，逝于匹兹堡，享年 84
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.0pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 密尔沃基的少年 ---
+\newcommand{\milwaukeeslide}{\begin{frame}\plainbar\sectiontitle{密尔沃基的少年 (1916--1933)}{电气工程师之子 · 无神论信件 · 单一税辩论}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{父 Arthur Simon：德国 Darmstadt 出身的犹太电气工程师、发明家、专利律师，1903 年赴美；母 Edna Merkel：钢琴家} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{欧洲移民家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{舅舅} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Harold Merkel 师从 John R. Commons 学经济学 —— 他最早的学术启蒙之一} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{社会科学的入口} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{少年立场} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{中学时致信《密尔沃基日报》为无神论者的公民自由辩护；辩论队中出于信念为 George 的单一税主张辩护} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{独立思想的雏形} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{早年阅读} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{受 Norman Angell《The Great Illusion》与 Henry George《Progress and Poverty》影响} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{1979 年仍主张土地价值税} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个在中学就敢于公开立论的少年，最终成为横跨五大学科的学者。}
+\end{center}
+\end{frame}}
+
+% --- 5. 芝加哥岁月 ---
+\newcommand{\chicagoslide}{\begin{frame}\plainbar\sectiontitle{芝加哥岁月 (1933--1943)}{色盲弃生物 · Schultz 门下 · 政治科学 BA 与 PhD}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1933 入学} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{进入芝加哥大学，本想学生物，却因"色盲与实验室里的笨拙"放弃，转向社会科学与数学} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{命运的岔路口} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师群} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{最重要的导师是计量经济学家 Henry Schultz；亦受教于 Lasswell、Rashevsky、Carnap、Merriam} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{政治科学 BA 1936 / PhD 1943} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{研究起点} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{选修"量度地方政府"课程后成为 Clarence Ridley 的研究助理，1938 年合著《Measuring Municipal Activities》} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{首部合著} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博士论文} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{研究对象是组织决策（organizational decision-making）} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{一生主线的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一门量度地方政府的课程，把他的注意力引向了组织决策。}
+\end{center}
+\end{frame}}
+
+% --- 6. Berkeley 与 IIT ---
+\newcommand{\berkeleyslide}{\begin{frame}\plainbar\sectiontitle{Berkeley 与 IIT (1939--1949)}{运筹组主任 · Cowles Commission · Hawkins--Simon 定理}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1939--1942} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{在 UC Berkeley 主持运筹研究组；经与芝加哥大学约定，以通信方式参加博士考试并课余写作论文} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{通信完成博士答辩} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1942--1949} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{任 Illinois Institute of Technology 政治科学教授兼系主任；参加 Cowles Commission 研讨班（Haavelmo、Marschak、Koopmans 在列）} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{深入经济学研究} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{公共服务} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{参与创建 Economic Cooperation Administration（1948，管理马歇尔计划援助）；后服务过 Johnson 总统科学顾问委员会} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{学术之外的公共角色} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1950s} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 David Hawkins 发现并证明 Hawkins--Simon 定理：投入产出矩阵存在正解向量的条件} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{数理经济学的贡献} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从运筹组主任到 Cowles 研讨班，经济学与组织研究在他身上汇流。}
+\end{center}
+\end{frame}}
+
+% --- 7. Administrative Behavior ---
+\newcommand{\adminslide}{\begin{frame}\plainbar\sectiontitle{《Administrative Behavior》(1947)}{基于博士论文 · 一生工作的基石}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{成书} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{1947 年首版，基于其博士论文，此后多次修订更新 —— 是他一生工作的基石} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{管理决策理论奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{核心命题} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{管理理论在很大程度上是关于人类决策的理论，必须同时立足经济学与心理学} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{双学科视角} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{决策正确性} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{两条标准：达成期望目标的充分性；取得结果的效率} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{可操作的评价框架} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{组织两要素} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{权威（authority）与忠诚/认同（loyalty and identification）—— 组织行为的两大普遍要素} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{组织行为的基础} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.6}{11.2}\selectfont\bfseries\color{coveraccent!85!black} "[If] there were no limits to human rationality administrative theory would be barren..."}\\[1pt]
+  {\fontsize{7.2}{9.2}\selectfont\color{muteddark} —— 《Administrative Behavior》，p. xxviii}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 有限理性与满意化 ---
+\newcommand{\boundrationalityslide}{\begin{frame}\plainbar\sectiontitle{有限理性与满意化}{bounded rationality · satisficing · 对抗 homo economicus}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{Simon 的主张}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{有限理性} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 "homo economicus" 相反：备选方案与后果只能被部分知晓，手段与目的难以完全区分、关联不全} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{行为经济学的核心主题} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{满意化} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{人只能选择"足够好"而非最优的方案 —— 这正是他 1978 年获诺奖的领域} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{决策理论的革命} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{两种理性} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{他强调心理学家使用"程序性"（procedural）理性定义，而经济学家使用"实质性"（substantive）定义} & \cellcolor{orgpanel}\textcolor{badgeOrg!82!black}{学科的分野} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 满意化 vs 最优化：两种决策逻辑}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}$
+    \text{最优化}:\ \arg\max_{x}\ U(x)
+    \qquad
+    \text{满意化}:\ \min\{x:\ U(x)\geq\alpha\}$
+  }
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. CMU 五十二年 ---
+\newcommand{\cmuslide}{\begin{frame}\plainbar\sectiontitle{CMU 五十二年 (1949--2001)}{工业管理系 · 帮助创建计算机学院}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1949} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{受任 Carnegie Institute of Technology（"Carnegie Tech"）工业管理系教授兼系主任} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{CMU 岁月的开始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1967} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{校名改为 Carnegie-Mellon University} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{学校更名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{跨学科任教} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{此后又在同一所大学讲授心理学与计算机科学} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{跨学科的身体力行} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{计算机学院} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{帮助创建了 CMU 计算机学院（School of Computer Science）—— 世界最早的计算机学院之一} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{制度性遗产} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 1949 到 2001，他的职业生涯与卡内基梅隆融为一体。}
+\end{center}
+\end{frame}}
+
+% --- 10. 与 Newell 共创 AI ---
+\newcommand{\newellslide}{\begin{frame}\plainbar\sectiontitle{与 Newell 共创 AI (1956--1957)}{Logic Theory Machine · GPS · IPL · NSS memory}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{2.2cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成果}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Logic Theory Machine} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{1956 年与 Allen Newell 创造；General Problem Solver（GPS，1957）可能是第一个把解题策略与具体问题信息分离开来的方法} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{AI 先驱工作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IPL (1956)} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Information Processing Language 由 Newell、Cliff Shaw 与 Simon 共同发展；IPL 中的列表处理发展出了链表} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{list processing 源头} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{NSS memory} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Donald Knuth 记载：链表原名 "NSS memory"，以三位发明者（Newell/Shaw/Simon）命名} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{数据结构的纪念} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{7.9cm}
+  \centering
+  {\fontsize{8.6}{11}\selectfont\bfseries\color{coveraccent!85!black} 1958 年联名论文}\\[1pt]
+  {\fontsize{7.4}{9.4}\selectfont\color{coverdark!85} Newell \& Shaw \& Simon, "Elements of a Theory of Human Problem Solving", \textit{Psychological Review}}
+  \end{minipage}%
+}\hspace{0.3cm}%
+\begin{minipage}{3.6cm}
+\centering
+{\IfFileExists{images/Herbert_A._Simon_and_Allen_Newell_Chess_Match.jpg}{\includegraphics[height=2.1cm,keepaspectratio]{Herbert_A._Simon_and_Allen_Newell_Chess_Match.jpg}}{\textcolor{covermuted}{\faIcon{user}}}}\\[-2pt]
+{\fontsize{5.6}{7.0}\selectfont\itshape\color{covermuted} Simon（左）与 Newell 对弈，c. 1958}
+\end{minipage}
+\end{center}
+\end{frame}}
+
+% --- 11. Human Problem Solving 与 EPAM ---
+\newcommand{\psychslide}{\begin{frame}\plainbar\sectiontitle{Human Problem Solving 与 EPAM (1972)}{口头协议分析 · 50,000 chunks}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成果}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{HPS (1972)} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 Allen Newell 合著《Human Problem Solving》：用产生式规则模拟人类问题解决行为的理论} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{认知科学里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{EPAM} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 Edward Feigenbaum 提出 EPAM —— 最早以计算机程序实现的学习理论之一} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{学习理论程序化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{协议分析} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{与 Anders Ericsson 发展口头协议分析（verbal protocol analysis）的实验技术} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{新的测量手段} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专长研究} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{成为专家约需十年经验，源于习得约 50,000 个信息块（chunks）—— 棋专家约习得 50,000 个棋局模式；后与 Gobet 扩展为 CHREST 模型} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{专长的定量刻画} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{7.6}{9.8}\selectfont\color{muteddark} 1963/1967 年两度撰文回应 Neisser 的"冷/热认知"之辩 —— 其情绪认知论文多年被 AI 界忽视，后经 Sloman、Picard 等工作重新受到关注。}
+\end{center}
+\end{frame}}
+
+% --- 12. 双冠：图灵奖与诺贝尔奖 ---
+\newcommand{\nobelslide}{\begin{frame}\plainbar\sectiontitle{双冠：1975 图灵奖 · 1978 诺贝尔经济学奖}{组织决策研究的一生}
+\vspace{-0.25cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{aipanel}{%
+  \begin{minipage}{11.7cm}
+  {\fontsize{8.6}{11.4}\selectfont\color{coverdark!90}\textbf{ACM Turing Award 1975（与 Allen Newell 共享）：} "In joint scientific efforts extending over twenty years, initially in collaboration with J.C. (Cliff) Shaw at the RAND Corporation, and subsequentially [sic] with numerous faculty and student colleagues at Carnegie Mellon University, they have made basic contributions to artificial intelligence, the psychology of human cognition, and list processing."}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  {\fontsize{8.6}{11.4}\selectfont\color{coverdark!90}\textbf{Nobel Memorial Prize in Economic Sciences 1978：} "for his pioneering research into the decision-making process within economic organizations"\\[2pt]
+  {\fontsize{7.4}{9.6}\selectfont\color{muteddark} —— 对经济组织内部决策过程的开创性研究；他是第一位严格考察管理者在信息不完备时如何决策的学者。}}
+  \end{minipage}%
+}
+\end{center}
+\vspace{0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 图灵奖与诺贝尔奖，同归于"决策"二字。}
+\end{center}
+\end{frame}}
+
+% --- 13. 预言家与误判 ---
+\newcommand{\predictionslide}{\begin{frame}\plainbar\sectiontitle{预言家与误判 (1957 / 1965)}{如实呈现 · 勿粉饰}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{预言}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{现实}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1957} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{预言计算机国际象棋将在"十年内"超越人类棋手} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{实际上这一转折用了约四十年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1965} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{预言 "machines will be capable, within twenty years, of doing any work a man can do."} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{至今仍远未实现} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 乐观的误判，亦是时代的注脚}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}\textit{AI 先驱的预言屡屡超前于现实 —— 这本身是这门学科历史的真实部分。}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{27 部著作 · 近千篇论文 · 门生成林}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要荣誉} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Turing Award（1975，与 Allen Newell 共享）\newline Nobel Memorial Prize in Economic Sciences（1978）\newline National Medal of Science（1986）· von Neumann Theory Prize（1988）\newline APA 杰出科学贡献奖（1969）· 终身贡献奖（1993）· ACM Fellow（1994）· IJCAI Award（1995）} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{双冠加身的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著述与影响} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{27 部著作、近千篇论文；截至 2016 年是 Google Scholar 上 AI 与认知心理学领域被引最多的人；《Organizations》（1958，与 March 合著）为现代组织理论奠基} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{20 世纪最具影响力的社会科学家之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{aipanel}\textcolor{badgeAI!82!black}{Feigenbaum · Newell · Korf · Muth · Pounds · Sarasvathy · Williamson · Waldinger} & \cellcolor{cogpanel}\textcolor{badgeCog!82!black}{学术谱系深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.2cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 钢琴家、登山爱好者、开过一门法国大革命本科课 —— 一个兴趣广博的头脑。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {有限理性，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {让决策回到真实的人。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Herbert A. Simon};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {赫伯特·西蒙\quad Herbert A. Simon\quad 1916 — 2001};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{trophy}\enspace Turing 1975 · Nobel Memorial Prize in Economic Sciences 1978\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\milwaukeeslide
+\chicagoslide
+\berkeleyslide
+\adminslide
+\boundrationalityslide
+\cmuslide
+\newellslide
+\psychslide
+\nobelslide
+\predictionslide
+\honorsslide
+\closingslide
+\end{document}

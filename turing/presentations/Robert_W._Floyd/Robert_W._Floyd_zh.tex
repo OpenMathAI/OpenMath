@@ -1,0 +1,501 @@
+% =============================================================
+%  程序设计方法学先驱：罗伯特·弗洛伊德 (Robert W. Floyd)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：柔和气泡 —— 呼应「从断言到语义、从图到像素」的普适算法语言
+%  资料来源：turing/pages/1978/Robert W. Floyd/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Floyd 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeParse}{HTML}{2E5A9E}    % 解析理论 — 蓝
+\definecolor{badgeSem}{HTML}{1E8E8E}      % 程序语义与验证 — 青绿
+\definecolor{badgeAlgo}{HTML}{D9A441}     % 算法分析 — 琥珀
+\definecolor{badgeImg}{HTML}{C0395B}      % 图像计算与普及 — 玫瑰
+\definecolor{parsepanel}{RGB}{228,233,246}
+\definecolor{sempanel}{RGB}{222,240,238}
+\definecolor{algopanel}{RGB}{249,240,224}
+\definecolor{imgpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景（柔和气泡：稀疏大块实心圆）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeParse!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeSem!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeAlgo!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeImg!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{cogs}\enspace 程序设计方法学先驱\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {罗伯特·弗洛伊德};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Robert W. Floyd\enspace·\enspace 1936 — 2001};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {解析 · 语义 · 验证 · 算法 · 1978 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeParse] at (-5.05,0)
+        {解析理论\\Parsing\par\scriptsize 算符优先文法};
+      \node[badge, fill=badgeSem] at (-1.68,0)
+        {语义与验证\\Semantics\par\scriptsize 1967 断言开山};
+      \node[badge, fill=badgeAlgo] at (1.68,0)
+        {算法分析\\Algorithms\par\scriptsize Floyd--Warshall};
+      \node[badge, fill=badgeImg] at (5.05,0)
+        {图像计算\\Dithering\par\scriptsize Floyd--Steinberg};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"a clear influence on methodologies for the creation of efficient and reliable software." —— 1978 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Robert_W._Floyd.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Robert_W._Floyd.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Robert W. Floyd};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Carnegie Mellon · Stanford\enspace|\enspace Turing 1978};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{弗洛伊德 - 无博士的教授}{生卒 · 本名 · 国籍 · 教育 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Robert_W._Floyd.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Robert_W._Floyd.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Robert W. Floyd};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1936-06-08 — 2001-09-25\\[2pt]\lab{本名}\quad Robert Willoughby Floyd\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=parsepanel, draw=badgeParse!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Chicago B.A. 1953（17 岁）\\[2pt]
+     \quad Chicago B.S. 物理 1958\\[2pt]
+     \lab{师承}\quad 无博士导师（无 PhD）};
+  \node[infob, fill=imgpanel, draw=badgeImg!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 纽约市 · 美国\\[2pt]\lab{去世地}\quad 斯坦福 · 加利福尼亚\\[2pt]\lab{任职}\quad CMU $\rightarrow$ Stanford};
+  \node[infob, fill=algopanel, draw=badgeAlgo!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1978 · IEEE Pioneer 1991\\[2pt]
+     \quad AAAS Fellow 1974\\[2pt]
+     \lab{核心领域}\quad 算法 · 解析 · 语义 · 验证};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{弗洛伊德的一生}{1936 — 2001 · 从早慧少年到程序设计方法学奠基人}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1936/生于纽约市,
+    2.3/1953/芝加哥大学文学士（年仅 17 岁）,
+    1.6/1958/再获芝加哥大学物理学士,
+    0.9/1950s/入 Armour Research Foundation,
+    0.2/1960s 初/计算机操作员，开始大量发表论文,
+    -0.5/27 岁前/获聘 Carnegie Mellon 副教授,
+    -1.2/六年后/升任 Stanford 正教授,
+    -1.9/1978/获图灵奖（五大子领域奠基）,
+    -2.3/1994/因 Pick 病提前退休,
+    -2.8/2001/逝于斯坦福，享年 65
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早慧少年与芝加哥大学 ---
+\newcommand{\prodigyslide}{\begin{frame}\plainbar\sectiontitle{早慧少年与芝加哥大学 (1936--1958)}{14 岁中学毕业 · 17 岁文学士 · 物理学士 · Sagan 室友}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1936} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{6 月 8 日生于纽约市} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{早慧少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{14 岁} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{完成高中学业} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{跳级早读} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1953} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{芝加哥大学文学士（B.A.，liberal arts）——时年仅 17 岁} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{少年大学生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1958} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{再获芝加哥大学物理学士（B.S.）——两段跨学科履历；芝加哥大学时期的室友是天文学家 Carl Sagan} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{文理兼修} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 两个学士学位，一颗此后献给计算的心。}
+\end{center}
+\end{frame}}
+
+% --- 5. 无博士的教授之路 ---
+\newcommand{\profpathslide}{\begin{frame}\plainbar\sectiontitle{无博士的教授之路 (1950s--1960s)}{Armour Research Foundation · CMU · Stanford}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1950s} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{入 Armour Research Foundation（今 IIT Research Institute，属 Illinois Institute of Technology）任研究员} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{工业界起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1960s 初} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{成为计算机操作员，开始大量发表论文（编译器与解析方向）} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{从操作员到学者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{27 岁前} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{获聘 Carnegie Mellon University 副教授} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{少年得志} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{六年后} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{升任 Stanford University 正教授（约 33 岁）} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{全程无 PhD} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 没有博士学位，全凭实绩立足讲席。}
+\end{center}
+\end{frame}}
+
+% --- 6. 解析理论先驱 ---
+\newcommand{\parsingslide}{\begin{frame}\plainbar\sectiontitle{解析理论先驱 (1960s)}{算符优先文法 · 编译器与解析论文}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{先驱} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{算符优先文法（operator-precedence grammars）的先驱（pioneer）} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{解析理论的奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发表} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{1960s 早期大量发表论文，方向集中于编译器（尤其 parsing）} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{高产期的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{为五大子领域之一的 "the theory of parsing" 奠定基础（1978 图灵奖理由）} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{图灵奖理由之一} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 算符优先关系（operator-precedence relations）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$a \lessdot b$\ （小于）\qquad $a \dot= b$\ （相等）\qquad $a \gtrdot b$\ （大于）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Assigning Meanings to Programs ---
+\newcommand{\meaningsslide}{\begin{frame}\plainbar\sectiontitle{Assigning Meanings to Programs (1967)}{逻辑断言 · 程序验证 · Hoare 逻辑的先声}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{*Assigning Meanings to Programs*（1967）：用逻辑断言为程序赋予含义} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{程序验证的开山} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{开创} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{被认为开创了程序设计语言语义（programming language semantics）领域} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{图灵奖理由之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{口径} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{是"贡献于后来成为 Hoare 逻辑的工作"的先声——逻辑本身以 Hoare 命名，勿写"Floyd 创立 Hoare 逻辑"} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{归属分明} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 前后件断言（assertions）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\{P\}\ S\ \{Q\}$\qquad 若断言 $P$ 在执行前成立，则执行 $S$ 后断言 $Q$ 成立}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. Floyd-Warshall ---
+\newcommand{\warshallslide}{\begin{frame}\plainbar\sectiontitle{Floyd--Warshall：全源最短路径 (1962)}{与 Stephen Warshall 各自独立提出}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{问题} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{高效求图中所有点对最短路径（all shortest paths in a graph）} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{图算法经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{独立性} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{与 Stephen Warshall 各自独立（independently）提出——"独立"两字必须保留} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{殊途同归} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发表} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{1962 年发表，动态规划的经典范例} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{教科书常客} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 递推式（经中转点 $k$ 松弛）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$d_{ij} \leftarrow \min\big(d_{ij},\ d_{ik} + d_{kj}\big)$\qquad $O(n^3)$ 内求得全源最短路径}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 弗洛伊德算法群像 ---
+\newcommand{\algorithmsslide}{\begin{frame}\plainbar\sectiontitle{弗洛伊德算法群像}{判圈 · Floyd 三角 · Floyd--Steinberg 抖动}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{算法}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{判圈算法} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{检测序列中的环（cycle-finding，龟兔赛跑快慢指针）——归功于 Floyd（attributed to him）} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{常数空间判环} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Floyd 三角} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{以他命名的数字三角形结构（Floyd's triangle）} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{入门经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{抖动算法} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{Floyd--Steinberg dithering：单篇论文引入图像渲染的误差扩散重要概念；Floyd 本人区分 dithering（抖动）与 diffusion（扩散）两概念} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{从图到像素} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 判圈：龟兔赛跑（tortoise and hare）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\nu_{2t} = \nu_t$\ 相遇即有环\qquad 快指针每次走两步，慢指针一步}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 与 Knuth 的协作 ---
+\newcommand{\knuthslide}{\begin{frame}\plainbar\sectiontitle{与 Knuth 的深度协作}{TAOCP 审稿 · Bose-Nelson · 合著教材}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{协作}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{审稿} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{Knuth《The Art of Computer Programming》的主要审稿人，也是该书中被引用最多的人} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{经典的幕后功臣} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合著} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{与 Knuth 合著 *The Bose-Nelson sorting problem*（1970）} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{排序问题的共同研究} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教材} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{与 Beigel 合著教材 *The Language of Machines*（1994）} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{计算理论教学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 高德纳书页间被引用最多的名字，正是弗洛伊德。}
+\end{center}
+\end{frame}}
+
+% --- 11. IFIP WG 2.1 与学术服务 ---
+\newcommand{\ifipslide}{\begin{frame}\plainbar\sectiontitle{IFIP WG 2.1 与学术服务}{ALGOL 60 / 68 · 更多合作}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IFIP WG 2.1} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{参与制定、维护 ALGOL 60 与 ALGOL 68 的国际工作组成员} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{语言标准制定} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{与 Ullman} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{1980 年与 Jeffrey D. Ullman 合著论文，将正则表达式编译入集成电路} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{理论走向硬件} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{与 Smith} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{1972 年与 Alan J. Smith 合著论文} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{合作网络广泛} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 ALGOL 标准到硅上电路，他的足迹横跨语言与硬件。}
+\end{center}
+\end{frame}}
+
+% --- 12. 图灵奖 1978 ---
+\newcommand{\turingprizeslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1978：五大子领域的奠基}{ACM citation 整句}\vspace{-0.2cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.9cm}
+  \centering
+  {\fontsize{8.6}{11.4}\selectfont\bfseries\color{coveraccent!85!black} 1978 图灵奖 citation（ACM 整句）}\\[3pt]
+  {\fontsize{8.4}{11.2}\selectfont\itshape\color{coverprimary!88!black}"for having a clear influence on methodologies for the creation of efficient and reliable software, and for helping to found the following important subfields of computer science: the theory of parsing, the semantics of programming languages, automatic program verification, automatic program synthesis, and analysis of algorithms"}
+  \end{minipage}%
+}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{3.4cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.6cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{五大子领域}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{对应工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{本篇呼应}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{解析理论} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{算符优先文法与解析论文} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{第 6 帧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{程序语义} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{Assigning Meanings to Programs（1967）} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{第 7 帧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{自动验证 · 自动综合} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{逻辑断言方法一脉相承} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{第 7 帧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{算法分析} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{Floyd--Warshall · 判圈 · 排序问题} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{第 8--9 帧} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 13. 门生与传承 ---
+\newcommand{\studentsslide}{\begin{frame}\plainbar\sectiontitle{门生与传承}{共指导 7 名博士 · Rivest 与 Tarjan 图灵奖级}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{博士门生} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{共指导 7 名博士毕业（页面明载）；infobox 列 5 人：Jay Earley、Zohar Manna、David Plaisted、Ron Rivest、Robert Tarjan} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{图灵奖级} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{Ron Rivest 与 Robert Tarjan 均为图灵奖得主} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{一门双杰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术影响} & \cellcolor{parsepanel}\textcolor{badgeParse!82!black}{解析、语义、验证、算法分析成为计算机科学的奠基性子领域} & \cellcolor{sempanel}\textcolor{badgeSem!82!black}{思想延续至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 七名博士，两位图灵奖得主——方法论的力量代代相传。}
+\end{center}
+\end{frame}}
+
+% --- 14. 晚年与爱好 ---
+\newcommand{\laterslide}{\begin{frame}\plainbar\sectiontitle{晚年与爱好：远足与双陆棋}{1994 提前退休 · Lipton 转述的机场轶事}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时期}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{注记}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1994} & \cellcolor{imgpanel}\textcolor{badgeImg!82!black}{因患 Pick 病（一种神经退行性疾病）提前退休} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{1994 年提前退休} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{爱好} & \cellcolor{imgpanel}\textcolor{badgeImg!82!black}{远足与双陆棋（backgammon）；据 Richard J. Lipton（2010）转述：Floyd 潜心研究双陆棋的数学，近乎职业水准} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{轶事据 Lipton 转述} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{机场轶事} & \cellcolor{imgpanel}\textcolor{badgeImg!82!black}{据 Lipton 转述：在 O'Hare 机场等航班时，Floyd 仍沉浸在双陆棋局的分析中} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{Lipton 所述非本人原话} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2001} & \cellcolor{imgpanel}\textcolor{badgeImg!82!black}{9 月 25 日逝于斯坦福，享年 65（死因页面未明写）} & \cellcolor{algopanel}\textcolor{badgeAlgo!82!black}{寿终讲席} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 据说连等飞机的间隙，他都在推演双陆棋的数学。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {以断言为尺，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {量度程序的正确。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Robert W. Floyd};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {罗伯特·弗洛伊德\quad Robert W. Floyd\quad 1936 — 2001};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{cogs}\enspace Turing 1978 · 程序设计方法学先驱\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\prodigyslide
+\profpathslide
+\parsingslide
+\meaningsslide
+\warshallslide
+\algorithmsslide
+\knuthslide
+\ifipslide
+\turingprizeslide
+\studentsslide
+\laterslide
+\closingslide
+\end{document}

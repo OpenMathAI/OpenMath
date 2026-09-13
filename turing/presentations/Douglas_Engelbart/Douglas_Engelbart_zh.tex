@@ -1,0 +1,488 @@
+% =============================================================
+%  人机交互之父：道格拉斯·恩格尔巴特 (Douglas Engelbart)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：飞越信息空间的工作站 —— 稀疏气泡呼应增强集体智慧
+%  资料来源：turing/pages/1997/Douglas Engelbart/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Engelbart 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeHCI}{HTML}{2E5A9E}    % 人机交互 — 蓝
+\definecolor{badgeInput}{HTML}{1E8E8E}  % 鼠标与输入装置 — 青绿
+\definecolor{badgeNLS}{HTML}{D9A441}    % 超文本与 NLS — 琥珀
+\definecolor{badgeCIQ}{HTML}{C0395B}    % 增强集体智慧 — 玫瑰
+\definecolor{hcipanel}{RGB}{228,233,246}
+\definecolor{inputpanel}{RGB}{222,240,238}
+\definecolor{nlspanel}{RGB}{249,240,224}
+\definecolor{ciqpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeHCI!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeInput!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeNLS!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{hand-pointer}\enspace 鼠标之父\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {恩格尔巴特};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Douglas Engelbart\enspace·\enspace 1925 — 2013};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {人机交互奠基人 · 鼠标与超文本先驱 · 1997 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeHCI] at (-5.05,0)
+        {人机交互\\Human--Computer Interaction\par\scriptsize HCI 领域奠基};
+      \node[badge, fill=badgeInput] at (-1.68,0)
+        {鼠标与输入\\Computer Mouse\par\scriptsize 专利 3,541,541};
+      \node[badge, fill=badgeNLS] at (1.68,0)
+        {超文本与 NLS\\Hypertext · NLS\par\scriptsize GUI 的前身};
+      \node[badge, fill=badgeCIQ] at (5.05,0)
+        {增强智能\\Collective IQ\par\scriptsize 1962 年纲领};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"我至今记得 1945 年秋，在菲律宾莱特岛丛林边缘的红十字图书馆里读到它的情形。" —— Engelbart 致 Vannevar Bush 的信};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/SRI_Douglas_Engelbart_1968_cropped_.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{SRI_Douglas_Engelbart_1968_cropped_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Douglas Engelbart · 1968};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace SRI · Tymshare · McDonnell Douglas\enspace|\enspace Turing 1997};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{恩格尔巴特 - 从波特兰到人机交互之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/SRI_Douglas_Engelbart_1968_cropped_.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{SRI_Douglas_Engelbart_1968_cropped_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Douglas Engelbart · 1968};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1925-01-30 — 2013-07-02\\[2pt]\lab{本名}\quad Douglas Carl Engelbart\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=inputpanel, draw=badgeInput!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Oregon State 电气工程 BS 1948\\[2pt]
+     \quad Berkeley MS 1953 · PhD 1955\\[2pt]
+     \lab{师承}\quad Paul L. Morton · John R. Woodyard};
+  \node[infob, fill=hcipanel, draw=badgeHCI!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 波特兰 · 俄勒冈 · 美国\\[2pt]\lab{去世地}\quad 阿瑟顿 · 加利福尼亚\\[2pt]\lab{任职}\quad SRI · Tymshare · McDonnell Douglas};
+  \node[infob, fill=nlspanel, draw=badgeNLS!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1997 · NMT 2000\\[2pt]
+     \quad Lemelson-MIT 1997 · Lovelace 2001\\[2pt]
+     \lab{核心领域}\quad 人机交互 · 超文本\\[2pt]
+     \quad 交互计算 · 发明};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{恩格尔巴特的一生}{1925 — 2013 · 从波特兰少年到鼠标之父}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-3.05);
+  \foreach \y/\year/\txt in {
+    3.0/1925/生于俄勒冈州波特兰，德/瑞典/挪威裔家庭,
+    2.45/1945/在莱特岛高脚屋读到 Bush 的 "As We May Think",
+    1.9/1950/订婚之际立下"让世界更好"的毕生纲领,
+    1.35/1955/Berkeley 电气工程博士（Morton · Woodyard）,
+    0.8/1957/入职 SRI，后创立增强研究中心 ARC,
+    0.25/1962/发表纲领报告 Augmenting Human Intellect,
+    -0.3/1968/The Mother of All Demos 轰动全场,
+    -0.85/1970/鼠标专利获批（1967 年申请）,
+    -1.4/1976/实验室并入 Tymshare，NLS 更名 Augment,
+    -1.95/1988/与女儿创办 Bootstrap Institute,
+    -2.5/1997/获 ACM 图灵奖,
+    -3.05/2013/逝于加州阿瑟顿，享年 88
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：波特兰与海军岁月 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：波特兰与海军岁月 (1925–1948)}{九岁丧父 · 菲律宾雷达技师 · 莱特岛读 Bush}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1925} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{生于波特兰，Carl 与 Gladys 之子，三子女居中；8 岁随家迁往 Johnson Creek 沿岸乡下，9 岁丧父} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{早年失怙} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1942} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{毕业于 Portland 的 Franklin High School} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{升学 Oregon State} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1944 前后} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{本科中途入伍美国海军两年，任菲律宾无线电/雷达技师；在 Leyte 岛高脚屋读到 Bush 的 "As We May Think"} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{影响一生方向} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1948} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{返校完成 Oregon State 电气工程学士（BS）} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{工程师的底色} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从莱特岛丛林边缘的图书馆，走出了未来人机交互的奠基者。}
+\end{center}
+\end{frame}}
+
+% --- 5. Berkeley 博士与 1950 顿悟 ---
+\newcommand{\berkeleyslide}{\begin{frame}\plainbar\sectiontitle{Berkeley 博士与 1950 年的顿悟 (1950–1957)}{CALDIC · 八项专利 · Morton 与 Woodyard 门下}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1950} & \cellcolor{ciqpanel}\textcolor{badgeCIQ!82!black}{订婚之际意识到自己别无职业目标，遂立下以毕生之力"让世界更好"的纲领——以计算机增强人类集体智慧} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{一生使命的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{研究生} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{在 Berkeley 协助建造 CALDIC；研究生工作取得 8 项专利} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{工程与发明并进} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学位} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{1953 年 MS、1955 年 PhD（电气工程，计算机方向），导师 Paul L. Morton 与 John R. Woodyard} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{数字计算机方向} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转折} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{留校任助理教授一年，因无法实现愿景离开；创办 Digital Techniques 初创} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{转向更大的蓝图} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个"以毕生让世界更好"的决定，把工程师推向了先驱的位置。}
+\end{center}
+\end{frame}}
+
+% --- 6. 1962 年纲领报告 ---
+\newcommand{\reportslide}{\begin{frame}\plainbar\sectiontitle{1962 年纲领：增强人类智能}{Augmenting Human Intellect: A Conceptual Framework}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{报告} & \cellcolor{ciqpanel}\textcolor{badgeCIQ!82!black}{1962 年发表愿景与研究议程：Augmenting Human Intellect: A Conceptual Framework（SRI Summary Report AFOSR-3223）} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{奠基文献} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{愿景} & \cellcolor{ciqpanel}\textcolor{badgeCIQ!82!black}{知识工作者坐在"工作站"前飞越信息空间，以更强的能力协同解决重大问题} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{交互计算的蓝图} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{资助} & \cellcolor{ciqpanel}\textcolor{badgeCIQ!82!black}{研究由空军科学研究办公室（AFOSR）支持，ARPA 由此资助其研究计划} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{走向 NLS} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 增强人类智能（Augmenting Human Intellect）的核心命题}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{Human} + \text{Artifact}\ \Rightarrow\ \text{更强大的问题解决能力}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. SRI 与增强研究中心 ARC ---
+\newcommand{\arcslide}{\begin{frame}\plainbar\sectiontitle{SRI 与增强研究中心 ARC (1957–)}{Hewitt Crane · Bootstrapping 策略 · ARPA 资助}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1957} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{入职斯坦福研究所（SRI，时称 Stanford Research Institute），与 Hewitt Crane 合作磁性器件与电子学小型化} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{二人结为挚友} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{实验室} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{在 SRI 创立 Augmentation Research Center（ARC），组建研究团队} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{交互计算重镇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{组织原则} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{提出 "bootstrapping strategy"（自举策略）以加速实验室自身的创新速率} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{管理的元方法} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{资助} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{获 ARPA 资助，ARC 成为 oN-Line System（NLS）设计与研发的驱动力} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{1968 演示的伏笔} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 用"自举"加速实验室自身——他把组织也当成了可增强的系统。}
+\end{center}
+\end{frame}}
+
+% --- 8. 鼠标的发明 ---
+\newcommand{\mouseslide}{\begin{frame}\plainbar\sectiontitle{鼠标的发明 (1965 前研制 · 1970 获批)}{与 Bill English 共同研制 · 无版税的发明}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{研制} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{1965 年前与首席工程师 Bill English 依其草图制成木壳双金属轮鼠标} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{人机接口的突破} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专利} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{1967 年申请，1970 年获批（U.S. Patent 3,541,541）} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{三个年份勿混} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{绰号 "mouse" 因"尾巴从末端伸出"；屏幕光标曾被小组称作 "bug"，未获流行} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{趣闻实载} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{无版税} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{从未获得任何版税；据 Engelbart 后来的采访，SRI 以约 \$40,000 将专利授权 Apple} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{发明家的遗憾} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "X-Y position indicator for a display system" —— U.S. Patent 3,541,541（1970）}\\[2pt]
+  {\fontsize{8}{10.5}\selectfont\color{coverprimary!88!black}注：计算机鼠标存在并行且独立的发明（parallel and independent invention）——本篇以"公认先驱之一"表述。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. NLS：oN-Line System ---
+\newcommand{\nlsslide}{\begin{frame}\plainbar\sectiontitle{NLS：oN-Line System}{位图屏幕 · 超文本 · 和弦键盘 · GUI 前身}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{系统} & \cellcolor{nlspanel}\textcolor{badgeNLS!82!black}{NLS（oN-Line System）——ARC 在 ARPA 资助下开发的交互系统} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{1960 年代的奇迹} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{技术} & \cellcolor{nlspanel}\textcolor{badgeNLS!82!black}{鼠标、位图屏幕、文字处理、超文本、协作工具与和弦键盘（chorded keyboard）} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{今日通用的前身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{时机} & \cellcolor{nlspanel}\textcolor{badgeNLS!82!black}{这些界面构想完成于 1960 年代中期，远早于个人计算机革命与分时普及} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{超越时代} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} NLS 的技术清单（1968 年已全部可演示）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{鼠标} + \text{位图屏幕} + \text{超文本} + \text{和弦键盘} \Rightarrow \text{GUI 的前身}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. The Mother of All Demos ---
+\newcommand{\demoslide}{\begin{frame}\plainbar\sectiontitle{The Mother of All Demos (1968)}{1968-12-09 · 旧金山 Fall Joint Computer Conference}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{时间地点} & \cellcolor{nlspanel}\textcolor{badgeNLS!82!black}{1968 年 12 月 9 日，旧金山 Fall Joint Computer Conference 技术演示会} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{历史性一刻} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{演示} & \cellcolor{nlspanel}\textcolor{badgeNLS!82!black}{现场展示 NLS：鼠标、超文本、屏幕窗口与远程协作等 ARC 全部发明} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{未来提前上映} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名} & \cellcolor{nlspanel}\textcolor{badgeNLS!82!black}{页面正文径直使用 "The Mother of All Demos" 之称——"所有演示之母"} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{实载表述} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} The Mother of All Demos —— 1968-12-09 · San Francisco}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{三十年后，全世界才用上了他那天演示的东西。}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 落寞年代 ---
+\newcommand{\declineslide}{\begin{frame}\plainbar\sectiontitle{落寞年代 (1970s–1986)}{PARC 分流 · 经费萎缩 · Tymshare 与 McDonnell Douglas}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1970 前后} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{多位研究员转投 Xerox PARC——在中心化分时与个人计算的未来之争中分流} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{团队离散} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1970s} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{Mansfield Amendment（1969）等致 ARPA/NASA 资助逐步萎缩；1972 年起 EST 争议亦削弱团队凝聚力} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{实验室式微} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1976} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{SRI 将 ARC 移交 Tymshare，NLS 更名 Augment；同期 Atherton 的家毁于火灾} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{雪上加霜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1984–1986} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{Tymshare 并入 McDonnell Douglas；1986 年退休，决意摆脱商业压力继续自己的事业} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{再出发前夜} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 先驱的思想跑得太快，时代用了三十年才追上他。}
+\end{center}
+\end{frame}}
+
+% --- 12. 再出发：Bootstrap 与 Institute ---
+\newcommand{\bootstrapslide}{\begin{frame}\plainbar\sectiontitle{再出发：Bootstrap 与 Institute (1988–)}{与女儿 Christina · Collective IQ · HyperScope}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1988} & \cellcolor{ciqpanel}\textcolor{badgeCIQ!82!black}{与女儿 Christina Engelbart 创办 Bootstrap Institute（后为 The Doug Engelbart Institute）} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{父女同台的愿景} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{理念} & \cellcolor{ciqpanel}\textcolor{badgeCIQ!82!black}{推广 Collective IQ——以战略性自举大幅提升"共同解决重大问题"的能力} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{纲领的延续} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1989–2000} & \cellcolor{ciqpanel}\textcolor{badgeCIQ!82!black}{在斯坦福大学开设三天/半天的管理研修班} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{传播与布道} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2005} & \cellcolor{ciqpanel}\textcolor{badgeCIQ!82!black}{获 NSF 资助开源 HyperScope 项目——以 Ajax 与 Dynamic HTML 复刻 Augment 的多重浏览与跳转能力} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{遗产开源化} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 82 岁仍在推动 HyperScope——增强人类的使命从未退休。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1997 · 国家技术奖章 2000（克林顿总统颁发）}\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.68}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{最高荣誉} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\leftmargin}{1.1em}\item ACM Turing Award（1997）\item Lemelson-MIT Prize（1997，50 万美元）\item National Medal of Technology（2000）\item BCS Lovelace Medal（2001）\end{itemize}} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{先驱乐章的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{更多认可} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{NAE 院士（1996）· Franklin Certificate of Merit（1996）· Inventors Hall of Fame（1998）· Benjamin Franklin Medal（1999）· CHM Fellow（2005）} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{贯穿发明与学术} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{身后} & \cellcolor{hcipanel}\textcolor{badgeHCI!82!black}{挚友、超文本先驱 Ted Nelson 致悼词；身后留有九个孙辈} & \cellcolor{inputpanel}\textcolor{badgeInput!82!black}{同行相送} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 鼠标之父之名，因开创而愈发闪耀。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：交互计算的多元之路}{鼠标 · 超文本 · 人机交互 · 集体智慧}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=inputpanel, draw=badgeInput!50,line width=0.7pt] (b) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeInput} 鼠标}\\[3pt]SRI · 木壳双轮\\[2pt]专利 3,541,541};
+\node[leg, fill=nlspanel, draw=badgeNLS!50,line width=0.7pt] (c) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeNLS} 超文本与 NLS}\\[3pt]Hypertext · Augment\\[2pt]GUI 的前身};
+\node[leg, fill=hcipanel, draw=badgeHCI!50,line width=0.7pt] (a) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeHCI} 人机交互}\\[3pt]HCI 领域奠基\\[2pt]交互计算};
+\node[leg, fill=ciqpanel, draw=badgeCIQ!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeCIQ} 集体智慧}\\[3pt]Collective IQ\\[2pt]Engelbart's law};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 人类内在绩效的增长率呈指数式——这就是以其命名的 Engelbart's law。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 鼠标 $\rightarrow$ 超文本 $\rightarrow$ 交互计算 $\rightarrow$ Collective IQ\\[2pt]他让"屏幕上的那只手"，成为全人类的第二天性。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {让世界更好，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是他毕生唯一的职业目标。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Douglas Engelbart};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {道格拉斯·恩格尔巴特\quad Douglas Engelbart\quad 1925 — 2013};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{hand-pointer}\enspace Turing 1997 · National Medal of Technology 2000 · 人机交互奠基人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\berkeleyslide
+\reportslide
+\arcslide
+\mouseslide
+\nlsslide
+\demoslide
+\declineslide
+\bootstrapslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

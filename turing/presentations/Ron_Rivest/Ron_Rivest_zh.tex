@@ -1,0 +1,497 @@
+% =============================================================
+%  RSA 之父：罗纳德·里维斯特 (Ron Rivest)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：公钥/私钥的非对称结构 —— 稀疏几何密文块
+%  资料来源：turing/pages/2002/Ron Rivest/index.html
+%  批次分工：本篇侧重 RSA 提出经过与对称密码 RC 系列；秘密共享归 Shamir 篇、DNA 计算归 Adleman 篇
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Rivest 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeRSA}{HTML}{2E5A9E}    % 公钥密码 — 蓝
+\definecolor{badgeSYM}{HTML}{1E8E8E}    % 对称密码与哈希 — 青绿
+\definecolor{badgeALG}{HTML}{D9A441}    % 算法 — 琥珀
+\definecolor{badgeELEC}{HTML}{C0395B}   % 选举安全 — 玫瑰
+\definecolor{rsapanel}{RGB}{228,233,246}
+\definecolor{sympanel}{RGB}{222,240,238}
+\definecolor{algpanel}{RGB}{249,240,224}
+\definecolor{elecpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 密文块背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeRSA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeSYM!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeALG!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{key}\enspace RSA 之父\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {罗纳德·里维斯特};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Ronald Linn Rivest\enspace·\enspace 1947 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {公钥密码奠基人 · 对称与哈希大家 · 2002 图灵奖（与 Shamir、Adleman 共享）};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeRSA] at (-5.05,0)
+        {公钥密码\\RSA\par\scriptsize 数字签名};
+      \node[badge, fill=badgeSYM] at (-1.68,0)
+        {对称与哈希\\RC 系列 · MD 族\par\scriptsize RC5 · MD5};
+      \node[badge, fill=badgeALG] at (1.68,0)
+        {算法\\Algorithms\par\scriptsize CLRS 教材};
+      \node[badge, fill=badgeELEC] at (5.05,0)
+        {选举安全\\Election Security\par\scriptsize ThreeBallot};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for their ingenious contribution to making public-key cryptography useful in practice." —— 2002 图灵奖 citation（与 Shamir、Adleman 共享）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Ronald_L_Rivest_photo.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Ronald_L_Rivest_photo.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Ronald Rivest};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace MIT · Yale · Stanford\enspace|\enspace Turing 2002};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{里维斯特 - 从斯克内克塔迪到 RSA 之父}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Ronald_L_Rivest_photo.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Ronald_L_Rivest_photo.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Ronald L. Rivest};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1947-05-06 —（在世）\\[2pt]\lab{本名}\quad Ronald Linn Rivest\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=rsapanel, draw=badgeRSA!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Yale 数学 BA（1969）\\[2pt]
+     \quad Stanford CS PhD（1974）\\[2pt]
+     \lab{师承}\quad Robert W. Floyd（导师）};
+  \node[infob, fill=sympanel, draw=badgeSYM!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 纽约州斯克内克塔迪\\[2pt]\lab{任职}\quad MIT EECS · CSAIL\\[2pt]
+     \quad 2015 起 Institute Professor};
+  \node[infob, fill=algpanel, draw=badgeALG!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2002 · Marconi 2007\\[2pt]
+     \quad Kanellakis Award 1996\\[2pt]
+     \lab{核心领域}\quad 密码学 · 算法 · 选举安全};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{里维斯特的一生}{1947 — · 从纽约州到密码学宗师}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1947/生于纽约州斯克内克塔迪,
+    2.3/1969/Yale 大学数学学士,
+    1.6/1974/Stanford 计算机科学博士（Floyd 门下）,
+    0.9/1978/与 Shamir、Adleman 发表 RSA（CACM）,
+    0.2/1990/MD4 问世 · CLRS 教材首版,
+    -0.5/1994/发表对称密码 RC5,
+    -1.2/2002/获图灵奖（与 Shamir、Adleman 共享）,
+    -1.9/2006/发明 ThreeBallot 并放入公有领域,
+    -2.4/2015/任 MIT Institute Professor,
+    -2.8/今/在世 · 算法、密码、选举三线并进
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1947–1974)}{Yale 数学 · Stanford 博士 · Floyd 门下}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1947} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{生于纽约州斯克内克塔迪（Schenectady）} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{美国东部的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{获 Yale 大学数学学士（BA）} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{数学的底色} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1974} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{获 Stanford 计算机科学博士，论文 "Analysis of associative retrieval algorithms"（哈希表快速匹配文档中的部分词）} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{检索与算法的功底} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 博士导师 Robert W. Floyd 是 1978 年图灵奖得主。}
+\end{center}
+\end{frame}}
+
+% --- 5. RSA 的提出经过 ---
+\newcommand{\rsaoriginslide}{\begin{frame}\plainbar\sectiontitle{RSA 的提出经过 (1977–1978)}{逾越节的酒桌 · 1978 CACM 论文}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三人组} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{与 Adi Shamir、Leonard Adleman 在 MIT 携手攻关公钥密码} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{传奇的搭档} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{酒桌灵感} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{据传（reportedly），Rivest 在与 Shamir、Adleman 于学生住处庆祝逾越节、喝了大量葡萄酒之后想出体制的关键思想} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{轶事保持"据传"口径} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1978 发表} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{"A Method for Obtaining Digital Signatures and Public-Key Cryptosystems"，\textit{Communications of the ACM} 21(2): 120--126} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{密码学的分水岭} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1978 正式发表（1977 年构思的体制）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{Rivest} $\cdot$ \textit{Shamir} $\cdot$ \textit{Adleman} —— 姓氏首字母即 RSA}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. RSA：首个实用的公钥密码 ---
+\newcommand{\rsaslide}{\begin{frame}\plainbar\sectiontitle{RSA：首个实用的公钥密码}{数字签名 · Alice 与 Bob 的诞生}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{特性}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首创地位} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{首个可用且公开描述的公钥密码方法，革命性地改变了现代密码学} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{"first usable" 口径} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{双重能力} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{公钥加密与数字签名合于一体，奠定了电子商务的信任基础} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{互联网时代的基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Alice 与 Bob} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{该论文首次引入 Alice 和 Bob 两个虚构角色，成为此后无数密码协议的主角} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{文化层面的遗产} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} RSA：公钥加密 · 私钥解密（1978）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$c \equiv m^{e},\ m \equiv c^{d} \pmod{n}\qquad$ 公钥 $(e,n)$ · 私钥 $(d,n)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 同态加密的先声 ---
+\newcommand{\homoslide}{\begin{frame}\plainbar\sectiontitle{同态加密的先声 (1978)}{privacy homomorphisms · 领先时代四十年}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{"On data banks and privacy homomorphisms"（1978）——作者为 Rivest、Adleman 与 Dertouzos（无 Shamir）} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{另一个三人组合} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{思想} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{首次形式化同态加密（privacy homomorphisms）及其在安全云计算中的应用} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{云计算时代的预言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{回响} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{这一想法四十多年后（2009 年 Gentry）才真正实现} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{领先时代的构想} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1978 年的纸上构想，2009 年才等来它的实现者。}
+\end{center}
+\end{frame}}
+
+% --- 8. 对称密码 RC 系列 ---
+\newcommand{\rcslide}{\begin{frame}\plainbar\sectiontitle{对称密码 RC 系列：一门四杰}{RC2 · RC4 · RC5 独造 · RC6 共同发明}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{算法}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{RC2 · RC4} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{Rivest 独自发明；RC2 见 RFC 2268（1998）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{广泛部署的对称密码} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{RC5} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{Rivest 独自发明，发表于 1994 年 FSE} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{简洁优雅的设计} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{RC6} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{共同发明人（co-inventor，与他人合作）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{AES 竞赛的参赛者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} RC 家族（Rivest Ciphers）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}RC2 $\rightarrow$ RC4 $\rightarrow$ RC5 $\rightarrow$ RC6\quad ——对称密码的一条家谱}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. MD 哈希族 ---
+\newcommand{\mdslide}{\begin{frame}\plainbar\sectiontitle{MD 哈希族：指纹的四代谱系}{MD2 · MD4 · MD5 · MD6}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{函数}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{MD2 · MD4} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{MD4 发表于 1990（RFC 1186）；另有早期设计的 MD2} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{哈希设计的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{MD5} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{发表于 1992（RFC 1321），曾长期是最广泛使用的哈希函数} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{一代工业标准} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{MD6} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{晚期设计的可扩展哈希函数} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{面向未来的迭代} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} MD 家族（Message Digest）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}MD2 $\rightarrow$ MD4 $\rightarrow$ MD5 $\rightarrow$ MD6\quad ——数据的"指纹"谱系}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 算法与 CLRS ---
+\newcommand{\algoslide}{\begin{frame}\plainbar\sectiontitle{算法大家：从选择算法到 CLRS}{median of medians · Floyd--Rivest · 教材经典}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1973} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{与 Blum、Floyd、Pratt、Tarjan 发表首个不依赖随机化的线性时间选择算法（median of medians）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{算法课的必修经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1975} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{Floyd--Rivest 算法：随机化选择，比较次数接近最优} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{随机化思想的典范} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1990–} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{经典教材 \textit{Introduction to Algorithms}（CLRS）四位作者之一，首版 1990、第四版 2022} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{影响一代代学生} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 线性时间选择（median of medians, 1973）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{SELECT}(A,\,k)\ \in\ O(n)\qquad$ 无需随机化的确定性保证}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. GMR 签名与环签名 ---
+\newcommand{\sigslide}{\begin{frame}\plainbar\sectiontitle{签名方案：从 GMR 到环签名}{1988 GMR · 2001 "How to Leak a Secret"}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{方案}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{GMR} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{与 Goldwasser、Micali 提出 GMR 数字签名方案（1988），抗自适应选择消息攻击} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{签名安全的形式化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{环签名} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{与 Shamir、Yael Tauman Kalai 提出环签名（2001），论文 "How to Leak a Secret"——匿名的群签名} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{匿名性的新范式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{其他贡献} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{chaffing and winnowing、interlock 协议、时间胶囊 LCS35、key whitening 与 DES-X} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{密码学工具箱} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 签名既为真实护航，也为匿名开路。}
+\end{center}
+\end{frame}}
+
+% --- 12. 机器学习的复杂性 ---
+\newcommand{\mlnpslide}{\begin{frame}\plainbar\sectiontitle{机器学习的计算复杂性}{决策树 · 神经网络 · NP 完全}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{结果}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1976} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{与 Hyafil 证明最优决策树的构造是 NP 完全} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{学习问题的复杂性下界} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1992} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{与 Avrim Blum 证明训练 3 节点神经网络是 NP 完全} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{神经网络训练的内在困难} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{视角} & \cellcolor{algpanel}\textcolor{badgeALG!82!black}{以计算复杂性为透镜审视机器学习} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{理论与学习的桥梁} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在"机器能否学习"之前，先问"学习需要付出多少计算"。}
+\end{center}
+\end{frame}}
+
+% --- 13. 选举安全 ---
+\newcommand{\electionslide}{\begin{frame}\plainbar\sectiontitle{选举安全：晚期的事业}{软件独立性 · ThreeBallot · Scantegrity}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{原则} & \cellcolor{elecpanel}\textcolor{badgeELEC!82!black}{提出软件独立性（software independence）原则} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{可审计选举的基石} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{ThreeBallot} & \cellcolor{elecpanel}\textcolor{badgeELEC!82!black}{2006 年发明 ThreeBallot 端到端可审计投票系统，并放入公有领域以促进民主（"in the interest of promoting democracy"）} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{放弃专利的选择} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Scantegrity} & \cellcolor{elecpanel}\textcolor{badgeELEC!82!black}{参与 Scantegrity 光学扫描投票安全系统} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{从理论到实践} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{公共服务} & \cellcolor{elecpanel}\textcolor{badgeELEC!82!black}{曾任美国选举协助委员会技术指南发展委员会（TGDC）成员} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{政策层面的参与} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 密码学家守护的不只是秘密，还有选票上的信任。}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2002 · 门生与创业者}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共享荣誉} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{Turing Award（2002，与 Shamir、Adleman 共享）· Paris Kanellakis Award（1996）\newline Koji Kobayashi Award（2000）· Secure Computing 终身成就奖} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{RSA 三人组的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{个人荣誉} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{MITX 终身成就奖（2005）· Marconi Prize（2007）· BBVA Frontiers（2017）\newline National Inventors Hall of Fame（2018）\newline NAE · NAS · ACM Fellow · IACR Fellow} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{跨界的影响力} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{产业与门生} & \cellcolor{rsapanel}\textcolor{badgeRSA!82!black}{RSA Data Security（后并入 RSA Security）、Verisign、Peppercoin 共同创始人；门生 Avrim Blum、Burt Kaliski、Anna Lysyanskaya、Robert Schapire 等} & \cellcolor{sympanel}\textcolor{badgeSYM!82!black}{学术与产业的双线传承} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从论文到公司，从课堂到选票——影响无处不在。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {把秘密写成数学，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {也把信任交还给社会。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Ron Rivest};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {罗纳德·里维斯特\quad Ronald Linn Rivest\quad 1947 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{key}\enspace Turing 2002 · RSA · MD5 · OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\rsaoriginslide
+\rsaslide
+\homoslide
+\rcslide
+\mdslide
+\algoslide
+\sigslide
+\mlnpslide
+\electionslide
+\honorsslide
+\closingslide
+\end{document}

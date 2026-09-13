@@ -155,7 +155,7 @@
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `turing/pages/2008/Barbara Liskov/index.html` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：使用 MIT 2010 肖像（`images/500px-Barbara_Liskov_MIT_computer_scientist_2010.jpg`，已就绪）
+- [ ] **头像**：使用 MIT 2010 肖像（`images/Barbara_Liskov_MIT_2010.jpg`，已就绪；原文写 500px-Barbara_Liskov_MIT_computer_scientist_2010.jpg 与实际文件名不符，执行时已按实际文件纠正）
 - [ ] **国籍**：封面顶部徽章明示美国
 - [ ] **引语核对**：引语必须在 Wikipedia 原文找到（仅颁奖词类引文）
 - [ ] **编译验证**：`make distclean && make`

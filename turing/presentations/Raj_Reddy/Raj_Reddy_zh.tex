@@ -1,0 +1,466 @@
+% =============================================================
+%  AI 先驱：拉吉·雷迪 (Raj Reddy)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：声波纹（同心扩散弧线）—— 让机器听懂人话的视觉语言
+%  资料来源：turing/pages/1994/Raj Reddy/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Reddy 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeSR}{HTML}{2E5A9E}     % 语音识别 — 蓝
+\definecolor{badgeRO}{HTML}{1E8E8E}     % 机器人学 — 青绿
+\definecolor{badgeED}{HTML}{D9A441}     % 教育普惠 — 琥珀
+\definecolor{badgeAR}{HTML}{C0395B}     % 体系结构 — 玫瑰
+\definecolor{srpanel}{RGB}{228,233,246}
+\definecolor{ropanel}{RGB}{222,240,238}
+\definecolor{edpanel}{RGB}{249,240,224}
+\definecolor{arpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 声波纹背景（同心扩散弧线）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \draw[badgeSR!18, line width=2.2pt] ([xshift=-8.2cm, yshift=-3.4cm]current page.center) circle (1.4cm);
+  \draw[badgeSR!14, line width=1.8pt] ([xshift=-8.2cm, yshift=-3.4cm]current page.center) circle (2.4cm);
+  \draw[badgeSR!10, line width=1.4pt] ([xshift=-8.2cm, yshift=-3.4cm]current page.center) circle (3.4cm);
+  \draw[badgeRO!16, line width=2.0pt] ([xshift=8.0cm, yshift=3.6cm]current page.center) circle (1.6cm);
+  \draw[badgeRO!12, line width=1.6pt] ([xshift=8.0cm, yshift=3.6cm]current page.center) circle (2.6cm);
+  \draw[badgeRO!9, line width=1.2pt] ([xshift=8.0cm, yshift=3.6cm]current page.center) circle (3.6cm);
+  \fill[badgeED!12] (current page.north west) ++(2.0,-2.0) circle (1.8cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{microphone}\enspace AI 先驱 · 语音识别开拓者\enspace·\enspace 印度裔·美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {拉吉·雷迪};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Raj Reddy\enspace·\enspace 1937 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {人工智能先驱 · 机器人学 · 1994 图灵奖（与 Edward Feigenbaum 共享）};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeSR] at (-5.05,0)
+        {语音识别\\Speech Recognition\par\scriptsize Hearsay · Sphinx};
+      \node[badge, fill=badgeRO] at (-1.68,0)
+        {机器人学\\Robotics\par\scriptsize RI 创始所长};
+      \node[badge, fill=badgeED] at (1.68,0)
+        {教育普惠\\IIIT · RGUKT\par\scriptsize 百万书库};
+      \node[badge, fill=badgeAR] at (5.05,0)
+        {体系结构\\Blackboard\par\scriptsize 任务导向架构};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"pioneering the design and construction of large scale artificial intelligence systems" —— 1994 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Raj_Reddy_2026.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Raj_Reddy_2026.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Raj Reddy · AAAI 2026};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 印度裔·美国\enspace|\enspace \faIcon{university}\enspace Stanford · CMU · IIIT Hyderabad\enspace|\enspace Turing 1994};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{雷迪 - 从 Katur 村到图灵奖}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Raj_Reddy_2026.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Raj_Reddy_2026.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Raj Reddy};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1937-06-13 —（在世）\\[2pt]\lab{本名}\quad Dabbala Rajagopal "Raj" Reddy\\[2pt]\lab{国籍}\quad 印度裔·美国（公民：美国）};
+  \node[infob, fill=ropanel, draw=badgeRO!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Guindy BEng（土木）\\[2pt]
+     \quad UNSW MTech 1960 · Stanford PhD 1966\\[2pt]
+     \lab{师承}\quad John McCarthy（导师）};
+  \node[infob, fill=srpanel, draw=badgeSR!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Katur · 安得拉邦（英属印度）\\[2pt]\lab{任职}\quad Stanford · CMU\\[2pt]\quad IIIT Hyderabad · RGUKT};
+  \node[infob, fill=edpanel, draw=badgeED!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1994 · 荣誉军团勋章 1984\\[2pt]
+     \quad Padma Bhushan 2001 · Bush 2006\\[2pt]
+     \lab{核心领域}\quad 语音识别 · 机器人\\[2pt]
+     \quad 人机交互 · AI};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{雷迪的一生}{1937 — · 从安得拉邦村庄到首位亚裔图灵奖得主}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    3.0/1937/生于英属印度 Katur 村（今安得拉邦）,
+    2.3/1960/UNSW MTech · 入 IBM 澳大利亚,
+    1.6/1963/加入 Stanford · 师从 McCarthy,
+    0.9/1966/页面载为 McCarthy 门下首位 AI 博士,
+    0.2/1969/加入 CMU · 与 Newell 和 Simon 共事,
+    -0.5/1979/机器人研究所创始所长（–1991）,
+    -1.2/1984/University Professor · 获荣誉军团勋章,
+    -1.9/1994/获图灵奖（页面载为首位亚裔得主）,
+    -2.45/2008/RGUKT 创始 Chancellor（–2019）,
+    -2.85/2021/Computer History Museum Fellow
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. Katur 村的少年 ---
+\newcommand{\katurslide}{\begin{frame}\plainbar\sectiontitle{Katur 村的少年 (1937–1950s)}{泰卢固家庭 · 家族第一个大学生}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{出生} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{1937 年生于 Katur 村（时属 Madras Presidency 英属印度，今印度安得拉邦 Chittoor 县）} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{农村家庭的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{泰卢固家庭：父 Sreenivasulu Reddy 为地主，母 Pitchamma 为家庭主妇} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{朴素的出身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{第一} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{家族中第一个上大学的人（页面实载）} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{知识改变命运} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从一个没有大学生的村庄，走向世界计算机科学的殿堂。}
+\end{center}
+\end{frame}}
+
+% --- 5. 从土木到计算机 ---
+\newcommand{\unswslide}{\begin{frame}\plainbar\sectiontitle{从土木到计算机 (1955–1963)}{Guindy 土木 · UNSW MTech · IBM 澳大利亚}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{本科} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{College of Engineering, Guindy（今 Anna University, Chennai）土木工程学士（BEng）} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{工程的底色} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1960} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{澳大利亚实习期间入 UNSW，获 MTech；其间上手 English Electric Deuce Mark II（真空管 + 水银延迟线存储 + 打孔卡 I/O）} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{初见计算机} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1960–1963} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{加入 IBM，在澳大利亚任 Applied Science representative} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{产业界历练} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一台真空管计算机，把土木工程师引向了人工智能。}
+\end{center}
+\end{frame}}
+
+% --- 6. Stanford：McCarthy 门下 ---
+\newcommand{\stanfordslide}{\begin{frame}\plainbar\sectiontitle{Stanford：McCarthy 门下 (1963–1969)}{首位 AI 博士（页面载）· 手眼耳计算机}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1963} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{加入 Stanford，师从 John McCarthy（1971 图灵奖得主 · "人工智能"术语创造者）} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{进入 AI 核心圈} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1966} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{页面载为 "the first PhD in AI under John McCarthy"——麦卡锡门下首位 AI 博士} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{AI 学位第一人（页面口径）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1966–1969} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{任 Stanford 计算机科学助理教授} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{教学生涯开始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{与 McCarthy 等合作 "A Computer with Hands, Eyes, and Ears"（AFIPS '68）} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{手眼耳的愿景} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在 McCarthy 门下，他为"感知智能"选定了自己的战场：语音。}
+\end{center}
+\end{frame}}
+
+% --- 7. CMU 与 Newell/Simon 共事 ---
+\newcommand{\cmuslide}{\begin{frame}\plainbar\sectiontitle{CMU：与 AI 先驱共事 (1969 起)}{Newell 与 Simon · 五十余年的卡内基岁月}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{加入 CMU 任副教授，与 AI 先驱 Allen Newell 和 Herb Simon 共事} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{三巨头同校} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1973} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{晋升正教授} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{学术地位确立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1984} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{获授 University Professor（大学教授头衔）} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{CMU 最高荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{至今} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{University Professor of Computer Science and Robotics · Moza Bint Nasser 讲席教授} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{执教逾五十年} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} Stanford 与 Carnegie Mellon 的讲台，他一站就是半个多世纪。}
+\end{center}
+\end{frame}}
+
+% --- 8. Hearsay 与黑板模型 ---
+\newcommand{\hearsayslide}{\begin{frame}\plainbar\sectiontitle{Hearsay 与黑板模型}{连续语音识别 · 多知识源协调（本篇核心）}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Hearsay I} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{最早的能做连续语音识别的系统之一（页面实载）} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{语音识别里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{五十年谱系} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{Reddy 与同事们（页面口径 "Reddy and his colleagues"）陆续演示：机器人语音控制、大词表连续识别、说话人无关识别、无限制词汇听写} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{感知智能的全谱系} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{研究面} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{聚焦智能的感知与运动侧面：语音、语言、视觉与机器人} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{AI 的另一半} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 黑板模型（blackboard model）：协调多知识源的架构}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{语音假设} \leftrightarrow \text{黑板} \leftrightarrow \text{多知识源}$\qquad 已被应用 AI 全谱系采纳}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Dragon-Harpy-Sphinx：语音识别谱系 ---
+\newcommand{\speechslide}{\begin{frame}\plainbar\sectiontitle{Dragon · Harpy · Sphinx：语音识别谱系}{现代商用语音识别思想的源头}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{系统}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{谱系} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{Hearsay II、Dragon、Harpy、Sphinx I/II——Reddy 与同事们的系列成果，发展出诸多现代商用语音识别技术的底层思想} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{从实验室到产业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{综述} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{与 Xuedong Huang（黄学东）、James K. Baker 合作发表语音识别历史综述（页面实载）} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{为领域立史} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{"黑板模型"等思想跨越语音，被整个应用 AI 领域采纳} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{架构级的遗产} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} CMU 语音识别谱系（页面实载）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{Hearsay I} \rightarrow \text{Hearsay II · Dragon · Harpy} \rightarrow \text{Sphinx I/II} \rightarrow \text{现代商用语音识别}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 机器人研究所创始所长 ---
+\newcommand{\roboticslide}{\begin{frame}\plainbar\sectiontitle{机器人研究所创始所长 (1979–1991)}{CMU Robotics Institute · 四大方向}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创始所长} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{1979–1991 任 CMU 机器人研究所（Robotics Institute）创始所长} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{机器人学建制化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{四大方向} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{Reddy 与同事们做出开创性贡献（页面原文 seminal contributions）的领域：任务导向体系结构 · 自然场景分析 · 信息普适访问 · 自主机器人系统} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{四条战线并进} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方法论} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{感知与运动智能的工程化——从语音到视觉到机器人一以贯之} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{统一的问题意识} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 让机器人走出实验室——CMU 机器人研究所在他手中奠基。}
+\end{center}
+\end{frame}}
+
+% --- 11. SCS 院长与四大机构 ---
+\newcommand{\deanslide}{\begin{frame}\plainbar\sectiontitle{SCS 院长与四大机构 (1991–1999)}{LTI · HCII · ML Dept · ISR 的缔造者}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{任职}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{建树}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{SCS 院长} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{1991–1999 任 CMU 计算机学院（School of Computer Science）院长} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{掌舵计算机重镇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创建机构} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{帮助创建：Language Technologies Institute · Human-Computer Interaction Institute · Center for Automated Learning and Discovery（后更名 Machine Learning Department）· Institute for Software Research} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{四大机构的缔造} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{公共职务} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{PITAC（总统信息技术咨询委员会）联合主席（1999–2001）；AAAI 创始人之一、1987–1989 任主席} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{国家与学界重任} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 今天的 CMU 语言学、人机交互与机器学习版图，刻着他任内的蓝图。}
+\end{center}
+\end{frame}}
+
+% --- 12. 技术服务社会 ---
+\newcommand{\societyslide}{\begin{frame}\plainbar\sectiontitle{技术服务社会}{Centre mondial · 百万书库 · IIIT 与 RGUKT}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事业}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1981 法国} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{Centre mondial informatique et ressource humaine 首席科学家（技术团队含 Negroponte、Alan Kay、Papert、Winograd）——1984 年密特朗总统授予法国荣誉军团勋章} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{技术帮助第三世界} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{百万书库} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{1990 年代 Universal Digital Library 项目发起人之一；2001 年 Million Book Project——与中国学者（Pan Yunhe、Zhuang Yuting、Gao Wen）和印度（N. Balakrishnan）合作} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{让所有书触手可及} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{印度办学} & \cellcolor{edpanel}\textcolor{badgeED!82!black}{IIIT Hyderabad 创始主席；RGUKT（2008）为安得拉邦农村天才青年办学——创始 Chancellor（2008–2019）} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{普惠教育的实践} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从语音识别到百万书库——他始终关心"技术能否抵达每一个人"。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1994 · 门生满门}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award 1994（共享）\item Légion d'Honneur 1984\item Padma Bhushan 2001\item Okawa 2004 · Honda 2005\item Bush 2006 · CHM 2021\item 院士：NAE · 美国艺术与科学院\item 院士：中国工程院 · 印度两院\end{itemize}} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{跨越大洋的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{srpanel}\textcolor{badgeSR!82!black}{Gosling · 李开复 · 黄学东 · 沈向洋 等} & \cellcolor{ropanel}\textcolor{badgeRO!82!black}{满门桃李} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 十余个荣誉博士学位（页面实载），跨越美、欧、亚三洲。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：让机器听见世界}{语音 · 机器人 · 教育 · 普惠}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=srpanel, draw=badgeSR!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSR} 语音识别}\\[3pt]Hearsay · Sphinx\\[2pt]黑板模型};
+\node[leg, fill=ropanel, draw=badgeRO!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeRO} 机器人学}\\[3pt]CMU 机器人研究所\\[2pt]自主系统};
+\node[leg, fill=edpanel, draw=badgeED!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeED} 教育普惠}\\[3pt]IIIT Hyderabad\\[2pt]RGUKT};
+\node[leg, fill=arpanel, draw=badgeAR!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeAR} 技术普惠}\\[3pt]百万书库\\[2pt]Universal Access};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 让机器听懂人类语言，让技术抵达金字塔底层。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 李开复《AI Superpowers》（2018）扉页题献："To Raj Reddy, my mentor in AI and in life"\\[2pt]AI 先驱 $\rightarrow$ 语音识别 $\rightarrow$ 机器人学 $\rightarrow$ 技术普惠\\[2pt]他的思想，仍在让更多人听见机器的回应。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {让机器听懂人声，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {让技术抵达每一个人。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Raj Reddy};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {拉吉·雷迪\quad Raj Reddy\quad 1937 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{microphone}\enspace Turing 1994 · 首位亚裔图灵奖得主（页面载）\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\katurslide
+\unswslide
+\stanfordslide
+\cmuslide
+\hearsayslide
+\speechslide
+\roboticslide
+\deanslide
+\societyslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

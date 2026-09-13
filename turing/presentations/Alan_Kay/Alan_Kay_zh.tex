@@ -1,0 +1,527 @@
+% =============================================================
+%  OOP 命名者：艾伦·凯 (Alan Kay)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：重叠窗口 / Dynabook —— 柔和圆角窗口层叠
+%  资料来源：turing/pages/2003/Alan Kay/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Alan Kay 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeOOP}{HTML}{2E5A9E}     % OOP 与 Smalltalk — 蓝
+\definecolor{badgeGUI}{HTML}{1E8E8E}     % GUI 与窗口 — 青绿
+\definecolor{badgeDyna}{HTML}{D9A441}    % Dynabook 与个人计算 — 琥珀
+\definecolor{badgeEdu}{HTML}{C0395B}     % 教育与 OLPC — 玫瑰
+\definecolor{ooppanel}{RGB}{228,233,246}
+\definecolor{guipanel}{RGB}{222,240,238}
+\definecolor{dynapanel}{RGB}{249,240,224}
+\definecolor{edupanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 重叠窗口背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \draw[badgeOOP!30, line width=1.0pt, rounded corners=9pt, fill=badgeOOP!7]
+    ([xshift=1.0cm,yshift=-1.2cm]current page.north west) rectangle ++(3.6,2.1);
+  \draw[badgeGUI!30, line width=1.0pt, rounded corners=9pt, fill=badgeGUI!7]
+    ([xshift=-4.4cm,yshift=1.0cm]current page.north east) rectangle ++(3.8,2.0);
+  \draw[badgeDyna!30, line width=1.0pt, rounded corners=9pt, fill=badgeDyna!7]
+    ([xshift=-4.0cm,yshift=0.9cm]current page.south west) rectangle ++(3.4,1.9);
+  \draw[badgeEdu!28, line width=1.0pt, rounded corners=9pt, fill=badgeEdu!7]
+    ([xshift=-4.6cm,yshift=0.7cm]current page.south east) rectangle ++(3.4,1.8);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{laptop}\enspace OOP 命名者 · Dynabook 之父\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {艾伦·凯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Alan Kay\enspace·\enspace 1940 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {Smalltalk 之父 · 现代窗口 GUI 架构师 · 2003 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeOOP] at (-5.05,0)
+        {面向对象\\Object-Oriented\par\scriptsize Smalltalk · messaging};
+      \node[badge, fill=badgeGUI] at (-1.68,0)
+        {现代 GUI\\Overlapping Windows\par\scriptsize desktop metaphor};
+      \node[badge, fill=badgeDyna] at (1.68,0)
+        {Dynabook\\Personal Computing\par\scriptsize 笔记本与平板先祖};
+      \node[badge, fill=badgeEdu] at (5.05,0)
+        {教育技术\\Etoys · OLPC\par\scriptsize 移动学习先驱};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9}{12.5}\selectfont\itshape, text=muteddark, align=center, text width=11.6cm]
+    at ([xshift=-0.6cm, yshift=-2.35cm]current page.center)
+    {"The Computer Revolution Hasn't Happened Yet" —— 2003 图灵奖演讲题目};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Alan_Kay_Kyoto.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Alan_Kay_Kyoto.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Alan Kay（京都奖受奖照）};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Xerox PARC · Atari · Apple · Disney · HP\enspace|\enspace Turing 2003};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{艾伦·凯 - 从生物学生到 OOP 命名者}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Alan_Kay_Kyoto.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Alan_Kay_Kyoto.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Alan Kay};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1940-05-17 —（在世）\\[2pt]\lab{本名}\quad Alan Curtis Kay\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=ooppanel, draw=badgeOOP!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Colorado Boulder BS 1966\\[2pt]
+     \quad Utah MS 1968 · CS PhD 1969\\[2pt]
+     \lab{师承}\quad Evans · Barton（双导师）};
+  \node[infob, fill=guipanel, draw=badgeGUI!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 马萨诸塞州斯普林菲尔德\\[2pt]\lab{任职}\quad Xerox PARC · Atari · Apple\\[2pt]
+     \quad Disney · HP Labs · Viewpoints};
+  \node[infob, fill=dynapanel, draw=badgeDyna!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2003 · Kyoto Prize 2004\\[2pt]
+     \quad Draper Prize 2004 · NAE 1997\\[2pt]
+     \lab{核心领域}\quad OOP · GUI · 个人计算\\[2pt]
+     \quad 教育技术};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{艾伦·凯的一生}{1940 — · 从斯普林菲尔德到 OOP 命名者}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    3.0/1940/生于马萨诸塞州斯普林菲尔德,
+    2.3/1966/获 Colorado Boulder 数学与分子生物学学士,
+    1.6/1969/获 Utah 计算机科学博士（FLEX 论文）,
+    0.9/1970/加入 Xerox PARC · Smalltalk 与 Dynabook,
+    0.2/1981/出任 Atari 首席科学家 · 1984 任 Apple Fellow,
+    -0.5/1995/发起开源 Smalltalk 版本 Squeak,
+    -1.2/2001/创立 Viewpoints Research Institute,
+    -1.9/2003/获图灵奖 · 次年获 Kyoto 与 Draper Prize,
+    -2.5/2005/OLPC 百元笔记本发布,
+    -2.9/在世/理想主义者仍在路上
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 曲折的早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{曲折的早年 (1940–1966)}{斯普林菲尔德 · Brooklyn Tech · 吉他与空军}
+\vspace{-0.6cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1940} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{生于马萨诸塞州斯普林菲尔德；家庭随从事生理学工作的父亲多次搬迁，定居纽约都会区} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{外祖父与舅舅皆为作家/探险家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{Brooklyn Technical High School——修满学分即毕业} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{非典型学霸路径} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Bethany College} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{生物主修、数学辅修；其间丹佛教吉他一年} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{前职业爵士吉他手} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{入伍} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{应征美国陆军；经空军军官培训资格测试成为程序员} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{与计算机结缘的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1966} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{获 University of Colorado Boulder 数学+分子生物学 BS} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{跨学科底色} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从吉他手到空军程序员，通往计算机的路从来不是直线。}
+\end{center}
+\end{frame}}
+
+% --- 5. Utah 岁月 ---
+\newcommand{\utahslide}{\begin{frame}\plainbar\sectiontitle{Utah 岁月 (1966–1969)}{FLEX 论文 · Evans 与 Barton 双导师 · Sketchpad 的影响}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{获 Utah 电机工程 MS；完成论文 \textit{FLEX: A Flexible Extendable Language}} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{可扩展语言的首次尝试} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{获计算机科学博士学位（论文工作 1968 年完成）} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{FLEX 孕育 Smalltalk 基因} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{双导师} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{David C. Evans（"计算机图形学之父"之一）与 Robert S. Barton} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{infobox 实载双导师} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响者} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{Ivan Sutherland（Sketchpad 作者）为其同事——Kay 自陈 1963 年论文影响了他对 objects 与编程的看法} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{图形学群星之门} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} FLEX 虽小，却是十年后 Smalltalk 的第一颗种子。}
+\end{center}
+\end{frame}}
+
+% --- 6. 1968：两次相遇 ---
+\newcommand{\meetingsslide}{\begin{frame}\plainbar\sectiontitle{1968：两次相遇}{Papert 与 Logo · Engelbart 的里程碑演示}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{相遇}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Seymour Papert} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{1968 年相识，接触 Logo 语言，进而深入 Piaget/Bruner/Vygotsky 的建构主义学习理论} & \cellcolor{dynapanel}\textcolor{badgeDyna!82!black}{教育基因贯穿一生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Douglas Engelbart} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{1968-12-09 旧金山 "Mother of all Demos" 现场见证者——尽管当天高烧} & \cellcolor{dynapanel}\textcolor{badgeDyna!82!black}{个人计算的现场启蒙} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 目睹 "Mother of all Demos" 的回忆（页面实载引语）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{"It was one of the greatest experiences in my life."}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Xerox PARC ---
+\newcommand{\parcslide}{\begin{frame}\plainbar\sectiontitle{Xerox PARC (1970–1981)}{Smalltalk · "object-oriented" 命名 · 现代窗口 GUI}
+\vspace{-0.6cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Smalltalk} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{领导开发面向对象语言 Smalltalk，亲手设计其早期版本的大部分内容} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{OOP 语言的里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名者} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{创造 "object-oriented" 一词；与 PARC 同事并列为 OOP 思想之父之一} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{概念源自 Simula 67（挪威计算中心）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{现代 GUI} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{领导设计首个现代窗口式桌面界面；现代重叠窗口 GUI 的架构者} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{desktop metaphor · windows 入 infobox} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{整个 1970 年代} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{持续开发 Smalltalk 网络化工作站原型} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{个人计算的完整实验场} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "object-oriented" 的命名与发扬}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{Simula 67 概念} \xrightarrow{\text{Kay 命名与发扬}} \text{Object-Oriented Programming}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. messaging：对象的反思 ---
+\newcommand{\messagingslide}{\begin{frame}\plainbar\sectiontitle{"The big idea is messaging"}{对 "objects" 一词的晚年反思}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{命题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{遗憾} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{Kay 自陈遗憾当年以 "objects" 命名这一主题——它让许多人关注了次要的观念} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{对术语误导性的自省} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{大观念} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{真正的核心观念是 "messaging"（消息传递）} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{OOP 的本义重申} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.5}{11}\selectfont\color{coverprimary!88!black}\textit{"I'm sorry that I long ago coined the term 'objects' for this topic because it gets many people to focus on the lesser idea. The big idea is 'messaging'."}}\\[3pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{muteddark}—— Alan Kay（页面实载引语 · 出处 Stefan L. Ram 文档/AlanKayOnMessaging）}
+  \end{minipage}%
+}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{ooppanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{object} \xrightarrow{\ \text{message}\ } \text{object} \xrightarrow{\ \text{message}\ } \text{object} \xrightarrow{\ \text{message}\ } \cdots$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Dynabook ---
+\newcommand{\dynabookslide}{\begin{frame}\plainbar\sectiontitle{Dynabook：个人计算的先祖}{笔记本 · 平板 · 电子书 · 移动学习}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{构想} & \cellcolor{dynapanel}\textcolor{badgeDyna!82!black}{在 PARC 期间构想的个人计算设备——供每个孩子拥有的"随身笔记本"} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{早于 PC 十余年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{先祖} & \cellcolor{dynapanel}\textcolor{badgeDyna!82!black}{笔记本电脑、平板电脑与电子书的关键先祖} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{infobox Known for 实载} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教育平台} & \cellcolor{dynapanel}\textcolor{badgeDyna!82!black}{因 Dynabook 定位于教育平台，Kay 被视为移动学习最早的研究者之一} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{理念进入 OLPC 设计} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Dynabook（1970 年代构想）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{Dynabook} \Rightarrow \text{笔记本电脑} + \text{平板} + \text{电子书}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. Atari → Apple → Disney ---
+\newcommand{\industryslide}{\begin{frame}\plainbar\sectiontitle{Atari $\rightarrow$ Apple $\rightarrow$ Disney (1981–2001)}{产业界的流浪智者}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{任职}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1981–1984} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{Atari 首席科学家} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{从实验室走向消费电子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1984} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{Apple Fellow（1997 年 Apple ATG 关闭）} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{苹果体系的十三年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1997} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{经 Bran Ferren 邀请加入 Walt Disney Imagineering 任 Disney Fellow} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{想象力工业的智者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2001} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{创立 Viewpoints Research Institute（任主席至 2018 年机构关闭）} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{自有研究基地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2002–2005} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{HP Labs senior fellow（2005-07-20 HP 解散其团队后离开）} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{晚年产业任职} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Atari 到 Disney，他始终站在产业与理想的交汇处。}
+\end{center}
+\end{frame}}
+
+% --- 11. Squeak / Etoys / Croquet ---
+\newcommand{\squeakslide}{\begin{frame}\plainbar\sectiontitle{Squeak / Etoys / Croquet / Tweak}{开源教育软件生态}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{项目}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Squeak} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{1995-12 在 Apple 发起开源 Smalltalk 版本 Squeak} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{Smalltalk 的开源生命线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Etoys} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{1996-11 启动 Etoys 教育系统研究} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{儿童的"媒体作者"工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Croquet} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{与 David A. Smith、David P. Reed 等发起 Croquet Project——开源网络化 2D/3D 协作环境} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{协作计算的先行实验} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Tweak} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{2001 年团队提出 Tweak 界面架构} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{Etoys 的后续演进} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} Smalltalk 不只属于历史——它以 Squeak 的形式活在孩子们手中。}
+\end{center}
+\end{frame}}
+
+% --- 12. OLPC ---
+\newcommand{\olpcslide}{\begin{frame}\plainbar\sectiontitle{OLPC 百元笔记本 (2005)}{Dynabook 理念的现实回响}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创立者} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{One Laptop Per Child 由 Kay 的朋友 Nicholas Negroponte 创立并维系} & \cellcolor{dynapanel}\textcolor{badgeDyna!82!black}{Kay 是共同开发者而非创始人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{发布} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{2005-11 信息社会世界峰会发布 \$100 Laptop（XO-1，"Children's Machine"）} & \cellcolor{dynapanel}\textcolor{badgeDyna!82!black}{百元计算机的全球轰动} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{理念源头} & \cellcolor{edupanel}\textcolor{badgeEdu!82!black}{设计基于 Kay 的 Dynabook 理念；Kay 是核心共同开发者，专注 Squeak/Etoys 教育软件} & \cellcolor{dynapanel}\textcolor{badgeDyna!82!black}{三十年理想照进现实} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 每个孩子一台笔记本——Dynabook 的教育梦，在 2005 年成为产品。}
+\end{center}
+\end{frame}}
+
+% --- 13. STEPS ---
+\newcommand{\stepsslide}{\begin{frame}\plainbar\sectiontitle{STEPS：重新发明编程 (2006)}{Viewpoints Research · NSF 资助 · "Model T" 追问}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{资助} & \cellcolor{dynapanel}\textcolor{badgeDyna!82!black}{2006-08-31 获 NSF 资助 "STEPS Toward the Reinvention of Programming"} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{国家级的长期押注} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{递归缩写} & \cellcolor{dynapanel}\textcolor{badgeDyna!82!black}{STEPS Toward Expressive Programming Systems} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{程序员的幽默传统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{追问} & \cellcolor{dynapanel}\textcolor{badgeDyna!82!black}{今天的商业软件数亿行代码——一个可理解的实用 "Model T" 设计能否只需 20K--1M 行？} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{对软件臃肿的根本反思} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} STEPS 的核心追问}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{实用系统} \sim 20\text{K--}1\text{M 行} \ll \text{数亿行商业代码}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉之殿 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉之殿}{图灵奖 2003 · Kyoto Prize · Draper Prize}\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.65}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{最高荣誉} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{ACM Turing Award（2003）· Kyoto Prize（2004 · 图灵奖同年）\newline Charles Stark Draper Prize（2004 · 与 Lampson/Taylor/Thacker 共享）} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{个人计算先驱的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{院士与会士} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{NAE 院士（1997）· CHM Fellow（1999）· ACM Fellow（2008）} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{工程界的最高认同} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{荣誉博士} & \cellcolor{ooppanel}\textcolor{badgeOOP!82!black}{KTH · 京都大学 · 爱丁堡大学等八项荣誉博士；另获 NEC C\&C Prize 等多项} & \cellcolor{guipanel}\textcolor{badgeGUI!82!black}{全球学界致敬} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{7.5}{9.8}\selectfont\color{coverprimary!88!black}\textit{"For pioneering many of the ideas at the root of contemporary object-oriented programming languages, leading the team that developed Smalltalk, and for fundamental contributions to personal computing"}}\\[2pt]
+  {\fontsize{7}{9}\selectfont\color{muteddark}—— 2003 图灵奖获奖理由（ACM 整句）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{20}{26}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.6cm]current page.center) {"The Computer Revolution};
+\node[font=\fontsize{20}{26}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.7cm]current page.center) {Hasn't Happened Yet."};
+\node[font=\fontsize{13}{18}\selectfont\bfseries, text=coverprimary!80!black] at ([yshift=-0.4cm]current page.center) {计算机革命，还没有发生。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-1.1cm, xshift=-4.2cm]current page.center) -- ([yshift=-1.1cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.8cm]current page.center) {— 致敬 Alan Kay};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.6cm]current page.center) {艾伦·凯\quad Alan Kay\quad 1940 —（在世）};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{laptop}\enspace Turing 2003 · Kyoto Prize · Dynabook 之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\utahslide
+\meetingsslide
+\parcslide
+\messagingslide
+\dynabookslide
+\industryslide
+\squeakslide
+\olpcslide
+\stepsslide
+\honorsslide
+\closingslide
+\end{document}

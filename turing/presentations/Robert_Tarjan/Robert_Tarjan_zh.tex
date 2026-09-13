@@ -1,0 +1,485 @@
+% =============================================================
+%  罗伯特·塔扬 (Robert Tarjan)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：稀疏 DFS 深度搜索树（嵌套弧线），呼应"深度优先搜索的线性时代"
+%  资料来源：turing/pages/1986/Robert Tarjan/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Tarjan 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeGraph}{HTML}{2E5A9E}   % 图算法 — 蓝
+\definecolor{badgeDS}{HTML}{1E8E8E}      % 数据结构 — 青绿
+\definecolor{badgeMentor}{HTML}{D9A441}  % 师承与门生 — 琥珀
+\definecolor{badgeInd}{HTML}{C0395B}     % 产业与专利 — 玫瑰
+\definecolor{graphpanel}{RGB}{228,233,246}
+\definecolor{dspanel}{RGB}{222,240,238}
+\definecolor{mentorpanel}{RGB}{249,240,224}
+\definecolor{indpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% DFS 深度搜索树背景（嵌套弧线）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeGraph!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeDS!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeMentor!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{project-diagram}\enspace 数据结构与图算法大师\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {罗伯特·塔扬};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Robert Tarjan\enspace·\enspace 1948 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {DFS 线性图算法 · 并查集分析 · Fibonacci 堆 · splay 树 · 1986 图灵奖（与 Hopcroft 共享）};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeGraph] at (-5.05,0)
+        {图算法\\Graph Algorithms\par\scriptsize DFS · 平面性判定};
+      \node[badge, fill=badgeDS] at (-1.68,0)
+        {数据结构\\Data Structures\par\scriptsize Fibonacci 堆 · splay};
+      \node[badge, fill=badgeMentor] at (1.68,0)
+        {师承与门生\\Mentorship\par\scriptsize Floyd · Knuth};
+      \node[badge, fill=badgeInd] at (5.05,0)
+        {产业与专利\\Industry\par\scriptsize Bell Labs · 18 项专利};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {discoverer of several graph theory algorithms · co-inventor of splay trees and Fibonacci heaps —— Wikipedia 页面原文};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Bob_Tarjan.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Bob_Tarjan.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Robert Tarjan};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Princeton · Stanford · Bell Labs\enspace|\enspace Turing 1986};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{塔扬 - 从波莫纳到 Princeton 讲席}{生卒 · 本名 · 国籍 · 教育 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Bob_Tarjan.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Bob_Tarjan.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Robert Tarjan};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1948-04-30 —（在世）\\[2pt]\lab{本名}\quad Robert Endre Tarjan\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=dspanel, draw=badgeDS!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Caltech 数学 BS 1969\\[2pt]
+     \quad Stanford CS MS 1971 · PhD 1972\\[2pt]
+     \lab{师承}\quad Robert Floyd（博士导师）};
+  \node[infob, fill=graphpanel, draw=badgeGraph!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 波莫纳 · 加利福尼亚\\[2pt]\lab{任职}\quad Princeton 杰出大学教授\\[2pt]
+     \quad （1985 年起至今）};
+  \node[infob, fill=mentorpanel, draw=badgeMentor!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1986 · Nevanlinna 首届\\[2pt]
+     \quad ACM Fellow 1994\\[2pt]
+     \lab{核心领域}\quad 图算法 · 数据结构};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{塔扬的一生}{1948 — · 从天文少年到线性时间的主人}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1948/生于加州波莫纳，Martin Gardner 专栏把他引向数学,
+    2.3/1969/Caltech 数学学士,
+    1.6/1972/Stanford 博士（Floyd 与 Knuth 指导）,
+    0.9/1972/发表 DFS 与线性图算法（SIAM J. Comput.）,
+    0.2/1980/进入 Bell Labs（1980--1989）,
+    -0.5/1985/任教 Princeton 至今（James S. McDonnell 讲席）,
+    -1.2/1986/与 Hopcroft 共享图灵奖,
+    -1.9/1987/与 Fredman 提出 Fibonacci 堆,
+    -2.6/2013/加入 Microsoft Research 硅谷；1999 获 Kanellakis 奖
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：波莫纳的天文少年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：波莫纳的天文少年 (1948--1969)}{科幻读者 · 棋王之弟 · Gardner 专栏}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1948} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{生于加州波莫纳；父 George Tarjan 为儿童精神病学家；弟 James 后为国际象棋特级大师} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{知识分子家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{少年} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{大量阅读科幻、想当天文学家；因 Martin Gardner 在 Scientific American 的数学游戏专栏转向数学} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{天文转向数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1964} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{Summer Science Program 学天文时第一次用上真正的计算机；高中打工接触 IBM 穿孔卡分类机} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{初识计算机} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 想当天文台的少年，最终在天平的另一端称量起图的结构。}
+\end{center}
+\end{frame}}
+
+% --- 5. Caltech 数学 → Stanford CS ---
+\newcommand{\caltechslide}{\begin{frame}\plainbar\sectiontitle{Caltech 数学 $\rightarrow$ Stanford CS (1969--1972)}{Floyd 与 Knuth 双导师 · 平面性算法论文}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{获 Caltech 数学学士} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{数学根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{师承} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{Robert Floyd（博士导师，1978 图灵奖得主）与 Donald Knuth（另一位学术导师）} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{双师之门} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1971--1972} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{Stanford 计算机科学硕士（1971）、博士（1972，辅修数学），论文 \textit{An Efficient Planarity Algorithm}} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{平面性起步} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 为什么选计算机科学（页面转述）}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}computer science was a way of doing mathematics that could have a practical impact}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. DFS 与线性图算法 ---
+\newcommand{\dfsslide}{\begin{frame}\plainbar\sectiontitle{DFS 与线性图算法 (1972)}{SIAM 论文 · 一系列算法的母体}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{\textit{Depth-first search and linear graph algorithms}（SIAM J. Comput. 1(2), 146--160, 1972）——论文最高被引之一} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{博士期间发表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同族算法} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{强连通分量、割点与桥（bridge-finding）、离线最近公共祖先（off-line LCA）等 "several graph theory algorithms"} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{DFS 线性化母体} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{把深度优先搜索变成系统化的线性时间算法框架} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{图算法分水岭} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} DFS 的线性时代}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\Theta(V+E)\qquad$ 一次深度优先遍历，线性时间看清整个图}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Hopcroft–Tarjan 平面性判定 ---
+\newcommand{\planarityslide}{\begin{frame}\plainbar\sectiontitle{Hopcroft--Tarjan 平面性判定}{首个线性时间平面性测试算法}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{成果} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{"first linear-time algorithm for planarity testing"（页面明载）——首个线性时间平面性判定算法} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{与 John Hopcroft 合作（1986 图灵奖的共同获奖者、collaborator）；博士论文即为 \textit{An Efficient Planarity Algorithm}} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{以合作事实叙事} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{区分} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{平面性算法与 1972 年 DFS 论文是两项不同的工作，勿混为一谈} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{口径清晰} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 判断一张图能否画在平面上且边不相交——他们把它做到了线性时间。}
+\end{center}
+\end{frame}}
+
+% --- 8. 并查集与逆 Ackermann ---
+\newcommand{\ufslide}{\begin{frame}\plainbar\sectiontitle{并查集与逆 Ackermann 函数}{union-find 的最优运行时间分析}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{对象} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{不相交集合（disjoint-set / union-find）数据结构} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{数据结构早已有之} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{贡献} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{"first to prove the optimal runtime involving the inverse Ackermann function"——首个证明含逆 Ackermann 函数的最优运行时间} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{分析而非发明} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{意义} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{$\alpha$ 增长极慢，实际中可视作常数——理论分析的经典范例} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{渐近分析的巅峰} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 并查集操作的均摊运行时间}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathcal{O}\big(m\,\alpha(m,n)\big)\qquad$ $\alpha$ 为逆 Ackermann 函数}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Fibonacci 堆 ---
+\newcommand{\fibheapslide}{\begin{frame}\plainbar\sectiontitle{Fibonacci 堆 (1987)}{与 Michael L. Fredman 合著 · 服务网络优化}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{\textit{Fibonacci heaps and their uses in improved network optimization algorithms}（JACM 34(3), 1987）——与 Michael L. Fredman \textbf{合著}} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{两人合作成果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{结构} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{由树组成的森林型堆（forest of trees），懒惰合并、级联剪枝} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{结构精巧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{用途} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{改进网络优化算法（最短路、最小生成树等）的渐近复杂度} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{理论加速器} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Fibonacci 堆的均摊复杂度}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{decrease-key}\ \mathcal{O}(1)\qquad \text{delete-min}\ \mathcal{O}(\log n)\qquad$（均摊）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 伸展树与 median of medians ---
+\newcommand{\splayslide}{\begin{frame}\plainbar\sectiontitle{伸展树与 median of medians}{与博士生 Sleator 共同发明 · 五作者之一}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成果}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{splay tree} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{与博士生 Daniel Sleator \textbf{共同发明}——自调整二叉搜索树，无需维护平衡信息} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{co-inventor（页面原文）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{median of medians} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{线性时间选择算法的\textbf{五位共同作者之一}（页面未列其余四人，勿编造）} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{one of five co-authors} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{最大流} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{与 Andrew V. Goldberg 合著 \textit{A new approach to the maximum-flow problem}（JACM 35(4), 1988）} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{Goldberg--Tarjan} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 伸展树：访问即调整}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{splay}(x)\ \Rightarrow\ x\ \text{旋转至根}\qquad m\ \text{次操作均摊}\ \mathcal{O}(m\log n)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 图灵奖 1986 ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{图灵奖 1986：与 Hopcroft 共享}{同一 citation · 同一份荣耀}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共享} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{1986 年与 John Hopcroft \textbf{共同}获得 ACM 图灵奖——两人同年、同一获奖理由} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{共享结构必须写明} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{侧重} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{本篇侧重 Tarjan 的数据结构与图算法深水区；教材与教育家叙事见 Hopcroft 篇} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{两篇互为补充} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{缘分} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{与 Hopcroft 在平面性判定上的合作，是两人共同获奖工作的一部分} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{collaborator 关系} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1986 图灵奖理由（整句引用）}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}"For fundamental achievements in the design and analysis of algorithms and data structures."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 学界与产业之间 ---
+\newcommand{\industryslide}{\begin{frame}\plainbar\sectiontitle{学界与产业之间}{Bell Labs · Intertrust · HP · MSR · 18 项专利}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{3.4cm}|>{\scriptsize}X}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{任职}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{区间（按页面实载，学界业界并行）}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学界} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{Cornell（1972--73）· Berkeley（1973--1975）· Stanford（1974--1980）· NYU（1981--1985）· Princeton（1985-- ，James S. McDonnell 杰出大学教授）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{业界} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{AT\&T Bell Labs（1980--1989）· NEC Research（1989--1997）· Intertrust（1997--2001，2014 年 10 月起重返任首席科学家）· Compaq（2002）· HP（2006--2013）· Microsoft Research 硅谷（2013 年 4 月起）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专利} & \cellcolor{indpanel}\textcolor{badgeInd!82!black}{至少 18 项美国专利（Data Compaction 1989、图聚类方法 2010、人机安全通道 2012）——理论家也做工程} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在 Princeton 讲席与硅谷实验室之间穿行，把理论带进工程。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉：Nevanlinna 首届与三大院士}{奖项 · 院士 · 94,000+ 引用}\vspace{-0.35cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{奖项} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Nevanlinna Prize——\textbf{首届得主}（infobox 作 1982，正文列表作 1983）\item NAS Initiatives in Research（1984）\item Kanellakis Award（1999）· Caltech 杰出校友（2010）\end{itemize}} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{首届与首创} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{院士} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{American Academy of Arts and Sciences（1985）· NAS（1987）· NAE（1988）· American Philosophical Society（1990）} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{四大机构} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术影响} & \cellcolor{graphpanel}\textcolor{badgeGraph!82!black}{ACM Fellow（1994，"For seminal advances in the design and analysis of data structures and algorithms."）· 被引超 94,000 次} & \cellcolor{dspanel}\textcolor{badgeDS!82!black}{影响力实证} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Nevanlinna 首届到三大院士，理论计算机科学的每一面奖牌上几乎都有他。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：沿 DFS 一路探到最深处}{图算法 · 数据结构 · 门生 · 产业}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=graphpanel, draw=badgeGraph!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeGraph} 图算法}\\[3pt]DFS · 强连通分量\\[2pt]平面性判定};
+\node[leg, fill=dspanel, draw=badgeDS!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDS} 数据结构}\\[3pt]并查集 $\alpha$ 分析\\[2pt]Fibonacci 堆 · splay};
+\node[leg, fill=mentorpanel, draw=badgeMentor!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeMentor} 师承与门生}\\[3pt]Floyd · Knuth 门下\\[2pt]Sleator 等五博士};
+\node[leg, fill=indpanel, draw=badgeInd!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeInd} 产业与专利}\\[3pt]Bell Labs $\rightarrow$ MSR\\[2pt]18 项美国专利};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 一次深度优先，看尽所有结构。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} DFS $\rightarrow$ 线性图算法 $\rightarrow$ 数据结构 $\rightarrow$ 网络优化\\[2pt]他证明了：好的结构与好的分析，同样是一种美。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {一次深度优先，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {看尽所有结构。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {致敬 Robert Tarjan};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {Robert Tarjan · 1948 — · 在世};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{project-diagram}\enspace Turing 1986 · Nevanlinna Prize 首届 · ACM Fellow 1994\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\caltechslide
+\dfsslide
+\planarityslide
+\ufslide
+\fibheapslide
+\splayslide
+\turingslide
+\industryslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

@@ -1,0 +1,505 @@
+% =============================================================
+%  指称语义奠基人：达纳·斯科特 (Dana Stewart Scott)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：从集合到域、从语法到语义 —— 稀疏分层网格
+%  资料来源：turing/pages/1976/Dana Scott/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Scott 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeA}{HTML}{2E5A9E}     % 自动机理论 — 蓝
+\definecolor{badgeB}{HTML}{1E8E8E}     % 逻辑与集合论 — 青绿
+\definecolor{badgeC}{HTML}{D9A441}     % 指称语义 — 琥珀
+\definecolor{badgeD}{HTML}{C0395B}     % 域理论 — 玫瑰
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 分层网格背景（从集合到域、从语法到语义）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeC!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeD!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \draw[coverprimary!10, line width=0.5pt] ([xshift=-5.5cm,yshift=2.8cm]current page.center) -- ([xshift=5.5cm,yshift=2.8cm]current page.center);
+  \draw[coverprimary!10, line width=0.5pt] ([xshift=-5.5cm,yshift=0.8cm]current page.center) -- ([xshift=5.5cm,yshift=0.8cm]current page.center);
+  \draw[coverprimary!10, line width=0.5pt] ([xshift=-3.4cm,yshift=2.8cm]current page.center) -- ([xshift=-3.4cm,yshift=0.8cm]current page.center);
+  \draw[coverprimary!10, line width=0.5pt] ([xshift=1.9cm,yshift=2.8cm]current page.center) -- ([xshift=1.9cm,yshift=0.8cm]current page.center);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{balance-scale}\enspace 逻辑学家\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {达纳·斯科特};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Dana Stewart Scott\enspace·\enspace 1932 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {逻辑与集合论 · 指称语义 · 域理论 · 1976 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {自动机理论\\Automata Theory\par\scriptsize Rabin–Scott 1959};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {逻辑与集合论\\Logic \& Sets\par\scriptsize Boolean-valued 1967};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {指称语义\\Semantics\par\scriptsize Scott–Strachey};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {域理论\\Domain Theory\par\scriptsize Scott domain};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12.6cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"the creation of domain theory" —— 1997 Rolf Schock Prize citation};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Scott_Dana_small.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Scott_Dana_small.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Dana Stewart Scott};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Princeton · CMU · Oxford\enspace|\enspace Turing 1976 · Schock Prize 1997};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{斯科特 - 从伯克利到牛津与 CMU}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Scott_Dana_small.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Scott_Dana_small.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Dana Stewart Scott};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1932-10-11 —（在世）\\[2pt]\lab{本名}\quad Dana Stewart Scott\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad UC Berkeley 数学 BA 1954\\[2pt]
+     \quad Princeton MA · PhD 1958\\[2pt]
+     \lab{师承}\quad Alonzo Church（导师）};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Berkeley · California\\[2pt]\lab{现居}\quad Berkeley（荣休）\\[2pt]\lab{任职}\quad CMU · Oxford · Berkeley};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1976 · Steele 1972\\[2pt]
+     \quad Schock 1997 · EATCS 2007\\[2pt]
+     \lab{核心领域}\quad 数理逻辑 · 指称语义\\[2pt]
+     \quad 域理论 · 模态逻辑};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{斯科特的一生}{1932 — · 从伯克利到牛津与 CMU}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1932/生于加州伯克利,
+    2.38/1954/Berkeley 数学 BA · 进入 Tarski 圈子,
+    1.76/1958/Princeton 博士（Church 门下）,
+    1.14/1959/与 Rabin 合著非确定性自动机论文,
+    0.52/1960–1963/回伯克利任数学助理教授 · 可测基数结果,
+    -0.10/1967/Boolean-valued models 与连续统假设论文,
+    -0.72/1972/获 Leroy P. Steele Prize,
+    -1.34/1972–1981/Oxford 数理逻辑教授 · 与 Strachey 铸指称语义,
+    -1.96/1981–2003/CMU Hillman 讲席 · equilogical spaces,
+    -2.58/2020–2021/ACM 访谈四部曲 · 荣休居伯克利
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 伯克利少年与 Tarski 圈子 ---
+\newcommand{\tarskislide}{\begin{frame}\plainbar\sectiontitle{伯克利少年与 Tarski 圈子 (1932–1954)}{天资早露 · 决裂与修补}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1932} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于加州伯克利} & \cellcolor{panelB}\textcolor{badgeB!82!black}{加州少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1950s 初} & \cellcolor{panelA}\textcolor{badgeA!82!black}{本科阶段天资即被认可，进入 Tarski 周边小组（与 Feferman、Montague 同侪）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Tarski 圈子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{内定与决裂} & \cellcolor{panelA}\textcolor{badgeA!82!black}{本已内定随 Tarski 读博，但因故决裂（原因页面未载）——赴 Princeton} & \cellcolor{panelB}\textcolor{badgeB!82!black}{远走他乡} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{修补} & \cellcolor{panelA}\textcolor{badgeA!82!black}{其后关系修复，Tarski 对他说："I hope I can call you my student."（Feferman 2005 转述）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{师生名分} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{10}{13}\selectfont\itshape\color{coverprimary!88!black}"I hope I can call you my student."}\\[2pt]
+  {\fontsize{7.5}{9.8}\selectfont\color{coveraccent!85!black}—— Alfred Tarski 对修补后的 Scott（Solomon Feferman, 2005 转述）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 5. Princeton：Church 门下 ---
+\newcommand{\princetonslide}{\begin{frame}\plainbar\sectiontitle{Princeton：Church 门下 (1954–1958)}{Convergent Sequences of Complete Theories}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{追随} & \cellcolor{panelA}\textcolor{badgeA!82!black}{赴 Princeton 师从 Alonzo Church} & \cellcolor{panelB}\textcolor{badgeB!82!black}{与 Rabin 成为同侪} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelA}\textcolor{badgeA!82!black}{博士论文 \textit{Convergent Sequences of Complete Theories}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{完全理论的收敛序列} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1958} & \cellcolor{panelA}\textcolor{badgeA!82!black}{答辩获博士学位（MA、PhD，时年 26 岁）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{逻辑学训练完成} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Chicago} & \cellcolor{panelA}\textcolor{badgeA!82!black}{博士后至 University of Chicago 任 instructor 至 1960} & \cellcolor{panelB}\textcolor{badgeB!82!black}{讲师岁月} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在 Church 门下磨砺数理逻辑，与 Rabin 的合作即将改写自动机理论。}
+\end{center}
+\end{frame}}
+
+% --- 6. 与 Rabin 的 1959 论文 ---
+\newcommand{\jointpaperslide}{\begin{frame}\plainbar\sectiontitle{与 Rabin 的 1959 论文}{Finite Automata and Their Decision Problems · 图灵奖伏笔}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{背景}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合著} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 Princeton 同侪 Michael O. Rabin 合著论文（IBM Journal 3(2), 114–125, 1959）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{传世之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{概念} & \cellcolor{panelA}\textcolor{badgeA!82!black}{将非确定性机器引入自动机理论} & \cellcolor{panelB}\textcolor{badgeB!82!black}{基本概念} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{panelA}\textcolor{badgeA!82!black}{该工作成为计算复杂度理论的基本概念之一} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1976 图灵奖之源} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8}{10.5}\selectfont\bfseries\color{coveraccent!85!black} 1976 ACM Turing Award Citation（与 Michael O. Rabin 共享）}\\[2pt]
+  {\fontsize{7.2}{9.6}\selectfont\itshape\color{coverprimary!88!black}"For their joint paper 'Finite Automata and Their Decision Problems,' which introduced the idea of nondeterministic machines, which has proved to be an enormously valuable concept."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 回到伯克利 ---
+\newcommand{\berkeleyslide}{\begin{frame}\plainbar\sectiontitle{回到伯克利 (1960–1963)}{构造性公理与可测基数}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{职务} & \cellcolor{panelA}\textcolor{badgeA!82!black}{回母校任数学助理教授} & \cellcolor{panelB}\textcolor{badgeB!82!black}{重返加州} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{领域} & \cellcolor{panelA}\textcolor{badgeA!82!black}{投身经典数理逻辑，尤其是集合论与 Tarski 式模型论} & \cellcolor{panelB}\textcolor{badgeB!82!black}{逻辑深耕} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定理} & \cellcolor{panelA}\textcolor{badgeA!82!black}{证明构造性公理与可测基数存在不相容——被视为集合论演化中的开创性结果（Wikipedia 称 "seminal"）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{集合论里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{门生} & \cellcolor{panelA}\textcolor{badgeA!82!black}{开始指导博士生：James Halpern、Edgar Lopez-Escobar} & \cellcolor{panelB}\textcolor{badgeB!82!black}{授业之始} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 构造性公理与可测基数不相容}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$V=L\ \wedge\ \exists\,\text{measurable cardinal}\ \Rightarrow\ \bot\qquad$ 集合论演化的开创性结果}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 模态逻辑的黄金期 ---
+\newcommand{\modalslide}{\begin{frame}\plainbar\sectiontitle{模态逻辑的黄金期}{Lemmon 遗稿 · Montague · filtrations}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{线索}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Lemmon} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 John Lemmon 合作模态逻辑；Lemmon 1966 年去世后整理遗稿，1977 年出版 \textit{An Introduction to Modal Logic}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{未竟之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Montague} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 Richard Montague 各自独立发现 Kripke 语义的重要推广——Scott–Montague 语义} & \cellcolor{panelB}\textcolor{badgeB!82!black}{并峙双峰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{技术} & \cellcolor{panelA}\textcolor{badgeA!82!black}{引入 filtrations（滤构造）与典范模型的精化——现代 Kripke 语义的核心概念} & \cellcolor{panelB}\textcolor{badgeB!82!black}{语义工具箱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{兴趣} & \cellcolor{panelA}\textcolor{badgeA!82!black}{关注 Arthur Prior 的时态逻辑及其与自然语言时间语义的联系} & \cellcolor{panelB}\textcolor{badgeB!82!black}{语言与时间} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.05cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} filtrations 与典范模型精化，至今仍是现代 Kripke 语义的核心概念。}
+\end{center}
+\end{frame}}
+
+% --- 9. Boolean-valued Models 与连续统假设 ---
+\newcommand{\booleanslide}{\begin{frame}\plainbar\sectiontitle{Boolean-valued Models 与连续统假设 (1967)}{Solovay 的观察 · Steele Prize 1972}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{线索}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{起点} & \cellcolor{panelA}\textcolor{badgeA!82!black}{循 Robert Solovay 的初步观察，Scott 形式化 Boolean-valued model 概念（Solovay 与 Petr Vopěnka 亦同期独立给出）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{概念定型 · 三人并立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1967} & \cellcolor{panelA}\textcolor{badgeA!82!black}{发表 \textit{A Proof of the Independence of the Continuum Hypothesis}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{连续统假设} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{分析} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以 Boolean-valued models 对 Paul Cohen 的独立性证明给出另一分析} & \cellcolor{panelB}\textcolor{badgeB!82!black}{殊途同归} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Boolean-valued 模型：连续统假设独立性的另一分析}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathbb{V}^{\mathbb{B}}\ \Rightarrow\ \mathrm{CH}\ \text{独立性}\qquad$ 由此获 1972 年 Leroy P. Steele Prize}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. Oxford 岁月 ---
+\newcommand{\oxfordslide}{\begin{frame}\plainbar\sectiontitle{Oxford 岁月 (1972–1981)}{数理逻辑教授 · 与 Strachey 共铸指称语义}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1972} & \cellcolor{panelA}\textcolor{badgeA!82!black}{受聘牛津大学哲学系数理逻辑教授} & \cellcolor{panelB}\textcolor{badgeB!82!black}{泰晤士河畔} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学院} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Merton College 院士（今荣誉院士）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学院生活} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 Christopher Strachey 合作，顶住行政压力为程序语言语义提供数学基础} & \cellcolor{panelB}\textcolor{badgeB!82!black}{跨学科合力} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Scott–Strachey 指称语义（denotational semantics）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{程序语言}\ \Rightarrow\ \text{数学语义}\qquad$ 理论计算机科学的奠基性贡献}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 域理论 ---
+\newcommand{\domainslide}{\begin{frame}\plainbar\sectiontitle{域理论：递归程序的语义}{DCPO · Scott domain/topology · information systems}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{Scott 的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{动机} & \cellcolor{panelA}\textcolor{badgeA!82!black}{提出域理论（domain theory），使含递归函数与循环控制结构的程序获得指称语义} & \cellcolor{panelB}\textcolor{badgeB!82!black}{递归的语义} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{基础} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以域理论与信息系统（information systems）理论为无穷与连续信息提供基础} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数学地基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Scott domain · Scott topology · Scott information system · Scott encoding 皆以其命名} & \cellcolor{panelB}\textcolor{badgeB!82!black}{概念丰碑} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 域方程：递归程序的指称语义之钥}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$D \cong [D \to D]\qquad$ 让递归与循环在数学语义中安放}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. CMU 与新基础 ---
+\newcommand{\cmuslide}{\begin{frame}\plainbar\sectiontitle{CMU 与新基础 (1981–2003)}{Hillman 讲席 · equilogical spaces}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1981} & \cellcolor{panelA}\textcolor{badgeA!82!black}{加入 Carnegie Mellon University} & \cellcolor{panelB}\textcolor{badgeB!82!black}{跨越西洋} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{讲席} & \cellcolor{panelA}\textcolor{badgeA!82!black}{计算机科学、哲学与数理逻辑 Hillman University Professor（荣休）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{三系讲席} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{新论} & \cellcolor{panelA}\textcolor{badgeA!82!black}{提出 equilogical spaces 作为域理论的后继理论} & \cellcolor{panelB}\textcolor{badgeB!82!black}{更进一步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{优势} & \cellcolor{panelA}\textcolor{badgeA!82!black}{其范畴是笛卡尔闭范畴，而 domains（DCPO）范畴不是} & \cellcolor{panelB}\textcolor{badgeB!82!black}{范畴优势} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} equilogical spaces：域理论的后继理论}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathbf{Equ}\ \text{是笛卡尔闭范畴}\qquad$ 1994 ACM Fellow · 2012 AMS Fellow}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与讲席 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与讲席}{Steele 1972 · Pender 1990 · Schock 1997}\vspace{-0.5cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.62}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{顶级荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.0em}\item Turing Award（1976，与 Michael O. Rabin 共享）\item Leroy P. Steele Prize（1972）\item Rolf Schock Prize（1997，瑞典皇家科学院，逻辑与哲学）\item Tarski Lectures（1989）· Gödel Lecture（1991）\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{逻辑与计算的双重公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{讲席与奖项} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Harold Pender Award（1990）· Bolzano Prize（2001）· EATCS Award（2007）· ACM Fellow（1994）· AMS Fellow（2012）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{跨学科学术席位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学界纪念} & \cellcolor{panelA}\textcolor{badgeA!82!black}{DOMAIN 2002 工作会以其 70 寿辰纪念 · Merton College 荣誉院士 · 荣休后居伯克利} & \cellcolor{panelB}\textcolor{badgeB!82!black}{在世的奠基者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 以逻辑与语义，赢得逻辑学与计算机科学的双重敬意。}
+\end{center}
+\end{frame}}
+
+% --- 14. 门生成林与遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{门生成林与遗产}{14 位博士生 · DOMAIN 2002 · ACM 四部曲访谈}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=panelA, draw=badgeA!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeA} 指称语义}\\[3pt]Scott–Strachey\\[2pt]程序语言的数学语义};
+\node[leg, fill=panelB, draw=badgeB!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeB} 逻辑与集合论}\\[3pt]Boolean-valued models\\[2pt]Scott–Montague 语义};
+\node[leg, fill=panelC, draw=badgeC!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeC} 域理论}\\[3pt]domain · topology\\[2pt]information systems};
+\node[leg, fill=panelD, draw=badgeD!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeD} 门生成林}\\[3pt]Turner · Mosses · Kunen\\[2pt]Bauer 等 14 位博士生};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 从集合到域、从语法到语义，为计算立下逻辑的根基。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} DOMAIN 2002 以其 70 寿辰纪念 · ACM 访谈四部曲（Gordon Plotkin 主持）\\[2pt]荣休后隐居伯克利，在世亲见自己的语义学成为编程语言的日常。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {以语义安放程序，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {以逻辑刻画世界。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Dana Stewart Scott};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {达纳·斯科特\quad Dana Stewart Scott\quad 1932 —（在世）};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{balance-scale}\enspace Turing 1976 · Schock Prize 1997 · 指称语义奠基人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\tarskislide
+\princetonslide
+\jointpaperslide
+\berkeleyslide
+\modalslide
+\booleanslide
+\oxfordslide
+\domainslide
+\cmuslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

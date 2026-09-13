@@ -1,0 +1,490 @@
+% =============================================================
+%  贝叶斯网络与因果革命：裘德亚·珀尔 (Judea Pearl)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：不确定性中寻找因果之链 —— 稀疏气泡
+%  资料来源：turing/pages/2011/Judea Pearl/index.html
+%  红线：全篇禁写 "do-演算 / do-calculus"（页面未载该术语）
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Pearl 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeBayes}{HTML}{2E5A9E}   % 贝叶斯网络 — 蓝
+\definecolor{badgeCause}{HTML}{1E8E8E}   % 因果推断 — 青绿
+\definecolor{badgeHW}{HTML}{D9A441}      % 硬件起点 — 琥珀
+\definecolor{badgePhil}{HTML}{C0395B}    % 哲学与认知 — 玫瑰
+\definecolor{bayespanel}{RGB}{228,233,246}
+\definecolor{causepanel}{RGB}{222,240,238}
+\definecolor{hwpanel}{RGB}{249,240,224}
+\definecolor{philpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeBayes!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeCause!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeHW!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{lightbulb}\enspace 贝叶斯网络与因果革命\enspace·\enspace 以色列裔美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {裘德亚·珀尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Judea Pearl\enspace·\enspace 1936 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {概率与因果演算 · 2011 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeBayes] at (-5.05,0)
+        {贝叶斯网络\\Bayesian Nets\par\scriptsize 概率 AI 先驱};
+      \node[badge, fill=badgeCause] at (-1.68,0)
+        {因果推断\\Causality\par\scriptsize 结构模型};
+      \node[badge, fill=badgeHW] at (1.68,0)
+        {硬件起点\\RCA · Superconductive\par\scriptsize 超导存储};
+      \node[badge, fill=badgePhil] at (5.05,0)
+        {哲学与认知\\Philosophy\par\scriptsize 认知模型};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"a calculus for probabilistic and causal reasoning" —— 2011 图灵奖（ACM citation）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Judea_Pearl_NIPS_2013.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Judea_Pearl_NIPS_2013.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Judea Pearl};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 以色列裔美国\enspace|\enspace \faIcon{university}\enspace UCLA · Technion · Brooklyn Polytechnic\enspace|\enspace Turing 2011};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{珀尔 - 从特拉维夫到因果革命}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Judea_Pearl_NIPS_2013.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Judea_Pearl_NIPS_2013.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Judea Pearl};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1936-09-04 —（在世）\\[2pt]\lab{本名}\quad Judea Pearl\\[2pt]\lab{国籍}\quad 以色列裔美国人};
+  \node[infob, fill=causepanel, draw=badgeCause!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Technion EE BS 1960\newline \quad Newark EE MS 1961\newline \quad Brooklyn Poly EE PhD 1965\\[2pt]\lab{师承}\quad Leonard Strauss\newline \quad Leonard Bergstein};
+  \node[infob, fill=bayespanel, draw=badgeBayes!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 特拉维夫 · 英属巴勒斯坦托管地\\[2pt]\lab{任职}\quad UCLA（1970 起）\\[2pt]
+     \quad Cognitive Systems Lab 主任};
+  \node[infob, fill=hwpanel, draw=badgeHW!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2011 · Lakatos 2001\\[2pt]
+     \quad NAS 2014 · 皇家学会 2025\\[2pt]
+     \lab{核心领域}\quad 贝叶斯网络 · 因果推断\\[2pt]
+     \quad 人工智能 · 科学哲学};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{珀尔的一生}{1936 — · 从超导工程师到因果革命家}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-3.1);
+  \foreach \y/\year/\txt in {
+    3.0/1936/生于特拉维夫（英属巴勒斯坦托管地）,
+    2.3/1960/Technion 电机学士 · 移居美国,
+    1.6/1965/布鲁克林理工 EE 博士 · 入职 RCA,
+    0.9/1970/加入 UCLA · 转向概率人工智能,
+    0.2/1984/出版 Heuristics,
+    -0.5/1988/出版 Probabilistic Reasoning in Intelligent Systems,
+    -1.2/2000/出版 Causality · 因果革命,
+    -1.9/2011/获图灵奖,
+    -2.6/2018/合著 The Book of Why,
+    -3.05/2025/当选英国皇家学会外籍院士
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：特拉维夫与 Bnei Brak ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：特拉维夫与 Bnei Brak (1936–1956)}{波兰犹太移民之子 · 军旅与基布兹}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1936} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{生于特拉维夫（时为英属巴勒斯坦托管地）} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{托管地岁月} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{父母 Eliezer 与 Tova 为波兰犹太移民\newline 祖父 Chaim 是 Bnei Brak 创建者之一} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{移民城市记忆} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1950s} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{服役于以色列国防军（IDF）\newline 加入 kibbutz，1956 年决定学工程} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{人生转向的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从托管地的少年到工程学的选择，命运的第一颗齿轮开始转动。}
+\end{center}
+\end{frame}}
+
+% --- 5. 从 Technion 到布鲁克林理工 ---
+\newcommand{\educationslide}{\begin{frame}\plainbar\sectiontitle{从 Technion 到布鲁克林理工 (1956–1965)}{电机工程三级跳 · 超导存储博士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1960} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{Technion（Israel Institute of Technology）电机工程 BS\newline 同年移居美国} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{工程根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1961} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{Newark College of Engineering（今 NJIT）EE MS\newline Rutgers University 物理 MS} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{跨物理与工程} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1965} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{Polytechnic Institute of Brooklyn（今 NYU Tandon）EE PhD\newline 论文 \textit{Vortex Theory of Superconductive Memories}} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{超导存储方向} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 博士导师：Leonard Strauss 与 Leonard Bergstein（infobox 两人并列）。}
+\end{center}
+\end{frame}}
+
+% --- 6. RCA 岁月与行业巨变 ---
+\newcommand{\rcaslide}{\begin{frame}\plainbar\sectiontitle{RCA 岁月与行业巨变 (1965–1970)}{超导参量放大器 · 被半导体"wipe out"的转折}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{RCA Princeton} & \cellcolor{hwpanel}\textcolor{badgeHW!82!black}{RCA Research Laboratories 从事超导参量放大器与存储器件} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{第一段职业生涯} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Electronic Memories} & \cellcolor{hwpanel}\textcolor{badgeHW!82!black}{后转入 Electronic Memories 从事先进存储系统} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{硬件工程师岁月} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{行业巨变} & \cellcolor{hwpanel}\textcolor{badgeHW!82!black}{半导体技术将其毕生所学的超导存储"wipe out"} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{一次终结即一次开始} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "When semiconductors 'wiped out' Pearl's work" —— Pearl 本人后来的表达}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}一个行业的消亡，成就了一位理论家的诞生。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. UCLA 与概率人工智能 ---
+\newcommand{\uclaslide}{\begin{frame}\plainbar\sectiontitle{UCLA 与概率人工智能 (1970 起)}{转向 · Cognitive Systems Laboratory}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1970} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{加入 UCLA 工程学院} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{学术生涯新起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转向} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{投身人工智能的概率路径} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{"championing the probabilistic approach"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{实验室} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{创立并主持 Cognitive Systems Laboratory} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{贝叶斯网络的摇篮} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教职} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{UCLA 计算机科学与统计学教授} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{横跨两学科} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 半导体夺走他的超导，UCLA 还他一个概率的 AI 世界。}
+\end{center}
+\end{frame}}
+
+% --- 8. Heuristics ---
+\newcommand{\heuristicsslide}{\begin{frame}\plainbar\sectiontitle{Heuristics (1984)}{启发式方法的系统化}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专著} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{\textit{Heuristics: Intelligent Search Strategies for Computer Problem Solving}} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{1984 年出版} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{内容} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{系统化启发式搜索方法} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{AI 问题求解的利器} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{贝叶斯网络之前的系统化成果} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{承前启后} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在拥抱概率之前，他先为 AI 的搜索写下方法论。}
+\end{center}
+\end{frame}}
+
+% --- 9. 贝叶斯网络 ---
+\newcommand{\bayesslide}{\begin{frame}\plainbar\sectiontitle{贝叶斯网络 (1988)}{Probabilistic Reasoning in Intelligent Systems}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{先驱} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{贝叶斯网络与 AI 概率方法的先驱之一（页面明载）} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{AI 的概率路径} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专著} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{\textit{Probabilistic Reasoning in Intelligent Systems}（1988）} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{领域奠基之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{思想} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{让计算机系统学会处理不确定性} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{现代 AI 的基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 贝叶斯网络：不确定性推理的图模型}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$P(X_1,\ldots,X_n)=\prod_{i=1}^{n} P\big(X_i\mid \mathrm{Pa}(X_i)\big)$\qquad 局部条件概率拼出全局}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 因果革命 ---
+\newcommand{\causalslide}{\begin{frame}\plainbar\sectiontitle{因果革命 (2000)}{Causality · 结构模型 · 反事实推断}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专著} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{\textit{Causality: Models, Reasoning, and Inference}（2000\newline Cambridge University Press）} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{因果推断奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{理论} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{基于结构模型的因果与反事实推断} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{从关联走向因果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{ACM：因果工作"revolutionized the understanding of causality in statistics, psychology, medicine and the social sciences"} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{跨学科革命} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 结构因果模型：让"干预"与"反事实"可计算}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$X\to Y$ 的结构方程 $+$ 外部扰动\quad $\Rightarrow$\quad 干预与反事实推断}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. The Book of Why ---
+\newcommand{\bookofwhyslide}{\begin{frame}\plainbar\sectiontitle{The Book of Why (2018)}{与 Dana Mackenzie 合著 · 因果科学大众化}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著作} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{\textit{The Book of Why}（2018\newline 与 Dana Mackenzie 合著）} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{大众向因果之书} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{使命} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{把因果科学的思维带进公众视野} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{科学的普及者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{回响} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{因果推断从学术议题成为时代话题} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{暮年的又一高峰} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 八十岁上下的珀尔，仍在为"因果"二字向世界布道。}
+\end{center}
+\end{frame}}
+
+% --- 12. 跨越边界 ---
+\newcommand{\boundariesslide}{\begin{frame}\plainbar\sectiontitle{跨越边界：工程师 · 科学家 · 哲学家}{三重身份 · 现代 AI 的奠基者}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{身份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三重身份} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{电气工程师 · 计算机科学家 · 哲学家（页面原文）} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{罕见的跨界者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{兴趣版图} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{科学哲学 · 知识表示 · 非标准逻辑与学习} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{高层认知模型} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{期刊} & \cellcolor{philpanel}\textcolor{badgePhil!82!black}{\textit{Journal of Causal Inference} 创刊编辑之一} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{因果研究阵地} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 同行与机构的评价}\\[2pt]
+  {\fontsize{9.5}{12.5}\selectfont\color{coverprimary!88!black}"laying the foundations of modern artificial intelligence"\\[2pt]"one of the giants in the field of artificial intelligence" —— UCLA 教授 Richard E. Korf}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2011 · 门生遍天下}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要荣誉} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（2011 年度）· IJCAI Excellence（1999）\item Lakatos Award（2001）· NAS（2014）· NAE（1995）\item BBVA Frontiers of Knowledge（2021）\end{itemize}} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{跨学科公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{存疑注记} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{Harvey Prize：infobox 作 2011、正文作 2012（页面两处不一致）\newline 英国皇家学会外籍院士（2025）} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{沿用 infobox 并注明} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{门生} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{Rina Dechter · Hector Geffner · Elias Bareinboim 等} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{学术谱系深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从概率到因果，荣誉长廊见证一场跨越半个世纪的求索。}
+\end{center}
+\end{frame}}
+
+% --- 14. 个人生活 ---
+\newcommand{\personalslide}{\begin{frame}\plainbar\sectiontitle{个人生活}{妻子与三子 · 一句客观陈述}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{成员}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{妻子 Ruth} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{1960 年与 Ruth Pearl 结婚（Ruth 于 2021 年去世）} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{相伴六十余载} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三个儿子} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{育有三子，其中包括记者 Daniel Pearl} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{家庭侧影} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{一句陈述} & \cellcolor{bayespanel}\textcolor{badgeBayes!82!black}{2002 年 Daniel Pearl 在巴基斯坦被杀害；家人创立 Daniel Pearl Foundation} & \cellcolor{causepanel}\textcolor{badgeCause!82!black}{仅作客观记录} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 丧子之痛后依然前行，这份坚韧同样属于他的科学人生。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {从不确定性中，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {编织出关联因与果的链条。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Judea Pearl};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {裘德亚·珀尔\quad Judea Pearl\quad 1936 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{lightbulb}\enspace Turing 2011 · 贝叶斯网络与因果革命\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\educationslide
+\rcaslide
+\uclaslide
+\heuristicsslide
+\bayesslide
+\causalslide
+\bookofwhyslide
+\boundariesslide
+\honorsslide
+\personalslide
+\closingslide
+\end{document}

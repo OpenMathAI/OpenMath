@@ -1,0 +1,496 @@
+% =============================================================
+%  强化学习奠基人：安德鲁·巴托 (Andrew G. Barto)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：agent 在未知环境中试错、以奖励回传更新（稀疏网格节点）
+%  资料来源：turing/pages/2024/Andrew Barto/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Barto 专属四分类色 + 基础色 =====
+\definecolor{mainclr}{HTML}{5B2D8E}      % 主色（图灵紫，同 coverprimary）
+\definecolor{accentclr}{HTML}{B03A2E}    % 强调色（红，同 coveraccent）
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeA}{HTML}{2E5A9E}       % 强化学习 — 蓝（MDP 数学基础 / agent 决策）
+\definecolor{badgeB}{HTML}{1E8E8E}       % 神经元自适应 — 青绿（Klopf 思想 / 大脑建模）
+\definecolor{badgeC}{HTML}{D9A441}       % 教科书与教育 — 琥珀（RL: An Introduction / 师生传承）
+\definecolor{badgeD}{HTML}{C0395B}       % 自适应系统 — 玫瑰（1975 博士论文 / 自适应实验室）
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 网格节点背景（agent 在未知环境中试错的视觉语言）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{robot}\enspace 强化学习奠基人\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {安德鲁·巴托};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Andrew G. Barto\enspace·\enspace 1948 —（在世）};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {现代强化学习奠基人 · UMass Amherst 荣休教授 · 2024 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {强化学习\\Reinforcement Learning\par\scriptsize MDP 数学基础};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {神经元自适应\\Neuronal Adaptation\par\scriptsize Klopf 思想};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {教科书与教育\\RL: An Introduction\par\scriptsize 师生传承};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {自适应系统\\Adaptive Systems\par\scriptsize 细胞自动机博士};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"For developing the conceptual and algorithmic foundations of reinforcement learning." —— 2024 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}\node[circle, draw=coveraccent!55, line width=1.0pt, fill=panelC, minimum size=2.35cm] {\fontsize{22}{26}\selectfont\bfseries\color{coverprimary!70}RL};\end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.55cm]current page.center) {Andrew G. Barto};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace UMass Amherst · Michigan\enspace|\enspace Turing 2024};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{巴托 - 从造船工程到大脑建模}{生卒 · 本名 · 国籍 · 教育 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\begin{tikzpicture}\node[circle, draw=coveraccent!55, line width=1.0pt, fill=panelC, minimum size=3.0cm] {\fontsize{28}{32}\selectfont\bfseries\color{coverprimary!70}RL};\end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Andrew Gehret Barto};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1948 年生（在世，卒日留白）\\[2pt]\lab{本名}\quad Andrew Gehret Barto\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Michigan 数学 BS 1970（优等）\\[2pt]
+     \quad Michigan 计算机科学 PhD 1975\\[2pt]
+     \lab{师承}\quad Bernard P. Zeigler（导师）};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{任职}\quad UMass Amherst 荣休教授\\[2pt]\lab{博士论文}\quad 细胞自动机作为自然系统模型\\[2pt]\lab{博士生}\quad Richard S. Sutton 等};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2024 · IJCAI 2017\\[2pt]
+     \quad IEEE NN Society Pioneer Award 2004\\[2pt]
+     \lab{核心领域}\quad 强化学习 · 自适应系统\\[2pt]
+     \quad 计算机科学 · 神经科学交叉};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{巴托的一生}{1948 — 至今 · 从造船少年到强化学习奠基人}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1948/生于美国（页面仅载年份）,
+    2.3/1970/Michigan 数学 BS（最初主修造船与轮机工程）,
+    1.6/1975/Michigan 计算机科学博士（细胞自动机 · 导师 Zeigler）,
+    0.9/1977/以博士后研究助理加入 UMass Amherst,
+    0.2/1980s/与博士生 Sutton 共创强化学习,
+    -0.5/1991/UMass 正教授（1982 副教授）,
+    -1.2/1998/与 Sutton 合著《强化学习导论》,
+    -1.9/2007/任 UMass 系主任（至 2011）,
+    -2.6/2017/获 IJCAI Research Excellence 奖,
+    -2.8/2024/获图灵奖（2025-03-05 公布）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：从造船工程到大脑建模 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：从造船工程到大脑建模 (1948–1970)}{Michigan 本科 · Arbib/McCulloch/Pitts 的启发}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1948} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于美国（页面仅载年份，无出生月日）} & \cellcolor{panelD}\textcolor{badgeD!82!black}{20 世纪中叶生人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{本科初期} & \cellcolor{panelA}\textcolor{badgeA!82!black}{University of Michigan 最初主修造船与轮机工程（naval architecture and engineering）} & \cellcolor{panelD}\textcolor{badgeD!82!black}{工程起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转折} & \cellcolor{panelA}\textcolor{badgeA!82!black}{读到 Michael Arbib、Warren McCulloch、Walter Pitts 的著作后，转向"用计算机与数学为大脑建模"} & \cellcolor{panelD}\textcolor{badgeD!82!black}{志向自此改写} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1970} & \cellcolor{panelA}\textcolor{badgeA!82!black}{获 Michigan 数学 BS（with distinction）} & \cellcolor{panelD}\textcolor{badgeD!82!black}{数学根基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从造船工程到大脑建模，一个转向改写了 AI 的版图。}
+\end{center}
+\end{frame}}
+
+% --- 5. Michigan 博士：细胞自动机 ---
+\newcommand{\phdslide}{\begin{frame}\plainbar\sectiontitle{Michigan 博士：细胞自动机 (1970–1975)}{导师 Zeigler · 论文 Cellular automata as models of natural systems}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{panelA}\textcolor{badgeA!82!black}{师从 Bernard P. Zeigler} & \cellcolor{panelB}\textcolor{badgeB!82!black}{严谨的系统建模训练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\textit{Cellular automata as models of natural systems}（1975，University of Michigan）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{细胞自动机视角的自然系统建模} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{速度} & \cellcolor{panelA}\textcolor{badgeA!82!black}{读 Arbib 等人著作后五年内拿下计算机科学 PhD} & \cellcolor{panelB}\textcolor{badgeB!82!black}{从数学到 CS 的快速跨越} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 博士论文：细胞自动机，而非强化学习}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{Cell}_{t+1}=f\big(\mathrm{neighbors}(\mathrm{Cell}_{t})\big)\qquad$ 以邻域规则演化建模自然系统}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. UMass 起点 ---
+\newcommand{\umassslide}{\begin{frame}\plainbar\sectiontitle{UMass 起点 (1977)}{博士后入职 · 副教授 1982 · 正教授 1991 · 系主任 2007–2011}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1977} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以博士后研究助理身份加入 UMass Amherst 信息与计算机科学学院} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学术生涯的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1982 / 1991} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1982 晋升副教授 · 1991 晋升正教授} & \cellcolor{panelB}\textcolor{badgeB!82!black}{稳扎稳打的学术阶梯} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2007–2011} & \cellcolor{panelA}\textcolor{badgeA!82!black}{任系主任（department chair）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学科建设的掌舵者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{交叉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Neuroscience and Behavior 项目核心成员 · 后为荣休教授（professor emeritus）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算与神经科学的桥梁} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在 UMass 一待数十年，这里成为强化学习的摇篮。}
+\end{center}
+\end{frame}}
+
+% --- 7. Klopf 的神经元自适应思想 ---
+\newcommand{\klopfslide}{\begin{frame}\plainbar\sectiontitle{Klopf 的神经元自适应思想}{"神经元行为是人类智能之基" · 概念提出者 A. Harry Klopf}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{研究纲领} & \cellcolor{panelB}\textcolor{badgeB!82!black}{入职 UMass 后加入一支探索"神经元行为作为人类智能之基"的研究组} & \cellcolor{panelA}\textcolor{badgeA!82!black}{大脑启发的路线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{概念提出者} & \cellcolor{panelB}\textcolor{badgeB!82!black}{该概念由计算机科学家 A. Harry Klopf 提出} & \cellcolor{panelA}\textcolor{badgeA!82!black}{思想源头（非导师）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{数学化} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Barto 带着博士生 Sutton 用数学将概念发展为 AI 的新基础} & \cellcolor{panelA}\textcolor{badgeA!82!black}{由思想到学科} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 从神经元自适应到一门新学科}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{神经元自适应}\ \xrightarrow{\text{Barto \& Sutton 数学化}}\ \text{强化学习}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 与 Sutton：师生共创强化学习 ---
+\newcommand{\suttonslide}{\begin{frame}\plainbar\sectiontitle{与 Sutton：师生共创强化学习 (1980s)}{Sutton 是 Barto 的博士生 · 共同奠基}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{关系}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{师生} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Richard Sutton 是 Barto 的博士生（页面明载 "was his PhD student"）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{学术谱系的传承} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共创} & \cellcolor{panelA}\textcolor{badgeA!82!black}{两人共同提出以 MDP 为数学基础的强化学习，将该类算法推向广泛应用} & \cellcolor{panelC}\textcolor{badgeC!82!black}{一门新学科的奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同行} & \cellcolor{panelA}\textcolor{badgeA!82!black}{后 Sutton 返回加拿大，Barto 留在 UMass 建设实验室继续发展} & \cellcolor{panelC}\textcolor{badgeC!82!black}{两地并进的 RL 事业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一对师生，一门学科——2024 年图灵奖也由师生共享。}
+\end{center}
+\end{frame}}
+
+% --- 9. MDP 数学基础 ---
+\newcommand{\mdpslide}{\begin{frame}\plainbar\sectiontitle{MDP 数学基础}{Markov 决策过程 · agent-环境交互回路 · 环境与奖励可未知}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{数学基础} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以 Markov 决策过程（MDP）解释 agent 如何在随机环境中决策} & \cellcolor{panelB}\textcolor{badgeB!82!black}{决策问题的形式化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{交互} & \cellcolor{panelA}\textcolor{badgeA!82!black}{agent 在随机环境中行动，每个动作结束时获得奖励} & \cellcolor{panelB}\textcolor{badgeB!82!black}{试错与奖励回传} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{关键突破} & \cellcolor{panelA}\textcolor{badgeA!82!black}{传统 MDP 理论假设 agent 知道全部环境信息——他们的方法允许环境与奖励均未知} & \cellcolor{panelB}\textcolor{badgeB!82!black}{算法可广泛应用于各类问题} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} agent-环境交互回路（MDP 四元组）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathcal{M}=(S,\,A,\,R,\,P)\qquad \text{agent}\ \leftrightarrows\ \text{environment}:\ \text{动作}\rightarrow\text{奖励}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 自主（自适应）学习实验室 ---
+\newcommand{\labslide}{\begin{frame}\plainbar\sectiontitle{自主（自适应）学习实验室}{Adaptive Network Laboratory → Autonomous Learning Laboratory}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{初名} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Adaptive Network Laboratory（自适应网络实验室）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{UMass 的 RL 据点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{后名} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Autonomous Learning Laboratory（自主实验室）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{定位愈发清晰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主持} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Barto 共同主持（co-directed）该实验室} & \cellcolor{panelA}\textcolor{badgeA!82!black}{长期学术领导} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{产出} & \cellcolor{panelD}\textcolor{badgeD!82!black}{孕育了强化学习的多个关键思想} & \cellcolor{panelA}\textcolor{badgeA!82!black}{关键思想的摇篮} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Adaptive 到 Autonomous，一间实验室孕育了一个领域。}
+\end{center}
+\end{frame}}
+
+% --- 11. 教科书《强化学习导论》 ---
+\newcommand{\bookslide}{\begin{frame}\plainbar\sectiontitle{教科书《Reinforcement Learning: An Introduction》}{与 Sutton 合著 · MIT Press 1998 / 2018 第二版}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{教科书} & \cellcolor{panelC}\textcolor{badgeC!82!black}{与 Sutton 合著 \textit{Reinforcement Learning: An Introduction}（MIT Press 1998；第二版 2018）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{现代 RL 的奠基之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著述} & \cellcolor{panelC}\textcolor{badgeC!82!black}{发表逾 100 篇论文或章节（期刊、书籍、会议与研讨会论文集）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{高产的学术生涯} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合编} & \cellcolor{panelC}\textcolor{badgeC!82!black}{与 Jennie Si、Warren Powell、Don Wunch II 合编 \textit{Handbook of Learning and Approximate Dynamic Programming}（Wiley-IEEE Press 2004）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{领域版图的系统梳理} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} \textit{Reinforcement Learning: An Introduction} —— 一本教科书，定义了一个领域的语言。}
+\end{center}
+\end{frame}}
+
+% --- 12. 从学术到世界：AlphaGo 与 AI 浪潮 ---
+\newcommand{\alphagoslide}{\begin{frame}\plainbar\sectiontitle{从学术到世界：AlphaGo 与 AI 浪潮}{首批重大现实应用之一 · 当代 AI 浪潮的基石}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术发展} & \cellcolor{panelA}\textcolor{badgeA!82!black}{强化学习作为课题在学术圈持续发展} & \cellcolor{panelB}\textcolor{badgeB!82!black}{厚积薄发} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{AlphaGo} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首批重大现实应用之一：Google AlphaGo 基于该概念击败当时的人类顶尖冠军} & \cellcolor{panelB}\textcolor{badgeB!82!black}{RL 走入世界舞台} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{公认地位} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Barto 与 Sutton 被广泛誉为现代强化学习先驱，该技术是当代 AI 浪潮的基石} & \cellcolor{panelB}\textcolor{badgeB!82!black}{奠基者的回响} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从实验室的思想，到击败世界冠军的棋局。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2024 · 学会 Fellow · 门生 Sutton}\vspace{-0.3cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.56}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（2024，与 Sutton 共享）\item IJCAI Research Excellence（2017）\item IEEE NN Society Pioneer Award（2004）\item UMass Neurosciences 终身成就奖（2019）\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{奠基者的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学会身份} & \cellcolor{panelA}\textcolor{badgeA!82!black}{AAAS Fellow · IEEE Fellow 与 Senior Member · AAAI 与 Society for Neuroscience 会员} & \cellcolor{panelB}\textcolor{badgeB!82!black}{多学会的肯定} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术传承} & \cellcolor{panelA}\textcolor{badgeA!82!black}{博士生 Richard S. Sutton 与他共享 2024 图灵奖——师生同奖} & \cellcolor{panelB}\textcolor{badgeB!82!black}{谱系与荣光同辉} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 荣誉纷至沓来，源头仍是那一间 UMass 实验室。}
+\end{center}
+\end{frame}}
+
+% --- 14. 2024 图灵奖：师生共享 ---
+\newcommand{\turingprizeslide}{\begin{frame}\plainbar\sectiontitle{2024 图灵奖：师生共享}{2025-03-05 公布 · 与昔日博士生 Richard S. Sutton 共享}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{奖项} & \cellcolor{panelA}\textcolor{badgeA!82!black}{2024 年图灵奖（2025 年 3 月 5 日由 ACM 公布）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算机科学最高荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共享者} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与昔日博士生 Richard S. Sutton 共享——以强化学习的工作获奖} & \cellcolor{panelB}\textcolor{badgeB!82!black}{图灵奖史上罕见的师生同奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IJCAI 引语} & \cellcolor{panelA}\textcolor{badgeA!82!black}{"Professor Barto is recognized for his groundbreaking and impactful research in both the theory and application of reinforcement learning."（2017）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{理论与应用的双重分量} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} ACM 获奖理由（citation 整句）}\\[2pt]
+  {\fontsize{10.5}{13.5}\selectfont\color{coverprimary!88!black}"For developing the conceptual and algorithmic foundations of reinforcement learning."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {强化学习，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {让智能在试错与奖励中生长。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Andrew G. Barto};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {安德鲁·巴托\quad Andrew G. Barto\quad 1948 —（在世）};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{robot}\enspace Turing 2024 · IJCAI 2017 · 强化学习奠基人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\phdslide
+\umassslide
+\klopfslide
+\suttonslide
+\mdpslide
+\labslide
+\bookslide
+\alphagoslide
+\honorsslide
+\turingprizeslide
+\closingslide
+\end{document}

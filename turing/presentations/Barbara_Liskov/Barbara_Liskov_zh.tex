@@ -1,0 +1,481 @@
+% =============================================================
+%  数据抽象奠基人：芭芭拉·利斯科夫 (Barbara Liskov)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：抽象层次包裹实现细节 —— 柔和气泡
+%  资料来源：turing/pages/2008/Barbara Liskov/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Liskov 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgePL}{HTML}{2E5A9E}     % 程序设计语言 — 蓝
+\definecolor{badgeDA}{HTML}{1E8E8E}     % 数据抽象 — 青绿
+\definecolor{badgeOO}{HTML}{D9A441}     % 面向对象 — 琥珀
+\definecolor{badgeDF}{HTML}{C0395B}     % 分布式与容错 — 玫瑰
+\definecolor{plpanel}{RGB}{228,233,246}
+\definecolor{dapanel}{RGB}{222,240,238}
+\definecolor{oopanel}{RGB}{249,240,224}
+\definecolor{dfpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeDA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeDF!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeOO!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{code}\enspace 数据抽象奠基人\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {芭芭拉·利斯科夫};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Barbara Liskov\enspace·\enspace 1939 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {抽象数据类型 · CLU · Liskov 替换原则 · 2008 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeDA] at (-5.05,0)
+        {数据抽象\\Data Abstraction\par\scriptsize 抽象数据类型};
+      \node[badge, fill=badgePL] at (-1.68,0)
+        {编程语言\\CLU · Argus\par\scriptsize Venus · Thor};
+      \node[badge, fill=badgeOO] at (1.68,0)
+        {面向对象\\Liskov 替换原则\par\scriptsize 与 Wing 1994};
+      \node[badge, fill=badgeDF] at (5.05,0)
+        {分布式容错\\BFT\par\scriptsize Castro · OSDI '99};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {contributions to the practical and theoretical foundations of "programming language and system design, especially related to data abstraction, fault tolerance, and distributed computing" —— 2008 图灵奖（ACM citation）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Barbara_Liskov_MIT_2010.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Barbara_Liskov_MIT_2010.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Barbara Liskov · MIT 2010};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace MIT · Stanford · UC Berkeley\enspace|\enspace Turing 2008 · von Neumann Medal 2004};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{利斯科夫 - 从洛杉矶到数据抽象奠基人}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Barbara_Liskov_MIT_2010.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Barbara_Liskov_MIT_2010.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Barbara Liskov · MIT 2010};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1939-11-07 —（在世）\\[2pt]\lab{本名}\quad Barbara Jane Liskov\\[2pt]
+     \quad（本姓 Huberman）\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=dapanel, draw=badgeDA!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad UC Berkeley 数学 BA 1961\\[2pt]
+     \quad Stanford CS PhD 1968-03\\[2pt]
+     \lab{师承}\quad John McCarthy（导师）};
+  \node[infob, fill=plpanel, draw=badgePL!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 洛杉矶 · 加州 · 美国\\[2pt]\lab{任职}\quad MIT Institute Professor\\[2pt]
+     \quad Ford Professor of Engineering\\[2pt]\lab{团队}\quad Programming Methodology Group};
+  \node[infob, fill=oopanel, draw=badgeOO!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2008 · von Neumann 2004\\[2pt]
+     \quad Franklin Medal 2023\\[2pt]
+     \lab{核心领域}\quad 程序设计语言 · 数据抽象\\[2pt]
+     \quad 分布式计算 · 容错};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{利斯科夫的一生}{1939 — · 从洛杉矶长女到数据抽象奠基人}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    3.0/1939/生于洛杉矶 · Huberman 家四个孩子中的长女,
+    2.3/1961/获 UC Berkeley 数学学士（辅修物理）,
+    1.6/1968/Stanford CS 博士（McCarthy 门下）,
+    0.9/1974/与 Zilles 发表抽象数据类型论文,
+    0.2/1970s/设计与实现 CLU 语言,
+    -0.5/1980s/Argus：首个支持分布式程序的高级语言,
+    -1.2/1994/与 Wing 提出 Liskov 替换原则,
+    -1.9/1999/与 Castro 发表实用拜占庭容错,
+    -2.4/2008/获图灵奖（2009-03 颁发）,
+    -2.9/2023/获 Benjamin Franklin Medal
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：洛杉矶与伯克利数学 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：洛杉矶长女与伯克利数学 (1939--1961)}{犹太家庭 · 专业里仅两名女生 · Princeton 之外的选择}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1939} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{生于洛杉矶；Jane 与 Moses Huberman 四个孩子中的长女，犹太家庭} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{知识家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1961} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{获 UC Berkeley 数学学士（辅修物理）；当时专业里只有她与另一位女生} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{少数中的前行者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{申请季} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{申请 Berkeley 与 Princeton 数学研究生；当时 Princeton 数学项目不收女生} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{被 Berkeley 录取} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{抉择} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{却先赴波士顿，进入 MITRE Corporation 工作} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{转折点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个在男性主导年代里坚持前行的数学女生，即将改写计算机科学。}
+\end{center}
+\end{frame}}
+
+% --- 5. MITRE 与 Harvard：转向计算机 ---
+\newcommand{\mitreslide}{\begin{frame}\plainbar\sectiontitle{MITRE 与 Harvard：转向计算机 (1961--1968)}{一年 MITRE · 哈佛编程 · 重返校园}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{MITRE} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{在 MITRE 工作一年，对计算机与编程产生兴趣} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{从数学到计算机} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Harvard} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{转赴 Harvard 承担编程工作，方向是语言翻译} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{编程实践积累} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{再求学} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{决定重返校园：再次申请 Berkeley，同时申请 Stanford 与 Harvard} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{迈向博士之路} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从数学到编程，她的方向在这几年间悄然定型。}
+\end{center}
+\end{frame}}
+
+% --- 6. Stanford 博士：McCarthy 门下 ---
+\newcommand{\stanfordslide}{\begin{frame}\plainbar\sectiontitle{Stanford 博士：McCarthy 门下的国际象棋程序 (1968)}{AI 起步 · killer heuristic · 女性先驱}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{在 Stanford 与 John McCarthy 共事，其人工智能方向的工作获 McCarthy 支持} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{名师之门} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{A Program to Play Chess End Games —— 国际象棋残局程序} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{AI 起步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{贡献} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{由此发展出重要的 killer heuristic（杀手启发式）} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{博弈搜索经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{里程碑} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{1968 年 3 月获 Stanford 计算机科学博士} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{美国最早 CS 博士女性之一} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一篇棋局程序论文，是美国最早获计算机科学博士学位的女性之一的开端。}
+\end{center}
+\end{frame}}
+
+% --- 7. 数据抽象与 CLU ---
+\newcommand{\cluslide}{\begin{frame}\plainbar\sectiontitle{数据抽象与 CLU (1970s)}{abstract data types · 抽象机制}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{奠基} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{引入抽象数据类型（abstract data types）与数据抽象原理} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{图灵奖核心} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1974} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{与 Stephen Zilles 发表 Programming with abstract data types} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{开山之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{CLU} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{设计并实现 CLU；1977 年 CACM 发表 Abstraction mechanisms in CLU} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{抽象机制集成} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{CLU/Argus 后来深刻影响 Java、C++、C\#、Ada 等众多知名语言} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{影响而非前身} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 抽象数据类型：把“是什么”与“怎么做”分开}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{ADT}=\text{数据表示}+\text{操作集}$\quad 用户只见接口、不见实现}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. Venus：系统工作的起点 ---
+\newcommand{\venusslide}{\begin{frame}\plainbar\sectiontitle{Venus：系统工作的起点}{小型低成本分时系统}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Venus} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{一个小型、低成本的分时（time-sharing）操作系统} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{早期系统工作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{项目群} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{她领导的诸多重要项目之一：Venus、CLU、Argus、Thor} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{四大系统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{脉络} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{从 Venus 的分时系统到 CLU 的抽象机制，系统观逐步成形} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{厚积薄发} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} Venus 之后，她的系统之路全面展开。}
+\end{center}
+\end{frame}}
+
+% --- 9. Argus：首个分布式高级语言 ---
+\newcommand{\argusslide}{\begin{frame}\plainbar\sectiontitle{Argus：首个分布式高级语言 (1980s)}{分布式程序 · promise pipelining}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{首创}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{语言} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{Argus：首个支持分布式程序实现的高级语言（页面原文限定）} & \cellcolor{dfpanel}\textcolor{badgeDF!82!black}{分布式先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{技术} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{并演示了 promise pipelining 技术} & \cellcolor{dfpanel}\textcolor{badgeDF!82!black}{异步流水线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1992} & \cellcolor{plpanel}\textcolor{badgeDF!82!black}{Ladin--Liskov 等：Providing high availability using lazy replication} & \cellcolor{dfpanel}\textcolor{badgeDF!82!black}{高可用复制} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Argus：让分布式程序成为高级语言的一等公民}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{多结点协作}\ \xrightarrow{\text{promise pipelining}}\ \text{异步流水}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. Liskov 替换原则 ---
+\newcommand{\lspslide}{\begin{frame}\plainbar\sectiontitle{Liskov 替换原则：行为化子类型 (1994)}{与 Jeannette Wing 合作 · TOPLAS}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{oopanel}\textcolor{badgeOO!82!black}{与 Jeannette Wing 合作提出子类型的一种特定定义} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{合作成果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{oopanel}\textcolor{badgeOO!82!black}{A behavioral notion of subtyping（TOPLAS 1994-11）} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{形式化定义} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{oopanel}\textcolor{badgeOO!82!black}{把数据抽象思想应用于面向对象编程的子类型与继承；成为软件工程教科书中的形式化判据} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{教科书经典} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Liskov 替换原则（LSP）：子类型的行为化判据}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$S <: T\ \Rightarrow\ \text{T 的对象可被 S 的对象替换而程序行为不变}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. Thor 与分布式数据库 ---
+\newcommand{\thorslide}{\begin{frame}\plainbar\sectiontitle{Thor 与分布式数据库}{object-oriented database · 系统演进}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{系统}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Thor} & \cellcolor{dfpanel}\textcolor{badgeDF!82!black}{一个面向对象数据库系统（object-oriented database）} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{四大系统收官} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{演进} & \cellcolor{dfpanel}\textcolor{badgeDF!82!black}{Venus $\rightarrow$ CLU $\rightarrow$ Argus $\rightarrow$ Thor：从单机系统到分布式} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{一以贯之} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{团队} & \cellcolor{dfpanel}\textcolor{badgeDF!82!black}{她长期领导 MIT 的 Programming Methodology Group} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{研究重镇} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从操作系统到语言再到数据库，她的系统观一以贯之。}
+\end{center}
+\end{frame}}
+
+% --- 12. 实用拜占庭容错 ---
+\newcommand{\bftslide}{\begin{frame}\plainbar\sectiontitle{实用拜占庭容错 (1999)}{Castro \& Liskov · OSDI '99}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{dfpanel}\textcolor{badgeDF!82!black}{与 Miguel Castro 合著 Practical Byzantine fault tolerance（OSDI '99）} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{里程碑论文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{贡献} & \cellcolor{dfpanel}\textcolor{badgeDF!82!black}{让拜占庭容错从理论走向实用} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{实用化突破} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{当下} & \cellcolor{dfpanel}\textcolor{badgeDF!82!black}{她至今领导的研究焦点：拜占庭容错与分布式计算} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{仍在前行} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 拜占庭容错：在“叛徒”存在时保持系统正确}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{部分结点失效甚至作恶}\ \Rightarrow\ \text{系统仍达成一致、继续工作}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2008 · 门生与共同体}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（2008，2009-03 颁发）\item von Neumann Medal（2004）\item Inventors Hall of Fame（2012）\item Computer Pioneer Award（2018）\item Benjamin Franklin Medal（2023）\end{itemize}} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{荣誉等身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{Maurice Herlihy、J. Eliot Moss、Sanjay Ghemawat、Andrew Myers、Dan R.K. Ports} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{学术谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学术共同体} & \cellcolor{plpanel}\textcolor{badgePL!82!black}{NAE / NAS 成员 · AAAS / ACM Fellow · ETH 荣誉博士（2005，与 Knuth 同批）} & \cellcolor{dapanel}\textcolor{badgeDA!82!black}{公认与尊重} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 数据抽象之根，长出了今天软件工程的参天大树。}
+\end{center}
+\end{frame}}
+
+% --- 14. 女性先驱与遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{女性先驱与遗产}{抽象与容错的当代回响}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=dapanel, draw=badgeDA!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDA} 数据抽象}\\[3pt]ADT · 数据抽象原理\\[2pt]图灵奖核心};
+\node[leg, fill=plpanel, draw=badgePL!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePL} 编程语言}\\[3pt]CLU · Argus\\[2pt]影响 Java/C++};
+\node[leg, fill=oopanel, draw=badgeOO!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeOO} 面向对象}\\[3pt]Liskov 替换原则\\[2pt]与 Wing 1994};
+\node[leg, fill=dfpanel, draw=badgeDF!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeDF} 分布式容错}\\[3pt]BFT · Thor\\[2pt]Castro · OSDI '99};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 第二位女性图灵奖得主。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 2002 年 Discover 杂志“50 位最重要女性” · ETH 荣誉博士（与 Knuth 同批）\\[2pt]ADT $\rightarrow$ CLU/Argus $\rightarrow$ LSP $\rightarrow$ PBFT：她的思想仍在每一行面向对象代码中流动。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {抽象，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {是驯服复杂性的艺术。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Barbara Liskov};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {芭芭拉·利斯科夫\quad Barbara Liskov\quad 1939 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{code}\enspace Turing 2008 · von Neumann Medal 2004\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\mitreslide
+\stanfordslide
+\cluslide
+\venusslide
+\argusslide
+\lspslide
+\thorslide
+\bftslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

@@ -1,0 +1,483 @@
+% =============================================================
+%  公钥密码学奠基人：马丁·赫尔曼 (Martin Hellman)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：模幂阶梯/离散对数网格 —— 公开钥匙算出私密共识
+%  资料来源：turing/pages/2015/Martin Hellman/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Hellman 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeA}{HTML}{2E5A9E}     % 公钥数学 — 蓝（New Directions / DH 密钥交换）
+\definecolor{badgeB}{HTML}{1E8E8E}     % 信息论谱系 — 青绿（Cover 门下 / Merkle、Elgamal 门生）
+\definecolor{badgeC}{HTML}{D9A441}     % 密钥之战 — 琥珀（DES 批评 / Pohlig–Hellman）
+\definecolor{badgeD}{HTML}{C0395B}     % 核风险与和平 — 玫瑰（Beyond War / NuclearRisk.org）
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 模幂阶梯背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{key}\enspace 公钥密码学奠基人\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {马丁·赫尔曼};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Martin Hellman\enspace·\enspace 1945 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {公钥密码学发明人之一 · Diffie--Hellman 密钥交换 · 2015 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {公钥密码学\\Public-Key Crypto\par\scriptsize New Directions 1976};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {密钥交换\\Key Exchange\par\scriptsize Diffie--Hellman};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {密钥之战\\DES 批评\par\scriptsize 1975 · 56-bit};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {和平工程\\International Security\par\scriptsize NuclearRisk.org};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"introduced the ideas of public-key cryptography and digital signatures." —— 2015 图灵奖（ACM citation）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Martin-Hellman.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Martin-Hellman.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Martin Hellman};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Stanford · IBM · MIT\enspace|\enspace Turing 2015 · Marconi 2000};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{赫尔曼 - 从纽约到公钥密码学}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Martin-Hellman.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Martin-Hellman.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Martin Hellman};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1945-10-02 —（在世）\\[2pt]\lab{本名}\quad Martin Edward Hellman\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Bronx Science 高中\\[2pt]
+     \quad NYU 电机 BS 1966\\[2pt]
+     \quad Stanford MS 1967 · PhD 1969\\[2pt]
+     \lab{师承}\quad Thomas Cover（导师）};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 纽约市 · 美国\\[2pt]\lab{任职}\quad IBM Watson · MIT · Stanford\\[2pt]\lab{核心领域}\quad 密码学 · 计算机科学\\[2pt]\quad 电机工程};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2015 · Marconi 2000\\[2pt]
+     \quad Hamming Medal 2010\\[2pt]
+     \quad NAE 院士 2002\\[2pt]
+     \lab{身份}\quad 密码学家 · 数学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{赫尔曼的一生}{1945 — · 从纽约少年到公钥密码学奠基人}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-3.05);
+  \foreach \y/\year/\txt in {
+    3.0/1945/生于纽约 · 犹太家庭,
+    2.3/1966/NYU 电机工程学士,
+    1.6/1969/Stanford 博士（导师 Thomas Cover）,
+    0.9/1968/IBM Watson 遇见 Horst Feistel,
+    0.2/1971/加入 Stanford 电机工程系,
+    -0.5/1976/与 Diffie 合著 New Directions in Cryptography,
+    -1.2/1985/转向国际安全与核风险研究,
+    -1.9/2000/获 Marconi Prize（与 Diffie）,
+    -2.6/2015/与 Diffie 共获图灵奖,
+    -3.05/至今/在世 · NuclearRisk.org 持续求索
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：纽约与布朗克斯科学高中 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：纽约与布朗克斯科学高中 (1945–1966)}{犹太家庭 · Bronx Science · NYU 电机工程}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1945} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于纽约市 · 出身犹太家庭} & \cellcolor{panelB}\textcolor{badgeB!82!black}{纽约少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学} & \cellcolor{panelA}\textcolor{badgeA!82!black}{毕业于布朗克斯科学高中（Bronx High School of Science）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{科学少年摇篮} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1966} & \cellcolor{panelA}\textcolor{badgeA!82!black}{获 New York University 电机工程学士（BS）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工程根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1967} & \cellcolor{panelA}\textcolor{badgeA!82!black}{赴 Stanford 攻读 · 获电机工程硕士（MS）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{西进斯坦福} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从布朗克斯科学高中到斯坦福，一个纽约少年走向了密码学的核心。}
+\end{center}
+\end{frame}}
+
+% --- 5. Cover 门下的信息论博士 ---
+\newcommand{\phdslide}{\begin{frame}\plainbar\sectiontitle{Cover 门下的信息论博士 (1967–1969)}{Thomas Cover · Learning with Finite Memory}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{panelB}\textcolor{badgeB!82!black}{师从 Stanford 信息论学家 Thomas Cover} & \cellcolor{panelA}\textcolor{badgeA!82!black}{信息论学脉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelB}\textcolor{badgeB!82!black}{博士论文 Learning with Finite Memory（1969）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{有限记忆学习} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学位} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1969 年获 Stanford 电机工程 PhD（MS 1967）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{学术起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 信息论的严谨训练，成为他日后重构密码学底座的数学语言。}
+\end{center}
+\end{frame}}
+
+% --- 6. IBM Watson 与 MIT ---
+\newcommand{\careerslide}{\begin{frame}\plainbar\sectiontitle{IBM Watson 与 MIT (1968–1971)}{遇见 Feistel · 电机工程助理教授}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1968–69} & \cellcolor{panelC}\textcolor{badgeC!82!black}{任职 IBM Thomas J. Watson Research Center（Yorktown Heights）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{工业研究历练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{遇见 Feistel} & \cellcolor{panelC}\textcolor{badgeC!82!black}{在 Watson 遇见 Horst Feistel（DES 的 Feistel 结构发明人）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{密码学启蒙节点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969–71} & \cellcolor{panelC}\textcolor{badgeC!82!black}{MIT 电机工程助理教授两年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{教学生涯起步} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 一次相遇：Hellman $\times$ Feistel（IBM Watson · 1968–69）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{分组密码的结构} 悄然埋下——几年后他与 Diffie 改写密码学版图}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 斯坦福二十五载 ---
+\newcommand{\stanfordslide}{\begin{frame}\plainbar\sectiontitle{斯坦福二十五载 (1971–1996)}{助理教授到荣休教授 · 公钥密码学的摇篮}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1971} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以助理教授加入 Stanford 电机工程系} & \cellcolor{panelB}\textcolor{badgeB!82!black}{扎根斯坦福} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1970s} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与 Diffie、Merkle 在此完成公钥密码学的开创工作} & \cellcolor{panelB}\textcolor{badgeB!82!black}{公钥密码学摇篮} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{全职任教} & \cellcolor{panelA}\textcolor{badgeA!82!black}{全职任教二十五年（served on the full-time faculty for twenty-five years）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{深耕育人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1996} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以正教授身份荣休（emeritus）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{教授生涯圆满} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 二十五年斯坦福岁月，见证密码学从军事机密走向公开学问。}
+\end{center}
+\end{frame}}
+
+% --- 8. 1974 年的会面与 1976 年的论文 ---
+\newcommand{\meetingslide}{\begin{frame}\plainbar\sectiontitle{1974 年的会面与 1976 年的论文}{Diffie 到访 · New Directions in Cryptography}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1974} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Whitfield Diffie 到访斯坦福 · 与 Hellman 长谈} & \cellcolor{panelB}\textcolor{badgeB!82!black}{命运的合作起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1975} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Diffie 受聘为兼职研究程序员} & \cellcolor{panelB}\textcolor{badgeB!82!black}{并肩攻关} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1976} & \cellcolor{panelA}\textcolor{badgeA!82!black}{合著 New Directions in Cryptography 发表（IEEE Trans.\ Information Theory）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{密码学新时代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{难题} & \cellcolor{panelA}\textcolor{badgeA!82!black}{远途解决密码学根本难题——密钥分发（key distribution）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{催生新算法类} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} New Directions in Cryptography（1976）}\\[1pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{公钥加密} $\cdot$ \textit{非对称加密} —— 一篇论文开辟一个算法新类别}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Diffie–Hellman 密钥交换 ---
+\newcommand{\dhslide}{\begin{frame}\plainbar\sectiontitle{Diffie--Hellman 密钥交换}{模幂 · 离散对数 · DHM 命名主张}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方案命名} & \cellcolor{panelA}\textcolor{badgeA!82!black}{该密钥分发方法后被称为 Diffie--Hellman key exchange} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以两人命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{DHM 主张} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Hellman 本人主张应叫 Diffie--Hellman--Merkle（因 Merkle 的独立贡献）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{页面实载的立场} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{panelA}\textcolor{badgeA!82!black}{催生 public key encryption 与 asymmetric encryption 等新类算法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{现代安全协议之基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 公开信道上协商共享密钥（模幂示意）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}公开 $g,\,p$\qquad $A=g^{a}\bmod p$\quad $B=g^{b}\bmod p$\qquad $K=B^{a}\equiv A^{b}=g^{ab}\pmod p$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. DES 之战 ---
+\newcommand{\desslide}{\begin{frame}\plainbar\sectiontitle{DES 之战 (1975--1976)}{56-bit 批评 · 斯坦福评审会录音 · 历史的验证}
+\vspace{-0.38cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1975} & \cellcolor{panelC}\textcolor{badgeC!82!black}{与 Diffie 成为 DES 短密钥（56-bit）最著名的批评者} & \cellcolor{panelA}\textcolor{badgeA!82!black}{公开呛声} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1976} & \cellcolor{panelC}\textcolor{badgeC!82!black}{斯坦福 DES 评审会录音存世（与 NBS 的 Branstad 及 NSA 代表）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{历史现场} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{历史证明} & \cellcolor{panelC}\textcolor{badgeC!82!black}{subsequent history has shown：NSA 曾干预计算机与 NBS 缩短密钥 · 短密钥恰使大规模并行破解机成为可能} & \cellcolor{panelA}\textcolor{badgeA!82!black}{担忧成真} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{结局} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1997 年起 DES Challenges · 至 2012 年一台 \$10,000 商用机数日即可破解 DES} & \cellcolor{panelA}\textcolor{badgeA!82!black}{DES 不安全而过时} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1994–96} & \cellcolor{panelC}\textcolor{badgeC!82!black}{NRC 国家密码政策研究委员会委员 · 主要建议此后多获实施} & \cellcolor{panelA}\textcolor{badgeA!82!black}{政策贡献} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 当年近乎孤立的批评，被后来的历史一一证实。}
+\end{center}
+\end{frame}}
+
+% --- 11. 桃李：Merkle 与 Elgamal ---
+\newcommand{\studentsslide}{\begin{frame}\plainbar\sectiontitle{桃李：Merkle 与 Elgamal}{两代公钥人物 · Pohlig--Hellman 算法}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{关系与贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Ralph Merkle} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Hellman 的博士生 · 因其独立贡献而位列公钥三杰（与 Diffie/Hellman in cooperation）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{公钥共同奠基人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Taher Elgamal} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Hellman 的博士生 · ElGamal 加密算法发明人} & \cellcolor{panelA}\textcolor{badgeA!82!black}{门生自成一家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Steve Pohlig} & \cellcolor{panelB}\textcolor{badgeB!82!black}{合作伙伴 · Pohlig--Hellman 算法（oral history 实载）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{经典算法留名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Thomas Cover} & \cellcolor{panelB}\textcolor{badgeB!82!black}{博士导师（信息论）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{导师-学生两代皆入公钥史} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Cover 到 Merkle 与 Elgamal——师承谱系本身就是一部公钥密码学史。}
+\end{center}
+\end{frame}}
+
+% --- 12. 后图灵人生：核风险与和平 ---
+\newcommand{\peaceslide}{\begin{frame}\plainbar\sectiontitle{后图灵人生：核风险与和平 (1985--)}{Beyond War · Breakthrough · NuclearRisk.org}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事业}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1985 起} & \cellcolor{panelD}\textcolor{badgeD!82!black}{活跃于国际安全研究 · 参与最初的 Beyond War 运动 · 任小册子 BEYOND WAR: A New Way of Thinking 主要编辑} & \cellcolor{panelA}\textcolor{badgeA!82!black}{转向下半场} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1987} & \cellcolor{panelD}\textcolor{badgeD!82!black}{30 余位学者共同编撰 Breakthrough: Emerging New Thinking 俄英文版 · 与 Anatoly Gromyko 同任主编} & \cellcolor{panelA}\textcolor{badgeA!82!black}{跨阵营对话} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{核风险} & \cellcolor{panelD}\textcolor{badgeD!82!black}{研究核威慑失败的概率与风险 · 网站 NuclearRisk.org · Daisy Alliance 董事会成员} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以风险分析守护和平} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2016} & \cellcolor{panelD}\textcolor{badgeD!82!black}{与妻子 Dorothie 合著 A New Map for Relationships——把家庭之爱与地球和平联系起来} & \cellcolor{panelA}\textcolor{badgeA!82!black}{家庭与和平同题} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.1cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 密码学家守护数字世界的秘密，也以同样的严谨守护人类的未来。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与共享之年 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与共享之年}{图灵奖 2015（与 Diffie 共享）· 两大奖项脉络}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{最高荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item ACM Turing Award（2015 · 与 Whitfield Diffie 共享）\item Marconi Prize（2000 · 与 Diffie）\item NAE 院士（2002 · 理论与实践贡献）\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{公钥奠基者的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{IEEE 脉络} & \cellcolor{panelA}\textcolor{badgeA!82!black}{IEEE Fellow 1980 · Fink Prize Paper 1981（与 Diffie）· Centennial Medal 1984 · Hamming Medal 2010} & \cellcolor{panelB}\textcolor{badgeB!82!black}{信息论学脉绵长} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{其他荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{EFF Pioneer 1994 · Levy Medal 1997 · Golden Jubilee 1998 · National Inventors Hall of Fame 2011 · Computer History Museum Fellow 2011（with Diffie and Merkle）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{跨越学界与业界} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 2015 年的图灵桂冠，属于两位把密码学带进公开学问的人。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：公开的钥匙，私密的安全}{公钥密码学 · 密钥交换 · 密钥之战 · 和平工程}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=panelA, draw=badgeA!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeA} 公钥密码学}\\[3pt]New Directions\\[2pt]1976};
+\node[leg, fill=panelB, draw=badgeB!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeB} 密钥交换}\\[3pt]Diffie--Hellman\\[2pt]模幂与离散对数};
+\node[leg, fill=panelC, draw=badgeC!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeC} 密钥之战}\\[3pt]DES 批评\\[2pt]历史的验证};
+\node[leg, fill=panelD, draw=badgeD!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeD} 和平工程}\\[3pt]Beyond War\\[2pt]NuclearRisk.org};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 今天的每一次安全连接，都在向 1976 年的那篇论文致意。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 公钥密码学 $\rightarrow$ 密钥交换 $\rightarrow$ 密钥之战 $\rightarrow$ 和平工程\\[2pt]他的遗产，仍在互联网的安全协议中运行。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {公开的钥匙，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {守住了整个数字世界的私密。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Martin Hellman};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {马丁·赫尔曼\quad Martin Hellman\quad 1945 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{key}\enspace Turing 2015 · Marconi 2000 · 公钥密码学奠基人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\phdslide
+\careerslide
+\stanfordslide
+\meetingslide
+\dhslide
+\desslide
+\studentsslide
+\peaceslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

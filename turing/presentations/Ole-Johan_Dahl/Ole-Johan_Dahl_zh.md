@@ -91,7 +91,7 @@
 - **学位**：Oslo 大学 BS、MS（数值数学）——**页面无 PhD**；勿编造博士导师。
 - **死因**：页面未载——写"未详述，勿编造"；享年 70。
 - **St. Olav 勋章年份**：Dahl 页面写 **2000** 年获 Command of the Royal Norwegian Order of St. Olav（Nygaard 页面写 2000 年 8 月由国王 Harald V 授勋——Dahl 篇只写 2000 即可）。
-- **von Neumann Medal**：**2002** 年（与 Nygaard 共享）——勿写 2001。
+- **von Neumann Medal 双口径**：本篇页面明写 "received the **2002** IEEE John von Neumann Medal (with Kristen Nygaard)"——本篇保持 **2002**；注意 Nygaard 页面作 "**November 2001** ... awarded"（2001-11 授予），两篇各自忠于本人本地页面，Review 时勿跨篇"纠正"。
 - **Early papers 使用红线**：早期论文（1957/1958/1963/1965/1966/1968）只取 2–3 条代表作（1957 首篇、1966 CACM、1968 Common Base），勿整清单罗列进正文页。
 - **家庭细节**：仅父母生卒与流亡一笔——页面无载配偶/子女，勿编造。
 - **全文无直接引语**：页面无 Dahl 本人任何直接引语——勿编造。

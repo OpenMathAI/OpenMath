@@ -1,0 +1,482 @@
+% =============================================================
+%  密码学可证明安全：西尔维奥·米卡利 (Silvio Micali)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：密文不可区分、证明不泄密 —— 稀疏气泡呼应零知识
+%  资料来源：turing/pages/2012/Silvio Micali/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Micali 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeSS}{HTML}{2E5A9E}     % 语义安全 — 蓝
+\definecolor{badgePR}{HTML}{1E8E8E}     % 伪随机性 — 青绿
+\definecolor{badgeZKP}{HTML}{D9A441}    % 零知识与协议 — 琥珀
+\definecolor{badgeST}{HTML}{C0395B}     % 创业与区块链 — 玫瑰
+\definecolor{sspanel}{RGB}{228,233,246}
+\definecolor{prpanel}{RGB}{222,240,238}
+\definecolor{zkppanel}{RGB}{249,240,224}
+\definecolor{stpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeSS!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgePR!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeZKP!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{key}\enspace 密码学可证明安全\enspace·\enspace 意大利};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {西尔维奥·米卡利};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Silvio Micali\enspace·\enspace 1954 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {语义安全 · 零知识证明 · Algorand 创始人 · 2012 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeSS] at (-5.05,0)
+        {语义安全\\Semantic Security\par\scriptsize 与 Goldwasser};
+      \node[badge, fill=badgePR] at (-1.68,0)
+        {伪随机性\\Blum--Micali\par\scriptsize 伪随机生成器};
+      \node[badge, fill=badgeZKP] at (1.68,0)
+        {零知识证明\\Zero-Knowledge\par\scriptsize GMR · 1985};
+      \node[badge, fill=badgeST] at (5.05,0)
+        {创业与区块链\\Algorand\par\scriptsize 三度创业};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for their work in the field of cryptography." —— 2012 图灵奖（ACM 表述）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Silvio_Micali.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Silvio_Micali.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Silvio Micali};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 意大利\enspace|\enspace \faIcon{university}\enspace MIT · Sapienza · Berkeley\enspace|\enspace Turing 2012 · Gödel 1993};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{米卡利 - 从巴勒莫到可证明安全}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Silvio_Micali.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Silvio_Micali.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Silvio Micali};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1954-10-13 —（在世）\\[2pt]\lab{本名}\quad Silvio Micali\\[2pt]\lab{国籍}\quad 意大利};
+  \node[infob, fill=sspanel, draw=badgeSS!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Sapienza 数学 BS 1978\\[2pt]
+     \quad Berkeley CS PhD 1982\\[2pt]
+     \lab{师承}\quad Manuel Blum（导师）};
+  \node[infob, fill=prpanel, draw=badgePR!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 巴勒莫 · 意大利\\[2pt]\lab{任职}\quad MIT · CSAIL\\[2pt]\lab{兼任}\quad Penn · Toronto · 清华};
+  \node[infob, fill=zkppanel, draw=badgeZKP!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2012 · Gödel 1993\\[2pt]
+     \quad NAS 2007 · NAE\\[2pt]
+     \lab{核心领域}\quad 密码学 · 零知识\\[2pt]
+     \quad 伪随机 · 区块链};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{米卡利的一生}{1954 — · 从巴勒莫到区块链时代}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1954/生于西西里岛巴勒莫,
+    2.3/1978/罗马一大数学毕业,
+    1.6/1982/Berkeley 计算机科学博士（Blum）,
+    0.9/1983/加入 MIT 电气工程与计算机科学系,
+    0.2/1985/与 Goldwasser · Rackoff 提出零知识证明,
+    -0.5/1993/获 Gödel Prize（五人共享）,
+    -1.2/2001/联合创立 CoreStreet,
+    -1.9/2012/获图灵奖（与 Goldwasser 共享）,
+    -2.6/2017/创立 Algorand（PoS 区块链）
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：巴勒莫与罗马一大 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：巴勒莫与罗马一大 (1954--1978)}{南意岛城 · 数学的起点}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1954} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{生于西西里岛的巴勒莫（Palermo）} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{地中海的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1978} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{毕业于罗马一大（La Sapienza University of Rome）数学专业} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{数学根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{转向} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{由数学走向计算机科学，远渡重洋赴 UC Berkeley} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{跨越大西洋} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从地中海的岛城出发，走向密码学的世界舞台。}
+\end{center}
+\end{frame}}
+
+% --- 5. Berkeley 与 Manuel Blum ---
+\newcommand{\berkeleyslide}{\begin{frame}\plainbar\sectiontitle{Berkeley 与 Manuel Blum (1978--1982)}{师徒双图灵奖 · Randomness versus Hardness}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{师承} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{师从 Manuel Blum（1995 图灵奖得主，师徒双图灵奖）} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{大师的门径} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{\textit{Randomness versus Hardness}（随机性对困难性）} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{1982 年获博士学位} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同门} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{与 Goldwasser 同出 Blum 门下，研究生时代即开始合作} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{一生的合作者} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 随机性与困难性的交织，成了他一生研究的底色。}
+\end{center}
+\end{frame}}
+
+% --- 6. Blum--Micali 算法：伪随机生成 ---
+\newcommand{\blummicalislide}{\begin{frame}\plainbar\sectiontitle{Blum--Micali 算法：伪随机生成}{与导师 Blum · 密码学伪随机性的基石}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{特性}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{设计}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合作} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{研究生期间与导师 Blum 共同开发} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{师徒的结晶} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{构造} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{伪随机数生成器：由短的种子生成不可预测的比特序列} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{随机性的工程化} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{密码学伪随机性的基石} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{基础原语} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Blum--Micali 伪随机生成器}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{短种子}\ \xrightarrow{\ \text{迭代}\ }\ \text{不可预测的伪随机比特序列}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 概率加密与语义安全 ---
+\newcommand{\semsecslide}{\begin{frame}\plainbar\sectiontitle{概率加密与语义安全 (1984)}{与 Goldwasser · 不可区分性}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{特性}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{设计}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{概率加密} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{同一条消息可随机加密成多个不同的密文} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{随机性进入加密} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{不可区分} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{即使攻击者可选择明文，两个密文也难以区分（indistinguishable）} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{语义安全的关键} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{传统} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{与 Goldwasser 作为研究生共同开创的概率加密传统} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{可证明安全的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 语义安全（semantic security）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$m\ \xrightarrow{\$}\ \{c_1, c_2, \ldots\}\qquad$ 无论选什么明文，密文不可区分}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 交互式证明与零知识证明 ---
+\newcommand{\zkslide}{\begin{frame}\plainbar\sectiontitle{交互式证明与零知识证明 (1985)}{与 Goldwasser · Rackoff · 证明而不泄露}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{命题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{三人署名} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{1985 年与 Goldwasser、Rackoff 引入零知识证明} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{GMR 三人署名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{核心性质} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{证明者与验证者交互证明定理，而不泄露额外知识} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{证明 $\neq$ 泄露} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{双组平行} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{与 Babai、Moran 的同期独立工作共享 1993 Gödel Prize} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{两条平行河流} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 零知识证明的承诺}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{证明者}\ \rightleftarrows\ \text{验证者}:\ \text{确证断言}\ \wedge\ \text{不泄露额外知识}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 密码学协议全景 ---
+\newcommand{\protocolslide}{\begin{frame}\plainbar\sectiontitle{密码学协议全景}{数字签名 · 不经意传输 · 安全多方计算}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{原语}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{数字签名} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{GMR 数字签名算法} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{身份与完整性} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{不经意传输} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{oblivious transfer（不经意传输）} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{隐私的交换} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{安全多方计算} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{secure multiparty computation（安全多方计算）} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{协作而互不交底} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{更多原语} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{伪随机函数 · claw-free permutation · 可验证秘密分享（verifiable secret sharing）} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{工具箱的全景} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从原语到协议，可证明安全的工具箱被一一写全。}
+\end{center}
+\end{frame}}
+
+% --- 10. Gödel Prize 1993 ---
+\newcommand{\godelslide}{\begin{frame}\plainbar\sectiontitle{Gödel Prize 1993：双组平行的公认}{交互式证明系统的知识复杂性}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{\textit{The knowledge complexity of interactive proof systems}} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{交互式证明线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{共享者} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{与 Goldwasser、Rackoff、Babai、Moran 五人共享} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{双组合并的荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{背景} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{Micali 组与 Babai--Moran 组同期独立发表} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{平行发现的公认} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 1993 年 Gödel Prize}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}交互式证明系统的知识复杂性\quad$\cdot$\quad 五人共享}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. MIT 与多国讲席 ---
+\newcommand{\mitslide}{\begin{frame}\plainbar\sectiontitle{MIT 教授与多国讲席 (1983--)}{CSAIL · Penn · Toronto · 清华}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1983} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{加入 MIT 电气工程与计算机科学系} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{MIT 主线} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{CSAIL} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{MIT CSAIL 研究者，研究集中于密码学与信息安全} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{研究重镇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{客座} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{曾在 University of Pennsylvania、University of Toronto 任教} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{跨校讲学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{清华} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{曾任职于清华大学（Tsinghua University）} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{跨越东西方} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Cambridge 的查尔斯河畔到清华园，讲席跨越了三大洲。}
+\end{center}
+\end{frame}}
+
+% --- 12. 三度创业 ---
+\newcommand{\startupsslide}{\begin{frame}\plainbar\sectiontitle{三度创业：理论家的企业家之路}{CoreStreet · Peppercoin · Algorand}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{公司}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{去向}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2001} & \cellcolor{stpanel}\textcolor{badgeST!82!black}{CoreStreet Ltd（剑桥市，联合创立，数字证书状态检查专利，任 Chief Scientist）} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{2009 被 ActivIdentity 收购} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2000s 初} & \cellcolor{stpanel}\textcolor{badgeST!82!black}{Peppercoin（微支付系统）} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{2007 被收购} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2017} & \cellcolor{stpanel}\textcolor{badgeST!82!black}{创立 Algorand —— proof-of-stake 区块链加密货币协议} & \cellcolor{zkppanel}\textcolor{badgeZKP!82!black}{区块链时代} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Algorand —— PoS 区块链协议}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{可证明安全}\ \rightarrow\ \text{区块链共识：从证明到协议的又一次跨越}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 2012 · 门生成林}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国际荣誉} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（2012，与 Goldwasser 共享）\item Gödel Prize（1993）· RSA 数学卓越奖 2004\item NAS 2007 · NAE · American Academy 院士\item ACM Fellow 2017\end{itemize}} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{理论家的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{Mihir Bellare、Phillip Rogaway、Shai Halevi、Alessandro Chiesa 等} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{现代密码学中坚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{长期合作} & \cellcolor{sspanel}\textcolor{badgeSS!82!black}{与 Shafi Goldwasser 合作（1984 概率加密 · 1985 零知识），同获 2012 图灵奖} & \cellcolor{prpanel}\textcolor{badgePR!82!black}{同门同行，共享桂冠} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从门生到公司，可证明安全的传统走向了整个行业。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：从证明走向协议}{语义安全 · 伪随机 · 协议 · 区块链}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=sspanel, draw=badgeSS!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSS} 语义安全}\\[3pt]概率加密\\[2pt]不可区分性};
+\node[leg, fill=prpanel, draw=badgePR!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePR} 伪随机性}\\[3pt]Blum--Micali\\[2pt]伪随机函数};
+\node[leg, fill=zkppanel, draw=badgeZKP!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeZKP} 零知识与协议}\\[3pt]GMR 1985\\[2pt]签名 · MPC};
+\node[leg, fill=stpanel, draw=badgeST!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeST} 区块链时代}\\[3pt]三度创业\\[2pt]Algorand};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 密码学从工程技艺成为可数学证明的科学。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} 语义安全 $\rightarrow$ 伪随机生成 $\rightarrow$ 零知识与协议 $\rightarrow$ 区块链\\[2pt]他奠定的传统，仍在从证明走向更远的技术前沿。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {安全，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {从证明开始，在协议中生长。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Silvio Micali};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {西尔维奥·米卡利\quad Silvio Micali\quad 1954 —};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{key}\enspace Turing 2012 · Gödel 1993 · Algorand 创始人\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\berkeleyslide
+\blummicalislide
+\semsecslide
+\zkslide
+\protocolslide
+\godelslide
+\mitslide
+\startupsslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

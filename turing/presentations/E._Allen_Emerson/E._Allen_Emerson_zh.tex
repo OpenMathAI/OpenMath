@@ -1,0 +1,503 @@
+% =============================================================
+%  时态逻辑与模型检验：E. Allen Emerson（E. 艾伦·爱默生）
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：分叉时间树（计算树的时间分支节点）
+%  资料来源：turing/pages/2007/E. Allen Emerson/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Emerson 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeCTL}{HTML}{2E5A9E}    % 时态逻辑 — 蓝
+\definecolor{badgeMC}{HTML}{1E8E8E}     % 模型检验命名 — 青绿
+\definecolor{badgeSym}{HTML}{D9A441}    % 符号模型检验 — 琥珀
+\definecolor{badgeConc}{HTML}{C0395B}   % 并发系统验证 — 玫瑰
+\definecolor{ctlpanel}{RGB}{228,233,246}
+\definecolor{mcpanel}{RGB}{222,240,238}
+\definecolor{sympanel}{RGB}{249,240,224}
+\definecolor{concpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 分叉时间树背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeCTL!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeMC!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeSym!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{code-branch}\enspace 时态逻辑与模型检验\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {E. 艾伦·爱默生};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {E. Allen Emerson\enspace·\enspace 1954 — 2024};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {CTL/CTL* 时态逻辑 · 命名 model checking · 2007 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeCTL] at (-5.05,0)
+        {计算树逻辑\\CTL / CTL*\par\scriptsize 时态逻辑};
+      \node[badge, fill=badgeMC] at (-1.68,0)
+        {模型检验\\Model Checking\par\scriptsize 命名者之一};
+      \node[badge, fill=badgeSym] at (1.68,0)
+        {符号模型检验\\Symbolic MC\par\scriptsize 对抗组合爆炸};
+      \node[badge, fill=badgeConc] at (5.05,0)
+        {并发系统验证\\Concurrency\par\scriptsize 形式验证};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for their role in developing Model-Checking into a highly effective verification technology." —— 2007 图灵奖 citation};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/E-allen-emerson_3x4_cropped_.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{E-allen-emerson_3x4_cropped_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Emerson in 2022};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Harvard · UT Austin\enspace|\enspace Turing 2007 · Kanellakis 1998};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{爱默生 - 从达拉斯到时态逻辑}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/E-allen-emerson_3x4_cropped_.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{E-allen-emerson_3x4_cropped_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {E. Allen Emerson};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1954-06-02 — 2024-10-15\\[2pt]\lab{本名}\quad Ernest Allen Emerson II\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=ctlpanel, draw=badgeCTL!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad UT Austin 数学 BS 1976\\[2pt]
+     \quad Harvard 应用数学 MS · PhD 1981\\[2pt]
+     \lab{师承}\quad Edmund M. Clarke（导师）};
+  \node[infob, fill=mcpanel, draw=badgeMC!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 达拉斯 · 得克萨斯\\[2pt]\lab{去世地}\quad 奥斯汀家中 · 得克萨斯\\[2pt]\lab{任职}\quad UT Austin（1981–2016）};
+  \node[infob, fill=sympanel, draw=badgeSym!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2007 · Kanellakis 1998\\[2pt]
+     \lab{核心领域}\quad 时态逻辑 CTL/CTL*\\[2pt]
+     \quad 模型检验 · 形式验证};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{爱默生的一生}{1954 — 2024 · 从达拉斯少年到模型检验命名者}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-3.0);
+  \foreach \y/\year/\txt in {
+    3.0/1954/生于得克萨斯州达拉斯,
+    2.25/1976/获 UT Austin 数学学士,
+    1.5/1981/Harvard 应用数学博士（导师 Clarke）,
+    0.75/1982/与 Clarke 发表奠基论文并命名 model checking,
+    0/1986/与 Halpern 论分叉 vs 线性时间（CTL*）,
+    -0.75/1998/获 ACM Paris Kanellakis 奖,
+    -1.5/2007/获图灵奖（与 Clarke、Sifakis 共享）,
+    -2.25/2016/自 UT Austin 退休（执教 35 年）,
+    -3.0/2024/逝于奥斯汀家中，享年 70
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：达拉斯与分时系统 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：达拉斯与分时系统 (1954–1976)}{BASIC · Fortran · ALGOL 60 · UT Austin 数学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1954} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{生于得克萨斯州达拉斯（Dallas, Texas）} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{美国南方少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{中学-本科} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{在 Dartmouth Time-Sharing System 与 Burroughs 大型机上接触 BASIC、Fortran、ALGOL 60} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{早期的计算初体验} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1976} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{获 University of Texas at Austin 数学学士（BS）} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{数学根基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 分时系统上的少年，日后为并发系统写下了时间的逻辑。}
+\end{center}
+\end{frame}}
+
+% --- 5. Harvard 应用数学博士 ---
+\newcommand{\harvardslide}{\begin{frame}\plainbar\sectiontitle{Harvard 应用数学博士 (1976–1981)}{师从 Edmund M. Clarke · 一门双奖的起点}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{求学} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{入 Harvard University，攻读应用数学，获 MS 与 PhD（1981）} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{数学走向系统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{博士导师 Edmund M. Clarke（infobox 实载）} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{师生同获 2007 图灵奖} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方向} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{时态逻辑与模态逻辑；对有限状态系统的形式化推理} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{模型检验的前夜} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 应用数学博士的底色，让他把"时间"变成了可以推理的对象。}
+\end{center}
+\end{frame}}
+
+% --- 6. 1981-82：提出并命名 model checking ---
+\newcommand{\mcslide}{\begin{frame}\plainbar\sectiontitle{1981–82：提出并命名 model checking}{与导师 Clarke · Sifakis 在欧洲独立研究}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{师生合作} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{与博士导师 Clarke 发展对有限状态系统按形式规格验证的技术} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{模型检验的奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{命名} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{他们为这一概念创造了术语 "model checking"（coined the term）} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{命名归师生二人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{欧洲独立线} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{该概念在欧洲被 Joseph Sifakis 独立研究（independently studied）} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{三人之奖的第三线} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Clarke \& Emerson 1982 · LNCS 131（工作于 1981）}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}\textit{Design and synthesis of synchronization skeletons using branching time temporal logic}}\\[1pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}$M \models \varphi$\quad 系统 $M$ 是否满足规格 $\varphi$？}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. CTL：计算树逻辑 ---
+\newcommand{\ctlslide}{\begin{frame}\plainbar\sectiontitle{CTL：计算树逻辑}{Computation Tree Logic · 并发系统验证的规格语言}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{概念}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{引入 CTL} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{对时态逻辑与模态逻辑的贡献：引入计算树逻辑 CTL} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{并发系统的规格语言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{分叉时间} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{把并发系统的时间展开为分叉的计算树，路径量词 + 时态算子} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{"所有/存在未来路径"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{扩展 CTL*} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{其后引入扩展 CTL*，统一分支时间与线性时间表达力} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{规格语言的里程碑} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} CTL 时态算子（路径量词 + 时态算子）}\\[2pt]
+  {\fontsize{10}{13}\selectfont\color{coverprimary!88!black}$\mathrm{AF}\,p$\ 「所有路径终将 $p$」\quad $\mathrm{EG}\,p$\ 「存在路径始终 $p$」\quad $\mathrm{EX}\,p$\ 「下一状态可有 $p$」}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. CTL* 与分叉 vs 线性时间 ---
+\newcommand{\ctlstarslide}{\begin{frame}\plainbar\sectiontitle{"Sometimes" and "not never" revisited (1986)}{与 Halpern · 分叉时间 vs 线性时间}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{合著者} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{与 Joseph Y. Halpern 合著，发表于 Journal of the ACM（1986）} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{顶刊经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主题} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{分叉时间与线性时间时态逻辑的关系（branching versus linear time）} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{厘清两大语义阵营} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定位} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{对 CTL* 与规格语言表达力层级的系统澄清} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{时态逻辑理论丰碑} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 分叉时间 vs 线性时间：时间之树上的两种读法}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{"Sometimes" and "not never"} —— 曾经的"有时"与"永不"，在计算树上重逢。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 组合爆炸与符号模型检验 ---
+\newcommand{\explosionslide}{\begin{frame}\plainbar\sectiontitle{组合爆炸与符号模型检验}{state space explosion · 应对之道}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{天敌} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{许多模型检验算法面临组合爆炸（状态空间爆炸）} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{可扩展性的拦路虎} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{应对} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{与他人共同发展符号模型检验（symbolic model checking）以应对组合爆炸} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{工业化验证的前提} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同行} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{与其一道获认可的还有 Bryant、Clarke、McMillan 等} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{细节详见 Clarke 篇} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 状态空间随并发分量呈指数增长}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$|S| \sim \prod_{i=1}^{n}|S_i|$\quad —— 符号化表示让"指数"重新变得可检验}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 1998 Kanellakis 奖 ---
+\newcommand{\kanellakisslide}{\begin{frame}\plainbar\sectiontitle{1998 Paris Kanellakis Award}{与 Bryant / Clarke / McMillan · 符号模型检验}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1998} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{获 ACM Paris Kanellakis 奖（本页正文与 infobox 均作 1998）} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{理论与实务之桥} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{同仁} & \cellcolor{sympanel}\textcolor{badgeSym!82!black}{与 Randal Bryant、Edmund M. Clarke、Kenneth L. McMillan 同获} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{符号模型检验四人组} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8}{10.5}\selectfont\color{coverprimary!88!black}\itshape "For their invention of symbolic model checking, a method of formally checking system designs, which is widely used in the computer hardware industry and is beginning to show significant promise also in software verification and other areas."}\\[2pt]
+  {\fontsize{7.2}{9}\selectfont\color{muteddark} —— Kanellakis 奖 citation（页面实载；注：Clarke 页面叙述作 1999，以本篇页面 1998 为准）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. UT Austin 三十五年 ---
+\newcommand{\utslide}{\begin{frame}\plainbar\sectiontitle{UT Austin 三十五年 (1981–2016)}{Regents Chair Emeritus · 一生一校}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1981} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{1981 年博士毕业不久即加入 UT Austin 计算机科学系} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{从 Harvard 回到得州} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{执教} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{在该校执教 35 年，培养后学} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{一生一校} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2016} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{自 UT Austin 退休，荣衔 Regents Chair Emeritus} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{讲席荣休} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 三十五年一个系，把奥斯汀变成了形式验证的一方重镇。}
+\end{center}
+\end{frame}}
+
+% --- 12. "model" 的模型论语义 ---
+\newcommand{\modelslide}{\begin{frame}\plainbar\sectiontitle{"model" 的模型论语义}{技术注解 · 系统是规格的 model}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{问题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{注解}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{词源} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{model checking 中的 "model" 取数理逻辑模型论（model theory）的用法} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{不是"建模"的泛称} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{语义} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{"the system is called a model of the specification" —— 系统被称为规格的 model} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{页面 Notes 实载} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{妙处} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{检验系统是否满足规格，即检验其是否为规格的一个模型} & \cellcolor{concpanel}\textcolor{badgeConc!82!black}{术语的自洽} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 系统是规格的 model（模型论语义）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$M \models \varphi$\quad 当且仅当\ $M$\ 是规格 $\varphi$ 的一个模型}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与谱系 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与谱系}{图灵奖 2007 · 一门双奖}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{图灵奖} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{2007 年与导师 Clarke、Sifakis 三人共享（infobox advisor + 2007 共奖，"一门双奖"）} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{师生同榜} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{其他奖项} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{页面实载仅两项：Turing 2007 与 Paris Kanellakis 1998} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{实载为准} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{ACM 评价} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{\itshape "authored seminal papers that founded what has become the highly successful field of Model Checking."} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{奠基性论文} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{7.8}{10.2}\selectfont\color{coverprimary!88!black}\itshape "for their role in developing Model-Checking into a highly effective verification technology that is widely adopted in the hardware and software industries."}\\[1pt]
+  {\fontsize{7.2}{9}\selectfont\color{muteddark} —— 2007 图灵奖 citation（本篇为三人共享 citation 的页面实载来源页）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 身后与纪念 ---
+\newcommand{\memorialslide}{\begin{frame}\plainbar\sectiontitle{身后与纪念 (2024)}{CAV 2025 纪念页 · Heidelberg Laureate Forum 悼念}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{2024-10-15} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{于奥斯汀家中去世，享年 70（死因页面未详述）} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{一颗恒星陨落} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{CAV 2025} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{CAV 会议设 In Memoriam 纪念页（页面脚注实载）} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{学界集体缅怀} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{HLF} & \cellcolor{mcpanel}\textcolor{badgeMC!82!black}{Heidelberg Laureate Forum 发文告别（页面脚注实载）} & \cellcolor{ctlpanel}\textcolor{badgeCTL!82!black}{跨界的纪念} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他留下的，是一整套让机器"守时守信"的方法论。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {为并发的世界，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {写下时间的逻辑。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 E. Allen Emerson};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {E. 艾伦·爱默生\quad E. Allen Emerson\quad 1954 — 2024};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{code-branch}\enspace Turing 2007 · CTL/CTL* · model checking\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\harvardslide
+\mcslide
+\ctlslide
+\ctlstarslide
+\explosionslide
+\kanellakisslide
+\utslide
+\modelslide
+\honorsslide
+\memorialslide
+\closingslide
+\end{document}

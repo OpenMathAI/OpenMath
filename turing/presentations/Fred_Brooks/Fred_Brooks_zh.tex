@@ -1,0 +1,485 @@
+% =============================================================
+%  人月神话之父：弗雷德·布鲁克斯 (Fred Brooks)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：大型机家族的模块化 / 人月的天平 —— 稀疏气泡
+%  资料来源：turing/pages/1999/Fred Brooks/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Brooks 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeArc}{HTML}{2E5A9E}    % 计算机体系结构 — 蓝
+\definecolor{badgeOS}{HTML}{1E8E8E}     % 操作系统与软件工程 — 青绿
+\definecolor{badgePM}{HTML}{D9A441}     % 项目管理智慧 — 琥珀
+\definecolor{badgeVR}{HTML}{C0395B}     % 虚拟现实与可视化 — 玫瑰
+\definecolor{arcpanel}{RGB}{228,233,246}
+\definecolor{ospanel}{RGB}{222,240,238}
+\definecolor{pmpanel}{RGB}{249,240,224}
+\definecolor{vrpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeArc!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeOS!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgePM!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{cubes}\enspace 人月神话之父\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {弗雷德·布鲁克斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Fred Brooks\enspace·\enspace 1931 — 2022};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {System/360 架构师 · 《人月神话》作者 · 1999 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeArc] at (-5.05,0)
+        {计算机体系结构\\Computer Architecture\par\scriptsize System/360};
+      \node[badge, fill=badgeOS] at (-1.68,0)
+        {操作系统\\OS/360\par\scriptsize 软件工程};
+      \node[badge, fill=badgePM] at (1.68,0)
+        {项目管理\\The Mythical Man-Month\par\scriptsize 人月神话};
+      \node[badge, fill=badgeVR] at (5.05,0)
+        {虚拟环境\\科学可视化\par\scriptsize UNC Chapel Hill};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"Adding manpower to a late software project makes it later." —— Brooks's law（1975）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Fred_Brooks_cropped_square_.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Fred_Brooks_cropped_square_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Fred Brooks};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace IBM · UNC Chapel Hill\enspace|\enspace Turing 1999 · NMT 1985};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{布鲁克斯 - 从北卡罗来纳到软件工程}{生卒 · 本名 · 国籍 · 教育 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Fred_Brooks_cropped_square_.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Fred_Brooks_cropped_square_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Fred Brooks};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1931-04-19 — 2022-11-17\\[2pt]\lab{本名}\quad Frederick Phillips\\ \quad Brooks Jr.\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=arcpanel, draw=badgeArc!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Duke 物理学 BS 1953\\[2pt]
+     \quad Harvard 应用数学 PhD 1956\\[2pt]
+     \lab{师承}\quad Howard Aiken（博士导师）};
+  \node[infob, fill=ospanel, draw=badgeOS!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Durham · 北卡罗来纳\\[2pt]\lab{去世地}\quad Chapel Hill · 北卡罗来纳\\[2pt]\lab{任职}\quad IBM · UNC Chapel Hill};
+  \node[infob, fill=pmpanel, draw=badgePM!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1999 · NMT 1985\\[2pt]
+     \quad von Neumann Medal 1993\\[2pt]
+     \lab{核心领域}\quad 计算机体系结构\\[2pt]
+     \quad 操作系统 · 软件工程};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{布鲁克斯的一生}{1931 — 2022 · 从北卡少年到软件工程先知}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1931/生于北卡罗来纳州 Durham,
+    2.3/1953/Duke 物理学学士,
+    1.6/1956/Harvard 应用数学博士，加入 IBM,
+    0.9/1964/创建 UNC 计算机科学系,
+    0.2/1975/出版《人月神话》,
+    -0.5/1987/发表《没有银弹》,
+    -1.2/1999/获 ACM 图灵奖,
+    -1.9/2004/获 Eckert-Mauchly 奖,
+    -2.4/2015/自 UNC 荣休,
+    -2.8/2022/逝于 Chapel Hill
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：北卡罗来纳的少年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：北卡罗来纳的少年 (1931--1953)}{Durham 出生 · Duke 物理本科}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1931} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{生于北卡罗来纳州 Durham，成长于美国南方} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{北卡少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1949--1953} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{入 Duke University 攻读物理学，1953 年获学士学位} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{物理学的严谨训练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1956} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{与 Nancy Lee Greenwood 结婚，育有三子女} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{家庭与信仰的支点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个北卡物理少年，即将走进计算工业的心脏。}
+\end{center}
+\end{frame}}
+
+% --- 5. Harvard：Aiken 门下 ---
+\newcommand{\harvardslide}{\begin{frame}\plainbar\sectiontitle{Harvard：Aiken 门下 (1953--1956)}{应用数学博士 · 全球首个 ADP 项目}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{师从 Howard Aiken，1956 年获应用数学（计算机科学方向）博士学位} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{计算先驱的门下} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{\textit{The Analytic Design of Automatic Data Processing Systems}} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{ADP 的系统化设计} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{助教} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{在 Ken Iverson 门下担任研究生助教，参与"自动数据处理"项目——哈佛的这一项目是"世界上第一个"此类项目} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{与 Iverson 结缘} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 全球首个 Automatic Data Processing 研究生项目（Harvard）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{"the first such program in the world"} —— 全篇唯一的"第一"表述}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. IBM：Stretch 与 Harvest ---
+\newcommand{\ibmslide}{\begin{frame}\plainbar\sectiontitle{IBM：Stretch 与 Harvest (1956--)}{Poughkeepsie · Yorktown · 超级计算机}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{项目}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1956 入职} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{加入 IBM，先后在 \mbox{Poughkeepsie} 与 \mbox{Yorktown} 工作} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{进入计算工业心脏} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Stretch} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{参与 IBM 7030 Stretch——千万美元级科学超级计算机，共售出九台} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{超算时代的旗舰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Harvest} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{参与 NSA 专用的 IBM 7950 Harvest} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{国家级计算任务} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Stretch 到 Harvest，他积累了驾驭巨型工程的第一手经验。}
+\end{center}
+\end{frame}}
+
+% --- 7. System/360 与 OS/360 ---
+\newcommand{\systemslide}{\begin{frame}\plainbar\sectiontitle{System/360 与 OS/360：家族化工程}{研发经理 · "computer architecture" 的提出者}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{硬件家族} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{担任 IBM System/360 大型机家族的研发经理——计算机史上最著名的家族化工程} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{兼容性取代一次性设计} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{软件体系} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{同时统管 OS/360 软件包的研发} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{大型软件工程的试验场} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{术语创造} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{在此期间创造（coined）了 "computer architecture" 一词} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{一门学科的语言起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 家族化体系：一套架构，多档机型}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{同一 architecture}\ \Rightarrow\ \{\text{Model 30},\ \text{Model 40},\ \dots,\ \text{Model 75}\}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 8-bit byte 决策 ---
+\newcommand{\byteslide}{\begin{frame}\plainbar\sectiontitle{8-bit byte：他自述最重要的单一决策}{6-bit 到 8-bit · 小写字母的胜利}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{决策} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{把 IBM 360 系列从 6-bit byte 改为 8-bit byte——Brooks 自述（2004 CHM 演讲与 2010 Wired 采访）} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{个人自述的归属} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{动因} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{从而支持小写字母的使用} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{文本处理的新可能} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{后果} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{"这一改变传遍各处"（That change propagated everywhere）} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{8-bit 成为世界标准} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 6-bit vs 8-bit：一个 byte 的信息表达}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$2^{6}=64\ \text{字符}\ \longrightarrow\ 2^{8}=256\ \text{字符}$\quad 支持大小写字母}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 人月神话 ---
+\newcommand{\mythicalslide}{\begin{frame}\plainbar\sectiontitle{《人月神话》(The Mythical Man-Month, 1975)}{Watson Jr. 之问 · 20 周年纪念版}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{缘起} & \cellcolor{pmpanel}\textcolor{badgePM!82!black}{离开 IBM 数年后写成；种子来自时任 CEO Thomas J. Watson Jr. 在其离职面谈中的提问——"为什么软件项目管理比硬件难得多"} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{一个问题的种子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{出版} & \cellcolor{pmpanel}\textcolor{badgePM!82!black}{1975 年出版《The Mythical Man-Month》} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{软件工程经典诞生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{增订} & \cellcolor{pmpanel}\textcolor{badgePM!82!black}{1995 年出 20 周年纪念版，增写四章} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{二十年不过时} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.03cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 人月不是可互换的单位}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{人月}\ \neq\ \text{人}\times\text{月}$\quad——沟通成本随人数超线性增长}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. Brooks's law ---
+\newcommand{\lawslide}{\begin{frame}\plainbar\sectiontitle{Brooks's law：向延期项目加人只会更延期}{《人月神话》最著名的定律}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{原文} & \cellcolor{pmpanel}\textcolor{badgePM!82!black}{"Adding manpower to a late software project makes it later"——页面原文明示此句出自《人月神话》并被称为 Brooks's law} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{整句可引} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{机理} & \cellcolor{pmpanel}\textcolor{badgePM!82!black}{新成员需要培训与沟通，任务被进一步分割，沟通路径成倍增加} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{加人 $\neq$ 提速} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{地位} & \cellcolor{pmpanel}\textcolor{badgePM!82!black}{至今仍是软件项目管理的第一课} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{五十年不衰} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Brooks's law（1975）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{Late} + \text{Manpower}\ \Longrightarrow\ \text{Later}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 没有银弹 ---
+\newcommand{\silverbulletslide}{\begin{frame}\plainbar\sectiontitle{《没有银弹》(No Silver Bullet, 1987)}{本质与偶然 · toolsmith 论文}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{命题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{"No Silver Bullet -- Essence and Accident in Software Engineering"，刊于 \textit{Computer} 20(4)，1987 年} & \cellcolor{pmpanel}\textcolor{badgePM!82!black}{年份红线：1987} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论点} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{软件的"本质复杂性"无法靠任何单一技术消除，不存在银弹} & \cellcolor{pmpanel}\textcolor{badgePM!82!black}{对技术乐观主义的清醒} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{延伸} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{"The computer scientist as toolsmith II"（1996）——工具匠的学术观} & \cellcolor{pmpanel}\textcolor{badgePM!82!black}{科学家与工程师之辨} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 软件工程的本质与偶然}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{Complexity} = \text{Essence}\ +\ \text{Accident}$\quad 银弹不存在}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. UNC 教育家 ---
+\newcommand{\uncslide}{\begin{frame}\plainbar\sectiontitle{UNC 教育家 (1964--2015)}{建系二十年 · Kenan 讲席 · 虚拟环境}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1964 创系} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{应邀创立 UNC Chapel Hill 计算机科学系} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{从工业界转向教育} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主任二十年} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{任系主任至 1984 年，共二十年；UNC 校园的 Brooks Computer Science Building 以其命名} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{以他命名的建筑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{晚年研究} & \cellcolor{vrpanel}\textcolor{badgeVR!82!black}{首任 Kenan 讲席教授；研究转向虚拟环境（virtual environments）与科学可视化；2015 年荣休} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{半世纪的教学生涯} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 System/360 的战场到 UNC 的讲台，他培养了两代计算机人。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1999 · 长荣誉清单}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{国家服务} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{Defense Science Board（1983--86）· National Science Board（1987--92）；2005 年发表图灵讲座 "Collaboration and Telecollaboration in Design"} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{学术与国家的双轨} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{重要奖项} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{Turing Award（1999）· National Medal of Technology（1985）· IEEE von Neumann Medal（1993）· Eckert-Mauchly Award（2004）} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{体系结构与软件工程双桂冠} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{院士身份} & \cellcolor{arcpanel}\textcolor{badgeArc!82!black}{NAE 院士（1976）· NAS 院士（2001）· IEEE Fellow（1968）} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{三大院的公认} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 IEEE Fellow 到 Eckert-Mauchly，荣誉长河跨越半个世纪。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：软件工程的必读经典}{人月神话 · 没有银弹 · 体系结构}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=arcpanel, draw=badgeArc!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeArc} 计算机体系结构}\\[3pt]System/360\\[2pt]"computer architecture"};
+\node[leg, fill=ospanel, draw=badgeOS!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeOS} 操作系统}\\[3pt]OS/360\\[2pt]8-bit byte};
+\node[leg, fill=pmpanel, draw=badgePM!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgePM} 项目管理智慧}\\[3pt]人月神话 1975\\[2pt]Brooks's law};
+\node[leg, fill=vrpanel, draw=badgeVR!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeVR} 教育与可视化}\\[3pt]UNC 建系\\[2pt]虚拟环境};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 《人月神话》与《没有银弹》至今仍是软件工程的必读经典。}\\[4pt]{\fontsize{7.3}{9.4}\selectfont\color{coverdark!85} 著述长河：\textit{Automatic Data Processing}（与 Iverson 合著）$\rightarrow$ \textit{Computer Architecture}（与 Blaauw 合著，1997）$\rightarrow$ \textit{The Design of Design}（2010）\\[2pt]他的思想，仍在每一次项目管理课与每一场工期争论中回响。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {科学家为求知而建造，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {工程师为建造而求知。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Fred Brooks};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {弗雷德·布鲁克斯\quad Fred Brooks\quad 1931 — 2022};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{cubes}\enspace Turing 1999 · 人月神话之父\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\harvardslide
+\ibmslide
+\systemslide
+\byteslide
+\mythicalslide
+\lawslide
+\silverbulletslide
+\uncslide
+\honorsslide
+\legacyslide
+\closingslide
+\end{document}

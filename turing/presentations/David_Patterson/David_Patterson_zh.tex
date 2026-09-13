@@ -1,0 +1,507 @@
+% =============================================================
+%  RISC 命名者：大卫·帕特森 (David Patterson)
+%  Beamer 源码 —— 高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：寄存器窗口堆叠 / 阵列方块 —— 稀疏嵌套矩形呼应简化指令与冗余阵列
+%  资料来源：turing/pages/2017/David Patterson (computer scientist)/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== 品牌主色别名（与 coverprimary/coveraccent 同值）=====
+\definecolor{mainclr}{HTML}{5B2D8E}   % 主色（图灵紫）
+\definecolor{accentclr}{HTML}{B03A2E} % 强调色（图灵奖红）
+% ===== Patterson 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeA}{HTML}{2E5A9E}     % RISC 与 Berkeley — 蓝
+\definecolor{badgeB}{HTML}{1E8E8E}     % 存储革命 RAID — 青绿
+\definecolor{badgeC}{HTML}{D9A441}     % 系统与集群 — 琥珀
+\definecolor{badgeD}{HTML}{C0395B}     % 教育与领袖 — 玫瑰
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 背景母题：寄存器窗口堆叠 / 阵列方块（稀疏嵌套矩形）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \draw[badgeA!14, line width=2.2pt, rounded corners=4pt] ([xshift=-7.6cm, yshift=1.6cm]current page.center) rectangle ++(2.6,1.7);
+  \draw[badgeA!18, line width=2.2pt, rounded corners=4pt] ([xshift=-7.2cm, yshift=2.0cm]current page.center) rectangle ++(2.6,1.7);
+  \draw[badgeA!22, line width=2.2pt, rounded corners=4pt] ([xshift=-6.8cm, yshift=2.4cm]current page.center) rectangle ++(2.6,1.7);
+  \draw[badgeB!16, line width=2.2pt, rounded corners=4pt] ([xshift=3.6cm, yshift=-2.6cm]current page.center) rectangle ++(1.5,0.9);
+  \draw[badgeB!16, line width=2.2pt, rounded corners=4pt] ([xshift=5.3cm, yshift=-2.6cm]current page.center) rectangle ++(1.5,0.9);
+  \draw[badgeB!16, line width=2.2pt, rounded corners=4pt] ([xshift=3.6cm, yshift=-3.7cm]current page.center) rectangle ++(1.5,0.9);
+  \draw[badgeB!16, line width=2.2pt, rounded corners=4pt] ([xshift=5.3cm, yshift=-3.7cm]current page.center) rectangle ++(1.5,0.9);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{microchip}\enspace RISC 命名者 · RAID 先驱\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {大卫·帕特森};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {David Patterson\enspace·\enspace 1947 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {"RISC" 术语创造者 · Berkeley RISC 项目领导者 · 2017 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {RISC 与 Berkeley\\RISC Project\par\scriptsize RISC-I · 1981};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {存储革命\\RAID\par\scriptsize 1988 · 三人合力};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {系统与集群\\NOW · RISC-V\par\scriptsize 集群先声 · 开放指令集};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {教育领袖\\Textbooks\par\scriptsize 教科书 · ACM 主席};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{8.2}{11}\selectfont\itshape, text=muteddark, align=center, text width=13.2cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"for pioneering a systematic, quantitative approach to the design and evaluation of computer architectures with enduring impact on the microprocessor industry" —— 2017 图灵奖（ACM 表述，2018-03-21 公布，与 Hennessy 共享）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/David_A_Patterson_cropped_.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{David_A_Patterson_cropped_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {David A. Patterson};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace UC Berkeley · Google · RISC-V\enspace|\enspace Turing 2017 · Draper 2022};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{帕特森 - 从伊利诺伊到 Berkeley 传奇}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/David_A_Patterson_cropped_.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{David_A_Patterson_cropped_.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {David A. Patterson};
+  \node[infob, fill=panelC, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1947-11-16 —（在世）\\[2pt]\lab{本名}\quad David Andrew Patterson\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad UCLA 数学 BA 1969 / MS 1970\\[2pt]
+     \quad UCLA 计算机科学 PhD 1976\\[2pt]
+     \lab{师承}\quad David F. Martin · Gerald Estrin};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad 伊利诺伊州常青公园 · 美国\\[2pt]\lab{任职}\quad UC Berkeley · Google · RISC-V\\[2pt]\lab{家庭}\quad 妻子 Linda Patterson（1967 结婚）};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2017 · Draper 2022\\[2pt]
+     \quad Eckert--Mauchly 2008 · NAS 2006\\[2pt]
+     \lab{核心领域}\quad 计算机系统\\[2pt]
+     \quad 体系结构 · 存储 · 集群};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{帕特森的一生}{1947 — · 从伊利诺伊到开放指令集}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.85);
+  \foreach \y/\year/\txt in {
+    3.0/1947/生于伊利诺伊州常青公园（Evergreen Park）,
+    2.4/1969/获 UCLA 数学学士（BA）,
+    1.8/1976/UCLA 计算机科学博士 · 任教 UC Berkeley,
+    1.2/1980/发表 "The Case for RISC" · 与 Sequin 领导 Berkeley RISC 项目,
+    0.6/1981/Berkeley 学生设计建造首台 VLSI RISC 计算机 RISC-I,
+    0.0/1988/与 Katz、Gibson 发表 RAID 论文,
+    -0.6/1995/发表 NOW（Network of Workstations）论文,
+    -1.2/2004/出任 ACM 主席（2004--06）,
+    -1.8/2016/宣布退休 · 成为 Google distinguished engineer,
+    -2.4/2017/与 Hennessy 共获图灵奖（2018-03 公布）,
+    -2.85/2025/出任 Laude Institute 董事会主席
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 伊利诺伊少年与加州成长 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{伊利诺伊少年与加州成长 (1947–1969)}{常青公园 · Torrance 高中 · UCLA 数学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{影响}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1947} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于伊利诺伊州常青公园（Evergreen Park），在小镇度过少年时代} & \cellcolor{panelB}\textcolor{badgeB!82!black}{中西部起点} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{高中} & \cellcolor{panelA}\textcolor{badgeA!82!black}{毕业于加州 Torrance 的 South High School} & \cellcolor{panelB}\textcolor{badgeB!82!black}{西迁加州} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{1969} & \cellcolor{panelA}\textcolor{badgeA!82!black}{获 UCLA 数学学士学位（BA）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数学根基} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{家庭} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1967 年与 Linda Patterson 结婚} & \cellcolor{panelB}\textcolor{badgeB!82!black}{一生同行的伴侣} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从伊利诺伊到洛杉矶，数学少年正在走向计算机的黄金年代。}
+\end{center}
+\end{frame}}
+
+% --- 5. UCLA 博士 ---
+\newcommand{\uclaslide}{\begin{frame}\plainbar\sectiontitle{UCLA 博士 (1970–1976)}{微程序验证 · 双导师 Martin \& Estrin}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{学位轨迹} & \cellcolor{panelA}\textcolor{badgeA!82!black}{UCLA 数学 BA（1969）$\rightarrow$ 计算机科学 MS（1970）$\rightarrow$ PhD（1976）——BA 是数学、PhD 才是计算机科学} & \cellcolor{panelB}\textcolor{badgeB!82!black}{从数学转向计算机} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{双导师} & \cellcolor{panelA}\textcolor{badgeA!82!black}{David F. Martin 与 Gerald Estrin 联合指导} & \cellcolor{panelB}\textcolor{badgeB!82!black}{系统方向的训练} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\textit{Verification of Microprograms}（1976）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{微程序的正确性验证} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{去向} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1976 年起任教 UC Berkeley，此后近四十年} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Berkeley 传奇的起点} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 博士论文研究微程序验证——他一生与"指令"结缘的序章。}
+\end{center}
+\end{frame}}
+
+% --- 6. Berkeley RISC 项目 ---
+\newcommand{\riscprojectslide}{\begin{frame}\plainbar\sectiontitle{Berkeley RISC 项目 (1980–)}{与 Sequin 共同领导 · register windows}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{命名者} & \cellcolor{panelA}\textcolor{badgeA!82!black}{页面明载 "having coined the term RISC"——"RISC" 术语由 Patterson 创造} & \cellcolor{panelB}\textcolor{badgeB!82!black}{一个词定义一个学派} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{领导} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1980 年起与 Carlo H. Sequin 共同领导 Berkeley RISC 项目} & \cellcolor{panelB}\textcolor{badgeB!82!black}{RISC 研究重镇} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{核心技术} & \cellcolor{panelA}\textcolor{badgeA!82!black}{项目中引入 register windows（寄存器窗口）技术} & \cellcolor{panelB}\textcolor{badgeB!82!black}{函数调用开销大减} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 寄存器窗口（register windows）的示意}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{调用} \Rightarrow \text{切换新窗口}\quad$ 减少访存、加速过程调用}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. The Case for RISC ---
+\newcommand{\caseforslicslide}{\begin{frame}\plainbar\sectiontitle{"The Case for RISC" (1980)}{与 Ditzel 的宣言式论文}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1980 年与 David Ditzel 发表 \textit{The Case for the Reduced Instruction Set Computer}（ACM SIGARCH Computer Architecture News）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{RISC 概念的宣言} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{主张} & \cellcolor{panelA}\textcolor{badgeA!82!black}{简化指令集：以精简、规整的指令换取更高的流水线效率与更简单的硬件} & \cellcolor{panelB}\textcolor{badgeB!82!black}{少即是多的体系观} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{回响} & \cellcolor{panelA}\textcolor{badgeA!82!black}{至 2018 年，99\% 的新芯片采用 RISC 架构（页面实载）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{宣言成真} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 复杂指令集（CISC）对比 精简指令集（RISC）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{指令更少、更规整} $\Rightarrow$ \textit{译码更简、流水更快}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. RISC-I 与 IEEE Milestone ---
+\newcommand{\riscislide}{\begin{frame}\plainbar\sectiontitle{RISC-I 与 IEEE Milestone (1981 / 2015)}{首台 VLSI 精简指令集计算机 · Soda Hall 铭牌}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事项}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{RISC-I（1981）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Berkeley 学生设计建造的首台 VLSI 精简指令集计算机（项目 1980 启动、芯片 1981 建成）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{VLSI RISC 之首} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{IEEE Milestone} & \cellcolor{panelA}\textcolor{badgeA!82!black}{2015-02-12 IEEE 在 UC Berkeley Soda Hall 为 RISC-I 立牌纪念} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工程史正式铭刻} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{12.0cm}
+  {\fontsize{7.6}{9.6}\selectfont\color{coverdark!90}\textit{"UC Berkeley students designed and built the first VLSI reduced instruction-set computer in 1981. The simplified instructions of RISC-I reduced the hardware for instruction decode and control, which enabled a flat 32-bit address space, a large set of registers, and pipelined execution. A good match to C programs and the Unix operating system, RISC-I influenced instruction sets widely used today, including those for game consoles, smartphones and tablets."}}\\[2pt]
+  {\fontsize{7.2}{9}\selectfont\bfseries\color{coveraccent!85!black} —— IEEE Milestone 铭文（Soda Hall，2015）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. RAID ---
+\newcommand{\raidslide}{\begin{frame}\plainbar\sectiontitle{RAID：冗余磁盘阵列 (1988)}{与 Katz、Gibson 的存储革命}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1988 年 6 月与 Randy Katz、Garth Gibson 发表 \textit{A Case for Redundant Arrays of Inexpensive Disks (RAID)}（ACM SIGMOD Record）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{存储研究的里程碑} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{核心思想} & \cellcolor{panelB}\textcolor{badgeB!82!black}{用多块廉价磁盘组成阵列：数据条带化 + 冗余校验，兼顾性能与可靠} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以阵列对抗单盘脆弱} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{产业影响} & \cellcolor{panelB}\textcolor{badgeB!82!black}{RAID 由此成为存储工业的标准词汇；正文后段亦作 "independent disks"——两种全称各随语境} & \cellcolor{panelA}\textcolor{badgeA!82!black}{一个词改造一个产业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} RAID：冗余磁盘阵列的示意}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$N\ \text{块磁盘} \Rightarrow \text{条带化} + \text{冗余校验}\quad$ 性能与可靠兼得}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. NOW 与集群 ---
+\newcommand{\nowslide}{\begin{frame}\plainbar\sectiontitle{NOW：工作站网络与集群 (1995)}{Network of Workstations · 集群时代先声}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1995 年 2 月与 Thomas Anderson、David Culler 发表 \textit{A Case for NOW (Networks of Workstations)}（IEEE Micro）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Berkeley 集群研究的旗帜} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{项目} & \cellcolor{panelC}\textcolor{badgeC!82!black}{领导 Berkeley 的 NOW 项目——用工作站网络构建大规模计算系统} & \cellcolor{panelA}\textcolor{badgeA!82!black}{计算机集群的早期探索} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{远见} & \cellcolor{panelC}\textcolor{badgeC!82!black}{从 RISC 到 RAID 再到 NOW：性能、可靠、可扩展三条主线一以贯之} & \cellcolor{panelA}\textcolor{badgeA!82!black}{体系结构的三重奏} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 把许多工作站连成一台"大机器"——云计算时代的预演。}
+\end{center}
+\end{frame}}
+
+% --- 11. 教科书双雄 ---
+\newcommand{\textbookslide}{\begin{frame}\plainbar\sectiontitle{教科书双雄：与 Hennessy 合著}{CAQA · COD · 全球标准教材}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{CAQA} & \cellcolor{panelD}\textcolor{badgeD!82!black}{与 Hennessy 合著 \textit{Computer Architecture: A Quantitative Approach}（已出 7 版）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{定量方法的标准载体} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{COD} & \cellcolor{panelD}\textcolor{badgeD!82!black}{\textit{Computer Organization and Design: the Hardware/Software Interface}（RISC-V Edition，已出 6 版）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{软硬件接口的入门经典} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{影响} & \cellcolor{panelD}\textcolor{badgeD!82!black}{自 1990 年起广泛用作研究生与本科课程教材；Patterson 合著书籍共 7 本} & \cellcolor{panelA}\textcolor{badgeA!82!black}{育人数代人} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{RISC-V} & \cellcolor{panelD}\textcolor{badgeD!82!black}{与 Andrew Waterman 合著 \textit{The RISC-V Reader: An Open Architecture Atlas}} & \cellcolor{panelA}\textcolor{badgeA!82!black}{开放指令集的导读} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 两本书，定义了全世界体系结构课堂的模样。}
+\end{center}
+\end{frame}}
+
+% --- 12. 学界领袖 ---
+\newcommand{\leaderslide}{\begin{frame}\plainbar\sectiontitle{学界领袖：ACM 主席与服务}{CRA · PITAC · Berkeley CS Division}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{职务}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{ACM 主席} & \cellcolor{panelD}\textcolor{badgeD!82!black}{2004–06 年出任 ACM（国际计算机学会）主席} & \cellcolor{panelA}\textcolor{badgeA!82!black}{执计算机学会之牛耳} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{CRA 主席} & \cellcolor{panelD}\textcolor{badgeD!82!black}{曾任 Computing Research Association（计算研究协会）主席} & \cellcolor{panelA}\textcolor{badgeA!82!black}{研究共同体的推动者} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{PITAC} & \cellcolor{panelD}\textcolor{badgeD!82!black}{2003–05 年任职美国总统信息技术顾问委员会（PITAC）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{为国家信息技术建言} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{Berkeley} & \cellcolor{panelD}\textcolor{badgeD!82!black}{曾任 UC Berkeley 计算机科学分部（CS Division）主任} & \cellcolor{panelA}\textcolor{badgeA!82!black}{系务与学术并重} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他不只建造系统，也塑造了计算机学术共同体的运转方式。}
+\end{center}
+\end{frame}}
+
+% --- 13. 从 RISC 到 RISC-V 与 Google ---
+\newcommand{\riscvslide}{\begin{frame}\plainbar\sectiontitle{从 RISC 到 RISC-V 与 Google (2016–)}{开放指令集的当代延续 · 第二幕}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事项}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{RISC-V Foundation} & \cellcolor{panelC}\textcolor{badgeC!82!black}{任 RISC-V Foundation 董事会副主席（vice chair）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Berkeley RISC 的精神闭环} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{2016 退休} & \cellcolor{panelC}\textcolor{badgeC!82!black}{在 Berkeley 执教近四十年后宣布退休，成为 Google distinguished engineer；现为 Pardee Professor Emeritus} & \cellcolor{panelA}\textcolor{badgeA!82!black}{从体系结构到软件与 ML 基建} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{2025 新篇} & \cellcolor{panelC}\textcolor{badgeC!82!black}{出任 Laude Institute 董事会主席，与 Jeff Dean、Joelle Pineau、Andy Konwinski 共事} & \cellcolor{panelA}\textcolor{badgeA!82!black}{学术与 AI 产业的新桥梁} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{panelC}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 叙事闭环：从 Berkeley RISC 到开放指令集}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}\textit{RISC-I（1981）} $\xrightarrow{\text{四十年}}$ \textit{RISC-V（开放指令集）}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 14. 荣誉与桃李 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与桃李}{图灵奖 2017 · Draper 2022 · 门生遍天下}\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.58}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{至高荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{-2.5pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item ACM Turing Award（2017，与 Hennessy 共享，2018-03 公布）\item Draper Prize（2022，四人共享）\item Eckert--Mauchly Award（2008）\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{体系结构宗师的公认} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{院士荣誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{NAS（2006）· NAE · AAAS（2006）· ACM/IEEE Fellow · Silicon Valley Engineering Hall of Fame} & \cellcolor{panelB}\textcolor{badgeB!82!black}{奖项约 50 项等身} \\
+\midrule
+\cellcolor{panelC}\textcolor{coveraccent!88!black}{著名门生} & \cellcolor{panelA}\textcolor{badgeA!82!black}{David Ditzel（Transmeta 创始人）· Garth Gibson（RAID 共同发明人）· David Ungar（Self 语言设计者）· Remzi Arpaci-Dusseau} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学术与产业双线传承} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从图灵奖到 Draper Prize，从 Ditzel 到 Gibson——荣誉与传承并举。}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {简化与冗余，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {让计算既快又可靠。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 David Patterson};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {大卫·帕特森\quad David Patterson\quad 1947 —};
+\node[font=\fontsize{7.5}{9.5}\selectfont, text=coverdark!55] at ([yshift=-2.75cm]current page.center) {1966 年他是加州州冠军摔跤队一员 · 2013 年创力量举四项州纪录——图灵奖得主的硬核体能。};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{microchip}\enspace Turing 2017 · Draper 2022 · RISC 命名者\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\uclaslide
+\riscprojectslide
+\caseforslicslide
+\riscislide
+\raidslide
+\nowslide
+\textbookslide
+\leaderslide
+\riscvslide
+\honorsslide
+\closingslide
+\end{document}

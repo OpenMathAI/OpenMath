@@ -1,0 +1,485 @@
+% =============================================================
+%  高性能计算软件奠基人：杰克·唐加拉 (Jack Dongarra)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：矩阵网格与上升折线 —— 呼应「数值软件跟上硬件指数增长」
+%  资料来源：turing/pages/2021/Jack Dongarra/index.html（肖像 Jack_Dongarra_2022.jpg）
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Dongarra 专属基础色 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{mainclr}{HTML}{2E5A9E}     % 数值线性代数 — 蓝（LINPACK / LAPACK / BLAS）
+\definecolor{accentclr}{HTML}{1E8E8E}   % 并行计算 — 青绿（PVM / MPI / ScaLAPACK）
+\definecolor{badgeC}{HTML}{D9A441}      % 基准与榜单 — 琥珀（Top500 / HPCG / PAPI / ATLAS）
+\definecolor{badgeD}{HTML}{C0395B}      % 开源软件分发 — 玫瑰（Netlib / EISPACK 传承）
+\definecolor{panelA}{RGB}{228,233,246}
+\definecolor{panelB}{RGB}{222,240,238}
+\definecolor{panelC}{RGB}{249,240,224}
+\definecolor{panelD}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 矩阵网格与性能曲线背景（HPC 母题：网格 + 上升折线）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \foreach \x in {2.0,4.2,6.4,8.6,10.8,13.0} {
+    \draw[mainclr!9, line width=0.6pt] ([xshift=\x cm, yshift=0.8cm]current page.south west) -- ([xshift=\x cm, yshift=6.4cm]current page.south west);
+  }
+  \draw[accentclr!22, line width=1.1pt] ([xshift=1.4cm, yshift=1.6cm]current page.south west)
+    -- ([xshift=4.0cm, yshift=2.4cm]current page.south west)
+    -- ([xshift=6.6cm, yshift=2.1cm]current page.south west)
+    -- ([xshift=9.2cm, yshift=3.4cm]current page.south west)
+    -- ([xshift=11.8cm, yshift=3.1cm]current page.south west)
+    -- ([xshift=14.4cm, yshift=4.6cm]current page.south west);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!8] (current page.south east) ++(-2.4,2.0) circle (2.6cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{microchip}\enspace 高性能计算软件奠基人\enspace·\enspace 美国};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {杰克·唐加拉};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Jack Joseph Dongarra\enspace·\enspace 1950 —};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {LINPACK · LAPACK · MPI · 2021 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=mainclr] at (-5.05,0)
+        {数值线性代数\\LINPACK · LAPACK\par\scriptsize BLAS 之基};
+      \node[badge, fill=accentclr] at (-1.68,0)
+        {并行计算\\PVM · MPI\par\scriptsize 消息传递标准};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {基准与榜单\\Top500\par\scriptsize HPCG · PAPI};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {开源分发\\Netlib\par\scriptsize 软件共享样板};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"pioneering contributions to numerical algorithms and libraries" —— 2021 图灵奖 citation（节引）};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Jack_Dongarra_2022.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Jack_Dongarra_2022.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Dongarra in 2022};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace Tennessee · Argonne · Manchester\enspace|\enspace Turing 2021};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{唐加拉 - 从芝加哥到高性能计算}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Jack_Dongarra_2022.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Jack_Dongarra_2022.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Jack Joseph Dongarra};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1950-07-18 —（在世）\\[2pt]\lab{本名}\quad Jack Joseph Dongarra\\[2pt]\lab{国籍}\quad 美国};
+  \node[infob, fill=panelB, draw=accentclr!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Chicago State 数学 BSc 1972\\[2pt]
+     \quad IIT CS MSc 1973 · New Mexico\\[2pt]
+     \quad 应用数学 PhD 1980\\[2pt]
+     \lab{师承}\quad Cleve Moler（导师）};
+  \node[infob, fill=panelA, draw=mainclr!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Chicago · Illinois · 美国\\[2pt]\lab{任职}\quad Tennessee · Argonne\\[2pt]\quad Manchester · Rice};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 2021 · ForMemRS · NAS\\[2pt]
+     \lab{核心领域}\quad 数值线性代数 · 并行计算\\[2pt]
+     \quad 高性能数学软件};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{唐加拉的一生}{1950 — · 从芝加哥到图灵奖}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1950/生于芝加哥（Illinois）,
+    2.3/1972/Chicago State 数学 BSc,
+    1.6/1973/IIT 计算机科学 MSc,
+    0.9/1980/New Mexico 应用数学 PhD（Moler 门下）,
+    0.2/1989/离开 Argonne（官至 senior scientist）,
+    -0.5/2007/Manchester 大学 Turing Fellow（至今）,
+    -1.2/2019/英国皇家学会外籍院士 ForMemRS,
+    -1.9/2021/图灵奖,
+    -2.6/2023/NAS 院士,
+    -2.8/2024/Ionian University 荣誉博士
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 芝加哥数学少年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{芝加哥数学少年 (1950–1973)}{Chicago State 数学 · IIT 计算机科学}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1950} & \cellcolor{panelA}\textcolor{mainclr!82!black}{1950-07-18 生于 Chicago, Illinois, U.S.} & \cellcolor{panelB}\textcolor{accentclr!82!black}{美国计算机科学家与数学家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1972} & \cellcolor{panelA}\textcolor{mainclr!82!black}{获 Chicago State University 数学学士（BSc）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{数学根基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1973} & \cellcolor{panelA}\textcolor{mainclr!82!black}{获 Illinois Institute of Technology 计算机科学硕士（MSc）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{计算机科学进阶} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 数学与计算机科学的双重底子，正合他一生要做的事——把数学装进软件。}
+\end{center}
+\end{frame}}
+
+% --- 5. 新墨西哥师从 Cleve Moler ---
+\newcommand{\unmslide}{\begin{frame}\plainbar\sectiontitle{新墨西哥师从 Cleve Moler (1980)}{应用数学 PhD · 矩阵特征值精度}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{学位} & \cellcolor{panelA}\textcolor{mainclr!82!black}{1980 年获 University of New Mexico 应用数学 PhD} & \cellcolor{panelB}\textcolor{accentclr!82!black}{应用数学博士} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{论文} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Improving the Accuracy of Computed Matrix Eigenvalues} & \cellcolor{panelB}\textcolor{accentclr!82!black}{特征值计算精度} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{导师} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Cleve Moler（页面未载其与 MATLAB 的关联，立传不引入）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{数值传统的师承} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 特征值问题：数值精度是数学软件的生命线}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$A x=\lambda x,\qquad r=A\hat{x}-\hat{\lambda}\hat{x}\ \to\ \text{残差越小，解越可信}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. Argonne 岁月 ---
+\newcommand{\argonneslide}{\begin{frame}\plainbar\sectiontitle{Argonne 岁月（至 1989）}{senior scientist · 数值软件的起步}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{机构} & \cellcolor{panelA}\textcolor{mainclr!82!black}{在 Argonne National Laboratory 工作至 1989 年} & \cellcolor{panelB}\textcolor{accentclr!82!black}{国家实验室历练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{职级} & \cellcolor{panelA}\textcolor{mainclr!82!black}{官至 senior scientist} & \cellcolor{panelB}\textcolor{accentclr!82!black}{资深科学家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{专长} & \cellcolor{panelA}\textcolor{mainclr!82!black}{线性代数中的数值算法 · 并行计算 · 先进计算机体系结构的使用 · 并行计算机编程方法与工具} & \cellcolor{panelB}\textcolor{accentclr!82!black}{一生方向的定盘} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在国家实验室里，他选定了一件事：做高质量数学软件的开发、测试与文档。}
+\end{center}
+\end{frame}}
+
+% --- 7. EISPACK → LINPACK ---
+\newcommand{\eispackslide}{\begin{frame}\plainbar\sectiontitle{EISPACK$\to$LINPACK：线性代数软件奠基}{known for 链条的前半段}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{软件包}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{EISPACK} & \cellcolor{panelD}\textcolor{badgeD!82!black}{页面 known for 实载——矩阵特征值问题的软件包传承} & \cellcolor{panelA}\textcolor{mainclr!82!black}{博士论文的延伸} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{LINPACK} & \cellcolor{panelA}\textcolor{mainclr!82!black}{页面 known for 实载——线性代数软件包，与 BLAS 同列其贡献清单} & \cellcolor{panelB}\textcolor{accentclr!82!black}{线性代数基座} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{方法论} & \cellcolor{panelA}\textcolor{mainclr!82!black}{研究包括高质量数学软件的开发、测试与文档——准确性、可靠性与性能并重} & \cellcolor{panelB}\textcolor{accentclr!82!black}{软件工程式的数值传统} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从特征值到线性方程组——数值软件的基座，在这里浇筑成型。}
+\end{center}
+\end{frame}}
+
+% --- 8. BLAS → LAPACK → ScaLAPACK ---
+\newcommand{\lalibslide}{\begin{frame}\plainbar\sectiontitle{BLAS$\to$LAPACK$\to$ScaLAPACK 三层库体系}{参与设计与实现的开源软件包}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{层级}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{BLAS} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Basic Linear Algebra Subprograms——基础线性代数子程序} & \cellcolor{panelB}\textcolor{accentclr!82!black}{最底层积木} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{LAPACK} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Linear Algebra Package——线性代数软件包} & \cellcolor{panelB}\textcolor{accentclr!82!black}{稠密问题主力} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{ScaLAPACK} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Scalable LINPACK——面向分布式内存并行计算机的可扩展版本} & \cellcolor{panelB}\textcolor{accentclr!82!black}{走向并行} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 分层复用：底层子程序撑起上层库}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\text{BLAS}\ \to\ \text{LAPACK}\ \to\ \text{ScaLAPACK}\qquad$ 单机 $\to$ 分布式内存并行}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. PVM 与 MPI ---
+\newcommand{\pvmpislide}{\begin{frame}\plainbar\sectiontitle{PVM 与 MPI：消息传递的两支柱}{参与设计与实现 · 并行计算事实标准}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{系统}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{PVM} & \cellcolor{panelB}\textcolor{accentclr!82!black}{Parallel Virtual Machine——并行虚拟机} & \cellcolor{panelA}\textcolor{mainclr!82!black}{异构并行的先行} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{MPI} & \cellcolor{panelB}\textcolor{accentclr!82!black}{Message Passing Interface——消息传递接口} & \cellcolor{panelA}\textcolor{mainclr!82!black}{并行世界的共同语言} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{口径} & \cellcolor{panelB}\textcolor{accentclr!82!black}{页面口径：参与设计与实现的开源软件包与系统——未称"发明者"} & \cellcolor{panelA}\textcolor{mainclr!82!black}{标准背后的人} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 消息传递标准的确立，让成千上万台机器得以协同完成同一个计算。}
+\end{center}
+\end{frame}}
+
+% --- 10. Netlib 与 Top500 ---
+\newcommand{\netlibslide}{\begin{frame}\plainbar\sectiontitle{Netlib 与 Top500}{开源分发先驱 · 榜单实载口径}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Netlib} & \cellcolor{panelD}\textcolor{badgeD!82!black}{与 Eric Grosse 一道，开创经由电子邮件与 Web 分发数值开源代码的 Netlib} & \cellcolor{panelC}\textcolor{badgeC!82!black}{软件共享基础设施的早期样板} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{Top500} & \cellcolor{panelC}\textcolor{badgeC!82!black}{页面 known for 实载 TOP500——高性能计算排名榜（机制细节页面未载，不展开）} & \cellcolor{panelA}\textcolor{mainclr!82!black}{HPC 的晴雨表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{更多系统} & \cellcolor{panelC}\textcolor{badgeC!82!black}{NetSolve · ATLAS（自动调优线性代数软件）· HPCG · PAPI 亦在其实载贡献清单} & \cellcolor{panelA}\textcolor{mainclr!82!black}{全家桶的广度} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 让代码像论文一样流通——Netlib 是开源科学软件的一次预演。}
+\end{center}
+\end{frame}}
+
+% --- 11. 田纳西与 ICL ---
+\newcommand{\tennesseslide}{\begin{frame}\plainbar\sectiontitle{田纳西与 ICL}{Innovative Computing Laboratory 创始主任}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{职务}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{创始主任} & \cellcolor{panelA}\textcolor{mainclr!82!black}{University of Tennessee Innovative Computing Laboratory（ICL）创始主任} & \cellcolor{panelB}\textcolor{accentclr!82!black}{研究实验室的建立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{讲席} & \cellcolor{panelA}\textcolor{mainclr!82!black}{UT 电气工程与计算机科学系 University Distinguished Professor Emeritus} & \cellcolor{panelB}\textcolor{accentclr!82!black}{杰出荣休教授} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{跨国任职} & \cellcolor{panelA}\textcolor{mainclr!82!black}{Manchester 数学学院 Turing Fellowship（2007 年起）· Rice 计算机系兼职教授 · Texas A\&M IAS faculty fellow（2014–2018）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{跨国学术网络} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从 Argonne 到田纳西，ICL 成为高性能数学软件的全球重镇。}
+\end{center}
+\end{frame}}
+
+% --- 12. 生态辐射 ---
+\newcommand{\ecoslide}{\begin{frame}\plainbar\sectiontitle{生态辐射：从他手中的库到千家万户}{MATLAB · Maple · Mathematica · Octave · R · SciPy}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{集成} & \cellcolor{panelA}\textcolor{mainclr!82!black}{其库被 MATLAB、Maple、Wolfram Mathematica、GNU Octave、R、SciPy 等广泛集成，惠及极广的用户群} & \cellcolor{panelB}\textcolor{accentclr!82!black}{科学计算的地基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{品质} & \cellcolor{panelA}\textcolor{mainclr!82!black}{这些库在底层数值算法的准确性与软件的可靠性、性能两方面皆称卓越} & \cellcolor{panelB}\textcolor{accentclr!82!black}{两条腿走路} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{产出} & \cellcolor{panelA}\textcolor{mainclr!82!black}{约 300 篇文章、论文、报告与技术备忘录，多部合著书籍} & \cellcolor{panelB}\textcolor{accentclr!82!black}{笔耕不辍四十年} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 你在 MATLAB 里敲下的每一次矩阵乘法，背后都站着他参与搭建的库。}
+\end{center}
+\end{frame}}
+
+% --- 13. 荣誉墙 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉墙}{NAE · NAS · ForMemRS · 两项"首位"}\vspace{-0.58cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.50}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{院士与 Fellow} & \cellcolor{panelC}\textcolor{badgeC!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item NAE 院士（2001）· NAS 院士（2023）\item ForMemRS（2019）· 俄罗斯科学院外籍院士\item AAAS（1994）· IEEE（1999）· ACM（2001）· SIAM（2009）Fellow\end{itemize}} & \cellcolor{panelA}\textcolor{mainclr!82!black}{多国多院全面认可} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{两项"首位"} & \cellcolor{panelA}\textcolor{mainclr!82!black}{2008 首位 IEEE Scalable Computing Medal 得主；2010 首位 SIAM SIAG Supercomputing Career Prize 得主（页面明载 the first recipient）} & \cellcolor{panelB}\textcolor{accentclr!82!black}{领域的开创性} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{其他奖项} & \cellcolor{panelC}\textcolor{badgeC!82!black}{Fernbach（2003）· Babbage（2011）· Ken Kennedy（2013）· SIAM/ACM Prize（2019）· Computer Pioneer（2020）· Ionian 荣誉博士（2024）} & \cellcolor{panelA}\textcolor{mainclr!82!black}{奖项跨度四十年} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 14. 2021 图灵奖 ---
+\newcommand{\turingslide}{\begin{frame}\plainbar\sectiontitle{2021 图灵奖}{"keep pace with exponential hardware improvements"}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{获奖} & \cellcolor{panelA}\textcolor{mainclr!82!black}{2021 年 ACM 图灵奖得主} & \cellcolor{panelB}\textcolor{accentclr!82!black}{计算机科学最高荣誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{影响} & \cellcolor{panelA}\textcolor{mainclr!82!black}{页面评述：其算法与软件推动了高性能计算的成长，影响从人工智能到计算机图形学等众多计算科学领域} & \cellcolor{panelB}\textcolor{accentclr!82!black}{AI 到图形学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主线} & \cellcolor{panelA}\textcolor{mainclr!82!black}{四十年如一日——让高性能计算软件跟上硬件的指数级进步} & \cellcolor{panelB}\textcolor{accentclr!82!black}{基础设施的一生} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 2021 图灵奖获奖理由（ACM citation 整句）}\\[2pt]
+  {\fontsize{7.8}{10.2}\selectfont\color{coverprimary!88!black}\itshape "for pioneering contributions to numerical algorithms and libraries that enabled high performance computational software to keep pace with exponential hardware improvements for over four decades."}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {让数学软件，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {跟上硬件四十年指数的脚步。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Jack Dongarra};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {杰克·唐加拉\quad Jack Joseph Dongarra\quad 1950 —（在世）};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{microchip}\enspace Turing 2021 · LINPACK · LAPACK · MPI\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\unmslide
+\argonneslide
+\eispackslide
+\lalibslide
+\pvmpislide
+\netlibslide
+\tennesseslide
+\ecoslide
+\honorsslide
+\turingslide
+\closingslide
+\end{document}

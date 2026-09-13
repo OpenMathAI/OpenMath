@@ -1,0 +1,468 @@
+% =============================================================
+%  分时系统先驱：费尔南多·科尔巴托 (Fernando J. Corbató)
+%  Beamer 源码 —— 参考高斯模板版式（表格语义化 + 公式框 + 时间线）
+%  设计母题：分时 / 终端 —— 稀疏的终端字符与时间片方块点缀（克制）
+%  资料来源：turing/pages/1990/Fernando J. Corbató/index.html
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\setsansfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold, ItalicFont=Helvetica Neue Italic]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% 引入 OpenTuring 项目首页（定义图灵紫品牌色 + \openturingslide）
+\input{../cover/openturing_page.tex}
+
+% ===== Corbató 专属四分类色 + 基础色 =====
+\definecolor{bgmain}{RGB}{247,245,251}
+\definecolor{titlecolor}{RGB}{36,26,51}
+\definecolor{muteddark}{RGB}{96,90,110}
+\definecolor{silverpanel}{RGB}{240,238,244}
+\definecolor{badgeTS}{HTML}{2E5A9E}     % 分时系统 — 蓝
+\definecolor{badgeOS}{HTML}{1E8E8E}     % 操作系统遗产 — 青绿
+\definecolor{badgeUX}{HTML}{D9A441}     % Unix 血脉 — 琥珀
+\definecolor{badgeSH}{HTML}{C0395B}     % 安全与人文 — 玫瑰
+\definecolor{tspanel}{RGB}{228,233,246}
+\definecolor{ospanel}{RGB}{222,240,238}
+\definecolor{uxpanel}{RGB}{249,240,224}
+\definecolor{shpanel}{RGB}{246,228,234}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+% 底部装饰条
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 终端背景母题（稀疏的终端字符与时间片方块点缀）
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeTS!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeOS!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeUX!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[coveraccent!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \node[font=\fontsize{7}{8}\selectfont, text=coverprimary!16] at ([xshift=-5.6cm, yshift=1.8cm]current page.center) {\texttt{login:}};
+  \node[font=\fontsize{7}{8}\selectfont, text=coverprimary!14] at ([xshift=5.9cm, yshift=-1.4cm]current page.center) {\texttt{ctss\$}};
+  \node[font=\fontsize{7}{8}\selectfont, text=coverprimary!13] at ([xshift=5.2cm, yshift=1.9cm]current page.center) {\texttt{multics}};
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 章节标题
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% 字段标签
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{coveraccent!88!black} #1}}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{13}{17}\selectfont\bfseries, text=coveraccent!85!black]
+    at ([xshift=-1.35cm, yshift=3.55cm]current page.center) {\faIcon{server}\enspace 分时系统先驱\enspace·\enspace 美国（西班牙裔）};
+  \node[anchor=center, font=\fontsize{30}{36}\selectfont\bfseries, text=coverprimary!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {费尔南多·科尔巴托};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=coverprimary!70!black]
+    at ([xshift=-0.35cm, yshift=1.70cm]current page.center) {Fernando J. Corbató\enspace·\enspace 1926 — 2019};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=coveraccent!70!black]
+    at ([xshift=-0.35cm, yshift=1.25cm]current page.center) {分时系统奠基人 · CTSS 与 Multics · 1990 图灵奖};
+  \draw[coverprimary!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeTS] at (-5.05,0)
+        {分时系统\\Time-Sharing\par\scriptsize CTSS · 1961 演示};
+      \node[badge, fill=badgeOS] at (-1.68,0)
+        {操作系统\\Multics\par\scriptsize 现代系统摇篮};
+      \node[badge, fill=badgeUX] at (1.68,0)
+        {Unix 血脉\\Multics $\to$ Unix\par\scriptsize 启发 Thompson};
+      \node[badge, fill=badgeSH] at (5.05,0)
+        {安全与人文\\第一个密码\par\scriptsize Corbató's Law};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {"On Building Systems That Will Fail" —— 1991 图灵奖演讲};
+  \node[draw=coveraccent!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\IfFileExists{images/Fernando_Corbato.jpg}{\includegraphics[width=2.0cm,height=2.8cm,keepaspectratio]{Fernando_Corbato.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Fernando J. Corbató};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 美国\enspace|\enspace \faIcon{university}\enspace MIT · Caltech\enspace|\enspace Turing 1990};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{科尔巴托 - 从物理学家到分时先驱}{生卒 · 本名 · 国籍 · 师承 · 任职 · 荣誉}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=10pt, inner ysep=9pt, text width=4.8cm,
+      font=\fontsize{7.4}{9.4}\selectfont, align=left}
+  ]
+  \node[draw=coveraccent!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.15,0.15) {\IfFileExists{images/Fernando_Corbato.jpg}{\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{Fernando_Corbato.jpg}}{\textcolor{covermuted}{\faIcon{user}\enspace 肖像}}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.15,-2.2) {Fernando J. Corbató};
+  \node[infob, fill=goldpanel, draw=coveraccent!45, anchor=north] at (-1.8,2.35)
+    {\lab{生卒}\quad 1926-07-01 — 2019-07-12\\[2pt]\lab{本名}\quad Fernando José "Corby" Corbató\\[2pt]\lab{国籍}\quad 美国（西班牙裔）};
+  \node[infob, fill=tspanel, draw=badgeTS!45, anchor=north] at (3.8,2.35)
+    {\lab{教育}\quad Caltech 物理学 BS 1950\\[2pt]
+     \quad MIT 物理学 PhD 1956\\[2pt]
+     \lab{师承}\quad John C. Slater（博士导师）};
+  \node[infob, fill=ospanel, draw=badgeOS!50, anchor=south] at (-1.8,-2.01)
+    {\lab{出生地}\quad Oakland · 加利福尼亚\\[2pt]\lab{去世地}\quad Newburyport · 马萨诸塞\\[2pt]\lab{任职}\quad MIT 教授（1965 年起）};
+  \node[infob, fill=uxpanel, draw=badgeUX!45, anchor=south] at (3.8,-2.01)
+    {\lab{主要荣誉}\quad Turing 1990\quad CHM Fellow 2012\\[2pt]
+     \lab{核心领域}\quad 分时操作系统\quad CTSS · Multics};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{科尔巴托的一生}{1926 — 2019 · 从物理学到分时系统}
+\vspace{-0.9cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{coveraccent!88!black}}
+]
+  \draw[coveraccent!70, line width=1.4pt] (0,3.0) -- (0,-2.8);
+  \foreach \y/\year/\txt in {
+    3.0/1926/生于 Oakland（加利福尼亚），西班牙裔家庭,
+    2.3/1943/入学 UCLA，因二战被海军招募,
+    1.6/1950/获 Caltech 物理学学士,
+    0.9/1956/获 MIT 物理学博士（导师 Slater，石墨能带计算）,
+    0.2/1956/毕业即加入 MIT Computation Center,
+    -0.5/1961/CTSS 早期版本演示——分时范式确立,
+    -1.2/1965/任 MIT 教授,
+    -1.9/1990/获图灵奖（分时与资源共享系统的概念组织与领导开发）,
+    -2.6/2012/入选 Computer History Museum Fellow,
+    -2.8/2019/逝于 Newburyport，享年 93
+  }{
+    \fill[coveraccent!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年：西班牙文学教授之子 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年：西班牙文学教授之子 (1926--1946)}{Oakland · 二战海军岁月 · 设备调试}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1926} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{生于 Oakland（加州）；父 Hermenegildo 为西班牙 Villarreal 出身的西班牙文学教授，母 Charlotte 为丹麦裔美国人} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{跨大西洋的移民家庭} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1930} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{因父就职 UCLA，举家迁居 Los Angeles} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{与大学结缘的少年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1943} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{入学 UCLA，一年级时因二战被美国海军招募，战时调试各种令人难以置信的设备} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{在设备调试中遇见计算} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1946} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{离开海军，进入 California Institute of Technology} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{人生轨道就此转向} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 战争打断了大学，却把一个少年推向了机器与计算。}
+\end{center}
+\end{frame}}
+
+% --- 5. 从物理到计算 (1946--1956) ---
+\newcommand{\physslide}{\begin{frame}\plainbar\sectiontitle{从物理到计算 (1946--1956)}{Caltech 物理学士 · MIT 物理博士}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1950} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{获 California Institute of Technology \textbf{物理学}学士} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{物理学家出身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1956} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{MIT \textbf{物理学}博士，论文以紧束缚法计算石墨晶体能带（\textit{A calculation of the energy bands of the graphite crystal by means of the tight-binding method}）} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{计算材料物理的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{师承} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{博士导师 John C. Slater（MIT 物理学家）} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{正统物理训练} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从计算石墨能带出发，他走向了让整台机器服务多人的事业。}
+\end{center}
+\end{frame}}
+
+% --- 6. MIT Computation Center ---
+\newcommand{\mitslide}{\begin{frame}\plainbar\sectiontitle{MIT Computation Center：职业生涯的起点}{1956 入职 · 1965 教授 · 终身 MIT}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{节点}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1956} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{博士毕业即加入 MIT Computation Center} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{从物理转向计算} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1965} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{任 MIT 教授} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{学术阵地确立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{直至退休} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{留在 MIT 直至退休，CTSS 与 Multics 都在这里孕育} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{一座校园改变一个行业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} MIT 的计算中心，成了分时时代的孵化器。}
+\end{center}
+\end{frame}}
+
+% --- 7. CTSS：第一次分时 ---
+\newcommand{\ctssslide}{\begin{frame}\plainbar\sectiontitle{CTSS：第一次分时 (1961)}{Compatible Time-Sharing System · 多人共用一台机器}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{要素}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{系统} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{他参与的首个分时系统：MIT Compatible Time-Sharing System（CTSS）} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{分时时代的开端} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1961} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{CTSS 的早期版本于 1961 年演示} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{范式由此确立} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{理念} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{一台计算机同时服务多个用户——计算资源从"独占"走向"共享"} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{资源分享的思想源头} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} 分时：时间片轮转的共享}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\{T_1,T_2,\dots,T_n\}\ \xrightarrow{\ \text{时间片轮转}\ }\ \text{一台机器同时服务多个用户}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 第一个计算机密码 ---
+\newcommand{\passwordslide}{\begin{frame}\plainbar\sectiontitle{第一个计算机密码}{公认首创 · "密码之父的懊悔"}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{面向}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首创} & \cellcolor{shpanel}\textcolor{badgeSH!82!black}{他被公认首次在大计算机系统上用密码保护文件访问（credited with the first use of passwords）} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{计算机安全的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{语境} & \cellcolor{shpanel}\textcolor{badgeSH!82!black}{CTSS 时代的密码是初级的安全方法，随后在扩散中变得难以管理} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{简单方案的现实边界} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{晚年} & \cellcolor{shpanel}\textcolor{badgeSH!82!black}{他本人回顾这段历史时坦言密码"扩散后变得不可管理"} & \cellcolor{tspanel}\textcolor{badgeSH!82!black}{创造者的清醒} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} "Man Behind the First Computer Password: It's Become a Nightmare"}\\[2pt]
+  {\fontsize{9.5}{12.5}\selectfont\color{coverprimary!88!black}—— WSJ 采访标题（转述）：密码之父的自省}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. Multics：现代操作系统的摇篮 ---
+\newcommand{\multicsslide}{\begin{frame}\plainbar\sectiontitle{Multics：现代操作系统的摇篮}{CTSS 经验引出的第二个项目}\vspace{-0.25cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{维度}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{项目定位} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{CTSS 经验引出的第二个分时项目，被通用电气（GE，后并入 Honeywell）用于其高端计算机系统} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{产学一体的宏大工程} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{首创概念} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 层次文件系统\item 环形安全（ring-oriented security）\item 访问控制列表（ACL）\item 单级存储（single-level store）\item 动态链接\item 在线重配置\end{itemize}} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{现代操作系统概念的试验田} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{历史地位} & \cellcolor{tspanel}\textcolor{badgeOS!82!black}{上述概念今日已遍布主流操作系统} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{摇篮之实} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 10. Multics → Unix ---
+\newcommand{\unixslide}{\begin{frame}\plainbar\sectiontitle{Multics $\to$ Unix：失败的系统孕育成功}{GE/Honeywell 的产业轨迹 · Ken Thompson}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{环节}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{商业成败} & \cellcolor{uxpanel}\textcolor{badgeUX!82!black}{Multics 本身在商业上并不特别成功（not particularly commercially successful in itself）} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{宏大未必即时兑现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{直接血脉} & \cellcolor{uxpanel}\textcolor{badgeUX!82!black}{Multics 直接启发了 Ken Thompson 开发 Unix} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{思想比产品活得久} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{深远回响} & \cellcolor{uxpanel}\textcolor{badgeUX!82!black}{Unix $\to$ 现代操作系统：今天的服务器、手机都流淌着这条血脉} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{历史的选择} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 商业上不算特别成功的系统，孕育了最成功的系统。}
+\end{center}
+\end{frame}}
+
+% --- 11. Corbató's Law 与图灵奖演讲 ---
+\newcommand{\lawslide}{\begin{frame}\plainbar\sectiontitle{Corbató's Law 与图灵奖演讲}{代码行数定律 · On Building Systems That Will Fail}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{条目}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{定律（流行版）} & \cellcolor{shpanel}\textcolor{badgeSH!82!black}{"The number of lines of code a programmer can write in a fixed period of time is the same, independent of the language used."} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{软件工程的冷静观察} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{源头} & \cellcolor{shpanel}\textcolor{badgeSH!82!black}{其 1969 年 \textit{PL/I As a Tool for System Programming} 原句："the number of debugged lines of source code per day is about the same!"} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{出自系统编程实践} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1991 演讲} & \cellcolor{shpanel}\textcolor{badgeSH!82!black}{图灵奖演讲 \textit{On Building Systems That Will Fail}——标题本身即是名言级观点} & \cellcolor{tspanel}\textcolor{badgeSH!82!black}{对系统构建者的警示} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.35cm}
+\begin{center}
+\fcolorbox{coveraccent!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{coveraccent!85!black} Corbató's Law 的形式化表达}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{coverprimary!88!black}$\mathrm{LOC}=k\cdot T$\qquad（$k$ 与所用编程语言无关）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与传承 ---
+\newcommand{\honorsslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{图灵奖 1990 · 门生 Saltzer}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.60}
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{主要荣誉} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Turing Award（1990）\item Computer History Museum Fellow（2012，表彰其分时与 Multics 的先驱工作）\end{itemize}} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{分时先驱的公认} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{门生} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{Jerome H. Saltzer（infobox 实载博士生），Multics 核心成员、MIT 著名教授} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{学术谱系深远} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{家人} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{两任婚姻，育有二女二继子；弟 Charles，五位孙辈} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{家庭的长影} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{7.8}{10.2}\selectfont\bfseries\color{coverdark!88} "for his pioneering work in organizing the concepts and leading the development of the\\ general-purpose, large-scale, time-sharing and resource-sharing computer systems" —— 1990 图灵奖（ACM 表述）}
+\end{center}
+\end{frame}}
+
+% --- 13. 学术著作一览 ---
+\newcommand{\worksslide}{\begin{frame}\plainbar\sectiontitle{学术著作一览}{从 CTSS 手册到图灵奖演讲}
+\vspace{-0.45cm}
+\begin{center}
+\footnotesize
+\arrayrulecolor{coveraccent!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{coverprimary}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作 / 文献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1963} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{CTSS Programmer's Guide} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{分时系统的第一份"用户地图"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1969} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{\textit{PL/I As a Tool for System Programming}——Corbató's Law 的出处} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{系统编程的方法论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1972} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{Multics---The First Seven Years} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{七年磨一剑的总结} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{coveraccent!88!black}{1991} & \cellcolor{tspanel}\textcolor{badgeTS!82!black}{图灵奖演讲 \textit{On Building Systems That Will Fail}} & \cellcolor{ospanel}\textcolor{badgeOS!82!black}{亲历者的系统哲学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 每一份文献，都是分时时代的一块界碑。}
+\end{center}
+\end{frame}}
+
+% --- 14. 遗产 ---
+\newcommand{\legacyslide}{\begin{frame}\plainbar\sectiontitle{遗产：多用户计算的基因}{分时系统 · Multics 概念 · Unix 血脉 · 安全}
+\vspace{-0.4cm}\begin{center}\begin{tikzpicture}[leg/.style={rounded corners=6pt, inner xsep=6pt, inner ysep=9pt, text width=3.05cm, font=\fontsize{6.4}{8.4}\selectfont, align=center}]
+\node[leg, fill=tspanel, draw=badgeTS!50,line width=0.7pt] (a) at (-5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeTS} 分时系统}\\[3pt]CTSS · 1961 演示\\[2pt]一台机器服务多人};
+\node[leg, fill=ospanel, draw=badgeOS!50,line width=0.7pt] (b) at (-1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeOS} 操作系统概念}\\[3pt]层次文件系统\\[2pt]ACL · 单级存储};
+\node[leg, fill=uxpanel, draw=badgeUX!50,line width=0.7pt] (c) at (1.8,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeUX} Unix 血脉}\\[3pt]Multics $\to$ Unix\\[2pt]启发 Ken Thompson};
+\node[leg, fill=shpanel, draw=badgeSH!50,line width=0.7pt] (d) at (5.4,1.3) {{\fontsize{9}{11.5}\selectfont\bfseries\color{badgeSH} 安全与人文}\\[3pt]第一个密码\\[2pt]Corbató's Law};
+\node[draw=coverprimary!65, fill=silverpanel, rounded corners=6pt, inner sep=11pt, text width=13.0cm, align=center] at (0,-1.6) {{\fontsize{9.5}{12.5}\selectfont\bfseries\color{coverprimary!90!black} 今天每一台多用户、多任务的计算机里，都有 CTSS 与 Multics 的基因。}\\[4pt]{\fontsize{7.6}{9.8}\selectfont\color{coverdark!85} CTSS $\rightarrow$ Multics $\rightarrow$ Unix $\rightarrow$ 现代操作系统\\[2pt]分时的思想，已成为计算的默认方式。}};\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 15. 结尾 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coverprimary!90!black] at ([yshift=1.5cm]current page.center) {他让一台计算机，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=coveraccent!85!black] at ([yshift=0.4cm]current page.center) {同时属于许多人。};
+\draw[coverprimary!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=coverprimary!70!black] at ([yshift=-1.2cm]current page.center) {— 致敬 Fernando J. Corbató};
+\node[font=\fontsize{8}{10}\selectfont, text=coverprimary!60!black] at ([yshift=-2.0cm]current page.center) {费尔南多·科尔巴托\quad Fernando J. Corbató\quad 1926 — 2019};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{server}\enspace Turing 1990 · CTSS · Multics\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openturingslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\physslide
+\mitslide
+\ctssslide
+\passwordslide
+\multicsslide
+\unixslide
+\lawslide
+\honorsslide
+\worksslide
+\legacyslide
+\closingslide
+\end{document}

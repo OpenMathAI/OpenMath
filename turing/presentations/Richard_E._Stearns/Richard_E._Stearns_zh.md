@@ -143,7 +143,7 @@
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `turing/pages/1993/Richard E. Stearns/index.html` 建立事实基准，逐页对照 Beamer tex 全部事实（页面极短，全部事实必须能回溯到这 198 行文本）
-- [ ] **头像**：使用 `images/500px-Dick_Stearns.jpg`（最大可用版）
+- [ ] **头像**：使用 `images/Dick_Stearns.jpg`（500px，实际文件名无 500px- 前缀，已核实）
 - [ ] **国籍**：封面顶部徽章明示美国
 - [ ] **引语核对**：引语必须在 Wikipedia 原文找到（仅获奖理由一条）
 - [ ] **编译验证**：`make distclean && make`
