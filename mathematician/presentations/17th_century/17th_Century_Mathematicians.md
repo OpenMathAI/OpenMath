@@ -41,17 +41,17 @@
 
 | 文件夹 | 中文名 |
 |------|:--:|
-| `Marin_Mersenne/` | 梅森 |
-| `René_Descartes/` | 笛卡尔 |
-| `Bonaventura_Cavalieri/` | 卡瓦列里 |
-| `Pierre_de_Fermat/` | 费马 |
-| `Evangelista_Torricelli/` | 托里拆利 |
-| `John_Wallis/` | 沃利斯 |
-| `Blaise_Pascal/` | 帕斯卡 |
-| `Christiaan_Huygens/` | 惠更斯 |
-| `Isaac_Barrow/` | 巴罗 |
-| `James_Gregory/` | 格雷戈里 |
-| `Isaac_Newton/` | 牛顿 |
-| `Gottfried_Wilhelm_Leibniz/` | 莱布尼茨 |
-| `Jacob_Bernoulli/` | 雅各布·伯努利 |
-| `Johann_Bernoulli/` | 约翰·伯努利 |
+| `1588–Marin_Mersenne/` | 梅森 |
+| `1596–René_Descartes/` | 笛卡尔 |
+| `1598–Bonaventura_Cavalieri/` | 卡瓦列里 |
+| `1601–Pierre_de_Fermat/` | 费马 |
+| `1608–Evangelista_Torricelli/` | 托里拆利 |
+| `1616–John_Wallis/` | 沃利斯 |
+| `1623–Blaise_Pascal/` | 帕斯卡 |
+| `1629–Christiaan_Huygens/` | 惠更斯 |
+| `1630–Isaac_Barrow/` | 巴罗 |
+| `1638–James_Gregory/` | 格雷戈里 |
+| `1643–Isaac_Newton/` | 牛顿 |
+| `1646–Gottfried_Wilhelm_Leibniz/` | 莱布尼茨 |
+| `1655–Jacob_Bernoulli/` | 雅各布·伯努利 |
+| `1667–Johann_Bernoulli/` | 约翰·伯努利 |
