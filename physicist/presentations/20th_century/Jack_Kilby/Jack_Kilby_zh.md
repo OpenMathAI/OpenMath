@@ -114,15 +114,17 @@
 | nationality | United States | 待写入 |
 | primary_occupation | electrical engineer | 待写入 |
 | field_of_work | electrical engineering / integrated circuits | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 本次入库置 0（Beamer 立传完成后由主控置 1） | 待执行 |
 
-## 7. 社会关系入库清单
+## 7. 社会关系入库清单（已按 page.md 核对，✅=yaml 入库 / ✗=不入库）
 
-- **共同发明人**：Robert Noyce（集成电路，数月之差独立发明；1989 Draper Prize 共享；1990 去世未获诺奖——关系类型 co-inventor 或 colleague，note 注明双雄格局）
-- **计算器三人组**：Jerry Merryman、James Van Tassel（手持计算器共同发明人）
-- **诺奖同届**：Zhores Alferov、Herbert Kroemer（2000 同届另一半，co-honored）
-- **授奖渊源**：Richard Nixon（1969 国家科学奖章）、George H. W. Bush（1990 国家技术奖章）——按"奖项颁发"备注，不建强关系
-- **机构纪念**：Texas Instruments（终身主线雇主）、Texas A&M University（杰出教授）
+- ✅ **共同发明人**：Robert Noyce（colleague；类型白名单无 co-inventor，用 colleague + note 注明双雄格局与 1989 Draper Prize 共享；"1990 去世未获诺奖"仅为背景不入 note 关系方向）
+- ✅ **计算器三人组**：Jerry Merryman、James Van Tassel（各一条 colleague，手持计算器共同发明人，page.md 明载）
+- ✅ **诺奖同届另一半**：Zhores I. Alferov、Herbert Kroemer（各一条 co-honored，page.md 注 3 明载 "Shared with Zhores Alferov and Herbert Kroemer"）
+- ✅ **配偶**：Barbara Annegers（spouse，1948 年结婚，page.md Family 节明载）
+- ✗ **授奖渊源**：Richard Nixon（1969 国家科学奖章）、George H. W. Bush（1990 国家技术奖章）——颁奖人为奖项程序事实，不建关系
+- ✗ **机构**：Texas Instruments、Texas A&M University——机构非人物关系，不入 person_relation
+- ✗ **子女**：Ann、Janet——page.md 仅载名无姓，规范全名不可得，不入库
 
 ## 8. 奖项清单
 
@@ -178,6 +180,30 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐（无师承栏的处理）
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与 Alferov/Kroemer 篇互检（2000 同届份额结构：三篇口径完全一致）；"双雄并立"页与 Noyce 相关表述与 Draper Prize 引用一致
+
+---
+
+## 12. 研究领域表（fields，对齐 yaml 与 person_field）
+
+| rank | 领域（name_en） | 中文 | 说明 |
+|:--:|------|------|------|
+| 0 | integrated circuits | 集成电路 | 1958 首块 IC（锗）、专利 3,138,743 |
+| 1 | electrical engineering | 电气工程 | infobox Fields 主线 |
+| 2 | microelectronics | 微电子学 | 军用/工业/商用应用拓荒 |
+| 3 | semiconductor devices | 半导体器件 | 晶体管/二极管/电阻/电容单一衬底 |
+
+## 13. 术语清单（第 9 步史实/术语审查）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| integrated circuit | 集成电路 | 第一块用锗，勿写"硅" |
+| tyranny of numbers | 数字暴政 | 通用术语名，非引语 |
+| co-inventor | 共同发明人 | 与 Noyce 双雄并立口径（page.md 原话） |
+| handheld calculator | 手持计算器 | 与 Merryman/Van Tassel 三人共同 |
+| thermal printer | 热打印机 | 共同发明 |
+| monolithic integrated circuit | 单片集成电路 | Ballantine/Draper 理由用词 |
+| Nobel citation | 诺奖理由 | 原句 "For his part in the invention of the integrated circuit"，"his part" 措辞勿改 |
+| Draper Prize | 德雷珀奖 | 1989 与 Noyce 共享，理由 "their independent development of the monolithic integrated circuit" |
 
 ---
 

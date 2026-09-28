@@ -175,6 +175,33 @@
 - [ ] 中文标点 / 断行 / 间距统一（半角引号 " "）
 - [ ] 与同组物理学家（Leo_Esaki / Ivar_Giaever）格式对齐，1973 诺奖份额口径三篇一致；与 John_Bardeen 篇"约瑟夫森之争"叙事互恰
 
+## 12. 研究领域表（第 4 步 fields 入库底稿，与 yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | Josephson effect | 约瑟夫森效应 | 1962 预言，以他命名的效应 | 核心页 |
+| 1 | superconductivity | 超导电性 | 超流隧穿 / 博士论文领域 | 核心页 |
+| 2 | quantum tunnelling | 量子隧穿 | 超流穿过薄势垒 | 核心页 |
+| 3 | condensed matter theory | 凝聚态理论 | 剑桥 Theory of Condensed Matter Group 终身成员 | 任职页 |
+| 4 | macroscopic quantum phenomena | 宏观量子现象 | Fritz London Prize 1970 引文语境 | 奖项页 |
+
+## 13. 术语清单（英文 / 中文 / 风险点）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| Josephson effect | 约瑟夫森效应 | 以他命名；勿写"发现于实验"——是理论预言在先 |
+| Josephson junction | 约瑟夫森结 | 两超导体间的隧穿结 |
+| supercurrent | 超流 | 获奖理由原词；勿泛译"超导电流" |
+| SQUID | 超导量子干涉器件 | 地质/医学/计算应用 |
+| Josephson voltage standard | 约瑟夫森电压标准 | NIST 一伏特阵列含 3020 个结（图注数字） |
+| Physics Letters 1(7), 251–253 | 论文出处 | 1962-06-08 收稿 / 07-01 发表，两日期勿混 |
+| Mond Laboratory | 蒙德实验室 | 剑桥老卡文迪什旧址；2012 镀牌处 |
+| Trinity College | 三一学院 | 1962 年起 Fellow；本硕博均在此 |
+| Mind–Matter Unification Project | 心智—物质统一项目 | 1996 设于卡文迪许；争议内容克制中性呈现 |
+| Transcendental Meditation | 超验冥想 | 1971 年起；写作 TM |
+| pathological disbelief | 病态的不信 | 其本人对批评的回称，须注明是他的说法 |
+| Nobel disease | 诺贝尔病 | 他者描述（对其支持非主流立场的讥称），勿当客观定性 |
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

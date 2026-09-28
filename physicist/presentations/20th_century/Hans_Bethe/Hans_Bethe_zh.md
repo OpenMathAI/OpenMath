@@ -100,6 +100,23 @@
 - **Bethe–Feynman 公式**：与 Feynman 共同发展（基于 Serber 前作）——归属两层勿丢。
 - **奖项年份**：Draper 1947、ForMemRS 1957、Franklin 1959、Eddington 与 Fermi Award 1961、Rumford 1963、诺奖 1967、NMS 1975、Oersted 1993、Bruce 2001——逐条对照勿错位。
 
+### 5.5 术语清单（8–12 条）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| stellar nucleosynthesis | 恒星核合成 | 1967 获奖理由核心 |
+| CNO cycle | 碳氮氧循环（CNO 循环） | 1939 独著论文，重恒星主序产能机制 |
+| proton–proton chain | 质子-质子链 | 与 Critchfield 合著；设想先出 Gamow & von Weizsäcker 1937 |
+| Bethe ansatz | Bethe 拟设 | 1931 一维量子多体精确解，与恒星工作勿混 |
+| Bethe formula | Bethe 公式 | 快粒子穿物质碰撞（habilitation 论文） |
+| Bethe–Feynman formula | Bethe–费曼公式 | 裂变弹当量估算，基于 Serber 前作 |
+| Lamb shift | 兰姆位移 | 1947 非相对论计算，"打开 QED 现代之门" |
+| Theoretical Division | 理论部（T 部） | 洛斯阿拉莫斯，Bethe 任主任 |
+| Bethe's Bible | "Bethe 圣经" | 与 Bacher/Livingston 核物理三综述俗称 |
+| Alpher–Bethe–Gamow paper | αβγ 论文 | 署名系 Gamow 未经同意加入 |
+| Partial Nuclear Test Ban Treaty | 部分禁止核试验条约（1963） | 其和平倡导成果，与 ABM 1972 勿混 |
+| Bethe lattice | Bethe 格 | 无环树状格，固态物理遗产 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

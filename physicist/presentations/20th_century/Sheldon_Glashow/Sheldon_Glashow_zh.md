@@ -122,7 +122,8 @@
 - **共享诺奖（co-honored，type=collaborator + note "1979 共享诺贝尔物理学奖"）**：Abdus Salam、Steven Weinberg
 - **亲属**：妻 Joan Shirley Alexander（1972 年结婚）；内兄 Daniel Kleitman（同为 Schwinger 博士生）；连襟 Carl Sagan（经 Lynn Margulis）
 - **著名学生（仅 infobox 实载）**：Andrew Yao——注意与 metadata 名单不一致，入库只取 infobox 一人
-- **获奖共享**：Feza Gürsey（1977 Oppenheimer 奎共享）
+- **获奖共享**：Feza Gürsey（1977 Oppenheimer 奖共享）
+- **入库类型口径（2026-09-28 批注）**：共享奖项对手方统一用 `type=co-honored`、合作者用 `type=colleague`（白名单类型，勿用 collaborator）；**Kleitman（妻妹夫、Schwinger 同门）与 Carl Sagan（连襟）为姻亲关系，关系类型白名单无对应类型，不入库**；妻 Joan Shirley Alexander 用 type=spouse。
 
 ## 8. 奖项清单
 
@@ -168,6 +169,23 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同批次（Salam / Weinberg / Cronin / Fitch）及同世纪物理学家格式对齐
+
+## 12. 术语清单（英/中/风险点）
+
+| 英文 | 中文 | 风险点 |
+|---|---|---|
+| electroweak theory | 电弱理论 | SU(2)×U(1) 对称结构为公认基础，勿写 1983 W/Z 验证 |
+| weak neutral current | 弱中性流 | 短程中性流粒子 Z0 的预言 |
+| GIM mechanism | GIM 机制 | 与 Iliopoulos、Maiani 三人，1970 |
+| charm quark | 粲夸克 | 1964 与 Bjorken 预言，勿写"发现" |
+| Grand Unified Theory (GUT) | 大统一理论 | 1973 与 Georgi，SU(5) |
+| Georgi–Glashow model | Georgi–Glashow 模型 | 首个 GUT |
+| anomaly | 反常 | 消除夸克-轻子数目不等的反常灾难 |
+| coupling constant running | 耦合常数跑动 | SU(5) 定性预言 |
+| proton decay | 质子衰变 | 重子数不守恒的首次提示 |
+| superstring | 超弦 | 批评立场 + "tumor" 引语须注明纪录片语境 |
+| Bronx High School of Science | 布朗克斯科学高中 | 与 Weinberg 同届毕业 |
+| Eugene Higgins Professor | Eugene Higgins 讲席教授 | 1979 授予，2000 荣休 |
 
 ---
 

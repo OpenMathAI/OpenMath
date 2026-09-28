@@ -175,5 +175,35 @@
 
 ---
 
+## 12. 补齐：研究领域表（第 4 步 fields，与 yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | particle physics | 粒子物理 | page.md infobox Fields 口径 | 封面、身份页 |
+| 1 | deep inelastic scattering | 深度非弹性散射 | SLAC-MIT 实验，1990 诺奖核心 | 实验页 |
+| 2 | quark model | 夸克模型 | 点状粒子即上/下夸克 | 夸克页 |
+| 3 | experimental physics | 实验物理 | 正电子素至电子散射的实验传统 | 全篇 |
+
+### 补充裁定（本轮 2026-09-28）
+- **Arie Bodek 不入库**：仅 metadata.json 载，page.md 无载——关系表不收，此处存档备 Review。
+- **Panofsky 入库用库内形式 `W. K. H. Panofsky`**（page.md 原文 Wolfgang K. H. Panofsky）。
+
+## 13. 补齐：术语清单（第 9 步）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| deep inelastic scattering | 深度非弹性散射 | 高能电子大角度散射并损失能量 |
+| quark | 夸克 | 上/下夸克，理论先提出实验为证据 |
+| gluon | 胶子 | 该批实验同时给出首个证据 |
+| positronium | 正电子素 | MIT 博士课题（Deutsch 门下） |
+| SLAC-MIT | SLAC-MIT 合作 | 实验合作体，勿写成单一机构 |
+| UCS | 忧思科学家联盟 | 全称 Union of Concerned Scientists，禁写 UCCPS |
+| JASON | JASON 国防咨询小组 | Defense Advisory Group |
+| deuteron | 氘核 | 散射靶之一 |
+| Wakulla 2 Project | Wakulla 2 洞穴潜水项目 | 死因相关，客观陈述 |
+| Hall of Mountaineering Excellence | 登山名人堂 | 2012 身后追授（美国登山俱乐部） |
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

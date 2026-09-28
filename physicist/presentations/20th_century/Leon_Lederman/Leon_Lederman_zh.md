@@ -31,6 +31,30 @@
 - **博士导师**：Eugene T. Booth（哥伦比亚大学）
 - **研究领域**：粒子物理、中微子、夸克与轻子
 
+### 1.5 研究领域表（第 4 步入库用，与 yaml fields 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 |
+|:--:|------|------|------|
+| 0 | particle physics | 粒子物理 | 终身主线：中微子、底夸克 |
+| 1 | neutrino physics | 中微子物理 | 1962 μ 子中微子发现，1988 诺奖核心 |
+| 2 | experimental physics | 实验物理 | 实验粒子物理学家（page.md 定性） |
+| 3 | quarks and leptons | 夸克与轻子 | 1982 Wolf Prize 获奖研究方向 |
+
+### 1.6 术语清单（第 9 步用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| muon neutrino | μ 子中微子 | 1962 年发现，轻子二重态证据 |
+| neutrino beam method | 中微子束方法 | 1988 诺奖理由之一 |
+| bottom quark | 底夸克 | 1977 年 υ 介子 = 9.5 GeV |
+| Oops-Leon | 乌龙莱德曼 | 1976 年 6.0 GeV 误报，与 υ 双关 |
+| parity violation | 宇称破坏 | 1957 Garwin-Lederman-Weinrich 验证 |
+| spark chamber | 火花室 | Nevis 实验核心探测器 |
+| Tevatron | 太瓦质子加速器 | 任所长期间监督建成 |
+| The God Particle | 《上帝粒子》 | 书名使该词普及，非命名希格斯机制 |
+| Physics First | 物理先修 | 高中课程顺序改革运动 |
+| IMSA | 伊利诺伊数学与科学学院 | 1986 年创办 |
+
 ## 2. 核心叙事亮点（用于 Slide 4-13）
 
 1. **移民之子（1922）**：父母从基辅与敖德萨来到纽约；南布朗克斯长大——从移民家庭走出的诺贝尔奖得主，一生自称科学普及的"非官方宣传员"气质自此处生长。
@@ -118,7 +142,7 @@
 
 - **博士导师**：Eugene T. Booth（哥伦比亚大学——advisor-student，direction: advisor=对方是导师）
 - **1962 三人组**：Jack Steinberger（哥伦比亚同僚——colleague / co-honored）、Melvin Schwartz（哥伦比亚同僚——colleague / co-honored；**注意 Schwartz 是 Steinberger 的学生，与 Lederman 无师生关系**）
-- **宇称实验搭档**：Richard L. Garwin、Marcel Weinrich（1957 背靠背论文合作者——collaborator）
+- **宇称实验搭档**：Richard L. Garwin（库内规范名 **Richard Garwin**，yaml 沿用库内形式）、R. Weinrich（**page.md 仅载 "R. Weinrich"，yaml 用字面形式 R. Weinrich，"Marcel" 全名 page.md 无载**）（1957 背靠背论文合作者）
 - **影响者**：Martin J. Klein（大学挚友，物理学史家——friend）、吴健雄（宇称实验同期发表——colleague）
 - **Wolf 奖共享**：Martin Lewis Perl（1982，quarks and leptons）
 - **任职机构同事**：Fermilab（所长 1979–1989）、芝加哥大学、IIT（Pritzker 教授）

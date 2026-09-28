@@ -175,3 +175,20 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+---
+
+## 12. 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| brownian motion | 布朗运动 | 理论是爱因斯坦（1905）的，实验验证是佩兰的，分工勿倒置 |
+| sedimentation equilibrium | 沉降平衡 | 1926 诺奖理由关键词 |
+| Avogadro constant | 阿伏伽德罗常数 | 佩兰用多种方法测定 |
+| cathode rays | 阴极射线 | 1895 年证明其带负电 |
+| atomic nucleus | 原子核 | 1901 年佩兰假说未由其本人发展，后以卢瑟福模型之名为人所知 |
+| molecular reality | 分子实在性 | 百年论战的终结，勿泛化为"发现原子" |
+| Les Atomes | 《原子》 | 1913 年名著，多语种译本 |
+| Institut de Biologie Physico-Chimique | 物理化学生物研究所 | 1927 年与 Job、Mayer 共同创建 |
+| Palais de la Découverte | 发现宫 | 1937 年巴黎世博会创办的科学博物馆 |
+| CNRS | 法国国家科学研究中心 | 1939 年雏形合并；佩兰 1936 年任科研副部长，勿写成"CNRS 创始人"泛称 |

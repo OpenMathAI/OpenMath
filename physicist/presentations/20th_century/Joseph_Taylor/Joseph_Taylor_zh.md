@@ -104,6 +104,32 @@
 - **家庭**：妻子/子女 page.md 无载，勿写；父母与弟弟 page.md 有载可写。
 - **MacArthur**：写"首批 MacArthur Fellows 之一"，勿加年份（page.md 未载年份）。
 
+## 5.5 研究领域表（fields 入库口径，2026-09-28 补）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | pulsar astronomy | 脉冲星天文 | 一生投身脉冲星天体物理各个方面 | 核心页 |
+| 1 | astrophysics | 天体物理学 | 主领域（天体物理学家身份） | 封面、身份页 |
+| 2 | gravitational waves | 引力波（间接验证） | 引力辐射存在的首次确认 | 引力检验页 |
+| 3 | general relativity | 广义相对论检验 | 三十年测量吻合优于百分之一 | 引力检验页 |
+| 4 | radio astronomy | 射电天文学 | 绿岸 NRAO / 五学院射电天文台 / 阿雷西博 | 机构页 |
+
+## 5.6 术语清单（英文/中文/风险点，2026-09-28 补）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| binary pulsar | 脉冲双星 | 写「首颗脉冲双星 PSR B1913+16」 |
+| recycled pulsar | 再加速脉冲星 | 发现当时未被理解，勿写「当时即认识到」 |
+| lunar occultation | 月掩星 | 博士论文题目 |
+| gravitational radiation | 引力辐射 | page.md 用语；写「首次确认存在」 |
+| amateur radio | 业余无线电 | 呼号 K1JT；WSJT=Weak Signal/Joe Taylor |
+| WSJT / WSPR / FT8 | 弱信号通信软件 | FT8 写「共同创造者」，勿写「之父」 |
+| Five College Radio Astronomy Observatory | 五学院射电天文台 | 副主任任职 |
+| James S. McDonnell Distinguished University Professor | McDonnell 杰出大学教授 | 普林斯顿头衔 |
+| MacArthur Fellows | 麦克阿瑟学者 | 写「首批之一」，年份 page.md 无载 |
+| 81859 Joetaylor | 小行星 Joetaylor | 2006-11-09 命名纪念退休 |
+| Dean of Faculty | 教务长（普林斯顿） | 任期六年 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -120,9 +146,11 @@
 
 ## 7. 社会关系入库清单
 
-- **博士学生（advisor-student，direction advisor=Taylor）**：Russell Alan Hulse（1993 共同诺奖得主）、Victoria Kaspi、Ingrid Stairs（infobox）；David Helfand（metadata 载）
+> yaml 入库名规范（2026-09-28）：Hulse 库内记录 name_en 用 page.md frontmatter 形式 **Russell A. Hulse**（与 Hulse 篇 yaml 一致，防分裂 stub）。David Helfand 仅 metadata.json 有载，**不入库**。
+
+- **博士学生（advisor-student，direction advisor=Taylor）**：Russell A. Hulse（1993 共同诺奖得主）、Victoria Kaspi、Ingrid Stairs（infobox）；~~David Helfand~~（metadata 载，不入库）
 - **主要合作者（collaborator，无向）**：Joel Weisberg（用 PSR B1913+16 演示引力辐射）
-- **诺奖同届（co-honored，无向）**：Russell Alan Hulse（1993 共享诺贝尔物理学奖）
+- **诺奖同届（co-honored，无向）**：Russell A. Hulse（1993 共享诺贝尔物理学奖）
 - **兄弟（仅立传呈现）**：Harold E. Taylor（物理学家）
 - **相邻年度诺奖同侪（仅立传呈现）**：Thorne / Barish / Weiss（引力波直接探测，2017；与本篇"间接验证"形成历史呼应页）；Richard E. Taylor（1990，姓名近似需辨析——立传中作"同名辨析"提示页，不建关系行）
 

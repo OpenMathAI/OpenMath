@@ -71,6 +71,30 @@
 - **落地文件**：`physicist/presentations/20th_century/Claude_Cohen_Tannoudji/Nostalgy.wav`（复制自 `music_audio/inspiring-electronic/17-_DA0mdtL-jI-Nostalgy - by AShamaluevMusic ｜ Sad Cinematic Music For Videos, Documentaries & Films.wav`，不入 git）。
 - **匹配理由**：科昂-塔努吉的叙事核心是"传承与沉淀"（师承 Kastler、教出 Haroche、写就教科书），纪录片式沉稳气质贴合；与本批次其余五人曲目不重复。
 
+## 3.6 研究领域表（数据库入库用，第 4 步）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | laser cooling | 激光冷却 | 亚多普勒冷却、反冲温度以下，1997 诺奖核心 | 核心贡献页 |
+| 1 | quantum optics | 量子光学 | 缀饰原子模型、原子-光子相互作用 | 核心页 |
+| 2 | atomic physics | 原子物理 | 激光冷却与囚禁、稳定分布统计方法 | 核心页 |
+| 3 | quantum mechanics | 量子力学 | 《量子力学》教科书（与 Diu、Laloë） | 教科书页 |
+
+## 3.7 术语清单（第 9 步审查用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| laser cooling | 激光冷却 | 与「原子囚禁 trapping」连用，勿拆散 |
+| dressed atom | 缀饰原子 | 勿译「穿衣原子」 |
+| sub-Doppler cooling | 亚多普勒冷却 | 勿写成「超多普勒冷却」（含义相反） |
+| recoil temperature | 反冲温度 | 冷却极限的下界 |
+| optical pumping | 光泵浦 | 博士论文主题 |
+| radiative forces | 辐射力 | 1980 年代初法兰西公学院讲席主题 |
+| stable distributions | 稳定分布 | 激光冷却的统计处理方法 |
+| Collège de France | 法兰西公学院 | 勿泛译「法兰西学院」 |
+| Kastler-Brossel Laboratory | 卡斯特勒-布罗塞尔实验室 | 师承传统锚点 |
+| Mainau Declaration | 美瑙宣言 | 2015 气候宣言，勿与 1955 版混淆 |
+
 ## 4. Slide 规划（约 15 页，Wilson 式结构）
 
 1. **封面**（`\titleslide`）：顶部标签「激光冷却理论 · 法国」+ 科昂-塔努吉 1933– + 右上头像（2010 真实肖像）+ 国籍行 + 底部三要素状态栏 + 四色 badge

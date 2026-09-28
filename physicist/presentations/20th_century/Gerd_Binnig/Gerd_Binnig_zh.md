@@ -32,6 +32,28 @@
 - **研究领域**：物理（扫描探针显微术、纳米科学）
 - **任职**：IBM 苏黎世研究实验室（1978 加入）→ IBM Almaden Valley（加州，1985–1988）+ 斯坦福大学访问教授 → IBM Fellow（1987）+ IBM Physics group Munich → 创办 Definiens（1994）
 
+### 1.5 研究领域表（第 4 步入库用，与 yaml fields 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 |
+|:--:|------|------|------|
+| 0 | scanning probe microscopy | 扫描探针显微术 | STM + AFM 共同开创的学科 |
+| 1 | scanning tunneling microscopy | 扫描隧道显微术 | 1986 诺奖核心成果 |
+| 2 | atomic force microscopy | 原子力显微术 | 1985 年发明，覆盖绝缘表面 |
+| 3 | nanoscience | 纳米科学 | Kavli Prize in Nanoscience（2016）所属领域 |
+
+### 1.6 术语清单（第 9 步用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| scanning tunneling microscope (STM) | 扫描隧道显微镜 | "设计"而非"发现"原理 |
+| scanning probe microscopy (SPM) | 扫描探针显微术 | STM/AFM 的统称 |
+| atomic force microscope (AFM) | 原子力显微镜 | 1985 年，勿写 1986 |
+| tunneling current | 隧道电流 | 物理原理之前已知 |
+| insulating surfaces | 绝缘表面 | AFM 相对 STM 的增量 |
+| Cognition Network Technology | 认知网络技术 | Definiens 公司核心技术 |
+| Kavli Prize in Nanoscience | 卡夫利纳米科学奖 | 2016 年，距诺奖三十年 |
+| IBM Fellow | IBM 院士 | 1987 年授予，勿与诺奖年份混淆 |
+
 ## 2. 核心叙事亮点（用于 Slide 4-13）
 
 1. **废墟上长大的战后孩子**：1947 年生于法兰克福，"在城市废墟中玩耍"的童年——从瓦砾到原子，一条从摧毁到看见的隐喻线。

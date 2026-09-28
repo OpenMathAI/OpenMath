@@ -62,12 +62,12 @@
 
 - **背景母题**：柔和气泡（稀疏大块实心圆，四档大小错落），呼应「脉冲星周期信号 / 闪烁」的视觉语言。
 
-### 3.5 背景音乐选择 ✅ 【人物专属】
+### 3.5 背景音乐选择 ✅ 【人物专属】（2026-09-28 改选：原 Through the Darkness 与同批 Leo_Esaki 重复，批内 BGM 须互不重复）
 
-- **气质定位**：突破前夕 / 暗色推进 / 探寻（从噪声中辨出宇宙信标）
-- **选定曲目**：Audiomachine **Through the Darkness**（史诗 / 黑暗 / 推进），匹配"在数据噪声与怀疑（射频干扰疑云）中坚持追踪、终见宇宙灯塔"的发现叙事。
-- **落地文件**：`physicist/presentations/20th_century/Antony_Hewish/ThroughTheDarkness.wav`（复制自音乐库，不入 git）。
-- **匹配理由**：脉冲星发现的本质是于暗夜中辨认规律信号；同时 Bell 争议的历史回响也需要一支有分量、不轻快的底色。
+- **气质定位**：突破前夕 / 戏剧性 / 探寻（从噪声中辨出宇宙信标）
+- **选定曲目**：Victor Cooper **Last Hope**（Inspiring Electronic 合辑 / 戏剧性 / 力量 / 史诗），匹配"在数据噪声与怀疑（射频干扰疑云）中坚持追踪、终见宇宙灯塔"的发现叙事。
+- **落地文件**：`physicist/presentations/20th_century/Antony_Hewish/LastHope.wav`（复制自音乐库 `music_audio/inspiring-electronic/24-ie5iLcdKiqk-Victor Cooper - Last Hope (Dramatic Powerful Epic Copyright Free Music).wav`，不入 git）。
+- **匹配理由**：脉冲星发现的本质是于暗夜中辨认规律信号——Last Hope 的戏剧性力量感承载"突破前夕"的张力；同时 Bell 争议的历史回响也需要一支有分量、不轻快的底色。
 
 ## 4. Slide 规划（约 15 页，Wilson 式结构）
 
@@ -165,6 +165,33 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同世纪物理学家（Ryle / Heisenberg / Wilson）格式对齐
+
+## 12. 研究领域表（第 4 步 fields 入库底稿，与 yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | radio astronomy | 射电天文学 | 卡文迪什射电天文学教授（1971–1989） | 主线页 |
+| 1 | interplanetary scintillation | 行星际闪烁 | 博士论文与一生核心技术（1952） | 核心页 |
+| 2 | pulsars | 脉冲星 | 1967 首个脉冲星的发现（决定性作用） | 发现页 |
+| 3 | astronomy | 天文学 | frontmatter field_of_work 原文 | 全篇 |
+| 4 | plasma physics | 等离子体物理 | 射电源闪烁源于前景等离子体 | 博士页 |
+
+## 13. 术语清单（英文 / 中文 / 风险点）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| pulsar | 脉冲星 | 首个脉冲星由 Bell 在阵列输出中发现；Hewish 是"决定性作用"口径 |
+| interplanetary scintillation | 行星际闪烁 | IPS；太阳风等离子体造成的射电源闪烁 |
+| scintillation technique | 闪烁技术 | Rowan-Robinson 评价其 1952 年发明 |
+| Interplanetary Scintillation Array | 行星际闪烁阵列 | 1965 获资助、1967 建成，两处年份勿混 |
+| phased array | 相控阵 | 大型相控阵射电望远镜提案 |
+| radio frequency interference | 射频干扰 | Hewish 起初的怀疑；排除过程体现发现叙事 |
+| Eddington Medal | 爱丁顿奖章 | 1969 RAS |
+| Albert A. Michelson Medal | 迈克耳孙奖章 | 1973 富兰克林学会，与 Bell 共同 |
+| Hughes Medal | 休斯奖章 | infobox 作 1977、正文列表作 1976——两处矛盾，终审核定或并注 |
+| Churchill College | 丘吉尔学院 | fellow；身后奖章捐赠于此 |
+| Questions of Truth | 《Questions of Truth》 | 其前言可引；宗教与科学互补观 |
+| Royal Institution Christmas Lecture | 皇家研究院圣诞讲座 | 1965 共同主讲 Exploration of the Universe（与 Ryle 同场） |
 
 ---
 

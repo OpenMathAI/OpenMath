@@ -171,6 +171,21 @@
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同组（Schwinger / Feynman / Kastler / Bethe）及 Heisenberg 格式对齐
 
+## 12. 术语清单（2026-09-28 补齐，对齐标杆）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| quantum electrodynamics | 量子电动力学（QED） | 1965 获奖理由领域 |
+| renormalization | 重整化 | 与 Schwinger 各自独立发现，勿写先后优先 |
+| super-many-time theory | 超多时间理论 | 战时工作，QED 形式化的关键底牌 |
+| Schwinger–Tomonaga equation | Schwinger–朝永方程 | 相对论性场论表述的同源成果 |
+| relativistically invariant formulation | 相对论性不变表述 | Prog. Theor. Phys. I–V 系列论文 |
+| Lamb shift | 兰姆位移 | 重整化方法的物理验证之一 |
+| Tomonaga–Luttinger liquid | 朝永–拉廷格液体 | 一维量子液体集体激发理论 |
+| magnetron | 磁控管 | 战时技术研究，表述中性 |
+| Dancoff | 丹科夫 | 1939 论文遗漏一项的再检验对象 |
+| Order of Culture | 文化勋章 | 1952；旭日重光章年份冲突见 §5 |
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

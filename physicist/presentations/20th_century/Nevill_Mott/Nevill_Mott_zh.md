@@ -123,6 +123,19 @@
 - **合著者**：H. Jones（1936 金属与合金）、Ronald Wilfred Gurney（固体物理化学）、Ian Sneddon（量子力学教材）
 - **学术传承**：Friedel 在 Orsay 的学生群体发展其虚束缚能级思想
 
+## 7.5 术语清单（对齐标杆 §9，8 条）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| Mott insulator | 莫特绝缘体 | 电子关联致绝缘，勿写"所有氧化物绝缘体" |
+| Mott transition | 莫特相变 | 金属-绝缘体转变；page.md 未给年份，禁标年份 |
+| Mott problem | 莫特问题 | 1929 α 粒子径迹的波动力学分析 |
+| dislocation | 位错 | 布里斯托学派；Mott 本人贡献"早期且相对次要" |
+| photographic emulsion | 照相乳剂 | 与 Gurney 合著的潜像理论 |
+| near-free electron model | 近自由电子模型 | 与 Jones 合著解释 Hume-Rothery 相 |
+| Thomas-Fermi screening | Thomas-Fermi 屏蔽 | 杂质远程无相互作用的解释 |
+| amorphous semiconductor | 非晶半导体 | 诺奖演说 Electrons in Glass 主题 |
+
 ## 8. 奖项清单
 
 - 诺贝尔物理学奖（1977，与 Anderson、Van Vleck 共享）

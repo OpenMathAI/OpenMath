@@ -66,9 +66,9 @@
 ### 3.5 背景音乐选择 ✅ 【人物专属】
 
 - **气质定位**：探索 / 远征 / 开创（从战壕到分裂原子，再到核能时代的远征式组织者）
-- **选定曲目**：Alex-Productions **Expedition**（探索 / 史诗），匹配"远征式叙事"——以工程师之躯完成物理学远征，再率队开辟核能时代。
-- **落地文件**：`physicist/presentations/20th_century/John_Cockcroft/Expedition.wav`（复制自音乐库，不入 git）。
-- **匹配理由**：Cockcroft 一生是"工程 + 科学"的远征：一战炮兵 → 电机工程 → 分裂原子 → 雷达与原子能工程 → 建校立所；Expedition 的开阔推进感契合其组织者与开拓者气质。
+- **选定曲目**：Ghostwriter Music **Pathfinder**（管弦 / 探索），匹配"远征式叙事"——以工程师之躯完成物理学远征，再率队开辟核能时代。（2026-09-28 批内去重调整：原定 Expedition 与同批 Cecil Powell 重复，改用 Pathfinder）
+- **落地文件**：`music_audio/inspiring-electronic/23-GiwYLGgJw7w-Ghostwriter Music - Pathfinder (Composed by Daniel Beijbom - Recorded in Budapest).wav`（复制为 `physicist/presentations/20th_century/John_Cockcroft/Pathfinder.wav`，不入 git）。
+- **匹配理由**：Cockcroft 一生是"工程 + 科学"的远征：一战炮兵 → 电机工程 → 分裂原子 → 雷达与原子能工程 → 建校立所；Pathfinder 的管弦推进感契合其开拓者（Pathfinder）气质。
 
 ## 4. Slide 规划（约 15 页，Wilson 式结构）
 

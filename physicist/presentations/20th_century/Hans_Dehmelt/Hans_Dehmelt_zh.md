@@ -168,6 +168,34 @@
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同世纪物理学家（Heisenberg / Rabi / Ramsey / Paul）格式对齐
 
+## 12. 研究领域 rank 表（yaml/DB 对齐，2026-09-28 补齐标杆格式）
+
+| rank | 领域（name_en） | 中文 | 说明 | 依据 |
+|:--:|------|------|------|------|
+| 0 | ion trap | 离子阱 | Penning 阱路线，1989 诺奖核心 | Known for/正文 |
+| 1 | atomic physics | 原子物理 | 氢氦离子光谱、囚禁粒子 | 正文 |
+| 2 | precision measurement | 精密测量 | 电子/正电子磁矩精测 | 正文 |
+| 3 | laser cooling | 激光冷却 | Known for 词条（含 Doppler cooling），正文无展开 | Known for |
+| 4 | spectroscopy | 光谱学 | 极化原子与自由电子顺磁共振起步 | 正文 |
+
+## 13. 术语清单（补齐标杆 §9 格式）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Penning trap | Penning 阱 | Dehmelt 路线，勿与 Paul 阱混 |
+| ion trap | 离子阱 | 与 Paul 共同发展的技术总称 |
+| geonium atom | geonium「原子」 | 1976 年创造，囚禁单电子系统 |
+| electron g-factor | 电子 g 因子 | 精密测量对象 |
+| Doppler cooling | Doppler 冷却 | 仅术语层面提及，无正文展开 |
+| isolated single electron | 被隔离的单个电子 | 1973 与 Wineland 合作 |
+| geonium | — | 勿写 page.md 无载的精度数字 |
+
+## 14. 关系入库裁定（2026-09-28，DB id=2835 复用回填）
+
+- 已按 §7 入库 10 条：Kopfermann/Brix=advisor（frontmatter doctoral_advisor 并列；正文未展开叙述，已按工作流「frontmatter 博士导师可收」口径入库）、Paul=colleague+co-honored（note 注明两人各自独立路线）、Ramsey=co-honored、Wineland=student、Van Dyck/Volkoff=colleague、Irmgard Lassow/Diana Dundore=spouse。
+- 复用 Ramsey 入库时预留的 stub（id=2835）回填 Q70532 与全部字段，无重复记录。
+- Dehmelt 无 doctoral_advisor 以外的 metadata-only 关系；儿子 Gerd 仅列名（已故）不入 parent-child。
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

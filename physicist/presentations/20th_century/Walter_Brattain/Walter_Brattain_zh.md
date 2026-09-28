@@ -101,6 +101,21 @@
 - **博士导师**：John Torrence Tate Sr.（明尼苏达）；Van Vleck 是课程教师——勿写成博士导师。
 - **生平引语**：page.md 无布拉特直接抱怨性言论，团队矛盾用间接转述，克制呈现。
 
+## 5.5 术语清单
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| point-contact transistor | 点接触晶体管 | Brattain 实验 + Bardeen 理论共同发明 |
+| surface states | 表面态 | 毕生主业、诺奖委员会认可的主要贡献之一 |
+| transistor effect | 晶体管效应 | 诺奖理由措辞 |
+| photo-effect | 光电效应 | 半导体自由表面光电效应的发现 |
+| field-effect transistor | 场效应晶体管 | 1930 年代与肖克利的未竟早期尝试 |
+| double point contact | 双点接触 | 1947-12-16 布拉顿方案 |
+| copper oxide rectifier | 氧化铜整流器 | 入贝尔初期与 Becker 的研究对象 |
+| thermionic emission | 热电子发射 | 为 Sommerfeld 模型提供实验验证 |
+| magnetometer | 磁强计 | 二战 NDRC 反潜研究 |
+| piezoelectric frequency standard | 压电频率标准 | 国家标准局时期工作 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

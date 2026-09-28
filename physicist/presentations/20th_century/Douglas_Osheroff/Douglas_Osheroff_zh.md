@@ -99,6 +99,30 @@
 - **肖像**：images.txt 含本人照片（Douglas_Osheroff_photographing_along_CA-1_May_2011_003.jpg，2011 年 Big Sur 旅行摄影照）——可用作封面肖像（照片为户外摄影场景，若构图不适合封面可用装饰圆占位，终审时肉眼确认）。
 - **同名人**：勿与 R. W. Wilson（1964 宇宙微波背景）或 Charles T. R. Wilson（1927 诺奖）混淆——本篇全名 Douglas D. Osheroff。
 
+## 5.5 研究领域表（第 4 步入库对照，与 MySQL/data/Douglas_D._Osheroff.yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | condensed matter physics | 凝聚态物理 | 实验凝聚态物理为 page.md 定位 | 全篇 |
+| 1 | low-temperature physics | 低温物理 | 极低温现象研究 | 核心页 |
+| 2 | superfluidity | 超流 | 1972 发现 ³He 超流，1996 诺奖核心 | 发现页 |
+| 3 | experimental physics | 实验物理 | Pomeranchuk cell 实验路线 | 方法页 |
+
+## 5.6 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| superfluidity in helium-3 | 氦-3 的超流性 | 1996 诺奖官方理由，"their" 三人共享 |
+| Pomeranchuk cell | Pomeranchuk 冷却池 | 绝热加压制冷；纠错叙事禁写 |
+| magneto-optical trapping | 磁光阱 | （注意：此为 Chu 术语，Osheroff 篇不写） |
+| department chair | 系主任 | 斯坦福 1993-1996 |
+| Columbia investigation panel | 哥伦比亚号调查委员会 | 2003，类比仅"大致相同角色" |
+| answering machine recording | 答录机录音 | 凌晨 2:30 轶事须注明"录音发布者描述" |
+| MacArthur Fellowship | 麦克阿瑟天才奖 | 1981 |
+| Simon Memorial Prize | 西蒙纪念奖 | 1976（三人同获） |
+| Oliver E. Buckley Condensed Matter Prize | 巴克利凝聚态奖 | 1981（三人同获） |
+| freshman seminar | 大一研讨课 | "Technical Aspects of Photography" 摄影课 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -113,14 +137,18 @@
 | field_of_work | physics / cryophysics / condensed matter physics | 待写入 |
 | has_biography | 1 | 本次置 1 |
 
-## 7. 社会关系入库清单
+## 7. 社会关系入库清单（★ 已按库内规范名核对，与 MySQL/data/Douglas_D._Osheroff.yaml 一致）
 
-- **博士导师**：David Lee（advisor-student，Cornell LASSP，实验室负责人；1996 共同诺奖）
-- **资深合作者**：Robert C. Richardson（colleague / co-honored，Cornell 低温组，1996 共同诺奖）
-- **本科科研导师**：Gerry Neugebauer（Caltech）
-- **妻子**：Phyllis Liu-Osheroff（spouse，生物化学家，1970 结婚）
-- **同届得主**：David Lee、Robert C. Richardson（co-honored，三人平分）
-- **机构同事**：Bell Labs 同仁（1973-1987）、斯坦福物理系
+| 类型 | 对方（库内规范名） | 方向 | note |
+|------|------|------|------|
+| advisor-student | David M. Lee（id=2858） | 师→生 | Cornell LASSP 博士导师，三人组 |
+| colleague | Robert C. Richardson | 无向 | 资深合作者，三人组 |
+| co-honored | David M. Lee（id=2858） | 无向 | 1996 诺奖三人平分；1981 Buckley 同获 |
+| co-honored | Robert C. Richardson | 无向 | 1996 诺奖三人平分；1981 Buckley 同获 |
+| colleague | Gerry Neugebauer | 无向 | Caltech 本科科研导师（非博士导师） |
+| spouse | Phyllis Liu-Osheroff | 无向 | 生物化学家，1970 结婚 |
+
+> **★ 已修正的存量错误关系**：库内原有 Feynman(2410)→Osheroff(2418) advisor-student 一行（note"其他知名学生"），系对 page.md "attended lectures by Richard Feynman" 的误读——Osheroff 只是听过 Feynman 讲课、非其学生，该行已删除。
 
 ## 8. 奖项清单
 

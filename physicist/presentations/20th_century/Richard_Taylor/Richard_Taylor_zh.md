@@ -173,5 +173,35 @@
 
 ---
 
+## 12. 补齐：研究领域表（第 4 步 fields，与 yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | particle physics | 粒子物理 | page.md infobox Fields 口径 | 封面、身份页 |
+| 1 | deep inelastic scattering | 深度非弹性散射 | SLAC-MIT 实验，1990 诺奖核心 | 实验页 |
+| 2 | quark model | 夸克模型 | 点状粒子即上/下夸克 | 夸克页 |
+| 3 | experimental physics | 实验物理 | 极化伽马射线至电子散射的实验传统 | 全篇 |
+
+### 补充裁定（本轮 2026-09-28）
+- **Hofstadter / Panofsky 不入库**：仅载于 Kendall page.md，Taylor 本人 page.md 无载——关系表不收（§7 原措辞已谨慎）。
+- **metadata-only 关系不入库**：Taylor metadata 无 doctoral_advisor 之外师生载录。
+
+## 13. 补齐：术语清单（第 9 步）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| deep inelastic scattering | 深度非弹性散射 | 高能电子大角度散射并损失能量 |
+| quark | 夸克 | 上/下夸克，理论先提出实验为证据 |
+| gluon | 胶子 | 该批实验同时给出首个证据 |
+| pion | π 介子 | 博士论文研究对象（极化轫致辐射产生） |
+| bremsstrahlung | 轫致辐射 | 论文标题术语 |
+| SLAC | 斯坦福直线加速器中心 | 现名 SLAC 国家加速器实验室 |
+| Guggenheim Fellowship | 古根海姆奖 | 1971，赴 CERN 休假年 |
+| Companion of the Order of Canada | 加拿大勋章同伴级 | 2005，加拿大荣誉之巅 |
+| Young Sheldon | 《小谢尔顿》 | 2019 剧集呈现 1990 诺奖宣布场景 |
+| Joseph H. Taylor Jr. | 约瑟夫·泰勒 | 1993 诺奖得主，与本人同姓不同人 |
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

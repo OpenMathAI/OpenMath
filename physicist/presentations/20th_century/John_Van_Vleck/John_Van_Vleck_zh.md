@@ -104,7 +104,7 @@
 |---|---|---|
 | qid | Q193655 | 待写入 |
 | name_zh | 范弗莱克（或 约翰·哈斯布鲁克·范弗莱克） | 待写入 |
-| name_en | John Hasbrouck Van Vleck | 待写入 |
+| name_en | John Hasbrouck Van Vleck（★库内既有记录 id=2172 name_en=`John Van Vleck`，yaml 已沿用库内形式，避免分裂 stub） | 已沿用 |
 | birth_date | 1899-03-13 | 待写入 |
 | death_date | 1980-10-27 | 待写入 |
 | nationality | United States | 待写入 |
@@ -121,6 +121,19 @@
 - **颁奖关系**：H. B. G. Casimir（1974 Lorentz Medal 颁授人，荷兰皇家艺术与科学院）
 - **战时同事**：J. Robert Oppenheimer（1942 伯克利夏季研究）；Leslie Groves（1943 Los Alamos 评审委员会）
 - **家庭（学术世家线）**：父 Edward Burr Van Vleck、祖父 John Monroe Van Vleck；妻 Abigail Pearson（1927-06-10）
+
+## 7.5 术语清单（对齐标杆 §9，8 条）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| quantum theory of magnetism | 量子磁性理论 | 其奠基领域，"现代磁学之父"以被誉为表述 |
+| crystal field theory | 晶体场理论 | 固体磁性根基，勿与配体场混一 |
+| ligand field theory | 配体场理论 | 金属配合物化学键 |
+| Van Vleck paramagnetism | 范弗莱克顺磁性 | 与温度无关的顺磁项 |
+| Van Vleck transformation | 范弗莱克变换 | 以他命名的变换 |
+| susceptibilities | （电/磁）极化率 | 1932 专著主题，书名勿写错 |
+| radiation laboratory | （MIT）辐射实验室 | 二战半时制，1.25 cm 水吸收 / 0.5 cm 氧吸收 |
+| radioastronomy | 射电天文学 | 雷达吸收研究"后来成为其重要基础"，勿写"开创" |
 
 ## 8. 奖项清单
 

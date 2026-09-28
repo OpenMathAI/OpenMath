@@ -100,6 +100,23 @@
 - **金正塔 μ 子层析结果**：是"所扫描的 19% 内未发现暗室"（阴性结果），勿写成"发现了密室"。
 - **师生关系**：博士学生为 Lawrence H. Johnston（爆炸桥丝雷管执行者）与 Richard A. Muller（metadata.json）；Bloch 是**合作者**而非学生。
 
+### 5.5 术语清单（8–12 条）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| hydrogen bubble chamber | 氢气泡室 | 获奖技术本体；发明者是 Glaser，勿写"发明" |
+| resonant states | 共振态 | 1968 获奖理由的发现对象 |
+| East–West effect | 宇宙线东西效应 | 芝加哥成名实验，初级宇宙线带正电 |
+| K-electron capture | K 电子俘获 | 1937 首个观测 |
+| exploding-bridgewire detonator | 爆炸桥丝雷管 | Johnston 执行、Alvarez 指导，内爆弹关键 |
+| Ground Controlled Approach | 地面控制进场（GCA） | 雷达着陆系统，Collier Trophy 依据 |
+| neutron magnetic moment | 中子磁矩 | 与 Felix Bloch 合作测量（1938–1940） |
+| Alvarez hypothesis | 阿尔瓦雷斯假说 | 1980 小行星灭绝假说，与子 Walter 合作 |
+| neutron activation analysis | 中子活化分析 | K-Pg 铱异常测定技术（Asaro/Michel） |
+| muon tomography | μ 子层析成像 | 金字塔透视，阴性结果口径 |
+| phase stability | 相稳定性 | McMillan 概念，Bevatron 的理论基础 |
+| Project Alberta | 阿尔伯塔计划 | Trinity 观测与广岛冲击波测量 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

@@ -105,6 +105,28 @@
 - **引语溯源**：可直接引用——诺奖晚宴演说句、诺奖自传 $100 段与祖母段、Jones 的 "a young man in a hurry"、诺奖委员会理由句；其余一律间接转述。
 - **死亡**：在世——生卒栏写 1936-01-27 出生，无去世栏。
 
+## 5.5 研究领域表（第 4 步，yaml fields 来源）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | particle physics | 粒子物理 | infobox Fields、J/ψ 发现 | 全篇 |
+| 1 | nuclear physics | 核物理 | 反氘核发现、核半径精密测量 | 早期研究页 |
+| 2 | electroweak interaction | 电弱相互作用 | μ 子电荷不对称、中微子种数验证 | 胶子电弱页 |
+| 3 | cosmic ray | 宇宙线 | AMS 太空磁谱仪 | AMS 页 |
+
+## 5.6 术语清单（第 9 步）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| J/psi particle | J/ψ 粒子 | J 与 ψ 两团队独立命名，勿写命名缘由 |
+| gluon | 胶子 | 传递强相互作用的粒子（page.md 作 "nuclear force"，按原文转述勿引申） |
+| anti-deuteron | 反氘核 | 1965 核反物质发现 |
+| Alpha Magnetic Spectrometer | 阿尔法磁谱仪（AMS） | 首席研究员 |
+| cosmic ray | 宇宙线 | 2600 亿事例口径 |
+| electroweak model | 电弱模型 | μ 子不对称首次验证 |
+| neutrino species | 中微子种数 | L3 合作 1992 |
+| tau | τ 轻子 | 电子族（e/μ/τ）零半径测量 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

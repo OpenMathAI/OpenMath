@@ -165,5 +165,31 @@
 
 ---
 
+## 12. 补遗（2026-09-28）：研究领域表 + 术语清单（对齐 Kenneth G. Wilson 标杆第 4 步 / 第 9 步）
+
+### 研究领域表（与 yaml fields 一致，按 rank 排序）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | nuclear physics | 核物理 | infobox Fields；1934 起主业 | 核物理页 |
+| 1 | Cherenkov radiation | 切伦科夫辐射 | 与 Tamm 共同给出理论解释、Frank-Tamm 公式 | 核心页 |
+| 2 | transition radiation | 过渡辐射 | infobox Known for（正文未展开，表述克制） | 概览页 |
+| 3 | neutron physics | 中子物理 | 反应堆中子扩散与热化、JINR 中子谱学 | JINR 页 |
+| 4 | luminescence | 发光 | 与 Vavilov 合写首篇论文 / 博士论文基础 | 早年页 |
+
+### 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Cherenkov radiation | 切伦科夫辐射 | 别称 Vavilov-Cherenkov effect，中文口径用「切伦科夫辐射/效应」 |
+| Frank-Tamm formula | 弗兰克-塔姆公式 | 两人联名，勿写成弗兰克独有 |
+| transition radiation | 过渡辐射 | 非「跃迁辐射」 |
+| shock wave | 激波 | 理论解释的物理图像 |
+| luminescence | 发光 | 首篇论文主题 |
+| neutron thermalization | 中子热化 | 反应堆研究内容 |
+| neutron spectroscopy | 中子谱学 | JINR IBR 堆上发展 |
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

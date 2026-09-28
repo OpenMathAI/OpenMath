@@ -170,5 +170,31 @@
 
 ---
 
+## 12. 补遗（2026-09-28）：研究领域表 + 术语清单（对齐 Kenneth G. Wilson 标杆第 4 步 / 第 9 步）
+
+### 研究领域表（与 yaml fields 一致，按 rank 排序）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | nuclear physics | 核物理 | infobox Fields；主业与获奖领域 | 全篇 |
+| 1 | radiochemistry | 放射化学 | 锝/砹的化学分析（infobox Fields） | 元素页 |
+| 2 | particle physics | 粒子物理 | 反质子发现（1955，Bevatron） | 反质子页 |
+| 3 | history of science | 科学史 | 伯克利物理学与科学史双教授、Fermi 传记与三部曲 | 作家页 |
+
+### 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| technetium | 锝（Tc, 43 号元素） | 1937，第一个人工合成元素 |
+| astatine | 砹（At, 85 号元素） | 1940，与 Corson/MacKenzie |
+| antiproton | 反质子 | 1955，1959 获奖理由 |
+| Bevatron | 高能质子加速器 | 6 GeV，勿意译 |
+| technetium-99m | 锝-99m | 医学诊断同位素 |
+| xenon-135 | 氙-135 | 反应堆核毒物 |
+| plutonium-239 | 钚-239 | 曼哈顿计划，Thin Man 否决依据为 Pu-240 杂质 |
+| Via Panisperna boys | Via Panisperna 男孩 | 罗马学派群称 |
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

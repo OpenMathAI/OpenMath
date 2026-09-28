@@ -163,3 +163,20 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+---
+
+## 12. 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| thermionic phenomenon | 热电子现象 | 1928 诺奖理由用词，勿泛化为"电子学" |
+| Richardson's law | 理查森定律 | 原始形式 s = A T^(1/2) e^(−b/T) |
+| saturation current | 饱和电流 | 定律描述的对象 |
+| Richardson–Dushman equation | 理查森-德什曼方程 | 后世修正形式 J = A T² e^(−φ/kT)，勿冒充 1901 年原始形式 |
+| gyromagnetic effect | 回转磁效应 | 与 Einstein–de Haas 效应同族，勿写"发现后者" |
+| Wheatstone Professor | 惠斯通教授 | 伦敦国王学院 1914 年起教席 |
+| D.Sc. | 高级理学博士 | 1904 年 UCL 所授，勿与 1902 年三一 Fellow 混淆 |
+| Hughes Medal | 休斯奖章 | 1920 年，理由"实验物理工作尤其是热离子学" |
+| Knight Bachelor | 下级勋位爵士 | 1939 年乔治六世册封 |
+| Silliman Memorial Lectures | 西利曼纪念讲座 | 耶鲁主讲，勿写成获奖 |

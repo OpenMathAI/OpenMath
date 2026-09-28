@@ -108,16 +108,11 @@
 | nationality | Sweden | 待写入 |
 | primary_occupation | physicist | 待写入 |
 | field_of_work | experimental physics / spectroscopy (ESCA/XPS) | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 0（本批仅提示词+入库，未做 Beamer；立传完成后由主控置 1） | 已按 0 入库 |
 
 ## 7. 社会关系入库清单
 
-- **父**：Karl Manne Georg Siegbahn（1924 诺奖得主；parent-child，互指——Manne 篇已存在并已写 Kai）
-- **母**：Karin Högbom
-- **配偶**：Anna Brita Rhedin（m. 1944）
-- **同届诺奖**：Nicolaas Bloembergen、Arthur Schawlow（二人共享另一半，1981；互指 co-honored）
-- **博士生**：Ewert Bengtsson（metadata.json 实载）
-- **机构传承**：Charles Manne Siegbahn 之后乌普萨拉谱系的第二代（表述为"机构传承"而非师承）
+> **2026-09-28 已入库 4 条**（id=2145，库内规范名 `Kai Siegbahn`）：parent-child 父 Karl Manne Georg Siegbahn（库内 id=2142，Q170741）、配偶 Anna Brita Rhedin（新建 stub）、co-honored Nicolaas Bloembergen（id=2180）+ Arthur Schawlow（id=2488）。**page.md 无博士导师（禁写「师从其父」）；母 Karin Högbom 非学界人物不入库；博士生 Ewert Bengtsson 仅 metadata.json 有载、page.md 无载，按无载禁写不入库**；「机构传承」是叙述概念，不入库。
 
 ## 8. 奖项清单
 
@@ -163,6 +158,21 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同届物理学家（Nicolaas_Bloembergen / Arthur_Schawlow）及海森堡式母本格式对齐
+
+## 12. 术语清单（终审用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| ESCA (Electron Spectroscopy for Chemical Analysis) | 化学分析电子能谱 | 其本人命名 |
+| XPS (X-ray photoelectron spectroscopy) | X 射线光电子能谱 | 今通称，与 ESCA 两名并用 |
+| electron spectroscopy | 电子光谱学 | 1981 获奖理由核心词 |
+| high-resolution | 高分辨率 | 获奖理由限定词，勿漏 |
+| Ångström Laboratory | 奥恩斯特伦实验室 | 乌普萨拉，晚年仍活跃处 |
+| IUPAP | 国际纯粹与应用物理学联合会 | 1981-1984 任主席 |
+| Björkén Prize | Björkén 奖 | 乌普萨拉校内奖，1955/1977 两获 |
+| Royal Institute of Technology | 皇家理工学院 | 斯德哥尔摩，1951-1954 |
+| Manne Siegbahn | 曼内·西格班 | 父名，勿与 Kai 混淆（同名家族两代诺奖） |
+| X-ray emission spectra | X 射线发射谱 | 父亲的领域，与 XPS 是两个领域 |
 
 ---
 

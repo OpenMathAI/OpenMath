@@ -125,6 +125,7 @@
 - **著名学生（page.md/infobox 实载，择要）**：Walter Gilbert、John Polkinghorne、Yuval Ne'eman、Michael Duff、Christopher Isham、John Moffat、Robert Delbourgo、Riazuddin、Fayyazuddin、Qaisar Shafi 等
 - **政府人物（type=controversy，克制）**：Zulfikar Ali Bhutto（1974 年后决裂）
 - **密友**：Munir Ahmad Khan、Ishfaq Ahmad（巴基斯坦科学界终身挚友）
+- **入库类型口径（2026-09-28 批注）**：导师用 `type=advisor-student + direction=advisor`（Kemmer/Matthews/Ganguly 三位）、博士生用 `direction=student`（infobox 20 人择要 10 位）；共享诺奖用 `type=co-honored`；Ward/Pati/Hoyle/Bethe/Oppenheimer/Dirac 用 `type=colleague`；Bhutto 用 `type=controversy`；两妻用 `type=spouse`。**密友 Munir Ahmad Khan/Ishfaq Ahmad 及 Kibble/Guralnik/Hagen（仅"同系云集"清单）未入库**（无白名单类型或关系强度不足）；博士生 Daniel Afedzi Akyeampong、Ali Chamseddine、Ray Streater、Masud Ahmad、Partha Ghose、Kamaluddin Ahmed、John Taylor、Ghulam Murtaza、Munir Ahmad Rashid、Peter West 同为 infobox 实载、本批择要未入。
 
 ## 8. 奖项清单
 
@@ -174,6 +175,23 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同批次（Glashow / Weinberg / Cronin / Fitch）及同世纪物理学家格式对齐
+
+## 12. 术语清单（英/中/风险点）
+
+| 英文 | 中文 | 风险点 |
+|---|---|---|
+| electroweak unification | 电弱统一 | "Electroweak" 一词由 Salam 命名 |
+| weak neutral current | 弱中性流 | 预言先于实验发现 |
+| renormalization of meson theory | 介子理论重整化 | 六个月解题，Bethe/Oppenheimer/Dirac 注意 |
+| Pati–Salam model | Pati–Salam 模型 | 1974 与 Pati 合作的大统一 |
+| magnetic photon | 磁光子 | 1966 预言 |
+| superspace / superfield | 超空间 / 超场 | 1974 超对称几何化 |
+| ICTP | 国际理论物理中心 | 1964 创建的里雅斯特，1997 更名冠名 |
+| TWAS | 第三世界科学院 | Salam 创建 |
+| SUPARCO | 巴基斯坦空间研究委员会 | 1961-09-16 创建并任首任台长 |
+| Ahmadiyya | 阿赫默底亚 | 1974 第二修正案议题务必克制中性 |
+| progressive supranuclear palsy | 进行性核上性麻痹 | 卒因，1996-11-21 牛津 |
+| Double First-Class Honours | 数学与物理双一等荣誉 | 1949 剑桥 Mathematical Tripos |
 
 ---
 

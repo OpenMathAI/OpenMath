@@ -180,5 +180,39 @@
 
 ---
 
+## 12. 补齐：研究领域表（第 4 步 fields，与 yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | soft matter | 软物质 | 软物质物理奠基者（infobox Known for） | 诺奖页、结尾 |
+| 1 | liquid crystals | 液晶 | 1968 转入，Landau–de Gennes 理论 | 液晶页 |
+| 2 | polymer physics | 聚合物物理 | 《标度概念》/ reptation | 聚合物页 |
+| 3 | superconductivity | 超导 | 奥赛超导组 / BdG 方程 | 超导页 |
+| 4 | magnetism | 磁性 | 萨克莱中子散射与磁性起点 | 早年页 |
+
+### 补充裁定（本轮 2026-09-28）
+- **André Herpin 不入库**：仅 metadata.json 载，page.md 无载——陷阱表存档备 Review。
+- **Lev Landau 不入库**：Landau–de Gennes 为理论命名关联，无直接关系载录，勿造关系（§7 原裁定维持）。
+- **Kittel 入库**：page.md 明载 "postdoctoral research visitor with Charles Kittel"（1959 伯克利）。
+
+## 13. 补齐：术语清单（第 9 步）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| soft matter | 软物质 | 诺贝尔演讲题 Soft Matter；"命名者"禁写 |
+| liquid crystal | 液晶 | 1968 年转入 |
+| reptation | 蛇形运动 | 聚合物动力学标志概念 |
+| Landau–de Gennes theory | 朗道–德热纳理论 | 液晶连续体理论 |
+| Bogoliubov–de Gennes equation | 博戈留波夫–德热纳方程 | 超导时期贡献 |
+| neutron scattering | 中子散射 | 萨克莱时期主线 |
+| STRASACOL | 斯特拉斯堡-萨克莱-公学院联合行动 | 聚合物物理攻关 |
+| ESPCI Paris | 巴黎市工业物理化学高等学校 | 1976-2002 院长 |
+| wetting and adhesion | 润湿与粘附 | 1980 起界面问题 |
+| scaling concepts | 标度概念 | 1979 专著主题 |
+| ForMemRS | 英国皇家学会外籍院士 | 1984 |
+| Humanist Manifesto | 《人文主义宣言》 | 2003 年 22 位诺奖得主联署之一 |
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

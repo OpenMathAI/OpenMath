@@ -113,21 +113,11 @@
 | nationality | United States / India（历史：British Raj） | 待写入 |
 | primary_occupation | astrophysicist / theoretical physicist | 待写入 |
 | field_of_work | astrophysics / general relativity / fluid dynamics / mathematics | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 0（本批仅提示词+入库，未做 Beamer；立传完成后由主控置 1） | 已按 0 入库 |
 
 ## 7. 社会关系入库清单
 
-- **伯父（kinship/uncle-nephew）**：Chandrasekhara Venkata Raman（1930 诺奖；互指——Raman 篇已写）
-- **博士导师**：Ralph H. Fowler（剑桥，奖学金促成者）；Arthur Eddington（infobox 实载；亦是 1935 年冲突对手——relation 标 advisor + controversy 双属性）
-- **学术交往**：Max Born（哥廷根之邀）、Paul Dirac（哥本哈根之荐）、Niels Bohr（支持者/会面）、E. A. Milne、Victor Weisskopf、Léon Rosenfeld、George Placzek、Max Delbrück、Lev Landau（1934 列宁格勒）、Viktor Ambartsumian
-- **伯乐与庇护者**：Otto Struve、Gerard Kuiper、Robert Maynard Hutchins（校长）
-- **邀而未成**：Robert Oppenheimer（曼哈顿计划，安全审查延迟未果）
-- **著名博士生**：Donald Edward Osterbrock、Guido Münch、Roland Winston、Jeremiah P. Ostriker、Jerome Kristian、Yousef Sobouti、Anne Barbara Underhill、Arthur Code、Surindar Kumar Trehan
-- **著名学生（课堂）**：李政道 Tsung-Dao Lee、杨振宁 Chen-Ning Yang（先于他获诺奖）；Carl Sagan（受业并留有名评）
-- **编辑往事**：Eugene Parker（太阳风论文力排拒稿刊出）
-- **配偶**：Lalitha Doraiswamy（m. 1936）
-- **同届诺奖**：William Alfred Fowler（另一半，1983；互指 co-honored）
-- **冲突对象**：Arthur Eddington（1935 RAS 公开批判；controversy）
+> **2026-09-28 已入库 19 条**（id=2295，库内规范名 `Subrahmanyan Chandrasekhar`）：双博士导师 Ralph H. Fowler（库内 id=2039）+ Arthur Eddington（id=852，另加 controversy 1 条共两条）、伯父 Chandrasekhara Venkata Raman（库内 id=2023，Q60429；**勿用**库内旧 stub `C. V. Raman` id=2280）、配偶 Lalitha Doraiswamy（新建 stub）、co-honored William Alfred Fowler（新建 stub）、colleague Max Born（id=644）+ Eugene Parker（新建 stub）、9 博士生 Osterbrock/Münch/Winston/Ostriker/Kristian/Sobouti/Underhill/Code/Trehan（新建 stub）、课堂学生李政道（id=1090）+ 杨振宁（库内规范名 **`Chen Ning Yang`** id=1080，非 Chen-Ning）。**不入库**：Carl Sagan（仅课堂留名评）、Paul Dirac/Niels Bohr/Milne/Weisskopf/Rosenfeld/Placzek/Delbrück/Landau/Ambartsumian（仅会面/交往性提及）、Struve/Kuiper/Hutchins（伯乐非学术关系）、Robert Oppenheimer（邀而未成）。
 
 ## 8. 奖项清单
 
@@ -184,6 +174,23 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同届物理学家（William_Fowler）及海森堡式母本格式对齐
+
+## 12. 术语清单（终审用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Chandrasekhar limit | 钱德拉塞卡极限 | 白矮星质量上限，约 1.44 太阳质量 |
+| white dwarf | 白矮星 | 电子简并压力支撑的恒星残骸 |
+| degenerate matter | 简并物质 | 相对论性简并电子气是极限核心 |
+| dynamical friction | 动态摩擦 | 20 个偏微分方程刻画的星系动力学量 |
+| radiative transfer | 辐射转移 | 1943-50 分期主领域 |
+| hydrodynamic and hydromagnetic stability | 流体与磁流体稳定性 | 1950-61 分期主领域 |
+| systematization | 系统化 | 其研究哲学关键词，可直引原文 |
+| The Astrophysical Journal | 《天体物理学报》 | 主编 1952-1971 |
+| solar wind | 太阳风 | Parker 1957 论文 1958 刊出 |
+| Yerkes Observatory | 叶凯士天文台 | 1936 年入职起点 |
+| Enrico Fermi Institute | 恩里科·费米研究所 | 1952 年随讲席加入 |
+| Tamil Brahmin | 泰米尔婆罗门 | 家庭背景，勿写种姓评价 |
 
 ---
 

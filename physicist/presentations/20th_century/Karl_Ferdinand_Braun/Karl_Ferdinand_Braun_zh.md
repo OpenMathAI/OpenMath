@@ -1,172 +1,190 @@
-# Karl Ferdinand Braun（卡尔·费迪南德·布劳恩）立传提示词
+# 物理学家立传提示词（人物专属：Karl Ferdinand Braun）
 
-> qid=Q57077 · 1850-06-06 – 1918-04-20 · 德国应用物理学家、发明家 · 20 世纪 · 1909 诺贝尔物理学奖（与马可尼共享）
-> 本地 Wikipedia 数据源：`physicist/presentations/20th_century/20th_century/Karl_Ferdinand_Braun/`（page.md + metadata.json + images.txt）
+> 本文件是 OpenPhysicist 20 世纪诺贝尔物理学奖批量立传的**人物专属提示词**，结构对齐标杆 `Kenneth_G_Wilson/Kenneth_G_Wilson_zh.md`（0–11 节母本）。
+> 直接复制本文件到新对话中使用，按步骤执行，每完成一步汇报进度。
 
 ---
 
-## 0. 正文形式说明（参考物理学家标杆 Kenneth G. Wilson）
+## 一、模板定位
 
-> 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**。物理学家立传格式硬性要求：
+- **目标项目**：OpenPhysicist —— 开放物理学家人物史（与 OpenMath 数学家侧共享 GitHub `OpenMathAI/OpenMath`）。
+- **本实例**：Karl Ferdinand Braun（卡尔·费迪南德·布劳恩），1909 年诺贝尔物理学奖得主（与 Guglielmo Marconi 共享），布劳恩管（阴极射线管）、晶体检波器与无线电双回路发明的"三线天才"。
+- **设计哲学**：保留物理学家模板两大骨架——「身份信息页」与「研究领域结构化表达」；本人物的设计重心是**一个物理学家点亮三条技术谱系**：显示（CRT→电视）、半导体（1874 单向导电→电子学）、无线电（双回路/相控阵→雷达与 MIMO）。
+
+---
+
+## 二、背景信息 【人物专属】
+
+- **目标物理学家**：Karl Ferdinand Braun（1850-06-06 ~ 1918-04-20，享年 67 岁）
+- **气质关键词**：**布劳恩管的父亲、半导体之路的起点、无线电的物理改良者**
+- **官方获奖理由（禁止改写，与 Marconi 共享）**：
+  > "in recognition of their contributions to the development of wireless telegraphy"（表彰他们对无线电极报发展的贡献）
+- **设计母题**：**电子束与射线管（electron beam / Braun tube）**——荧光屏上的偏转光点；视觉语言用真空管轮廓、扫描线与定向波束。
+- **本地数据源**：`physicist/presentations/20th_century/20th_century/Karl_Ferdinand_Braun/page.md`（Wikipedia 全文 + frontmatter）
+- **参考模板**：标杆 `Kenneth_G_Wilson/Kenneth_G_Wilson_zh.md`；首页 `cover/openphysicist_page.tex`（统一 `\input`）
+
+---
+
+## 三、任务流程 【模板通用，逐步执行】
+
+### 第 0 步：下载并核对 Wikipedia 页面 【人物专属】
+
+- ⏳ **待下载** `https://en.wikipedia.org/wiki/Karl_Ferdinand_Braun` 到 `{Dir}/Karl_Ferdinand_Braun.html`（本地暂只有 `page.md`）
+- **事实基准**：
+  - 生卒（1850-06-06 生于黑森选侯国富尔达 ~ 1918-04-20 卒于美国纽约布鲁克林，享年 67；信义宗教徒）
+  - 教育（1868 入马尔堡大学习物理/化学/数学；1869 转柏林大学任 Heinrich Gustav Magnus 助手；Magnus 1870 去世后师从 Georg Hermann Quincke；1872 以振动弦论文获柏林大学博士；后随 Quincke 赴维尔茨堡任助教）
+  - 任职（1874 莱比锡 Thomasschule 任教 → 1876 马尔堡理论物理特聘教授 → 1880 斯特拉斯堡 → 1883 卡尔斯鲁厄高等技术学校物理教授 → 1885 蒂宾根 → 1895 重返斯特拉斯堡任物理研究所所长）
+  - 关键荣誉（Nobel 1909（奖章即其双回路设计图）；维也纳技术大学荣誉博士；法兰克福物理协会荣誉会员；1987 年 SID 设立 Karl Ferdinand Braun Prize 以其命名）
+  - 知名学生（博士生：Richard Gans、Leonid Mandelstam、Nikolai Papaleksi、Godfrey Thomson；助手 Jonathan Zenneck）
+  - 核心贡献清单：
+    1. 1874 金属-半导体结单向导电（半导体电子学起点）
+    2. 1897 布劳恩管（阴极射线管，示波器与电视之源）
+    3. 无线电双回路发射机（振荡与辐射回路感应耦合分离）
+    4. 晶体检波器（取代金屑检波器，提升接收灵敏度）
+    5. 1905 相控阵定向天线（雷达/智能天线/MIMO 先声）
+    6. Telefunken 共同创始（Stollwerck 资本联盟→1903 公司化）
+  - 诺奖演讲（注记）：1909-12-11 *Electrical Oscillations and Wireless Telegraphy*
+  - 核心时间线（1850 生 → 1868 马尔堡 → 1869 柏林/Magnus → 1872 博士 → 1874 半导体单向导电发现 + 莱比锡任教 → 1876 马尔堡教授 → 1883 卡尔斯鲁厄 → 1885 蒂宾根 → 1895 斯特拉斯堡所长 → 1897 布劳恩管 → 1897-98 转向无线电+晶体检波器 → 1899 Cuxhaven 北海实验+专利 → 1900-09-24 Cuxhaven–Helgoland 62 km → 1903 Telefunken 前身公司 → 1905 相控阵天线 → 1909 共享诺奖 → 1914 赴纽约为 Telefunken 专利诉讼作证 → 1917 美对德宣战后以敌侨身份滞留 → 1918 卒于布鲁克林）
+
+### 第 1 步：建立目录 【模板通用】
+
+- 在 `physicist/presentations/20th_century/` 下已有 `Karl_Ferdinand_Braun/`（本提示词所在），需新建 `images/` 子目录存放肖像与插图
+
+### 第 2 步：复制 Makefile 【模板通用】
+
+- 复制标杆目录 `Kenneth_G_Wilson/Makefile`，设置 `MAIN=Karl_Ferdinand_Braun_zh`、`VIDEO_NAME=Karl_Ferdinand_Braun_zh`
+
+### 第 3 步：收集图片 【人物专属】
+
+- 肖像：page.md 内嵌 1904 年实验室照（KF_Braun.png）；优先 Commons `Special:FilePath/KF Braun.png?width=500`（布劳恩在实验室，1904）
+- 备选：移动电台 1903 照、原始布劳恩管 1897 实物照（作插图更好）；再失败用装饰圆占位（主色边框圆 + 姓名缩写）
+
+### 第 4 步：研究领域梳理 + 入库 【人物专属内容】
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | wireless telegraphy | 无线电报 | 双回路发射机/晶体检波器，1909 诺奖核心 | 核心页 |
+| 1 | electronics | 电子学 | 布劳恩管开启显示与示波器 | CRT 页 |
+| 2 | semiconductor physics | 半导体物理 | 1874 金属-半导体结单向导电 | 半导体页 |
+| 3 | antenna engineering | 天线技术 | 1905 相控阵→雷达/MIMO 先声 | 天线页 |
+
+入库：`MySQL/data/Karl_Ferdinand_Braun.yaml`（已备好，`cd MySQL && python3 seed_person.py data/Karl_Ferdinand_Braun.yaml`）。
+校验：`SELECT f.name_en, pf.rank FROM person_field pf JOIN fields f ON f.id=pf.field_id WHERE pf.person_id=<id> ORDER BY pf.rank`。
+
+### 第 4.5 步：社会关系梳理 + 入库 【人物专属内容】
+
+| 关系类型 | 对方 | 方向 | note |
+|---------|------|------|------|
+| advisor-student | Georg Hermann Quincke | 师→生 | 柏林大学博士导师，1872 振动弦论文 |
+| advisor-student | Richard Gans | 布劳恩→学生 | 博士生 |
+| advisor-student | Leonid Mandelstam | 布劳恩→学生 | 博士生 |
+| advisor-student | Nikolai Papaleksi | 布劳恩→学生 | 博士生 |
+| advisor-student | Godfrey Thomson | 布劳恩→学生 | 博士生 |
+| co-honored | Guglielmo Marconi | 无向 | 1909 年诺贝尔物理学奖共享 |
+| colleague | Jonathan Zenneck | 无向 | 助手，1899 为布劳恩管引入 Y 偏转 |
+
+### 第 5 步：设计配色方案 【人物专属色彩】
+
+- **气质**：真空管、射线、德意志工匠
+- **配色**：电子管深褐（主色）+ 诺奖香槟金 `C9A227` + 四分类色
+  - 主色 — 电子管深褐 `#4E342E`
+  - `badgeTube` 阴极射线管 — `#B23A48`
+  - `badgeCrystal` 晶体检波器 — `#3B7A57`
+  - `badgeRadio` 双回路无线电 — `#4C5FD5`
+  - `badgeAntenna` 相控阵 — `#C97B2D`
+- **背景母题**：稀疏真空管轮廓 + 扫描线光点，呼应"荧光屏上被驱动的电子束"
+
+### 5.1 物理学家格式硬要求 【模板通用，★ 必须满足】
 
 1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。
-2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 德国`），底部状态栏给出 `国籍 | 机构 | 主要奖项` 三要素。
-3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧 `2×2` 信息网格，含至少：生卒、本名、国籍、出生地、去世地、教育、师承、任职、主要荣誉、核心领域。事实取自 Wikipedia infobox，不得杜撰。
-4. **配色 + 阴极射线背景**：主色 + 强调色（诺奖金）+ 四分类色；背景用电子束扫描线/荧光辉光圆斑呼应「布劳恩管」母题。
-5. **品牌口径统一**：结尾页底部品牌统一写 `OpenMathAI`；引号用半角 `" "`。
+2. **封面有国籍**：顶部副标题或底部状态栏明示国籍；底部状态栏给出 `国籍 | 机构 | 主要奖项` 三要素（布劳恩：德国 | 斯特拉斯堡大学 | Nobel 1909）。
+3. **必须有身份信息页**：封面之后、核心贡献之前。左侧头像 + 右侧信息网格，含至少：生卒、本名（Karl Ferdinand Braun）、国籍、出生地（富尔达）、师承（Quincke）、任职（六站教职）、主要荣誉、核心领域。事实取自 page.md infobox，不得杜撰。
+4. **品牌口径统一（共享 GitHub）**：结尾页底部品牌标注统一写 `OpenMathAI`（不是 `OpenPhysicist`）；GitHub 链接由首页模板 `\input` 继承，子 deck 不重复；引号用半角 `" "`。
+
+### 第 6 步：规划幻灯片序列 【人物专属，可微调】
+
+```
+00  OpenPhysicist 项目首页（\input cover/openphysicist_page.tex）
+01  封面 — 布劳恩管之父 / Karl Ferdinand Braun 1850–1918 + badge + 头像 + 国籍行
+02  身份信息页（★ 必做）— 左头像 + 右信息网格
+03  核心贡献概览 — CRT / 半导体 / 双回路 / 相控阵（三条技术谱系）
+04  富尔达求学路 (1850–1872) — Marburg→Berlin、Magnus→Quincke、振动弦博士
+05  六站教职 (1874–1895) — Thomasschule→Marburg→Strassburg→Karlsruhe→Tübingen→Strassburg
+06  1874：半导体的起点 — 金属-半导体结单向导电，点接触整流之基
+07  1897：布劳恩管 — 冷阴极+10 万伏+旋转镜的"不完美"起点
+08  无线电双回路 — 感应耦合分离振荡与辐射回路，续振与远距
+09  晶体检波器与 62 km — 取代金屑检波器、Cuxhaven–Helgoland
+10  1905：相控阵天线 — 三天线定向发射，雷达/MIMO 先声
+11  1909 诺贝尔物理学奖 — 与 Marconi 共享；Marconi 自认"借用"（注记）
+12  Telefunken 与产业 — Stollwerck 资本、Professor Braun's Telegraphy Company
+13  纽约的晚年 (1914–1918) — 专利诉讼证人、敌侨、布鲁克林
+14  遗产：从布劳恩管到每一块屏幕 — 电视/半导体/雷达三线传承
+15  结尾
+```
+
+### 第 7 步：编写 Beamer 源码 【模板通用】
+
+- 每页 `\newcommand{\xxxslide}{...}` 定义；身份信息页实现模式参照成品 `\profileslide`；头部宏（配色 / `\plainbar` / `\deckbackground` / `\sectiontitle`）可整体复用标杆骨架。
+
+### 第 8 步：布局检查 【模板通用】
+
+- 每写完一页 `make`，用 `pdftoppm` 截图检查溢出/重叠；修复优先级：删 `\plainbar` → 缩 `inner sep` → 缩字号 → 减行距 → 调 y 坐标。
+
+### 第 9 步：史实审查 + 术语审查 【人物专属】
+
+**Braun 特殊陷阱**：
+
+| 陷阱 | 说明 |
+|------|------|
+| 获奖理由 | 共享句式 "in recognition of their contributions to the development of wireless telegraphy"，勿写 Braun 独得；其奖章图案即双回路设计 |
+| 导师口径 | 博士导师 = **Quincke**（infobox+正文一致）；Magnus 是"其他学术导师/助手东家"；frontmatter 另列 August Kundt 但正文未提，禁写 Kundt |
+| "电视之父" | 是与 Nipkow 等人**共享**的称谓，且 page 明载 Braun 本人认为布劳恩管不适合电视——禁写"电视发明人" |
+| 1874 半导体 | 发现的是金属-半导体结**单向导电性质**（点接触整流之基），禁写成"发明二极管成品"；"every semiconductor 的曾祖父"是媒体比喻，可作注记勿当头衔 |
+| CRT 细节 | 1897 第一版：冷阴极、中等真空、10 万伏加速、磁偏转仅一向+旋转镜——按"不完美起点"叙事，勿写成完善仪器 |
+| 1901 跨洋 | Marconi 在纽芬兰用的是 Braun 电路发射机，但"是否真的收到"文献有争议（page 明载），禁写成确凿佐证 |
+| Marconi 关系 | page 明载 Marconi 大量调谐专利用了 Braun 的专利并自认 "borrowed"——可客观注记，勿写成剽窃指控 |
+| 学生同名 | Godfrey Thomson 与 J.J. Thomson / G.P. Thomson 无关，note 已注明，禁混淆 |
+| 晚年身份 | 1917 美对德宣战后以"敌侨"身份被拘但可在布鲁克林自由活动，1918-04-20 卒——按 page 原口径 |
+| 引语红线 | 全篇仅 Marconi "borrowed" 一词带引号（page 明载），其余禁引语；诺奖演讲标题 Electrical Oscillations and Wireless Telegraphy 可注 |
+
+**术语清单**：
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| cathode-ray tube | 阴极射线管（布劳恩管） | 德语 Braunsche Röhre |
+| crystal detector | 晶体检波器 | 取代金屑检波器 |
+| inductive coupling | 感应耦合 | 双回路分离的关键 |
+| phased array | 相控阵 | 1905 三天线定向发射 |
+| semiconductor | 半导体 | 1874 单向导电发现 |
+| point-contact rectifier | 点接触整流器 | 后续器件化 |
+| damped oscillation | 阻尼振荡 | 火花系统问题 |
+| cold cathode | 冷阴极 | 1897 版特征 |
+| Leyden jar | 莱顿瓶 | 振荡回路储能 |
+| oscilloscope | 示波器 | CRT 早期用途 |
 
 ---
 
-## 1. 背景信息（用于 Slide 1-3）
+## 四、背景音乐选择 【人物专属】
 
-- **全名**：Karl Ferdinand Braun（卡尔·费迪南德·布劳恩，德语发音 [ˈfɛʁdinant ˈbʁaʊ̯n]）
-- **生卒**：1850-06-06 生于富尔达（Fulda，黑森选侯国）→ 1918-04-20 逝于纽约市（美国），享年 67
-- **国籍**：德国（黑森选侯国 → 普鲁士王国）——封面用「德国」
-- **身份**：应用物理学家、发明家、大学教师；Telefunken 公司共同创始人
-- **宗教**：信义宗（Lutheran）
-- **教育轨迹**：
-  - 1868 年入马尔堡大学学习物理、化学与数学
-  - 1869 年转入柏林大学，任 Heinrich Gustav Magnus 的助手；1870 年 Magnus 去世后随 Georg Hermann Quincke 继续研究
-  - 1872 年获**柏林大学博士**，论文《Ueber den Einfluss von Steifigkeit, Befestigung und Amplitude auf die Schwingungen von Saiten》（弦振动研究）
-  - 之后随 Quincke 赴维尔茨堡大学任助手
-- **博士导师**：Georg Hermann Quincke；**其他学术导师**：Heinrich Gustav Magnus
-- **研究领域**：物理学（半导体、阴极射线、无线电、天线）
-
-## 2. 核心叙事亮点（用于 Slide 4-13）
-
-1. **半导体之父（1874）**：发现某些材料的非对称导电特性——金属-半导体结单向导电——点接触整流器与第一个半导体二极管的基础；被称为"每一枚造出的半导体的曾祖父"，与电子学/电子工程的诞生共同起步。
-2. **布劳恩管——阴极射线管（1897）**：斯特拉斯堡制成第一支 CRT（冷阴极、中等真空、10 万伏加速电压、旋转镜辅助一维磁偏转）；至今德语区仍称 CRT 为 Braunsche Röhre，韩语（브라운관）、日语（ブラウン管）皆以其名命名。
-3. **电视之路**：CRT 成为全电子电视的基石（直至 20 世纪末 LCD 出现，一切电视/电脑屏幕皆布劳恩管）；1899 年助手 Zenneck 引入振荡控制 Y 偏转，后加热阴极、Wehnelt 圆筒与高真空技术完善——尽管布劳恩本人认为此管不适合电视。
-4. **无线电两回路系统（1897–1898）**：将谐振回路与天线回路以电感耦合分离——振荡更持久、信号更强、占用带宽更小、距离更远；马可尼越洋接收所用的发射机即采用布劳恩回路设计。
-5. **晶体检波器（约 1898）**：以晶体探测器取代重复性不佳的金属屑检波器（coherer），大幅提升接收灵敏度——直至电子管出现前的关键器件；早期 FM 雷达仍用晶体检波器。
-6. **距离纪录**：1899 年斯特拉斯堡至 Mutzig 42 km；1899 年春与 Cantor、Zenneck 赴库克斯港北海试验；1900-09-24 库克斯港—黑尔戈兰岛 62 km 定期无线电报，易北河灯船与海岸站开通常规业务。
-7. **相控阵天线（1905）**：精心排布三副天线实现定向发射——其诺贝尔奖奖章上即镌刻此设计；由此衍生雷达、智能天线与 MIMO。
-8. **Telefunken（1903）**：科隆巧克力商 Stollwerck 出资 56 万马克组建财团开发其专利→"布劳恩教授电报公司"→Telefunken AG，建成世界第一个全球通信网络；与 Graf von Arco、Adolf Slaby 合作开发军用移动无线电台（1903 年 AEG 与西门子-哈尔斯克双马车实现）。
-9. **马可尼的"借用"**：马可尼多项调谐专利使用了布劳恩的英国调谐专利；马可尼后来亲口向布劳恩承认"借用"（borrowed）了其工作的部分内容。
-10. **1909 诺贝尔物理学奖（与马可尼共享）**："表彰他们对无线电报发展所作出的贡献"；诺奖演说《Electrical Oscillations and Wireless Telegraphy》（1909-12-11）。
-11. **指针验电器**：以其名字命名的指针验电器发明者。
-12. **客死他乡（1914–1918）**：1914 年赴纽约为 Telefunken Sayville 电台专利诉讼出庭辩护；1917 年美国对德宣战后作为敌方侨民被拘（可在布鲁克林范围内自由活动），1918-04-20 在布鲁克林去世。
-13. **身后纪念**：国际信息显示学会（SID）1987 年设立卡尔·费迪南德·布劳恩奖（显示技术杰出成就）；其发明的范围横跨半导体、显示与无线三大现代产业。
-
-## 3. 配色方案
-
-| 用途 | 色值 | 说明 |
-|---|---|---|
-| 主色（深钢青） | `#17495B` | 布劳恩管玻璃的深色 / 阴极射线的幽蓝 |
-| 强调色（诺奖金） | `#C9A227` | 诺贝尔奖 / 尊崇 |
-| 分类色 1（阴极射线与电视 — 荧光绿） | `#3FA34D` | 布劳恩管 / 荧光屏 / 电视 |
-| 分类色 2（半导体 — 晶体紫） | `#6B4FA0` | 1874 非对称导电 / 晶体检波器 / 二极管 |
-| 分类色 3（无线电与天线 — 电波橙） | `#D07B2F` | 两回路系统 / 相控阵 / 无线电报 |
-| 分类色 4（历史与身后 — 石墨灰） | `#8A8D93` | Telefunken 产业史 / 客死纽约 / 纪念 |
-| 背景 | `#F7F6F9` | 浅灰白 |
-
-- **背景母题**：电子束扫描线与荧光辉光圆斑（稀疏横向细线 + 数个大辉光圆，四档大小错落），呼应「布劳恩管中电子束打上荧光屏」的视觉语言。
-
-### 3.5 背景音乐选择 ✅ 【人物专属】
-
-- **气质定位**：深沉 / 内敛 / 历史感（被诺奖光环遮蔽的第二人，三大现代产业的共同源头）
-- **选定曲目**：Alex-Productions **PAST**（历史感 / 深沉），匹配"常被忽略的奠基者"的历史纵深——布劳恩的成就跨越 1874–1905 四十年，是一段需要回望的"过去"。
-- **落地文件**：`physicist/presentations/20th_century/Karl_Ferdinand_Braun/PAST.wav`（复制自音乐库，不入 git）。
-- **匹配理由**：布劳恩是典型的"深沉理性"型人物——物理学家式的工程改良（非马可尼式的商业远征），1918 年客死纽约的落寞结局需要历史感的沉稳底色；PAST 的纪录片气质正合"被遗忘的伟大"这一叙事基调。
-
-## 4. Slide 规划（约 15 页，Wilson 式结构）
-
-1. **封面**（`\titleslide`）：顶部标签「布劳恩管与无线电之父 · 德国」+ 布劳恩 1850–1918 + 右上头像 + 国籍行 + 底部三要素状态栏 + 四色 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右 2×2 信息网格（生卒 / 本名 / 国籍 / 出生地 / 去世地 / 教育 / 师承 / 任职 / 主要荣誉 / 核心领域）
-3. **核心贡献概览**（`\hookslide`）：半导体与晶体整流 / 阴极射线管 / 无线电两回路系统 / 相控阵与 Telefunken
-4. **早年：富尔达到柏林**（1850–1872）：Magnus 与 Quincke 门下、弦振动博士论文
-5. **1874：半导体的黎明**：金属-半导体结的单向导电、点接触整流器、"半导体的曾祖父"
-6. **学院生涯**（1874–1895）：莱比锡 Thomasschule → 马尔堡 → 斯特拉斯堡 → 卡尔斯鲁厄 → 蒂宾根 → 重返斯特拉斯堡物理研究所所长
-7. **布劳恩管（1897）**：冷阴极与 10 万伏、旋转镜、Zenneck 的后续改进
-8. **从示波器到电视机**：CRT 与全电子电视、Braunsche Röhre 的跨国命名
-9. **无线电两回路系统**：电感耦合、更长距离、马可尼的"借用"
-10. **晶体检波器与距离纪录**：取代 coherer、42 km → 62 km 黑尔戈兰岛
-11. **相控阵（1905）**：三副天线的定向发射、奖章上的设计、通向雷达与 MIMO
-12. **Telefunken 与移动电台**：Stollwerck 财团、AEG/西门子双马车
-13. **1909 诺贝尔物理学奖**：与马可尼共享、"贡献常被忽略"的第二人
-14. **客死纽约**（1914–1918）：Sayville 诉讼、敌方侨民、布鲁克林
-15. **结尾**：半导体、显示与无线三大产业的共同源头——"布劳恩奖"的当代回响
-
-## 5. 史实陷阱与敏感点（终审必须检查）
-
-- **1909 诺奖归属**：与 **Guglielmo Marconi 共享**，理由是"对无线电报发展所作出的贡献"（their contributions）——布劳恩的两回路系统、晶体检波器与相控阵常被忽略——勿写马可尼"独得"，勿把布劳恩写成"陪衬"。
-- **马可尼"借用"**：马可尼的多项调谐专利使用了布劳恩的英国调谐专利，且亲口承认"borrowed"——可写但注明来源（page.md 原文），勿写成"剽窃/抄袭"等强断言。
-- **半导体表述**：1874 年发现的是**非对称导电特性**，由此发展出点接触整流器/第一个半导体二极管——勿写"发明晶体管"（1947）或"发明半导体"。
-- **CRT 与电视**：1897 年发明的是**阴极射线管**；布劳恩本人认为其"不适合电视"——勿写"发明电视机"；"电视之父"是与 Nipkow 等人**共享**的称呼。
-- **死亡地点**：纽约市布鲁克林（敌方侨民被拘期间），1918——勿写"死于德国"或"病逝斯特拉斯堡"。
-- **相控阵**：1905 年发明的是**相控阵天线**（导致雷达/智能天线/MIMO 的发展）——勿写"发明雷达"。
-- **博士导师**：infobox 为 **Georg Hermann Quincke**（Magnus 去世后随其继续）；metadata.json 另列 August Kundt——以 page.md infobox 为准，Kundt 不写。
-- **纽芬兰接收争议**：1901-12-12 马可尼在 Signal Hill 使用**布劳恩回路设计的发射机**（Poldhu），"这次接收是否真的发生，文献中仍有争论"——表述需谨慎。
-- **Telefunken 起源**：Stollwerck 财团（56 万马克）→"布劳恩教授电报公司"→Telefunken——布劳恩为 co-founder，勿写"独自创立"。
-- **获奖极少**：布劳恩的主要奖项就是 1909 诺奖（外加维也纳工业大学荣誉博士、法兰克福物理协会荣誉会员）——勿杜撰其他奖章。
-
-## 6. 数据库字段核对表
-
-| 字段 | 值 | 状态 |
-|---|---|---|
-| qid | Q57077 | 待写入 |
-| name_zh | 布劳恩（或 卡尔·费迪南德·布劳恩） | 待写入 |
-| name_en | Karl Ferdinand Braun | 待写入 |
-| birth_date | 1850-06-06 | 待写入 |
-| death_date | 1918-04-20 | 待写入 |
-| nationality | Germany（Electorate of Hesse → Kingdom of Prussia） | 待写入 |
-| primary_occupation | physicist | 待写入 |
-| field_of_work | physics | 待写入 |
-| has_biography | 1 | 本次置 1 |
-
-## 7. 社会关系入库清单
-
-- **博士导师**：Georg Hermann Quincke
-- **其他学术导师**：Heinrich Gustav Magnus（柏林，1870 年去世）
-- **助手与同事**：Jonathan Zenneck（CRT 后续改进、库克斯港试验同行）、Cantor（试验同行）
-- **Telefunken 团队**：Georg Graf von Arco、Adolf Slaby（军用移动电台）、Ludwig Stollwerck（商业伙伴）
-- **共同得主（co-honored）**：Guglielmo Marconi（1909 诺贝尔物理学奖共享，且马可尼承认借用其工作）
-- **著名博士学生**：Richard Gans、Leonid Mandelstam、Nikolai Papaleksi、Godfrey Thomson
-- **诺贝尔奖同届**：1909 年诺贝尔物理学奖仅 Marconi 与 Braun 两人共享
-
-## 8. 奖项清单
-
-- 诺贝尔物理学奖（1909，与马可尼共享）
-- 维也纳工业大学荣誉博士
-- 法兰克福物理协会荣誉会员
-- 身后：Karl Ferdinand Braun Prize（国际信息显示学会 SID，1987 年设立）
-
-## 9. 机构清单
-
-- 教育：马尔堡大学（1868）、柏林大学（1869，博士 1872）、（随 Quincke）维尔茨堡大学
-- 任职：莱比锡 Thomasschule 教师（1874）、马尔堡大学理论物理编外教授（1876）、斯特拉斯堡大学（1880）、卡尔斯鲁厄理工学院物理学教授（1883）、蒂宾根大学（1885）、斯特拉斯堡大学物理研究所所长（1895–）
-- 产业：Telefunken AG 共同创始人（1903）；AEG/西门子军用移动电台项目（1903）
-
-## 10. 终审清单
-
-- [ ] 生卒 1850-06-06 / 1918-04-20，享年 67，出生地 Fulda，去世地纽约（布鲁克林）
-- [ ] 1909 诺奖"与 Marconi 共享"且布劳恩贡献不被略写
-- [ ] "马可尼承认借用"表述有出处、不写"剽窃"
-- [ ] 1874 年"非对称导电/点接触整流器"、不写"发明晶体管"
-- [ ] 1897 年"阴极射线管"、不写"发明电视机"
-- [ ] 相控阵 1905、不写"发明雷达"
-- [ ] 博士导师 Quincke（非 Kundt）
-- [ ] 死亡地纽约布鲁克林、敌方侨民背景表述准确
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 阴极射线背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
-
-## 11. Review 流程规范（两轮 Review）
-
-### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `20th_century/Karl_Ferdinand_Braun/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：使用 images.txt 中的肖像（`KF_Braun.png`，1904 年实验室照）
-- [ ] **国籍**：封面顶部徽章明示德国
-- [ ] **引语核对**：引语必须在 page.md 原文找到（如马可尼的"borrowed"）；无原文用间接转述
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
-
-### 第 2 轮（Review-2）：结构优化
-- [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
-- [ ] 身份信息页布局与 Wilson 模板对齐
-- [ ] 中文标点 / 断行 / 间距统一
-- [ ] 与同世纪物理学家（Heisenberg / Marconi / Röntgen）格式对齐
+- **选定曲目**：**The Invisible Light** — Infraction（纪录片 / 电影 / 稳重，2:34）
+- **匹配理由**：阴极射线正是"看不见的光"——肉眼不可见却点亮荧光屏；曲名与 CRT/射线母题直接对应，纪录片气质匹配其三条技术谱系的沉稳叙事。
+- **本地路径**：`music_audio/inspiring-electronic/19-tGxXsgSKPiQ-Documentary Cinematic by Infraction [No Copyright Music] ⧸ The Invisible Light.wav`
+- **备选**（未采用）：
+  - ★★ Nostalgia — "温和/传记"匹配六站教职的辗转叙事，但"怀旧"气质弱于射线母题的直接对应
+  - ★ PAST — "历史感/深沉"匹配其 1918 年客死纽约的晚年，但基调过沉，与其三条谱系的创造感不合
+- **时长核验**：曲目 2:34 > 16 页 × 7 秒 ≈ 112 秒 → ffmpeg `-shortest` 自动对齐
+- **备注**：批内 BGM 去重——Lippmann=Shine Like The Sun、Marconi=SEA、van der Waals=Eternals、Wien=The Flow of Time。
 
 ---
+
+## 五、关键参考文件清单 【模板通用】
+
+| 文件 | 用途 |
+|------|------|
+| `physicist/presentations/20th_century/20th_century/Karl_Ferdinand_Braun/page.md` | 本地 Wikipedia 正文（事实基准） |
+| `physicist/presentations/20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.md` | 结构标杆 |
+| `physicist/presentations/cover/openphysicist_page.tex` | 项目首页模板 |
+| `MySQL/data/Karl_Ferdinand_Braun.yaml` | 入库 yaml（已按本提示词 §4/§4.5 备好） |
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

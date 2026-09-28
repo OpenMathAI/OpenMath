@@ -103,6 +103,31 @@
 - **肖像**：`images.txt` **为空**——封面用装饰圆占位，须在 tex 中用 `\IfFileExists` 条件包含。
 - **同名人**：勿与 Tsung-Dao Lee（李政道）混淆——本篇全名 David M. Lee，封面国籍行明示美国。
 
+## 5.5 研究领域表（第 4 步入库对照，与 MySQL/data/David_M._Lee.yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | low-temperature physics | 低温物理 | 一生主题，毫开尔文量级 | 全篇 |
+| 1 | superfluidity | 超流 | 1972 发现 ³He 超流，1996 诺奖核心 | 发现页 |
+| 2 | helium-3 | 氦-3 | 液态/固态/超流 ³He 及 ⁴He 混合物 | 核心页 |
+| 3 | condensed matter physics | 凝聚态物理 | 固体 ³He 反铁磁有序等 | 其他发现页 |
+| 4 | experimental physics | 实验物理 | Pomeranchuk cell 等实验路线 | 方法页 |
+
+## 5.6 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| superfluidity in helium-3 | 氦-3 的超流性 | 1996 诺奖官方理由用词，"their" 三人共享 |
+| Pomeranchuk cell | Pomeranchuk 冷却池 | 绝热加压制冷；勿加"误认磁性相变"叙事 |
+| Laboratory of Atomic and Solid State Physics (LASSP) | 原子与固体物理实验室 | 表述为"负责组建"，勿写"任首任主任" |
+| antiferromagnetic ordering | 反铁磁有序 | 固体氦-3 中的发现 |
+| nuclear spin waves | 核自旋波 | 自旋极化原子氢气体（与 Freed 合作） |
+| tri-critical point | 三临界点 | 液态 ⁴He-³He 相分离曲线（与 Reppy 合作） |
+| Simon Memorial Prize | 西蒙纪念奖 | 1976 英国物理学会 |
+| Oliver E. Buckley Condensed Matter Prize |巴克利凝聚态奖| 1981 与 Osheroff、Richardson 同获；勿并列 infobox 的 1970 年份噪声 |
+| distinguished professor | 杰出教授 | Texas A&M（2009 起） |
+| impurity-helium solids | 杂质-氦固体 | 原 Cornell 组继续研究方向 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -117,12 +142,20 @@
 | field_of_work | physics / low-temperature physics | 待写入 |
 | has_biography | 1 | 本次置 1 |
 
-## 7. 社会关系入库清单
+## 7. 社会关系入库清单（★ 已按库内规范名核对，与 MySQL/data/David_M._Lee.yaml 一致）
 
-- **博士导师**：Henry A. Fairbank（advisor-student，耶鲁低温物理组）
-- **博士生**：Douglas Osheroff（advisor-student，1972 超流发现时的研究生，1996 诺奖）、Nicholas P. Bigelow
-- **核心合作者**：Robert C. Richardson（colleague / co-honored，Cornell 同事，1996 共同诺奖）、Jack H. Freed（核自旋波）、John Reppy（三临界点）
-- **同届得主**：Douglas Osheroff、Robert C. Richardson（co-honored，三人平分）
+| 类型 | 对方（库内规范名） | 方向 | note |
+|------|------|------|------|
+| advisor-student | Henry A. Fairbank | 师→生 | 耶鲁低温物理组博士导师 |
+| advisor-student | Douglas D. Osheroff（id=2418） | 师→生 | 研究生，1972 超流发现三人组 |
+| colleague | Robert C. Richardson | 无向 | Cornell LASSP 资深同事，三人组 |
+| co-honored | Robert C. Richardson | 无向 | 1996 诺奖三人平分；1981 Buckley 同获 |
+| co-honored | Douglas D. Osheroff（id=2418） | 无向 | 1996 诺奖三人平分；1981 Buckley 同获 |
+| colleague | Jack H. Freed | 无向 | 自旋极化氢核自旋波合作者 |
+| colleague | John Reppy | 无向 | 三临界点合作者 |
+| spouse | Dana | 无向 | Cornell 另一系博士生 |
+
+> **metadata-only 不入库**：Nicholas P. Bigelow（博士生）仅 metadata.json 有载，page.md 无载——不入库，此处存档。
 
 ## 8. 奖项清单
 

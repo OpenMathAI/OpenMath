@@ -178,3 +178,20 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+---
+
+## 12. 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Compton effect | 康普顿效应 | 1922 年发现、1923 年发表，诺奖理由 "the effect named after him" |
+| Compton wavelength | 康普顿波长 | h/mₑc ≈ 2.43×10⁻¹² m，波长偏移上限是两倍（θ=180°） |
+| photon momentum | 光子动量 | 证明电磁辐射的粒子性 |
+| coincidence method | 符合法 | 与 Simon 发展；Bothe 与 Geiger 独立发展类似方法 |
+| latitude effect | 宇宙线纬度效应 | 两极比赤道高 15%，源于地磁场 |
+| X-Rays and Electrons | 《X 射线与电子》 | 1926 专著，1935 与 Allison 修订为标准参考书 |
+| Metallurgical Laboratory | 冶金实验室 | 曼哈顿计划钚计划载体，Compton 主管 |
+| Chicago Pile-1 | CP-1 反应堆 | 1942-12-02 在 Stagg Field 看台下首次临界 |
+| Compton generator | 康普顿发生器 | 环形水管演示地球自转，早年发明 |
+| Medal for Merit | 功勋勋章 | 表彰其战时贡献，勿与其他奖项混淆 |

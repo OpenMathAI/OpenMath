@@ -95,6 +95,21 @@
 - **专业口径**：他是"理论家转实验家"（Kaiser 语），毕业后先理论后实验——勿写成"天生的实验物理学家"。
 - **引语核对**：可引 "most people who use quantum mechanics have little need to know much about the interpretation of the subject"（page.md 原文）；Kaiser 的 "rare theorist turned experimentalist" 为转述他人评语，注明来源。
 
+### 5.1 术语清单（英文/中文/风险点）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Lamb shift | 兰姆移位 | 氢原子 2S₁/₂ 与 2P₁/₂ 能级位移；获奖「氢光谱精细结构的发现」 |
+| fine structure | 精细结构 | 获奖理由；**勿误写为超精细结构（hyperfine）** |
+| Lamb–Mössbauer factor | Lamb-Mössbauer 因子 | 1939 博士级工作；"擦肩而过"表述勿写成"发现了 Mössbauer 效应" |
+| quantum electrodynamics (QED) | 量子电动力学 | 兰姆移位是其关键催化，勿写成"创立 QED" |
+| quantum measurement | 量子测量 | 晚年研究转向 |
+| photon（批判） | 光子（术语批判） | 其对"光子"一词使用持批评态度——转述勿加戏 |
+| Wykeham Professor of Physics | Wykeham 物理学讲席教授 | 牛津 1956-1962，New College Fellow |
+| Henry Ford II Professor | Henry Ford II 讲席教授 | 耶鲁 1962 起 |
+| optical science | 光学科学 | 亚利桑那大学物理与光学科学教授（1974-2003） |
+| hyperfine splitting | 超精细分裂 | 21cm 线的物理起源——本篇禁写，仅作区分提示 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

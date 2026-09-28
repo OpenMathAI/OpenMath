@@ -160,5 +160,29 @@
 
 ---
 
+## 12. 补遗（2026-09-28）：研究领域表 + 术语清单（对齐 Kenneth G. Wilson 标杆第 4 步 / 第 9 步）
+
+### 研究领域表（与 yaml fields 一致，按 rank 排序）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | particle physics | 粒子物理 | infobox Known for；反质子发现 | 反质子页 |
+| 1 | experimental physics | 实验物理 | Fermi 引其从理论转向实验；质子散射 | 师承页 |
+| 2 | antiproton | 反质子 | 1955 Bevatron 发现，1959 获奖理由 | 核心页 |
+| 3 | particle detectors | 粒子探测器 | 时间投影室（TPC）、SLAC 工作 | 后期页 |
+
+### 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| antiproton | 反质子 | 类质子而带负电 |
+| Bevatron | 高能质子加速器 | 伯克利，勿意译 |
+| proton-proton scattering | 质子-质子散射 | 1948 起与 Segrè 等 |
+| time projection chamber | 时间投影室（TPC） | 后期研究 |
+| nuclear freeze | 核冻结运动 | 1980 年代参与创建 |
+| Humanist Manifesto | 人文主义宣言 | 2003 年 22 位诺奖得主之一签署 |
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

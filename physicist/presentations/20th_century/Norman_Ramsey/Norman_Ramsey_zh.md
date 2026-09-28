@@ -178,6 +178,35 @@
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同世纪物理学家（Heisenberg / Rabi / Dehmelt / Paul）格式对齐
 
+## 12. 研究领域 rank 表（yaml/DB 对齐，2026-09-28 补齐标杆格式）
+
+| rank | 领域（name_en） | 中文 | 说明 | 依据 |
+|:--:|------|------|------|------|
+| 0 | nuclear physics | 核物理 | frontmatter field_of_work；氘核四极矩等 | frontmatter/正文 |
+| 1 | molecular beam | 分子束 | Rabi 方法基础与一生方法论 | 正文 |
+| 2 | atomic clock | 原子钟 | 分离振荡场的应用与秒定义 | 正文 |
+| 3 | precision measurement | 精密测量 | 1949 方法的核心动机 | 正文 |
+| 4 | neutron physics | 中子物理 | 中子磁矩与电偶极矩上限 | 正文 |
+
+## 13. 术语清单（补齐标杆 §9 格式）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| separated oscillatory field method | 分离振荡场方法 | 即 Ramsey 干涉术，1949 年发明 |
+| Ramsey interferometry / Ramsey fringes | Ramsey 干涉术 / Ramsey 条纹 | 以其名命名 |
+| hydrogen maser | 氢微波激射器 | 与 Kleppner 共同研制 |
+| hyperfine structure | 超精细结构 | 氢/氘/氚分裂测量 |
+| cesium-133 9,192,631,770 Hz | 铯-133 秒定义 | 1967–2019 时段，勿写「至今」 |
+| neutron electric dipole moment | 中子电偶极矩 | 只写给出上限 |
+| cavity magnetron | 腔式磁控管 | MIT 辐射实验室时期 |
+| Project Alberta | A 项目（Alberta） | 勿误写 Alaska/Arizona |
+
+## 14. 关系入库裁定（2026-09-28，DB id=2113 复用回填）
+
+- 库内原有分裂记录 'Norman Ramsey'(2113，含 Rabi→师生关系) 与 'Norman F. Ramsey'(2176，含 Purcell→colleague)，已按「改指→删 stub」合并到 2113 并沿用库内 name_en「Norman Ramsey」（yaml 文件名仍为 Norman_Ramsey.yaml，batch json 中 dir=Norman_F._Ramsey 仅指目录）。
+- 已按 §7 入库 19 条：Rabi=advisor（沿用既有行）、Rutherford=colleague（BA 语境非博士导师）、Goldhaber=influence（学期论文引导转向分子束）、Kusch/Zacharias/Kellogg/Millman=colleague（Rabi 团队）、Oppenheimer/Bacher/Parsons/Groves=colleague（曼哈顿项目，用库内规范 'J. Robert Oppenheimer' id=355）、Nierenberg/Kleppner/Wineland=student（infobox 博士生九人中取提示词点名的三位，其余 six 位 Chen/Corngold/Berg/Freeman/Greene/Heckel 不入库防噪声）、Dehmelt/Paul=co-honored（1989 拆分口径入 note）、Elinor Jameson/Ellie Welch=spouse。
+- 卡文迪什两位「导师」不入 advisor-student：Ramsey 在剑桥读的是第二个 BA（Tripos），非博士。
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

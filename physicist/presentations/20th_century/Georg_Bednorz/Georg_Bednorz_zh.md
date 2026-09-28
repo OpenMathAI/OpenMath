@@ -32,6 +32,28 @@
 - **博士导师**：Heini Gränicher、K. Alex Müller（ETH Zurich）
 - **研究领域**：物理学、高温超导体、材料科学
 
+### 1.5 研究领域表（第 4 步入库用，与 yaml fields 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 |
+|:--:|------|------|------|
+| 0 | high-temperature superconductivity | 高温超导 | 1986 LaBaCuO 35 K 发现，1987 诺奖核心 |
+| 1 | superconductivity | 超导 | 1982 年起加入 Müller 的研究主线 |
+| 2 | ceramics | 陶瓷材料 | 诺奖理由 "superconductivity in ceramic materials" |
+| 3 | materials science | 材料科学 | metadata field_of_work 明载 |
+
+### 1.6 术语清单（第 9 步用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| high-temperature superconductivity | 高温超导 | 发现者 Bednorz 与 Müller 二人 |
+| lanthanum barium copper oxide (LBCO) | 镧钡铜氧化物 | Tc = 35 K，高出此前纪录 12 K |
+| perovskite | 钙钛矿 | SrTiO₃ 所属晶族 |
+| critical temperature (Tc) | 临界温度 | 35 K 勿写错 |
+| crystallography | 结晶学 | 明斯特转向的冷门专业（矿物学分支） |
+| BSCCO / YBCO | 铋锶钙铜氧 / 钇钡铜氧 | 非 Bednorz/Müller 发现，勿混 |
+| IBM Fellow | IBM 院士 | 1987 年授予 |
+| Zeitschrift für Physik B | 《物理学杂志 B》 | 1986 年 6 月发表论文期刊 |
+
 ## 2. 核心叙事亮点（用于 Slide 4-13）
 
 1. **西里西亚移民之子（1950）**：父母在二战动荡中从西里西亚西迁至威斯特法伦；父亲小学教师、母亲钢琴教师——一个重视古典音乐却养出"摩托车修理工"的家庭。

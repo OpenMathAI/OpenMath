@@ -164,6 +164,33 @@
 - [ ] 中文标点 / 断行 / 间距统一（半角引号 " "）
 - [ ] 与同批次物理学家（Georg_Bednorz / Alex_Muller / Leon_Lederman / Jack_Steinberger）格式对齐
 
+## 12. 研究领域 rank 表（yaml/DB 对齐，2026-09-28 补齐标杆格式）
+
+| rank | 领域（name_en） | 中文 | 说明 | 依据 |
+|:--:|------|------|------|------|
+| 0 | particle physics | 粒子物理 | infobox Fields 明载 | infobox |
+| 1 | neutrino physics | 中微子物理 | Known for Neutrinos；μ 子中微子发现 | 正文/field_of_work |
+| 2 | classical electromagnetism | 经典电动力学 | 1972 教材领域 | frontmatter/正文 |
+| 3 | experimental physics | 实验物理 | "American experimental physicist" | 导语 |
+
+## 13. 术语清单（补齐标杆 §9 格式）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| muon neutrino | μ 子中微子 | 第二种中微子，勿与电子中微子混 |
+| neutrino beam method | 中微子束方法 | 诺奖理由中为三人共享的集体表述 |
+| spark chamber | 火花室 | 建于 Nevis Labs，勿写成布鲁克海文 |
+| doublet structure of the leptons | 轻子的二重态结构 | 诺奖理由原文措辞 |
+| charge asymmetry | 电荷不对称性 | 中性 K 介子衰变（斯坦福时期） |
+| relativistic hydrogen-like atom | 相对论类氢原子 | π 子-μ 子系统，勿写成普通原子 |
+| AGS（Alternating Gradient Synchrotron） | 交变梯度同步加速器 | 位于布鲁克海文 |
+
+## 14. 关系入库裁定（2026-09-28，DB id=2795）
+
+- 已按 §7 全表入库（7 条）：Steinberger=advisor、Lederman=colleague+co-honored、Steinberger=co-honored、Lee=colleague、Rabi=colleague（注明非导师）、Marilyn=spouse（入库名 Marilyn Schwartz）。
+- Lederman stub 以 name_en「Leon M. Lederman」新建（与 batch 23 目录名一致，qid Q192695 留待 batch 23 回填）。
+- page.md 未载师生/其他合作 → 不再增补；仅 metadata 有载的关系无。
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

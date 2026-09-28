@@ -104,6 +104,21 @@
 - **机构命名时间线**：去世后（1958）评议会才将两实验室冠名；lawrencium 1961 年发现命名；Lawrence Award 1959 设立；Lawrence Hall of Science 1968 建立——勿把冠名写进生前。
 - **师承口径**：博士导师 W. F. G. Swann（硕士与博士一路相随）；博士生含 Livingston、Sloan、吴健雄（Chien-Shiung Wu）、Robert R. Wilson、MacKenzie 等（metadata）——勿把 Alvarez/McMillan 写成其博士生（他们是 Rad Lab 下属/同事）。
 
+## 5.5 术语清单（10 条）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| cyclotron | 回旋加速器 | 勿与"同步加速器"等泛称混用；第一台 4 英寸 25 美元 |
+| calutron | 加州大学回旋加速器质谱仪 | 源自 California university cyclotrons，电磁法铀分离 |
+| isotope separation | 同位素分离 | 橡树岭 Y-12 工厂 |
+| artificial radioactivity | 人工放射性 | 诺奖理由"人工放射性元素成果"所指 |
+| carbon-14 | 碳-14 | 与 Kamen/Ruben 用质子轰击石墨意外发现 |
+| phosphorus-32 | 磷-32 | 弟弟 John 用于红细胞增多症治疗，核医学开端 |
+| Rad Lab | （伯克利）辐射实验室 | 1931 创建并主持，1936 成为加州大学正式部门 |
+| Big Science | 大科学 | Kauffman 概括"他之前是小科学、之后是大科学" |
+| lawrencium | 铹 | 103 号元素，1961 年命名 |
+| deuteron | 氘核 | 1933 索尔维挫败后 Rutherford/Oliphant 发现氘聚变成氦-3 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

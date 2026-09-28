@@ -100,6 +100,21 @@
 - **引语红线**：Rubbia 本人在 page.md 中无直接引语；1987 年书名 *The Temptation to Believe* 是事实可写，但书中内容勿引。宗教信仰中性处理（"公开的基督徒"一句即可）。
 - **肖像**：images.txt 仅有 Wikiquote/Commons logo 图标，**无本人肖像**——封面与身份页用装饰圆占位（Review 可尝试 Commons "Carlo Rubbia 2012 Lindau" 检索）。
 
+## 5.5 术语清单（英文 / 中文 / 风险点）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| W and Z bosons | W 与 Z 玻色子 | 弱相互作用传递者，发现归属 UA1 团队 |
+| intermediate vector boson | 中间矢量玻色子 | W/Z 的旧称，诺奖演讲标题用语 |
+| stochastic cooling | 随机冷却 | 发明者是 van der Meer，勿归 Rubbia |
+| Antiproton Accumulator | 反质子累积环 | 依赖随机冷却技术建造 |
+| Proton-Antiproton Collider | 质子-反质子对撞机 | SPS 改造方案，三人共同提议 |
+| UA1 Collaboration | UA1 合作组 | 百余位物理学家、Rubbia 领头 |
+| Super Proton Synchrotron (SPS) | 超质子同步加速器 | 勿与 LHC 混淆 |
+| Scuola Normale Superiore di Pisa | 比萨高等师范学校 | 非「比萨大学」 |
+| energy amplifier | 能量放大器 | 加速器驱动核能概念 |
+| Senator for Life | 终身参议员 | 2013-08-30 Napolitano 任命 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

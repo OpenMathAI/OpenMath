@@ -106,6 +106,23 @@
 - **宗教观**：人文主义者（Humanist Laureate）与不可知论者（agnostic）——page.md 有载可写，一笔带过。
 - **生日确认**：1929-09-15（metadata 与 page.md 一致）。
 
+### 5.5 术语清单（8–12 条）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| strangeness | 奇异性 | 新量子数，1950 年代（勿标 1953） |
+| eightfold way | 八重法 | 1961，借佛教八正道命名；Ne'eman 独立提出 |
+| quark | 夸克 | 1964 与 Zweig 独立；命名出《芬尼根的守灵夜》 |
+| quantum chromodynamics | 量子色动力学（QCD） | 1972 与 Fritzsch/Leutwyler/Bardeen 共同，在获奖之后 |
+| V−A theory | V−A 弱相互作用理论 | 与 Feynman 合作；Sudarshan–Marshak 平行独立 |
+| Gell-Mann–Low equation | Gell-Mann–Low 方程 | 1954 与 Low 的重整化群方程 |
+| current algebra | 流代数 | 1960 年代对称性方法 |
+| Gell-Mann–Nishijima formula | 盖尔曼–西岛公式 | 勿标提出年份（page.md 未载） |
+| Gell-Mann–Okubo mass formula | 盖尔曼–大久保质量公式 | 勿标提出年份（page.md 未载） |
+| seesaw mechanism | 跷跷板机制 | 中微子质量，与 Ramond/Slansky |
+| consistent histories | 一致历史诠释 | 与 James Hartle 合作 |
+| plectics | 综通学（plectics） | 复杂性研究命名尝试，Santa Fe 语境 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

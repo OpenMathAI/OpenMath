@@ -1,173 +1,199 @@
-# Gabriel Lippmann（加布里埃尔·李普曼）立传提示词
+# 物理学家立传提示词（人物专属：Gabriel Lippmann）
 
-> qid=Q133232 · 1845-08-16 – 1921-07-12 · 法国（卢森堡出生）应用物理学家、发明家 · 20 世纪 · 1908 诺贝尔物理学奖
-> 本地 Wikipedia 数据源：`physicist/presentations/20th_century/20th_century/Gabriel_Lippmann/`（page.md + metadata.json + images.txt）
+> 本文件是 OpenPhysicist 20 世纪诺贝尔物理学奖批量立传的**人物专属提示词**，结构对齐标杆 `Kenneth_G_Wilson/Kenneth_G_Wilson_zh.md`（0–11 节母本）。
+> 直接复制本文件到新对话中使用，按步骤执行，每完成一步汇报进度。
 
 ---
 
-## 0. 正文形式说明（参考物理学家标杆 Kenneth G. Wilson）
+## 一、模板定位
 
-> 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**。物理学家立传格式硬性要求：
+- **目标项目**：OpenPhysicist —— 开放物理学家人物史（与 OpenMath 数学家侧共享 GitHub `OpenMathAI/OpenMath`）。
+- **本实例**：Gabriel Lippmann（加布里埃尔·李普曼），1908 年诺贝尔物理学奖得主，彩色摄影干涉法的发明者。
+- **设计哲学**：保留物理学家模板两大骨架——「身份信息页」与「研究领域结构化表达」；本人物的设计重心是**光与颜色的物理**：把"颜色"还原为"波长"，用干涉把光谱固定在干板上。
+
+---
+
+## 二、背景信息 【人物专属】
+
+- **目标物理学家**：Gabriel Lippmann（1845-08-16 ~ 1921-07-12，享年 75 岁）
+- **气质关键词**：**干涉光谱的雕刻师、彩色摄影的开创者、实验物理的巧匠**
+- **官方获奖理由（禁止改写）**：
+  > "for his method of reproducing colours photographically based on the phenomenon of interference"（因其基于干涉现象的彩色摄影复制方法）
+- **设计母题**：**驻波与干涉条纹（standing waves / interference lamellae）**——光在反射面与感光乳剂之间形成驻波，波节波腹的层状结构把颜色"刻"进干板；视觉语言用细密平行条纹与光谱渐变。
+- **本地数据源**：`physicist/presentations/20th_century/20th_century/Gabriel_Lippmann/page.md`（Wikipedia 全文 + frontmatter）
+- **参考模板**：
+  - 标杆提示词：`physicist/presentations/20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.md`
+  - 物理学家成品参照：`physicist/presentations/20th_century/Antoine_Henri_Becquerel/Antoine_Henri_Becquerel_zh.tex`
+  - 项目首页模板：`physicist/presentations/cover/openphysicist_page.tex`（统一 `\input`）
+
+---
+
+## 三、任务流程 【模板通用，逐步执行】
+
+> 每完成一步向我汇报，遇到歧义先征求我的意见再继续。
+
+### 第 0 步：下载并核对 Wikipedia 页面 【人物专属】
+
+- ⏳ **待下载** `https://en.wikipedia.org/wiki/Gabriel_Lippmann` 到 `{Dir}/Gabriel_Lippmann.html`（本地暂只有 `page.md`，无 html 与 images/）
+- 提取 infobox 与正文，输出供校验（**事实基准如下**）：
+  - 生卒（1845-08-16 生于卢森堡霍勒里希 ~ 1921-07-12 卒于大西洋海上（自加拿大返法途中），享年 75 岁；**frontmatter 作 1921-07-13，以正文/infobox 12 日为准**）
+  - 国籍（卢森堡出生，犹太家庭，1848 年迁巴黎，后归化法国）
+  - 家庭（父在霍勒里希经营手套作坊；1888 年娶小说家 Victor Cherbuliez 之女）
+  - 教育（1858 入 Lycée Napoléon（今 Henri-IV）；1868 入巴黎高等师范学院，agrégation 落榜；1873 赴德科学考察，海德堡大学随 Kühne 与 Kirchhoff，1874 summa cum laude 获博士；1874 柏林短暂拜访 Helmholtz；1875-07-24 向巴黎大学提交电毛细现象博士论文 *Relations entre les phénomènes électriques et capillaires*）
+  - 博士导师（infobox：Jules Jamin + Gustav Kirchhoff；Helmholtz 仅为短暂拜访，见陷阱表）
+  - 任职（1878 入巴黎大学理学院；1883 数学物理教授；1886 实验物理教授并接 Jamin 任物理研究所所长）
+  - 关键荣誉（Nobel 1908；Progress Medal 1897；荣誉军团骑士 1881/军官 1894/指挥官 1900/大军官 1919；法兰西科学院院士 1886；英国皇家学会外籍会员 1896）
+  - 知名学生（博士生：Pierre Curie、Marie Curie、Jean Lecomte、Constantin Miculescu；其他知名学生：Paul Langevin）
+  - 核心贡献清单：
+    1. Lippmann 干板彩色摄影（驻波干涉记录 λ/(2n) 层状结构，1908 诺奖核心）
+    2. Lippmann 静电计（毛细管静电计，用于第一台 ECG 机器）
+    3. 1881 年预言逆压电效应
+    4. 1908 年集成摄影（透镜阵列→光场成像先声）
+    5. coelostat 定天镜（补偿地球自转的天文摄影装置）
+    6. 1895 年计时去人差法 + 1900 年布朗棘轮思想实验
+  - 关键时间线（1845 生 → 1848 迁巴黎 → 1858 中学 → 1868 高师 → 1873-74 海德堡 → 1875 巴黎大学博士 → 1878 入索邦 → 1881 预言逆压电效应 → 1883 数学物理教授 → 1886 实验物理教授/所长 + 转向彩色摄影 → 1888 成婚 → 1891-02-02 宣布彩色摄影成功 → 1895 计时法 → 1897 Progress Medal → 1900 布朗棘轮 → 1908 集成摄影 + 诺奖 → 1919 大军官 → 1921 卒于归途海上）
+
+### 第 1 步：建立目录 【模板通用】
+
+- 在 `physicist/presentations/20th_century/` 下已有 `Gabriel_Lippmann/`（本提示词所在），需新建 `images/` 子目录存放肖像与插图
+
+### 第 2 步：复制 Makefile 【模板通用】
+
+- 复制标杆目录 `Kenneth_G_Wilson/Makefile`，设置 `MAIN=Gabriel_Lippmann_zh`、`VIDEO_NAME=Gabriel_Lippmann_zh`
+
+### 第 3 步：收集图片 【人物专属】
+
+- 肖像：先试 Commons `Special:FilePath/Le professeur Lippmann dans le laboratoire des recherches physiques de la Sorbonne.jpg?width=500`（索邦实验室照，page.md 内嵌）
+- 404 则退 Nobelprize.org laureate/12 页面像；再失败用装饰圆占位（主色边框圆 + 姓名缩写）
+
+### 第 4 步：研究领域梳理 + 入库 【人物专属内容】
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | color photography | 彩色摄影 | Lippmann 干板，1908 诺奖核心 | 核心页 |
+| 1 | optics | 光学 | 干涉/驻波原理 | 原理页 |
+| 2 | piezoelectricity | 压电效应 | 1881 预言**逆**压电效应 | 压电页 |
+| 3 | electrocapillarity | 电毛细现象 | 博士论文 + Lippmann 静电计 | 早年页 |
+| 4 | integral photography | 集成摄影（光场成像） | 1908 提出，光场相机先声 | 集成页 |
+
+入库：`MySQL/data/Gabriel_Lippmann.yaml`（已备好，`cd MySQL && python3 seed_person.py data/Gabriel_Lippmann.yaml`）。
+校验：`SELECT f.name_en, pf.rank FROM person_field pf JOIN fields f ON f.id=pf.field_id WHERE pf.person_id=<id> ORDER BY pf.rank`。
+
+### 第 4.5 步：社会关系梳理 + 入库 【人物专属内容】
+
+| 关系类型 | 对方 | 方向 | note |
+|---------|------|------|------|
+| advisor-student | Gustav Kirchhoff | 师→生 | 海德堡大学博士导师之一，1874 summa cum laude |
+| advisor-student | Jules Jamin | 师→生 | 巴黎大学博士导师之一（infobox 明载） |
+| advisor-student | Pierre Curie | 李普曼→学生 | 博士生，1903 诺奖得主 |
+| advisor-student | Marie Curie | 李普曼→学生 | 博士生，两届诺奖得主 |
+| advisor-student | Paul Langevin | 李普曼→学生 | 其他知名学生 |
+| advisor-student | Jean Lecomte | 李普曼→学生 | 博士生 |
+| advisor-student | Constantin Miculescu | 李普曼→学生 | 博士生 |
+
+### 第 5 步：设计配色方案 【人物专属色彩】
+
+- **气质**：光谱、精致、实验室匠心
+- **配色**：干涉光谱蓝（主色）+ 诺奖香槟金 `C9A227` + 四分类色
+  - 主色 — 干涉光谱蓝 `#0F4C81`
+  - `badgeInterf` 干涉光学 — `#2E86AB`
+  - `badgePhoto` 彩色摄影 — `#C0392B`
+  - `badgePiezo` 压电 — `#7D5BA6`
+  - `badgeIntegral` 集成摄影 — `#1E8A5A`
+- **背景母题**：细密平行干涉条纹 + 稀疏光谱色圆点，呼应"驻波把颜色刻进乳剂"
+
+### 5.1 物理学家格式硬要求 【模板通用，★ 必须满足】
 
 1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。
-2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 法国`），底部状态栏给出 `国籍 | 机构 | 主要奖项` 三要素。
-3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧 `2×2` 信息网格，含至少：生卒、本名、国籍、出生地、去世地、教育、师承、任职、主要荣誉、核心领域。事实取自 Wikipedia infobox，不得杜撰。
-4. **配色 + 虹彩背景**：主色 + 强调色（诺奖金）+ 四分类色；背景用虹彩同心圆环/平行干涉条纹呼应「干涉彩色摄影」母题。
-5. **品牌口径统一**：结尾页底部品牌统一写 `OpenMathAI`；引号用半角 `" "`。
+2. **封面有国籍**：顶部副标题或底部状态栏明示国籍；底部状态栏给出 `国籍 | 机构 | 主要奖项` 三要素（李普曼：卢森堡/法国 | 巴黎大学 | Nobel 1908）。
+3. **必须有身份信息页**：封面之后、核心贡献之前。左侧头像 + 右侧信息网格，含至少：生卒、本名（Jonas Ferdinand Gabriel Lippmann）、国籍、出生地（霍勒里希）、师承（Jamin/Kirchhoff）、任职（巴黎大学）、主要荣誉、核心领域。事实取自 page.md infobox，不得杜撰。
+4. **品牌口径统一（共享 GitHub）**：结尾页底部品牌标注统一写 `OpenMathAI`（不是 `OpenPhysicist`）；GitHub 链接由首页模板 `\input` 继承，子 deck 不重复；引号用半角 `" "`。
+
+### 第 6 步：规划幻灯片序列 【人物专属，可微调】
+
+```
+00  OpenPhysicist 项目首页（\input cover/openphysicist_page.tex）
+01  封面 — 干涉彩色摄影发明人 / Gabriel Lippmann 1845–1921 + badge + 头像 + 国籍行
+02  身份信息页（★ 必做）— 左头像 + 右信息网格
+03  核心贡献概览 — 彩色摄影 / 逆压电 / 静电计 / 集成摄影
+04  早年：卢森堡到巴黎 (1845–1868) — 手套作坊之子、Henri-IV、高师、agrégation 落榜
+05  德国岁月 (1873–1875) — 海德堡 Kühne/Kirchhoff、柏林拜访 Helmholtz、巴黎大学博士
+06  索邦教席 (1878–1886) — 数学物理→实验物理教授、接任 Jamin 任所长
+07  电毛细现象与 Lippmann 静电计 — 用于第一台 ECG 机器
+08  1881：预言逆压电效应 — 正效应归居里兄弟，逆效应属李普曼
+09  彩色摄影：把光谱刻进干板（核心贡献页，公式框 λ/(2n) 层间距）
+10  集成摄影 (1908) — 透镜阵列→光场相机/3D 成像先声
+11  其他发明 — coelostat 定天镜、计时去人差、布朗棘轮思想实验
+12  门生与传承 — Pierre/Marie Curie、Langevin
+13  荣誉与认可 — Nobel 1908 · Progress Medal 1897 · 荣誉军团四级 · 院士
+14  遗产：从干涉照相到激光全息（Lippmann–Bragh 全息）
+15  结尾
+```
+
+### 第 7 步：编写 Beamer 源码 【模板通用】
+
+- 每页 `\newcommand{\xxxslide}{...}` 定义；身份信息页实现模式参照成品 `\profileslide`；头部宏（配色 / `\plainbar` / `\deckbackground` / `\sectiontitle`）可整体复用标杆骨架。
+
+### 第 8 步：布局检查 【模板通用】
+
+- 每写完一页 `make`，用 `pdftoppm` 截图检查溢出/重叠；修复优先级：删 `\plainbar` → 缩 `inner sep` → 缩字号 → 减行距 → 调 y 坐标。
+
+### 第 9 步：史实审查 + 术语审查 【人物专属】
+
+**Lippmann 特殊陷阱**：
+
+| 陷阱 | 说明 |
+|------|------|
+| 卒日噪声 | 正文/infobox 1921-**07-12**（海上），frontmatter 作 07-13，一律以正文为准 |
+| 国籍表述 | 卢森堡出生→法国归化，禁写成"法国人李普曼生于巴黎"；犹太家庭背景 page 明载可客观一句 |
+| 博士导师 | infobox 为 **Jamin + Kirchhoff**；Helmholtz 仅 1874 短暂拜访（frontmatter 有列但 infobox 未列），禁写"受业于 Helmholtz" |
+| 逆压电效应 | 1881 年预言的是**逆效应**（converse effect）；正效应 1880 由居里兄弟发现，勿写"发现压电效应" |
+| 获奖理由 | 忠实英文原句 "for his method of reproducing colours photographically based on the phenomenon of interference"，勿改写成"发明彩色摄影"泛称 |
+| ECG | 其静电计被**用于**第一台心电图机器，勿写成"发明心电图" |
+| 学生归属 | Pierre/Marie Curie 为其博士生系 infobox 明载，可写；勿追加 page 未载的其他师承 |
+| 集成摄影 | 1908 年仅理论提出、无实物演示（透镜阵列材料当时缺乏），勿写成"发明光场相机" |
+| 布朗棘轮 | 1900 年提出的是思想实验（麦克斯韦妖的力学版本），勿写成实验装置 |
+| 引语红线 | 仅 1891-02-02 向法兰西科学院的宣布句可引（page 明载英译），其余一律转述 |
+| 与贝克勒尔 | 勿把他与 Becquerel 家族的彩色摄影尝试混写（page 未载其互动） |
+
+**术语清单**：
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Lippmann plate | 李普曼干板 | 干涉彩色感光板，非普通底片 |
+| interference | 干涉 | 光学驻波成因 |
+| standing wave | 驻波 | 波节波腹层状结构 |
+| lamellae | 薄层（干涉条纹层） | 间距 = λ/(2n) |
+| electrocapillarity | 电毛细现象 | 博士论文主题 |
+| converse piezoelectric effect | 逆压电效应 | 勿与正效应混淆 |
+| integral photography | 集成摄影 | 光场成像先声 |
+| coelostat | 定天镜 | 补偿地球自转的天文装置 |
+| light field | 光场 | 现代光场相机概念源头 |
+| electrometer | 静电计 | 毛细管静电计 |
 
 ---
 
-## 1. 背景信息（用于 Slide 1-3）
+## 四、背景音乐选择 【人物专属】
 
-- **全名**：Jonas Ferdinand Gabriel Lippmann（乔纳斯·费迪南德·加布里埃尔·李普曼）
-- **生卒**：1845-08-16 生于卢森堡 Hollerich → 1921-07-12 逝于大西洋（自加拿大返法航程中），享年 75
-- **国籍**：生于卢森堡（犹太家庭），1848 年随家迁巴黎，归化法国——封面用「法国」，身份页注明"生于卢森堡"
-- **身份**：应用物理学家、发明家、摄影师、教授
-- **家庭**：父在 Hollerich 经营手套制造生意；1888 年与小说家 Victor Cherbuliez 之女结婚
-- **教育轨迹**：
-  - 早年由母亲启蒙；1858 年入 Lycée Napoléon（今 Lycée Henri-IV），据称是"不太专注但善于思考"的学生，偏爱数学
-  - 1868 年入巴黎高等师范学院（École normale supérieure），**未通过 agrégation（教师资格会考）**，转而专注物理
-  - 1873 年受法国政府派遣赴德国考察科学教学方法：在海德堡大学与 Wilhelm Kühne、Gustav Kirchhoff 合作
-  - 1874 年获**海德堡大学博士**（summa cum laude 最优等）
-  - 1875 年短暂访问柏林大学 Hermann von Helmholtz 后返巴黎；同年 7 月 24 日向巴黎大学提交博士论文《Relations entre les phénomènes électriques et capillaires》（电动毛细现象，1875）
-- **博士导师**：Jules Jamin、Gustav Kirchhoff（infobox 记载；柏林短期受教于 Hermann von Helmholtz）
-- **研究领域**：物理学、电学（电动毛细现象）、光学与彩色摄影、精密测量（计时）
-
-## 2. 核心叙事亮点（用于 Slide 4-13）
-
-1. **干涉彩色摄影（Lippmann plate，1908 诺奖）**：基于光在乳胶与水银镜面间形成驻波、以银晶格层（lamellae）记录 λ/(2n) 半波长间距，将颜色信息"就地"存储于感光板——1891 年 2 月 2 日向法国科学院宣布成功。
-2. **"日光下不褪色的光谱像"**：1891 年宣布词——"我已在感光板上获得带颜色的光谱像，图像固定且可在日光下保存而不劣化"；1892 年 4 月已拍出彩绘玻璃窗、一组旗帜、一碗橙子与彩色鹦鹉。
-3. **驻波原理的技术转化**：普通非相干光下驻波仅在反射面附近微米级薄层内可分辨——他以此反其道而行，用极细颗粒乳胶实现色彩记录；1894 与 1906 年两篇论文系统阐述其理论。
-4. **过程的局限与遗产**：曝光以分钟计、无法复制（每张独一无二）、尺寸受限——"科学上优雅的实验室奇珍"，但直接预启了激光全息术（Denisyuk 反射全息图即 Lippmann–Bragg 全息图）。
-5. **积分摄影（integral photography，1908）**：微透镜阵列记录光场，重建带视差与透视的原景三维视觉——光场相机与显微术、透镜阵列 3D 成像的源头。
-6. **Lippmann 电动毛细验电器**：基于电动毛细现象的灵敏验电器，被用于第一台心电图机（ECG）。
-7. **预言逆压电效应（1881）**：居里兄弟 1880 年发现正压电效应次年，Lippmann 从热力学推证其逆效应必存在——后由居里兄弟实验证实。
-8. **布朗棘轮（1900）**：提出麦克斯韦妖的纯力学版本思想实验，用以说明气体动理学理论与热力学第二定律的张力。
-9. **计时学**：1895 年用摄影记录法消除天文人差（personal equation）对时间测量的影响，并研究摆钟不规则性的消除与双摆周期比较法。
-10. **定天镜（coelostat）**：发明补偿地球自转、使天空区域可"静止"拍摄的天文装置。
-11. **索邦实验室掌门（1886–）**：1883 年任数学物理教授、1886 年任实验物理教授并接替 Jules Jamin 出任物理研究室主任——巴黎物理学界的枢纽人物，居里夫妇与朗之万皆出其门下。
-12. **荣誉之巅**：1886 年入选法国科学院、1896 年英国皇家学会外籍会员、1897 年皇家摄影学会 Progress Medal、1908 诺贝尔物理学奖、1919 荣誉军团大军官勋章。
-
-## 3. 配色方案
-
-| 用途 | 色值 | 说明 |
-|---|---|---|
-| 主色（光谱深紫） | `#4A2C82` | 干涉虹彩 / 可见光谱两端的深邃紫 |
-| 强调色（诺奖金） | `#C9A227` | 诺贝尔奖 / 尊崇 |
-| 分类色 1（彩色摄影 — 光谱青） | `#1E7F9E` | Lippmann 板 / 干涉彩色摄影 |
-| 分类色 2（电学与压电 — 电紫） | `#7B4FA6` | 电动毛细现象 / 逆压电效应 / 验电器 |
-| 分类色 3（精密测量与天文 — 天文蓝） | `#2C5F8A` | 定天镜 / 计时学 |
-| 分类色 4（思想实验与传承 — 玫瑰） | `#B5446E` | 布朗棘轮 / 居里夫妇与朗之万的师承 |
-| 背景 | `#F7F6F9` | 浅灰白 |
-
-- **背景母题**：虹彩同心圆环与稀疏平行细条纹（呼应干涉驻波在乳胶中形成的 lamellae 层状结构，四档大小错落），替代海森堡版的气泡母题——「干涉彩色摄影」的视觉语言。
-
-### 3.5 背景音乐选择 ✅ 【人物专属】
-
-- **气质定位**：优雅 / 怀旧 / 温和（19 世纪末光学实验的诗意，彩色照片中"一碗橙子与红色罂粟"的静物气质）
-- **选定曲目**：Alex-Productions **Nostalgia**（怀旧 / 温和），匹配"用干涉定格色彩"这一优雅而不喧哗的成就，以及其彩色摄影如今已成" nostalgic 珍品"的历史余韵。
-- **落地文件**：`physicist/presentations/20th_century/Gabriel_Lippmann/Nostalgia.wav`（复制自音乐库，不入 git）。
-- **匹配理由**：李普曼的成就不是革命性断裂而是"科学上的优雅"，Nostalgia 的温和怀旧气质贴合 19 世纪末巴黎实验物理的静美氛围；大西洋上逝于归途的结局亦需一份柔和的挽歌底色。
-
-## 4. Slide 规划（约 15 页，Wilson 式结构）
-
-1. **封面**（`\titleslide`）：顶部标签「干涉彩色摄影之父 · 法国」+ 李普曼 1845–1921 + 右上头像 + 国籍行 + 底部三要素状态栏 + 四色 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右 2×2 信息网格（生卒 / 本名 / 国籍 / 出生地 / 去世地 / 教育 / 师承 / 任职 / 主要荣誉 / 核心领域）
-3. **核心贡献概览**（`\hookslide`）：干涉彩色摄影 / 电动毛细与压电 / 精密测量与天文 / 师承与传承
-4. **早年：卢森堡到巴黎**（1845–1868）：手套商人之子、Lycée Henri-IV、ENS 与未通过的 agrégation
-5. **海德堡岁月**（1873–1875）：科学考察使命、Kirchhoff 门下最优等博士、柏林见 Helmholtz、巴黎电毛细论文
-6. **索邦的实验物理掌门**（1878–1886）：数学物理教授→实验物理教授→研究室主任
-7. **电动毛细验电器**：第一台 ECG 的心脏、McKendrick 1883 的描述、万分之一 Daniell 电池的灵敏度
-8. **逆压电效应的预言**（1881）：居里兄弟正效应之后的热力学推证
-9. **彩色摄影的突破**（1886–1891）：驻波原理、水银镜面、1891 年 2 月 2 日科学院宣布
-10. **Lippmann 板的科学与局限**：lamellae、λ/(2n)、分钟级曝光、无法复制——"优雅的实验室奇珍"
-11. **通向全息术的先声**：Denisyuk/Lippmann–Bragg 反射全息图的层状结构同源
-12. **积分摄影（1908）**：微透镜阵列、光场、3D 与视差——今天光场相机的先祖
-13. **定天镜、计时学与布朗棘轮**：被低估的多面手
-14. **荣誉与师承**：1908 诺奖、居里夫妇与朗之万、法国科学院与皇家学会
-15. **结尾**：大西洋归途（1921）、"以干涉定格色彩"的历史地位
-
-## 5. 史实陷阱与敏感点（终审必须检查）
-
-- **死亡日期**：Wikipedia 正文与 infobox 均为 **1921 年 7 月 12 日**，而 metadata.json 记 1921-07-13——勿写"7 月 13 日"，应写"12 日"，入库时以 page.md 为准并注明差异。
-- **死亡地点**：大西洋（自加拿大返法航程中），勿写"巴黎"或"卢森堡"。
-- **诺奖理由原文**："For his method of reproducing colours photographically based on the phenomenon of interference."（表彰他基于干涉现象发明的彩色摄影方法）——勿写成"发明彩色照相术"或"第一种彩色摄影方法"。
-- **过程实用性**：Lippmann 过程从未普及——长曝光、无法复制、尺寸受限，"never graduated from being a scientifically elegant laboratory curiosity"——勿夸大为"让彩色摄影走进大众"。
-- **压电效应**：1881 年他**预言的是逆压电效应**（converse piezoelectric effect）；正效应是居里兄弟 1880 年发现——勿写"发现压电效应"。
-- **博士履历**：1874 年**海德堡大学**博士（Kirchhoff 门下，summa cum laude）；1875 年向**巴黎大学**提交的电动毛细论文是另一份博士论文——勿把两者混为一谈或写成"巴黎大学博士（1874）"。
-- **博士导师归属**：infobox 记 Jules Jamin + Gustav Kirchhoff；metadata.json 记 Kirchhoff + Helmholtz——以 page.md infobox 为准，Helmholtz 表述为"柏林短期访学受教"。
-- **布朗棘轮**：1900 年提出的**思想实验**（麦克斯韦妖的力学版本），勿写"发明了永动机装置"。
-- **积分摄影**：1908 年只有**理论奠基**，当年"无法附以具体成果"——勿写"发明了立体相机/光场相机"。
-- **学生区分**：Pierre Curie、Marie Curie、Jean Lecomte、Constantin Miculescu 为博士学生；Paul Langevin 为"other notable student"——勿一律写"博士导师"。
-- **国籍**：生于卢森堡 Hollerich 的犹太家庭、归化法国——封面用「法国」，身份页注明"生于卢森堡"；勿隐去或刻意强调其犹太出身，按史实平实表述。
-
-## 6. 数据库字段核对表
-
-| 字段 | 值 | 状态 |
-|---|---|---|
-| qid | Q133232 | 待写入 |
-| name_zh | 李普曼（或 加布里埃尔·李普曼） | 待写入 |
-| name_en | Gabriel Lippmann | 待写入 |
-| birth_date | 1845-08-16 | 待写入 |
-| death_date | 1921-07-12（metadata.json 记 07-13，以 page.md 为准） | 待写入 |
-| nationality | France（生于卢森堡） | 待写入 |
-| primary_occupation | physicist | 待写入 |
-| field_of_work | physics / photography | 待写入 |
-| has_biography | 1 | 本次置 1 |
-
-## 7. 社会关系入库清单
-
-- **博士导师**：Jules Jamin（巴黎）、Gustav Kirchhoff（海德堡）
-- **师承关系（导师侧）**：Hermann von Helmholtz（1875 柏林短期访学）
-- **著名博士学生**：Pierre Curie、Marie Curie、Jean Lecomte、Constantin Miculescu
-- **著名学生**：Paul Langevin
-- **机构传承**：接替 Jules Jamin 出任索邦物理研究室主任（1886）
-- **诺贝尔奖同届**：1908 年诺贝尔物理学奖由李普曼一人获得
-
-## 8. 奖项清单
-
-- 诺贝尔物理学奖（1908）
-- Progress Medal（皇家摄影学会，1897）
-- 荣誉军团勋章：骑士（1881）→ 军官（1894）→ 司令官（1900）→ 大军官（1919）
-- 英国皇家学会外籍会员（1896）
-- 法国科学院院士（1886）
-
-## 9. 机构清单
-
-- 教育：Lycée Henri-IV（1858）、巴黎高等师范学院（1868）、海德堡大学（博士 1874）、巴黎大学（博士论文 1875）
-- 任职：巴黎大学理学院（1878 起）、数学物理教授（1883）、实验物理教授兼物理研究室主任（1886）
-- 考察：1873 年法国政府派遣赴德考察科学教学（海德堡/柏林）
-
-## 10. 终审清单
-
-- [ ] 生卒 1845-08-16 / 1921-07-12，享年 75，出生地 Hollerich（卢森堡），去世地大西洋
-- [ ] 死亡日期"12 日"而非 metadata 的"13 日"表述准确
-- [ ] 诺奖理由"基于干涉现象发明的彩色摄影方法"表述准确
-- [ ] "预言逆压电效应（1881）"而非"发现压电效应"
-- [ ] 海德堡博士（1874）与巴黎博士论文（1875）不混淆
-- [ ] Lippmann 过程"未普及"的表述不夸大
-- [ ] 博士导师 Jamin + Kirchhoff，Helmholtz 为短期访学
-- [ ] 积分摄影 1908 仅为理论奠基
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 虹彩背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
-
-## 11. Review 流程规范（两轮 Review）
-
-### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `20th_century/Gabriel_Lippmann/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：使用 images.txt 中的索邦实验室照片（`Le_professeur_Lippmann_dans_le_laboratoire_des_recherches_physiques_de_la_Sorbonne.jpg`）；若无合适肖像，经 Wikipedia REST API 核实 infobox 实际文件名后经 Commons Special:FilePath 下载
-- [ ] **国籍**：封面顶部徽章明示法国，身份页注明生于卢森堡
-- [ ] **引语核对**：引语必须在 page.md 原文找到（如 1891 年科学院宣布词）；无原文用间接转述
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
-
-### 第 2 轮（Review-2）：结构优化
-- [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
-- [ ] 身份信息页布局与 Wilson 模板对齐
-- [ ] 中文标点 / 断行 / 间距统一
-- [ ] 与同世纪物理学家（Heisenberg / Wilson / Röntgen）格式对齐
+- **选定曲目**：**Shine Like The Sun** — Really Slow Motion（史诗 / 美丽 / 振奋）
+- **匹配理由**：彩色摄影是把"太阳的颜色"永久固定在干板上的发明，曲目名与"光谱/光明"母题直接呼应；光明结尾匹配其优雅而唯一的干涉照相遗产。
+- **本地路径**：`music_audio/inspiring-electronic/15-w6kT1BfvETI-Really Slow Motion - Shine Like The Sun (Epic Beautiful Uplifting).wav`
+- **备选**（未采用）：
+  - ★★ The Flow of Time — "时间感"匹配 76 年跨度，但本批已分配给 Wien
+  - ★ Awaken — "明亮/突破"匹配 1891 年首次成功的宣布，但"鼓舞"气质与其匠人心略偏
+- **时长核验**：曲目 2:49 > 16 页 × 7 秒 ≈ 112 秒 → ffmpeg `-shortest` 自动对齐
+- **备注**：批内 BGM 去重——Marconi=SEA、Braun=The Invisible Light、van der Waals=Eternals、Wien=The Flow of Time。
 
 ---
+
+## 五、关键参考文件清单 【模板通用】
+
+| 文件 | 用途 |
+|------|------|
+| `physicist/presentations/20th_century/20th_century/Gabriel_Lippmann/page.md` | 本地 Wikipedia 正文（事实基准） |
+| `physicist/presentations/20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.md` | 结构标杆 |
+| `physicist/presentations/cover/openphysicist_page.tex` | 项目首页模板 |
+| `MySQL/data/Gabriel_Lippmann.yaml` | 入库 yaml（已按本提示词 §4/§4.5 备好） |
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

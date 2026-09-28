@@ -106,18 +106,11 @@
 | nationality | United States | 待写入 |
 | primary_occupation | physicist | 待写入 |
 | field_of_work | laser science / spectroscopy / optics | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 0（本批仅提示词+入库，未做 Beamer；立传完成后由主控置 1） | 已按 0 入库 |
 
 ## 7. 社会关系入库清单
 
-- **博士导师**：Malcolm F. Crawford（多伦多大学）
-- **博士后导师 / 合作者**：Charles Townes（哥伦比亚大学；1955 教科书 + 1958 光学 maser 论文）
-- **姻亲关系**：Charles Townes（妻 Aurelia Townes 之兄——Schawlow 是 Townes 妹夫，kinship）
-- **配偶**：Aurelia Townes（m. 1951）
-- **互助同道**：Robert Hofstadter（斯坦福同事，同为自闭症儿童父亲）
-- **同领域同道**：Nicolaas Bloembergen（1981 同半份诺奖，互指 co-honored）；Theodore Maiman（第一台激光器制造者）；Gordon Gould（发明权争议相关人物，仅客观并列）
-- **著名博士生**：Wendell T. Hill、Antoinette Taylor、Michael Duryea Williams
-- **诺贝尔奖同届**：Nicolaas Bloembergen（共享一半）、Kai M. Siegbahn（另一半，1981）
+> **2026-09-28 已入库 10 条**（id=2488，库内规范名 `Arthur Schawlow`，yaml 文件名 Arthur_Leonard_Schawlow.yaml）：博士导师 Malcolm F. Crawford（新建 stub）、博士后导师+合作者 Charles Hard Townes（库内 id=2477，两条）、配偶 Aurelia Townes（新建 stub）、colleague Robert Hofstadter（库内 id=2362）、co-honored Nicolaas Bloembergen（id=2180）+ Kai Siegbahn（id=2145）、3 博士生 Wendell T. Hill / Antoinette Taylor / Michael Duryea Williams（新建 stub）。**Theodore Maiman、Gordon Gould 仅 page.md 客观并列（无实质关系），不入库**；Townes 姻亲关系经 spouse 条目 note 表达，不再单列。
 
 ## 8. 奖项清单
 
@@ -165,6 +158,21 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同届物理学家（Nicolaas_Bloembergen / Kai_Siegbahn）及海森堡式母本格式对齐
+
+## 12. 术语清单（终审用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| optical maser | 光学微波激射器 | 1958 论文用词，即激光前身的理论方案 |
+| Schawlow–Townes approximation | 肖洛-汤斯近似 | 激光线宽近似，两人姓名连字符 |
+| resonant cavity | 谐振腔 | 核心洞见：两面镜子 |
+| laser cooling | 激光冷却 | Known for 实载，先驱构想 |
+| Microwave Spectroscopy | 《微波波谱学》 | 1955 与 Townes 合著教科书 |
+| laser spectroscopy | 激光光谱学 | 1981 获奖理由核心词 |
+| atomic energy levels | 原子能级 | intro 版理由的精确测定对象 |
+| facilitated communication | 辅助沟通 | 保留 controversial 限定词 |
+| leukemia | 白血病 | 1999-04-28 死因 |
+| Bell Telephone Laboratories | 贝尔电话实验室 | 1951-1961 任职 |
 
 ---
 

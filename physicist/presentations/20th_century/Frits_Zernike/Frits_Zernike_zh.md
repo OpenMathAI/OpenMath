@@ -66,6 +66,7 @@
 - **气质定位**：纪录片 / 稳重 / "看见不可见之物"（从鬼线疑云到相衬显微镜的耐心长跑）
 - **选定曲目**：Inspiring Electronic **The Invisible Light**（纪录片 / 电影 / 稳重）——曲目名与"相衬法让无色透明之物显形"的物理意象天然互文。
 - **落地文件**：`physicist/presentations/20th_century/Frits_Zernike/TheInvisibleLight.wav`（复制自音乐库，不入 git）。
+- **注记（主控 2026-09-28 裁定）**：本篇与他篇（Walther_Bothe）同名曲目「The Invisible Light」系**不同音频来源**（本篇为 Inspiring Electronic 版，Bothe 篇为 Infraction 版），各自目录内的 .wav 文件互不冲突，维持原状；Review 时勿作撞曲处理。
 - **匹配理由**：Zernike 的故事是"从 1930 年鬼线到 1953 年诺奖"的长线纪录片；The Invisible Light 的稳重叙事感契合光学主题与其沉潜气质，且与本组其他曲目（Expedition / Nostalgia / Eternals / The Flow of Time）来源与气质均不雷同。
 
 ## 4. Slide 规划（约 15 页，Wilson 式结构）
@@ -101,6 +102,21 @@
 - **引语**：page.md **无 Zernike 原话**；其诺奖演讲**标题** "How I discovered phase contrast"（1953-12-11，见 page.md 外链注）可照录标题，其余一律间接转述。
 - **家族关系**：'t Hooft 为"侄曾孙"（great-nephew）——亲缘代际较远，社会关系库**不建** parent-child 类条目（避免自环/错向），只在叙事中提及。
 - **配偶**：两任妻子均有载（Dora 卒于 1945；Lena 1954 再婚）——spouse 条目可建两行或择一注明，注意 Dora 卒年勿写成"离异"。
+
+### 5.1 术语清单（英文/中文/风险点）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| phase contrast / phase-contrast microscopy | 相衬法 / 相衬显微术 | 获奖：「论证相衬法，尤其是发明相衬显微镜」 |
+| ghost lines | 鬼线 | 光栅光谱主线两侧、与主线 90° 相位差 |
+| Zernike polynomials | Zernike 多项式 | 正交圆多项式，光学像差表述——不在获奖理由中 |
+| optical aberration | 光学像差 | Seidel 幂级数表述的难题由其解决 |
+| Ornstein–Zernike equation | OZ 方程 | 临界点理论，与 Ornstein 共同推导 |
+| Van Cittert–Zernike theorem | VCZ 定理 | Van Cittert 1934 原定理 + Zernike 1938 更简推导 |
+| coherence theory | 相干理论 | 部分相干光源研究 |
+| opalescence | 乳光 | 气体临界点乳光，1912 获奖工作 |
+| lector | 讲师（荷兰学制） | 1915 职位，勿译作"教授"；1920 才升教授 |
+| diffraction grating | 衍射光栅 | 鬼线出现的光学装置 |
 
 ## 6. 数据库字段核对表
 

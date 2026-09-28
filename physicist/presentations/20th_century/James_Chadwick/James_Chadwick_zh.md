@@ -1,182 +1,186 @@
-# James Chadwick（詹姆斯·查德威克）立传提示词
+# 物理学家立传提示词（James Chadwick）
 
-> qid=Q80884 · 1891-10-20 – 1974-07-24 · 英国实验物理学家 · 20 世纪 · 1935 诺贝尔物理学奖（独得）
-> 本地 Wikipedia 数据源：`physicist/presentations/20th_century/20th_century/James_Chadwick/`（page.md + metadata.json + images.txt）
-
----
-
-## 0. 正文形式说明（参考物理学家标杆 Kenneth G. Wilson）
-
-> 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**。物理学家立传格式硬性要求：
-
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。⚠ 本人物 images.txt 无正式肖像，见 §5 肖像条目。
-2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 英国`），底部状态栏给出 `国籍 | 机构 | 主要奖项` 三要素。
-3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧 `2×2` 信息网格，含至少：生卒、本名、国籍、出生地、去世地、教育、师承、任职、主要荣誉、核心领域。事实取自 Wikipedia infobox，不得杜撰。
-4. **配色 + 粒子点背景**：主色 + 强调色（诺奖金）+ 四分类色；背景用稀疏小实心圆点（粒子散射感），呼应「中子 / 不带电的粒子」母题。
-5. **品牌口径统一**：结尾页底部品牌统一写 `OpenMathAI`；引号用半角 `" "`。
+> 本文件是 OpenPhysicist 20 世纪诺贝尔物理学奖得主的「人物专属立传提示词」，以 Kenneth G. Wilson 篇为结构母本（0–11 节骨架一致）。
+> 直接复制本文件到新对话中使用，按步骤执行，每完成一步汇报进度。
 
 ---
 
-## 1. 背景信息（用于 Slide 1-3）
+## 一、模板定位
 
-- **全名**：Sir James Chadwick（詹姆斯·查德威克爵士），CH、FRS
-- **生卒**：1891-10-20 生于柴郡（Cheshire, England；metadata 载出生地 Bollington）→ 1974-07-24 逝于剑桥（Cambridge, England），享年 82（睡眠中安然离世）
-- **国籍**：英国
-- **身份**：实验（核）物理学家、大学教师；剑桥 Gonville and Caius College 第 36 任 Master（1948–1959）
-- **家庭**：长子。父 John Joseph Chadwick（棉纺工人）；母 Anne Mary Knowles（家政仆役）；弟 Harry 与 Hubert，另有一妹夭折。1895 年父母迁居曼彻斯特、幼年查德威克留在外祖父母家。1925 年 8 月与 Aileen Stewart-Brown（利物浦股票经纪人之女）结婚（伴郎为 Kapitza），育双胞胎女儿 Joanna 与 Judith（1927-02 生）
-- **教育轨迹**：
-  - Bollington Cross Primary School；曾获 Manchester Grammar School 奖学金但家庭无力承担杂费而放弃，改读曼彻斯特 Central Grammar School for Boys
-  - 1908 年入维多利亚曼彻斯特大学（**本想读数学，误报物理**）；1911 年一等荣誉毕业
-  - 1913 年曼彻斯特 **MSc**（Beyer Fellow）；同年获 1851 展览奖学金赴柏林帝国物理技术研究所（Physikalisch-Technische Reichsanstalt）
-  - 1920 年 Clerk Maxwell Studentship；1921 年 6 月剑桥 Gonville and Caius College **博士**（导师 Rutherford），11 月当选该院 Fellow
-- **博士导师**：Ernest Rutherford；**柏林时期导师**：Hans Geiger
-- **研究领域**：物理、放射性、中子、核物理、（战时）原子弹
-
-## 2. 核心叙事亮点（用于 Slide 4-13）
-
-1. **误报物理的曼彻斯特学生（1908–1913）**：本意学数学却误入物理系；在 Rutherford 门下完成第一篇论文（与 Rutherford 合著，1912，放射性源强度比较方法）；1913 年 MSc 后获 1851 奖学金，选择赴柏林随 **Hans Geiger** 研究β辐射——用盖革新发明的计数器证明 β 谱是**连续谱**而非分立谱（颠覆当时认知；Einstein 参观 Geiger 实验室时对他说："I can explain either of these things, but I can't explain them both at the same time."）。
-2. **Ruhleben 集中营的四年（1914–1918）**：一战爆发时仍滞留德国，被拘于柏林近郊 Ruhleben internment camp 整整四年——在马厩里搭实验室，用包括"放射性牙膏"在内的就地取材做实验，与 Charles Drummond Ellis 合作研究磷的电离与 CO-Cl₂ 光化学反应。战争没有打断他的物理学，只是搬了地方。
-3. **追随 Rutherford 到卡文迪许（1919–1935）**：战后随 Rutherford 转赴剑桥卡文迪许实验室，1921 年获博士学位；1923 年起任 Rutherford 的**助理研究主任十余年**——协助遴选博士生（Cockcroft、Feather、Oliphant 均出自其手），编辑实验室全部论文，是卡文迪许黄金年代的"大管家"。
-4. **中子发现（1932，★ 核心）**：德国 Bothe 与 Becker 用钋轰击铍得到异常辐射；Chadwick 让 1851 学者 Hugh Webster 复现。1932 年 1 月 Feather 提醒他 Joliot-Curie 夫妇的新结果（钋+铍"γ 射线"竟把石蜡中的质子打了出来）——质子太重，γ 光子不可能做到，**中子只需要很小能量**。查德威克放下一切、与 Feather 昼夜实验约两周，1932-02 给 *Nature* 寄出短讯《Possible Existence of a Neutron》，同年 5 月在 *Proc. R. Soc. A* 发表完整论文《The Existence of a Neutron》。罗马的 Majorana 一语道破："约里奥-居里夫妇发现了中子，只是他们自己不知道。"（此话用于说明竞争叙事，归属仍是 Chadwick。）
-5. **中子质量的精测（1933–1934）**：1933 年 Bakerian Lecture 估出中子质量约 1.0067 Da；此后与德国难民研究生 **Maurice Goldhaber** 用氘核光致分解（²H + γ → ¹H + n）精测中子质量为 1.0084 或 1.0090（现代值 1.00866 Da）——证明中子质量过大、不可能是质子-电子复合物。注：Meitner 曾从德国寄给他约 2 mCi 钋源。
-6. **中子的连锁意义**：中子不带电、无需克服库仑势垒，可进入最重元素的核——直接启发了 Fermi 的慢中子反应研究（1938 诺奖），使实验室合成超铀元素成为可能；后来它成为撬开原子核、乃至释放核能的钥匙。
-7. **利物浦重建（1935–）**：1935 年 3 月受聘利物浦大学 Lyon Jones 讲席教授（10 月 1 日到任），接手还在用直流电的老旧实验室；筹资自建**回旋加速器**（50 吨磁铁、1939 年 7 月建成运行，总花费 £5,184），**超支部分（£8,243 诺奖奖金中的相应部分）由他本人用诺贝尔奖金垫付**。他预感中子可用于治癌——中子与放射性同位素"或将成为对抗癌症的武器"。
-8. **MAUD 报告与"90% 确信"（1940–1941）**：Frisch–Peierls 备忘录（1940-03）改变了一切——纯 U-235 球可能只需约 1 kg 即可链式反应。Chadwick 领导利物浦团队测定 U-235 核截面，1941 年 4 月实验确认临界质量约 8 kg 或更少；1941 年 7 月受命执笔 **MAUD 报告最终草案**，同年 10 月由 Vannevar Bush 呈罗斯福，直接推动美国投入巨资研制原子弹。他对来访的 Pegram 与 Urey 说："I wish I could tell you that the bomb is not going to work, but I am 90 per cent sure that it will."；他后来意识到"核弹不仅可能——而且不可避免"。Farmelo 评价："Chadwick did more than any other scientist to give Churchill the Bomb."；忧劳到只能靠安眠药入睡（此后终其余生）。
-9. **曼哈顿计划英国代表团团长（1943–1945）**：1943 年 9 月魁北克协定恢复英美加合作后，Chadwick 任**联合政策委员会技术顾问暨英国代表团团长**；是除 Groves 及其副手外唯一能接触美国全部铀弹研发与生产设施的人（**Hanford 钚产区是唯一例外**，战时从未获准参观）；以化名 **James Chaffee** 行动；1944 年初携家移居 Los Alamos。英国团队成为曼哈顿计划成功的关键之一。
-10. **Trinity 见证（1945-07-16）**：人类第一次核试验的装置内芯，用的正是**钋-铍调制中子引爆器**——他 13 年前发现中子的技术延伸。随团记者 William L. Laurence 写道："never before in history had any man lived to see his own discovery materialize itself with such telling effect on the destiny of man."（历史上从未有人在有生之年亲眼目睹自己的发现如此深刻地改变人类命运。）1945 年 1 月 1 日获封爵士（他视之为对整个 Tube Alloys 项目的承认）。
-11. **战后的疲惫与转型（1946–1948）**：战后任英国原子能咨询委员会（ACAE）委员、联合国原子能委员会英国科学顾问；与 Blackett 在"英国是否须拥有自己的核武"上分歧（Chadwick 立场最终胜出）。利物浦副校长在日记里写道，从未见过一个人"在身体、精神与心灵上如此疲惫"。他厌倦了"大科学"（Big Science），1948 年转任剑桥 Gonville and Caius College Master。
-12. **Master 任内与 DNA（1948–1958）**：任内将研究 Fellowship 从 31 个增至 49 个，招贤纳士（1951 年力排众议聘中国生物化学家曹天钦与匈牙利经济学家 Peter Bauer，引发"农人暴动"（Peasants' Revolt））；正是在他任 Master 期间，该学院博士生 **Francis Crick** 与 Watson、Rosalind Franklin 相关工作通向了 1953 年 DNA 结构的发现。
-13. **荣誉与身后**：Hughes Medal（1932，发现中子当年）、诺贝尔奖（1935）、Copley Medal（1950）、Faraday Medal（1950）、Franklin Medal（1951）、Knight Bachelor（1945）、Pour le Mérite（1966）、Companion of Honour（1970）、美国 Medal of Freedom；月球背面有 Chadwick 环形山；英国原子能局官方史家 Lorna Arnold 评其为"a physicist, a scientist-diplomat, and a good, wise, and humane man"。终其一生是无神论者。2014 年其诺贝尔奖章拍出 32.9 万美元。
-
-## 3. 配色方案
-
-| 用途 | 色值 | 说明 |
-|---|---|---|
-| 主色（碳墨蓝灰） | `#2C3E50` | 中子的中性暗色 / 实验家的沉稳 |
-| 强调色（诺奖金） | `#C9A227` | 诺贝尔奖 / 尊崇 |
-| 分类色 1（中子发现 — 赭红） | `#A64B3C` | 卡文迪许实验 / 钋-铍辐射 |
-| 分类色 2（核物理 — 琥珀） | `#C98A2D` | 中子质量 / 回旋加速器 / 链式反应 |
-| 分类色 3（战争科学 — 钢蓝） | `#5B7C99` | MAUD 报告 / 曼哈顿计划英国团 |
-| 分类色 4（学院与身后 — 学院绿） | `#3D6B4F` | Caius Master / 科学外交 / 身后纪念 |
-| 背景 | `#F7F6F9` | 浅灰白 |
-
-- **背景母题**：稀疏小实心圆点（四档大小错落，如粒子散射轨迹的静帧），呼应「中子——不带电、沉默而穿透一切」的视觉语言。与海森堡气泡母题区分：查德威克用**更小更密**的粒子点。
-
-### 3.5 背景音乐选择 ✅ 【人物专属】
-
-- **气质定位**：深沉 / 历史感 / 坚毅（集中营、MAUD、曼哈顿的沉重担子与实验家的隐忍）
-- **选定曲目**：Alex-Productions **PAST**（历史感 / 深沉），匹配查德威克贯穿两次世界大战的沉厚人生与"scientist-diplomat"的历史重量。
-- **落地文件**：`physicist/presentations/20th_century/James_Chadwick/PAST.wav`（复制自音乐库，不入 git）。
-- **匹配理由**：查德威克的叙事重心不是灵光一现，而是**隐忍的坚持与责任的重负**（Ruhleben 四年、战时钟摆、战后疲惫）——需要历史感与内敛的深色底。组内不与其他四人雷同；与薛定谔的 The Invisible Light（纪录片稳重）气质相近但曲目不同。
-
-## 4. Slide 规划（约 15 页，Wilson 式结构）
-
-1. **封面**（`\titleslide`）：顶部标签「中子的发现者 · 英国」+ 查德威克 1891–1974 + 右上头像（或装饰圆）+ 国籍行 + 底部三要素状态栏 + 四色 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右 2×2 信息网格（生卒 / 本名 / 国籍 / 出生地 / 去世地 / 教育 / 师承 / 任职 / 主要荣誉 / 核心领域）
-3. **核心贡献概览**（`\hookslide`）：中子的发现 / 中子质量与核物理 / 战时科学（MAUD→曼哈顿）/ 学院与身后
-4. **早年：柴郡棉纺工之子**（1891–1911）：祖父母抚育、放弃的奖学金、误报进物理系、Rutherford 门下第一篇论文
-5. **柏林与集中营**（1913–1918）：Geiger 与 β 连续谱、Einstein 的"我只能解释其一"、Ruhleben 马厩实验室
-6. **卡文迪许的大管家**（1919–1931）：博士与 Fellow、助理研究主任、为实验室遴选 Cockcroft/Feather/Oliphant
-7. **铍辐射之谜与中子发现**（1932，★ 公式/实验流程页）：Bothe-Becker → Joliot-Curie → 两周冲刺 → Nature 短讯；钋-铍装置示意
-8. **中子质量的精测**（1933–1934）：Bakerian Lecture、Chadwick–Goldhaber 氘核光致分解、"不是质子-电子复合物"
-9. **中子的连锁意义**：慢中子与 Fermi、超铀元素、核能时代的入口（高斯版式表格：概念｜发现｜结果）
-10. **利物浦与回旋加速器**（1935–1939）：诺奖奖金垫付加速器、对抗癌症的预想
-11. **MAUD 报告**（1940–1941）：Frisch–Peierls 备忘录、临界质量、"I am 90 per cent sure that it will"
-12. **曼哈顿计划英国代表团团长**（1943–1945）：魁北克协定、Groves 的信任、化名 Chaffee、Hanford 的例外
-13. **Trinity 与战后疲惫**（1945–1946）：钋-铍引爆器的历史闭环、爵士、"身心俱疲"的日记
-14. **Caius Master 与 DNA 时代**（1948–1958）：Fellowship 扩容、Peasants' Revolt、Crick 与双螺旋
-15. **结尾**：82 岁、"发现中子的人"——谦和、坚毅、 humane 的科学外交家
-
-## 5. 史实陷阱与敏感点（终审必须检查）
-
-- **诺奖归属**：**1935 年诺贝尔物理学奖由查德威克独得**（非共享）——勿与他人（如 1936 的 Hess/Anderson）混淆，也勿在叙事里写"与某人共享"。中文理由（总名单口径）：「表彰他发现中子」。英文原文："For the discovery of the neutron."
-- **中子 ≠ Pauli 的"中子"**（★ 最高危命名陷阱）：Pauli 1930-12-04 为解释 β 连续谱提出的另一种粒子当时也叫 "neutron"，后被 **Fermi 改名为 neutrino（中微子）**——Chadwick 的中子与 Pauli 的"中子"是**完全不同的两种粒子**。表述时必须注明，否则全篇物理叙事会错乱。
-- **发现时间线**：1932-02 *Nature* 短讯《Possible Existence of a Neutron》；1932-05 *Proc. R. Soc. A*《The Existence of a Neutron》。勿把 5 月论文写成首发，也勿写"1933 年发现"。
-- **竞争叙事的分寸**：Joliot-Curie 夫妇的实验提供了关键线索但**未识别中子**；Majorana 的评语（"他们发现了中子但不知道"）只作背景引述，勿把发现归属改写为他人。Chadwick 的贡献是"识别+两周内证实+测质量"。
-- **中子质量数字**：Chadwick 1933 估计值 1.0067 Da 有误差、当时有多个互相冲突的结果（Joliot-Curie 偏大、Lawrence 团队偏小）——Beamer 中如引用数字，用 Chadwick–Goldhaber 1934 的 1.0084/1.0090 与现代值 1.00866 Da，并注明历史测量有反复；1933 年的 1.0067 若引用须带"初步估计"语境。
-- **战争角色定位**：查德威克是 **MAUD 报告最终草案执笔人 + 曼哈顿计划英国代表团团长**；Dirac 做的是 Tube Alloys 理论工作——两卷不要互相串写。他**没有参与铀弹核心设计**，角色是科学外交与统筹（Groves 体系内）。
-- **Hanford 例外**：他是唯一被禁止参观 Hanford（钚产区）的盟方高级人员；1946 年才借 Portal 之行补看——写"几乎全部设施"而非"全部设施"。
-- **化名与保密**：战时化名 James Chaffee——趣闻可用，但注明"因安全原因"。
-- **战后疲惫**：Liverpool 副校长日记"身心俱疲"与安眠药习惯——表述尊重克制，作为人性侧面而非猎奇。
-- **出生日期**：1891-10-20（metadata 中另有 1891-01-01 占位值，以 page.md infobox 10 月 20 日为准）；出生地写 Cheshire（page.md）/Bollington（metadata），建议正文用 Cheshire，身份页可注 Bollington。
-- **肖像（⚠ 本卷特有）**：`images.txt` **无查德威克本人肖像**（仅有 Solvay 1933 签名图与实验室照片）。处理方案：① 尝试 Commons 文件名探索（如 "James Chadwick.jpg"，404 则换拼写，参照数学家卷经验）；② 仍不可得则用装饰圆占位（`\faIcon{user}\enspace Portrait`），身份页与封面保持一致；③ 可用 Groves 与 Chadwick 合影（images.txt 载 `Groves_and_Chadwick_830308.jpg`）作为叙事配图——但确认裁切后用于封面需谨慎（画面以 Groves 为左主体），优先方案 ①/②。
-- **无神论**：终身无神论者，睡眠中去世于剑桥——勿附宗教仪式叙述。
-
-## 6. 数据库字段核对表
-
-| 字段 | 值 | 状态 |
-|---|---|---|
-| qid | Q80884 | 待写入 |
-| name_zh | 查德威克（或 詹姆斯·查德威克） | 待写入 |
-| name_en | James Chadwick | 待写入 |
-| birth_date | 1891-10-20 | 待写入（弃 1891-01-01 占位值） |
-| death_date | 1974-07-24 | 待写入 |
-| nationality | United Kingdom | 待写入 |
-| primary_occupation | nuclear physicist | 待写入 |
-| field_of_work | nuclear physics / neutron / radioactivity | 待写入 |
-| has_biography | 1 | 本次置 1 |
-
-## 7. 社会关系入库清单
-
-- **博士导师**：Ernest Rutherford（曼彻斯特→剑桥卡文迪许，两段师承）
-- **柏林时期导师**：Hans Geiger（非博士导师，note 注明）
-- **著名博士生**：Maurice Goldhaber（中子质量合作）、Étienne Biéler、Albert Crewe、Ernest C. Pollard、John Riley Holt
-- **其他学生**：Charles Drummond Ellis（Ruhleben 集中营难友+合作者）、Norman Feather（中子发现的关键提示者）、Joseph Rotblat（1939 战时聘入利物浦）
-- **卡文迪许遴选的学生**：John Cockcroft、Mark Oliphant（note 注明"以助理研究主任身份协助遴选/培养"）
-- **战时同僚**：Leslie Groves（曼哈顿计划总监）、John Cockcroft、Rudolf Peierls、Otto Frisch、George Paget Thomson（MAUD 主席）
-- **学术对手（温和）**：Ernest Lawrence（对 Big Science 与 1933 Solvay "新粒子"之争）、Patrick Blackett（战后核武政策分歧）
-- **诺奖同届**：1935 年独得，无共享者——入库 co-honored 关系为空；1936 年 Hess/Anderson 为"下一年度"非同届
-- **妻子**：Aileen Stewart-Brown（spouse，1925；伴郎 Kapitza——note 可注）
-
-## 8. 奖项清单
-
-- 诺贝尔物理学奖（1935，独得）
-- Hughes Medal（1932，皇家学会，"因放射性研究"——发现中子当年）
-- Copley Medal（1950，"因核物理与原子能发展的杰出工作，尤以发现中子"）
-- Faraday Medal（1950，英国电气工程师学会）
-- Franklin Medal（1951，"因确认中子为原子核的组成部分"）
-- Knight Bachelor（1945 元旦授勋名单，George VI）
-- Pour le Mérite（1966，西德）
-- Companion of Honour（1970，Elizabeth II）
-- 美国 Medal of Freedom（1945 年版，与英国团队多人同获）
-- 皇家学会 Fellow（FRS，1927）、荷兰皇家艺术与科学院外籍院士（1946）、美国哲学学会国际会员（1948）
-
-## 9. 机构清单
-
-- 教育：Central Grammar School for Boys（曼彻斯特）、维多利亚曼彻斯特大学（1911 学士 / 1913 MSc）、柏林帝国物理技术研究所（1851 奖学金，Geiger 门下）、剑桥 Gonville and Caius College（博士 1921）
-- 任职：曼彻斯特（Rutherford 麾下研究）、剑桥卡文迪许实验室助理研究主任（1923–1935）、利物浦大学 Lyon Jones 讲席教授（1935–）、曼哈顿计划英国代表团团长（1943–1945）、联合国原子能委员会英国科学顾问（1945–）、剑桥 Gonville and Caius College Master（1948–1958）
-- 战时：Tube Alloys / MAUD 委员会成员、利物浦实验室（Luftwaffe 轰炸下坚持研究，窗户屡被震破以纸板代之）
-
-## 10. 终审清单
-
-- [ ] 生卒 1891-10-20 / 1974-07-24，享年 82，出生地 Cheshire，去世地 Cambridge
-- [ ] 诺奖"1935 年独得、理由为发现中子"表述准确
-- [ ] Pauli 的"中子"（后名 neutrino）与 Chadwick 的中子区分明确
-- [ ] 中子发现时间线"1932-02 Nature 短讯、1932-05 完整论文"表述准确
-- [ ] 竞争叙事分寸：Joliot-Curie/Majorana 只作背景，归属 Chadwick
-- [ ] 中子质量数字引用带历史测量语境
-- [ ] MAUD/曼哈顿角色"执笔+代表团团长+科学外交"定位准确，不写成核设计者
-- [ ] 肖像方案落实（Commons 探索或装饰圆占位），不使用未验证照片
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像/占位 + 国籍行 + 粒子点背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
-
-## 11. Review 流程规范（两轮 Review）
-
-### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `20th_century/James_Chadwick/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：按 §5 肖像方案执行（Commons 探索失败则装饰圆占位）
-- [ ] **国籍**：封面顶部徽章明示英国
-- [ ] **引语核对**：每条引语须在 page.md 找到原文（如 Einstein "I can explain either of these things..."、"I am 90 per cent sure that it will."、Laurence "never before in history..."、Liverpool 副校长日记、"so physically, mentally and spiritually tired"）
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
-
-### 第 2 轮（Review-2）：结构优化
-- [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
-- [ ] 身份信息页布局与 Wilson 模板对齐
-- [ ] 中文标点 / 断行 / 间距统一
-- [ ] 与同世纪物理学家（Wilson / Wigner / Lorentz）格式对齐
+- **目标项目**：OpenPhysicist —— 开放物理学家人物史（与 OpenMath 数学家侧共享 GitHub `OpenMathAI/OpenMath`）。
+- **本实例**：James Chadwick（詹姆斯·查德威克，1935 诺贝尔物理学奖，中子的发现者）。
+- **设计哲学**：物理学家立传必须有「身份信息页」与结构化「研究领域」表达；Chadwick 篇的设计重心是**中性的粒子与沉默的测量者**——不带电荷的中子与不爱说话的查德威克互为镜像，立传以「两周实验改变原子核图像」为叙事脊柱。
 
 ---
+
+## 二、背景信息 【人物专属】
+
+- **目标物理学家**：Sir James Chadwick（1891-10-20 ~ 1974-07-24，享年 82 岁）
+- **气质关键词**：**中子的发现者、英国核计划的掌舵人、沉默的实验大师** —— 1935 诺贝尔物理学奖获奖理由：
+  > "For the discovery of the neutron."（因发现中子）
+- **设计母题**：**穿透（penetration without charge）**。中子不带电荷故能穿透库仑壁垒进入任何原子核——「不动声色地改变一切」正是查德威克一生的写照：曼哈顿计划中几乎无人注意、却拿到除 Groves 外唯一的全设施通行权。
+- **本地数据源**：`/Users/ericksun/workspace/codebuddy/OpenMathAI/physicist/presentations/20th_century/20th_century/James_Chadwick/page.md`（Wikipedia 全文已抓取）
+- **待下载**：本目录尚无 `James_Chadwick.html` 与 `images/`，第 0 步需从 `https://en.wikipedia.org/wiki/James_Chadwick` 下载页面与肖像（infobox c.1945 照片）。
+- **参考模板**：
+  - 结构母本：`physicist/presentations/20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.tex`
+  - 项目首页模板：`physicist/presentations/cover/openphysicist_page.tex`
+
+---
+
+## 三、任务流程 【模板通用，逐步执行】
+
+### 第 0 步：下载并核对 Wikipedia 页面 【人物专属】
+
+- page.md 已在本地（见上），**事实基准如下**（以 page.md 为唯一依据；frontmatter 生卒有噪声 `1891-01-01`/`1974-01-01`，以 infobox/正文 1891-10-20 / 1974-07-24 为准）：
+  - 生卒（1891-10-20 生于英格兰柴郡 ~ 1974-07-24 逝于英格兰剑桥，睡梦中去世，享年 82 岁）
+  - 国籍（英国）
+  - 父母（父 John Joseph Chadwick 棉纺工；母 Anne Mary Knowles 佣工；幼年由外祖父母抚养）
+  - 教育（Manchester Central Grammar School for Boys（曾获 Manchester Grammar School 奖学金、因付不起杂费放弃）→ 1908 入维多利亚曼彻斯特大学（本想读数学、误注册物理）→ 1911 一等荣誉毕业 → 1913 MSc（Beyer Fellow）→ 1851 奖学金赴柏林帝国物理技术研究所师从 Hans Geiger → 1921 剑桥 Gonville and Caius College 博士（导师 Rutherford））
+  - 任职机构（1919 跟随 Rutherford 入卡文迪许实验室 → 1923 任 Rutherford 助理研究主任（逾十年）→ 1935-10-01 利物浦大学 Lyon Jones 物理学讲席教授（建回旋加速器）→ 1943-44 曼哈顿计划英国代表团团长（Los Alamos，化名 James Chaffee）→ 1948-1958 剑桥冈维尔与凯斯学院第 36 任院长）
+  - 关键荣誉（FRS 1927、Hughes Medal 1932、Nobel 1935、Copley Medal 1950、Faraday Medal 1950、Franklin Medal 1951、Knight Bachelor 1945、Companion of Honour 1970、Pour le Mérite 1966、Medal of Freedom）
+  - 家庭（1925-08 娶利物浦股票经纪人之女 Aileen Stewart-Brown，Kapitza 任伴郎；1927-02 生双胞胎女儿 Joanna 与 Judith）
+  - 知名学生（博士生：Étienne Biéler、Albert Crewe、Maurice Goldhaber、John Riley Holt、Ernest C. Pollard；其他 notable：Charles Drummond Ellis、Norman Feather、Joseph Rotblat）
+  - 核心贡献清单（见第 4 步）
+  - 关键时间线（15–20 节点）：1891 生 → 1908 入曼彻斯特 → 1912 与 Rutherford 合写首篇论文 → 1913 柏林 Geiger 处证实 β 连续谱 → 1914-18 鲁勒本拘留营（马厩实验室、放射性牙膏做实验）→ 1919 入卡文迪许 → 1920 Clerk Maxwell Studentship → 1921 博士 + Caius Fellow → 1923 助理研究主任 → 1925 结婚 → 1932-01 Feather 转来约里奥-居里论文 → 1932-02 Nature 快信 "Possible Existence of a Neutron" → 1932-05 PRSA 全文 "The Existence of a Neutron" → 1932 Hughes 奖章 → 1933 Bakerian 讲座估算中子质量 1.0067 → 1934 与 Goldhaber 氘核光致分裂定质量 → 1935 利物浦讲席 + 诺贝尔奖（奖金部分付回旋加速器）→ 1939-07 回旋加速器建成 → 1941-07 撰写 MAUD 报告终稿 → 1943 魁北克协定后任英国代表团团长 → 1945-01-01 封爵、1945-07-16 现场观看 Trinity 核试验 → 1946 联合国原子能委员会英方顾问 → 1948 出任 Caius 院长 → 1950 Copley/Faraday → 1958 退休 → 1974-07-24 剑桥逝世
+
+### 第 1 步：建立目录 【模板通用】
+
+- 在 `physicist/presentations/20th_century/` 下使用本目录 `James_Chadwick/` 并创建 `images/`。
+
+### 第 2 步：复制 Makefile 【模板通用】
+
+- 复制参照成品 `Makefile`，设置 `MAIN=James_Chadwick_zh`、`VIDEO_NAME=James_Chadwick_zh`。
+
+### 第 3 步：收集图片 【人物专属】
+
+- 下载 infobox c.1945 肖像到 `images/`；404 用 Commons `Special:FilePath` 回退。可补插图：Groves 与 Chadwick 合影、卡文迪许实验室旧照。
+
+### 第 4 步：研究领域梳理 + 入库 【模板通用，人物专属内容】
+
+**Chadwick 的研究领域（按 rank 排序）**：
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | nuclear physics | 核物理 | 中子的发现改变原子核图像 | 核心页 |
+| 1 | radioactivity | 放射性 | 曼彻斯特时期 γ 吸收、核核电荷测量 | 早年页 |
+| 2 | beta radiation | β 辐射 | 1914 证实 β 谱连续（柏林 Geiger 处） | 柏林页 |
+| 3 | neutron physics | 中子物理 | 中子质量测量、钋铍源技术 | 核心页 |
+| 4 | experimental physics | 实验物理 | 全程实验路线，反对 Big Science | 贯穿页 |
+
+### 第 4.5 步：社会关系梳理 + 入库 【模板通用，人物专属内容】
+
+| 关系类型 | 对方 | 方向 | note |
+|---------|------|------|------|
+| advisor-student | Ernest Rutherford | 导师→本人 | 曼彻斯特本科导师 + 剑桥博士导师，卡文迪许同事 |
+| advisor-student | Maurice Goldhaber | 本人→学生 | 博士生，氘核光致分裂法测中子质量 |
+| advisor-student | Norman Feather | 本人→学生 | 其他 notable 学生，中子发现的关键提醒者 |
+| advisor-student | Joseph Rotblat | 本人→学生 | 其他 notable 学生，战时雇于利物浦 |
+| spouse | Aileen Stewart-Brown | 无向 | 1925 年结婚，Kapitza 任伴郎 |
+| colleague | Hans Geiger | 无向 | 柏林博士后导师，β 连续谱合作 |
+| colleague | John Cockcroft | 无向 | 卡文迪许同事、MAUD 委员会成员 |
+| controversy | Patrick Blackett | 无向 | 战后原子能咨询委员会上就英国是否自研核武立场相左 |
+
+### 第 5 步：设计配色方案 【模板通用，人物专属色彩】
+
+- **气质**：内敛、坚实、金属灰绿
+- **配色**：石板灰青（主色 `#2F4550`）+ 诺奖香槟金 `C9A227` + 四分类色
+  - `badgeNucl` 核物理 — 石板灰青 `#2F4550`
+  - `badgeNeut` 中子物理 — 钢青 `#46707E`
+  - `badgeBeta` β 辐射 — 琥珀 `#E07B30`
+  - `badgeWar` 战时科学 — 暗红 `#8B3A3A`
+- **背景母题**：柔和气泡中以「无色圆点穿透色环」的中性粒子图形呼应设计母题。
+
+### 5.1 物理学家格式硬要求 【模板通用，★ 必须满足】
+
+1. 封面有头像（右上肖像 + 细边框 + 姓名小字注）与国籍行。
+2. 必须有身份信息页：左侧头像 + 右侧信息网格（生卒、本名、国籍、出生地、师承、任职、主要荣誉、核心领域），事实取自 page.md infobox，不得杜撰。
+3. 结尾页底部品牌标注统一写 `OpenMathAI`；引号用半角 `" "`。
+
+### 第 6 步：规划幻灯片序列 【人物专属，可微调】
+
+```
+00  OpenPhysicist 项目首页（\input cover/openphysicist_page.tex）
+01  封面 — 中子的发现者 / James Chadwick 1891–1974 + 四色 badge + 右上头像 + 国籍行
+02  身份信息页（★ 必做）— 左头像 + 右信息网格（含教育、师承、任职、荣誉、核心领域）
+03  核心贡献概览 — 中子 / β 连续谱 / 核电荷 / 战时科学
+04  误入物理（1891–1913）— 数学志愿填成物理、Rutherford 门下、Beyer Fellow
+05  柏林与拘留营（1913–1918）— Geiger、β 连续谱、Ruhleben 马厩实验室
+06  卡文迪许十年（1919–1932）— Rutherford 助理研究主任、Gonville and Caius
+07  1932：两周的中子（核心贡献页）— Bothe/Becker → Joliot-Curie 误判 → 钋铍源击中靶心
+08  公式框页 — 铍核 α 轰击反应 ⁹Be + α → ¹²C + n（page.md 未给显式式，此为反应式图式并注明）
+09  中子的质量 — Bakerian 1.0067、Goldhaber 光致分裂 1.0084/1.0090
+10  利物浦与回旋加速器 — 诺贝尔奖金付加速器、反 Big Science、与 Lawrence 的 1933 索尔维交锋
+11  MAUD 报告与曼哈顿 — "90 per cent sure"、英国代表团团长、化名 James Chaffee
+12  门生与传承 — Goldhaber、Feather、Rotblat；Caius 院长任内的 DNA 之年
+13  荣誉与认可 — Nobel 1935 · Copley 1950 · 封爵 1945 · CH 1970
+14  遗产：从核图像到核时代
+15  结尾
+```
+
+### 第 7 步：编写 Beamer 源码 【模板通用】
+
+- 每页 `\newcommand{\xxxslide}{...}` 定义；头部宏定义整体复用结构母本骨架。
+
+### 第 8 步：布局检查 【模板通用】
+
+- 每写完一页 `make distclean && make pdf`，用 `pdftoppm` 截图检查溢出/重叠；修复优先级：删 `\plainbar` → 缩 `inner sep` → 缩字号 → 减行距 → 调 y 坐标。
+
+### 第 9 步：史实审查 + 术语审查 【人物专属】
+
+**Chadwick 特殊陷阱**：
+
+| 陷阱 | 说明 |
+|------|------|
+| 获奖理由 | 官方原句 "For the discovery of the neutron."（独立得奖，非共享），勿写成"因核物理贡献"泛化 |
+| 中子发现归属 | Bothe/Becker 首先产生异常辐射、Joliot-Curie 打出质子却误认 γ、Majorana 同结论未发表——Chadwick 的贡献是**两周确证与解释**；勿写成完全独立无前人，也勿把发现权让渡 |
+| Pauli 的"中子" | 泡利 1930 提出的 "neutron" 后来被费米改名为 neutrino（中微子），与查德威克中子**不是同一粒子**，勿混 |
+| 生卒噪声 | frontmatter 含 1891-01-01 / 1974-01-01 噪声，一律以 infobox/正文 1891-10-20 / 1974-07-24 为准 |
+| 志愿误填 | 曼彻斯特本想读数学、误注册物理——有载可写，勿演绎为"命运注定" |
+| 拘留营细节 | Ruhleben 期间用"放射性牙膏"等拼凑材料做实验为 page.md 明载，可写 |
+| 奖金用途 | 诺贝尔奖金（159,917 kr，约 £8,243）部分支付了总价 £5,184 的回旋加速器——数字勿混（£700 修缮 + £2,000 大学 + £2,000 皇家学会） |
+| Big Science | 1933 索尔维会议上质疑 Lawrence 的"新粒子"（后证为污染），且被证实正确——可写，但勿引申为"反对一切大型装置" |
+| 同名区分 | 与 1946 化学奖 James B. Sumner 无关；与 R. W. Wilson/C.T.R. Wilson 无关；Caius 院长继任者是 Nevill Mott |
+| Caius 岁月 | 任内 Francis Crick（该校博士生）等发现 DNA 双螺旋——是"任内"不是"指导"，勿写成参与 |
+| 战时工作 | MAUD 终稿执笔 + 英国代表团团长 + 除 Groves 外唯一全设施通行权 + 无权进入 Hanford——细节多且易混，逐条对照 page.md |
+
+**术语清单**：
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| neutron | 中子 | 不带电核子，勿与 neutrino 混 |
+| beta radiation | β 辐射 | 1914 连续谱发现 |
+| continuous spectrum | 连续谱 | β 衰变谱 |
+| polonium–beryllium source | 钋铍源 | 中子发现实验核心装置 |
+| proton | 质子 | Joliot-Curie 打出的反冲粒子 |
+| cyclotron | 回旋加速器 | 利物浦 50 吨磁体 |
+| MAUD Report | MAUD 报告 | 1941 终稿执笔人 |
+| Tube Alloys | 管合金（计划） | 英国原子弹计划代号 |
+| Manhattan Project | 曼哈顿计划 | 英国代表团团长 |
+| critical mass | 临界质量 | 1941 实验确认铀-235 可能 ≤8 kg |
+| Trinity nuclear test | 三位一体核试验 | 1945-07-16 在场 |
+
+---
+
+## 四、背景音乐选择 【人物专属】
+
+- **选定曲目**: **PAST** — Alex-Productions（86k views）
+- **风格**: 历史感 / 深沉 / 纪录片
+- **匹配理由**: 查德威克的一生横跨拘留营、卡文迪许、曼哈顿与战后疲惫的英国——PAST 的历史感与深沉正匹配这位"沉默掌舵人"的世纪叙事，也呼应其晚年 "physically, mentally and spiritually tired" 的重量。
+- **备选**（未采用）: Through the Darkness（突破前夕的推进感，匹配 1932 两周实验但已被多批使用）；The Flow of Time（时间感匹配但受众偏低）。
+- **本地路径**: `music_audio/alex-productions/89-geyy8_WXDK0-PAST.wav` → `presentations/20th_century/James_Chadwick/PAST.wav`
+
+---
+
+## 五、关键参考文件清单 【模板通用】
+
+| 文件 | 用途 |
+|------|------|
+| `physicist/presentations/20th_century/20th_century/James_Chadwick/page.md` | 本地 Wikipedia 正文（事实基准） |
+| `physicist/presentations/20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.md` | 提示词结构母本 |
+| `physicist/presentations/20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.tex` | 成品 Beamer 骨架/源码 |
+| `physicist/presentations/cover/openphysicist_page.tex` | 项目首页模板 |
+| `MySQL/seed_person.py` | 人物 + 领域 + 关系入库引擎 |
+| `MySQL/data/Kenneth_G_Wilson.yaml` | yaml 字段母本 |
 
 > **开始执行。每完成一步向我汇报。**
-> **最重要的事：每写一页就 make，看到溢出就修。**
+> **最重要的事：每写一页就 make，看到溢出就修；所有事实以 page.md 为准，无载禁写。**

@@ -126,6 +126,19 @@
 - **本科同窗**：Thomas Kuhn（科学史家，同时是 Van Vleck 的博士生——三人链条可作叙事彩蛋）
 - **合著者**：Bertrand I. Halperin、Chandra M. Varma（1972 玻璃反常论文）；David Pines（1988 会议文集合编）
 
+## 7.5 术语清单（对齐标杆 §9，8 条）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| Anderson localization | 安德森局域化 | 无序使扩展态局域（1958），勿写成"所有无序系统必局域" |
+| superexchange | 超交换 | 过渡金属磁性多体相互作用，勿与 RKKY 混写（RKKY 无载禁写） |
+| Anderson Hamiltonian | 安德森哈密顿量 | 杂质位内相互作用模型，勿与 Kondo 模型等同 |
+| Anderson's theorem | 安德森定理 | 超导体中杂质散射，勿与局域化定理混写 |
+| pseudospin | 赝自旋 | BCS 理论的表述方式 |
+| RVB (resonating valence bond) | 共振价键 | 1987 高温超导理论，两面并陈 |
+| emergent phenomena | 涌现现象 | "More is Different" 的哲学内核 |
+| plasmon | 等离子体激元 | 1962 对称破缺论文《Plasmons, Gauge Invariance, and Mass》 |
+
 ## 8. 奖项清单
 
 - 诺贝尔物理学奖（1977，与 Mott、Van Vleck 共享）

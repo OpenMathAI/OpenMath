@@ -169,6 +169,21 @@
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同组（Tomonaga / Feynman / Kastler / Bethe）及 Heisenberg 格式对齐
 
+## 12. 术语清单（2026-09-28 补齐，对齐标杆）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| quantum electrodynamics | 量子电动力学（QED） | 1965 获奖理由领域 |
+| renormalization | 重整化 | 单圈精度；与 Tomonaga 独立并行，勿写"第一人" |
+| quantum action principle | 量子作用原理 | 变分方法，场论框架起点 |
+| Schwinger–Dyson equation | Schwinger–Dyson 方程 | 场关联函数与运动方程 |
+| Schwinger effect | Schwinger 效应 | 强场隧穿对产生，非微扰 |
+| electroweak interaction | 电弱相互作用 | SU(2)→U(1) 首个模型；Glashow 延伸 |
+| source theory | 源理论 | 晚年 UCLA 主线，现代有效场论先驱 |
+| anomalous magnetic moment | 反常磁矩 | 墓碑 α/2π 所指，勿写成其他公式 |
+| spin–statistics theorem | 自旋-统计定理 | 与 CPT 定理优雅证明并提 |
+| Rarita–Schwinger equation | Rarita–Schwinger 方程 | 自旋 3/2 场方程 |
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

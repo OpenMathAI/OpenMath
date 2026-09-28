@@ -64,9 +64,9 @@
 ### 3.5 背景音乐选择 ✅ 【人物专属】
 
 - **气质定位**：明亮 / 突破 / 年轻（31 岁的诺奖、反物质第一眼的惊奇）
-- **选定曲目**：Alex-Productions **Awaken**（鼓舞 / 明亮），匹配"云室里意外看见反物质"的发现之喜与年轻实验家的锋芒。
-- **落地文件**：`physicist/presentations/20th_century/Carl_Anderson/Awaken.wav`（复制自音乐库，不入 git）。
-- **匹配理由**：安德森是本组五人中最"年轻、明亮、实验的直觉"的一位——不选深色史诗，而选明亮推进的 Awaken；与 Hess 的 Expedition（远征）、Chadwick 的 PAST（深沉）形成组内差异。
+- **选定曲目**：Alex-Productions **Shine Like The Sun**（史诗 / 美丽 / 振奋），匹配"云室里意外看见反物质"的发现之喜与年轻实验家的锋芒。
+- **落地文件**：`physicist/presentations/20th_century/Carl_Anderson/ShineLikeTheSun.wav`（复制自音乐库，不入 git）。
+- **匹配理由**：安德森是本组五人中最"年轻、明亮、实验的直觉"的一位——不选深色史诗，而选光明振奋的 Shine Like The Sun；批内与 Davisson（The Flow of Time）、G.P. Thomson（Eternals）、Fermi（Expedition）、Lawrence（Awaken）互不重复（原选 Awaken 与 Lawrence 冲突，2026-09-28 批内去重改定）。
 
 ## 4. Slide 规划（约 15 页，Wilson 式结构）
 
@@ -100,6 +100,19 @@
 - **宗教身份**：page.md 明载"He was a Christian"——如需人物温度页可如实一句，勿扩写教派细节。
 - **生平简短（⚠ 本卷特有）**：page.md 相对单薄（无童年细节、无轶事长段）——**禁写 page.md 未载的传记细节**（如童年故事、二战工作、晚年生活细节等均无载）；Slide 规划中"早年"与"晚年"页内容按 page.md 有载信息填充，宁短勿造。
 - **肖像（⚠ 本卷特有）**：`images.txt` **无安德森本人肖像**（仅有 `PositronDiscovery.jpg` 首张正电子照片）。方案：① 尝试 Commons 文件名探索（如 "Carl David Anderson.jpg"）；② 不可得则封面右上装饰圆占位；③ `PositronDiscovery.jpg`（1933-03-15 首张正电子照片）作为 §4.6/§4.7 的叙事大图——云室照片是本卷最有力的视觉资产，宁可正文大图、封面占位。
+
+## 5.5 术语清单（8 条）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| positron | 正电子 | 勿写"阳性电子"；反物质的第一个直接证据 |
+| muon | μ 子 | 曾长期称 "mu-meson"，但并非 Yukawa 预言的 π 介子 |
+| cosmic ray | 宇宙线 | 发现正电子与 μ 子的实验载体 |
+| cloud chamber | 云室 | 径迹判读的仪器基础 |
+| pair production | （γ 射线）对产生 | 1933 ThC'' γ 射线实验，正电子证据闭环 |
+| track curvature | 径迹曲率 | 磁场中判质量与电荷符号的依据 |
+| Dirac equation | 狄拉克方程 | 1928 方程 → 1931 反物质预言，实验验证对象 |
+| antimatter | 反物质 | "第一次看见反物质"的叙事母题 |
 
 ## 6. 数据库字段核对表
 

@@ -98,6 +98,30 @@
 - **死因**：page.md 无载，勿写（只写 2003-10-13 逝于 Hamilton, Ontario，享年 85）。
 - **肖像占位**：images.txt 为空——封面用装饰圆占位，勿使用未经 `file` 验证的网络图片。
 
+## 5.5 研究领域表（fields 入库口径，2026-09-28 补）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | neutron scattering | 中子散射 | 获奖理由整体主线（先驱性贡献） | 核心页 |
+| 1 | neutron spectroscopy | 中子谱学 | 个人半份获奖理由（neutron spectroscopy） | 核心页 |
+| 2 | condensed matter physics | 凝聚态物理 | 中子散射技术的研究对象 | 核心页 |
+| 3 | magnetism | 磁性 | 1950 博士论文研究铁磁材料磁性 | 早年页 |
+
+## 5.6 术语清单（英文/中文/风险点，2026-09-28 补）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| neutron triple-axis spectrometry | 中子三轴谱仪 | 本人物标志性成果（Known for） |
+| neutron spectroscopy | 中子谱学 | 个人半份诺奖理由，勿与衍射混 |
+| neutron diffraction | 中子衍射 | 属 Shull 半份理由，本篇勿写进获奖理由 |
+| inelastic scattering | 非弹性散射 | 谱学的物理基础（动力学激发） |
+| condensed matter | 凝聚态 | 获奖理由限定语 |
+| ferromagnetic materials | 铁磁材料 | 博士论文对象（1950） |
+| Chalk River Nuclear Laboratory | 乔克河核实验室 | 加拿大原子能公司，1950–1962 |
+| McMaster University | 麦克马斯特大学 | 1962–1984 教授 |
+| Order of Canada | 加拿大勋章 | Officer 1982 / Companion 1995 |
+| Brockhouse Medal | 布罗克豪斯奖章 | DCMMP & CAP 1999 设立 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -114,8 +138,11 @@
 
 ## 7. 社会关系入库清单
 
+> yaml 入库名规范（2026-09-28）：Shull 库内记录 name_en 用 page.md frontmatter 形式 **Clifford G. Shull**（与 Shull 篇 yaml 一致，防分裂 stub）。P. K. Iyengar 的 doctoral_student 身份仅 metadata.json 有载，**不入库**；按 page.md 正文明载的 Chalk River 共事以 **colleague** 入库。
+
 - **博士导师（advisor-student，direction advisor=对方是导师）**：James Reekie（多伦多大学）
-- **博士学生（advisor-student，direction advisor=Brockhouse）**：Sow-Hsin Chen（infobox）；P. K. Iyengar（metadata 载；page.md 正文为 Chalk River 共事语境——note 注明；Iyengar 被视为印度核计划之父）
+- **博士学生（advisor-student，direction advisor=Brockhouse）**：Sow-Hsin Chen（infobox）
+- **共事同事（colleague，无向）**：P. K. Iyengar（Chalk River 共事；被视为印度核计划之父；doctoral_student 仅 metadata 载不入库）
 - **诺奖同届（co-honored，无向）**：Clifford G. Shull（1994 共享诺贝尔物理学奖——与 Shull 篇互指；两人贡献互补：谱学 vs 衍射）
 - **任职机构同事（仅立传呈现，不建关系行）**：Chalk River / McMaster 具体同事人名 page.md 无载（Iyengar 除外），禁写
 

@@ -64,10 +64,10 @@
 
 ### 3.5 背景音乐选择 ✅ 【人物专属】
 
-- **气质定位**：流动 / 平稳 / 连续叙事（从原子物理到生物物理到能源政策的持续转向）
-- **选定曲目**：Alex-Productions **SEA**（流动 / 平稳），匹配"激光冷却——原子在光之海中缓缓静止"的意象，以及朱棣文一生多领域流动的连续叙事。
-- **落地文件**：`physicist/presentations/20th_century/Steven_Chu/SEA.wav`（复制自 `music_audio/alex-productions/92-WEqfdRXU3IU-SEA.wav`，不入 git）。
-- **匹配理由**：朱棣文的叙事不是单点突破而是持续迁移（原子→分子→能源→政策），SEA 的平稳流动感贴合；且与本批次其余五人曲目不重复。
+- **气质定位**：开阔 / 史诗 / 新领域开拓（从原子物理到生物物理到能源政策的持续转向）
+- **选定曲目**：Alex-Productions **New Lands**（高受众 / 史诗 / 开阔），匹配"激光冷却打开全新物理疆域"与"能源部长开辟能源新政"的开疆叙事。
+- **落地文件**：`physicist/presentations/20th_century/Steven_Chu/NewLands.wav`（复制自 `music_audio/alex-productions/74-oK8HN0FsZmc-New-Lands.wav`，不入 git）。
+- **匹配理由**：朱棣文的叙事不是单点突破而是持续迁移（原子→分子→能源→政策），New Lands 的开阔开拓感贴合"每个领域都是新大陆"；★ 本批次批内曲目查重时发现与 David_Lee 篇撞 SEA，2026-09-28 改定 New Lands，批内五曲互不重复。
 
 ## 4. Slide 规划（约 15 页，Wilson 式结构）
 
@@ -102,6 +102,30 @@
 - **引语红线**：可加引号的仅限 page.md 有原文者——"the Stone Age did not end because we ran out of stones; we transitioned to better solutions"、皇家学会提名词整段；其余一律间接转述。
 - **在世人物**：无卒日，death_date 留白；结尾页写"1948–"勿补卒年。
 
+## 5.5 研究领域表（第 4 步入库对照，与 MySQL/data/Steven_Chu.yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | atomic physics | 原子物理 | page.md Fields 首列 | 贝尔实验室页 |
+| 1 | laser cooling | 激光冷却 | 六束对射激光冷却囚禁原子，1997 诺奖核心 | 诺奖页 |
+| 2 | biological physics | 生物物理 | 单分子层面：酶活性、蛋白质与 RNA 折叠 | 斯坦福页 |
+| 3 | polymer physics | 聚合物物理 | 单个 DNA 分子研究聚合物动力学与相变 | 斯坦福页 |
+
+## 5.6 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| laser cooling | 激光冷却 | 1997 诺奖官方理由用词 |
+| magneto-optical trapping | 磁光囚禁 | 贝尔实验室时期工作，勿与光镊混期 |
+| optical tweezers | 光镊 | 斯坦福单分子生物物理时期，勿归贝尔实验室 |
+| atom interferometry | 原子干涉仪 | 皇家学会提名词用语 |
+| fluorescence resonance energy transfer (FRET) | 荧光共振能量转移 | 单分子研究技术 |
+| atomic clock | 原子钟 | 囚禁技术的高精度应用 |
+| forbidden magnetic dipole transition | 禁戒磁偶极跃迁 | 博士论文主题（铊原子） |
+| glucose economy | 葡萄糖经济 | 其气候主张 |
+| Helios project | Helios 项目 | LBNL 太阳能制燃料计划 |
+| ARPA-E | 能源高级研究计划局 | 能源部长任内设立 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -116,14 +140,19 @@
 | field_of_work | atomic physics / biological physics / polymer physics | 待写入 |
 | has_biography | 1 | 本次置 1 |
 
-## 7. 社会关系入库清单
+## 7. 社会关系入库清单（★ 已按库内规范名核对，与 MySQL/data/Steven_Chu.yaml 一致）
 
-- **博士导师**：Eugene D. Commins
-- **博士生**：Michale Fee
-- **co-honored（同届共享）**：Claude Cohen-Tannoudji、William D. Phillips（1997 诺贝尔物理学奖三人共享）
-- **家庭成员（可入库）**：父 Ju-Chin Chu、兄 Gilbert Chu、弟 Morgan Chu；妻 Jean Fetter
-- **政界关联**：Barack Obama（任命其为能源部长）、万钢（共同宣布 CERC）
-- **机构继任关系**：能源部长任内前任 Samuel Bodman、继任 Ernest Moniz（可选入库）
+| 类型 | 对方（库内规范名） | 方向 | note |
+|------|------|------|------|
+| advisor-student | Eugene D. Commins（id=2335） | 师→生 | UC Berkeley 博士导师（1976） |
+| advisor-student | Michale Fee | 师→生 | 博士生（infobox 明载） |
+| co-honored | Claude Cohen-Tannoudji（id=2445） | 无向 | 1997 诺奖三人共享 |
+| co-honored | William D. Phillips（按 batch-28 名单规范名，勿用全称 William Daniel Phillips 另建 stub） | 无向 | 1997 诺奖三人共享 |
+| spouse | Jean Fetter | 无向 | 现妻，1997 结婚 |
+| spouse | Lisa Chu-Thielbar | 无向 | 前妻，育 Geoffrey 与 Michael |
+| parent-child | Ju-Chin Chu | 无向 | 父，MIT 化工博士 |
+
+> **不入库存档（page.md 明载但非规范关系类型）**：兄 Gilbert Chu / 弟 Morgan Chu（兄弟关系无对应类型）、外祖父 Shu-tian Li（祖辈）、Barack Obama（任命者）、万钢（共同宣布 CERC）、Samuel Bodman / Ernest Moniz（部长前任/继任）——均不入库，此处存档。
 
 ## 8. 奖项清单
 

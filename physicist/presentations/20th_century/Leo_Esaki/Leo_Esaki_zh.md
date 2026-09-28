@@ -167,6 +167,33 @@
 - [ ] 中文标点 / 断行 / 间距统一（半角引号 " "）
 - [ ] 与同组物理学家（Ivar_Giaever / Brian_Josephson）格式对齐，1973 诺奖份额口径三篇一致
 
+## 12. 研究领域表（第 4 步 fields 入库底稿，与 yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | semiconductor tunneling | 半导体隧穿 | 1957 首次演示固体中的隧穿效应 | 核心页 |
+| 1 | tunnel diode | 隧道二极管 | 江崎二极管，首个量子电子器件 | 核心页 |
+| 2 | superlattice | 超晶格 | 1969 预言 / 1972 III-V 族实现 | 超晶格页 |
+| 3 | quantum well | 量子阱 | 与超晶格一脉相承的人工结构 | 超晶格页 |
+| 4 | quantum electronics | 量子电子学 | 隧穿器件开出的领域 | 结尾页 |
+
+## 13. 术语清单（英文 / 中文 / 风险点）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| tunnel diode | 隧道二极管 | 又称江崎二极管；命名源于 Nishina 1959 引文语境，正文避免现代回望式命名 |
+| negative resistance | 负阻 | 电压增大电流反减；勿写成"负电阻率" |
+| p–n junction | p–n 结 | 锗 p–n 结宽度减薄是 1957 发现的前提 |
+| superlattice | 超晶格 | 1969 预言 / 1972 实现，两处年份勿混 |
+| molecular-beam epitaxy | 分子束外延 | page.md 称其"unique"方法；勿写发明人归属细节 |
+| quantum well | 量子阱 | Known for 之一 |
+| III-V group semiconductors | III-V 族半导体 | 1972 实现所用的材料体系 |
+| five don'ts | 五个"不要" | 1994 Lindau；五条按原文列表，勿增删 |
+| Lindau Nobel Laureate Meetings | 林道诺奖得主会议 | 1994 年提出、两个月后 Nordling 引用 |
+| Tokyo Tsushin Kogyo | 东京通信工业 | 索尼前身，1956 任主任物理学家 |
+| IBM Fellow | IBM Fellow | 1967 年获聘，荣誉职衔勿译"研究员" |
+| International Prize for New Materials | 国际新材料奖 | 1985 APS，与 Chang、Tsu 共享（仅 shared 注记，勿写合著） |
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

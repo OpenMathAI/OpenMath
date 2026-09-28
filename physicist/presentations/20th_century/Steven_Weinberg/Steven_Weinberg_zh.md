@@ -124,6 +124,7 @@
 - **著名学生（page.md/infobox 实载，择要）**：John Preskill、Fernando Quevedo、Clifford Burgess、Mark G. Raizen、Scott Willenbrock、Bob Holdom 等
 - **学界评价（勿入库为关系，仅引用）**：Preskill、Sean Carroll、Brian Greene、Peter Woit、Juan Maldacena
 - **亲属**：妻 Louise Weinberg（法律学者，1954 年结婚）
+- **入库类型口径（2026-09-28 批注）**：共享诺奖用 `type=co-honored`、Feynman 合作用 `type=colleague`、博士生 6 位（Preskill/Holdom/Burgess/Quevedo/Willenbrock/Raizen，infobox 实载年份）用 `type=advisor-student + direction=student`、妻用 `type=spouse`；**学界评价者（Preskill 悼词/Carroll/Greene/Woit/Maldacena/Milner）不入库**；infobox 其余 13 位博士生本批择要未入。
 
 ## 8. 奖项清单
 
@@ -171,6 +172,23 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同批次（Glashow / Salam / Cronin / Fitch）及同世纪物理学家格式对齐
+
+## 12. 术语清单（英/中/风险点）
+
+| 英文 | 中文 | 风险点 |
+|---|---|---|
+| electroweak unification | 电弱统一 | 1967 A Model of Leptons，MIT 访问任内提出 |
+| spontaneous symmetry breaking | 自发对称破缺 | 解释弱载流子质量 |
+| weak neutral current | 弱中性流 | 1973 实验发现为首个验证 |
+| Higgs boson | 希格斯玻色子 | 模型基本要点之一，勿写 2012 发现主线 |
+| soft graviton theorem | 软引力子定理 | 伯克利时期工作 |
+| effective field theory | 有效场论 | 1979 folk theorem |
+| technicolor | 彩色（人工色）动力学 | 无基本希格斯方案 |
+| The First Three Minutes | 《最初三分钟》 | 1977 科普首作 |
+| Dreams of a Final Theory | 《终极理论之梦》 | 1992/1993 择一统一 |
+| SSC | 超导超级对撞机 | 1993 项目取消，国会作证 |
+| José Regental Professor | Josey Regental 讲席教授 | 得州奥斯汀，执教至去世未退休 |
+| Breakthrough Prize | 突破奖 | 2020，基础物理学突破奖 |
 
 ---
 

@@ -94,6 +94,21 @@
 - **生卒**：1904-07-28 / 1990-01-06，享年 85；逝于莫斯科，葬新圣女公墓——勿写成 1990-01-06 之外日期。
 - **国籍**：出生时俄罗斯帝国 → 苏联；封面用「苏联」。
 
+## 5.5 术语清单
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| Cherenkov radiation | 切伦科夫辐射 | 又称 Vavilov-Cherenkov 效应 |
+| Cherenkov effect | 切伦科夫效应 | 1958 诺奖表彰对象（发现+解释） |
+| Cherenkov detector | 切伦科夫探测器 | 粒子物理标准设备 |
+| phase velocity | 相速度 | 粒子速度超过介质中光的相速度 |
+| charged particle | 带电粒子 | 辐射发射主体 |
+| cosmic ray | 宇宙线 | 效应应用领域 |
+| photo-meson process | 光介子过程 | 1959 起主持的实验室方向 |
+| photo-nuclear reaction | 光核反应 | 与加速器相关研究方向 |
+| electron accelerator | 电子加速器 | 参与研制建造 |
+| Sputnik 3 | 斯普特尼克 3 号 | 搭载切伦科夫探测器 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

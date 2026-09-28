@@ -97,6 +97,21 @@
 - **肖像**：使用 `Fowler-william_a.jpg`（1984 年，images.txt 实载），curl 下载 + file 验证。
 - **出生地**：Pittsburgh（2 岁迁 Lima）——勿把利马写成出生地。
 
+## 5.5 术语清单（英文 / 中文 / 风险点）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| stellar nucleosynthesis | 恒星核合成 | 非「恒星核聚变」，涵盖 s/r 过程等多种机制 |
+| nuclear astrophysics | 核天体物理 | 实验核物理 × 天体物理交叉领域 |
+| thermonuclear reaction rates | 热核反应率 | Caughlan-Fowler 系列数据表，实验测量核心产出 |
+| B2FH paper | B²FH 论文 | 四作者排序 M. Burbidge→G. Burbidge→Fowler→Hoyle |
+| Kellogg Radiation Laboratory | 凯洛格辐射实验室 | W. K. Kellogg，勿写成食品公司 |
+| p-process / s-process / r-process | 质子俘获/慢中子/快中子过程 | B²FH 分类框架，符号勿写错 |
+| proton-proton chain | 质子-质子链 | 恒星氢燃烧主通道 |
+| triple-alpha process | 3α 过程 | 碳的起源 |
+| Medal for Merit | 功绩勋章 | 1948 杜鲁门颁发， wartime 工作细节无载禁写 |
+| shared the 1983 Nobel Prize | 1983 年（共享）诺贝尔物理学奖 | 独得一半、与 Chandra 工作互不相关，勿写「共同研究」 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

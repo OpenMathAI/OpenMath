@@ -101,6 +101,21 @@
 - **国籍**：出生时德意志帝国 → 英国（1939 起）；封面写「德国 / 英国」。
 - **哥廷根墓碑**：刻正则对易关系——可作结尾页点睛，但表述为"由他数学严格化的对易关系"。
 
+### 5.1 术语清单（英文/中文/风险点）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Born rule / statistical interpretation | Born 规则 / 波函数统计诠释 | 获奖：「量子力学基础研究，尤其是波函数的统计诠释」 |
+| matrix mechanics | 矩阵力学 | Born（与 Jordan）完成数学转写；pq−qp 归功玻恩 |
+| commutation relation | （正则）对易关系 | 墓碑所刻；勿与"不确定性原理"混写 |
+| Born approximation | 玻恩近似 | 散射理论 |
+| Born–Oppenheimer approximation | 玻恩–奥本海默近似 | 与 Oppenheimer 1927 共同提出 |
+| Born–Haber cycle | 玻恩–哈伯循环 | 与 Haber 1918 讨论——热化学循环，非物理诺奖方向 |
+| Born rigidity | Born 刚性 | 狭义相对论运动学概念 |
+| habilitation | 教职资格论文 | 1909 哥廷根（相对论）；勿与博士论文混同 |
+| Dr. phil.（数学） | 哲学博士学位（数学） | 1906 博士是数学学位，导师 Runge |
+| Lockerung des Denkens | 思维的松动 | 诺奖演说用语，直译勿改写 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

@@ -102,6 +102,21 @@
 - **宗教观**：1988 年访谈 "I am not a religious person…" 与 "science cannot provide an answer to the ultimate questions…" 两句均可引用（page.md 原文）；妻子送孩子上教堂、自己是主日学教师与长老——如实。
 - **诺奖委员会"不愿两次颁奖"**：这是巴丁 1960 年代末的个人担忧（page.md 明载），勿写成委员会的成文规则。
 
+## 5.5 术语清单
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| point-contact transistor | 点接触晶体管 | 1947-12-23 Bardeen+Brattain 发明 |
+| surface states | 表面态 | 巴丁解释场效应失败的关键理论 |
+| junction transistor | 结型晶体管 | 肖克利后继发展，勿归巴丁 |
+| BCS theory | BCS 理论 | 1957 提出、1972 获奖，勿写 1956 |
+| Cooper pair | 库珀对 | BCS 超导核心概念 |
+| superconductivity | 超导性 | 微观理论为 BCS |
+| charge density wave | 电荷密度波（CDW） | 晚年研究方向 |
+| Josephson effect | 约瑟夫森效应 | 1962 之争、1963 收回、1973 提名获奖 |
+| work function | 功函数 | 博士论文主题 |
+| transistor | 晶体管 | transconductance + resistor 合成词 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

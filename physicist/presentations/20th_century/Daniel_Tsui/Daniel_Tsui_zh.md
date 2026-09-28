@@ -71,6 +71,31 @@
 - **落地文件**：`physicist/presentations/20th_century/Daniel_Tsui/Elevation.wav`（复制自 `music_audio/inspiring-electronic/` 目录下 Elevation 对应 wav，不入 git）。
 - **匹配理由**：崔琦的叙事主线是"攀登"而非单点突破，上升感的电影配乐贴合其人生弧线；与本批次其余五人曲目不重复。
 
+## 3.6 研究领域表（数据库入库用，第 4 步）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | experimental physics | 实验物理 | page.md infobox Fields 载 | 身份页 |
+| 1 | condensed matter physics | 凝聚态物理 | 固体物理 / 二维电子物理研究 | 贝尔页 |
+| 2 | fractional quantum Hall effect | 分数量子霍尔效应 | 与 Störmer 的实验发现（1982），1998 诺奖核心 | 核心贡献页 |
+| 3 | semiconductor physics | 半导体物理 | 薄膜与微结构的电学性质 | 导语页 |
+| 4 | electrical engineering | 电机工程 | 普林斯顿电机工程系讲席，infobox Fields 并载 | 普林斯顿页 |
+
+## 3.7 术语清单（第 9 步审查用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| fractional quantum Hall effect | 分数量子霍尔效应 | 实验发现=Tsui+Störmer，勿写独自发现 |
+| two-dimensional electrons | 二维电子 | 贝尔实验室专注的新兴领域 |
+| de Haas-van Alphen effect | 德哈斯-范阿尔芬效应 | 博士论文主题（镍的能带结构） |
+| thin films and microstructures | 薄膜与微结构 | 研究领域表述照 page.md |
+| Pui Ching Middle School | 培正中学 | 九龙，1951 入学 |
+| Augustana College | 奥古斯塔纳学院 | 路德宗母校奖学金，1961 毕业 |
+| Phi Beta Kappa | 荣誉学会 | 1961 毕业时入选 |
+| naturalized U.S. citizen | 已入籍美国 | 生于中国河南，勿写「13 岁赴美」 |
+| Chinese Academy of Sciences | 中国科学院 | 2000 外籍院士 |
+| Academia Sinica | 「中研院」 | 台北，院士，page.md 未给年份留白 |
+
 ## 4. Slide 规划（约 15 页，Wilson 式结构）
 
 1. **封面**（`\titleslide`）：顶部标签「分数量子霍尔效应 · 美国」+ 崔琦 1939– + 右上头像（装饰圆占位）+ 国籍行 + 底部三要素状态栏 + 四色 badge

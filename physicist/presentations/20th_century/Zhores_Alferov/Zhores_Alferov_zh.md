@@ -113,16 +113,18 @@
 | nationality | Soviet Union → Russia | 待写入 |
 | primary_occupation | physicist | 待写入 |
 | field_of_work | semiconductor physics / heterostructures / optoelectronics | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 本次入库置 0（Beamer 立传完成后由主控置 1） | 待执行 |
 
-## 7. 社会关系入库清单
+## 7. 社会关系入库清单（已按 page.md 核对，✅=yaml 入库 / ✗=不入库）
 
-- **诺奖同届**：Herbert Kroemer（2000 共享一半，co-honored）、Jack Kilby（2000 同届另一半）
-- **独立同题**：Herbert Kroemer（1963 双异质结构激光器专利，先后数月独立提交）
-- **学术群体**：Vladimir Tuchkevich（Ioffe 课题组领导，后任所长）
-- **博士生**：Dmitri Z. Garbuzov（infobox 仅载此一位）
-- **竞争同题**：Izuo Hayashi、Morton B. Panish（贝尔实验室，1968 CW 激光器，晚一个月）
-- **机构继承**：Abraham Ioffe（研究所命名渊源，非直接师承，按机构备注）
+- ✅ **诺奖共享**：Herbert Kroemer（co-honored，2000 共享一半；1963 双异质结构激光器专利先后数月独立提交写入 note）
+- ✅ **诺奖同届另一半**：Jack S. Kilby（co-honored，page.md 注 1 明载 "Shared with Jack Kilby and Herbert Kroemer"）
+- ✅ **博士生**：Dmitri Z. Garbuzov（advisor-student 方向 student，infobox 实载仅此一位）
+- ✅ **学术群体**：Vladimir Tuchkevich（colleague，Ioffe 课题组领导、后 1967 年任所长，page.md 明载 "worked with a group led by"）
+- ✅ **配偶**：Tamara Darskaya（spouse，page.md Personal life 明载）
+- ✗ **竞争同题**：Izuo Hayashi、Morton B. Panish（贝尔实验室，1968 CW 激光器晚一个月）——奖项时间对照非个人关系，不入库（Beamer 叙事页可写）
+- ✗ **机构继承**：Abraham Ioffe——研究所命名渊源、无直接师承/共事记载，不入库
+- ✗ **子女**：Ivan、Olga——page.md 仅载名无姓，规范全名不可得，不入库
 
 ## 8. 奖项清单
 
@@ -176,6 +178,32 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一（俄语人名转写一致：Алфёров → 阿尔费罗夫）
 - [ ] 与 Kroemer 篇跨篇互检（2000 双人"独立同题"叙事：两篇对 1963 专利先后的口径完全一致、互为镜像不重复）；与 Kilby 篇互检（同届份额结构一致）
+
+---
+
+## 12. 研究领域表（fields，对齐 yaml 与 person_field）
+
+| rank | 领域（name_en） | 中文 | 说明 |
+|:--:|------|------|------|
+| 0 | semiconductor physics | 半导体物理 | Ioffe 研究所主线 |
+| 1 | heterostructures | 半导体异质结构 | 1960s 初组织攻关，2000 诺奖核心 |
+| 2 | semiconductor lasers | 半导体激光器 | 1963 双异质结构专利 → 1968 室温连续波 |
+| 3 | optoelectronics | 光电子学 | LED / 条码 / CD / 卫星通信 |
+| 4 | thin-film solar cells | 薄膜太阳能电池 | Known for 之一 |
+
+## 13. 术语清单（第 9 步史实/术语审查）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| heterojunction | 异质结 | 与 homojunction（同质结）对照 |
+| heterostructure | 异质结构 | 诺奖理由用词 |
+| double-heterostructure laser | 双异质结构激光器 | 1963 专利；勿写"异质结晶体管" |
+| continuous-wave | 连续波（CW） | 1968 室温 CW 首创，早 Bell Labs 一个月 |
+| laser diode | 激光二极管 | Known for |
+| thin-film solar cell | 薄膜太阳能电池 | Known for |
+| epitaxy | 外延 | — |
+| Nobel citation | 诺奖理由 | 原句 "for developing semiconductor heterostructures used in high-speed- and opto-electronics" 勿改写 |
+| State Duma | 国家杜马 | 政治叙事中性，一句带过 |
 
 ---
 

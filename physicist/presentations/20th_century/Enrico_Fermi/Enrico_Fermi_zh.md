@@ -106,6 +106,21 @@
 - **学生口径**：infobox 博士生名单极长（李政道、Majorana、Segrè、Chamberlain、Chew、Friedman、Garwin、Goldberger、Treiman、Agnew 等）；**杨振宁列于"Other notable students"**（非博士生栏）——两组名单勿混；Mildred Dresselhaus 是"深受其影响"而非其博士生。
 - **国籍口径**：封面写「意大利 → 美国」，infobox 国籍为 Kingdom of Italy / Italy / United States（1944 入籍）。
 
+## 5.5 术语清单（10 条）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Fermi–Dirac statistics | 费米–狄拉克统计 | 1926，与 Dirac 独立发展 |
+| fermion | 费米子 | 服从泡利不相容原理的粒子 |
+| Fermi interaction | 费米相互作用 | β 衰变理论，后称弱相互作用理论之始 |
+| neutrino | 中微子 | 费米命名；Nature 拒稿语须用原文 |
+| slow neutron | 慢中子 | 石蜡减速，1938 诺奖关联发现 |
+| chain reaction | 链式反应 | 1942-12-02 CP-1 首次自持 |
+| transuranium elements | 超铀元素 | ausenium/hesperium 后被证明是裂变产物，误认链须如实 |
+| nuclear fission | 核裂变 | 1939 年 Hahn/Meitner 纠正链 |
+| Fermi age equation | 费米年龄方程 | 中子扩散理论 |
+| Fermi estimate | 费米估算 | Trinity 纸片法为最著名现场演示 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

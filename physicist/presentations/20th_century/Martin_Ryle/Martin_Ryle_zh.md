@@ -171,6 +171,33 @@
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同世纪物理学家（Heisenberg / Wilson / Hewish）格式对齐
 
+## 12. 研究领域表（第 4 步 fields 入库底稿，与 yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | radio astronomy | 射电天文学 | 首任剑桥射电天文学教授、MRAO 创始台长 | 主线页 |
+| 1 | aperture synthesis | 口径综合 | 获奖理由核心（观测和发明，尤其是孔径综合技术） | 核心页 |
+| 2 | astronomical interferometry | 射电干涉测量 | 1946 与 Vonberg 最先发表干涉测量 | 早期页 |
+| 3 | astronomy | 天文学 | frontmatter field_of_work 原文 | 全篇 |
+| 4 | wind energy | 风能 | 晚年替代能源研究（1970s 转向） | 晚年页 |
+
+## 13. 术语清单（英文 / 中文 / 风险点）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| aperture synthesis | 口径综合 / 孔径综合 | 获奖表述用"孔径综合技术"口径；两译名全篇统一 |
+| radio interferometer | 射电干涉仪 | 1946"最先发表测量"与"首台多单元干涉仪"两个表述勿混并 |
+| 3C catalogue | 第三剑桥星表 | 1959；助力（helped lead to）发现首个类星体，勿写"发现类星体" |
+| quasi-stellar object / quasar | 类星体 | 3C 星表与类星体发现的因果表述要克制 |
+| Mullard Radio Astronomy Observatory | 穆拉德射电天文台 | MRAO，1957 创始台长 |
+| Astronomer Royal | 皇家天文学家 | 第十二任，1972–1982，继 Richard Woolley |
+| TRE | 电信研究机构 | 战时机载雷达天线与雷达对抗 |
+| Knight Bachelor | 下级勋位爵士 | 1966 受封；Sir 为称谓非本名 |
+| Ryle Telescope | 赖尔望远镜 | MRAO 内以其命名的望远镜阵列 |
+| Last Testament | 遗书 | 1983 应宗座科学院之邀；"cleverness...wisdom"句可引 |
+| steady state theory | 稳恒态宇宙论 | Fred Hoyle 主张；争论对象是理论立场，勿写私人恩怨 |
+| callsign G3CY | 呼号 G3CY | 业余无线电；中学自建发射机，本科牛津呼号 G3MM 勿混 |
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

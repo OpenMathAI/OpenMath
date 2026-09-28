@@ -173,6 +173,21 @@
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同世纪物理学家（Basov / Prokhorov / Wilson）格式对齐；科学与宗教页的叙述立场需专项复核
 
+## 12. 术语清单（2026-09-28 补齐，对齐标杆）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| maser | 微波激射器 / 微波激射 | 缩写由 Townes 发明；勿写"激光" |
+| laser | 激光 / 激光器 | "light" 替换 "microwave" 而来；勿写 Townes 制成第一台激光器 |
+| stimulated emission | 受激辐射 | 理论源自 Einstein，page.md 未展开勿加写 |
+| ammonia maser | 氨分子微波激射器 | 1953 三人（Townes/Gordon/Zeiger）协作制成 |
+| quantum electronics | 量子电子学 | 1964 获奖理由领域 |
+| coherent radiation | 相干辐射 | 1951 构想的核心目标 |
+| supermassive black hole | 超大质量黑洞 | Sgr A\* 300 万（当时推断）与 430 万（后精测）两数字勿混用 |
+| infrared spatial interferometer | 红外空间干涉仪（ISI） | 三台探测器等效 30 米口径 |
+| Betelgeuse | 参宿四 | 每年 1% 胀缩速率 |
+| Templeton Prize | 坦普尔顿奖 | 2005；科学与宗教段落用"他认为"口径 |
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

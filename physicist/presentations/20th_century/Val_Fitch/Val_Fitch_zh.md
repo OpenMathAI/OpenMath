@@ -93,7 +93,7 @@
 - **⚠ 卒日噪声**：metadata.json 的 date_of_death 有两个值 ["2015-02-05", "2015-02-04"]——**以 page.md 正文与 infobox 的 2015-02-05 为准**，勿写 02-04。
 - **⚠ 与 Cronin 的关系 = 同事/合作者（co-researcher），绝非师生**：Fitch 的博士导师是 Rainwater；Cronin 的导师是 Allison——两人是 Brookhaven 相识的合作伙伴；社会关系入库用 collaborator + note "1964 共同发现 CP 破坏、1980 共享诺贝尔奖"，**禁写 advisor-student**。
 - **⚠ "Fitch 把 Cronin 带到普林斯顿"是 Cronin page.md 的说法**：Fitch page.md 只写"两人在 Brookhaven 相识、打桥牌、Cronin 造火花室谱仪、Fitch 意识到适合 K 介子实验"——Fitch 篇按 Fitch page.md 口径写，勿替 Cronin 篇代言。
-- **CP 破坏实验的合作者**：Fitch page.md 明确载 James Christenson 与 René Turlay 两位同事、实验地点 AGS——与 Cronin 篇（无载）的分工：**细节归 Fitch 篇，Cronin 篇模糊化**。
+- **⚠ Christenson / Turlay 禁写（2026-09-28 批注核对）**：Fitch page.md **实查无载** James Christenson 与 René Turlay（grep 全文零命中）——此前「page.md 明确载」的说法有误。两位实验合作者之名**一律不入正文、不入库**；实验叙述只写「与 Cronin 及其团队在 AGS」级别。
 - **Sakharov 1967 可写（Fitch page.md 有载）**："解释了宇宙为何主要由物质而非反物质构成"——用"为理解……提供关键线索"式表述可加 page.md 的"我们为何存在"之答案一句，但勿扩展成宇宙学专页。
 - **Trinity 与曼哈顿工程**：page.md 有大量实载（Titterton 组、投弹试验、1945-07-16 目击、SED 机器）——如实呈现但**克制、不加核武器评价**；infobox 机构栏将 Manhattan Project 列为 Fitch 的 Institutions 之一，可写入身份页。
 - **博士论文时间**：论文 1953 年 11 月刊于 Physical Review、1954 年获博士学位——写"1954 年获博士（论文 1953 年发表）"。
@@ -114,15 +114,16 @@
 | nationality | United States | 待写入 |
 | primary_occupation | nuclear/particle physicist | 待写入 |
 | field_of_work | particle physics | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 0（本批仅提示词+入库，未做 Beamer；立传完成后由主控置 1） | 已按 0 入库 |
 
 ## 7. 社会关系入库清单
 
 - **博士导师**：James Rainwater
 - **学术知遇**：Melvin Kellogg（介绍信引其见 Rabi）、Isidor Isaac Rabi（哥伦比亚）、Ernest Titterton（Los Alamos 组长、推荐麦吉尔）、Robert Bacher（曾邀其赴康奈尔）
-- **合作者/同事（type=collaborator，note "1964 共同发现 CP 破坏、1980 共享诺贝尔物理学奖"）**：James Cronin；James Christenson、René Turlay（本篇 page.md 实载）
-- **Los Alamos 人物（受教/共事）**：Niels Bohr、James Chadwick、Enrico Fermi、Isidor Rabi、Bruno Rossi、Emilio Segrè、Edward Teller、Richard Tolman（择要入库，type=colleague/mentor 相应标注）
-- **论文理论来源**：John Wheeler（μ 介原子理论预言）；探测器脉络：Robert Hofstadter（碘化钠探测器）
+- **合作者/共同获奖（已入库）**：James Cronin（库内新建 stub `James Watson Cronin`）——co-honored（1980 共享诺奖）+ colleague（Brookhaven 相识的 co-researcher）各一条；**James Christenson、René Turlay page.md 无载，禁写禁入库**
+- **Los Alamos 大师（Bohr/Chadwick/Fermi/Segrè/Teller/Rossi/Tolman 等）**：page.md 仅载「见过/上过课」，关系太弱不入库；仅 **Isidor Isaac Rabi**（经 Kellogg 介绍信谒见并随其系读博）入库为 influence（库内规范名 `Isidor Isaac Rabi`，id=2104）
+- **论文理论来源（已入库）**：John Archibald Wheeler（μ 介原子理论预言）influence（库内 id=2359）
+- **博士导师（已入库）**：James Rainwater——用库内规范名 `Leo James Rainwater`（id=2601，Q190745，即同一人），**勿用**库内旧 stub `James Rainwater`（id=2595）
 - **亲属**：第一任妻 Elise Cunningham（1949-1972）、第二任妻 Daisy Harper Sharp（1976-）
 
 ## 8. 奖项清单
@@ -170,6 +171,21 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同批次（Glashow / Salam / Weinberg / Cronin）及同世纪物理学家格式对齐
+
+## 12. 术语清单（终审用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| CP violation | CP 破坏 | 电荷共轭-宇称对称性破坏，非「CP 违反」泛称 |
+| neutral K-meson (kaon) | 中性 K 介子 | 1964 实验对象 |
+| Alternating Gradient Synchrotron (AGS) | 交变梯度同步加速器 | 布鲁克海文，勿与 Cosmotron 混淆 |
+| mu-mesic atoms (muonic atoms) | μ 介原子 | 博士论文对象，μ 子绕核的类氢体系 |
+| Manhattan Project | 曼哈顿计划 | 克制呈现，不加评价 |
+| Special Engineer Detachment (SED) | 特种工程师分队 | 约 200 SED 技术兵在 Los Alamos |
+| Trinity nuclear test | 三位一体核试验 | 1945-07-16，亲历者视角 |
+| co-researcher | 共同研究者 | page.md 对 Cronin 关系的原文定性，非师生 |
+| spark chamber spectrometer | 火花室谱仪 | Cronin 造、Fitch 认定适合 K 介子实验 |
+| valedictorian | 毕业生代表 | 1940 戈登高中 |
 
 ---
 

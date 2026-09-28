@@ -99,6 +99,32 @@
 - **家庭**：page.md 无婚姻/子女记载，勿写。
 - **肖像占位**：images.txt 为空——封面用装饰圆占位，勿使用未经 `file` 验证的网络图片。
 
+## 5.5 研究领域表（fields 入库口径，2026-09-28 补）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | astrophysics | 天体物理学 | 主领域（天体物理学家身份） | 封面、身份页 |
+| 1 | pulsar astronomy | 脉冲星天文 | 阿雷西博巡天、首颗脉冲双星 PSR B1913+16 | 核心页 |
+| 2 | gravitational waves | 引力波（间接探测） | 首个间接探测，引力辐射演示 | 轨道衰减页 |
+| 3 | general relativity | 广义相对论检验 | 脉冲双星高精度检验 | 引力实验室页 |
+| 4 | plasma physics | 等离子体物理 | 普林斯顿等离子体物理实验室（PPPL）长期任职 | PPPL 页 |
+
+## 5.6 术语清单（英文/中文/风险点，2026-09-28 补）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| binary pulsar | 脉冲双星 | 写「首颗射电脉冲双星」，勿写「首颗脉冲星」 |
+| PSR B1913+16 | 脉冲双星 PSR B1913+16 | 按天空位置命名；伴星勿引申「双中子星」 |
+| pulsar | 脉冲星 | 快速旋转中子星的射电脉冲 |
+| gravitational waves | 引力波 | 本篇仅「间接探测」，直接探测属 Thorne/Barish/Weiss |
+| gravitational radiation | 引力辐射 | 与引力波同义，page.md 用语 |
+| quadrupole radiation | 四极辐射 | 爱因斯坦 1918 公式 |
+| general relativity | 广义相对论 | 高精度检验 |
+| Arecibo Observatory | 阿雷西博天文台 | 波多黎各，康奈尔大学管理 |
+| Princeton Plasma Physics Laboratory (PPPL) | 普林斯顿等离子体物理实验室 | 诺奖工作之外的日常主业 |
+| science education | 科学教育 | UT Dallas SEEC；「可视化」无载禁写 |
+| Fellow of the AAAS | 美国科学促进会会士 | 2003 当选 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -115,8 +141,10 @@
 
 ## 7. 社会关系入库清单
 
-- **博士导师（advisor-student，direction advisor=对方是导师）**：Joseph Hooton Taylor Jr.（UMass Amherst；1993 诺奖共同得主——与 Taylor 篇 advisor-student 双向呼应）
-- **诺奖同届（co-honored，无向）**：Joseph Hooton Taylor Jr.（1993 共享诺贝尔物理学奖）
+> yaml 入库名规范（2026-09-28）：Taylor 库内记录 name_en 用 page.md frontmatter 形式 **Joseph H. Taylor Jr.**（两篇 yaml 一致，防分裂 stub）。
+
+- **博士导师（advisor-student，direction advisor=对方是导师）**：Joseph H. Taylor Jr.（UMass Amherst；1993 诺奖共同得主——与 Taylor 篇 advisor-student 双向呼应）
+- **诺奖同届（co-honored，无向）**：Joseph H. Taylor Jr.（1993 共享诺贝尔物理学奖）
 - **博士后机构同事（仅立传呈现，不建关系行）**：NRAO 绿岸；普林斯顿 PPPL 同事 page.md 无具体人名，禁写
 - **相邻年度诺奖同侪（仅立传呈现）**：Thorne / Barish / Weiss（引力波直接探测，2017；与本篇"间接探测"形成历史呼应页）
 

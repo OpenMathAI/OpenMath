@@ -169,5 +169,35 @@
 
 ---
 
+## 12. 补齐：研究领域表（第 4 步 fields，与 yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | particle physics | 粒子物理 | page.md Fields 口径（physics） | 封面、身份页 |
+| 1 | deep inelastic scattering | 深度非弹性散射 | MIT-SLAC 实验，1990 诺奖核心 | 实验页 |
+| 2 | quark model | 夸克模型 | 点状粒子即上/下夸克 | 夸克页 |
+| 3 | experimental physics | 实验物理 | 高能电子散射实验传统 | 全篇 |
+
+### 补充裁定（本轮 2026-09-28）
+- **Hofstadter 禁入库**：Robert Hofstadter 仅载于 Kendall page.md，Friedman 本人 page.md 无载——关系表不收，仅可在立传正文按 §5 措辞提及。
+- **metadata-only 关系不入库**：无（Friedman metadata 无额外师生）。
+
+## 13. 补齐：术语清单（第 9 步）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| deep inelastic scattering | 深度非弹性散射 | 高能电子大角度散射并损失能量，与弹性散射区分 |
+| quark | 夸克 | 上/下夸克理论先提出，实验为其首个证据，勿写"发现夸克" |
+| proton | 质子 | "内部结构"表述有据 |
+| gluon | 胶子 | 该批实验同时给出其存在的首个证据 |
+| SLAC | 斯坦福直线加速器中心 | 实验发生地，勿与斯坦福大学混称 |
+| institute professor | 学院讲席教授 | MIT 特有职衔，勿泛译"教授" |
+| Bulletin of the Atomic Scientists | 《原子科学家公报》 | 董事会赞助人（board of sponsors） |
+| Humanist Manifesto | 《人文主义宣言》 | 2003 年 22 位诺奖得主联署之一 |
+| Order of the Rising Sun | 旭日大绶章 | 2016 日本荣衔，全称 Grand Cordon |
+| Panofsky Prize | 帕诺夫斯基奖 | 仅 metadata 有载，年份禁标 |
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

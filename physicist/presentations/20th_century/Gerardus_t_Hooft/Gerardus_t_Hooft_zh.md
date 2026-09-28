@@ -115,16 +115,18 @@
 | nationality | Netherlands | 待写入 |
 | primary_occupation | theoretical physicist | 待写入 |
 | field_of_work | theoretical physics / quantum field theory / quantum gravity | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 本次入库置 0（Beamer 立传完成后由主控置 1） | 待执行 |
 
-## 7. 社会关系入库清单
+## 7. 社会关系入库清单（已按 page.md 核对，✅=yaml 入库 / ✗=不入库）
 
-- **博士导师**：Martinus J. G. Veltman（1999 共同诺奖，co-honored 双关系）
-- **学术家族**：Frits Zernike（曾叔祖，1953 诺奖，parent-child 类按"亲属"处理或 colleague 备注血缘）；Nico van Kampen（舅舅，乌得勒支理论物理教授）
-- **诺奖同届**：Martinus J. G. Veltman（1999 共享）
-- **著名博士生**：Robbert Dijkgraaf、Herman Verlinde、Max Welling、Petrus Jacobus van Baal、Ruud van Damme、Joost Johannes Zegwaard 等
-- **量子引力同路**：Leonard Susskind（全息原理）、Stephen Hawking（信息佯谬对话对象）、Stanley Deser、Roman Jackiw（3 维引力合作）
-- **渐近自由"擦肩"**：David Gross、Frank Wilczek、Hugh David Politzer（2004 诺奖得主，1972 马赛会议渊源）
+- ✅ **博士导师 + 诺奖共享**：Martinus J. G. Veltman（advisor-student 方向 advisor + co-honored 双关系，1999 共享）
+- ✅ **博士生**（infobox 实载仅三人）：Robbert Dijkgraaf、Herman Verlinde、Max Welling（各一条 advisor-student，direction student）
+- ✅ **三维引力合作**：Stanley Deser、Roman Jackiw（colleague，1984 年合作发表论文，page.md 明载 "Together with Deser and Jackiw"）
+- ✅ **全息原理**：Leonard Susskind（colleague，page.md 明载 "by him and Leonard Susskind"）
+- ✅ **配偶**：Albertha A. Schik（spouse，1972 年结婚，page.md 明载）
+- ✗ **学术家族**：Frits Zernike（曾叔祖）、Nico van Kampen（舅舅）——亲属关系超出类型白名单，不入库（提示词 §5 已有表述规范）
+- ✗ **渐近自由"擦肩"**：David Gross、Frank Wilczek、Hugh David Politzer——1972 马赛会议渊源属史实背景，非个人关系，不入库
+- ✗ **Stephen Hawking**：仅 Hawking 辐射学术对话对象，无直接个人交往记载，不入库
 
 ## 8. 奖项清单
 
@@ -176,6 +178,33 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一（姓氏前缀 "'t" 半角处理）
 - [ ] 与同世纪物理学家（Wilson / Wigner / Heisenberg）格式对齐；与 Veltman 篇跨篇互检（师生双人叙事口径一致）
+
+---
+
+## 12. 研究领域表（fields，对齐 yaml 与 person_field）
+
+| rank | 领域（name_en） | 中文 | 说明 |
+|:--:|------|------|------|
+| 0 | quantum field theory | 量子场论 | 1971 两篇论文证明 Yang–Mills 可重整化（诺奖核心） |
+| 1 | gauge theory | 规范场论 | 维数正规化、大 N 展开、't Hooft 圈 |
+| 2 | electroweak interaction | 电弱相互作用 | 1999 诺奖理由用词：阐明其量子结构 |
+| 3 | quantum gravity | 量子引力 | 黑洞信息佯谬、三维引力、全息原理 |
+| 4 | quantum foundations | 量子力学基础 | 元胞自动机诠释（2016 专著） |
+
+## 13. 术语清单（第 9 步史实/术语审查）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| Yang–Mills theory | 杨–米尔斯理论 | 连字符统一半角 |
+| renormalization | 重整化 | 勿与"重整化群"混用 |
+| dimensional regularization | 维数正规化 | 与 Veltman 共同发展，勿写独自 |
+| Slavnov–Taylor identities | Slavnov–Taylor 恒等式 | 后人推广，勿写其原创 |
+| 't Hooft–Polyakov monopole | 't Hooft–Polyakov 磁单极 | 并列命名（Polyakov 独立发现） |
+| instanton | 瞬子 | 1986 年借其解决 ABJ 反常 |
+| holographic principle | 全息原理 | 与 Susskind 共同引出 |
+| black hole complementarity | 黑洞互补性 | — |
+| cellular automaton interpretation | 元胞自动机诠释 | 2016 专著，反响"毁誉参半" |
+| asymptotic freedom | 渐近自由 | 1972 算出未发表，2004 归三人 |
 
 ---
 

@@ -100,6 +100,29 @@
 - **引语红线**：page.md 正文无直接引语——所有"他说"一律间接转述，不得加引号。
 - **死亡**：2022-05-13 逝于哥本哈根，享年 95——同届三人中最后离世者（Rainwater 1986、Aage Bohr 2009、Mottelson 2022），可作叙事点。
 
+## 5.5 研究领域表（第 4 步，yaml fields 来源）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | nuclear physics | 核物理 | infobox Fields | 全篇 |
+| 1 | nuclear structure | 原子核结构 | 诺奖理由核心 | 核心页 |
+| 2 | nuclear deformation | 原子核形变 | 非球形核几何（其个人侧重） | 核心页 |
+| 3 | collective model | 原子核集体模型 | 与 Bohr 合作发展的理论 | 理论页 |
+| 4 | nuclear pairing | 核配对效应 | 1957 受 Pines/超导理论启发引入 | 配对页 |
+
+## 5.6 术语清单（第 9 步）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| collective motion | 集体运动 | 诺奖理由关键词 |
+| particle motion | 粒子运动 | 与集体运动相对 |
+| rotation spectrum | 转动能谱 | 实验对照的核心证据 |
+| non-spherical geometry | 非球形核几何 | Wikipedia 概括用语，非官方理由 |
+| pairing effect | 配对效应 | 源自超导理论，勿写成其独立发明 |
+| shell model | 壳层模型 | 1949 Mayer 等 |
+| liquid drop model | 液滴模型 | 被超越的旧模型 |
+| Nuclear Structure | 《原子核结构》 | 两卷专著（1969/1975），书名斜体 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

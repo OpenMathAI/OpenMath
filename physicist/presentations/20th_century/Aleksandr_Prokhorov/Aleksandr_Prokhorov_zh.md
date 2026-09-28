@@ -176,6 +176,23 @@
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同世纪物理学家（Basov / Townes / Wilson）格式对齐；Sakharov 公开信页的克制程度需专项复核
 
+## 12. 术语清单（2026-09-28 补齐，对齐标杆）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| molecular oscillator | 分子振荡器 | 与 Basov 共同奠基；勿写谁受谁启发 |
+| open resonator | 开放式谐振腔 | 1958 提出，沿用至今的标准激光腔构型 |
+| ruby | 红宝石 | 1957 仅为激活介质之想，勿写"制成红宝石激光器" |
+| synchrotron radiation | 同步辐射 | 博士论文主题，相干辐射集中于微波波段 |
+| electron paramagnetic resonance | 电子顺磁共振（EPR） | 1955 起的研究转向 |
+| two-quantum transition | 双量子跃迁 | 1963 与 Selivanenko 共同建议的激光方案 |
+| Atherton, Queensland | 昆士兰阿瑟顿 | 出生地澳大利亚，勿写"生于俄国" |
+| Prochoroff | 出生名拼写 | 后苏联化为 Prokhorov |
+| Novodevichy Cemetery | 新圣女公墓 | 安葬地 |
+| General Physics Institute | 普通物理研究所 | 2002 年身后更名为 A. M. Prokhorov GiPI |
+
+> **入库订正（2026-09-28）**：§7 原列「学生 Karlov/Martirosyan/Kornienko/Velikhov（metadata）」与「合作者 N. D. Papaleksi」——经核对 page.md 与 metadata.json 均无载（Papaleksi 仅为其实验室主任，非师生/合作载录），按「无载禁写」红线不入库；Prokhorov 入库关系以双导师（Migulin/Rytov，frontmatter 明载）+ infobox 博士生（Basov）+ co-honored（Townes/Basov）+ Selivanenko 合作者 + 配偶 + 父子为准。
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

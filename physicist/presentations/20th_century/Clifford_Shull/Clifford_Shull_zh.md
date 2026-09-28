@@ -100,6 +100,30 @@
 - **家庭/死因**：page.md 均无载，勿写。
 - **field_of_work**：metadata 为 "neutron transport"（中子输运）——数据库按 metadata 填写即可，立传正文以中子散射/衍射为主线。
 
+## 5.5 研究领域表（fields 入库口径，2026-09-28 补）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | neutron diffraction | 中子衍射 | 个人半份获奖理由（neutron diffraction） | 核心页 |
+| 1 | neutron scattering | 中子散射 | 获奖理由整体主线（先驱性贡献） | 核心页 |
+| 2 | condensed matter physics | 凝聚态物理 | 中子散射的研究对象 | 核心页 |
+| 3 | magnetism | 磁性 | 首创磁性材料的中子衍射研究 | 磁性页 |
+
+## 5.6 术语清单（英文/中文/风险点，2026-09-28 补）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| neutron diffraction | 中子衍射 | 个人半份诺奖理由，勿与谱学混 |
+| neutron spectroscopy | 中子谱学 | 属 Brockhouse 半份理由，本篇勿写进获奖理由 |
+| diffraction pattern | 衍射图样 | 原子位置的可见化 |
+| Ernest O. Wollan | 欧内斯特·沃兰 | 橡树岭九年合作者；卒年 page.md 无载禁写 |
+| Oak Ridge National Laboratory | 橡树岭国家实验室 | 时称克林顿实验室，1946 起 |
+| hydrogen atoms | 氢原子位置 | 他认为当时最重要的工作 |
+| magnetic materials | 磁性材料 | 首创其中子衍射研究 |
+| Gregori Aminoff Prize | 阿明诺夫奖 | 1993，瑞典皇家科学院 |
+| Buckley Prize | 巴克利奖 | 1956，美国物理学会 |
+| Shull Rocks | 沙尔群礁 | 南极洲命名纪念 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -116,9 +140,10 @@
 
 ## 7. 社会关系入库清单
 
-- **博士导师（advisor-student，direction advisor=对方是导师）**：Richard T. Cox（纽约大学；metadata 另载 Frank Myers、Robert DeWitt Huntoon，note 注明）
+> yaml 入库名规范（2026-09-28）：Brockhouse 库内记录 name_en 用 page.md frontmatter 形式 **Bertram N. Brockhouse**（与 Brockhouse 篇 yaml 一致，防分裂 stub）。Jacek Moscinski、H. A. Mook 仅 metadata.json 有载，**不入库**。
+
+- **博士导师（advisor-student，direction advisor=对方是导师）**：Richard T. Cox（纽约大学；metadata 另载 Frank Myers、Robert DeWitt Huntoon，不入库）
 - **主要合作者（collaborator，无向）**：Ernest O. Wollan（橡树岭九年合作，中子衍射奠基——Wollan 卒年 page.md 无载，note 勿写）
-- **博士学生（advisor-student，direction advisor=Shull）**：Jacek Moscinski、H. A. Mook（metadata 载）
 - **诺奖同届（co-honored，无向）**：Bertram N. Brockhouse（1994 共享诺贝尔物理学奖——与 Brockhouse 篇互指；两人贡献互补：衍射 vs 谱学）
 
 ## 8. 奖项清单

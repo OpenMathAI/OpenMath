@@ -103,6 +103,33 @@
 - **肖像**：images.txt 含本人照片（Reines-frederick.jpg，1950s 初）与 **Clyde Cowan and Frederick Reines 合照**、Poltergeist Team 1953 合照——封面用单人照，合照可用于内容页；下载用 Commons `Special:FilePath`。
 - **同名人**：勿与 Owen Willans Richardson / Owen Richardson（1928 诺奖）等人混淆——本篇全名 Frederick Reines。
 
+## 5.5 研究领域表（第 4 步入库对照，与 MySQL/data/Frederick_Reines.yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | neutrino physics | 中微子物理 | 1956 首测中微子、毕生追猎中微子 | Poltergeist / 追猎页 |
+| 1 | neutrino astronomy | 中微子天文学 | SN1987A / IMB 开创该领域 | SN1987A 页 |
+| 2 | cosmic rays | 宇宙线 | NYU 师从 Korff 起步、大气中微子 | 早年 / 金矿页 |
+| 3 | nuclear physics | 核物理 | 液滴模型论文、核试验经历 | 论文 / 核试验页 |
+| 4 | experimental physics | 实验物理 | 探测器设计贯穿一生 | 全篇 |
+
+## 5.6 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| neutrino | 中微子 | Fermi 命名（意大利语"小小中性的一个"） |
+| Project Poltergeist | 喧闹鬼计划 | 1953 Hanford 实验项目名，勿泛化成探测器昵称 |
+| Cowan–Reines neutrino experiment | 考万–莱因斯中微子实验 | 1953 Hanford 首试，成功在 1956 Savannah River |
+| liquid scintillator | 液体闪烁体 | 300 升闪烁液 + 90 支光电倍增管 |
+| antineutrino | 反中微子 | 反应式 ν̄e + p⁺ → n⁰ + e⁺ |
+| positron annihilation | 正电子湮灭 | 两个 0.51 MeV γ + 中子俘获 2.2 MeV γ 特征签名 |
+| cadmium salt | 镉盐 | 增强中子俘获 |
+| Operation Greenhouse |温室行动| 1951 太平洋试验系列主任职务 |
+| Mach stem | 马赫杆 | 与 von Neumann 合著主题 |
+| SN1987A | 超新星 1987A | IMB 十秒 19 事例 |
+| Irvine–Michigan–Brookhaven (IMB) | 加州欧文–密歇根–布鲁克海文合作组 | 8000 吨 Cherenkov 探测器 |
+| lepton physics | 轻子物理 | 1995 诺奖官方理由用词 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -117,15 +144,22 @@
 | field_of_work | physics / neutrino physics | 待写入 |
 | has_biography | 1 | 本次置 1 |
 
-## 7. 社会关系入库清单
+## 7. 社会关系入库清单（★ 已按库内规范名核对，与 MySQL/data/Frederick_Reines.yaml 一致）
 
-- **博士导师**：Richard D. Present（advisor-student，NYU，液滴模型论文）
-- **宇宙线导师**：Serge A. Korff（NYU 期间师从）
-- **核心合作者**：Clyde Cowan（colleague / co-researcher，Project Poltergeist，1951-1956 共同探测中微子；1957 分开；1974 去世未获诺奖）
-- **Los Alamos 同事**：Richard Feynman（招募者，T-4 组长）、Hans Bethe（理论部主任）、John von Neumann（合著 Mach stem 论文）、John Archibald Wheeler（Project 137 / 鼓励 Savannah River）
-- **南非实验合作者**：Friedel Sellschop（Witwatersrand 大学）
-- **博士生**：Michael K. Moe（1965）、William Kropp、Henry Sobel（金矿实验领队）
-- **同届得主**：Martin L. Perl（co-honored，1995 各得一半、理由不同）
+| 类型 | 对方（库内规范名） | 方向 | note |
+|------|------|------|------|
+| advisor-student | Richard D. Present | 师→生 | NYU 博士导师，液滴模型核裂变论文 |
+| advisor-student | Serge A. Korff | 师→生 | NYU 期间师从其研究宇宙线 |
+| colleague | Clyde Cowan | 无向 | Project Poltergeist 搭档，1956 共同首测中微子 |
+| co-honored | Martin Lewis Perl（id=2116） | 无向 | 1995 诺奖共享，各得一半理由不同 |
+| colleague | Richard P. Feynman（id=2410，勿用 "Richard Feynman" id=2043 裸 stub） | 无向 | 1944 招募入 Los Alamos T-4 组 |
+| colleague | Hans Albrecht Bethe（id=2510，勿用 "Hans Bethe" id=2360 裸 stub） | 无向 | T 部主任；1934 断言被 1956 推翻 |
+| colleague | John von Neumann（id=3） | 无向 | 合著 Mach stem 论文 |
+| colleague | John Archibald Wheeler（id=2359，勿用 "John Wheeler" id=2133） | 无向 | Project 137 / 鼓励 Savannah River |
+| colleague | Friedel Sellschop | 无向 | 南非金矿实验合作者 |
+| advisor-student | William Kropp / Henry Sobel | 生←师 | 金矿实验两任研究生领队 |
+| advisor-student | Michael K. Moe | 生←师 | 博士生（1965，infobox 明载） |
+| spouse | Sylvia Samuels | 无向 | 1940-08-30 结婚 |
 
 ## 8. 奖项清单
 

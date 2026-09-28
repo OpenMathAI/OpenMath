@@ -171,6 +171,34 @@
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同世纪物理学家（Heisenberg / Rabi / Ramsey / Dehmelt）格式对齐
 
+## 12. 研究领域 rank 表（yaml/DB 对齐，2026-09-28 补齐标杆格式）
+
+| rank | 领域（name_en） | 中文 | 说明 | 依据 |
+|:--:|------|------|------|------|
+| 0 | ion trap | 离子阱 | Paul 阱（射频四极阱），1989 诺奖核心 | Known for/正文 |
+| 1 | mass spectrometry | 质谱学 | 四极质量分析器、1953 论文 | Known for/正文 |
+| 2 | molecular beam | 分子束 | 分子束透镜 | 正文 |
+| 3 | accelerator physics | 加速器物理 | 500/2500 MeV 电子同步加速器 | 正文 |
+| 4 | nuclear physics | 核物理 | CERN 核物理部主任、中子存储环 | 正文 |
+
+## 13. 术语清单（补齐标杆 §9 格式）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Paul trap（quadrupole ion trap） | Paul 阱（四极离子阱） | Paul 发明，勿与 Penning 阱混 |
+| quadrupole mass analyzer | 四极质量分析器 | 电四极场，无磁场 |
+| ion trap | 离子阱 | 与 Dehmelt 共同发展的技术总称 |
+| isotope separation | 同位素分离 | 二战时期研究，客观一句带过 |
+| Göttingen Manifesto | 《哥廷根宣言》 | 1957 年，18 人联名 |
+| magnetic storage ring | 磁存储环 | 囚禁慢中子测寿命 |
+| imaginary part | 虚部 | Pauli 玩笑，间接转述并保留英文原词 |
+
+## 14. 关系入库裁定（2026-09-28，DB id=2836 复用回填）
+
+- 已按 §7 入库 9 条：Kopfermann=advisor、Geiger=colleague（Diploma 小组语境非博士导师）、Steinwedel=colleague（1953 论文合著者，白名单无 collaborator 故用 colleague）、Dehmelt=colleague+co-honored、Ramsey=co-honored、Pauli=colleague（note 注明同名区分与虚部玩笑）、Stephan/Lorenz Paul=parent-child。
+- **不入库项**：§7 所列「著名博士生」Peter Toschek、Hans-Hellmut Nagel、Günter Werth 仅 metadata.json 有载（page.md 无博士生栏）→ 按工作流禁写；《哥廷根宣言》共同签署人 page.md 只写「18 位西德核科学家」未具名 Heisenberg → 不入库（立传中亦不得点名互指）。
+- 复用 Ramsey 入库时预留的 stub（id=2836）回填 Q57227 与全部字段，与 Wolfgang Pauli（id=1099）无混淆。
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

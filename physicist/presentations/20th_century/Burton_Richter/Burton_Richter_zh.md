@@ -103,6 +103,29 @@
 - **肖像缺失**：无真实肖像，装饰圆占位——不得用网络图冒充。
 - **死亡**：2018-07-18 逝于斯坦福，享年 87。
 
+## 5.5 研究领域表（第 4 步，yaml fields 来源）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | particle physics | 粒子物理 | J/ψ 发现、十一月革命 | 核心页 |
+| 1 | accelerator physics | 加速器物理 | SPEAR 设计与建造 | SPEAR 页 |
+| 2 | synchrotron radiation | 同步辐射 | 2014 国家科学奖章授奖词载 | 荣誉页 |
+| 3 | ecology | 生态学 | frontmatter field_of_work，晚年方向 | 晚年页 |
+| 4 | sustainable development | 可持续发展 | 《Beyond Smoke and Mirrors》 | 晚年页 |
+
+## 5.6 术语清单（第 9 步）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| J/psi meson | J/ψ 介子 | 两团队独立命名的合称 |
+| co-discovery | 独立共同发现 | 勿写谁先谁后 |
+| November Revolution | 十一月革命 | page.md 明载 "was part of" |
+| storage ring | 储存环 | 正负电子对撞 |
+| SPEAR | 斯坦福正负电子非对称储存环 | 全称展开勿丢 Asymmetric |
+| charm | 粲 | 仅以诺奖演说标题为据，勿展开机制 |
+| linear collider | 直线对撞机 | 2014 授奖词用语 |
+| energy policy | 能源政策 | 晚年方向，非获奖理由 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

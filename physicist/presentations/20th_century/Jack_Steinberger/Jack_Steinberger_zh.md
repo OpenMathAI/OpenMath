@@ -174,6 +174,34 @@
 - [ ] 中文标点 / 断行 / 间距统一（半角引号 " "）
 - [ ] 与同批次物理学家（Georg_Bednorz / Alex_Muller / Leon_Lederman / Melvin_Schwartz）格式对齐
 
+## 12. 研究领域 rank 表（yaml/DB 对齐，2026-09-28 补齐标杆格式）
+
+| rank | 领域（name_en） | 中文 | 说明 | 依据 |
+|:--:|------|------|------|------|
+| 0 | particle physics | 粒子物理 | infobox Fields 明载 | infobox |
+| 1 | neutrino physics | 中微子物理 | μ 子中微子发现，1988 诺奖核心 | 正文 |
+| 2 | weak interaction | 弱相互作用 | 超子自旋宇称与弱作用宇称破坏测量 | 正文 |
+| 3 | CP violation | CP 破坏 | ε 干涉测量、NA31 直接 CP 破坏 | 正文 |
+| 4 | strange particle physics | 奇异粒子物理 | 气泡室与超子研究 | 正文 |
+
+## 13. 术语清单（补齐标杆 §9 格式）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| muon neutrino | μ 子中微子 | 与电子中微子区分 |
+| spark chamber | 火花室 | 建于 Nevis Labs |
+| bubble chamber | 气泡室 | 15/30/75 cm 三代，勿混年份 |
+| neutral Sigma hyperon | 中性 Σ 超子 | 1956 年发现并测质量 |
+| CP violation / epsilon | CP 破坏 / ε 参数 | 经干涉现象测量 |
+| MWPC（multi-wire proportional chamber） | 多丝正比室 | Charpak 发明，勿记为 Steinberger 所发 |
+| NA31 | NA31 实验 | 直接 CP 破坏首次演示 |
+| ALEPH | ALEPH 实验 | LEP 上的实验，Steinberger 任发言人 |
+
+## 14. 关系入库裁定（2026-09-28，DB id=2358 复用回填）
+
+- 已按 §7 入库 12 条：Teller/Fermi=advisor（Fermi 行沿用 Fermi 篇既有 note「其他著名学生（非博士生栏）」）、Schwartz=student+co-honored、Lederman=colleague+co-honored（Lederman 已由 batch 23 入库 id=2796，双向关系自动对上）、Rubbia/Charpak=colleague、两任妻子=spouse、Ned/Julia=parent-child。
+- §7 中子女 Joseph、John 仅 page.md 列名无其他信息 → 未入库（防噪声 stub）。
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

@@ -102,6 +102,30 @@
 - **家庭**：女儿 Elizabeth Ann 九岁白血病去世——如实、克制；死亡细节（CPR 获救、心肺骤停）page.md 有载，按史料呈现。
 - **引语溯源**：可直接引用的仅有 Rainwater 本人回忆段（page.md blockquote 原文）；其余一律间接转述。
 
+## 5.5 研究领域表（第 4 步，yaml fields 来源）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | nuclear physics | 核物理 | 实际贡献主线 | 核心页 |
+| 1 | nuclear structure | 原子核结构 | 1950 变形核论文、诺奖核心 | 核心页 |
+| 2 | atomic physics | 原子物理 | frontmatter field_of_work | — |
+| 3 | muonic atom | μ 子原子 | 与 Fitch 合作的 X 射线研究 | Nevis 页 |
+| 4 | neutron physics | 中子物理 | 战时中子谱仪与中子截面 | 曼哈顿页 |
+
+## 5.6 术语清单（第 9 步）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| spheroidal nuclear model | 椭球核模型 | 1950 论文标题用语，勿译"球面核" |
+| collective motion | 集体运动 | 诺奖理由关键词 |
+| quadrupole moment | 四极矩 | Townes 报告的反常量 |
+| liquid drop model | 液滴模型 | Bohr–Wheeler 1939 |
+| shell model | 壳层模型 | 1949 Mayer 等 |
+| muonic atom | μ 子原子 | μ 子替代电子的原子，不在获奖理由内 |
+| neutron cross section | 中子截面 | 战时 SAM 实验室工作 |
+| gaseous diffusion | 气体扩散法 | 铀浓缩技术 |
+| synchrocyclotron | 同步回旋加速器 | Nevis 实验室 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

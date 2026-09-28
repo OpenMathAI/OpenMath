@@ -100,6 +100,21 @@
 - **卒地**：逝于瑞士日内瓦（工作地），享年 85——勿写"逝于荷兰"。
 - **肖像**：images.txt 仅 Wikiquote logo，**无本人肖像**——装饰圆占位（Review 可尝试 Commons "Simon van der Meer 1988"）。
 
+## 5.5 术语清单（英文 / 中文 / 风险点）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| stochastic cooling | 随机冷却 | van der Meer 发明，勿写成他人 |
+| Antiproton Accumulator | 反质子累积环 | 为 p-pbar 对撞机供反质子 |
+| Van der Meer horn / magnetic horn | 磁号角 | 1961 年发明，中微子长基线设施仍在用 |
+| Van der Meer scan | 范德梅尔扫描 | 束流亮度标定方法，LHC 至今在用 |
+| luminosity calibration | 亮度标定 | ISR 首用 |
+| Proton Synchrotron (PS) | 质子同步加速器 | 28 GeV，1950s 设计磁铁 |
+| Intersecting Storage Rings (ISR) | 交叉储存环 | 1970s 对撞实验 |
+| engineer's degree | 工程师学位 | Delft 1952，无博士表述 |
+| Duddell Medal and Prize | 达德尔奖章 | 1982，注意与 Dennis Gabor Medal 区分 |
+| first cousins once removed | 隔房表亲 | Tjalling Koopmans（诺奖经济学），亲戚类型不入库 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

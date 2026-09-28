@@ -98,6 +98,21 @@
 - **家庭**：妻子 Elise Cosset 是教师；子 Daniel Kastler 后为物理学家——勿写成 Daniel 获诺奖（page.md 无载）。
 - **引语纪律**：page.md **无本人原话**——全篇不加引号引语，一律间接转述；诺奖理由为官方中文表述可引。
 
+### 5.5 术语清单（8–12 条）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| optical pumping | 光泵浦 | 核心贡献与获奖理由本体，勿写成「激光泵浦」 |
+| Hertzian resonances | 赫兹共振 | 获奖理由用词，「原子中赫兹共振」 |
+| optical resonance | 光学共振 | 与磁共振结合是方法关键 |
+| magnetic resonance | 磁共振 | 结合光学共振方成光泵浦 |
+| spectroscopy | 光谱学 | ENS 小组起步领域 |
+| nuclear acoustic resonance | 核声共振 | Known for 第二项，勿遗漏勿夸大 |
+| Laboratoire Kastler-Brossel | 卡斯特勒-布罗塞尔实验室 | 1994 更名，主体在 ENS |
+| maser / laser | 微波激射 / 激光 | 其工作「促成理论完成」，非发明者 |
+| École Normale Supérieure | 巴黎高等师范学校（ENS） | 1921 入学、1941 重返、1952 讲席 |
+| double resonance | 双共振 | 光磁双共振方法语境（如 page.md 提及） |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

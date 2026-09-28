@@ -32,6 +32,30 @@
 - **研究领域**：物理（表面科学、扫描隧道显微术）
 - **任职**：IBM 苏黎世研究实验室（Rüschlikon，1963 加入，时为 Ambros Speiser 主持）
 
+### 1.5 研究领域表（第 4 步入库用，与 yaml fields 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 |
+|:--:|------|------|------|
+| 0 | scanning tunneling microscopy | 扫描隧道显微术 | 1986 诺奖核心成果 |
+| 1 | scanning probe microscopy | 扫描探针显微术 | STM 所属学科 |
+| 2 | critical phenomena | 临界现象 | 磁相图研究带入的领域 |
+| 3 | superconductivity | 超导 | 博士论文：超导体磁场转变长度测量 |
+
+### 1.6 术语清单（第 9 步用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| scanning tunneling microscope (STM) | 扫描隧道显微镜 | "设计"而非"发现"原理 |
+| scanning probe microscopy (SPM) | 扫描探针显微术 | STM 的上位学科 |
+| critical phenomena | 临界现象 | 由磁相图研究引入 |
+| cryogenic engineering | 低温工程 | 博士导师 Grassmann 的方向 |
+| type-II superconductors | II 类超导体 | 1961 蜜月期 Rutgers 研究课题 |
+| thermal conductivity | 热导 | 与 Serin 合作研究内容 |
+| nuclear magnetic resonance (NMR) | 核磁共振 | 1974 UCSB 休假年课题 |
+| Kondo systems | 近藤体系 | IBM 早期研究（脉冲磁场+磁阻） |
+| Heinrich Rohrer Medal | 罗雷尔奖章 | 三年一届；勿与 Nano Seoul 2020 Rohrer Award 混淆 |
+| IBM Fellow | IBM 院士 | 1986 年授予 |
+
 ## 2. 核心叙事亮点（用于 Slide 4-13）
 
 1. **晚半小时的孪生弟弟**：1933-06-06 生于 Buchs——比孪生妹妹晚半小时来到世界；此后是 Buchs 无忧的乡村童年。
@@ -121,7 +145,7 @@
 - **ETH 老师**：Wolfgang Pauli、Paul Scherrer（本科/研究生授课老师，advisor-student 弱向或 teacher 关系，note 注明"非博士导师"）
 - **博士导师**：P. Grassmann（低温工程；metadata 的 Pauli 字段为噪声，勿入 relation）
 - **共同得主**：Gerd Binnig（1986 共享一半，co-honored）；Ernst Ruska（同届另一半，co-honored）
-- **STM 合作团队**：Christoph Gerber、Edmund Weibel（IBM 苏黎世四人组）
+- **STM 合作团队**：Christoph Gerber、Edmund Weibel——**注意：此二人仅 Binnig 篇 page.md 有载，Rohrer 篇 page.md 未提及，Rohrer yaml 不入库（避免无载写入）**
 - **配偶**：Rose-Marie Egger（1961 结婚）
 - **科研合作者**：Bernie Serin（Rutgers，II 类超导体热导，1961 蜜月期）、Vince Jaccarino 与 Alan King（UCSB，NMR，1974）
 - **机构前辈**：Ambros Speiser（1963 年加入时 IBM 苏黎世实验室主持人，note 级）

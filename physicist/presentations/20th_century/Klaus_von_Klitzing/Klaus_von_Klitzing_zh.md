@@ -101,6 +101,21 @@
 - **引语红线**：von Klitzing 本人在 page.md 中无直接引语；全部间接转述。
 - **肖像**：images.txt 为空，**无本人肖像**——装饰圆占位（Review 可尝试 Commons "Klaus von Klitzing 2015"）。
 
+## 5.5 术语清单（英文 / 中文 / 风险点）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| quantum Hall effect | 量子霍尔效应 | 整数量子霍尔效应；与分数量子霍尔效应（Tsui 等人 1998）区分 |
+| von Klitzing constant | 冯·克利青常数 | R_K = h/e² = 25812.80745... Ω |
+| conductance quantum | 电导量子 | 常数的倒数为其一半 |
+| integer quantum Hall effect | 整数量子霍尔效应 | 1980 年发现，1985 独享诺奖 |
+| habilitation | 特许任教资格 | 1978 维尔茨堡，勿与博士混淆 |
+| Galvanomagnetische Eigenschaften | 强磁场中碲的电流磁性质 | 博士论文题目（1972，德文） |
+| Clarendon Laboratory | 克拉伦登实验室 | 牛津 |
+| Grenoble High Magnetic Field Laboratory | 格勒诺布尔强磁场实验室 | 今 LNCMI |
+| Max Planck Institute for Solid State Research | 马普固体研究所 | 斯图加特，1985 起所长 |
+| Pour le Mérite | 功勋勋章 | 2019，科学与艺术类，德国最高荣衔 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

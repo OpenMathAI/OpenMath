@@ -125,6 +125,19 @@
 - **博士学生**：Pierre Encrenaz
 - **家庭**：第一任妻 Anne Barras（1954，三子女，离异）；第二任妻 Sherry Levit（1996）
 
+## 7.5 术语清单（对齐标杆 §9，8 条）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| cosmic microwave background (CMB) | 宇宙微波背景 | 1978 诺奖发现本体，勿写"预言" |
+| Holmdel Horn Antenna | 霍姆德尔喇叭天线 | 发现地装置，超灵敏低温微波接收系统 |
+| isotropic | 各向同性 | 噪声的关键特征，排除银河系来源的依据 |
+| Kindertransport | 儿童救援行动 | 1939 六岁赴英，流亡线勿倒置 |
+| maser radiometer | 微波激射器射电计 | 博士论文装置（Townes 门下） |
+| 21 cm line | 21 厘米谱线 | 飞马座 I 星系团自由氢测量 |
+| white dielectric material | 白色电介质材料 | 鸽子粪轶事唯一可引原话 |
+| back-to-back letters | 背靠背通讯 | 与 Dicke 组在 Astrophysical Journal 的发表形式 |
+
 ## 8. 奖项清单
 
 - 诺贝尔物理学奖（1978，与 R. W. Wilson 共享一半；另一半为 Kapitsa）

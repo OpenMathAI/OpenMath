@@ -100,6 +100,22 @@
 - **Trinity 目击**：是他自己"声称"（claimed）唯一不用护目镜的人——保留 claimed 口径。
 - **学历**：MIT 学士（SB）1939 + 普林斯顿博士（PhD）1942；本科论文成果 Hellmann–Feynman 定理。
 
+### 5.5 术语清单（8–12 条）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| quantum electrodynamics | 量子电动力学（QED） | 1965 获奖理由核心，勿与路径积分混写 |
+| Feynman diagram | 费曼图 | 粒子相互作用的图形表示 |
+| path integral formulation | 路径积分表述 | 量子力学的第三种表述，非获奖理由本体 |
+| parton model | 部分子模型 | 与夸克模型互补，勿写「提出夸克」 |
+| Wheeler–Feynman absorber theory | 惠勒–费曼吸收体理论 | 与导师 Wheeler 合作，博士论文动机 |
+| Hellmann–Feynman theorem | Hellmann–费曼定理 | 本科论文成果，勿写为博士成果 |
+| Bethe–Feynman formula | Bethe–费曼公式 | 裂变弹当量估算，与 Bethe 合作 |
+| V−A theory | V−A 弱相互作用理论 | 与 Gell-Mann 合作，Sudarshan–Marshak 并陈 |
+| superfluidity | 超流性 | 液氦超流的量子解释 |
+| Rogers Commission | 罗杰斯委员会 | 挑战者号调查，O 型圈冰水演示 |
+| renormalization | 重整化 | QED 发散处理，规则补全归 Dyson |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

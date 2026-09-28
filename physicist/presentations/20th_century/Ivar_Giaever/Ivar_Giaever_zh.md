@@ -167,6 +167,33 @@
 - [ ] 中文标点 / 断行 / 间距统一（半角引号 " "）
 - [ ] 与同组物理学家（Leo_Esaki / Brian_Josephson）格式对齐，1973 诺奖份额口径三篇一致
 
+## 12. 研究领域表（第 4 步 fields 入库底稿，与 yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | superconductivity | 超导电性 | 1960 超导体隧穿实验 / 能隙证据 | 核心页 |
+| 1 | quantum tunneling | 量子隧穿 | 极薄氧化层两侧金属的隧穿 | 核心页 |
+| 2 | thin films | 薄膜 | 1958–1969 早期研究主线 | 早期页 |
+| 3 | biophysics | 生物物理 | 1969 剑桥转向 / Applied BioPhysics | 转向页 |
+| 4 | physics | 物理 | infobox Fields 原文 | 全篇 |
+
+## 13. 术语清单（英文 / 中文 / 风险点）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| electron tunneling | 电子隧穿 | 其 1960 实验的核心；勿与 Esaki 半导体隧穿混写 |
+| energy gap | 能隙 | BCS 1957 最重要预言之一，Giaever 是实验展示者 |
+| BCS theory | BCS 理论 | Bardeen-Cooper-Schrieffer；勿写"参与建立" |
+| oxide layer | 氧化层 | 极薄氧化层夹于两侧金属之间；实验细节以 page.md 为限 |
+| Oliver E. Buckley Prize | 巴克利奖 | 1965 APS；"first"表述仅限引文语境 |
+| Guggenheim Fellowship | 古根海姆奖学金 | 1969 剑桥生物物理一年 |
+| Applied BioPhysics | Applied BioPhysics | 1993 创立的公司 |
+| Institute Professor | 学院教授 | 1988 起 RPI 头衔 |
+| Norwegian Institute of Technology | 挪威理工学院 | NTH，1948 入学 1952 毕业（M.Eng.） |
+| Rensselaer Polytechnic Institute | 伦斯勒理工学院 | RPI，1964 Ph.D.（在职攻读） |
+| Hillard Bell Huntington | 希拉德·贝尔·亨廷顿 | RPI 博士导师，仅 infobox 明载 |
+| Gunnerus Medal | 古纳鲁斯奖章 | 2010 DKNVS；颁奖礼照片即封面肖像（2010） |
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

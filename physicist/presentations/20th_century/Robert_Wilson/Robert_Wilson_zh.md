@@ -94,6 +94,7 @@
 - **CO 首测的地位**："毫米波与亚毫米波天文的奠基事件（foundational event）"为 page.md 原表述——可写；"首次探测到天文天体的 CO 转动谱线"措辞准确（rotational spectral line）。
 - **2008 引语**：致布什信中 "reverse the damage done to basic science research in the Fiscal Year 2008 Omnibus Appropriations Bill" 为 page.md 原文——可加引号；其余不加。
 - **师承表述**：论文导师为"包括 John Bolton 与 Maarten Schmidt"（thesis advisors included）——用"包括"措辞，勿写"唯一导师"。
+- **Kapitsa 另一半为总名单口径，本篇 page.md 无载**（全篇无 Kapitsa 字样）——份额结构可按总名单一句话带过，但**关系库不入 Kapitsa co-honored**（仅 metadata/总名单有载不入库）；勿展开 Kapitsa 低温物理叙事。
 - **无本人肖像**：封面用天线历史照（二人合影裁切或整幅，注明人物），身份页装饰圆占位。
 
 ## 6. 数据库字段核对表
@@ -161,6 +162,23 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐（卒日格留白处理美观）
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与 1978 同届（Kapitsa / Penzias）格式对齐，CMB 叙事口径一致
+
+## 12. 术语清单（英/中/风险点）
+
+| 英文 | 中文 | 风险点 |
+|---|---|---|
+| cosmic microwave background (CMB) | 宇宙微波背景 | 勿写成"证明了大爆炸"，用"重要佐证" |
+| Holmdel Horn Antenna | 霍尔姆德尔喇叭天线 | 15 米口径表述照 page.md |
+| pigeon droppings | 天线上的鸽子粪 | 一句带过，勿混入 Penzias 篇细节 |
+| Big Bang | 大爆炸 | corroboration 措辞 |
+| rotational spectral line | 转动谱线 | 勿简化为"光谱线" |
+| carbon monoxide (CO) | 一氧化碳 | 1970 首测地点 Orion Nebula + 八银道源 |
+| Orion Nebula | 猎户座星云 | — |
+| millimeter / submillimeter astronomy | 毫米波 / 亚毫米波天文 | "奠基事件"为 page.md 原表述 |
+| cool molecular interstellar gas | 冷星际分子气体 | CO 示踪对象 |
+| Henry Draper Medal | 亨利·德雷珀奖章 | 1977，与 Penzias 共同获 NAS 授予 |
+| Phi Beta Kappa | 荣誉学会 | Rice 本科荣誉，勿写成学位 |
+| thesis advisors | 论文导师 | "including" 措辞，勿写唯一导师 |
 
 ---
 

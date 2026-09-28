@@ -105,7 +105,7 @@
 |---|---|---|
 | qid | Q172844 | 待写入 |
 | name_zh | 卡皮察（或 彼得·列昂尼多维奇·卡皮察） | 待写入 |
-| name_en | Pyotr Leonidovich Kapitsa | 待写入 |
+| name_en | Pyotr Leonidovich Kapitsa（★库内既有记录 id=2421 name_en=`Pyotr Kapitsa`，yaml 已沿用库内形式，避免分裂 stub） | 已沿用 |
 | birth_date | 1894-07-09（公历；metadata 1894-06-26 为儒略历噪声） | 待写入 |
 | death_date | 1984-04-08 | 待写入 |
 | nationality | Soviet Union（履历跨 Russian Empire → RSFSR → USSR） | 待写入 |
@@ -122,6 +122,19 @@
 - **家庭**：妻 Anna Alekseyevna Krylova（1927，应用数学家 Aleksey Krylov 之女）；长子 Sergey Kapitsa（物理学家/人口学家）；次子 Andrey Kapitsa（地理学家，沃斯托克湖）
 - **对抗关系**：Lavrentiy Beria（1945 苏联原子弹项目管控冲突）；Joseph Stalin（致信对象，曾表态支持）
 - **同代画像**：Nikolay Semyonov（Kustodiyev 1921 合像画中人，诺贝尔化学奖得主——关系细节 page.md 无载，仅画像并立，入库可列 colleague、note 不渲染）
+
+## 7.5 术语清单（对齐标杆 §9，8 条）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| superfluidity | 超流 | 1938 氦-4 粘滞消失；Allen/Misener 无载禁写 |
+| low-temperature physics | 低温物理 | 1978 诺奖理由核心词 |
+| pulsed magnetic field | 脉冲强磁场 | 无铁芯电磁体+脉冲大电流技术 |
+| Kapitza club | 卡皮察俱乐部 | 剑桥研讨传统，勿渲染为学派 |
+| Mond Laboratory | 蒙德实验室 | 1930-1934 首任主任；设备由苏联购回勿写"赠予" |
+| Institute for Physical Problems | 物理问题研究所 | 1934 年起参与创建并主持 |
+| expansion turbine | 膨胀透平 | 1939 空气液化低压循环核心 |
+| plasma discharge | 等离子体放电 | 电子温度超 100 万 K 的连续高压放电 |
 
 ## 8. 奖项清单
 

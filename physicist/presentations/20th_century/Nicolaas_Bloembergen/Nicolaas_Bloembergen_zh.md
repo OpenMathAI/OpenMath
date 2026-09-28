@@ -110,17 +110,11 @@
 | nationality | Netherlands / United States | 待写入 |
 | primary_occupation | physicist | 待写入 |
 | field_of_work | nonlinear optics / laser spectroscopy / quantum physics | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 0（本批仅提示词+入库，未做 Beamer；立传完成后由主控置 1） | 已按 0 入库 |
 
 ## 7. 社会关系入库清单
 
-- **博士导师**：Edward Mills Purcell（哈佛）、Cornelis Jacobus Gorter（莱顿）
-- **学术影响**：John Van Vleck、Percy Bridgman、Julian Schwinger（听课）
-- **学术家谱**：J. J. Thomson（经 Purcell 上溯）
-- **技术前驱关系**：Charles Townes（改进其 maser；互指 collaborator——Townes 篇 Charles_Townes/Charles_Townes_zh.md 已存在）
-- **同领域同道**：Peter Franken（SHG 发现者，其工作触发 Bloembergen 转向非线性光学）；Arthur Schawlow（1981 同半份诺奖，互指 co-honored）
-- **著名博士生**：Peter Pershan、Yuen-Ron Shen、Eli Yablonovitch
-- **诺贝尔奖同届**：Arthur Schawlow（共享一半）、Kai M. Siegbahn（另一半，1981）
+> **2026-09-28 已入库 12 条**（id=2180，库内规范名 `Nicolaas Bloembergen`）：双导师 Purcell（库内 id=2169）/Gorter（新建 stub）、3 博士生 Pershan/Shen/Yablonovitch、配偶 Huberta Deliana Brink、co-honored Schawlow（id=2488）+ Kai Siegbahn（id=2145）、colleague Townes（id=2477）+ Franken（新建 stub）、influence Van Vleck（id=2172）+ Bridgman（id=2191）。**J. J. Thomson 学术家谱是叙述脉络，不入库**；Kemble/Schwinger 仅「听课」不入库。
 
 ## 8. 奖项清单
 
@@ -167,6 +161,23 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同届物理学家（Arthur_Schawlow / Kai_Siegbahn）及海森堡式母本格式对齐
+
+## 12. 术语清单（终审用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| nonlinear optics | 非线性光学 | 其命名的新领域，诺奖 singled out |
+| laser spectroscopy | 激光光谱学 | 1981 获奖理由核心词 |
+| nuclear magnetic resonance (NMR) | 核磁共振 | 现代 MRI 前身 |
+| BPP theory (Bloembergen–Purcell–Pound) | BPP 理论 | 核磁弛豫，勿写为独名 |
+| nuclear magnetic relaxation | 核磁弛豫 | 1948 莱顿博士论文题 |
+| maser | 微波激射器 | 晶体 maser 1956，不在获奖理由 |
+| three-level maser | 三能级 maser | IEEE Medal of Honor 获奖理由 |
+| second-harmonic generation (SHG) | 二次谐波产生 | Franken 1961，触发其转向 |
+| optical parametric oscillator | 光学参量振荡器 | 其衍生技术，page.md 有载方可写 |
+| doctorandus | （荷兰）博士候选人学位 | 乌得勒支 1943，勿译博士 |
+| Lorentz Professor | 洛伦兹讲席教授 | 1973 莱顿，荣誉职位非教职 |
+| Buckley Condensed Matter Prize | 巴克利凝聚态奖 | 1958，磁共振研究 |
 
 ---
 

@@ -97,6 +97,30 @@
 - **metadata/机构名**：page.md 载"meta­data doctoral_advisor: Q7085"未解析人名——师承栏以正文为据（受父亲与 Rabi、Rainwater 影响，非正式导师关系；infobox 未列博士导师，勿杜撰导师名）。
 - **死亡**：2009-09-08 逝于哥本哈根，享年 87；葬地 page.md 无载。
 
+## 5.5 研究领域表（第 4 步，yaml fields 来源）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | nuclear physics | 核物理 | infobox Fields | 全篇 |
+| 1 | nuclear structure | 原子核结构 | 诺奖理由核心 | 核心页 |
+| 2 | collective model | 原子核集体模型 | 集体运动与粒子运动的联系 | 核心页 |
+| 3 | nuclear rotation | 原子核转动 | 博士论文《Rotational States of Atomic Nuclei》、转动能谱 | 验证页 |
+| 4 | nuclear shell model | 原子核壳层模型 | 工作调和了壳层模型与变形核概念 | 背景页 |
+
+## 5.6 术语清单（第 9 步）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| collective motion | 集体运动 | 诺奖理由关键词，勿译"集团运动" |
+| particle motion | 粒子运动 | 与集体运动相对 |
+| rotational spectrum | 转动能谱 | 实验验证的核心证据 |
+| spheroidal nucleus | 椭球核 / 变形核 | 非"球形畸变" |
+| liquid drop model | 液滴模型 | Niels Bohr 等发展的旧模型 |
+| shell model | 壳层模型 | 1949 Mayer 等，被调和而非被推翻 |
+| surface oscillation | 核表面振荡 | 1951 综合论文主题 |
+| hyperfine structure | 超精细结构 | Rabi 引路的研究起点 |
+| Tube Alloys | 英国原子弹计划 | 勿与曼哈顿计划混同 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

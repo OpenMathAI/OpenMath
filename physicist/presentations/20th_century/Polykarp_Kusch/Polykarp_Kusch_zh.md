@@ -95,6 +95,21 @@
 - **引语**：page.md 无库什直接引语，全部间接转述，不加引号。
 - **国籍双底色**：生于德国、1912 年移民、1922 年入籍美国——封面写「美国」，正文可提移民背景。
 
+## 5.5 术语清单
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| molecular beam | 分子束 | 非「分子线」 |
+| magnetic resonance | 磁共振 | Rabi 分子束磁共振方法 |
+| anomalous magnetic moment | 反常磁矩 | 指实验值大于理论值这一事实 |
+| electron magnetic moment | 电子磁矩 | 诺奖理由核心对象 |
+| hyperfine structure | 超精细结构 | 后续系列测量对象 |
+| optical molecular spectroscopy | 光学分子光谱 | 博士论文方向（铯与铷分子光谱） |
+| chemical physics | 化学物理 | 后期扩展领域 |
+| quantum electrodynamics | 量子电动力学（QED） | 只写「重新审视与创新」，不写具体理论家 |
+| provost | 教务长 | 哥大 1970–1971 一年任期 |
+| naturalized | 归化入籍 | 1922 年，勿写出生即美国籍 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -115,7 +130,7 @@
 - **研究上司/学派宗师**：I. I. Rabi（哥伦比亚，分子束共振）
 - **分子束合作者**：Jerrold R. Zacharias、Sidney Millman（Rabi–Zacharias–Millman–Kusch 1938/1939 论文署名团队）
 - **关键合作者**：Henry M. Foley（Kusch–Foley 1948 电子磁矩论文）
-- **博士学生**：Eugene Commins
+- **博士学生**：Eugene D. Commins、Gordon Gould（激光先驱之一）、Sheldon Schultz（page.md infobox Doctoral students 三人全载，勿只写 Commins）
 - **诺奖同届**：Willis Eugene Lamb（1955 共享，理由不同）
 - **诺奖同系前辈**：哥伦比亚物理系传统（Rabi 1944 诺奖，兰姆 1955 同系）——谨慎写"同系"而非直接合作
 - **家庭**：首任妻 Edith Starr McRoberts（1935，三女，1959 去世）；继室 Betty Pezzoni（二女）

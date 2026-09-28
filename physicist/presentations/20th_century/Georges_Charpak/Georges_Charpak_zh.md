@@ -172,5 +172,38 @@
 
 ---
 
+## 12. 补齐：研究领域表（第 4 步 fields，与 yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | particle physics | 粒子物理 | page.md field_of_work 口径 | 封面、身份页 |
+| 1 | particle detectors | 粒子探测器 | 多丝正比室/漂移室/MicroMegas | 核心页 |
+| 2 | nuclear physics | 核物理 | 1954 博士学科（极低能核衰变辐射） | 博士页 |
+| 3 | medical imaging | 医学成像 | 探测器健康诊断应用（ESPCI 时期） | 应用页 |
+
+### 补充裁定（本轮 2026-09-28）
+- **Philippe Coulon 不入库**：仅 metadata.json 载，page.md 无载——陷阱表存档备 Review。
+- **frontmatter 国籍为 France + Poland**（总名单 "France Switzerland" 有误）——yaml 国籍取 France rank 0 + Poland rank 1。
+- **collaborator 类型不在白名单**：Mathias Fink 创业合作入库用 colleague 类型。
+
+## 13. 补齐：术语清单（第 9 步）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| multiwire proportional chamber | 多丝正比室 | 1968 公开，勿误写发明于 1959 |
+| wire chamber | 丝室 | infobox Known for |
+| MicroMegas detector | MicroMegas 探测器 | 仅 infobox 有载，勿编造细节 |
+| scintillation drift chamber | 闪烁漂移室 | 与 Policarpo 等共同发明；"Nlolc" 系排版噪声禁写 |
+| CERN | 欧洲核子研究中心 | 1959 加入，1991 退休 |
+| ESPCI Paris | 巴黎市工业物理化学高等学校 | 1980 驻校教授、1984 Joliot-Curie 讲席 |
+| Joliot-Curie Chair | 若里奥-居里讲席 | 1984，ESPCI |
+| Dachau concentration camp | 达豪集中营 | 1944 驱逐、1945 获释；禁写 Buchenwald |
+| French Resistance | 法国抵抗运动 | 1943 遭维希当局监禁 |
+| École des Mines | 巴黎矿业学院 | 1948 毕业，矿业土木工程师 |
+| Juri Orlov Committee | 尤里·奥尔洛夫委员会 | 抗议苏联监禁人权活动家 |
+| Golden Plate Award | 金盘奖 | 1999 美国成就学院 |
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

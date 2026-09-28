@@ -68,6 +68,30 @@
 - **落地文件**：`physicist/presentations/20th_century/William_Phillips/Awaken.wav`（复制自 `music_audio/alex-productions/36-aqLUvpAdLNQ-Awaken.wav`，不入 git）。
 - **匹配理由**：Phillips 的叙事核心是"发明与务实"（Zeeman slower 这样具体可感的器件）而非宏大理论，Awaken 的明亮鼓舞气质贴合实验家的形象；与本批次其余五人曲目不重复。
 
+## 3.6 研究领域表（数据库入库用，第 4 步）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | laser cooling | 激光冷却 | 塞曼减速器、中性原子冷却与囚禁，1997 诺奖核心 | 核心贡献页 |
+| 1 | atomic physics | 原子物理 | 气态原子减速与精密研究 | 核心页 |
+| 2 | Bose-Einstein condensation | 玻色-爱因斯坦凝聚 | 后期参与的工作 | BEC 页 |
+| 3 | precision measurement | 精密测量 | 博士论文水中质子磁矩的测量传统 | 早年页 |
+
+## 3.7 术语清单（第 9 步审查用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Zeeman slower | 塞曼减速器 | 本篇标志发明，诺奖 "especially for" 落点 |
+| laser cooling | 激光冷却 | 与「囚禁 trapping」连用 |
+| magnetic trap | 磁阱 | 原子囚禁手段之一 |
+| Bose-Einstein condensation | 玻色-爱因斯坦凝聚 | 后期工作，勿写成诺奖理由 |
+| H2O proton magnetic moment | 水中质子磁矩 | 博士论文主题 |
+| NBS / NIST | （美国）国家标准局 / 国家标准与技术研究院 | 1978 入 NBS，今 NIST，勿混 |
+| NIST Fellow | NIST 特级研究员 | 1995 年获，机构内最高技术职级 |
+| valedictorian | 毕业演说代表 | 1966 高中，勿译泛化 |
+| summa cum laude | 最优等 | 1970 Juniata 毕业 |
+| Methodist laity | 卫理公会平信徒 | 宗教维度如实呈现 |
+
 ## 4. Slide 规划（约 15 页，Wilson 式结构）
 
 1. **封面**（`\titleslide`）：顶部标签「激光冷却与塞曼减速器 · 美国」+ 菲利普斯 1948– + 右上头像（裁剪或占位）+ 国籍行 + 底部三要素状态栏 + 四色 badge

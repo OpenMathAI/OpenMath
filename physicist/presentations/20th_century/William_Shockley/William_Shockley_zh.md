@@ -97,6 +97,22 @@
 - **攀岩路线改名**："Shockley's Ceiling" → "The Ceiling"（因优生学争议）——可作趣闻一句，间接转述。
 - **家庭悲剧**：晚年与子女疏离、子女从讣告得知死讯——如实呈现于结尾页，克制。
 
+## 5.5 术语清单
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| point-contact transistor | 点接触晶体管 | Bardeen 与 Brattain 发明，勿归肖克利 |
+| junction transistor | 结型晶体管 | 肖克利提出，"三明治"夹层结构 |
+| bipolar junction transistor | 双极结型晶体管（BJT） | 1951-07-04 发布 |
+| field effect | 场效应 | 肖克利原始构想，屡试屡败后被 Lilienfeld 专利占先 |
+| surface states | 表面态 | Bardeen 用其解释失败实验 |
+| minority carrier injection | 少数载流子注入 | 肖克利结型理论关键概念 |
+| Shockley diode equation | 肖克利二极管方程 | 公式框首选 |
+| solid-state physics group | 固体物理组 | 与化学家 Stanley Morgan 共同领导 |
+| traitorous eight | 叛逆八人帮 | 1957 出走创办仙童半导体 |
+| Silicon Valley | 硅谷 | 肖克利是"把硅带到硅谷的人" |
+| eugenics | 优生学 | 晚年争议，克制呈现 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

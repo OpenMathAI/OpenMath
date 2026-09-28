@@ -103,6 +103,30 @@
 - **死亡**：2014-09-30 心脏病发作逝于斯坦福大学医院，享年 87。
 - **肖像**：`images.txt` 中**无本人肖像**（仅诺奖奖章/标识类图标）——封面用装饰圆占位，须在 tex 中用 `\IfFileExists` 条件包含。
 
+## 5.5 研究领域表（fields 入库口径，2026-09-28 补）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | lepton physics | 轻子物理 | 诺奖理由 "pioneering experimental contributions to lepton physics" | 核心页 |
+| 1 | experimental particle physics | 实验粒子物理 | SLAC-SPEAR / LBL 磁探测器实验主线 | SPEAR 页 |
+| 2 | strong interactions | 强相互作用 | 密歇根八年用气泡室/火花室研究 π 介子-质子散射 | 密歇根页 |
+| 3 | particle detectors | 粒子探测器 | 气泡室、火花室、LBL 磁探测器 | 实验页 |
+
+## 5.6 术语清单（英文/中文/风险点，2026-09-28 补）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| tau lepton | τ 轻子 | 第三个带电轻子，间接发现 |
+| lepton physics | 轻子物理 | 诺奖理由限定语 |
+| SPEAR | SPEAR 对撞环 | SLAC e⁺e⁻ 对撞环，初始 4.8 GeV |
+| muon | μ 子 | 质量为电子 206.8 倍，勿与 τ 的 3477 倍混淆 |
+| electron-positron collision | 正负电子对撞 | 寻找第三代轻子的手段 |
+| atomic beam resonance method | 原子束共振法 | Rabi 获 1944 诺奖的方法，博士论文所用 |
+| nuclear quadrupole moment | 核四极矩 | 博士论文测钠的核四极矩 |
+| bubble chamber / spark chamber | 气泡室 / 火花室 | 密歇根时期探测器 |
+| Wolf Prize in Physics | 沃尔夫物理学奖 | 1982，早于诺奖 |
+| Frederick Reines | 弗雷德里克·莱因斯 | 1995 各得一半且理由不同 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -119,11 +143,13 @@
 
 ## 7. 社会关系入库清单
 
+> yaml 入库名规范（2026-09-28）：库内已有记录 **Martin Lewis Perl**（id=2116），name_en 沿用库内形式（勿用 Martin L. Perl，防分裂 stub；原 stub 2546 已合并至 2116）。Rabi 入库用库内规范名 **Isidor Isaac Rabi**、Ting 用 **Samuel Chao Chung Ting**、Reines 用 **Frederick Reines**（库内已由 batch-27 建好 qid Q191922）。Kwan-Wu Lai、Michael Kreisler、Petros Afentoulis Rapidis、George Fleming 仅 metadata.json 有载，**不入库**。
+
 - **博士导师**：Isidor Isaac Rabi（advisor-student，Rabi 1944 诺奖）
-- **博士生**：Samuel C. C. Ting（与 Lawrence W. Jones 共同指导，1976 诺奖）、Melissa Franklin、Kwan-Wu Lai、Michael Kreisler、Petros Afentoulis Rapidis、George Fleming
-- **共同导师同事**：Lawrence W. Jones（密歇根时期共同指导 Ting）
-- **同届得主**：Frederick Reines（co-honored，1995 各得一半、理由不同）
-- **机构同事**：SLAC-LBL 合作组成员（τ 发现）
+- **博士生**：Samuel C. C. Ting（与 Lawrence W. Jones 共同指导，1976 诺奖）、Melissa Franklin（infobox）；~~Kwan-Wu Lai / Michael Kreisler / Petros Afentoulis Rapidis / George Fleming~~（metadata 载，不入库）
+- **共同导师同事（colleague）**：Lawrence W. Jones（密歇根时期共同指导 Ting）
+- **同届得主（co-honored）**：Frederick Reines（1995 各得一半、理由不同）
+- **机构同事**：SLAC-LBL 合作组成员（τ 发现）——仅立传呈现，不建关系行
 
 ## 8. 奖项清单
 

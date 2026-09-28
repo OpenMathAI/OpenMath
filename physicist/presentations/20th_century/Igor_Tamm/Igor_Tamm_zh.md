@@ -174,5 +174,32 @@
 
 ---
 
+## 12. 补遗（2026-09-28）：研究领域表 + 术语清单（对齐 Kenneth G. Wilson 标杆第 4 步 / 第 9 步）
+
+### 研究领域表（与 yaml fields 一致，按 rank 排序）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | theoretical physics | 理论物理 | infobox field_of_work；勒贝德夫理论部负责人 1934–1971 | 全篇 |
+| 1 | particle physics | 粒子物理 | infobox Fields；交换力、中子磁矩 | 核力页 |
+| 2 | quantum mechanics | 量子力学 | Mandelstam-Tamm 能量-时间关系、Tamm-Dancoff 近似 | 1945 页 |
+| 3 | condensed matter physics | 凝聚态物理 | 声子（1929）、Tamm 表面态（1932） | 声子页 |
+| 4 | plasma physics | 等离子体物理 | 托卡马克（1951，与 Sakharov） | 托卡马克页 |
+
+### 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| phonon | 声子 | 声音准粒子，1929 提出 |
+| Tamm states / surface states | 塔姆表面态 / 表面态 | 对 MOSFET 物理重要，非"发明 MOSFET" |
+| Frank-Tamm formula | 弗兰克-塔姆公式 | 与 Frank 联名，勿独占 |
+| Tamm-Dancoff approximation | 塔姆-丹科夫近似 | Dancoff 1950 独立发展 |
+| Klein-Nishina-Tamm formula | 克莱因-仁科芳雄-塔姆公式 | 三人联名 |
+| exchange force | 交换力 | 思想后由汤川发展为介子理论 |
+| quantum speed limit | 量子速度极限 | 能量-时间关系的现代称谓 |
+| tokamak | 托卡马克 | 与 Sakharov 共同提出 |
+
+---
+
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

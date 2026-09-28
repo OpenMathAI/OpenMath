@@ -65,6 +65,7 @@
 - **气质定位**：稳重 / 纪录片 / 实验者的一生（五十年如一日的计数者）
 - **选定曲目**：Infraction **The Invisible Light**（纪录片 / 电影 / 稳重，Inspiring Electronic 合辑），匹配"以一台探测器终其一生凝视不可见辐射"的实验者气质。
 - **落地文件**：`physicist/presentations/20th_century/Walther_Bothe/TheInvisibleLight.wav`（复制自音乐库，不入 git）。
+- **注记（主控 2026-09-28 裁定）**：本篇与他篇（Frits_Zernike）同名曲目「The Invisible Light」系**不同音频来源**（本篇为 Infraction 版，Zernike 篇为 Inspiring Electronic 版），各自目录内的 .wav 文件互不冲突，维持原状；Review 时勿作撞曲处理。
 - **匹配理由**：博特不是理论革命家，而是把精密测量技术推到极限的实验巨匠——纪录片式的沉稳叙事最贴合；"The Invisible Light"（不可见之光）暗合其毕生研究的辐射与宇宙线。
 
 ## 4. Slide 规划（约 15 页，Wilson 式结构）
@@ -97,6 +98,21 @@
 - **Deutsche Physik 之难**：被逐出海德堡所长职位（1934，Lenard 施压），随后受 Planck 与 Krehl 之邀入 KWImF——这段"政治排挤—学术救援"的因果链按 page.md 呈现。
 - **无弟子 Nordheim**：Lothar Nordheim 是 **Born** 的学生，与博特无关（任务提示中的"Nordheim 弟子"本地 page.md 无载，禁写）。博特的知名学生仅 Hans (Jakob) Ritter von Baeyer。
 - **生平引语**：page.md 无博特直接引语，全部用间接转述，不加引号。
+
+### 5.1 术语清单（英文/中文/风险点）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| coincidence method | 符合方法 | 获奖：「提出符合方法以及借此作出的发现」 |
+| coincidence circuit | 符合电路 | 双探测器同时触发判断事件关联 |
+| Bothe–Geiger coincidence experiment | Bothe-Geiger 符合实验 | 康普顿效应与波粒二象性验证 |
+| penetrating radiation | 穿透辐射 | Bothe-Becker 1930 观察到、Chadwick 1932 识别为中子 |
+| cyclotron | 回旋加速器 | 定位是「德国首台运行」的，非德国首台 |
+| Deutsche Physik | 德意志物理学 | Lenard/Stark 领军的运动，将博特逐出海德堡所长职 |
+| Uranverein | 铀俱乐部 | 德国核能项目，博特为主要参与者之一 |
+| neutron moderator | 中子慢化剂 | 石墨误差 → 德国选择重水的关键因素 |
+| dipolar giant nuclear resonance | 偶极巨共振 | 1938 核光电效应工作的结论 |
+| Physikalisch-Technische Reichsanstalt (PTR) | 帝国物理技术研究院 | 1913–1930 任职机构 |
 
 ## 6. 数据库字段核对表
 

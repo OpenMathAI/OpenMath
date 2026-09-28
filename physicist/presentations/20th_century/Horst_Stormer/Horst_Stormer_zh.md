@@ -69,6 +69,31 @@
 - **落地文件**：`physicist/presentations/20th_century/Horst_Stormer/Pathfinder.wav`（复制自 `music_audio/inspiring-electronic/` 目录下 Pathfinder 对应 wav，不入 git）。
 - **匹配理由**：施特默的叙事是一条"开路者"轨迹——调制掺杂为 FQHE 铺路、二维电子气为一个新领域奠基；探索气质贴合；与本批次其余五人曲目不重复。
 
+## 3.6 研究领域表（数据库入库用，第 4 步）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | condensed matter physics | 凝聚态物理 | 固体物理实验研究的主领域 | 身份页 |
+| 1 | semiconductor physics | 半导体物理 | 贝尔实验室 20 年的研究主场 | 贝尔页 |
+| 2 | two-dimensional electron systems | 二维电子系统 | 调制掺杂造出极高迁移率体系 | 调制掺杂页 |
+| 3 | fractional quantum Hall effect | 分数量子霍尔效应 | 与 Tsui 的实验发现（1981-10），1998 诺奖核心 | 核心贡献页 |
+| 4 | modulation doping | 调制掺杂 | 「与诺奖同等重要」的发明 | 核心页 |
+
+## 3.7 术语清单（第 9 步审查用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| modulation doping | 调制掺杂 | page.md 谨慎措辞 "Perhaps as important as…" 照抄 |
+| fractional quantum Hall effect | 分数量子霍尔效应 | 实验发现=Störmer+Tsui，勿写独自发现 |
+| two-dimensional electron system | 二维电子系统 | 强磁场下的量子流体载体 |
+| electron hole droplets | 电子-空穴液滴 | 博士论文主题（强磁场下） |
+| Francis Bitter High Magnetic Field Lab | （MIT）弗朗西斯·比特高磁场实验室 | 1981-10 实验地 |
+| I. I. Rabi professor | 拉比讲席教授 | 哥伦比亚大学讲席，以诺奖得主 I. I. Rabi 命名 |
+| professor emeritus | 荣休教授 | 2011 荣休 |
+| naturalized US citizen | 已入籍美国 | 国籍口径：封面德国、身份页注入籍 |
+| Goetheschule Neu-Isenburg | 新伊森堡歌德学校 | 1967 毕业勿与法兰克福混淆 |
+| Bell Labs | 贝尔实验室 | 约 20 年，诺奖实验所引工作在此完成 |
+
 ## 4. Slide 规划（约 15 页，Wilson 式结构）
 
 1. **封面**（`\titleslide`）：顶部标签「分数量子霍尔效应 · 德国」+ 施特默 1949– + 右上头像（装饰圆占位）+ 国籍行 + 底部三要素状态栏 + 四色 badge

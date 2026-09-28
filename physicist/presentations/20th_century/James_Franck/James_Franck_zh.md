@@ -1,186 +1,196 @@
-# James Franck（詹姆斯·弗兰克）立传提示词
+# 物理学家立传提示词（James Franck）
 
-> qid=Q57066 · 1882-08-26 – 1964-05-21 · 德裔美籍物理学家 · 20 世纪 · 1925 诺贝尔物理学奖
-> 本地 Wikipedia 数据源：`physicist/presentations/20th_century/20th_century/James_Franck/`（page.md + metadata.json + images.txt）
-
----
-
-## 0. 正文形式说明（参考物理学家标杆 Kenneth G. Wilson）
-
-> 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**。物理学家立传格式硬性要求：
-
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。
-2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 德国 / 美国`），底部状态栏给出 `国籍 | 机构 | 主要奖项` 三要素。
-3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧 `2×2` 信息网格，含至少：生卒、本名、国籍、出生地、去世地、教育、师承、任职、主要荣誉、核心领域。事实取自本地 Wikipedia infobox，不得杜撰。
-4. **配色 + 气泡背景**：主色 + 强调色（诺奖金）+ 四分类色；背景用柔和气泡（稀疏大块实心圆）呼应「电子能级 / 碰撞台阶跃迁」母题。
-5. **品牌口径统一**：结尾页底部品牌统一写 `OpenMathAI`；引号用半角 `" "`。
+> 本文件是 OpenPhysicist「物理学家立传提示词」的人物专属实例，以 James Franck（1925 诺贝尔物理学奖，电子-原子碰撞定律，与 Gustav Hertz 共享）为对象。
+> 结构对齐标杆 `Kenneth_G_Wilson/Kenneth_G_Wilson_zh.md`（0–11 节），凡标注 `【模板通用】` 可复用，`【人物专属】` 为弗兰克定制品。
+> 直接复制本文件到新对话中使用，按步骤执行，每完成一步汇报进度。
 
 ---
 
-## 1. 背景信息（用于 Slide 1-3）
+## 一、模板定位
 
-- **全名**：James Franck（詹姆斯·弗兰克）
-- **生卒**：1882-08-26 生于汉堡（Hamburg，德意志帝国）→ 1964-05-21 逝于哥廷根（Göttingen，西德，访友时心脏病猝发），享年 81；与第一任妻子合葬于芝加哥
-- **国籍**：德国（汉堡）→ 1941 年入籍美国（德裔美籍）
-- **身份**：实验物理学家、大学教师（metadata 兼列 chemist——晚年光合作用研究）
-- **家庭**：犹太家庭，父 Jacob Franck（银行家，虔诚教徒）、母 Rebecca Nachum Drucker（拉比世家）；姐 Paula、弟 Robert；1911（page.md 又作 1907-12-23 哥特堡瑞典式婚礼，以 page.md 时间线为准：1907 结婚）与瑞典钢琴家 Ingrid Josefson 结婚（1942 去世），二女 Dagmar（1909）、Elisabeth/Lisa（1912）；1946-06-29 与物理学家 **Hertha Sponer** 民事婚礼再婚
-- **教育轨迹**：
-  - 1891 入汉堡 Wilhelm-Gymnasium
-  - 1901 入海德堡大学（本意法律经济，受 Max Born 影响转物理化学；听 Königsberger、Cantor 的数学课）
-  - 转柏林大学，听 Max Planck 与 Emil Warburg 的课
-  - 1906 柏林大学博士，论文 *Über die Beweglichkeit der Ladungsträger der Spitzenentladung*（尖端放电中载流子的迁移率）
-  - 1911 柏林大学 habilitation（以已发表论文 34 篇折抵论文）
-- **博士导师**：Emil Warburg（metadata 兼列 Paul Drude）
-- **研究领域**：物理（电子碰撞、原子激发、光谱学、光合作用）
-
-## 2. 核心叙事亮点（用于 Slide 4-13）
-
-1. **从法律到物理**（1901）：海德堡法律新生被 Born 劝转物理，两人成终生挚友——"Born 帮他说服了父母"。
-2. **博士与从军插曲**（1906）：尖端放电载流子迁移率博士论文（Warburg 建议的电晕放电太复杂而换题）；同年 10 月入伍第一电报营，12 月坠马轻伤退役。
-3. **与 Hertz 的黄金搭档**（1911–1918）：与 Gustav Hertz 合作发表论文 **19 篇**，是其一生的最高产合作（另有 Meitner、von Bahr、Pohl、Wood 等合作者）。
-4. **弗兰克–赫兹实验（1914）**：低压汞蒸气电子碰撞实验——电子只能以**分立量 4.9 eV** 失去动能；第二篇论文（1914-05）证明汞原子吸收能量后发射的紫外光波长恰对应 4.9 eV。
-5. **实验的双重历史地位**：既证实 Einstein 光电效应与 Planck 关系 E = fh，又为前一年（1913）Bohr 原子模型的量子化能级提供关键实验支持——量子论的"实验铁证"。
-6. **诺奖讲坛上的自省**（1926-12-10 领 1925 年度奖）：诺奖演讲中坦言"我们竟未能认识玻尔理论的根本意义，以至于从未提及它一次，这完全不可理解"（"completely incomprehensible that we had failed to recognise the fundamental significance of Bohr's theory..."）——可引用（page.md 原文）。
-7. **一战岁月**：1914 从军，西线皮卡第；1915 转入 **Haber 的毒气部队**（与 Otto Hahn 一起选定施放地点）；铁十字二等（1915）、汉萨十字（1916）、铁十字一等（1918）；俄线痢疾；住院期间仍与 Hertz 合作论文。
-8. **战后与 metastable**：Haber 研究所时期与 Grotrian、Sponer 等提出 **metastable（亚稳态）**一词；受激态原子研究日后证明对激光发展重要。
-9. **哥廷根黄金时代（1920–1933）**：1920-11-15 出任实验物理学正教授兼第二实验物理研究所所长（Born 任理论物理讲席——这是 Born 来哥廷根的条件之一）；自掏腰包更新实验室；"bonzen"（Born、Franck、Pohl）治下的哥廷根成为世界物理学中心。
-10. **Franck–Condon 原理**：电子跃迁中振动波函数重叠决定跃迁强度——光谱学与量子化学的基本规则。
-11. **提携女性物理学家**：扶持 Lise Meitner、Hertha Sponer、Hilde Levi 的职业发展；1920 年与 Meitner 安排来访的 Bohr 与年轻研究员（绕开大人物 bonzen）单独交流。
-12. **1933 年的良心**：作为一战老兵本可豁免《职业公务员法》，仍于 **1933-04-17 辞职**——**全德第一个为此抗议辞职的学者**，世界报纸报道；自述"科学是我的神，自然是我的宗教"。
-13. **流亡与曼哈顿计划**：哥本哈根玻尔研究所一年（与 Hilde Levi 合作光合作用）→ 1935 Johns Hopkins → 1938 芝加哥大学；1942 起任冶金实验室化学部主任（Compton 引语："我对抗的不是德国人民，是纳粹"——page.md 原文）；主持"政治与社会问题委员会"，起草 **Franck Report**（1945-06-11）建议不预先警告即不对日本城市使用原子弹。
-14. **诺奖金牌与王水传奇**：金牌托付 Bohr 保管；1940 年德军入侵丹麦后由 de Hevesy 与 von Laue 的金牌一同溶于王水，战后重铸——科学史最著名的"化学藏宝"故事之一（与 Bohr 篇交叉，两篇口径一致）。
-15. **晚年**：1946 与 Sponer 结婚；1947 芝加哥荣休教授仍研究光合作用；1955 Rumford Prize（表彰光合作用基础研究）；Meitner 评价其研究轨迹"从离子迁移率到光合作用几乎是一条直线——永远着迷于原子或分子间的能量交换"。
-
-## 3. 配色方案
-
-| 用途 | 色值 | 说明 |
-|---|---|---|
-| 主色（电子束深青） | `#1F4E5F` | 低压气体中电子束的冷光 / 实验物理的沉静 |
-| 强调色（诺奖金） | `#C9A227` | 诺贝尔奖 / 尊崇 |
-| 分类色 1（弗兰克–赫兹实验 — 汞光青） | `#1B8F8F` | 4.9 eV / 碰撞定律 / 能级量子化 |
-| 分类色 2（哥廷根时代 — 哥廷根蓝） | `#3A5CA8` | Born 与 bonzen / Franck–Condon 原理 |
-| 分类色 3（战争与 Franck Report — 铁灰） | `#5B6770` | 一战毒气部队 / 曼哈顿计划 / Franck Report |
-| 分类色 4（流亡与光合作用 — 叶绿） | `#4C8C3F` | 1933 辞职 / 流亡芝加哥 / 光合作用晚年 |
-| 背景 | `#F7F6F9` | 浅灰白 |
-
-- **背景母题**：柔和气泡（稀疏大块实心圆，四档大小错落）——视为"电子在碰撞中台阶式跃迁的能级"抽象化，tex 注释写明「电子碰撞 / 能级台阶」语义。
-
-### 3.5 背景音乐选择 ✅ 【人物专属】
-
-- **气质定位**：良知 / 穿越黑暗 / 历史反思（一战毒气、纳粹流亡、Franck Report 的道德重量）
-- **选定曲目**：Audiomachine **Through the Darkness**（史诗 / 黑暗 / 推进），匹配"突破前夕、攻克难题"——弗兰克一生的主线恰是"穿越黑暗"：1914 的实验照亮量子论，1933 的辞职照亮流亡者之路，1945 的报告照亮核时代的良知。
-- **落地文件**：`physicist/presentations/20th_century/James_Franck/ThroughTheDarkness.wav`（复制自音乐库 `music_audio/inspiring-electronic/14-Trn1cSsY2t8-Audiomachine - Through the Darkness.wav`，不入 git）。
-- **匹配理由**：模板 5.3 将"悲剧/战争/反思"气质（Szilárd、Oppenheimer）指向 Lonesome / Through the Darkness；弗兰克与 Szilárd 同在 Franck Report 委员会、同属"良知科学家"，Through the Darkness 的推进感比 Lonesome 的哀伤更贴合其"行动的良心"人设，且避免与 Gustav_Hertz 的 Nostalgy 同源重复。
-
-## 4. Slide 规划（约 15 页，Wilson 式结构）
-
-1. **封面**（`\titleslide`）：顶部标签「电子碰撞 · 德国/美国」+ Franck 1882–1964 + 右上头像 + 国籍行 + 底部三要素状态栏 + 四色 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右 2×2 信息网格（生卒 / 本名 / 国籍 / 出生地 / 去世地 / 教育 / 师承 / 任职 / 主要荣誉 / 核心领域）
-3. **核心贡献概览**（`\hookslide`）：弗兰克–赫兹实验 / Franck–Condon 原理 / 1933 辞职 / Franck Report
-4. **汉堡银行家之子**（1882–1906）：Wilhelm-Gymnasium、海德堡转科（Born）、柏林 Planck 与 Warburg 门下、博士
-5. **与 Hertz 的搭档**（1911–1914）：habilitation（34 篇论文折抵）、19 篇合著
-6. **弗兰克–赫兹实验**（1914）：汞蒸气、4.9 eV、电流-电压曲线（公式框页：E = fh 与能级）
-7. **量子论的实验铁证**：光电效应的证实、Bohr 模型的支持、UV 发射的第二篇论文
-8. **诺奖讲坛上的自省**（1925/1926）：未识 Bohr 理论的坦白、1918 年末篇论文的和解
-9. **一战：毒气与铁十字**：Haber 部队、与 Otto Hahn 选址、两枚铁十字与汉萨十字
-10. **哥廷根黄金时代**（1920–1933）：Born 的条件、bonzen、Franck–Condon 原理、metastable
-11. **提携者的品格**：Meitner、Sponer、Hilde Levi；1920 年 Bohr 私密座谈的安排者
-12. **1933-04-17：第一个辞职的学者**：豁免在身仍辞职、"科学是我的神"、协助流亡
-13. **流亡之路**：哥本哈根（Hilde Levi 与光合作用）→ Johns Hopkins → 芝加哥；金牌与王水
-14. **曼哈顿计划与 Franck Report**（1942–1945）：冶金实验室化学部主任、"我对抗的是纳粹"、1945-06-11 报告
-15. **结尾**：芝加哥荣休与光合作用直线、81 岁猝逝哥廷根、James Franck Institute（1967）与月球环形山
-
-## 5. 史实陷阱与敏感点（终审必须检查）
-
-- **诺奖年份与颁奖年份**：1925 年度诺贝尔物理学奖（与 Gustav Hertz 共享），**1926-12-10 颁发**。勿写"1926 年获奖"，应写"1925 年度（1926 年颁发）"；实验完成于 1914——三个时间节点（1914 实验 / 1925 年度 / 1926 颁发）勿混淆。
-- **获奖理由**：官方原文 "for their discovery of the laws governing the impact of an electron upon an atom"（表彰他们发现电子与原子碰撞所遵循的定律）。勿写成"因证实玻尔模型获奖"。
-- **1914 vs 1925 的时间差（★ 指定陷阱）**：实验 1914 年完成，诺奖 1925 年度才授予——中间相隔 11 年。原因表述克制：page.md 只说他们最初未意识到与 Bohr 理论的关系（1918 年末篇论文才和解），勿编造"因战争延迟颁奖"等因果。
-- **诺奖自省引语**："completely incomprehensible that we had failed to recognise the fundamental significance of Bohr's theory, so much so, that we never even mentioned it once" 出自其**诺奖演讲**——归属场合写对，勿写成战时或书信。
-- **毒气部队（★ 敏感）**：Franck 一战时在 Haber 的氯气部队服役、与 Otto Hahn 负责选定施放地点——如实写，勿回避；同时写明他后来的 Franck Report 反核用弹立场形成对照，勿做道德拔高或丑化。
-- **婚期口径**：page.md 正文两处：1907-12-23 哥特堡成婚（Swedish ceremony in Gothenburg）；而"Biography"节写 1911。以 1907 为结婚叙事、1911 忽略（或注明 infobox 记 1911）——终审时统一，勿两个年份并存。
-- **1933 辞职定位**：**第一个**为抗议该法辞职的学者（the first academic to resign in protest over the law）——page.md 明载，可写"第一"，但限定为"就《职业公务员法》抗议辞职的（德国）学者"，勿扩大为"史上第一个抗议纳粹的人"。
-- **Franck Report 结论**：建议**不预先警告即不对日本城市使用原子弹**（recommended that the atomic bombs not be used on the Japanese cities without warning）；Interim Committee 未采纳。勿写成"建议不使用原子弹"（他未反对对日使用本身，而是反对无警告轰炸城市）——page.md 措辞精确认真核对。
-- **曼哈顿计划角色**：冶金实验室**化学部**主任（不是物理部）；1941-07-21 入美国籍。勿写"洛斯阿拉莫斯"（他在芝加哥冶金实验室）。
-- **金牌王水**：是 **de Hevesy** 动手溶解，Franck 的金牌与 **von Laue** 的金牌同批；战后重铸——与 Bohr 篇、Hertz 篇相关表述口径一致。
-- **与 Hertz 的"普克之约"无关**：1945 年与苏联接触的"pact"四人是 **Gustav Hertz**、von Ardenne、Thiessen、Volmer（见 Gustav_Hertz 篇）——**Franck 不在其中**，勿混写。
-- **Meitner 评价引语**："Franck enjoyed talking about his problems... it was always the energy exchange between atoms or molecules that fascinated him"——出自 Meitner 回忆（page.md 块引用），可引用，归属写对。
-- **Compton 引语**："It's not the German people I'm fighting. It's the Nazis."——Compton 转述的 Franck 之言（page.md 块引用），归属表述为"Compton 记载的 Franck 语"。
-- **伪引语红线**：除上述 page.md 块引用与诺奖演讲句外，勿为 Franck 添加任何引号原话。
-
-## 6. 数据库字段核对表
-
-| 字段 | 值 | 状态 |
-|---|---|---|
-| qid | Q57066 | 待写入 |
-| name_zh | 弗兰克（或 詹姆斯·弗兰克） | 待写入 |
-| name_en | James Franck | 待写入 |
-| birth_date | 1882-08-26 | 待写入 |
-| death_date | 1964-05-21 | 待写入 |
-| nationality | Germany / United States | 待写入 |
-| primary_occupation | physicist | 待写入 |
-| field_of_work | physics（电子碰撞 / 光谱学 / 光合作用） | 待写入 |
-| has_biography | 1 | 本次置 1 |
-
-## 7. 社会关系入库清单
-
-- **博士导师**：Emil Warburg（metadata 兼列 Paul Drude——以 Warburg 为主，Drude 入 note）
-- **终生挚友**：Max Born（海德堡同学 → 哥廷根同事，"Born 来哥廷根的条件之一是 Franck 主持实验物理"）
-- **黄金搭档**：Gustav Hertz（1914 实验 + 19 篇合著 + 1925 共享诺奖；colleague/co-honored）
-- **一战同事**：Fritz Haber（毒气部队）、Otto Hahn（选址同事）
-- **流亡庇护者**：Niels Bohr（1933–34 哥本哈根研究所一年；金牌保管人）
-- **合作者**：Lise Meitner、Eva von Bahr、Robert Pohl、Robert W. Wood、Hertha Sponer（助手→妻子）、Hilde Levi（哥本哈根合作）、Edward Teller（芝加哥首篇合著）
-- **提携对象**：Lise Meitner、Hertha Sponer、Hilde Levi（职业扶持，mentor 关系）
-- **妻子**：Ingrid Josefson（1942 去世）、Hertha Sponer（1946–1964，spouse）
-- **著名学生**：Hans Kopfermann、Arthur R. von Hippel（女婿）、Wilhelm Hanle、Fritz Houtermans、Heinrich Gerhard Kuhn、Heinz Maier-Leibnitz、Robert d'Escourt Atkinson、Theodore Puck、John Torrence Tate Sr.
-- **曼哈顿计划同事**：Arthur Compton、Glenn T. Seaborg、Leó Szilárd、Eugene Rabinowitch（Franck Report 委员会）
-- **诺贝尔奖同届**：1925 年度与 Gustav Hertz 共享（co-honored）
-
-## 8. 奖项清单
-
-- 诺贝尔物理学奖（1925 年度，与 Gustav Hertz 共享；1926-12-10 颁发）
-- 铁十字二等（1915）、汉萨十字（汉堡，1916）、铁十字一等（1918）——一战军功，如实呈现
-- Max Planck Medal（1951，德国物理学会，与 Hertz 同年同授）
-- Rumford Prize（1955，美国艺术与科学院，表彰光合作用基础研究）
-- Dannie Heineman Prize（metadata 载，用前核对年份）
-- Foreign Member of the Royal Society（1964，去世当年）
-- 会员：美国艺术与科学院国际荣誉会员（1929）、美国哲学会国际会员（1937）、美国国家科学院院士（1944）
-
-## 9. 机构清单
-
-- 教育：Wilhelm-Gymnasium（汉堡）、海德堡大学（1901）、柏林大学（博士 1906，habilitation 1911）
-- 任职：柏林大学（ Privatdozent → 副教授 extraordinarius，至 1918）、Haber 的威廉皇帝物理化学与电化学研究所（战后，气体防毒面具与原子激发）、哥廷根大学实验物理学正教授兼第二实验物理研究所所长（1920–1933）、哥本哈根 Niels Bohr 研究所（1934–1935）、Johns Hopkins 大学（1935–1938）、芝加哥大学（1938–1947，1947 荣休教授）、冶金实验室化学部主任（1942–，曼哈顿计划）
-- 纪念机构：芝加哥大学 James Franck Institute（1967 更名）、月球环形山 Franck；论文与重铸诺奖金牌藏芝加哥大学图书馆
-
-## 10. 终审清单
-
-- [ ] 生卒 1882-08-26 / 1964-05-21，享年 81，出生地 Hamburg，去世地 Göttingen
-- [ ] "1914 实验 / 1925 年度 / 1926 颁发"三时间节点准确
-- [ ] 1925 获奖理由用官方中文表述（电子与原子碰撞定律）
-- [ ] 诺奖自省引语归属诺奖演讲，逐字核对
-- [ ] 一战毒气部队如实呈现，并与 Franck Report 形成对照叙述
-- [ ] 1933 辞职"第一个"限定为《职业公务员法》抗议
-- [ ] Franck Report 措辞精确认真核对（"不预先警告即不使用"）
-- [ ] 金牌王水与 Bohr/Hertz 篇口径一致（de Hevesy 动手）
-- [ ] 全部引语逐字核对 page.md，无伪引语
-- [ ] `make distclean && make` 编译通过，0 错误
-
-## 11. Review 流程规范（两轮 Review）
-
-### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `James_Franck/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：`images.txt` 无独立肖像（仅 Franck–Hertz 图、1923 bonzen 合影、1954 四人合影）——用 Commons `Special:FilePath` 以"James Franck 1925"肖像文件名下载（page.md 图注 Franck in 1925），404 则换文件名；1923 bonzen 合影（Franckfeier_1923_Die_Bonzen.jpg）可作辅助图
-- [ ] **国籍**：封面顶部徽章明示"德国 / 美国"
-- [ ] **引语核对**：重点核对诺奖演讲自省句、Compton 记载句、Meitner 回忆句
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
-
-### 第 2 轮（Review-2）：结构优化
-- [ ] 检查 Overfull/Underfull 告警（vbox > 10pt、hbox > 50pt 必须修复）
-- [ ] 身份信息页布局与 Wilson 模板对齐（学生名单长，注意溢出）
-- [ ] 中文标点 / 断行 / 间距统一
-- [ ] 与同世纪物理学家（Heisenberg / Bohr / Gustav_Hertz）格式对齐，尤其与 Gustav_Hertz 篇的交叉叙事（同一实验、同一诺奖）口径完全一致
+- **目标项目**：OpenPhysicist —— 开放物理学家人物史（与 OpenMath 数学家侧共享 GitHub `OpenMathAI/OpenMath`）。
+- **本实例**：James Franck（詹姆斯·弗兰克）。
+- **设计哲学**：物理学家立传必须有「身份信息页」与「研究领域」结构化表达；弗兰克篇是"实验物理学家 + 良知科学家"双线叙事——Franck–Hertz 实验与 Franck–Condon 原理的科学线，与 1933 年辞职抗议、1945 年 Franck Report 的良知线并重，两条线互为注脚。
 
 ---
 
-> **开始执行。每完成一步向我汇报。**
-> **最重要的事：每写一页就 make，看到溢出就修。**
+## 二、背景信息 【人物专属】
+
+- **目标物理学家**：James Franck（1882-08-26 ~ 1964-05-21，享年 81 岁）
+- **气质关键词**：**电子碰撞定律的发现者、量子跃迁的实验证人、科学良知的化身** —— 1925 诺贝尔物理学奖获奖理由（官方原文，禁改写；与 Gustav Hertz 共享）：
+  > "for their discovery of the laws governing the impact of an electron upon an atom"（表彰他们发现了电子与原子碰撞所遵循的定律）
+- **设计母题**：**4.9 电子伏的门槛（the 4.9 eV threshold）**。电子撞上汞原子，非整段能量不交——碰撞曲线上的等距台阶是量子化能级最直观的实验肖像；视觉上用碰撞曲线的台阶、电子轨迹与能级梯呈现"能量交换的阶梯"。
+- **本地数据源**：`physicist/presentations/20th_century/20th_century/James_Franck/page.md`（Wikipedia 全文 + frontmatter）
+- **待下载**：`https://en.wikipedia.org/wiki/James_Franck` → `James_Franck/James_Franck.html`（本批人物暂无 html 与 images/，第 0/3 步需补下载）
+- **参考模板**：
+  - 标杆成品：`physicist/presentations/20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.tex`（16 页）
+  - 项目首页模板：`physicist/presentations/cover/openphysicist_page.tex`（统一 `\input`）
+
+---
+
+## 三、任务流程 【模板通用，逐步执行】
+
+### 第 0 步：下载并核对 Wikipedia 页面 【人物专属】
+
+- 🔲 待下载 `https://en.wikipedia.org/wiki/James_Franck` 到 `James_Franck.html`
+- 事实基准（已按本地 page.md 核对）：
+  - 生卒：1882-08-26 生于汉堡（德意志帝国）~ 1964-05-21 卒于西德哥廷根（访问期间心脏病发），享年 81 岁；葬于芝加哥（与第一任妻子合葬）
+  - 国籍与变迁：德国（汉堡/魏玛）→ 美国（1941-07-21 入籍）
+  - 家庭：犹太家庭；父 Jacob Franck 为银行家、母 Rebecca Nachum Drucker 出身拉比世家；姐 Paula、弟 Robert
+  - 教育：1891 入汉堡 Wilhelm-Gymnasium；1901 入海德堡大学（本欲学法律，因结识 Max Born 转物理）；后转柏林大学，师从 Planck 与 Warburg
+  - 博士导师：Emil Warburg（infobox 与正文明载）；frontmatter 另列 Paul Drude（1906 年去世，写法须谨慎）
+  - 学位与论文：1906 博士《Über die Beweglichkeit der Ladungsträger der Spitzenentladung》（尖端放电中载流子的迁移率，发表于 Annalen der Physik）；1911 柏林 Habilitation（以 34 篇论文路线）
+  - 婚姻：1907-12-23 于哥德堡与瑞典钢琴家 Ingrid Josefson 结婚（女 Dagmar 1909、Elisabeth 1912）；Ingrid 1942-01-10 卒；1946-06-29 与 Hertha Sponer 再婚
+  - 一战：1914 志愿入伍；1915 转入 Fritz Haber 的氯气部队（与 Otto Hahn 负责选址）；铁十字二级 1915-03-30、汉萨十字 1916-01-11、一级 1918-02-23；1917 毒气袭击重伤；俄国前线痢疾
+  - 任职：柏林 extraordinaire 教授（1916-09-19 缺勤任命）→ 战后 Haber 的威廉皇帝物理化学所 → 1920-11-15 哥廷根实验物理正教授兼第二实验物理研究所所长（Born 的来哥廷根条件）→ 1933 辞职 → 1933-34 哥本哈根玻尔研究所（与 Hilde Levi 合作，转向光合作用）→ 1935 Johns Hopkins → 1938 芝加哥大学 → 1942-02 Met Lab 化学部主任 → 1947 芝加哥荣休教授仍研究光合作用
+  - 关键荣誉（含年份）：Nobel 1925（与 Hertz 共享）；Max Planck Medal 1951（与 Hertz 共同获得）；Rumford Prize 1955（"For his fundamental studies on photosynthesis"）；NAS 1944；英国皇家学会外籍会员 1964
+  - 知名学生（infobox Doctoral students 明载者择要）：Fritz Houtermans、Hans Kopfermann、Heinz Maier-Leibnitz、Arthur R. von Hippel（后为其女婿）、Wilhelm Hanle、Heinrich Kuhn
+  - 核心贡献清单：①Franck–Hertz 实验（1914，电子与汞原子碰撞 4.9 eV 定值失能，紫外发射对应；玻尔模型的实验支柱）②Franck–Condon 原理（电子-振动跃迁强度由振动波函数重叠决定，光谱学与量子化学基石）③亚稳态（metastable）术语的提出（与 Sponer 等）④Franck Report（1945-06-11，建议不经警告不对日本城市使用原子弹）⑤流亡学者援助（协助 Lindemann 安置被解职的犹太科学家）⑥光合作用机理研究（晚年主线）
+  - 关键时间线（18 节点）：1882 生于汉堡 / 1901 入海德堡（遇 Born）/ 1906 柏林博士 / 1911 Habilitation / 1914 Franck–Hertz 实验 / 1914-18 一战服役（Haber 毒气部队）/ 1918-12 与 Hertz 的最后一篇合作论文（承认玻尔理论）/ 1920-11-15 哥廷根正教授 / 1925 诺贝尔奖 / 1926-12-10 授奖 / 1933-04-17 辞职抗议 / 1933-11 离德赴哥本哈根 / 1935 Johns Hopkins / 1938 芝加哥 / 1941-07-21 入籍美国 / 1942 Met Lab 化学部主任 / 1945-06-11 Franck Report / 1946 与 Sponer 再婚 / 1951 Max Planck Medal（与 Hertz）/ 1955 Rumford Prize / 1964-05-21 卒于哥廷根 / 1967 芝加哥 James Franck Institute 命名
+
+### 第 1 步：建立目录 【模板通用】
+
+- 已存在 `physicist/presentations/20th_century/James_Franck/`，补建 `images/`
+
+### 第 2 步：复制 Makefile 【模板通用】
+
+- 复制标杆 `Kenneth_G_Wilson/Makefile`，设置 `MAIN=James_Franck_zh`、`VIDEO_NAME=James_Franck_zh`
+
+### 第 3 步：收集图片 【人物专属】
+
+- 🔲 待下载弗兰克肖像（Wikipedia infobox 1925 年照）到 `images/Franck.jpg`，curl 带 `-A "Mozilla/5.0"` 并 `file` 验证；Franck–Hertz 曲线图（`Franck-Hertz_en.svg`，基于 1914 原始论文）与 1954 年玻尔/弗兰克/爱因斯坦/拉比四人合影可作插图
+
+### 第 4 步：研究领域梳理 + 入库 【模板通用，人物专属内容】
+
+**Franck 的研究领域（按 rank 排序，与 yaml 完全一致）**：
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | experimental physics | 实验物理 | 精密碰撞实验传统 | 核心页 |
+| 1 | atomic physics | 原子物理 | Franck–Hertz 实验，能级量子化的实验证据 | 碰撞页 |
+| 2 | molecular spectroscopy | 分子光谱学 | Franck–Condon 原理 | 跃迁页 |
+| 3 | photochemistry | 光化学 | 晶体光化学过程（与 Teller 合作） | 光化学页 |
+| 4 | biophysics | 生物物理 | 晚年光合作用机理研究 | 光合页 |
+
+### 第 4.5 步：社会关系梳理 + 入库 【模板通用，人物专属内容】
+
+| 关系类型 | 对方 | 方向 | note |
+|---------|------|------|------|
+| advisor-student | Emil Warburg | 对方是导师 | 柏林大学博士导师，离子迁移率论文（1906） |
+| advisor-student | Paul Drude | 对方是导师 | frontmatter 明载的博士导师之一 |
+| co-honored | Gustav Ludwig Hertz | 无向 | 1925 诺贝尔物理学奖共同得主 |
+| colleague | Gustav Ludwig Hertz | 无向 | Franck–Hertz 实验合作者，19 篇合作论文 |
+| colleague | Max Born | 无向 | 海德堡结识的终生挚友，哥廷根理论物理所长 |
+| colleague | Lise Meitner | 无向 | 柏林时期合作者，其学术生涯的提携者 |
+| spouse | Hertha Sponer | 无向 | 1946 年再婚，长期合作者与助手 |
+| colleague | Fritz Haber | 无向 | 一战毒气部队与战后威廉皇帝研究所同事 |
+| colleague | Otto Hahn | 无向 | 毒气攻击选址同事 |
+| colleague | Niels Bohr | 无向 | 哥本哈根研究所避难一年，诺奖奖章托其保管 |
+| advisor-student | Fritz Houtermans | 对方是学生 | 哥廷根博士学生 |
+| advisor-student | Hans Kopfermann | 对方是学生 | 哥廷根博士学生 |
+| advisor-student | Heinz Maier-Leibnitz | 对方是学生 | 哥廷根博士学生 |
+| advisor-student | Arthur R. von Hippel | 对方是学生 | 哥廷根博士学生，后为其女婿 |
+| colleague | Edward Teller | 无向 | 芝加哥首篇合作论文（晶体光化学过程） |
+| colleague | Eva von Bahr | 无向 | 柏林时期最常合作者之一 |
+
+#### 4.5.1 入库操作
+
+- `cd MySQL && python3 seed_person.py data/James_Franck.yaml`
+- 方向约定：师生有向；配偶/同事/共同荣誉无向；缺失人物自动建 stub
+
+### 第 5 步：设计配色方案 【模板通用，人物专属色彩】
+
+- **气质**：温厚、坚韧、德国学院绿
+- **配色**：格廷根绿（主色，批内专属 `#2E5E4E`）+ 诺奖香槟金 `C9A227` + 四分类色
+  - `badgeColl` 碰撞实验 — 电子蓝 `#2B6CB0`
+  - `badgeCond` Franck–Condon — 振动紫 `#7B5EA7`
+  - `badgePhoto2` 光合作用 — 叶绿青 `#3B8A4E`
+  - `badgeConsc` 科学良知 — 熔岩红 `#B03A2E`
+- **背景母题**：碰撞曲线的等距台阶——一段上升的阶梯曲线横贯版面，电子沿"能级梯"逐级跃迁，呼应 4.9 eV 的量子化门槛
+
+### 第 6 步：规划幻灯片序列 【人物专属，可微调】
+
+```
+00  OpenPhysicist 项目首页（\input cover/openphysicist_page.tex）
+01  封面 — 电子碰撞定律的发现者 / James Franck 1882–1964 + 四色 badge + 右上头像 + 国籍行
+02  身份信息页（★ 必做）— 左头像 + 右信息网格（生卒、国籍、师承、任职、荣誉、核心领域）
+03  核心贡献概览 — Franck–Hertz 实验 / Franck–Condon 原理 / Franck Report / 光合作用
+04  汉堡银行家之子 (1882–1906) — 法律转物理、Born 挚友、柏林师从 Planck 与 Warburg
+05  柏林的合作者时代 (1907–1914) — 与 Hertz 19 篇、Meitner/von Bahr、34 篇论文的 Habilitation
+06  Franck–Hertz 实验（核心贡献页）— 4.9 eV、碰撞曲线、紫外发射（公式框放 E=f·h 能频关系；I–V 曲线概念图式）
+07  与玻尔理论的和解 (1918) — 最后一篇合作论文、诺奖演讲自承"竟未认出玻尔理论的意义"（原话可引）
+08  一战：Haber 部队与铁十字 (1914–1918) — 毒气选址、负伤、三章
+09  哥廷根黄金年代 (1920–1933) — Born 双璧、bonzen 合影、博士弟子群、亚稳态、Franck–Condon 原理
+10  1933：辞职抗议 — 依该法辞职的第一位学者（正文原话口径）、Lindemann 援助网、奖章托付玻尔
+11  流亡与美国 (1933–1942) — 哥本哈根一年、Johns Hopkins、芝加哥、入籍
+12  Met Lab 与 Franck Report (1942–1945) — 化学部主任、报告核心主张、Interim Committee 决定相反
+13  晚年：光合作用与传承 (1946–1964) — Sponer、荣休研究、门生（Houtermans/Kopfermann/von Hippel）
+14  荣誉与认可 — Nobel 1925 · Max Planck 1951（与 Hertz）· Rumford 1955 · James Franck Institute
+15  遗产：实验证实量子世界的人 + 敢说"不"的人
+```
+
+### 第 7–8 步：编写 Beamer 源码与布局检查 【模板通用】
+
+- 每页 `\newcommand{\xxxslide}{...}` 定义；身份信息页参照标杆 `\profileslide`；头部宏复用 `Kenneth_G_Wilson_zh.tex` 骨架
+- 每写完一页 `make` 并 `pdftoppm` 目检；修复优先级：删 `\plainbar` → 缩 `inner sep` → 缩字号 → 减行距
+
+### 第 9 步：史实审查 + 术语审查 【人物专属】
+
+**Franck 特殊陷阱**：
+
+| 陷阱 | 说明 |
+|------|------|
+| 诺奖理由 | 官方原文 "for their discovery of the laws governing the impact of an electron upon an atom"（与 Hertz 共享），禁改写 |
+| 1914 实验初衷 | 当时并非为验证玻尔模型（诺奖演讲自承 "completely incomprehensible that we had failed to recognise the fundamental significance of Bohr's theory"，正文载可引）；1918-12 最后一篇论文才与玻尔理论和解——勿写成"一开始就为验证玻尔模型" |
+| Franck–Condon 原理 | Condon 是 Edward Uhler Condon；原理内容为电子跃迁中振动波函数重叠决定强度——勿作其他引申 |
+| 毒气部队 | 与 Haber、Hahn 的战时关系按正文客观表述（选址职责、三章），禁渲染禁洗白 |
+| 1933 辞职 | 正文口径是"依该法辞职的第一位学者"（first academic to resign in protest over the law）——禁扩大为"首位公开反抗纳粹的德国人" |
+| Franck Report | 1945-06-11 完成，建议"不经警告不对日本城市使用原子弹"；Interim Committee 决定相反——两半都要写；委员会成员含 Seaborg、Szilárd |
+| 奖章王水故事 | 执行溶解者是 Hevesy，奖章属 Franck 与 Laue，存放于玻尔研究所——勿写成玻尔本人溶解或 Franck 自行处理 |
+| Drude 师承 | frontmatter 列 Drude 为博士导师之一，但 infobox 与正文只认 Warburg，且 Drude 1906 年去世——表述限定为"frontmatter 明载" |
+| 卒葬地 | 卒于哥廷根（访问期间心梗）、葬于芝加哥——勿写"葬于哥廷根" |
+| 双重身份 | von Hippel 既是博士学生又是女婿（娶 Dagmar），两个身份都明载 |
+| 国籍口径 | 出生汉堡（德意志帝国）、1941 入籍美国——DB 国籍写 Germany + United States 两条 |
+
+**术语清单**：
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Franck–Hertz experiment | 弗兰克–赫兹实验 | 能级量子化的实验证据 |
+| electron volt | 电子伏 | 4.9 eV 是汞原子第一激发能 |
+| Franck–Condon principle | 弗兰克–康登原理 | 电子-振动跃迁强度规则 |
+| metastable state | 亚稳态 | 与 Sponer 等提出的术语 |
+| habilitation | 教授资格 | 德国学术制度，34 篇论文路线 |
+| professor ordinarius | 正教授 | 哥廷根职衔 |
+| Franck Report | 弗兰克报告 | 1945，反对无警告使用核武 |
+| Metallurgical Laboratory | 冶金实验室 | 曼哈顿计划芝加哥分部 |
+| photosynthesis | 光合作用 | 晚年研究主线 |
+| aqua regia | 王水 | 奖章保存故事，勿挪用到他人名下 |
+
+---
+
+## 四、背景音乐选择 ✅ 【人物专属】
+
+- **选定曲目**: **Lonesome** — AShamaluevMusic（inspiring-electronic 合辑首位，3:17）
+- **风格**: 悲伤 / 电影感 / 情感
+- **匹配理由**:
+  - "孤独/情感" 匹配弗兰克的人生底色——1933 年独自辞职的良知抉择、1945 年报告被驳回的孤立、流亡岁月的离散
+  - "电影感" 匹配其叙事张力——从汉堡到柏林到哥廷根到芝加哥，一位"直线前行"的实验物理学家的传记弧光（Meitner 评语：研究沿着一条几乎笔直的线，正文载）
+  - 批内唯一使用，不与其他四位重复
+- **本地路径**: `music_audio/inspiring-electronic/16-xBLYHNv7C4Q-Lonesome - by AShamaluevMusic ｜ Sad and Emotional Cinematic Music.wav` → 复制为 `presentations/20th_century/James_Franck/Lonesome.wav`
+- **时长**: 3:17 > 16 页 × 7 秒 ≈ 112 秒 → ffmpeg `-shortest` 自动对齐
+
+---
+
+## 五、关键参考文件清单 【模板通用】
+
+| 文件 | 用途 |
+|------|------|
+| `physicist/presentations/20th_century/20th_century/James_Franck/page.md` | 本地 Wikipedia 正文（事实基准） |
+| `physicist/presentations/20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.md` | 提示词结构标杆 |
+| `physicist/presentations/20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.tex` | 成品 Beamer 骨架/源码 |
+| `physicist/presentations/cover/openphysicist_page.tex` | 项目首页模板 |
+| `MySQL/data/James_Franck.yaml` | 研究领域 + 社会关系入库文件 |
+| `MySQL/seed_person.py` | 入库引擎（幂等，按 qid → name_en 匹配） |
+
+> **开始执行。每完成一步向主控汇报。**

@@ -31,6 +31,30 @@
 - **博士导师**：Georg Busch（ETH Zurich）
 - **研究领域**：物理学（钙钛矿氧化物、顺磁共振、铁电性、超导电性）
 
+### 1.5 研究领域表（第 4 步入库用，与 yaml fields 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 |
+|:--:|------|------|------|
+| 0 | high-temperature superconductivity | 高温超导 | 1986 LBCO 35 K 发现，1987 诺奖核心 |
+| 1 | superconductivity | 超导 | 1980s 初押注氧化物的探索主线 |
+| 2 | ferroelectricity | 铁电性 | SrTiO₃ 及钙钛矿的铁电/软模研究 |
+| 3 | magnetic resonance | 磁共振 | 博士论文顺磁共振 + Battelle 磁共振组经理 |
+| 4 | critical phenomena | 临界现象 | 结构相变的临界与多临界现象研究 |
+
+### 1.6 术语清单（第 9 步用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| high-temperature superconductivity | 高温超导 | 发现者 Müller 与 Bednorz 二人 |
+| lanthanum barium copper oxide (LBCO) | 镧钡铜氧化物 | Tc = 35 K |
+| perovskite | 钙钛矿 | SrTiO₃ 及相关化合物，一生主场 |
+| soft-mode | 软模 | 结构相变研究核心概念 |
+| paramagnetic resonance | 顺磁共振 | 博士论文：SrTiO₃ 单晶中 Fe³⁺ |
+| Woodstock of physics | 物理学伍德斯托克 | 1987 年大会，Müller 为主角演讲人之一 |
+| IBM Fellow | IBM 院士 | 1982 年授予（早于诺奖） |
+| Eidophor | 艾多福大屏投影 | ETH 工业研究部一年工作内容 |
+| Zeitschrift für Physik B | 《物理学杂志 B》 | 1986 年 6 月发表论文期刊 |
+
 ## 2. 核心叙事亮点（用于 Slide 4-13）
 
 1. **漂泊的童年（1927–1938）**：巴塞尔出生即迁萨尔茨堡（父亲学音乐）→ 多纳赫外祖父母家 → 卢加诺意大利语区；11 岁丧母，随后被送往 Schiers 福音学院寄宿就读（1938–1945）——多语多地的童年塑造了这位未来的"瑞士国际主义者"。

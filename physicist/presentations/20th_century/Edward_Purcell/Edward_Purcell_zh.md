@@ -99,6 +99,21 @@
 - **Family 细节**：page.md 仅载父母姓名，无妻孥记载——身份信息页"家庭"栏从简或留白，勿杜撰。
 - **死亡**：1997-03-07 卒于 Cambridge, Massachusetts，享年 84——勿与英国 Cambridge 混淆。
 
+### 5.1 术语清单（英文/中文/风险点）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| nuclear magnetic resonance (NMR) | 核磁共振 | 非"核磁成像"（MRI 是其医学应用） |
+| hydrogen line / 21 cm line | 21cm 氢线 | 源于超精细分裂（hyperfine splitting），勿写成"氢原子跃迁能级"泛称 |
+| hyperfine splitting | 超精细分裂 | 21cm 线的物理起源 |
+| radio astronomy | 射电天文学 | 21cm 探测"助推诞生"，勿写成"开创者/创始人" |
+| negative spin temperature | 负自旋温度 | 对激光发明有重要意义，勿写成"发明激光" |
+| spin echo | 自旋回波 | 凝聚态弛豫研究 |
+| Scallop theorem | 扇贝定理 | 低雷诺数时间可逆性原理 |
+| low Reynolds number | 低雷诺数 | 微尺度流动主导效应 |
+| Purcell effect | Purcell 效应 | infobox Known for 明载，正文未展开——若用需标注 infobox 来源 |
+| Smith–Purcell effect | Smith–Purcell 效应 | 同上，与 S. J. Smith 共同命名，勿写成 Purcell 独有 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |

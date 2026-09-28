@@ -111,15 +111,16 @@
 | nationality | Germany / United States | 待写入 |
 | primary_occupation | physicist | 待写入 |
 | field_of_work | semiconductor physics / heterostructures / high-frequency technology | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 本次入库置 0（Beamer 立传完成后由主控置 1） | 待执行 |
 
-## 7. 社会关系入库清单
+## 7. 社会关系入库清单（已按 page.md 核对，✅=yaml 入库 / ✗=不入库）
 
-- **博士导师**：Richard Becker（infobox 实载；metadata 另列 Fritz Sauter，双列并注明）
-- **诺奖同届**：Zhores Alferov（2000 共享一半，co-honored）、Jack Kilby（2000 同届另一半）
-- **独立同题**：Zhores Alferov（1963 双异质结构激光器，先后数月独立）
-- **教材合作**：Charles Kittel（应其邀编辑 *Thermal Physics* 第二版）
-- **机构同侪**：UCSB 电气与计算机工程系化合物半导体团队（不列具体人名，page.md 无载）
+- ✅ **博士导师**：Richard Becker（advisor-student 方向 advisor，infobox 实载）
+- ✅ **博士导师（frontmatter 另载）**：Fritz Sauter（advisor-student 方向 advisor；page.md frontmatter doctoral_advisor 有载而 infobox 未列，note 注明差异）
+- ✅ **诺奖共享**：Zhores I. Alferov（co-honored，2000 共享一半；1963 双异质结构激光器先后数月独立写入 note）
+- ✅ **诺奖同届另一半**：Jack S. Kilby（co-honored，page.md 注 1 明载 "Shared with Zhores Alferov and Jack Kilby"）
+- ✅ **教材合作**：Charles Kittel（colleague，应其邀编辑 *Thermal Physics* 第二版 1980，page.md 明载 "enlisted Kroemer"）
+- ✗ **机构同侪**：UCSB 化合物半导体团队——page.md 无具体人名，不入库
 
 ## 8. 奖项清单
 
@@ -166,6 +167,31 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一（德语人名/术语转写一致：Weimar → 魏玛）
 - [ ] 与 Alferov 篇跨篇互检（2000 双人"独立同题"叙事：两篇对 1963 专利先后的口径完全一致、互为镜像不重复）；与 Kilby 篇互检（同届份额结构一致）
+
+---
+
+## 12. 研究领域表（fields，对齐 yaml 与 person_field）
+
+| rank | 领域（name_en） | 中文 | 说明 |
+|:--:|------|------|------|
+| 0 | semiconductor physics | 半导体物理 | 一生主线 |
+| 1 | heterostructures | 半导体异质结构 | 最先指出异质结优势，2000 诺奖核心 |
+| 2 | semiconductor lasers | 半导体激光器 | 1963 双异质结构激光器概念 |
+| 3 | molecular beam epitaxy | 分子束外延 | 早期先驱，用于新材料 |
+| 4 | transistors | 晶体管 | 漂移晶体管（1950s）/ HBT |
+
+## 13. 术语清单（第 9 步史实/术语审查）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| drift transistor | 漂移晶体管 | 1950s 发明（drift-field transistor） |
+| heterojunction bipolar transistor | 异质结双极晶体管（HBT） | Known for；勿与 1963 节点混写 |
+| double-heterostructure laser | 双异质结构激光器 | 1963 提出的是它，勿写"异质结构晶体管" |
+| band offsets | 带阶 | 诺奖演讲 Teaching Electrons New Tricks |
+| molecular beam epitaxy | 分子束外延（MBE） | — |
+| Thermal Physics | 《热物理学》 | Kittel 原著，Kroemer 编辑第二版（1980） |
+| Nobel citation | 诺奖理由 | 原句与 Alferov 篇完全一致，勿改写 |
+| naturalization | 入籍 | 2003 年入籍美国，勿写"早年移民" |
 
 ---
 

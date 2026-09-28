@@ -175,6 +175,23 @@
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同世纪物理学家（Prokhorov / Townes / Wilson）格式对齐；SDI 政治页的克制程度需专项复核
 
+## 12. 术语清单（2026-09-28 补齐，对齐标杆）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| molecular oscillator | 分子振荡器 | 与 Prokhorov 共同奠基，即后来的 maser；勿写 Basov 独自发明 |
+| maser | 微波激射器 / 微波激射 | 苏联组未用此缩写命名，表述勿混淆 |
+| population inversion | 粒子数反转 | 用非均匀电场与磁场产生，方法为两人共同提出 |
+| three-level laser | 三能级激光 | 1955 Basov 设计，固体/半导体激光的普适架构 |
+| semiconductor laser | 半导体激光器 | 1959 建议、1963 与合作者建成 |
+| disk laser | 盘式激光 | 1966 提出，今日高功率激光主流构型之一 |
+| optical phase conjugation | 光学相位共轭 | 列别杰夫研究所发现（Basov 支持非亲自发现） |
+| MEPhI | 莫斯科工程物理学院 | 勿与 MIPT（莫斯科物理技术学院）混淆 |
+| Candidate of Sciences | 副博士 | 1953 获得者；1956 才是 Dr. Sc. 博士 |
+| Novodevichy Cemetery | 新圣女公墓 | 安葬地 |
+
+> **入库订正（2026-09-28）**：§7 原列「学生 Letokhov、Krokhin（metadata doctoral_student）」——经核对 page.md 与 metadata.json 均无载，按「无载禁写」红线不入库；Basov 入库关系以双导师（Leontovich/Prokhorov）+ co-honored（Prokhorov/Townes）+ 配偶 + 父子为准。
+
 ---
 
 > **开始执行。每完成一步向我汇报。**

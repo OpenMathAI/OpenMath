@@ -122,6 +122,7 @@
 - **宇宙线同事**：Alan Watson、Murat Boratav（Auger 项目）
 - **早期团队**：Rodney L. Cool、Oreste Piccioni（Brookhaven 小组）
 - **亲属**：妻 Annette Martin（1954-2005）、Carol Champlin（2006-）
+- **入库类型口径（2026-09-28 批注）**：Allison 用 `type=advisor-student + direction=advisor`（frontmatter doctoral_advisor 实载）；Fermi/Mayer/Gell-Mann/Chandrasekhar 四位芝大受业老师亦用 advisor-student + note 注明"受业，非博士导师"；Fitch 用 co-honored（1980 共享）+ colleague（1964 合作、1958 引进普林斯顿）双条；Cool/Piccioni/Watson/Boratav 用 colleague；两妻用 spouse。**Christenson/Turlay 未入库**（本篇 page.md 无载，跨源自 Fitch page.md——见 §5 首条陷阱）。
 
 ## 8. 奖项清单
 
@@ -167,6 +168,23 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同批次（Glashow / Salam / Weinberg / Fitch）及同世纪物理学家格式对齐
+
+## 12. 术语清单（英/中/风险点）
+
+| 英文 | 中文 | 风险点 |
+|---|---|---|
+| CP violation | CP 破坏 | 1964 发现，勿混入 CKM 扩展知识 |
+| kaon | K 介子 | 中性 K 介子衰变实验对象 |
+| time reversal invariance | 时间反演不变性 | "逆反应非原路返回"措辞按 page.md 顺序 |
+| spark chamber spectrometer | 火花室谱仪 | Cronin 建造的新型探测器 |
+| Cosmotron | 宇宙级加速器 | Brookhaven，磁铁故障后转 Bevatron |
+| Bevatron | 高能质子加速器 | 伯克利，1958 上半年过渡 |
+| AGS | 交变梯度同步加速器 | 本篇 page.md 无载，从简处理 |
+| hyperon | 超子 | 早期宇称破坏研究对象 |
+| large transverse momentum | 大横动量 | 芝加哥时期强子产生实验系列 |
+| Pierre Auger Observatory | 皮埃尔·俄歇天文台 | 与 Watson/Boratav 共同推动，荣休发言人 |
+| ultra-high-energy cosmic ray | 超高能宇宙线 | 1998 起犹他大学半职 |
+| Ernest Orlando Lawrence Award | 劳伦斯奖 | 1976，授奖词提及时间反演不对称 |
 
 ---
 

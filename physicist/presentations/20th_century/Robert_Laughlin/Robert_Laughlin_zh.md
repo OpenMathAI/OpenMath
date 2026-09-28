@@ -67,6 +67,31 @@
 - **落地文件**：`physicist/presentations/20th_century/Robert_Laughlin/Mirage.wav`（复制自 `music_audio/inspiring-electronic/04-5gcb94jhG1I-Notan Nigres - Mirage (Audio).wav`，不入 git）。
 - **匹配理由**：劳克林的叙事核心是"集体行为的新实在"（Laughlin 波函数、复合费米子、演生论），抽象梦幻的电子质感贴合理论想象力；与本批次其余五人曲目不重复。
 
+## 3.6 研究领域表（数据库入库用，第 4 步）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | theoretical physics | 理论物理 | page.md infobox Fields 载 | 身份页 |
+| 1 | condensed matter physics | 凝聚态物理 | 强磁场二维电子系统的多体理论 | 核心页 |
+| 2 | fractional quantum Hall effect | 分数量子霍尔效应 | Laughlin 波函数，1998 诺奖核心 | 核心贡献页 |
+| 3 | many-body physics | 多体物理 | 首个 FQHE 多体波函数（1983） | 核心页 |
+| 4 | emergence | 演生 | 《不同的宇宙》主张取代还原论 | 著作页 |
+
+## 3.7 术语清单（第 9 步审查用）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Laughlin wavefunction | 劳克林波函数 | 1983 首个 FQHE 多体波函数 |
+| fractional quantum Hall effect | 分数量子霍尔效应 | 实验发现属 Störmer+Tsui，勿混 |
+| fractionalized charge | 分数化电荷 | 波函数正确解释的实验观测 |
+| composite fermion | 复合费米子 | 后人诠释，勿写成其本人提出 |
+| emergence | 演生 | 《不同的宇宙》核心主张 |
+| reductionism | 还原论 | 演生论的对照概念 |
+| Quantum Hall effect | 量子霍尔效应 | 整数版属 von Klitzing，勿混 |
+| KAIST | 韩国科学技术院 | 2004-06 校长，勿写成教授 |
+| A Different Universe | 《不同的宇宙》 | 2005，副题 Reinventing Physics from the Bottom Down |
+| Project Malta | 马耳他项目 | 2017 论文「启发」Google X，勿写创立 |
+
 ## 4. Slide 规划（约 15 页，Wilson 式结构）
 
 1. **封面**（`\titleslide`）：顶部标签「分数量子霍尔理论 · 美国」+ 劳克林 1950– + 右上头像（合影裁剪或占位）+ 国籍行 + 底部三要素状态栏 + 四色 badge

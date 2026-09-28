@@ -1,181 +1,198 @@
-# Johannes Stark（约翰内斯·斯塔克）立传提示词
+# 物理学家立传提示词（模板标杆实例：Johannes Stark）
 
-> qid=Q57092 · 1874-04-15 – 1957-06-21 · 德国实验物理学家 · 20 世纪 · 1919 诺贝尔物理学奖
-> 本地 Wikipedia 数据源：`physicist/presentations/20th_century/20th_century/Johannes_Stark/`（page.md + metadata.json + images.txt）
-
----
-
-## 0. 正文形式说明（参考物理学家标杆 Kenneth G. Wilson）
-
-> 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**。物理学家立传格式硬性要求：
-
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。⚠️ 本地 `images.txt` 未提取到人物肖像（仅 Commons logo 图标），需按项目经验用 Commons `Special:FilePath/<文件名>?width=600` 尝试下载 infobox 肖像（infobox 图注为 "Stark in 1919"；可尝试 `Johannes_Stark.jpg` / `JohannesStark.jpg` 等文件名，404/HTML 则换名重试），全部失败则按项目惯例用装饰圆占位。
-2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 德国`），底部状态栏给出 `国籍 | 机构 | 主要奖项` 三要素。
-3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧 `2×2` 信息网格，含至少：生卒、本名、国籍、出生地、去世地、教育、师承、任职、主要荣誉、核心领域。事实取自 Wikipedia infobox，不得杜撰。
-4. **配色 + 气泡背景**：主色 + 强调色（诺奖金）+ 四分类色；背景用柔和气泡（稀疏大块实心圆），母题克制、色调偏冷——与 Lenard 立传同一立场：**这是"如实呈现两面"的审慎传记，不做颂扬式渲染**；科学成就与历史污名两面并置。
-5. **品牌口径统一**：结尾页底部品牌统一写 `OpenMathAI`；引号用半角 `" "`。
+> **本文件是 OpenPhysicist 的「物理学家立传提示词模板标杆」的人物专属实例**，目标人物为 Johannes Stark（1919 诺贝尔物理学奖，斯塔克效应的发现者；后为「德意志物理学」运动主将——本篇必须同时如实呈现其科学成就与纳粹劣迹）。
+> 凡标注 `【模板通用】` 的部分可原样复用到任何物理学家；标注 `【人物专属】` 的部分需按本文件内容替换。
+> 直接复制本文件到新对话中使用，按步骤执行，每完成一步汇报进度。
 
 ---
 
-## 1. 背景信息（用于 Slide 1-3）
+## 一、模板定位
 
-- **全名**：Johannes Stark（约翰内斯·斯塔克）
-- **生卒**：1874-04-15 生于希肯霍夫（Schickenhof，今属弗赖翁 Freihung），巴伐利亚王国（Kingdom of Bavaria），德意志帝国 → 1957-06-21 逝于特劳恩施泰因（Traunstein），巴伐利亚，西德，享年 83
-- **国籍**：德国（巴伐利亚王国 → 德意志帝国 → 魏玛共和国 / 纳粹德国 → 西德）
-- **身份**：实验物理学家、大学教师；纳粹时期"德国物理学"（Deutsche Physik）运动领袖之一（与 Philipp Lenard 并列）
-- **家庭**：妻 Luise Uepler，育 5 子；爱好果树栽培与林业
-- **教育轨迹**：
-  - 先后就读拜罗伊特（Bayreuth）与雷根斯堡（Regensburg）的文理中学（Gymnasium）
-  - 1894 年入慕尼黑大学（Ludwig-Maximilians-Universität München），学习物理、数学、化学与晶体学
-  - 1897 年获慕尼黑大学**博士**（导师 Eugen von Lommel），论文 *Untersuchungen über einige physikalische, vorzüglich optische Eigenschaften des Rußes*（关于烟炱的若干物理、尤其光学性质的研究）
-- **博士导师**：Eugen von Lommel；1897–1900 留校任 von Lommel 助手
-- **研究领域**：光谱学（spectroscopy）、稀薄气体放电与电传导、极隧射线（canal rays）
-- **逝世与安葬**：逝于上巴伐利亚 Traunstein 附近自家庄园 *Gut Eppenstatt*，葬于舍瑙阿姆柯尼希塞（Schönau am Königssee）山地公墓
-
-## 2. 核心叙事亮点（用于 Slide 4-13）
-
-1. **稀薄气体放电研究起点（1899–1900）**：早年系列论文研究电流自电炽碳极向稀薄气体的放电、稀薄气体电导率变化与静电效应等（*Annalen der Physik* 系列）——他一生的实验主题由此定调：电在气体中的行为。
-2. **极隧射线中的多普勒效应**：极隧射线（canal rays）中光谱线的多普勒频移——**1919 年诺贝尔物理学奖获奖理由之一**。⚠️ 具体发现年份 page.md 无载，正文中勿标注年份。
-3. **斯塔克效应（Stark effect）**：电场中光谱线的分裂——**1919 年诺奖获奖理由之二**，Wikipedia infobox "Known for" 条目即此。与塞曼效应（磁场分裂）相对，是电场对原子光谱作用的标志性发现。⚠️ 发现年份 page.md 无载，勿写"1913"。
-4. **"基本能量子"计算（1907）**：在 *Physikalische Zeitschrift* 论文中引用"H. A. Lorentz 与 A. Einstein 表述的相对性原理"与"Planck 关系式 *M*0 = *E*0/*c*2"，并用 *e*0 = *m*0*c*2 计算"基本能量子"（elementary quantum of energy，即电子静止质量对应的能量）。⚠️ 勿写成"Stark 先于 Einstein 提出质能关系"。
-5. **邀约爱因斯坦写相对论综述（1907）**：Stark 时任 *Jahrbuch der Radioaktivität und Elektronik* 编辑，约请当时尚不知名的 Einstein 撰写相对性原理综述——Einstein 在写作过程中萌发的思路最终通向广义相对论。这一史实与他日后成为反爱因斯坦、反相对论宣传旗手构成强烈的历史讽刺。
-6. **Stark–Einstein 定律**：光化学中的 Stark–Einstein 定律（每分子吸收一个光子）以其命名（page.md 见 See also 条目）——如实带过即可，勿展开 page.md 无载的细节。
-7. **《原子动力学原理》（1910）**：出版 *Prinzipien der Atomdynamik* 第一部分"电的量子"——战前他是量子假说的积极实验支持者之一。
-8. **1919 诺贝尔物理学奖**：获奖理由原文"for his discovery of the Doppler effect in canal rays and the splitting of spectral lines in electric fields"（总名单中文：表彰他发现极隧射线中的多普勒效应，以及电场中光谱线的分裂）。Nobel Lecture 题为 *Structural and Spectral Changes of Chemical Atoms*，1920-06-03 发表。此前已获维也纳科学院 Baumgartner 奖（1910）、哥廷根科学院 Vahlbruch 奖（1914）、罗马 Matteucci Medal（1915）。
-9. **多产实验家**：发表 300 余篇论文，主题以电学及相关领域为主。
-10. **从支持者到运动旗手（1922–1924 起）**：1922 年出版《Die gegenwärtige Krise der deutschen Physik》（当前德国物理学的危机），1924 年与 Lenard 合著《Hitlergeist und Wissenschaft》，同年（1924）起公开支持希特勒——科学界的纳粹化路线由此成型。
-11. **"德国物理学"运动的权力顶峰（★ 争议，必须如实呈现）**：纳粹时期与 Lenard 共同领导 *Deutsche Physik*（雅利安物理学）运动，攻击"犹太物理学"；1933–1939 年任帝国物理技术研究所（Physikalisch-Technische Reichsanstalt）主席，兼德国科学紧急联合会（Notgemeinschaft der Deutschen Wissenschaft）主席；1934 年出版《Nationalsozialismus und Wissenschaft》，主张科学家首先服务于国家与军备工业、理论物理是"犹太的"。
-12. **人身攻击的记录**：Heisenberg 因公开为相对论辩护，遭 Stark 在 SS 机关报《Das Schwarze Korps》撰文攻击为"白犹太人"（"White Jew"）；1934-08-21 致诺奖得主 Max von Laue 的信中勒令其服从党路线、否则承担后果，落款"Heil Hitler"。
-13. **战后审判与晚年**：1947 年被去纳粹化法庭判为"主要犯"（Major Offender），处 4 年徒刑（后缓刑）；1949 年慕尼黑上诉法庭改判"轻犯"（Lesser Offender），罚款 1000 马克。战后在上巴伐利亚庄园用诺奖奖金建立的私人实验室研究光在电场中的偏转。月球背面 Stark 陨石坑 1970 年由 IAU 命名（当时天文学界不知其纳粹活动），2020-08-12 除名。
-14. **结局**：1957-06-21 逝于 Gut Eppenstatt 庄园，享年 83——生前身后，他的名字既是斯塔克效应，也是"德国物理学"的污名。
-
-## 3. 配色方案
-
-| 用途 | 色值 | 说明 |
-|---|---|---|
-| 主色（冷铁青灰） | `#37474F` | 极隧射线实验的冷峻金属感 / 审慎不颂扬的传记基调 |
-| 强调色（诺奖金） | `#C9A227` | 诺贝尔奖 / 尊崇（仅指奖项本身） |
-| 分类色 1（极隧射线 — 钢蓝） | `#4A6FA5` | 极隧射线 / 多普勒效应 / 气体放电 |
-| 分类色 2（斯塔克效应 — 青绿） | `#1B7A6E` | 电场中光谱线分裂 / 光谱学 |
-| 分类色 3（能量子与光化学 — 琥珀） | `#B07D2B` | 基本能量子 / Stark–Einstein 定律 / 《原子动力学原理》 |
-| 分类色 4（争议与"德国物理学" — 警示红棕） | `#8B3A3A` | Deutsche Physik / 反犹攻击 / 去纳粹化审判 |
-| 背景 | `#F5F5F3` | 浅冷灰白（比标准背景更冷一档，呼应严肃基调） |
-
-- **背景母题**：柔和气泡（稀疏大块实心圆，四档大小错落），整体明度降低、以冷色为主——暗示"被历史尘埃覆盖的实验成就"；争议章节（分类色 4）只在对应页少量出现，不主导画面。
-
-### 3.5 背景音乐选择 ✅ 【人物专属】
-
-- **气质定位**：深色 / 历史反思 / 沉稳而非颂扬（争议人物，传记立场是"如实两面"，不是致敬）
-- **选定曲目**：Alex-Productions **Tragedy**（深色 / 戏剧性 / 沉重），匹配"实验成就与历史污名并存的世纪沉浮"。
-- **落地文件**：`physicist/presentations/20th_century/Johannes_Stark/Tragedy.wav`（复制自音乐库 `music_audio/alex-productions/80-K5f65-22sY4-Tragedy.wav`，不入 git）。
-- **备选曲目**：Cold Cinema **Empire Collapse**（`music_audio/inspiring-electronic/12-NTuSqFy4Stc-...Empire Collapse.wav`，战争背景 / 危机时刻）——若 Tragedy 与全片时长不匹配可换用；**勿用** PAST（Lenard 已占用同气质，且两片易混淆）。
-- **匹配理由**：斯塔克的前半生是诺奖级的实验发现，后半生是科学史上最刺眼的污名之一——深色戏剧性的 Tragedy 避免任何英雄化色彩，给"德国物理学"章节留出冷峻、警醒的空间，与 Lenard 立传的 PAST 同为"反思系"但音色区分开。
-
-## 4. Slide 规划（约 15 页，Wilson 式结构）
-
-1. **封面**（`\titleslide`）：顶部标签「实验物理学家 · 德国」+ Stark 1874–1957 + 右上头像（或装饰圆）+ 国籍行 + 底部三要素状态栏 + 四色 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右 2×2 信息网格（生卒 / 本名 / 国籍 / 出生地 Schickenhof / 去世地 Traunstein / 教育慕尼黑大学 / 师承 von Lommel / 任职 / 主要荣誉 / 核心领域）
-3. **核心贡献概览**（`\hookslide`）：极隧射线 / 斯塔克效应 / 能量子与光化学 / 争议与"德国物理学"
-4. **早年：巴伐利亚的少年**（1874–1897）：拜罗伊特与雷根斯堡中学、慕尼黑大学四科并修、烟炱光学性质的博士论文
-5. **气体放电研究**（1899–1900）：慕尼黑助手时期系列论文、1900 哥廷根 Privatdozent
-6. **极隧射线中的多普勒效应**：射线粒子的光频频移、1919 诺奖理由之一（年份不标）
-7. **斯塔克效应：电场中的光谱线分裂**：与塞曼效应的对照、1919 诺奖理由之二、infobox "Known for"
-8. **"基本能量子"（1907）**：*e*0 = *m*0*c*2 计算、引 Lorentz–Einstein 相对性原理与 Planck 关系式——早年站在新物理一边
-9. **1907 年的编辑约稿**：*Jahrbuch* 编辑约青年 Einstein 写相对论综述、通向广义相对论的思路起点、与日后立场的讽刺对照
-10. **1919 诺贝尔物理学奖**：获奖理由原文、Matteucci Medal（1915）等前荣誉、1920 Nobel Lecture、300 余篇论文的多产
-11. **走向"德国物理学"（1922–1924）**：《当前德国物理学的危机》、与 Lenard 合著《Hitlergeist und Wissenschaft》、1924 起支持希特勒
-12. **纳粹时期的权力（★ 谨慎处理）**：PTR 与 Notgemeinschaft 双主席、《Nationalsozialismus und Wissenschaft》、"白犹太人"攻击 Heisenberg、致 von Laue 的"Heil Hitler"信
-13. **战后审判**（1947–1949）：去纳粹化"主要犯"判决与缓刑、上诉改判"轻犯"罚款 1000 马克
-14. **晚年与身后**：Gut Eppenstatt 庄园私人实验室、电场中光的偏转、陨石坑 1970 命名 / 2020-08-12 除名、Schönau am Königssee 安葬
-15. **结尾**：83 岁；"斯塔克效应的发现者，'德国物理学'的旗手"——两面并置的收束
-
-## 5. 史实陷阱与敏感点（终审必须检查）
-
-- **诺奖理由表述**：官方原文"for his discovery of the Doppler effect in canal rays and the splitting of spectral lines in electric fields"；中文一律用总名单表述"表彰他发现极隧射线中的多普勒效应，以及电场中光谱线的分裂"。勿写成"因发现斯塔克效应获奖"单一理由（多普勒效应也是并列理由）。
-- **发现年份（★ page.md 无载，禁写）**：极隧射线多普勒效应的发现年份与斯塔克效应的发现年份（常见的"1913"）**page.md 均无载**——正文与时间线一律不标具体年份，只写"1919 年诺奖理由"层面的表述。⚠️ 本条为专属陷阱：其他物理学家立传习惯补年份，本片禁止。
-- **1919 获奖**：写"1919 年诺贝尔物理学奖"即可；是否延迟颁发、颁奖背景（一战刚结束）page.md 均无载，禁写。可写的是 Nobel Lecture 于 1920-06-03 发表（page.md 外部链接节有载）。
-- **与 Lenard 的关系（★ page.md 无载，禁写"决裂"）**：page.md 只载"与 Lenard 共同领导 Deutsche Physik"及 1924 合著《Hitlergeist und Wissenschaft》——"晚年与 Lenard 决裂"等说法 page.md 无载，**一律禁写**，仅在陷阱表注明此裁定。
-- **质能关系归属**：Stark 1907 年用 *e*0 = *m*0*c*2 计算"基本能量子"并引用 Planck 关系式——这是**应用**既有关系式，勿写成"Stark 先于/独立于 Einstein 提出质能关系"。
-- **攻击性称呼引号语境**："White Jew"（白犹太人）、"Jewish physics"（犹太物理学）、"eradicate the Jewish spirit"（Das Schwarze Korps 原文引语）均为 **Stark 的攻击性用语**，必须置于引号内并注明出处与历史语境，勿以叙述者口吻使用。
-- **纳粹立场（★ 最重要敏感点）**：1924 年起支持希特勒、Deutsche Physik 领袖、攻击 Einstein 与 Heisenberg（后者并非犹太人）、1934 著作主张科学服务国家与军备、科学职位只容"纯血德意志人"。立传必须**如实呈现**，表述谨慎、不美化、不淡化。
-- **Heisenberg 被攻击的原因**：因其**为爱因斯坦相对论辩护**——因果顺序勿颠倒；page.md 明确 Heisenberg "who was not Jewish"，攻击属株连式指控，如实注明。
-- **去纳粹化判决顺序**：1947 "主要犯"（4 年徒刑后缓刑）→ 1949 慕尼黑上诉法庭改判"轻犯" + 罚款 1000 马克——顺序勿颠倒，勿漏改判。
-- **陨石坑时间线**：1970 年 IAU 命名月球背面陨石坑（**当时不知其纳粹活动**）→ 2020-08-12 除名——勿颠倒，勿漏"不知情"语境。
-- **国籍**：生于巴伐利亚王国（德意志帝国），历经魏玛、纳粹、西德——封面用「德国」现代对应。
-- **博士论文**：1897 年论文是**烟炱的物理/光学性质**（infobox 拼作 *des Rußes*，正文拼作 *des Russes*，同词异拼），不是光谱学——勿混。
-- **Stark–Einstein 定律**：page.md 仅在 See also 提及，如实一句带过，勿展开无载细节。
-- **Goethe Medal**：metadata.json `award_received` 载有 "Goethe Medal for Art and Science"，但 page.md 未载——如需列出须注明"来源为 Wikidata（metadata.json），年份无载"，或干脆不进正文。
-- **引语红线**：可溯源引语仅有 Lorentz–Einstein 相对性原理表述、Das Schwarze Korps "eradicate the Jewish spirit" 段落、致 von Laue 信的"Heil Hitler"落款（page.md 原文）；其余一律间接转述，勿伪造 Stark 的"忏悔式"或"辩解式"发言——page.md 无此类记载。
-
-## 6. 数据库字段核对表
-
-| 字段 | 值 | 状态 |
-|---|---|---|
-| qid | Q57092 | 待写入 |
-| name_zh | 约翰内斯·斯塔克 | 待写入 |
-| name_en | Johannes Stark | 待写入 |
-| birth_date | 1874-04-15 | 待写入 |
-| death_date | 1957-06-21 | 待写入 |
-| nationality | Germany（生于巴伐利亚王国） | 待写入 |
-| primary_occupation | physicist | 待写入 |
-| field_of_work | spectroscopy（canal rays / Stark effect） | 待写入 |
-| has_biography | 1 | 本次置 1 |
-
-## 7. 社会关系入库清单
-
-- **博士导师**：Eugen von Lommel（慕尼黑大学，1897 博士）
-- **对立/攻击关系**：Albert Einstein（早年 1907 邀其写相对论综述，后成反相对论宣传旗手——历史讽刺，双向事实均入库）；Werner Heisenberg（"白犹太人"攻击，因其为相对论辩护）；Max von Laue（1934-08-21 勒令信，"Heil Hitler"落款）
-- **同阵营**：Philipp Lenard（Deutsche Physik 同盟、1924 合著《Hitlergeist und Wissenschaft》；⚠️ 仅此两件有据，勿加"决裂"等无载关系）
-- **合著者**：Wilhelm Müller（1941《Jüdische und deutsche Physik》）
-- **配偶**：Luise Uepler（5 子）
-- **1919 诺贝尔物理学奖**：Stark 独得，无共同得主
-
-## 8. 奖项清单
-
-- 诺贝尔物理学奖（1919，表彰极隧射线中的多普勒效应与电场中光谱线的分裂）
-- Baumgartner Prize（1910，维也纳科学院）
-- Vahlbruch Prize（1914，哥廷根科学院）
-- Matteucci Medal（1915，罗马 Accademia dei XL）
-- Goethe Medal for Art and Science（仅 metadata.json 有载，page.md 无载——如列出须注明来源与"年份无载"）
-- 月球背面 Stark 陨石坑（1970 命名，2020-08-12 除名——非荣誉，如实注明性质）
-
-## 9. 机构清单
-
-- 教育：拜罗伊特 / 雷根斯堡文理中学、慕尼黑大学（1894 入学，1897 博士）
-- 任职：慕尼黑大学 von Lommel 助手（1897–1900）、哥廷根大学 Privatdozent（1900）、汉诺威 Königliche Technische Hochschule 特许任教副教授（Extraordinary Professor，1906）、亚琛工业大学教授（1909）、格赖夫斯瓦尔德大学与维尔茨堡大学教授（1917–1922）、帝国物理技术研究所（Physikalisch-Technische Reichsanstalt）主席（1933–1939）、德国科学紧急联合会（Notgemeinschaft der Deutschen Wissenschaft）主席（1933 起兼任）
-- 晚年：上巴伐利亚 *Gut Eppenstatt* 庄园私人实验室（用诺奖奖金建立）
-
-## 10. 终审清单
-
-- [ ] 生卒 1874-04-15 / 1957-06-21，享年 83，出生地 Schickenhof（今属 Freihung），去世地 Traunstein
-- [ ] 诺奖理由中文表述与总名单逐字一致（多普勒效应 + 电场中光谱线分裂，双理由并列）
-- [ ] 多普勒效应与斯塔克效应均**不标发现年份**（page.md 无载）
-- [ ] 与 Lenard 仅写"同盟与合著"，无"决裂"等无载内容
-- [ ] *e*0 = *m*0*c*2 写成"应用 Planck 关系式计算基本能量子"，非"提出质能关系"
-- [ ] 纳粹立场如实、谨慎呈现，不美化不淡化；攻击性称呼均在引号内并注明语境
-- [ ] 去纳粹化判决顺序（1947 主要犯 → 1949 轻犯）准确
-- [ ] 陨石坑时间线（1970 命名 / 2020-08-12 除名，含"不知情"语境）准确
-- [ ] 引语均可回溯至 page.md 原文，无伪引语
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
-- [ ] `make distclean && make` 编译通过，0 错误
-
-## 11. Review 流程规范（两轮 Review）
-
-### 第 1 轮（Review-1）：事实终审
-- [ ] **结合本地 Wikipedia**：读取 `20th_century/Johannes_Stark/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：本地 images.txt 无肖像——用 Commons `Special:FilePath/<文件名>?width=600` 依 infobox 图注 "Stark in 1919" 线索尝试多个文件名（404/HTML 则换名重试），全部失败则按项目惯例用装饰圆占位
-- [ ] **国籍**：封面顶部徽章明示德国
-- [ ] **引语核对**：每条中文引号内文字须能在 page.md 找到英文原文；纳粹相关称呼一律注明是 Stark 用语
-- [ ] **编译验证**：`make distclean && make`
-- [ ] **更新提示词**：Review 修正写回本文件
-
-### 第 2 轮（Review-2）：结构优化
-- [ ] 检查 Overfull/Underfull 告警（vbox >10pt、hbox >50pt 必须修复）
-- [ ] 身份信息页布局与 Wilson 模板对齐（上排 anchor=north、下排 anchor=south）
-- [ ] 中文标点 / 断行 / 间距统一
-- [ ] 与同世纪物理学家（Lenard / Heisenberg / Röntgen）格式对齐；争议章节（分类色 4）版式与全片协调，尤须与 Lenard 立传的审慎基调一致
+- **目标项目**：OpenPhysicist —— 开放物理学家人物史（与 OpenMath 数学家侧共享 GitHub `OpenMathAI/OpenMath`）。
+- **模板来源**：综合数学家侧标杆（Hilbert / Grothendieck 的提示词 + tex 结构）与物理学家侧首例（Eugene Wigner）的实战经验。
+- **本实例**：Johannes Stark（约翰内斯·斯塔克）。
+- **设计哲学**：物理学家立传与数学家立传的核心差异，在于**物理学家必须有「身份信息页」（Identity / Bio 速览页）**，且强调「研究领域」的结构化表达——这两点构成物理学家模板的骨架，务必保留。
 
 ---
+
+## 二、背景信息 【人物专属】
+
+- **目标物理学家**：Johannes Stark（1874-04-15 ~ 1957-06-21，享年 83 岁）
+- **气质关键词**：**斯塔克效应的发现者、阴极射线与极隧射线的实验家、德意志物理学运动的推手** —— 1919 诺贝尔物理学奖获奖理由（官方英文原文，禁止改写）：
+  > "for his discovery of the Doppler effect in canal rays and the splitting of spectral lines in electric fields"（因发现极隧射线中的多普勒效应以及电场中谱线的分裂）
+- **设计母题**：**分裂的谱线（splitting of spectral lines）**。电场使一条谱线分裂为数条——这既是他 1913 年的实验发现，也隐喻其一生：科学成就与政治劣迹在同一人身上「分裂」。视觉语言可用「一条谱线在电场下裂为多条」贯穿全篇。
+- **本地 Wikipedia**：`physicist/presentations/20th_century/20th_century/Johannes_Stark/page.md`（已有全文）
+  - `{Dir}.html` 与 `images/`：**待下载**（Wikipedia URL: `https://en.wikipedia.org/wiki/Johannes_Stark`）
+- **参考模板**：
+  - 物理学家首例成品：`physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner_zh.tex`（16 页）
+  - 数学家标杆：`mathematician/presentations/20th_century/Alexander_Grothendieck-F/Alexander_Grothendieck_zh.tex`
+  - 项目首页模板：`physicist/presentations/cover/openphysicist_page.tex`（统一 `\input`）
+
+---
+
+## 三、任务流程 【模板通用，逐步执行】
+
+> 每完成一步向我汇报，遇到歧义先征求我的意见再继续。
+> **数据库同步要求**：包含「研究领域梳理 + 入库」（第 4 步）与「社会关系梳理 + 入库」（第 4.5 步）两个数据库步骤，写入 `greatminds` 库（MySQL），与 Beamer 立传并行。
+
+### 第 0 步：下载并核对 Wikipedia 页面 【人物专属】
+
+- `{Dir}.html` **待下载**：`https://en.wikipedia.org/wiki/Johannes_Stark`（page.md 已有全文可先建立事实基准）
+- 头像 **待下载**（Wikipedia infobox 照片，1919 年 Stark 像；下载到 `images/`）
+- 提取 infobox 与正文，事实基准如下（源自 page.md）：
+  - 生卒日期（1874-04-15 生于希肯霍夫 Schickenhof，今属 Freihung，巴伐利亚王国 ~ 1957-06-21 逝于上巴伐利亚特劳恩施泰因 Traunstein 附近自家庄园，享年 83 岁；葬于舍瑙 am Königssee 山地墓园）
+  - 国籍（德国；出生时巴伐利亚王国属德意志帝国）
+  - 家庭（妻 Luise Uepler，育五子；爱好果树栽培与林业）
+  - 教育（拜罗伊特与雷根斯堡文理中学；1894 入慕尼黑大学，学物理、数学、化学与结晶学；1897 在 Eugen von Lommel 指导下以《烟炱的若干物理尤其是光学性质研究》获物理学博士；1897–1900 留校任 von Lommel 助手）
+  - 博士导师（Eugen von Lommel）
+  - 博士后（无载）
+  - 主要任职机构（1900 格丁根大学无俸讲师；1906 汉诺威皇家技术学院 Extraordinary Professor；1909 亚琛工业大学教授；1917–1922 格赖夫斯瓦尔德大学与维尔茨堡大学教授；1933–1939 帝国物理技术研究所（PTR）所长，兼德国科学紧急联合会主席）
+  - 关键荣誉（Nobel 物理学奖 1919；Matteucci Medal 1915；维也纳科学院 Baumgartner Prize 1910；格丁根科学院 Vahlbruch Prize 1914；月球背面环形山 1970 命名——2020-08-12 撤名）
+  - 知名学生（page.md 无载，禁编）
+  - 核心贡献清单（见第 4 步）
+  - 关键时间线（约 15 个节点）：1874 生于 Schickenhof → 拜罗伊特/雷根斯堡中学 → 1894 入慕尼黑大学 → 1897 博士（烟炱光学性质，von Lommel 门下）→ 1897–1900 慕尼黑助教 → 1900 格丁根 Privatdozent → 1906 汉诺威 extraordinary professor → 1909 亚琛教授 → 1910 Baumgartner Prize → 1914 Vahlbruch Prize → 1915 Matteucci Medal → 1917–1922 格赖夫斯瓦尔德/维尔茨堡教授 → 1919 诺贝尔奖 → 1920-06-03 诺贝尔演讲《Structural and Spectral Changes of Chemical Atoms》→ 1922《德国物理学的彻底危机》→ 1924 开始支持希特勒（与 Lenard 合著《Hitlergeist und Wissenschaft》）→ 1933–1939 帝国物理技术研究所所长兼科学紧急联合会主席 → 1934-08-21 致 Max von Laue 威胁信（"Heil Hitler" 落款）→ 1934《Nationalsozialismus und Wissenschaft》→ 1938《Nature》刊文 → 二战后在上巴伐利亚自建私人实验室（用诺奖奖金）研究电场中光的偏转 → 1947 去纳粹化法庭判「主犯」4 年监禁（后缓刑）→ 1949 慕尼黑上诉改判「从犯」、罚款 1000 马克 → 1957-06-21 逝于 Traunstein → 1970 月球环形山命名 / 2020-08-12 撤名
+
+### 第 1 步：建立目录 【模板通用】
+
+- 在 `physicist/presentations/20th_century/` 下创建 `Johannes_Stark/` 与 `images/`
+
+### 第 2 步：复制 Makefile 【模板通用】
+
+- 复制同目录 `Eugene_Wigner/Makefile`，设置 `MAIN=Johannes_Stark_zh`、`VIDEO_NAME=Johannes_Stark_zh`
+
+### 第 3 步：收集图片 【人物专属】
+
+- 头像 **待下载**：优先 Wikipedia infobox 照片（1919 年 Stark 像；Commons `Special:FilePath` 或 REST API 查实际文件名）
+- 可用插图（page.md 明载）：月球背面 Stark 环形山图（IAU Gazetteer，注意须与 2020 撤名并提）
+
+### 第 4 步：研究领域梳理 + 入库 【模板通用，人物专属内容】
+
+> 把研究领域变成可检索、可图形化的结构化字段（`fields` + `person_field` 表）。
+
+**Stark 的研究领域（按 rank 排序）**：
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | spectroscopy | 光谱学 | frontmatter 主领域；电场中谱线分裂 | 核心贡献页 |
+| 1 | atomic physics | 原子物理 | 谱线分裂的原子结构意义 | 核心贡献页 |
+| 2 | canal rays | 极隧射线 | 其中发现多普勒效应 | 极隧射线页 |
+| 3 | optics | 光学 | 博士论文（烟炱光学性质）与晚年电场光偏转 | 早年页/晚年页 |
+
+### 第 4.5 步：社会关系梳理 + 入库 【模板通用，人物专属内容】
+
+| 关系类型 | 对方 | 方向 | note |
+|---------|------|------|------|
+| advisor-student | Eugen von Lommel | 师→生（博士导师） | 慕尼黑博士导师（1897 烟炱光学论文），1897–1900 任其助手 |
+| colleague | Albert Einstein | 无向 | 1907 以《放射性与电子学年鉴》编辑身份约爱因斯坦写相对论综述；后成为攻击相对论的急先锋 |
+| colleague | Philipp Lenard | 无向 | 「德意志物理学」运动共同主将（同为诺奖得主），1924 合著《Hitlergeist und Wissenschaft》 |
+| controversy | Max von Laue | 施害→对方 | 1934-08-21 致信威胁 Laue 服从党路线，落款 "Heil Hitler" |
+| controversy | Werner Heisenberg | 施害→对方 | 因 Heisenberg 为相对论辩护，在党卫机关报《Das Schwarze Korps》撰文称其为 "White Jew" |
+| spouse | Luise Uepler | 无向 | 育五子 |
+
+### 第 5 步：设计配色方案 【模板通用，人物专属色彩】
+
+- **气质**：阴郁、紧张、双重性
+- **配色**：深酒红（暗色传记基调）+ 香槟金 `C9A227`（诺奖）+ 四分类色
+  - `badgeSpec` 光谱学 — 琥珀 `#E07B30`
+  - `badgeAtom` 原子物理 — 靛蓝 `#4C5FD5`
+  - `badgeCanal` 极隧射线 — 青绿 `#0E7C7B`
+  - `badgePol` 「德意志物理学」— 铁灰 `#4A4A55`
+- **背景母题**：分裂谱线（一条竖线在下方分裂为三条错位短竖线，稀疏排布），呼应「谱线分裂」与「一生双重性」双重母题（与第 2 步设计母题一致）
+
+### 5.1 物理学家格式硬要求 【模板通用，★ 必须满足】
+
+1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。
+2. **封面有国籍**：顶部副标题或底部状态栏明示国籍，底部状态栏给出 `国籍 | 机构 | 主要奖项` 三要素。
+3. **必须有身份信息页**：封面之后、核心贡献之前。左侧头像 + 右侧信息网格，含至少：生卒、本名、国籍、出生地、师承、任职、主要荣誉、核心领域。事实取自 page.md，不得杜撰。
+4. **品牌口径统一（共享 GitHub）**：结尾页底部品牌标注统一写 `OpenMathAI`（不是 `OpenPhysicist`）；GitHub 链接由首页模板 `\input` 继承，子 deck 不重复；引号用半角 `" "`。
+
+### 第 6 步：规划幻灯片序列 【人物专属，可微调】
+
+```
+00  OpenPhysicist 项目首页（\input cover/openphysicist_page.tex）
+01  封面 — 斯塔克效应的发现者 / Johannes Stark 1874–1957 + 四色 badge + 右上头像 + 国籍行
+02  身份信息页（★ 必做）— 左头像 + 右信息网格（含出生地 Schickenhof、教育、师承、任职、荣誉、核心领域）
+03  核心贡献概览 — 极隧射线多普勒效应 / 电场谱线分裂 / 300+ 论文（概念图式：谱线分裂示意，page.md 无标志性公式）
+04  早年：上普法尔茨与慕尼黑 (1874–1900) — 中学、1894 入学、1897 烟炱博士论文、Lommel 助教
+05  游历教席：格丁根→汉诺威→亚琛 (1900–1917) — Privatdozent、extraordinary professor、教授
+06  极隧射线中的多普勒效应（核心贡献页之一，概念图式）
+07  斯塔克效应：电场中的谱线分裂（核心贡献页之二，概念图式）
+08  荣誉与认可 — Nobel 1919 · Matteucci 1915 · Baumgartner 1910 · Vahlbruch 1914
+09  1907 年的编辑：与爱因斯坦的交集 — 约稿相对论综述、e0=m0c2「基本能量量子」、日后的反讽
+10  从《德国物理学的彻底危机》到支持希特勒 (1922–1933) — 1924 表态、与 Lenard 合著
+11  「德意志物理学」：掌权与清洗 (1933–1939) — PTR 所长、攻击理论物理为「犹太的」、Laue/Heisenberg 事件
+12  战后清算 — 私人实验室 Gut Eppenstatt、1947「主犯」、1949 改判「从犯」
+13  纪念的撤销 — 1970 月球环形山命名、2020-08-12 IAU 撤名
+14  遗产：斯塔克效应长存，评价两分
+15  结尾
+```
+
+### 第 7 步：编写 Beamer 源码 【模板通用】
+
+- 每页 `\newcommand{\xxxslide}{...}` 定义；身份信息页实现模式参照成品 `\profileslide`。
+- 头部宏定义（配色 / `\plainbar` / `\deckbackground` / `\sectiontitle` / `\lab` / `\infob`）可整体复用标杆骨架。
+
+### 第 8 步：布局检查 【模板通用】
+
+- 每写完一页 `make clean && make`，用 `pdftoppm` 截图检查溢出/重叠。
+- 修复优先级：删 `\plainbar` → 缩 `inner sep` → 缩字号 → 减行距 → 调 y 坐标。
+
+### 第 9 步：史实审查 + 术语审查 【人物专属】
+
+**Stark 特殊陷阱**：
+
+| 陷阱 | 说明 |
+|------|------|
+| 获奖理由两项并提 | 诺奖理由含两件事：极隧射线中的多普勒效应 + 电场中谱线分裂（后者即斯塔克效应）；勿写成「因发现斯塔克效应获奖」单项 |
+| 发现年份 | 多普勒效应与谱线分裂的**具体发现年份 page.md 均未载**，禁写编造年份，用概念图式 |
+| 与爱因斯坦的关系 | 必须两面并呈：1907 年 Stark 是约稿编辑（当时爱因斯坦尚不知名，且其约稿间接催生广义相对论思路）；1920s 后是「德意志物理学」反相对论急先锋——page.md 明言这是 "ironic"，勿只写一面 |
+| 攻击对象口径 | 攻击爱因斯坦（"Jewish physics"）与 Heisenberg（非犹太人，因辩护相对论被称 "White Jew"，载于党卫机关报《Das Schwarze Korps》）；page.md 未载对 Planck/Sommerfeld 的攻击细节（见 Planck 页），本篇禁跨页引入 |
+| 去纳粹化两审 | 1947 判「Major Offender」4 年监禁（后缓刑）→ 1949 慕尼黑上诉法庭改判「Lesser Offender」+ 罚款 1000 马克，两判勿混 |
+| 月球环形山 | 1970 IAU 命名时**不知其纳粹活动**，2020-08-12 撤名——命名与撤名必须同时交代，禁只写命名 |
+| 诺奖奖金去向 | 用诺奖奖金在上巴伐利亚自家庄园（Gut Eppenstatt）建私人实验室，战后研究电场中光的偏转；勿写成「隐居不研」 |
+| 纳粹内容尺度 | 引用纳粹言论（如 "eradicate the Jewish spirit"）须克制、注明出处且用于批判性叙述；全篇定性词用「反犹主义运动」（antisemitic）——这是 page.md 原文定性，禁止中性化处理 |
+| 同名区分 | Stark effect（物理效应）与 Stark crater（月球环形山，已撤名）勿混；Wilhelm Müller（1941《Jüdische und deutsche Physik》合著者，慕尼黑物理学家）若提及须限「合著者」身份，勿与其他同名者混淆 |
+| 无载禁写 | 五名子女姓名、博士生、与 Sommerfeld 冲突细节、Stark effect 的理论解释者（Epstein/Schwarzschild）、Stark–Einstein 光化学当量律的正文细节（仅 See also 一提）——page.md 均无载 |
+
+**术语清单**：
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| Stark effect | 斯塔克效应 | 电场中谱线分裂，诺奖理由后半句 |
+| canal rays | 极隧射线 | 多普勒效应的载体；勿译「隧道射线」 |
+| Doppler effect | 多普勒效应 | 极隧射线中的运动光源频移 |
+| spectral line splitting | 谱线分裂 | 电场中分裂，勿与磁场塞曼效应混淆 |
+| Deutsche Physik | 德意志物理学 / 雅利安物理学 | 反犹运动名，保留德文原词并注明性质 |
+| denazification | 去纳粹化 | 战后清算程序，两审判决勿混 |
+| Privatdozent | 无俸讲师 | 德语学术职衔 |
+| Physikalisch-Technische Reichsanstalt | 帝国物理技术研究所（PTR） | 1933–1939 所长职 |
+| Notgemeinschaft der Deutschen Wissenschaft | 德国科学紧急联合会 | 1933 起任主席 |
+| white Jew | 「白色犹太人」 | Stark 对 Heisenberg 的攻击用语，须带引号并注明出处 |
+
+---
+
+## 四、背景音乐选择 【人物专属】
+
+- **选定曲目**: **Tragedy** — Alex-Productions
+- **风格**: 深色 / 戏剧性
+- **匹配理由**:
+  - 「深色」匹配 Stark 的一生底色——诺奖桂冠与纳粹劣迹同在一身，是一部带罪的科学传记
+  - 「戏剧性」匹配叙事的强烈反差——1907 年约稿爱因斯坦的编辑，二十年后的反相对论急先锋；1919 年诺奖，1947 年去纳粹化法庭
+  - 谱线分裂的母题本身自带戏剧张力，配乐应承载而非冲淡这种沉重
+- **本地路径**: `music_audio/alex-productions/80-K5f65-22sY4-Tragedy.wav` → `presentations/20th_century/Johannes_Stark/Tragedy.wav`
+
+---
+
+## 五、关键参考文件清单 【模板通用】
+
+| 文件 | 用途 |
+|------|------|
+| `physicist/presentations/20th_century/20th_century/Johannes_Stark/page.md` | 本地 Wikipedia 正文（事实基准） |
+| `physicist/presentations/20th_century/Kenneth_G_Wilson/Kenneth_G_Wilson_zh.tex` | 标杆 Beamer 骨架/源码 |
+| `physicist/presentations/cover/openphysicist_page.tex` | 项目首页模板 |
+| `physicist/presentations/20th_century/Eugene_Wigner/Eugene_Wigner_zh.tex` | 物理学家首例成品参考 |
+| `mathematician/presentations/20th_century/Alexander_Grothendieck-F/Alexander_Grothendieck_zh.tex` | 数学家标杆参考 |
+| `MySQL/seed_person.py` | 人物主记录 + fields/relations 入库引擎 |
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**

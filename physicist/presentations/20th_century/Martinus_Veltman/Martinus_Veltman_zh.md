@@ -114,16 +114,16 @@
 | nationality | Netherlands | 待写入 |
 | primary_occupation | theoretical physicist | 待写入 |
 | field_of_work | theoretical physics / particle theory / computer algebra | 待写入 |
-| has_biography | 1 | 本次置 1 |
+| has_biography | 本次入库置 0（Beamer 立传完成后由主控置 1） | 待执行 |
 
-## 7. 社会关系入库清单
+## 7. 社会关系入库清单（已按 page.md 核对，✅=yaml 入库 / ✗=不入库）
 
-- **博士导师**：Léon van Hove（1961 随其赴 CERN）
-- **著名博士生**：Gerard 't Hooft（1999 共同诺奖）、Peter van Nieuwenhuizen（超引力）、Bernard de Wit、Michel Eugène Lemoine 等
-- **诺奖同届**：Gerard 't Hooft（1999 共享，师生档）
-- **实验现场同事**：Giampietro Bernardini（1963 CERN 中微子实验共同分析）
-- **量子引力接续**：Stanley Deser（重整化引力后续）
-- **家族**：女儿 Hélène Veltman（粒子物理博士，师从 Mary Gaillard）
+- ✅ **博士导师**：Léon van Hove（advisor-student 方向 advisor；1961 随其转赴 CERN，page.md 明载）
+- ✅ **博士生**（infobox 实载三人）：Gerardus 't Hooft（advisor-student 方向 student）、Peter van Nieuwenhuizen、Bernard de Wit
+- ✅ **诺奖共享**：Gerardus 't Hooft（co-honored，1999 共享，师生双关系）
+- ✅ **实验现场同事**：Giampietro Bernardini（colleague，1963 CERN 中微子实验共同图像分析，page.md 明载"仅余两人"）
+- ✗ **量子引力接续**：Stanley Deser——Veltman page.md **无载**（该事实出自 't Hooft 篇），不入库；§2.9 相关表述在 Beamer 执行时须删或改写
+- ✗ **家族**：妻 Anneke（page.md 仅载名无姓）、女儿 Hélène（无全名）——规范全名不可得，不入库（子承父业师从 Mary Gaillard 属女儿履历非 Veltman 关系）
 
 ## 8. 奖项清单
 
@@ -169,6 +169,30 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与 't Hooft 篇跨篇互检（1999 师生双人叙事：两篇对同一事件的口径、年份、理由完全一致，互为镜像不重复）
+
+---
+
+## 12. 研究领域表（fields，对齐 yaml 与 person_field）
+
+| rank | 领域（name_en） | 中文 | 说明 |
+|:--:|------|------|------|
+| 0 | quantum field theory | 量子场论 | 二十年执念：Yang–Mills 重整化 |
+| 1 | electroweak interaction | 电弱相互作用 | 与学生证明自发破缺情形可重整化（1999 诺奖核心） |
+| 2 | renormalization | 重整化 | 维数正规化与 't Hooft 共同发展 |
+| 3 | computer algebra | 计算机代数 | Schoonschip——公认首个计算机代数系统 |
+
+## 13. 术语清单（第 9 步史实/术语审查）
+
+| 英文 | 中文 | 风险点 |
+|------|------|------|
+| Schoonschip | （保留原名） | 1963/64 SLAC 期间设计，首个计算机代数系统 |
+| Passarino–Veltman reduction | 帕萨里诺–韦尔特曼约化 | 圈图计算标准工具（Known for） |
+| dimensional regularization | 维数正规化 | 与 't Hooft 共同发展 |
+| vDVZ discontinuity | vDVZ 不连续性 | 有质量引力（Known for） |
+| renormalization | 重整化 | 1971 完成者为博士生 't Hooft |
+| spontaneous symmetry breaking | 自发对称破缺 | 以 Higgs 机制实现 |
+| Nobel citation | 诺奖理由 | 原句 "for elucidating the quantum structure of electroweak interactions in physics" 勿改写 |
+| Facts and Mysteries in Elementary Particle Physics | 书名 | 2003，勿误写 |
 
 ---
 

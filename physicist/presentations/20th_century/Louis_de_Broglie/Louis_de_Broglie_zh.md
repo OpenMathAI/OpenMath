@@ -169,3 +169,20 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+---
+
+## 12. 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| matter wave | 物质波 | 1923 年 note 提出、1924 年博士论文系统化 |
+| phase wave | 相位波 | 相速度 c²/v，粒子速度等于其群速度 |
+| de Broglie wavelength | 德布罗意波长 | λ = h/p，公式框 ★ 用此式 |
+| wave mechanics | 波动力学 | mécanique ondulatoire；Schrödinger 建立方程，勿混淆归属 |
+| pilot wave | 领波 | 1927 提出后搁置，1952 Bohm 复兴 |
+| group velocity | 群速度 | 与相速度区分，勿写反 |
+| intrinsic clock | 内禀钟 | 电子内部周期过程，频率 E/h，猜想至今未定论 |
+| Duc de Broglie | 布罗意公爵 | 1960 年才继承第七代，1929 获奖时勿冠头衔 |
+| Kalinga Prize | 卡林加奖 | 1952 年 UNESCO 首届 |
+| Académie française | 法兰西学术院 | 1944 年第 1 席，由兄长 Maurice 主持入席为史上孤例 |

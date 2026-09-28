@@ -101,6 +101,32 @@
 - **死亡**：2013-02-19 逝于 Ithaca, NY，享年 75。
 - **肖像**：`images.txt` **为空**——封面用装饰圆占位，须在 tex 中用 `\IfFileExists` 条件包含。
 
+## 5.5 研究领域表（第 4 步入库对照，与 MySQL/data/Robert_Coleman_Richardson.yaml 一致）
+
+| rank | 领域（name_en） | 中文 | 说明 | 对应页 |
+|:--:|------|------|------|------|
+| 0 | cryophysics | 低温物理 | page.md field_of_work 原载 | 全篇 |
+| 1 | low-temperature physics | 亚毫开尔文低温物理 | 极低温 ³He 研究 | 核心页 |
+| 2 | nuclear magnetic resonance | 核磁共振 | 用 NMR 研究极低温量子性质 | 方法页 |
+| 3 | superfluidity | 超流 | 1972 发现 ³He 超流，1996 诺奖核心 | 发现页 |
+| 4 | experimental physics | 实验物理 | 实验物理学家定位 | 全篇 |
+
+## 5.6 术语清单
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| superfluidity in helium-3 | 氦-3 的超流性 | 1996 诺奖官方理由，"their" 三人共享 |
+| sub-millikelvin | 亚毫开尔文 | 其研究温度量级 |
+| Pomeranchuk effect | Pomeranchuk 效应 | 其诺奖演讲题（1996-12-07），标题引用准确 |
+| Pomeranchuk cell | Pomeranchuk 冷却池 | 绝热加压制冷；纠错叙事禁写 |
+| vice provost for research | 研究副校长 | Cornell 1998-2007，勿与 2007-2009 顾问职务混 |
+| senior science adviser | 校长兼教务长高级科学顾问 | 2007-2009 |
+| Floyd Newman Professor | Floyd Newman 物理学教授 | 去世时在任（不再运营实验室） |
+| Simon Memorial Prize | 西蒙纪念奖 | 1976（三人同获） |
+| Oliver E. Buckley Condensed Matter Prize | 巴克利凝聚态奖 | 1981（三人同获） |
+| American Philosophical Society | 美国哲学学会 | 2001 当选 |
+| Biographical Memoirs | （NAS）传记回忆录 | Reppy 与 Lee 执笔（2015） |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
@@ -115,13 +141,18 @@
 | field_of_work | cryophysics / low-temperature physics | 待写入 |
 | has_biography | 1 | 本次置 1 |
 
-## 7. 社会关系入库清单
+## 7. 社会关系入库清单（★ 已按库内规范名核对，与 MySQL/data/Robert_Coleman_Richardson.yaml 一致）
 
-- **博士导师**：Horst Meyer（advisor-student，Duke）
-- **核心合作者**：David Lee（colleague / co-honored，Cornell LASSP，1996 共同诺奖）、Douglas Osheroff（colleague / co-honored，1972 超流发现时的研究生；**非其博士生**）
-- **妻子**：Betty Marilyn McCarthy（spouse，Duke 物理博士生，1962-09-29 结婚）
-- **回忆录执笔者**：J. D. Reppy、D. M. Lee（NAS 传记回忆录 2015）
-- **同届得主**：David Lee、Douglas Osheroff（co-honored，三人平分）
+| 类型 | 对方（库内规范名） | 方向 | note |
+|------|------|------|------|
+| advisor-student | Horst Meyer | 师→生 | Duke 博士导师（1966） |
+| colleague | David M. Lee（id=2858） | 无向 | Cornell LASSP 资深同事，三人组 |
+| colleague | Douglas D. Osheroff（id=2418） | 无向 | 三人组中的研究生（非其博士生） |
+| co-honored | David M. Lee（id=2858） | 无向 | 1996 诺奖三人平分；1981 Buckley 同获 |
+| co-honored | Douglas D. Osheroff（id=2418） | 无向 | 1996 诺奖三人平分；1981 Buckley 同获 |
+| spouse | Betty Marilyn McCarthy | 无向 | Duke 物理博士生同学，1962-09-29 结婚 |
+
+> **不入库存档**：J. D. Reppy 为其 NAS 回忆录执笔者之一（与 Lee 合撰，2015）——属身后文献事实而非直接社会关系，不入库（Reppy 已以 David Lee 的三临界点合作者身份入库）。
 
 ## 8. 奖项清单
 

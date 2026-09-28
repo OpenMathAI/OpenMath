@@ -101,6 +101,21 @@
 - **引语红线**：Ruska 本人在 page.md 中无直接引语；诺奖演讲标题 *The Development of the Electron Microscope and of Electron Microscopy* 是事实可写。
 - **肖像**：images.txt 只有**电镜实物照与耶拿雕像**，无本人肖像——封面装饰圆占位，电镜实物照可作内容页插图。
 
+## 5.5 术语清单（英文 / 中文 / 风险点）
+
+| 英文 | 中文 | 风险 |
+|------|------|------|
+| electron optics | 电子光学 | field_of_work，1986 获奖理由核心词 |
+| electron microscope / TEM | 电子显微镜 / 透射电镜 | 1933 年第一台 TEM |
+| electron lens | 电子透镜 | 1931 磁线圈演示（与 Knoll） |
+| Technische Hochschule Berlin | 柏林技术学院 | 今 TU Berlin，勿写成柏林大学 |
+| Fritz Haber Institute | 弗里茨·哈伯研究所 | 马普学会，电镜研究所所长 |
+| Siemens-Reiniger-Werke | 西门子-赖尼格公司 | 1937 入职、1939 首台商用机电镜 |
+| Lasker Award | 拉斯克奖 | 1960 基础医学研究奖，早于诺奖 26 年 |
+| half of the Nobel Prize | 诺奖的一半 | 1986 Ruska 一半 + Binnig/Rohrer 各四分之一，切分勿写错 |
+| Helmut Ruska | 赫尔穆特·鲁斯卡 | 弟弟、医生，电镜医学应用开拓者；兄弟类型不入库 |
+| 1178 Irmela | 小行星 1178 伊尔梅拉 | 以其妻 Irmela 命名，Max Wolf 发现 |
+
 ## 6. 数据库字段核对表
 
 | 字段 | 值 | 状态 |
