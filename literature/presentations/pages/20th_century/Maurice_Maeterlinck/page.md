@@ -9,6 +9,7 @@ nationality: ["Belgium"]
 field_of_work: ["philosophy"]
 occupation: ["writer", "poet", "philosopher", "essayist", "playwright", "librettist", "translator", "jurist", "natural philosopher"]
 award_received: ["Nobel Prize in Literature", "Commander of the Legion of Honour", "Grand Officer of the Military Order of Saint James of the Sword"]
+languages_spoken: ["French"]
 educated_at: ["Ghent University", "Society of Jesus", "Sint-Barbaracollege"]
 ---
 

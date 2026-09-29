@@ -8,6 +8,7 @@ date_of_death: ["1910-04-26", "1910-01-01"]
 nationality: ["Norway"]
 occupation: ["poet", "playwright", "writer", "journalist", "prose writer", "politician", "theatre manager", "director", "Theaterintendant", "opinion journalist"]
 award_received: ["Nobel Prize in Literature"]
+languages_spoken: ["Riksmål", "Norwegian"]
 educated_at: ["University of Oslo"]
 ---
 

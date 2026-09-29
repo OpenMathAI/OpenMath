@@ -9,6 +9,7 @@ nationality: ["Russian Empire", "Poland"]
 field_of_work: ["fiction"]
 occupation: ["novelist", "screenwriter", "journalist", "writer", "short story writer"]
 award_received: ["Nobel Prize in Literature", "Knight of the Legion of Honour"]
+languages_spoken: ["Polish"]
 educated_at: ["University of Warsaw"]
 ---
 

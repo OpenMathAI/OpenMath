@@ -8,6 +8,7 @@ date_of_death: ["2017-03-17"]
 nationality: ["Saint Lucia"]
 occupation: ["poet", "playwright", "writer", "prose writer", "director", "librettist"]
 award_received: ["Nobel Prize in Literature", "Guggenheim Fellowship", "MacArthur Fellows Program", "Officer of the Order of the British Empire", "Cholmondeley Award", "King’s / Queen’s Gold Medal for Poetry", "PEN Oakland/Josephine Miles Literary Award", "Musgrave Medal", "Preis der Stadt Münster für Europäische Poesie", "Anisfield-Wolf Book Awards", "honorary doctorate of the University of Alcala", "Order of Merit", "T. S. Eliot Prize", "Heinemann Award", "star on Playwrights' Sidewalk", "Prix Laure Bataillon"]
+languages_spoken: ["English"]
 educated_at: ["University of the West Indies", "University of London"]
 ---
 

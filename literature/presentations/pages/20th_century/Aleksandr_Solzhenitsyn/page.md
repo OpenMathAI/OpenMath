@@ -9,6 +9,7 @@ nationality: ["Russian Socialist Federative Soviet Republic", "Soviet Union", "R
 field_of_work: ["Correctional Labor Camps"]
 occupation: ["writer", "historian", "novelist", "screenwriter", "playwright", "poet", "public figure", "prose writer", "opinion journalist", "school teacher", "military personnel", "militant", "writer", "teacher", "short story writer"]
 award_received: ["Nobel Prize in Literature", "Medal \"For the Victory over Germany in the Great Patriotic War 1941–1945\"", "Order of the Patriotic War, 2nd class", "Templeton Prize", "Order of the Red Star", "Medal \"For the Capture of Königsberg\"", "Lomonosov Gold Medal", "Grand Cross of the Order of the Star of Romania", "Order of St. Andrew the Apostle the First-Called", "honorary doctor of Syracuse University", "State Prize of the Russian Federation", "International Botev Prize", "TEFI", "Q126325594", "Order of the Star of Romania", "Ordre des Arts et des Lettres", "honorary citizen of Ryazan", "The Hillman Prize for Book Journalism", "Order of Holy Prince Daniel of Moscow"]
+languages_spoken: ["Russian"]
 educated_at: ["Rostov State University"]
 ---
 

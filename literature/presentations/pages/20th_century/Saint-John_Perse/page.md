@@ -8,6 +8,7 @@ date_of_death: ["1975-09-20"]
 nationality: ["France"]
 occupation: ["poet", "translator", "diplomat", "writer"]
 award_received: ["Nobel Prize in Literature", "Commander of the Legion of Honour", "Knight of the Legion of Honour", "Officer of the Legion of Honour", "Grand Officer of the Legion of Honour", "Grand prix national des Lettres"]
+languages_spoken: ["French"]
 educated_at: ["University of Bordeaux", "Lycée Louis-Barthou"]
 ---
 

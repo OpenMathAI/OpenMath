@@ -8,6 +8,7 @@ date_of_death: ["1916-09-14", "1916-00-00"]
 nationality: ["Spain"]
 occupation: ["playwright", "civil engineer", "politician", "writer", "engineer", "mathematician", "economist", "poet"]
 award_received: ["Nobel Prize in Literature", "Knight of the Order of the Golden Fleece", "Grand Cross of Naval Merit with white badge", "Grand cross of the Civil Order of Alfonso XII", "Grand Cross of the Cross of Military Merit with White Decoration", "Echegaray Medal"]
+languages_spoken: ["Spanish"]
 educated_at: ["Escuela Técnica Superior de Ingenieros de Caminos, Canales y Puertos (Universidad Politécnica de Madrid)"]
 ---
 

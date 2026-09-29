@@ -8,6 +8,7 @@ date_of_death: ["1968-06-14"]
 nationality: ["Kingdom of Italy", "Italy"]
 occupation: ["poet", "linguist", "writer", "translator", "screenwriter", "university teacher", "journalist", "literary critic", "critic", "librettist"]
 award_received: ["Nobel Prize in Literature", "Taormina prize"]
+languages_spoken: ["Italian", "English", "French", "Spanish"]
 educated_at: ["Ist. Tec. Economico  A.M. Jaci"]
 ---
 

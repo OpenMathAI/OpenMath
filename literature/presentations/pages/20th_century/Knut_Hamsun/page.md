@@ -8,6 +8,7 @@ date_of_death: ["1952-02-19"]
 nationality: ["Norway"]
 occupation: ["writer", "poet", "novelist", "playwright", "critic", "writer"]
 award_received: ["Nobel Prize in Literature", "Goethe Medal for Art and Science"]
+languages_spoken: ["Norwegian", "Danish"]
 ---
 
 Knut Hamsun

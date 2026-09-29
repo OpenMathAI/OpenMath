@@ -8,6 +8,7 @@ date_of_death: ["1958-05-29"]
 nationality: ["Spain"]
 occupation: ["poet", "writer", "librettist"]
 award_received: ["Nobel Prize in Literature", "Honorary Doctorate from the National Autonomous University of Mexico"]
+languages_spoken: ["Spanish"]
 educated_at: ["High School La Rábida"]
 ---
 

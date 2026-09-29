@@ -9,6 +9,7 @@ nationality: ["Spain"]
 field_of_work: ["literature"]
 occupation: ["writer", "poet", "novelist", "politician", "journalist", "essayist", "university teacher", "film actor"]
 award_received: ["Nobel Prize in Literature", "Grand Cross of the Order of Isabella the Catholic", "Princess of Asturias Literary Prize", "Saint George's Cross", "Castelao Medal", "honorary doctorate of the National University of San Marcos", "honorary doctor of the University of Madrid Complutense", "Grand Cross of the Order of the Sun of Peru‎", "Grand Cross of the Military Order of Saint James of the Sword", "honorary doctorate of the University of Santiago de Compostela", "Grand Cross of the Order of Charles III", "honorary doctorate of the University of the Balearic Islands", "honorary doctor of Tel Aviv University", "honorary doctor of the Hebrew University of Jerusalem", "honorary doctor of the University of Miami", "Premio Planeta de Novela", "National Novel Prize", "Grand Cross of the Aeronautical Merit - White Decoration", "Miguel de Cervantes Prize"]
+languages_spoken: ["Spanish"]
 educated_at: ["Centro Universitario Villanueva"]
 ---
 

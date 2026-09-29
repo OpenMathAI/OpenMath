@@ -9,6 +9,7 @@ nationality: ["France"]
 field_of_work: ["creative and professional writing", "journalism", "literary criticism", "prose", "poetry"]
 occupation: ["writer", "poet", "novelist", "librarian", "literary critic", "science fiction writer", "prose writer", "biographer", "critic", "journalist"]
 award_received: ["Nobel Prize in Literature", "Montyon Prize", "Vitet Prize", "Officer of the Legion of Honour", "Knight of the Legion of Honour", "Grand Prize for the Best Novels of the Half-Century"]
+languages_spoken: ["French"]
 educated_at: ["Collège Stanislas de Paris"]
 ---
 

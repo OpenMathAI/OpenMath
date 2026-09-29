@@ -9,6 +9,7 @@ nationality: ["German Reich", "Czechoslovakia", "United States"]
 field_of_work: ["novel", "creative and professional writing", "prose", "essay"]
 occupation: ["novelist", "essayist", "autobiographer", "short story writer", "social critic", "diarist", "screenwriter", "university teacher", "writer", "poet", "musician"]
 award_received: ["Nobel Prize in Literature", "Goethe Prize of the City of Frankfurt", "Pour le Mérite for Sciences and Arts order", "Feltrinelli Prize", "Goethe Plaque of the City of Frankfurt", "honorary doctorate from Princeton University", "honorary doctor of Harvard University", "honorary doctorate from Columbia University", "Honorary doctor of the University of Oxford", "honorary doctorate from the University of Cambridge", "Officer of the Legion of Honour", "Commander of the Order of Orange-Nassau", "honorary citizen of Lübeck", "honorary doctor of ETH Zürich", "honorary doctorate of Lund University", "honorary doctor of the University of Bonn", "honorary doctor of Yale University", "honorary doctor of the University of Jena", "Goethe Medal for Art and Science", "honorary doctor of Rutgers University", "Pour le Mérite", "Order of Orange-Nassau", "Taylorian Lecture"]
+languages_spoken: ["German"]
 educated_at: ["Ludwig-Maximilians-Universität München", "Technical University of Munich", "Katharineum"]
 ---
 

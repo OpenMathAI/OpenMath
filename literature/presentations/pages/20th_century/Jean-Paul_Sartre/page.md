@@ -9,6 +9,7 @@ nationality: ["France"]
 field_of_work: ["philosophy", "epistemology", "ethics", "politics", "phenomenology", "ontology"]
 occupation: ["playwright", "epistemologist", "novelist", "screenwriter", "biographer", "literary critic", "essayist", "resistance fighter", "political writer", "writer", "philosopher", "peace activist", "opinion journalist", "intellectual", "lyricist"]
 award_received: ["Nobel Prize in Literature", "Eugène Dabit populist novel award", "Fellow of the American Academy of Arts and Sciences", "Grand Prize for the Best Novels of the Half-Century", "Toynbee Prize"]
+languages_spoken: ["French"]
 educated_at: ["Lycée Henri-IV", "École Normale Supérieure", "Cours Hattemer", "Lycée Louis-le-Grand", "University of Paris"]
 ---
 

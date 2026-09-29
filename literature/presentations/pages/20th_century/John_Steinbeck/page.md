@@ -9,6 +9,7 @@ nationality: ["United States"]
 field_of_work: ["novel of manners", "creative and professional writing", "prose"]
 occupation: ["writer", "screenwriter", "war correspondent", "novelist", "scientific collector", "prose writer"]
 award_received: ["Nobel Prize in Literature", "Presidential Medal of Freedom", "National Book Award for Fiction", "California Hall of Fame", "Pulitzer Prize for the Novel", "King Haakon VII Freedom Cross", "Bancarella Selection Prize"]
+languages_spoken: ["English"]
 educated_at: ["Stanford University", "Salinas High School"]
 ---
 

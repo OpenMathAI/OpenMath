@@ -9,6 +9,7 @@ nationality: ["Duchy of Schleswig", "Kingdom of Prussia", "German Reich", "Germa
 field_of_work: ["study of history", "history", "jurisprudence", "classical philology", "classical antiquity"]
 occupation: ["historian of classical antiquity", "numismatist", "jurist", "journalist", "legal historian", "writer", "university teacher", "politician", "epigrapher", "classical archaeologist", "historian", "Germanist", "member of parliament"]
 award_received: ["Nobel Prize in Literature", "Pour le Mérite for Sciences and Arts order", "Bavarian Maximilian Order for Science and Art", "honorary citizen of Rome"]
+languages_spoken: ["Latin", "Ancient Greek", "German"]
 educated_at: ["Kiel University", "Christianeum"]
 ---
 

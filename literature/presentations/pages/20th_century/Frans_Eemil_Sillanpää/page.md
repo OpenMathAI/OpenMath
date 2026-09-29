@@ -8,6 +8,7 @@ date_of_death: ["1964-06-03"]
 nationality: ["Finland", "Grand Duchy of Finland"]
 occupation: ["writer", "novelist", "poet"]
 award_received: ["Nobel Prize in Literature", "Aleksis Kivi Award", "Commander First Class of the Order of the Lion of Finland"]
+languages_spoken: ["Finnish"]
 educated_at: ["Jumesniemi Church School", "Haukijärvi School", "Tampere Lyceum High School", "University of Helsinki"]
 ---
 

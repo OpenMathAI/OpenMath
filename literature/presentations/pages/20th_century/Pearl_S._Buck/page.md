@@ -9,6 +9,7 @@ nationality: ["United States"]
 field_of_work: ["Chinese culture", "English-language literature"]
 occupation: ["translator", "novelist", "autobiographer", "human rights defender", "screenwriter", "journalist", "children's writer", "writer", "missionary", "prose writer", "teacher"]
 award_received: ["Pulitzer Prize for the Novel", "William Dean Howells Medal of the American Academy of Arts and Letters", "Nobel Prize in Literature", "Horatio Alger Award", "National Women's Hall of Fame"]
+languages_spoken: ["English", "Mandarin", "Standard Chinese"]
 educated_at: ["Cornell University", "Randolph–Macon College"]
 ---
 

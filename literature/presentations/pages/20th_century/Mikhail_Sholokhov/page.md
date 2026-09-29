@@ -9,6 +9,7 @@ nationality: ["Russian Empire", "Soviet Union"]
 field_of_work: ["prose", "creative and professional writing", "poetry", "journalism", "politics"]
 occupation: ["writer", "novelist", "screenwriter", "poet", "prose writer", "journalist", "politician", "short story writer"]
 award_received: ["State Stalin Prize, 1st degree", "Medal \"For the Victory over Germany in the Great Patriotic War 1941–1945\"", "Order of Lenin", "Hero of Socialist Labour", "Order of the October Revolution", "Order of the Patriotic War, 1st class", "Nobel Prize in Literature", "Medal \"For the Defence of Moscow\"", "Medal \"For the Defence of Stalingrad\"", "Medal \"For Valiant Labour in the Great Patriotic War 1941–1945\"", "Alexander Fadeyev Medal", "Medal \"Veteran of Labour\"", "Lenin Prize", "Jubilee Medal \"Twenty Years of Victory in the Great Patriotic War 1941–1945\"", "Jubilee Medal \"Thirty Years of Victory in the Great Patriotic War 1941–1945\"", "Jubilee Medal \"In Commemoration of the 100th Anniversary of the Birth of Vladimir Ilyich Lenin\"", "Order of Georgi Dimitrov", "Order of Cyril and Methodius", "Grand Star of People's Friendship", "Order of Sukhbaatar", "Order of Lenin", "Order of Lenin", "Order of Lenin", "\"Hammer and Sickle\" gold medal", "Order of Lenin", "Order of Lenin", "Hero of Socialist Labour", "\"Hammer and Sickle\" gold medal"]
+languages_spoken: ["Russian"]
 ---
 
 Mikhail Sholokhov

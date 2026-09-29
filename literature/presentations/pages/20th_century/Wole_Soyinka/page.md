@@ -8,6 +8,7 @@ nationality: ["Nigeria"]
 field_of_work: ["performing arts"]
 occupation: ["playwright", "poet", "translator", "novelist", "philosopher", "essayist", "professor", "writer", "satirical novelist"]
 award_received: ["Nobel Prize in Literature", "Nigerian National Order of Merit Award", "Anisfield-Wolf Book Awards", "Benson Medal", "honorary doctor of Harvard University", "Weilheim Literature Prize", "Fellow of the Royal Society of Literature", "Fellow of the African Academy of Sciences", "Doctor honoris causa at University of Bayreuth", "honorary doctorate from Princeton University", "Order of the Federal Republic", "John Whiting Award", "Europe Theatre Prize", "honorary doctorate from the University of Paris-VII", "honorary doctorate from the University of Montpellier-III", "Golden Magnolia", "Grand Commander of the Order of the Niger, Civil Division", "honorary doctorate of the University of Cape Town"]
+languages_spoken: ["English", "Nigerian Pidgin", "Yoruba"]
 educated_at: ["University of Leeds", "University of Ibadan", "University of London", "Abeokuta Grammar School"]
 ---
 

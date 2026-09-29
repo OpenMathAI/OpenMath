@@ -8,6 +8,7 @@ date_of_death: ["1998-02-08", "1998-02-09", "1988-02-08"]
 nationality: ["Iceland"]
 occupation: ["linguist", "novelist", "translator", "playwright", "poet", "philosopher", "writer"]
 award_received: ["Nobel Prize in Literature"]
+languages_spoken: ["Icelandic"]
 ---
 
 Halldór Laxness

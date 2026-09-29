@@ -9,6 +9,7 @@ nationality: ["Ireland"]
 field_of_work: ["drama"]
 occupation: ["writer", "linguist", "film director", "screenwriter", "cricketer", "poet", "novelist", "playwright", "translator", "teacher", "intellectual", "French resistance fighter", "video artist", "cinematographer", "draftsperson", "filmmaker"]
 award_received: ["Scholar of Trinity College, Dublin", "honorary doctorate of Trinity College, Dublin", "Obie Award", "Obie Award", "Prix Formentor", "Obie Award", "Obie Award", "Fellow of the American Academy of Arts and Sciences", "Nobel Prize in Literature", "Obie Award", "Saoi", "star on Playwrights' Sidewalk"]
+languages_spoken: ["French", "English"]
 educated_at: ["Trinity College, Dublin", "Portora Royal School"]
 ---
 

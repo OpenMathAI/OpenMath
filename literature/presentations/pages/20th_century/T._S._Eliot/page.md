@@ -8,6 +8,7 @@ date_of_death: ["1965-01-04"]
 nationality: ["United States", "United Kingdom", "United Kingdom"]
 occupation: ["playwright", "poet", "essayist", "literary critic", "social critic", "short story writer", "university teacher", "screenwriter", "lyricist", "children's writer", "writer", "Nobel Prize winner", "bank teller"]
 award_received: ["Nobel Prize in Literature", "Pour le Mérite for Sciences and Arts order", "doctor honoris causa from the University of Paris", "Emerson-Thoreau Medal", "Presidential Medal of Freedom", "Laurence Olivier Award for Best New Musical", "Tony Award for Best Original Score", "Tony Award for Best Book of a Musical", "Officer of the Legion of Honour", "Pour le Mérite", "Order of Merit", "Commandeur des Arts et des Lettres‎", "honorary doctor of the University of Rennes", "Tony Award for Best Play"]
+languages_spoken: ["English"]
 educated_at: ["University of Paris", "Harvard University", "Merton College", "Milton Academy", "Harvard College", "Eliot House"]
 ---
 

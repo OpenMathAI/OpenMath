@@ -8,6 +8,7 @@ nationality: ["France", "Mauritius"]
 field_of_work: ["creative and professional writing", "journalism", "translation", "prose"]
 occupation: ["writer", "translator", "novelist", "essayist", "children's writer", "journalist", "university teacher"]
 award_received: ["Nobel Prize in Literature", "Officer of the Legion of Honour", "Prince Pierre Award", "Stig Dagerman Prize", "Prix Renaudot", "Grand prix de littérature Paul-Morand", "Prix Breizh", "Prix mondial Cino Del Duca", "Prix Littéraire Valery Larbaud", "Grand prix Jean-Giono", "Flaiano Literary Prize"]
+languages_spoken: ["English", "Spanish", "Italian", "French"]
 educated_at: ["University of Bristol", "Aix-Marseille University", "University of Nice Sophia Antipolis", "University of Provence - Aix-Marseille I", "University of Côte d'Azur"]
 ---
 

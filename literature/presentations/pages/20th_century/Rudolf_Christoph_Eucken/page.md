@@ -9,7 +9,7 @@ nationality: ["Kingdom of Prussia", "German Empire", "Weimar Republic"]
 field_of_work: ["philosophy"]
 occupation: ["philosopher", "writer", "university teacher", "prose writer"]
 award_received: ["Nobel Prize in Literature"]
-doctoral_advisor: ["Friedrich Adolf Trendelenburg"]
+languages_spoken: ["German"]
 educated_at: ["University of Göttingen", "Humboldt-Universität zu Berlin"]
 ---
 

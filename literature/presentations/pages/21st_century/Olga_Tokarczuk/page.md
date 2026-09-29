@@ -7,6 +7,7 @@ date_of_birth: ["1962-01-29"]
 nationality: ["Poland"]
 occupation: ["novelist", "writer", "psychologist", "poet", "librettist", "publisher", "donor", "screenwriter", "essayist"]
 award_received: ["Silver Medal for Merit to Culture – Gloria Artis‎", "Samuel Bogumil Linde Prize", "Kościelski Award", "Kulturhuset Stadsteatern", "Nike Award", "International Booker Prize", "Brückepreis", "Nike Award", "Śląski Wawrzyn Literacki", "Vilenica Prize", "Nobel Prize in Literature", "Jan Michalski Prize", "honorary citizen of Wrocław", "Prix Laure Bataillon", "EBRD Literature Prize", "Warwick Prize for Women in Translation", "Warwick Prize for Women in Translation", "Ambassador of the correct Polish language", "Usedom Literature Prize", "Q30903900", "honorary citizen of Warsaw", "Paszport Polityki", "Golden Medal for Merit to Culture", "Paszport Polityki", "honorary citizen of Lower Silesia", "Q115207928", "honorary doctorate from Sorbonne University"]
+languages_spoken: ["Polish"]
 educated_at: ["Faculty of Psychology, University of Warsaw"]
 ---
 

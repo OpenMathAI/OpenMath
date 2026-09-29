@@ -8,6 +8,7 @@ date_of_death: ["1991-07-24", "1991-00-00"]
 nationality: ["United States", "Poland", "Russian Empire"]
 occupation: ["translator", "novelist", "Esperantist", "autobiographer", "journalist", "children's writer", "screenwriter", "prose writer", "Nobel Prize winner", "writer"]
 award_received: ["Nobel Prize in Literature", "National Book Award", "Itzik Manger Prize", "Buber Rosenzweig Medal", "honorary doctor of Ben-Gurion University", "honorary doctor of the University of Miami", "National Book Award", "Bancarella Literary Prize"]
+languages_spoken: ["English", "Esperanto", "Yiddish", "Polish"]
 ---
 
 Isaac Bashevis Singer

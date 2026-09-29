@@ -9,6 +9,7 @@ nationality: ["Sweden"]
 field_of_work: ["novel"]
 occupation: ["translator", "novelist", "journalist", "writer", "poet", "film director", "film screenwriter"]
 award_received: ["Nobel Prize in Literature", "Nordic Council Literature Prize", "Dobloug Prize", "Dobloug Prize", "Samfundet De Nio's Grand Prize", "Östersunds-Postens litterature price"]
+languages_spoken: ["Swedish"]
 ---
 
 Eyvind Johnson

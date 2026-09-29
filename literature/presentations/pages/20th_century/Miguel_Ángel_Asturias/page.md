@@ -8,6 +8,7 @@ date_of_death: ["1974-06-09"]
 nationality: ["Guatemala"]
 occupation: ["poet", "writer", "diplomat", "journalist", "politician", "poet lawyer", "translator", "lawyer"]
 award_received: ["Nobel Prize in Literature", "Order of Augusto César Sandino", "Medalla Yucatán", "Lenin Peace Prize", "honorary doctorate of the University of Reims", "honorary doctor of the University of Western Brittany"]
+languages_spoken: ["Spanish"]
 educated_at: ["University of Paris", "Universidad de San Carlos de Guatemala"]
 ---
 

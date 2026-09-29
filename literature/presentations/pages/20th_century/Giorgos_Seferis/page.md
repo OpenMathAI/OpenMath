@@ -8,6 +8,7 @@ date_of_death: ["1971-09-20", "1971-09-19"]
 nationality: ["Greece"]
 occupation: ["poet", "translator", "writer", "ambassador"]
 award_received: ["Nobel Prize in Literature", "doctor honoris causa from the University of Aix-Marseille"]
+languages_spoken: ["French", "English", "Modern Greek"]
 educated_at: ["University of Paris 1 Pantheon-Sorbonne"]
 ---
 

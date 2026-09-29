@@ -9,6 +9,7 @@ nationality: ["Russian Empire", "Soviet Union"]
 field_of_work: ["prose"]
 occupation: ["writer", "poet", "translator", "novelist", "playwright", "pianist", "prose writer", "translator of William Shakespeare", "screenwriter", "composer", "librettist"]
 award_received: ["Nobel Prize in Literature", "Medal \"For the Defence of Moscow\"", "Medal \"For Valiant Labour in the Great Patriotic War 1941–1945\"", "Bancarella Literary Prize"]
+languages_spoken: ["German", "Russian"]
 educated_at: ["Moscow State University, Faculty of Law", "University of Marburg", "Lomonosov Moscow State University", "Imperial Moscow University"]
 ---
 

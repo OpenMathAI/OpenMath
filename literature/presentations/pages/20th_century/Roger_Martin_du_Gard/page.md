@@ -8,6 +8,7 @@ date_of_death: ["1958-08-22"]
 nationality: ["France"]
 occupation: ["writer", "archivist", "playwright"]
 award_received: ["Nobel Prize in Literature", "Commander of the Legion of Honour", "Grand Prix littéraire de la Ville de Paris"]
+languages_spoken: ["French"]
 educated_at: ["Lycée Condorcet", "École des chartes", "École du Louvre", "Lycée Janson-de-Sailly"]
 ---
 

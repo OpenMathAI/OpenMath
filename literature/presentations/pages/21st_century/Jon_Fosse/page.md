@@ -8,6 +8,7 @@ nationality: ["Norway"]
 field_of_work: ["playwriting", "translation", "creative and professional writing", "literary translation", "children's literature", "drama", "novel", "essay"]
 occupation: ["playwright", "poet", "children's writer", "translator", "novelist", "literary scholar", "writer", "essayist"]
 award_received: ["Nynorsk Literature Prize", "Sokneprest Alfred Andersson-Ryssts fond", "Samlagsprisen", "Aschehoug Prize", "Dobloug Prize", "Gyldendal Prize", "Nynorsk Literature Prize", "Arts Council Norway Honorary Award", "Brage Prize honorary award", "Swedish Academy Nordic Prize", "International Ibsen Award", "Language Prize", "European Prize for Literature", "Nordic Council Literature Prize", "honorary doctor of the University of Bergen", "Brage Award for Fiction", "Nobel Prize in Literature", "Commander of the Order of St. Olav‎", "Nestroy Theatre Prize", "Knight of the National Order of Merit", "Knight Grand Cross of the Order of St. Olav‎", "Ludwig Mülheims Theatre Prize", "Q12373132", "Hedda Honorary Award"]
+languages_spoken: ["Norwegian", "Nynorsk"]
 educated_at: ["University of Bergen"]
 ---
 

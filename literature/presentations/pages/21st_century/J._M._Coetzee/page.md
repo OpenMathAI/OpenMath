@@ -8,6 +8,7 @@ nationality: ["South Africa", "Australia"]
 field_of_work: ["novel"]
 occupation: ["linguist", "translator", "novelist", "essayist", "librettist", "screenwriter", "university teacher", "poet", "writer", "prose writer", "critic", "literary scholar"]
 award_received: ["Nobel Prize in Literature", "Chevalier des Arts et des Lettres", "James Tait Black Memorial Prize", "Geoffrey Faber Memorial Prize", "Prix Femina étranger", "Jerusalem Prize", "Booker Prize", "Fellow of the Royal Society of Literature", "Order of Mapungubwe in Gold", "Booker Prize", "Christina Stead Prize for Fiction", "Companion of the Order of Australia", "Medalla Delmira Agustini"]
+languages_spoken: ["Afrikaans", "English"]
 educated_at: ["University of Cape Town", "University of Texas at Austin", "University of Adelaide"]
 ---
 

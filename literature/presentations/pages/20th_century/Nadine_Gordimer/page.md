@@ -9,6 +9,7 @@ nationality: ["South Africa"]
 field_of_work: ["literature"]
 occupation: ["poet", "writer", "novelist", "playwright", "short story writer", "scientific editor", "prose writer"]
 award_received: ["Nobel Prize in Literature", "Officer of the Legion of Honour", "Commandeur des Arts et des Lettres‎", "WH Smith Literary Award", "James Tait Black Memorial Prize", "Booker Prize", "Central News Agency Literary Award", "Nelly Sachs Prize", "Anisfield-Wolf Book Awards", "Rome Prize", "Fellow of the Royal Society of Literature", "Central News Agency Literary Award", "Central News Agency Literary Award"]
+languages_spoken: ["English"]
 educated_at: ["University of the Witwatersrand"]
 ---
 

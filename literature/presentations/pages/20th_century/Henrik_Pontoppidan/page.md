@@ -8,6 +8,7 @@ date_of_death: ["1943-08-21"]
 nationality: ["Kingdom of Denmark"]
 occupation: ["writer", "novelist", "autobiographer", "poet", "prose writer"]
 award_received: ["Nobel Prize in Literature"]
+languages_spoken: ["Danish"]
 ---
 
 Henrik Pontoppidan

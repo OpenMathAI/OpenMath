@@ -8,6 +8,7 @@ nationality: ["South Korea"]
 field_of_work: ["Korean literature", "Korean poetry"]
 occupation: ["writer", "novelist", "short story writer", "poet"]
 award_received: ["Yi Sang Literary Award", "International Booker Prize", "Premio Malaparte", "Q130553019", "Q137590278", "Prix Médicis étranger", "Nobel Prize in Literature", "Ho-Am Prize in the Arts"]
+languages_spoken: ["Korean"]
 educated_at: ["Yonsei University"]
 ---
 

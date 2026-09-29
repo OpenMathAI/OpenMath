@@ -7,6 +7,7 @@ date_of_birth: ["1940-01-04"]
 nationality: ["People's Republic of China", "France"]
 occupation: ["writer", "painter", "translator", "novelist", "playwright", "literary critic", "film director", "screenwriter"]
 award_received: ["Nobel Prize in Literature", "honorary doctor of the Chinese University of Hong Kong", "Commander of the Legion of Honour", "honorary doctor of the University of Provence - Aix-Marseille I"]
+languages_spoken: ["French", "Chinese"]
 educated_at: ["Beijing Foreign Studies University", "Nanjing Jinling High School"]
 ---
 

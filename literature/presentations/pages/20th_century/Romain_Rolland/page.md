@@ -8,6 +8,7 @@ date_of_death: ["1944-12-30"]
 nationality: ["France"]
 occupation: ["writer", "playwright", "essayist", "historian", "novelist", "musicologist", "prose writer", "biographer", "musician", "teacher"]
 award_received: ["Nobel Prize in Literature", "Prix Femina", "Grand prix de littérature de l'Académie française"]
+languages_spoken: ["French"]
 educated_at: ["École Normale Supérieure", "Lycée Louis-le-Grand", "Lycée Saint-Louis", "University of Paris"]
 ---
 

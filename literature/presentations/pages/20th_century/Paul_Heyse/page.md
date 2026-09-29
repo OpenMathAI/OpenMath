@@ -8,6 +8,7 @@ date_of_death: ["1914-04-02", "1914-01-01"]
 nationality: ["Kingdom of Prussia"]
 occupation: ["poet", "playwright", "translator", "novelist", "writer", "draftsperson"]
 award_received: ["Nobel Prize in Literature", "honorary citizen of Munich", "Schiller prize", "Bavarian Maximilian Order for Science and Art"]
+languages_spoken: ["German"]
 educated_at: ["University of Bonn", "Humboldt-Universität zu Berlin", "Friedrich-Wilhelms-Gymnasium"]
 ---
 

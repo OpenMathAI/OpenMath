@@ -9,6 +9,7 @@ nationality: ["United States"]
 field_of_work: ["literature"]
 occupation: ["novelist", "playwright", "journalist", "writer"]
 award_received: ["Nobel Prize in Literature", "Prometheus Award - Hall of Fame"]
+languages_spoken: ["American English", "English"]
 educated_at: ["Yale University", "Oberlin College", "Oberlin Academy"]
 ---
 

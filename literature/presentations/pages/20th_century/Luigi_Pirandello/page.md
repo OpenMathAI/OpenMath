@@ -8,6 +8,7 @@ date_of_death: ["1936-12-10"]
 nationality: ["Kingdom of Italy"]
 occupation: ["playwright", "writer", "poet", "novelist", "screenwriter", "director"]
 award_received: ["Nobel Prize in Literature", "Equestrian Order of the Holy Sepulchre"]
+languages_spoken: ["German", "Italian"]
 educated_at: ["University of Bonn"]
 ---
 

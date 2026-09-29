@@ -9,6 +9,7 @@ nationality: ["Sweden"]
 field_of_work: ["drama", "literature", "poetry"]
 occupation: ["writer", "poet", "novelist", "science fiction writer"]
 award_received: ["Nobel Prize in Literature", "Dobloug Prize", "Samfundet De Nio's Grand Prize", "Bellman Prize", "Sveriges Radio's Poetry Prize"]
+languages_spoken: ["Swedish"]
 ---
 
 Harry Martinson

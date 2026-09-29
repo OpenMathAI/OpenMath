@@ -9,6 +9,7 @@ nationality: ["Kingdom of Italy"]
 field_of_work: ["poetry", "narration"]
 occupation: ["writer", "poet", "novelist", "playwright", "prose writer", "short story writer"]
 award_received: ["Nobel Prize in Literature"]
+languages_spoken: ["Sardinian", "Italian", "French"]
 educated_at: ["homeschooling"]
 ---
 

@@ -9,6 +9,7 @@ nationality: ["Soviet Union", "United States", "statelessness"]
 field_of_work: ["lyric poetry", "literary activity", "belletristic literature", "poetry", "drama", "literary translation", "translation from English", "translation from Spanish", "translation from Polish"]
 occupation: ["poet", "translator", "essayist", "playwright", "dramaturge", "lecturer", "writer", "university teacher", "librettist"]
 award_received: ["Nobel Prize in Literature", "Guggenheim Fellowship", "MacArthur Fellows Program", "Rome Prize", "Knight of the Legion of Honour", "honorary citizen of Saint Petersburg", "United States Poet Laureate", "Golden Wreath", "honorary doctorate", "National Book Critics Circle Award in Criticism", "honorary degree"]
+languages_spoken: ["English", "Russian"]
 educated_at: ["Clare Hall", "Annenschule"]
 ---
 

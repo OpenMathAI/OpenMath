@@ -7,6 +7,7 @@ date_of_birth: ["1955-02-17"]
 nationality: ["People's Republic of China"]
 occupation: ["writer", "novelist", "teacher", "screenwriter"]
 award_received: ["Nobel Prize in Literature", "International Nonino Prize", "honorary doctor of the Chinese University of Hong Kong", "Fukuoka Asian Culture Prize", "honorary doctor of the Aix-Marseille University", "Prix Laure Bataillon"]
+languages_spoken: ["Chinese"]
 educated_at: ["College of Military Culture at the PLA National Defense University", "Beijing Normal University"]
 ---
 

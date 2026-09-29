@@ -8,6 +8,7 @@ nationality: ["Austria"]
 field_of_work: ["poetry"]
 occupation: ["writer", "playwright", "screenwriter", "poet", "translator", "novelist", "librettist", "literary critic"]
 award_received: ["Nobel Prize in Literature", "Georg Büchner Prize", "Walter-Hasenclever-Preis der Stadt Aachen", "manuskripte award", "Franz Kafka Prize", "Heinrich-Böll-Preis", "Stig Dagerman Prize", "Literaturpreis des Landes Steiermark", "Mülheimer Dramatikerpreis", "Roswitha Prize", "Peter-Weiss Prize", "Österreichischer Kunstpreis für Literatur", "City of Vienna Literature Prize", "Literaturpreis der Stadt Bremen", "Heinrich Heine Prize", "Q1978511", "Nestroy theater award/lifetime achievement", "honorary citizen of Vienna", "Ring of Honour of the Austrian state Styria", "Commandeur des Arts et des Lettres‎", "Grand Cross of Honor for Services to the Republic of Austria"]
+languages_spoken: ["German"]
 educated_at: ["Pamer", "Music and Arts University of the City of Vienna", "University of Vienna"]
 ---
 

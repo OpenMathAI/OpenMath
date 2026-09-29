@@ -9,6 +9,7 @@ nationality: ["Japan", "Empire of Japan"]
 field_of_work: ["literary activity"]
 occupation: ["novelist", "essayist", "screenwriter", "university teacher", "science fiction writer", "writer", "narrator"]
 award_received: ["Akutagawa Prize", "Shinchosha literature award", "Tanizaki Prize", "Noma Literary Prize", "Yomiuri Prize", "Osaragi Jirō Award", "Kawabata award", "Sei Itō Award", "Order of Culture", "Nobel Prize in Literature", "Asahi Prize", "Grinzane Cavour Prize", "Commander of the Legion of Honour"]
+languages_spoken: ["Japanese"]
 educated_at: ["University of Tokyo"]
 ---
 

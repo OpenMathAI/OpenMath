@@ -8,6 +8,7 @@ date_of_death: ["1924-12-29"]
 nationality: ["Switzerland"]
 occupation: ["poet", "writer", "theologian"]
 award_received: ["Nobel Prize in Literature", "Schiller prize"]
+languages_spoken: ["German"]
 educated_at: ["University of Zurich"]
 ---
 

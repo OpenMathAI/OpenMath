@@ -9,6 +9,7 @@ nationality: ["United Kingdom of Great Britain and Ireland", "United Kingdom", "
 field_of_work: ["fine art"]
 occupation: ["music critic", "politician", "playwright", "linguist", "screenwriter", "biographer", "photographer", "writer", "essayist", "prose writer", "socialist", "literary critic", "theatre critic", "pacifist", "Nobel Prize winner"]
 award_received: ["Nobel Prize in Literature", "Academy Award for Best Writing, Adapted Screenplay", "Fellow of the Royal Society of Literature"]
+languages_spoken: ["English"]
 educated_at: ["Royal Academy of Dramatic Art"]
 ---
 

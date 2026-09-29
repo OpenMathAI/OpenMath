@@ -8,6 +8,7 @@ nationality: ["Hungary"]
 field_of_work: ["creative and professional writing"]
 occupation: ["screenwriter", "novelist", "writer", "visiting docent"]
 award_received: ["Kossuth Prize", "International Booker Prize", "Vilenica Prize", "America Award in Literature", "Laureate of the Hungarian Republic", "Márai Sándor Prize", "Móricz Zsigmond Grant", "Prize of the Society of Writers", "Alföld Prize", "Preis der SWR-Bestenliste", "Austrian State Prize for European Literature", "National Book Award for Translated Literature", "Q25459531", "Prix Formentor", "Nobel Prize in Literature", "Q137884378", "Prix Laure Bataillon", "Artisjus Award", "honorary citizen of Szentendre"]
+languages_spoken: ["Hungarian"]
 educated_at: ["University of Szeged", "Eötvös Loránd University"]
 ---
 

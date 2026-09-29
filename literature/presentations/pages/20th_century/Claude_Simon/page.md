@@ -8,6 +8,7 @@ date_of_death: ["2005-07-06"]
 nationality: ["France"]
 occupation: ["writer", "novelist"]
 award_received: ["Nobel Prize in Literature", "Commandeur des Arts et des Lettres‎", "Prix Médicis", "Austrian Decoration for Science and Art", "Grand Officer of the National Order of Merit"]
+languages_spoken: ["French"]
 educated_at: ["Collège Stanislas de Paris", "Lycée Saint-Louis"]
 ---
 

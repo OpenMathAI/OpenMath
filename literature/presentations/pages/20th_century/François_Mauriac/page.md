@@ -9,6 +9,7 @@ nationality: ["France"]
 field_of_work: ["creative and professional writing", "journalism", "poetry", "literary criticism", "biography", "prose"]
 occupation: ["writer", "journalist", "poet", "novelist", "playwright", "screenwriter", "literary critic", "biographer"]
 award_received: ["Nobel Prize in Literature", "Grand Cross of the Legion of Honour", "Grand Prix du roman de l'Académie française", "Prix Émile Augier", "Grand Prize for the Best Novels of the Half-Century"]
+languages_spoken: ["French"]
 educated_at: ["École des chartes", "Sainte-Marie Grand Lebrun", "University of Bordeaux"]
 ---
 

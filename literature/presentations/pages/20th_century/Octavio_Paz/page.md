@@ -9,6 +9,7 @@ nationality: ["Mexico", "Second Spanish Republic"]
 field_of_work: ["poetry", "essay", "Mexican literature", "Mexican poetry"]
 occupation: ["poet", "lyricist", "diplomat", "philosopher", "translator", "essayist", "writer", "politician", "university teacher", "literary critic", "librettist"]
 award_received: ["Nobel Prize in Literature", "Guggenheim Fellowship", "Miguel de Cervantes Prize", "Xavier Villaurrutia Award", "National Prize for Arts and Sciences", "Neustadt International Prize for Literature", "Princess of Asturias Award for Communications and Humanities", "Peace Prize of the German Publishers' and Booksellers' Association", "Grand Cross of the Civil Order of Alfonso X the Wise", "Grand Officer of the Order of Merit of the Italian Republic", "Mariano de Cavia' Price", "Jerusalem Prize", "Grand Cross of the Order of Isabella the Catholic", "Menéndez Pelayo International Prize", "Alfonso Reyes International Prize"]
+languages_spoken: ["Spanish"]
 educated_at: ["University of California, Berkeley", "Colegio Williams", "National Autonomous University of Mexico"]
 ---
 

@@ -9,6 +9,7 @@ nationality: ["Australia"]
 field_of_work: ["prose"]
 occupation: ["writer", "novelist", "playwright", "poet", "screenwriter", "autobiographer"]
 award_received: ["Nobel Prize in Literature", "Miles Franklin Literary Award", "Australian of the Year", "Miles Franklin Literary Award", "Companion of the Order of Australia"]
+languages_spoken: ["English"]
 educated_at: ["Cheltenham College", "King's College", "The King's School, Tudor House"]
 ---
 

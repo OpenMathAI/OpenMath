@@ -7,6 +7,7 @@ date_of_birth: ["1942-12-06"]
 nationality: ["Austria"]
 occupation: ["writer", "film director", "screenwriter", "translator", "playwright", "prose writer", "poet", "short story writer", "essayist", "draftsperson", "director", "artist", "novelist", "librettist"]
 award_received: ["Franz Kafka Prize", "Grand Austrian State Prize for Literature", "Georg Büchner Prize", "Schiller Memorial Prize", "International Ibsen Award", "Vilenica Prize", "America Award in Literature", "Literaturpreis des Landes Steiermark", "Else-Lasker-Schüler-Dramatikerpreis", "Gerhart Hauptmann Prize", "Mülheimer Dramatikerpreis", "Siegfried Unseld Preis", "Schiller Prize of the City of Mannheim", "Franz-Kafka-Preis", "Franz Nabl Prize", "honorary doctorate of Salzburg University", "Q1978511", "honorary citizen of Belgrade", "honorary doctorate of the University of Alcala", "Candide Preis", "Nobel Prize in Literature", "Prix Georges-Sadoul", "Heinrich Heine Prize", "Literature Award of the Bavarian Academy of the Fine Arts", "honorary doctor of the Catholic University of Eichstätt-Ingolstadt", "Literaturpreis der Stadt Bremen", "Nestroy theater award/lifetime achievement", "Order of the Star of Karađorđe", "Order of the Republika Srpska", "Flaiano Literary Prize"]
+languages_spoken: ["German", "French", "Slovene"]
 educated_at: ["University of Graz"]
 ---
 

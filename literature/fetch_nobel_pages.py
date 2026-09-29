@@ -207,6 +207,7 @@ WANTED_PROPS = {
     "P166": "award_received",
     "P800": "notable_work",
     "P21": "sex_or_gender",
+    "P1412": "languages_spoken",
 }
 
 
@@ -341,7 +342,7 @@ def _build_frontmatter(name: str, lang: str, meta: dict) -> str:
         lines.append(f"description: {json.dumps(desc, ensure_ascii=False)}")
     for key in ("date_of_birth", "date_of_death", "nationality",
                 "field_of_work", "occupation", "award_received",
-                "doctoral_advisor", "educated_at"):
+                "doctoral_advisor", "educated_at", "languages_spoken"):
         if vals := props.get(key):
             lines.append(f"{key}: {json.dumps(vals, ensure_ascii=False)}")
     lines.append("---")

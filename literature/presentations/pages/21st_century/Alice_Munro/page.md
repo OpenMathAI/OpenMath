@@ -9,6 +9,7 @@ nationality: ["Canada"]
 field_of_work: ["literary activity", "prose", "short story"]
 occupation: ["writer", "screenwriter", "novelist", "short story writer", "journalist"]
 award_received: ["Nobel Prize in Literature", "Order of Ontario", "International Booker Prize", "Chevalier des Arts et des Lettres", "National Book Critics Circle Award for Fiction", "Marian Engel Award", "WH Smith Literary Award", "PEN/Malamud Award", "Rea Award for the Short Story", "O. Henry Award", "Commonwealth Writers' Prize", "Molson Prize", "Governor General's Award for English-language fiction", "Governor General's Award for English-language fiction", "Governor General's Award for English-language fiction", "O. Henry Award", "Fellow of the Royal Society of Literature", "Giller Prize", "Giller Prize", "Atwood Gibson Writers' Trust Fiction Prize", "Lorne Pierce Medal", "Q140507230", "Q140507230", "Q140507230", "Flaiano Literary Prize"]
+languages_spoken: ["English"]
 educated_at: ["University of Western Ontario"]
 ---
 

@@ -8,6 +8,7 @@ date_of_death: ["1907-02-08", "1907-02-16", "1907-00-00"]
 nationality: ["Kingdom of Italy"]
 occupation: ["writer", "poet", "journalist", "politician", "university teacher", "literary critic", "philologist", "literary historian"]
 award_received: ["Nobel Prize in Literature"]
+languages_spoken: ["Italian"]
 educated_at: ["convent of Scolopi", "Scuola Normale Superiore. Classe di Lettere e Filosofia"]
 ---
 

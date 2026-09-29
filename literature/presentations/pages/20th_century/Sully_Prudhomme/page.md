@@ -9,6 +9,7 @@ nationality: ["France"]
 field_of_work: ["poem"]
 occupation: ["poet", "writer", "essayist", "diarist", "philosopher"]
 award_received: ["Nobel Prize in Literature", "Grand Officer of the Legion of Honour", "Vitet Prize", "Commander of the Legion of Honour", "Officer of the Legion of Honour", "Knight of the Legion of Honour"]
+languages_spoken: ["French"]
 educated_at: ["Lycée Condorcet"]
 ---
 

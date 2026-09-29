@@ -9,6 +9,7 @@ nationality: ["Chile"]
 field_of_work: ["literature", "diplomacy", "politics"]
 occupation: ["poet", "diplomat", "politician", "lyricist", "autobiographer", "writer", "ambassador", "consul", "librettist"]
 award_received: ["Nobel Prize in Literature", "National Prize for Literature (Chile)", "World Peace Council prizes", "International Stalin Prize for Peace", "honorary doctorate of the National University of San Marcos", "Atenea Award", "Commander of the Order of the Sun of Peru‎", "Viareggio-Versilia International Prize", "Grawemeyer Award for Music Composition", "honorary doctor of the Pontifical Catholic University of Chile", "Golden Wreath", "Order of the Sun of Peru", "Order of the Aztec Eagle"]
+languages_spoken: ["Spanish", "French"]
 educated_at: ["University of Chile"]
 ---
 

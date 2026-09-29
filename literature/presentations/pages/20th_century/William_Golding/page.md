@@ -9,6 +9,7 @@ nationality: ["United Kingdom"]
 field_of_work: ["novel"]
 occupation: ["writer", "poet", "novelist", "screenwriter", "science fiction writer"]
 award_received: ["Nobel Prize in Literature", "James Tait Black Memorial Prize", "Booker Prize", "Commander of the Order of the British Empire", "Fellow of the Royal Society of Literature", "Knight Bachelor", "honorary doctor of the Sorbonne Nouvelle University"]
+languages_spoken: ["English"]
 educated_at: ["Brasenose College", "University of Oxford", "Marlborough Royal Free Grammar School"]
 ---
 

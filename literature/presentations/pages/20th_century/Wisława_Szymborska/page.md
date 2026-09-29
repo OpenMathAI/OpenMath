@@ -9,6 +9,7 @@ nationality: ["Poland"]
 field_of_work: ["poetry", "essay"]
 occupation: ["poet", "writer", "translator", "essayist", "mechanic", "literary critic", "critic"]
 award_received: ["Nobel Prize in Literature", "Knight of the Order of Polonia Restituta", "Herder Prize", "Order of the White Eagle (Third Polish Republic)", "Golden Medal for Merit to Culture", "Goethe Prize of the City of Frankfurt", "Samuel Bogumil Linde Prize", "Kościelski Award", "honorary doctor of the Adam Mickiewicz University in Poznań", "Gold Cross of Merit‎", "City of Kraków Award"]
+languages_spoken: ["Polish"]
 educated_at: ["Jagiellonian University"]
 ---
 

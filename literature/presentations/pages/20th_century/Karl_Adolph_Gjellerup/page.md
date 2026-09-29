@@ -8,6 +8,7 @@ date_of_death: ["1919-10-13", "1919-10-11", "1919-00-00"]
 nationality: ["Kingdom of Denmark"]
 occupation: ["poet", "writer", "novelist", "playwright", "theologian"]
 award_received: ["Nobel Prize in Literature"]
+languages_spoken: ["Danish"]
 ---
 
 Karl Adolph Gjellerup

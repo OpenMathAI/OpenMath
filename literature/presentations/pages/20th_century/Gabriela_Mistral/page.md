@@ -9,6 +9,7 @@ nationality: ["Chile"]
 field_of_work: ["poetry"]
 occupation: ["poet", "diplomat", "teacher", "writer", "children's writer"]
 award_received: ["Nobel Prize in Literature", "National Prize for Literature (Chile)", "Knight of the Legion of Honour"]
+languages_spoken: ["Spanish"]
 educated_at: ["Escuela Normal № 1 de Santiago"]
 ---
 

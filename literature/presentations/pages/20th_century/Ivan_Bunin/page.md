@@ -9,6 +9,7 @@ nationality: ["Russian Empire", "France"]
 field_of_work: ["novel", "short story", "poetry", "diary"]
 occupation: ["writer", "translator", "poet", "prose writer", "playwright", "Nobel Prize winner"]
 award_received: ["Nobel Prize in Literature", "Pushkin Prize"]
+languages_spoken: ["Russian"]
 ---
 
 Ivan Bunin

@@ -9,6 +9,7 @@ nationality: ["Poland", "United States", "Lithuania"]
 field_of_work: ["fiction", "literature", "history of literature", "translation", "diplomacy"]
 occupation: ["poet", "diplomat", "writer", "essayist", "translator", "pedagogue", "university teacher", "literary historian"]
 award_received: ["Nobel Prize in Literature", "Righteous Among the Nations", "Guggenheim Fellowship", "Order of the White Eagle (Third Polish Republic)", "National Medal of Arts", "Neustadt International Prize for Literature", "Honorary doctor of the University of Bologna", "honorary doctor of the Jagiellonian University of Krakow", "Honorary doctor of the University of Oxford", "Nike Award", "Commander's Grand Cross of the Order of the Lithuanian Grand Duke Gediminas", "honorary doctor of Harvard University", "Doctor Honoris Causa at the Vytautas Magnus University", "Śląski Wawrzyn Literacki", "honorary citizen of Vilnius"]
+languages_spoken: ["American English", "French", "Polish", "English", "Spanish", "Czech"]
 educated_at: ["Vilnius University"]
 ---
 

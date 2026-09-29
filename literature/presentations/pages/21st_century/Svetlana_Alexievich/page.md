@@ -8,6 +8,7 @@ nationality: ["Belarus", "Soviet Union"]
 field_of_work: ["creative and professional writing", "journalism"]
 occupation: ["writer", "journalist", "historian", "oral historian"]
 award_received: ["Herder Prize", "Peace Prize of the German Publishers' and Booksellers' Association", "Order of the Badge of Honour", "Lenin Komsomol Prize", "Angelus Award", "Q20641783", "Q20641784", "Kurt Tucholsky Prize", "Andrei Sinyavsky prize", "Triumph", "Leipzig Book Award for European Understanding", "Das politische Buch", "Oxfam Novib/PEN Award", "Ryszard Kapuściński Award for literary reportage", "Nobel Prize in Literature", "Officer of Arts and Letters", "Prix Médicis essai", "Belarusian Democratic Republic 100th Jubilee Medal", "honorary doctorate of the Vrije Universiteit Brussel", "Commander's Cross of the Order of Merit of the Federal Republic of Germany", "Anna Politkovskaya Award", "Honorary doctorate from the University of Geneva", "honorary doctor of the University of Madrid Complutense", "DAAD Scholarship", "National Book Critics Circle Award in Nonfiction", "Sonning Prize", "Catalonia International Prize"]
+languages_spoken: ["Russian", "Belarusian"]
 educated_at: ["Faculty of Journalism of the Belarusian State University"]
 ---
 

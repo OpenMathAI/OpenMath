@@ -8,6 +8,7 @@ date_of_death: ["1950-11-25"]
 nationality: ["Kingdom of Denmark"]
 occupation: ["writer", "poet", "novelist", "essayist", "translator-interpreter", "journalist", "columnist", "correspondent", "sculptor", "translator", "docent", "wood engraver"]
 award_received: ["Nobel Prize in Literature", "Q11963169", "Q11964741", "Drachmannlegatet"]
+languages_spoken: ["Danish"]
 educated_at: ["Viborg Katedralskole", "University of Copenhagen"]
 ---
 

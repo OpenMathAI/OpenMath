@@ -8,6 +8,7 @@ nationality: ["France"]
 field_of_work: ["literary activity", "literature"]
 occupation: ["writer", "teacher"]
 award_received: ["Prix Renaudot", "Prix François-Mauriac", "Prix de la langue française", "Prix Marguerite Duras", "Prix de l’Académie de Berlin", "prize Maillé Latour Landry", "Nobel Prize in Literature", "Prix Formentor", "Q28494945", "Strega Prize", "Q127926149", "Prix François Mauriac (Aquitaine)"]
+languages_spoken: ["French"]
 educated_at: ["University of Rouen-Normandy", "University of Bordeaux", "Lycée Jeanne-d'Arc"]
 ---
 

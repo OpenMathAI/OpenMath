@@ -9,6 +9,7 @@ nationality: ["Germany"]
 field_of_work: ["fiction", "creative and professional writing", "radio drama", "translation"]
 occupation: ["lyricist", "screenwriter", "translator", "poet", "novelist", "writer", "Nobel Prize winner", "public figure"]
 award_received: ["Georg Büchner Prize", "Nobel Prize in Literature", "Carl von Ossietzky Medal", "honorary citizen of Cologne", "Medal of Gratitude", "Commandeur des Arts et des Lettres‎", "Cross of the Order of Merit of the Federal Republic of Germany"]
+languages_spoken: ["German"]
 educated_at: ["University of Cologne"]
 ---
 

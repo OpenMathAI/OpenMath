@@ -9,6 +9,7 @@ nationality: ["German Empire", "Switzerland", "Germany", "Russian Empire"]
 field_of_work: ["prose"]
 occupation: ["novelist", "poet", "literary scholar", "painter", "philosopher", "resistance fighter", "illustrator", "writer", "Nobel Prize winner", "bookseller", "pacifist", "librettist"]
 award_received: ["Nobel Prize in Literature", "Pour le Mérite for Sciences and Arts order", "Bauernfeld prize", "Peace Prize of the German Publishers' and Booksellers' Association", "Gottfried-Keller-Preis", "Goethe Prize of the City of Frankfurt", "Wilhelm Raabe Prize", "Pour le Mérite"]
+languages_spoken: ["German"]
 educated_at: ["Johannes-Kepler-Gymnasium", "Evangelical Seminaries of Maulbronn and Blaubeuren"]
 ---
 

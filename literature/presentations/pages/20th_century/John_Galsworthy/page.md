@@ -9,6 +9,7 @@ nationality: ["United Kingdom", "United Kingdom of Great Britain and Ireland"]
 field_of_work: ["drama", "prose"]
 occupation: ["playwright", "writer", "novelist", "screenwriter", "prose writer"]
 award_received: ["Nobel Prize in Literature"]
+languages_spoken: ["English"]
 educated_at: ["Harrow School", "New College"]
 ---
 

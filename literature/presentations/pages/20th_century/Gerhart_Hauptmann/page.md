@@ -9,6 +9,7 @@ nationality: ["Kingdom of Prussia", "Weimar Republic"]
 field_of_work: ["drama"]
 occupation: ["playwright", "poet", "lyricist", "novelist", "autobiographer", "screenwriter", "writer"]
 award_received: ["Nobel Prize in Literature", "Pour le Mérite for Sciences and Arts order", "Ring of Honour of the City of Vienna", "Order of the Red Eagle 4th Class", "Goethe Prize of the City of Frankfurt", "Bavarian Maximilian Order for Science and Art", "honorary doctor of the Leipzig University", "Honorary doctor of the University of Oxford", "honorary doctorate from Columbia University", "honorary doctor of the Charles University of Prague", "Franz-Grillparzer-Preis", "Franz-Grillparzer-Preis", "Franz-Grillparzer-Preis", "Goethe Medal for Art and Science", "Adlerschild des Deutschen Reiches", "Pour le Mérite", "Order of the Red Eagle", "honorary citizen of Breslau"]
+languages_spoken: ["German"]
 educated_at: ["University of Jena"]
 ---
 

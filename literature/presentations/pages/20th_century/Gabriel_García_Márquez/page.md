@@ -9,6 +9,7 @@ nationality: ["Colombia"]
 field_of_work: ["novel", "creative and professional writing", "prose", "short story", "opinion journalism", "journalism"]
 occupation: ["novelist", "short story writer", "journalist", "playwright", "writer", "publisher", "poet lawyer", "autobiographer", "prose writer", "opinion journalist", "television writer", "film screenwriter", "film director", "television actor", "screenwriter", "jurist"]
 award_received: ["Neustadt International Prize for Literature", "Rómulo Gallegos Prize", "Common Wealth Award of Distinguished Service", "Grand Officer of the Legion of Honour", "Nobel Prize in Literature", "Simón Bolívar award", "Order of the Aztec Eagle", "Orden al Mérito Docente y Cultural Gabriela Mistral", "Order of Honour", "Commander of the Legion of Honour"]
+languages_spoken: ["Spanish", "Italian", "French", "English"]
 educated_at: ["National University of Colombia"]
 ---
 

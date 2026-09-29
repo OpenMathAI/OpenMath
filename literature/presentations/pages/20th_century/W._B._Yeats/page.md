@@ -9,6 +9,7 @@ nationality: ["Irish Free State"]
 field_of_work: ["fiction", "poetry", "drama"]
 occupation: ["poet", "playwright", "writer", "politician", "mystic", "astrologer"]
 award_received: ["Nobel Prize in Literature", "Goethe Plaque of the City of Frankfurt", "Fellow of the Royal Society of Literature", "Doctor of Letters"]
+languages_spoken: ["English"]
 educated_at: ["National College of Art and Design", "The High School, Dublin"]
 ---
 

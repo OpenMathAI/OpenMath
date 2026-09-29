@@ -9,6 +9,7 @@ nationality: ["Japan"]
 field_of_work: ["literature"]
 occupation: ["writer", "novelist", "screenwriter", "poet"]
 award_received: ["Kikuchi Kan Prize", "Japan Art Academy Prize", "Noma Literary Prize", "Goethe Plaque of the City of Frankfurt", "Officer of Arts and Letters", "Order of Culture", "Person of Cultural Merit", "Mainichi Publication Culture Award", "Nobel Prize in Literature", "Order of the Rising Sun, 1st class", "Kikuchi Kan Prize"]
+languages_spoken: ["Japanese"]
 educated_at: ["University of Tokyo"]
 ---
 

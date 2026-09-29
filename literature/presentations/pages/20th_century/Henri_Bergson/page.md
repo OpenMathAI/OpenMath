@@ -9,6 +9,7 @@ nationality: ["France"]
 field_of_work: ["philosophy", "metaphysics", "epistemology", "irrationalism", "philosophy of language", "philosophy of mathematics"]
 occupation: ["philosopher", "professor", "sociologist", "writer", "university teacher"]
 award_received: ["Nobel Prize in Literature", "Grand Cross of the Legion of Honour", "Concours général", "Fellow of the American Academy of Arts and Sciences", "Honorary Doctorate from the National Autonomous University of Mexico", "Honorary doctor of the University of Oxford", "honorary doctorate from the University of Cambridge"]
+languages_spoken: ["French"]
 educated_at: ["Lycée Condorcet", "École Normale Supérieure", "University of Paris"]
 ---
 

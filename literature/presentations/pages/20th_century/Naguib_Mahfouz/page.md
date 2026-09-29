@@ -9,6 +9,7 @@ nationality: ["Khedivate of Egypt", "Sultanate of Egypt", "Kingdom of Egypt", "R
 field_of_work: ["writing", "screenwriting", "translation", "journalism", "playwriting", "author", "fiction", "dream"]
 occupation: ["novelist", "screenwriter", "translator", "playwright", "writer", "intellectual", "journalist", "short story writer", "autobiographer", "author", "editing staff", "film screenwriter"]
 award_received: ["Nobel Prize in Literature", "Orden al Mérito Docente y Cultural Gabriela Mistral", "Commandeur des Arts et des Lettres‎", "Grand Collar of the Order of the Nile", "Honorary doctorate from the University of Cairo", "Cavafy Award", "Grand Officer of the Order of Merit of the Italian Republic"]
+languages_spoken: ["Arabic", "Egyptian Arabic"]
 educated_at: ["Cairo University"]
 ---
 

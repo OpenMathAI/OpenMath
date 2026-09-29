@@ -8,6 +8,7 @@ date_of_death: ["2008-12-24"]
 nationality: ["United Kingdom"]
 occupation: ["playwright", "actor", "film director", "screenwriter", "writer", "theatre director", "poet", "novelist", "director"]
 award_received: ["Nobel Prize in Literature", "Knight of the Legion of Honour", "Laurence Olivier Awards", "Commander of the Order of the British Empire", "Hermann Kesten Prize", "Franz Kafka Prize", "America Award in Literature", "Sretenje Order, 1st class", "Companion of Honour", "Fellow of the Royal Society of Literature", "Austrian State Prize for European Literature", "Society of London Theatre Special Award", "Critics' Circle Award for Distinguished Service to the Arts", "Europe Theatre Prize", "BAFTA Award for Best British Screenplay"]
+languages_spoken: ["English"]
 educated_at: ["Royal Central School of Speech and Drama", "Royal Academy of Dramatic Art"]
 ---
 

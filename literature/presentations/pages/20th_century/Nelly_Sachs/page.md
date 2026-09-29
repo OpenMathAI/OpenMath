@@ -9,6 +9,7 @@ nationality: ["Germany", "Sweden"]
 field_of_work: ["poetry"]
 occupation: ["poet", "playwright", "translator", "writer", "librettist"]
 award_received: ["Nobel Prize in Literature", "honorary citizen of Berlin", "Peace Prize of the German Publishers' and Booksellers' Association", "Droste-Preis", "Nelly Sachs Prize", "Sveriges Radio's Poetry Prize"]
+languages_spoken: ["German"]
 ---
 
 Nelly Sachs

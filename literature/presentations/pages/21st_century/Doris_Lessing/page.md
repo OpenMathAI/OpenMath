@@ -9,6 +9,7 @@ nationality: ["United Kingdom", "United Kingdom of Great Britain and Ireland"]
 field_of_work: ["poetry", "essay"]
 occupation: ["writer", "poet", "novelist", "playwright", "autobiographer", "screenwriter", "essayist", "science fiction writer", "prose writer"]
 award_received: ["Nobel Prize in Literature", "Somerset Maugham Award", "WH Smith Literary Award", "Grinzane Cavour Prize", "James Tait Black Memorial Prize", "David Cohen Prize", "Princess of Asturias Literary Prize", "Prix Médicis étranger", "Catalonia International Prize", "Fellow of the Royal Society of Literature", "Order of Mapungubwe in Gold", "Årets budeie", "Trevi award", "Austrian State Prize for European Literature", "honorary doctorate"]
+languages_spoken: ["English"]
 educated_at: ["Dominican Convent High School"]
 ---
 

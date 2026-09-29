@@ -9,6 +9,7 @@ nationality: ["Sweden"]
 field_of_work: ["poetry", "psychology"]
 occupation: ["linguist", "poet", "translator", "psychologist", "writer", "librettist"]
 award_received: ["Aftonbladet Literary Award", "Sveriges Radio's Poetry Prize", "Kellgren Award", "Gerard Bonnier Poetry Award", "Aniara Award", "Neustadt International Prize for Literature", "Nordic Council Literature Prize", "Swedish Academy Nordic Prize", "Litteris et Artibus", "Horst Bienek Award for Poetry", "Gustaf Fröding Society Poetry Prize", "August Prize", "Q10552330", "Samfundet De Nio's Grand Prize", "Golden Wreath", "International Nonino Prize", "Nobel Prize in Literature"]
+languages_spoken: ["Swedish"]
 educated_at: ["Stockholm University", "Södra Latin"]
 ---
 

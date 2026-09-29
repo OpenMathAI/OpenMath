@@ -9,6 +9,7 @@ nationality: ["United Kingdom", "Bulgaria"]
 field_of_work: ["novel", "essay"]
 occupation: ["writer", "aphorist", "playwright", "chemist", "essayist", "novelist", "psychologist", "philosopher"]
 award_received: ["Pour le Mérite for Sciences and Arts order", "Nobel Prize in Literature", "Grand Austrian State Prize for Literature", "Literature Award of the Bavarian Academy of the Fine Arts", "Nelly Sachs Prize", "Gottfried-Keller-Preis", "Johann-Peter-Hebel-Preis", "Franz Kafka Prize", "Grand Austrian State Prize for Literature", "Georg Büchner Prize", "Commander's Cross of the Order of Merit of the Federal Republic of Germany", "Franz-Kafka-Preis", "Franz Nabl Prize", "City of Vienna Literature Prize", "honorary doctorate of the University of Graz", "honorary doctor of the University of Manchester", "honorary citizen of Vienna", "Austrian Decoration for Science and Art", "Pour le Mérite"]
+languages_spoken: ["Bulgarian", "Judaeo-Spanish", "German", "English"]
 educated_at: ["University of Vienna"]
 ---
 

@@ -9,6 +9,7 @@ nationality: ["Russian Empire", "Second Polish Republic"]
 field_of_work: ["fiction", "creative and professional writing", "prose", "short story"]
 occupation: ["writer", "novelist", "screenwriter", "prose writer", "author"]
 award_received: ["Nobel Prize in Literature", "Commander of the Legion of Honour", "Officer of the Order of Polonia Restituta", "Commander of the Order of Polonia Restituta", "Grand Cross of the Order of Polonia Restituta", "Order of the White Eagle"]
+languages_spoken: ["Polish"]
 ---
 
 Władysław Reymont

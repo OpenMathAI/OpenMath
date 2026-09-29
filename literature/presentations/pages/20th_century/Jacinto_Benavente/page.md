@@ -8,6 +8,7 @@ date_of_death: ["1954-07-14"]
 nationality: ["Spain"]
 occupation: ["playwright", "journalist", "writer", "politician", "poet", "film director", "lawyer"]
 award_received: ["Nobel Prize in Literature", "Dearest Son of Madrid", "Grand cross of the Civil Order of Alfonso XII", "Grand Cross of the Civil Order of Alfonso X the Wise", "Medal of Work Merit", "Mariano de Cavia' Price", "Gold Medal of Work Merit"]
+languages_spoken: ["Spanish"]
 educated_at: ["Complutense University of Madrid"]
 ---
 

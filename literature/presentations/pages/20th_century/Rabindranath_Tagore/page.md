@@ -9,6 +9,7 @@ nationality: ["British Raj"]
 field_of_work: ["literature", "poetry", "short story", "creative and professional writing", "music composition", "drama", "essay", "painting"]
 occupation: ["painter", "poet", "composer", "playwright", "essayist", "philosopher", "artist", "writer", "lyricist", "songwriter", "singer", "film director", "freedom fighter", "Nobel Prize winner", "librettist", "actor", "short story writer", "novelist", "social reformer", "travel writer"]
 award_received: ["Nobel Prize in Literature", "honorary doctor of the University of Calcutta", "Knight Bachelor"]
+languages_spoken: ["English", "Bangla"]
 educated_at: ["University College London", "St. Xavier's Collegiate School"]
 ---
 

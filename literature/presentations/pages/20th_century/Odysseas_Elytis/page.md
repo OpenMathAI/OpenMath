@@ -8,6 +8,7 @@ date_of_death: ["1996-03-18"]
 nationality: ["Greece"]
 occupation: ["translator", "poet", "art critic", "writer", "librettist"]
 award_received: ["Nobel Prize in Literature", "doctor honoris causa from the Paris-Sorbonne University"]
+languages_spoken: ["Modern Greek"]
 educated_at: ["National and Kapodistrian University of Athens"]
 ---
 

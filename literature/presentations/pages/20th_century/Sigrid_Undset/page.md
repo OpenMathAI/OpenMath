@@ -9,6 +9,7 @@ nationality: ["Norway"]
 field_of_work: ["hagiography"]
 occupation: ["novelist", "translator", "writer", "screenwriter", "prose writer", "poet"]
 award_received: ["Nobel Prize in Literature", "Knight Grand Cross of the Order of St. Olav‎", "Order of the Falcon"]
+languages_spoken: ["Norwegian"]
 educated_at: ["Fru Ragna Nielsens skole"]
 ---
 

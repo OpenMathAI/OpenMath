@@ -9,6 +9,7 @@ nationality: ["Sweden"]
 field_of_work: ["literature"]
 occupation: ["poet", "playwright", "essayist", "screenwriter", "autobiographer", "writer"]
 award_received: ["Nobel Prize in Literature", "Samfundet De Nio's Grand Prize", "honorary doctor of the University of Gothenburg", "Bellman Prize", "Grand Prix littéraire de la Ville de Paris"]
+languages_spoken: ["Swedish"]
 educated_at: ["Uppsala University"]
 ---
 

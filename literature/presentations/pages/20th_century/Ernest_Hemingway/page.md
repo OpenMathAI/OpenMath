@@ -9,6 +9,7 @@ nationality: ["United States"]
 field_of_work: ["roman à clef"]
 occupation: ["war correspondent", "screenwriter", "novelist", "journalist", "playwright", "poet", "writer", "short story writer", "prose writer", "reporter", "film director"]
 award_received: ["Nobel Prize in Literature", "Bronze Star Medal", "Pulitzer Prize for Fiction", "Florida Artists Hall of Fame", "National Order of Merit Carlos Manuel de Céspedes", "Medal of Military Valour", "Commemorative Medal for the Italo-Austrian War 1915-1918", "Bancarella Literary Prize"]
+languages_spoken: ["English", "French", "Spanish"]
 educated_at: ["Oak Park and River Forest High School", "James F. Byrnes High School"]
 ---
 

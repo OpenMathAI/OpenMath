@@ -9,6 +9,7 @@ nationality: ["Czechoslovakia"]
 field_of_work: ["Czech poetry"]
 occupation: ["translator", "poet", "essayist", "writer", "opinion journalist", "editing staff", "newspaper editor", "journalist"]
 award_received: ["Nobel Prize in Literature", "Order of Tomáš Garrigue Masaryk, 1st class", "Národní umělec", "Čestná medaile T. G. Masaryka", "Klement Gottwald State Prize"]
+languages_spoken: ["Czech"]
 ---
 
 Jaroslav Seifert

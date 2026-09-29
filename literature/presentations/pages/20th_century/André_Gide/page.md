@@ -9,6 +9,7 @@ nationality: ["France"]
 field_of_work: ["fiction"]
 occupation: ["journalist", "film producer", "essayist", "playwright", "novelist", "diarist", "travel writer", "translator", "autobiographer", "writer", "prose writer", "screenwriter", "literary critic", "poet"]
 award_received: ["Nobel Prize in Literature", "Goethe Plaque of the City of Frankfurt", "Goethe Medal for Art and Science", "Grand Prize for the Best Novels of the Half-Century"]
+languages_spoken: ["French"]
 educated_at: ["Lycée Henri-IV", "École alsacienne"]
 ---
 

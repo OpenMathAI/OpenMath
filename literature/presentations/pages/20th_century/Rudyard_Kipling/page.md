@@ -9,6 +9,7 @@ nationality: ["United Kingdom", "United Kingdom of Great Britain and Ireland"]
 field_of_work: ["literature", "creative and professional writing", "journalism", "poetry", "travel literature", "children's and young adult literature"]
 occupation: ["writer", "poet", "novelist", "war correspondent", "children's writer", "autobiographer", "screenwriter", "journalist", "science fiction writer", "prose writer", "traveler", "librettist"]
 award_received: ["Nobel Prize in Literature", "Fellow of the Royal Society of Literature", "Lektorix", "doctor honoris causa from the University of Paris", "honorary doctorate from the University of Strasbourg", "honorary degree"]
+languages_spoken: ["English"]
 educated_at: ["United Services College"]
 ---
 

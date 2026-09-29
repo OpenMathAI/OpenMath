@@ -9,6 +9,7 @@ nationality: ["Spain"]
 field_of_work: ["poetry"]
 occupation: ["poet", "writer", "teacher"]
 award_received: ["Nobel Prize in Literature", "National Prizes for Literature", "Premio de la Crítica Española", "Premio de la Crítica Española", "Grand Cross of the Order of Charles III", "Concurso Nacional de Literatura (Spain, 1923-1973)"]
+languages_spoken: ["Spanish"]
 educated_at: ["Residencia de Estudiantes"]
 ---
 

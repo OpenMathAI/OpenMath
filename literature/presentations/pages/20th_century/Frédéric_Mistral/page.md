@@ -9,6 +9,7 @@ nationality: ["France"]
 field_of_work: ["literature", "translation from Latin"]
 occupation: ["writer", "poet", "lexicographer"]
 award_received: ["Nobel Prize in Literature", "Commander of the Legion of Honour", "Officer of the Legion of Honour", "Knight of the Legion of Honour", "Vitet Prize", "Alfred Née Award", "Jean Reynaud Prize"]
+languages_spoken: ["French", "Occitan"]
 educated_at: ["Aix-Marseille University (1896-1971)", "Paul Cézanne University"]
 ---
 

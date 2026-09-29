@@ -7,6 +7,7 @@ date_of_birth: ["1952-06-07"]
 nationality: ["Turkey"]
 occupation: ["writer", "novelist", "screenwriter", "essayist", "journalist", "academic"]
 award_received: ["Independent Foreign Fiction Prize", "International Antalya Golden Orange Film Festival Award for Best Original Screenplay", "Q136747220", "Grinzane Cavour Prize", "Dublin Literary Award", "Peace Prize of the German Publishers' and Booksellers' Association", "Prix Médicis étranger", "Ricarda-Huch-Preis", "Nobel Prize in Literature", "Honorary doctor of the Free University of Berlin", "honorary doctor of the University of Madrid Complutense", "Ovid Prize", "honorary doctorate from University of Rouen", "Norman Mailer Prize", "honorary doctor of Yale University", "honorary doctor of Sofia University", "Officer of the Legion of Honour", "Erdal Öz Literature Award", "German-Turkish friendship Prize", "honorary doctorate from University of Lyon-II", "Commandeur des Arts et des Lettres‎", "honorary doctorate from the American University of Beirut", "honorary doctorate of the University of Tirana", "honorary doctor of Saint Petersburg State University", "Q136747220", "Q137385829", "Q137761811"]
+languages_spoken: ["Turkish"]
 educated_at: ["Robert College", "Istanbul Technical University", "Istanbul University Faculty of Communications"]
 ---
 

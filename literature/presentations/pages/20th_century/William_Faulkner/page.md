@@ -9,6 +9,7 @@ nationality: ["United States"]
 field_of_work: ["novel"]
 occupation: ["screenwriter", "poet", "novelist", "short story writer", "playwright", "children's writer", "writer"]
 award_received: ["Nobel Prize in Literature", "National Book Award", "Pulitzer Prize for Fiction", "Chevalier des Arts et des Lettres", "National Book Award", "O. Henry Award", "William Dean Howells Medal of the American Academy of Arts and Letters", "Pulitzer Prize for Fiction"]
+languages_spoken: ["English"]
 educated_at: ["University of Virginia", "University of Mississippi"]
 ---
 

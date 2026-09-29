@@ -8,6 +8,7 @@ date_of_death: ["1940-05-20", "1940-01-01"]
 nationality: ["Sweden"]
 occupation: ["writer", "poet", "painter"]
 award_received: ["Nobel Prize in Literature", "Honorary doctor of the Heidelberg University", "Samfundet De Nio's Grand Prize", "Goethe Medal for Art and Science"]
+languages_spoken: ["Swedish"]
 ---
 
 Verner von Heidenstam

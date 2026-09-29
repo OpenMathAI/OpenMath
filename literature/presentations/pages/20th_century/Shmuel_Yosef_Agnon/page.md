@@ -8,6 +8,7 @@ date_of_death: ["1970-02-17"]
 nationality: ["German Empire", "Weimar Republic", "Mandatory Palestine", "Israel", "Hungary"]
 occupation: ["writer", "novelist", "poet", "short story writer"]
 award_received: ["Nobel Prize in Literature", "Bialik Prize", "Israel Prize", "Bialik Prize", "Israel Prize", "honorary doctorate of the Weizmann Institute of Science", "honorary citizen of Jerusalem", "Newman Prize"]
+languages_spoken: ["Yiddish", "Hebrew"]
 ---
 
 Shmuel Yosef Agnon

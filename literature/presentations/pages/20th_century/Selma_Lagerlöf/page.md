@@ -9,6 +9,7 @@ nationality: ["Sweden"]
 field_of_work: ["poetry", "women's suffrage in Sweden"]
 occupation: ["writer", "novelist", "children's writer", "biographer", "teacher", "Volksschule teacher", "poet", "prose writer", "translator", "autobiographer"]
 award_received: ["Nobel Prize in Literature", "honorary doctor of the University of Uppsala", "Order of the Three Stars, 3rd Class", "Litteris et Artibus", "Knight of the Order of the White Rose of Finland", "Officer of the Legion of Honour", "Knight First Class of the Order of St. Olav‎", "Officer of the Order of Leopold", "Illis quorum"]
+languages_spoken: ["Swedish"]
 educated_at: ["Högre lärarinneseminariet"]
 ---
 

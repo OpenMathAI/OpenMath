@@ -8,6 +8,7 @@ date_of_death: ["1953-11-27"]
 nationality: ["United States"]
 occupation: ["playwright", "screenwriter", "writer"]
 award_received: ["Nobel Prize in Literature", "Laurence Olivier Awards", "Pulitzer Prize for Drama", "Pulitzer Prize for Drama", "Pulitzer Prize for Drama", "Pulitzer Prize for Drama", "star on Playwrights' Sidewalk", "Tony Award for Best Play"]
+languages_spoken: ["English"]
 educated_at: ["Princeton University"]
 ---
 

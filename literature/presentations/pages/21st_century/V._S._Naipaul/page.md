@@ -9,6 +9,7 @@ nationality: ["Trinidad and Tobago", "United Kingdom"]
 field_of_work: ["literature"]
 occupation: ["writer", "novelist", "journalist", "essayist", "short story writer", "travel writer"]
 award_received: ["Nobel Prize in Literature", "John Llewellyn Rhys Prize", "Booker Prize", "Jerusalem Prize", "International Nonino Prize", "Knight Bachelor", "Fellow of the Royal Society of Literature", "Fellow of the American Academy of Arts and Sciences", "Somerset Maugham Award", "Hawthornden Prize"]
+languages_spoken: ["English"]
 educated_at: ["University College, Oxford", "Queen's Royal College"]
 ---
 

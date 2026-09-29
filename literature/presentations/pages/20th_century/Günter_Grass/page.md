@@ -9,6 +9,7 @@ nationality: ["Free City of Danzig", "Germany"]
 field_of_work: ["fiction"]
 occupation: ["lyricist", "screenwriter", "poet", "sculptor", "novelist", "playwright", "essayist", "autobiographer", "painter", "graphic artist", "altar server", "illustrator", "printmaker", "photographer", "librettist", "writer", "artist"]
 award_received: ["Nobel Prize in Literature", "Georg Büchner Prize", "Hermann Kesten Prize", "Princess of Asturias Literary Prize", "Hans Fallada Prize", "Samuel Bogumil Linde Prize", "Fontane-Preis", "Ernst-Toller-Preis", "Literature Award of the Bavarian Academy of the Fine Arts", "Honorary doctor of the Free University of Berlin", "honorary doctor of Harvard University", "Honorary doctor of the University of Gdańsk", "Carl von Ossietzky Medal", "Thomas Mann Prize", "honorary doctor of the Adam Mickiewicz University in Poznań", "honorary doctor of the University of Lübeck", "Brückepreis", "Feltrinelli Prize", "honorary citizen of Gdańsk", "Theodor Heuss Award", "Fellow of the Royal Society of Literature", "Pipe Smoker of the Year", "Hans Christian Andersen Award", "Grinzane Cavour Prize", "Medaille für Kunst und Wissenschaft (Hamburg)", "Q105870591", "Eckart Witzigmann Prize", "honorary doctorate", "Fritz Bauer Prize", "Sonning Prize", "German Critics' Prize for Literature", "Stolem Medal"]
+languages_spoken: ["German"]
 educated_at: ["Kunstakademie Düsseldorf", "Berlin University of the Arts", "Pestalozzischule"]
 ---
 

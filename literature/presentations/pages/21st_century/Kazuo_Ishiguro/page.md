@@ -7,6 +7,7 @@ date_of_birth: ["1954-11-08"]
 nationality: ["United Kingdom", "Japan"]
 occupation: ["novelist", "writer", "screenwriter", "author", "science fiction writer", "lyricist", "songwriter"]
 award_received: ["Costa Book Awards", "Officer of the Order of the British Empire", "Booker Prize", "Helmerich Award", "Fellow of the Royal Society of Arts", "Nobel Prize in Literature", "Chevalier des Arts et des Lettres", "Fellow of the Royal Society of Literature", "Bodley Medal", "Knight Bachelor", "Order of the Rising Sun", "Companion of Honour"]
+languages_spoken: ["English", "Japanese"]
 educated_at: ["University of Kent", "University of East Anglia", "Woking County Grammar School for Boys"]
 ---
 

@@ -9,6 +9,7 @@ nationality: ["Hungary", "Germany"]
 field_of_work: ["The Holocaust"]
 occupation: ["writer", "translator", "novelist", "journalist", "screenwriter", "playwright"]
 award_received: ["Nobel Prize in Literature", "Pour le Mérite for Sciences and Arts order", "Kossuth Prize", "Herder Prize", "Knight Commander's Cross of the Order of Merit of the Federal Republic of Germany", "Ernst Reuter Medal", "Literaturpreis des Landes Brandenburg", "Márai Sándor Prize", "Füst Milán Prize", "Déry Tibor Prize", "Friedrich Gundolf Prize", "Hungarian Order of Saint Stephen", "Grand Cross of the Order of Merit of Hungary", "Adelbert von Chamisso Prize (complimentary gift)", "Goethe Medal", "Honorary doctor of the Free University of Berlin", "Jean Améry award", "Leipzig Book Award for European Understanding", "Marion Samuel Prize", "Order of Saint Stephen of Hungary", "honorary citizen of Budapest", "Jeanette Schocken Prize", "Jeanette Schocken Prize", "honorary doctor of the Sorbonne Nouvelle University"]
+languages_spoken: ["Hungarian", "German"]
 educated_at: ["Madách Imre High School"]
 ---
 

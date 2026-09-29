@@ -8,6 +8,7 @@ date_of_death: ["1931-04-08"]
 nationality: ["Sweden"]
 occupation: ["poet", "writer"]
 award_received: ["Nobel Prize in Literature", "Samfundet De Nio's Grand Prize"]
+languages_spoken: ["Swedish"]
 educated_at: ["Uppsala University"]
 ---
 

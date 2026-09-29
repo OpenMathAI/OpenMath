@@ -8,6 +8,7 @@ date_of_death: ["1981-09-12"]
 nationality: ["Italy", "Kingdom of Italy"]
 occupation: ["poet", "journalist", "translator", "politician", "librarian", "prose writer", "editor", "music critic", "literary critic"]
 award_received: ["Nobel Prize in Literature", "Grand Officer of the Order of Merit of the Italian Republic", "Knight Grand Cross of the Order of Merit of the Italian Republic", "Golden Wreath", "honorary doctorate from the University of Nice-Sophia Antipolis", "Feltrinelli Prize"]
+languages_spoken: ["Italian"]
 ---
 
 Eugenio Montale

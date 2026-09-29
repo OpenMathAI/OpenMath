@@ -8,6 +8,7 @@ date_of_death: ["2016-10-13"]
 nationality: ["Kingdom of Italy", "Italy"]
 occupation: ["theatre director", "stage actor", "screenwriter", "composer", "playwright", "film actor", "illustrator", "painter", "poet", "scenographer", "satirist", "writer", "costume designer", "actor", "visual artist", "director", "Nobel Prize winner", "Theaterintendant"]
 award_received: ["Nobel Prize in Literature", "Sonning Prize", "Orden al Mérito Docente y Cultural Gabriela Mistral", "honorary citizen of Palermo", "honorary doctorate of the Vrije Universiteit Brussel", "Cinearti La chioma di Berenice Prize", "honorary doctor of the Sorbonne Nouvelle University"]
+languages_spoken: ["Italian"]
 educated_at: ["Brera Academy"]
 ---
 

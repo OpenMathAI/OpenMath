@@ -9,6 +9,7 @@ nationality: ["France"]
 field_of_work: ["philosophy", "literature", "journalism", "ethics", "existence", "political philosophy", "opinion journalism", "theatre", "literary activity", "essay", "drama", "The strange writer", "existentialism"]
 occupation: ["writer", "philosopher", "novelist", "journalist", "essayist", "playwright", "French resistance fighter", "poet", "association football player", "opinion journalist", "actor"]
 award_received: ["Nobel Prize in Literature", "Q137970105"]
+languages_spoken: ["French"]
 educated_at: ["University of Algiers 1"]
 ---
 

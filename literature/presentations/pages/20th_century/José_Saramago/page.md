@@ -8,6 +8,7 @@ date_of_death: ["2010-06-18"]
 nationality: ["Portugal"]
 occupation: ["journalist", "playwright", "translator", "novelist", "poet", "chronicler", "essayist", "diarist", "literary critic", "writer", "screenwriter", "dramaturge", "revolutionary"]
 award_received: ["Nobel Prize in Literature", "Camões Prize", "America Award in Literature", "Grand Collar of the Military Order of Saint James of the Sword", "honorary doctor of the University of Manchester", "honorary doctorate of the University of Coimbra", "Chevalier des Arts et des Lettres", "honorary doctorate of the University of Castille-La Mancha", "honorary doctorate of the Bordeaux Montaigne University", "honorary doctorate of the University of Granada", "honorary doctorate of the University of Las Palmas, Gran Canaria", "Commander of the Military  Order of Saint James of the Sword", "honorary doctor of the University of Brasília", "honorary doctorate of Seville University", "honorary doctor of the University of Turin", "honorary doctorate of the Polytechnic University of Valencia", "honorary doctor of the University of Santiago, Chile", "honorary doctorate of the University of Salamanca", "Q130553019", "Grand Collar of the Order of Camões", "Q130852614", "Flaiano Literary Prize"]
+languages_spoken: ["Portuguese"]
 ---
 
 José Saramago

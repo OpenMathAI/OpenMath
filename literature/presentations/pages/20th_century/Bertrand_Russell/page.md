@@ -9,7 +9,7 @@ nationality: ["United Kingdom", "United Kingdom of Great Britain and Ireland"]
 field_of_work: ["set theory", "history of philosophy", "epistemology", "logic", "mathematics", "philosophy of language", "philosophy of science", "ethics", "religion", "mathematical logic", "sociology", "philosophy"]
 occupation: ["mathematician", "social critic", "essayist", "logician", "epistemologist", "philosopher of language", "metaphysician", "analytic philosopher", "autobiographer", "university teacher", "science fiction writer", "philosopher of science", "politician", "peace activist", "journalist", "philosopher", "writer", "pedagogue", "pacifist"]
 award_received: ["Nobel Prize in Literature", "Fellow of the Royal Society", "Medal Carl von Ossietzky", "Kalinga Prize", "De Morgan Medal", "Sylvester Medal", "Jerusalem Prize", "doctor honoris causa from the University of Aix-Marseille", "Sonning Prize"]
-doctoral_advisor: ["Alfred North Whitehead"]
+languages_spoken: ["English"]
 educated_at: ["University of Cambridge", "Trinity College"]
 ---
 

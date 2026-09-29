@@ -9,6 +9,7 @@ nationality: ["United States"]
 field_of_work: ["literary activity", "poetry"]
 occupation: ["writer", "poet", "essayist"]
 award_received: ["Guggenheim Fellowship", "Bollingen Prize", "Pulitzer Prize for Poetry", "PEN New England Award", "United States Poet Laureate", "Eunice Tietjens Memorial Prize", "National Endowment for the Arts Fellowship", "National Humanities Medal", "Nobel Prize in Literature", "National Endowment for the Arts Fellowship", "National Endowment for the Arts Fellowship", "Lannan Literary Awards", "Tomas Tranströmer prize", "Wallace Stevens Award", "National Book Critics Circle Award for Poetry", "William Carlos Williams Award", "National Book Award"]
+languages_spoken: ["English", "German"]
 educated_at: ["Columbia University", "Sarah Lawrence College", "George W. Hewlett High School"]
 ---
 

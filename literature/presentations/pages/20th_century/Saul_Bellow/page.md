@@ -9,6 +9,7 @@ nationality: ["United States"]
 field_of_work: ["novel"]
 occupation: ["writer", "novelist", "university teacher", "essayist", "author", "journalist", "sociologist", "anthropologist"]
 award_received: ["Nobel Prize in Literature", "Guggenheim Fellowship", "National Medal of Arts", "National Book Award for Fiction", "National Book Award for Fiction", "National Book Award for Fiction", "Pulitzer Prize for Fiction", "Jefferson Lecture", "St. Louis Literary Award", "PEN/Malamud Award", "Helmerich Award", "Common Wealth Award of Distinguished Service", "Emerson-Thoreau Medal", "Prix Formentor", "Officer of the Legion of Honour", "O. Henry Award", "Fellow of the American Academy of Arts and Sciences", "Guggenheim Fellowship"]
+languages_spoken: ["English"]
 educated_at: ["University of Wisconsin–Madison", "University of Chicago", "Northwestern University", "Roberto Clemente Community Academy", "Camp B'nai Brith", "Weinberg College of Arts and Sciences"]
 ---
 

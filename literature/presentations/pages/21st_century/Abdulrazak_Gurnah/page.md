@@ -8,6 +8,7 @@ nationality: ["United Kingdom", "Tanzania"]
 field_of_work: ["postcolonial literature", "literary activity", "editing"]
 occupation: ["novelist", "university teacher", "prose writer", "editing staff", "writer", "philologist"]
 award_received: ["Fellow of the Royal Society of Literature", "Nobel Prize in Literature", "honorary doctorate", "honorary doctorate of the University of Lleida"]
+languages_spoken: ["English", "Swahili"]
 educated_at: ["University of Kent", "University of London", "Christ Church"]
 ---
 

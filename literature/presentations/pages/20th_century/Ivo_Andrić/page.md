@@ -9,6 +9,7 @@ nationality: ["Socialist Federal Republic of Yugoslavia", "Cisleithania", "Kingd
 field_of_work: ["literature"]
 occupation: ["writer", "novelist", "diplomat", "poet", "essayist", "short story writer"]
 award_received: ["Nobel Prize in Literature", "Order of the Hero of Socialist Labour", "Order of the German Eagle"]
+languages_spoken: ["Serbo-Croatian", "Serbian"]
 educated_at: ["University of Graz", "Faculty of Humanities and Social Sciences, University of Zagreb", "University of Vienna", "Faculty of Philosophy of the Jagiellonian University"]
 ---
 

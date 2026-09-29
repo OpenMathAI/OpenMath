@@ -7,6 +7,7 @@ date_of_birth: ["1945-07-30"]
 nationality: ["France"]
 occupation: ["screenwriter", "writer", "playwright", "lyricist", "essayist"]
 award_received: ["Roger Nimier Prix", "Fénéon Prize for literature", "Grand Prix du roman de l'Académie française", "prix des Libraires", "Prix Goncourt", "Prince Pierre Award", "Commandeur des Arts et des Lettres‎", "Knight of the Legion of Honour", "Grand prix national des Lettres", "Grand prix de littérature Paul-Morand", "Jean Monnet Prize", "Prix mondial Cino Del Duca", "Preis der SWR-Bestenliste", "The prize of the BNF", "Austrian State Prize for European Literature", "Officer of the Legion of Honour", "Nobel Prize in Literature", "Commander of the Legion of Honour", "Prix Marguerite Duras"]
+languages_spoken: ["French"]
 educated_at: ["Lycée Henri-IV", "Lycée Michel-Montaigne"]
 ---
 
