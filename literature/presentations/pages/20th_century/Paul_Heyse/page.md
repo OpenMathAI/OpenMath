@@ -1,0 +1,83 @@
+---
+name: "Paul von Heyse"
+wikidata: Q76487
+wikipedia: https://en.wikipedia.org/wiki/Paul_Heyse
+description: "German writer (1830–1914)"
+date_of_birth: ["1830-03-15", "1830-03-13", "1830-01-01"]
+date_of_death: ["1914-04-02", "1914-01-01"]
+nationality: ["Kingdom of Prussia"]
+occupation: ["poet", "playwright", "translator", "novelist", "writer", "draftsperson"]
+award_received: ["Nobel Prize in Literature", "honorary citizen of Munich", "Schiller prize", "Bavarian Maximilian Order for Science and Art"]
+educated_at: ["University of Bonn", "Humboldt-Universität zu Berlin", "Friedrich-Wilhelms-Gymnasium"]
+---
+
+Paul Heyse
+
+| Paul Heyse | |
+| --- | --- |
+| Paul Heyse's official Nobel Prize portrait | |
+| Born | Paul Johann Ludwig von Heyse  (1830-03-15)15 March 1830  [Berlin](https://en.wikipedia.org/wiki/Berlin "Berlin"), [Kingdom of Prussia](https://en.wikipedia.org/wiki/Kingdom_of_Prussia "Kingdom of Prussia") |
+| Died | 2 April 1914(1914-04-02) (aged 84)  [Munich](https://en.wikipedia.org/wiki/Munich "Munich"), [Kingdom of Bavaria](https://en.wikipedia.org/wiki/Kingdom_of_Bavaria "Kingdom of Bavaria"), [German Empire](https://en.wikipedia.org/wiki/German_Empire "German Empire") |
+| **Writing career** | |
+| Notable awards | [Nobel Prize in Literature](https://en.wikipedia.org/wiki/Nobel_Prize_in_Literature "Nobel Prize in Literature")   1910 |
+|  | |
+
+**Paul Johann Ludwig von Heyse** (German: [[ˈpaʊl ˈhaɪzə]](https://en.wikipedia.org/wiki/Help:IPA/Standard_German "Help:IPA/Standard German") [ⓘ](https://en.wikipedia.org/wiki/File:De-Paul_Heyse.ogg "File:De-Paul Heyse.ogg"); 15 March 1830 – 2 April 1914) was a German writer and translator. A member of two important literary societies, the *[Tunnel über der Spree](https://en.wikipedia.org/wiki/Tunnel_über_der_Spree "Tunnel über der Spree")* in [Berlin](https://en.wikipedia.org/wiki/Berlin "Berlin") and *[Die Krokodile](https://en.wikipedia.org/wiki/Die_Krokodile "Die Krokodile")* in Munich, he wrote novels, poetry, 177 short stories, and about sixty dramas. The sum of Heyse's many and varied productions made him a dominant figure among German men of letters. He was awarded the [1910 Nobel Prize in Literature](https://en.wikipedia.org/wiki/1910_Nobel_Prize_in_Literature "1910 Nobel Prize in Literature") "as a tribute to the consummate artistry, permeated with idealism, which he has demonstrated during his long productive career as a lyric poet, dramatist, novelist and writer of world-renowned short stories." Wirsen, one of the Nobel judges, said that "Germany has not had a greater literary genius since [Goethe](https://en.wikipedia.org/wiki/Johann_Wolfgang_von_Goethe "Johann Wolfgang von Goethe")." Heyse is the fifth oldest laureate in literature, after [Alice Munro](https://en.wikipedia.org/wiki/Alice_Munro "Alice Munro"), [Jaroslav Seifert](https://en.wikipedia.org/wiki/Jaroslav_Seifert "Jaroslav Seifert"), [Theodor Mommsen](https://en.wikipedia.org/wiki/Theodor_Mommsen "Theodor Mommsen") and [Doris Lessing](https://en.wikipedia.org/wiki/Doris_Lessing "Doris Lessing").
+
+## Life
+
+### Berlin (1830–54)
+
+Paul Heyse was born on 15 March 1830 in Heiliggeiststraße, [Berlin](https://en.wikipedia.org/wiki/Berlin "Berlin"). His father, the distinguished philologist [Karl Wilhelm Ludwig Heyse](https://en.wikipedia.org/wiki/Karl_Wilhelm_Ludwig_Heyse "Karl Wilhelm Ludwig Heyse"), was a professor at the [University of Berlin](https://en.wikipedia.org/wiki/University_of_Berlin "University of Berlin") who had been the tutor of both [Wilhelm von Humboldt](https://en.wikipedia.org/wiki/Wilhelm_von_Humboldt "Wilhelm von Humboldt")'s youngest son (during 1815–17) and [Felix Mendelssohn](https://en.wikipedia.org/wiki/Felix_Mendelssohn "Felix Mendelssohn") (during 1819–27). His paternal grandfather [Johann Christian August Heyse](https://en.wikipedia.org/wiki/Johann_Christian_August_Heyse "Johann Christian August Heyse") (21 April 1764, Nordhausen – 27 July 1829, Magdeburg), was a famous German grammarian and lexicographer. Paul Heyse's mother was Jewish.
+
+Heyse attended the renamed Friedrich-Wilhelms-Gymnasium until 1847. He was later remembered as a model student. His family connections gained him early entry to the artistic circles of Berlin, where he made the acquaintance of [Emanuel Geibel](https://en.wikipedia.org/wiki/Emanuel_Geibel "Emanuel Geibel"), a man fifteen years his elder who was to become his literary mentor and lifelong friend, and who introduced him to his future father-in-law, the art historian and writer [Franz Kugler](https://en.wikipedia.org/wiki/Franz_Theodor_Kugler "Franz Theodor Kugler").
+
+After leaving school Heyse began studying classical philology. He met [Jacob Burckhardt](https://en.wikipedia.org/wiki/Jacob_Burckhardt "Jacob Burckhardt"), [Adolph Menzel](https://en.wikipedia.org/wiki/Adolph_Menzel "Adolph Menzel"), [Theodor Fontane](https://en.wikipedia.org/wiki/Theodor_Fontane "Theodor Fontane") and [Theodor Storm](https://en.wikipedia.org/wiki/Theodor_Storm "Theodor Storm"), and in 1849 joined the *[Tunnel über der Spree](https://en.wikipedia.org/wiki/Tunnel_über_der_Spree "Tunnel über der Spree")* literary group. *Frühlingsanfang 1848*, the first of Heyse's poems to see print, expressed his enthusiasm for the recent Revolution. After a brief excursion to see the student militias he returned home without joining them, apparently out of consideration for the concerns of his parents and friends.
+
+Having studied for two years at the [University of Berlin](https://en.wikipedia.org/wiki/University_of_Berlin "University of Berlin") he left for [Bonn](https://en.wikipedia.org/wiki/Bonn "Bonn") in April 1849 in order to study art history and Romance languages. In 1850, he finally resolved on a career as a writer and began a dissertation under the supervision of [Friedrich Diez](https://en.wikipedia.org/wiki/Friedrich_Diez "Friedrich Diez"), a pioneer of Romance philology in Germany; but when it was discovered he was conducting an affair with the wife of one of his professors he was sent back to Berlin. Heyse's first book, *Der Jungbrunnen* (a collection of tales and poetry) was published anonymously by his father that same year as was his tragedy *Francesca von Rimini*. About the same time, Heyse received from the publisher [Alexander Duncker](https://en.wikipedia.org/wiki/Alexander_Duncker "Alexander Duncker") a manuscript by the then-unknown [Theodor Storm](https://en.wikipedia.org/wiki/Theodor_Storm "Theodor Storm"). Heyse's enthusiastic critique of *Sommergeschichten und Lieder* laid the foundations of their future friendship.
+
+[![](https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Portr%C3%A4t_des_Paul_Heyse_%281853%29_-_Adolf_Friedrich_Erdmann_von_Menzel_%28Museum_Georg_Sch%C3%A4fer%29.jpg/250px-Portr%C3%A4t_des_Paul_Heyse_%281853%29_-_Adolf_Friedrich_Erdmann_von_Menzel_%28Museum_Georg_Sch%C3%A4fer%29.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)](https://en.wikipedia.org/wiki/File:Porträt_des_Paul_Heyse_(1853)_-_Adolf_Friedrich_Erdmann_von_Menzel_(Museum_Georg_Schäfer).jpg)
+
+Portrait of Paul Heyse, by [Adolph von Menzel](https://en.wikipedia.org/wiki/Adolph_von_Menzel "Adolph von Menzel")
+
+In 1851, Heyse won a contest held by the members of the "Tunnel" for the ballad *Das Tal von Espigno*, and his first short story, "Marion" (1852), was similarly honoured. It was followed in 1852 by the *[Spanisches Liederbuch](https://en.wikipedia.org/wiki/Spanisches_Liederbuch "Spanisches Liederbuch")*, a collection of translations of poems and folk songs by Geibel and Heyse which was to be a favourite with composers, including [Robert Schumann](https://en.wikipedia.org/wiki/Robert_Schumann "Robert Schumann") (Opp. 74 & 138), [Adolf Jensen](https://en.wikipedia.org/wiki/Adolf_Jensen "Adolf Jensen") (Op. 21) and [Hugo Wolf](https://en.wikipedia.org/wiki/Hugo_Wolf "Hugo Wolf") ([Lieder](https://en.wikipedia.org/wiki/Lieder "Lieder") collection *[Spanisches Liederbuch](https://en.wikipedia.org/wiki/Spanisches_Liederbuch_(Wolf) "Spanisches Liederbuch (Wolf)")*, 1891). Wolf also set poems from Heyse's collection *[Italienisches Liederbuch](https://en.wikipedia.org/wiki/Italienisches_Liederbuch "Italienisches Liederbuch")* of 1860 (Lieder collection *[Italienisches Liederbuch](https://en.wikipedia.org/wiki/Italienisches_Liederbuch_(Wolf) "Italienisches Liederbuch (Wolf)")* 1892–96). Throughout his career Heyse worked as a translator, above all of Italian literature ([Leopardi](https://en.wikipedia.org/wiki/Leopardi "Leopardi"), [Giusti](https://en.wikipedia.org/wiki/Giuseppe_Giusti "Giuseppe Giusti")).
+
+Several members of the "Tunnel" began to find its formalities and public nature distasteful, and a smaller circle, the *[Rütli](https://en.wikipedia.org/wiki/Rütli_(literary_group) "Rütli (literary group)")*, was formed in December 1852: it included Kugler, [Lepel](https://en.wikipedia.org/wiki/Bernhard_von_Lepel?action=edit&redlink=1 "Bernhard von Lepel"), Fontane, Storm, and Heyse. In May 1852, Heyse was awarded a doctorate for his work on the [troubadours](https://en.wikipedia.org/wiki/Troubadour "Troubadour"), and a Prussian scholarship allowed him to depart for Italy to look for old Provençal manuscripts. He made friends with [Arnold Böcklin](https://en.wikipedia.org/wiki/Arnold_Böcklin "Arnold Böcklin") and [Joseph Victor von Scheffel](https://en.wikipedia.org/wiki/Joseph_Victor_von_Scheffel "Joseph Victor von Scheffel") but was banned from the Vatican library after being discovered copying passages from unpublished manuscripts. He returned to Germany in 1853, where, with the Italian landscape still fresh in his mind, he wrote the works which first made him famous: his most famous short story, "L'Arrabbiata" ("The Fury", 1853, published in 1855); and the *Lieder aus Sorrent* ("Songs of Sorrento", 1852/53). Much of his new writing appeared in the *Argo*, the yearbook of the *Rütli* writers.
+
+### Munich (1854–1914)
+
+Emanuel Geibel persuaded the King of Bavaria, [Maximilian II](https://en.wikipedia.org/wiki/Maximilian_II_of_Bavaria "Maximilian II of Bavaria"), to grant Heyse a titular professorship in Munich. Heyse was thus appointed professor of Romance philology, although he never taught at that city's university. After his marriage on 15 May to Margarete Kugler he arrived in Munich on 25 May 1854. At his first audience with the King, Heyse presented his verse tales, *Hermen*, and began a productive life as one of the *Nordlichtern* ("northern lights": Geibel, Heyse and Riehl) and establishing another literary society, *Die Krokodile*, which included [Felix Dahn](https://en.wikipedia.org/wiki/Felix_Dahn "Felix Dahn"), [Wilhelm Hertz](https://en.wikipedia.org/wiki/Wilhelm_Hertz "Wilhelm Hertz"), [Hermann Lingg](https://en.wikipedia.org/wiki/Hermann_Lingg "Hermann Lingg"), [Franz von Kobell](https://en.wikipedia.org/wiki/Franz_von_Kobell "Franz von Kobell"), the cultural historian [Wilhelm Heinrich Riehl](https://en.wikipedia.org/wiki/Wilhelm_Heinrich_Riehl "Wilhelm Heinrich Riehl"), [Friedrich Bodenstedt](https://en.wikipedia.org/wiki/Friedrich_Bodenstedt "Friedrich Bodenstedt"), and the travel writer and art patron [Adolf Friedrich von Schack](https://en.wikipedia.org/wiki/Adolf_Friedrich_von_Schack "Adolf Friedrich von Schack"). In December Heyse began a long correspondence with [Eduard Mörike](https://en.wikipedia.org/wiki/Eduard_Mörike "Eduard Mörike").
+
+On 22 August 1855, Heyse's first son, Franz, was born. Heyse had four children by his first marriage: Franz (1855–1919), Julie or Lulu (Frau Baumgarten, 1857–1928), Ernst (1859–1871) and Clara (Frau Layriz, 1861–1931). In 1859, obligations to the Kugler family led Heyse to take up a position as editor of the *Literaturblatt zum deutschen Kunstblatt*, and he declined a tempting offer from the Grand Duke Carl Alexander von Weimar which would have involved moving to [Thuringia](https://en.wikipedia.org/wiki/Thuringia "Thuringia").
+
+On 30 September 1862, his wife Margarete died in [Meran](https://en.wikipedia.org/wiki/Meran "Meran") of a lung illness. He completed the historical drama, *Ludwig der Bayer* – a Bavarian period piece which Maximilian II had long been eager to see – but its theatrical production was a failure. Nevertheless, Heyse worked throughout the 1860s on new plays, eventually achieving his greatest success with *Kolberg* (1865).
+
+He married Anna Schubart in 1867. Over the next three decades, Heyse continued to write prolifically. Despite a number of bereavements his life was uneventful, and his fame grew steadily until he was a world-famous figure. He was a very early opponent of [naturalism](https://en.wikipedia.org/wiki/Naturalism_(literature) "Naturalism (literature)"), making critical references to it in print long before its influence could be felt in Germany. Younger critics who favoured naturalism made attacks on his writings, to which he replied in *Merlin* (1892): but their influence on the public was negligible. He was dubbed *Dichterfürst*, prince of poetry, and he worked tirelessly to promote international understanding within Europe. He was elected an International Member of the [American Philosophical Society](https://en.wikipedia.org/wiki/American_Philosophical_Society "American Philosophical Society") in 1895. In 1900, he was named an honorary citizen of Munich, and several special publications honoured his 70th birthday; and in 1910, he was made a member of the nobility, before being awarded the Nobel Prize for Literature on 10 December. He could not attend the ceremony, and was represented in Sweden by Count von Pückler.
+
+His last published works were *Letzten Novellen* and *Italienischen Volksmärchen* (1914). He died on 2 April 1914, several months before the outbreak of [World War I](https://en.wikipedia.org/wiki/World_War_I "World War I"), and was buried in the old section of the Waldfriedhof (Nr. 43-W-27).
+
+A street and tunnel in Munich, "Paul-Heyse Strasse" and "Paul-Heyse-Unterführung" are named after him as well as “Heysestrasse” in Hamburg Bergedorf.
+
+## See also
+
+- [Gustav Adolf Kröner](https://en.wikipedia.org/wiki/Gustav_Adolf_Kröner "Gustav Adolf Kröner")
+- [List of Jewish Nobel laureates](https://en.wikipedia.org/wiki/List_of_Jewish_Nobel_laureates "List of Jewish Nobel laureates")
+
+## References
+
+## External links
+
+[![Wikimedia Commons logo](https://thumb.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/40px-Commons-logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)](https://en.wikipedia.org/wiki/File:Commons-logo.svg)
+
+Wikimedia Commons has media related to [Paul Heyse](https://commons.wikimedia.org/wiki/Category:Paul%20Heyse "commons:Category:Paul Heyse").
+
+- [Paul Heyse](https://www.nobelprize.org/laureate/580) on Nobelprize.org
+- [Photo and Short Biography](https://web.archive.org/web/20060517063345/http://literature.nobel.brainparad.com/ludwig_heyse.html) at [Timeline of Nobel Winners](https://web.archive.org/web/20051027152853/http://nobel.brainparad.com/)
+- [Works by Paul Heyse](https://www.gutenberg.org/ebooks/author/1121) at [Project Gutenberg](https://en.wikipedia.org/wiki/Project_Gutenberg "Project Gutenberg")
+- [List of Works](http://noblib.internet-box.ch/NLEW.php?authorid=11)
+- [Works by or about Paul Heyse](https://archive.org/search.php?query=%28%28subject%3A%22Heyse%2C%20Paul%22%20OR%20subject%3A%22Paul%20Heyse%22%20OR%20creator%3A%22Heyse%2C%20Paul%22%20OR%20creator%3A%22Paul%20Heyse%22%20OR%20creator%3A%22Heyse%2C%20P%2E%22%20OR%20title%3A%22Paul%20Heyse%22%20OR%20description%3A%22Heyse%2C%20Paul%22%20OR%20description%3A%22Paul%20Heyse%22%29%20OR%20%28%221830-1914%22%20AND%20Heyse%29%29%20AND%20%28-mediatype:software%29) at the [Internet Archive](https://en.wikipedia.org/wiki/Internet_Archive "Internet Archive")
+- [Works by Paul Heyse](https://librivox.org/author/9119) at [LibriVox](https://en.wikipedia.org/wiki/LibriVox "LibriVox") (public domain audiobooks) ![](https://thumb.wikimedia.org/wikipedia/commons/thumb/2/21/Speaker_Icon.svg/20px-Speaker_Icon.svg.png?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)
+- [Paul Heyse](https://www.ibdb.com/broadway-cast-staff/8047) at the [Internet Broadway Database](https://en.wikipedia.org/wiki/Internet_Broadway_Database "Internet Broadway Database")
+- [*In Paradise*](https://archive.org/details/inparadiseanove00heysgoog), by Paul Heyse
+- [*Children of the World*](https://books.google.com/books?id=etpBAAAAIAAJ), by Paul Heyse
+- ["Spanisches Liederbuch"](https://archive.org/details/spanischesliede00heysgoog). *archive.org*. Retrieved 3 May 2015.

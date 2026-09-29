@@ -48,7 +48,7 @@
 | 1934 | [George Whipple](https://en.wikipedia.org/wiki/George_Whipple) | United States |
 | 1934 | [George Minot](https://en.wikipedia.org/wiki/George_Minot) | United States |
 | 1934 | [William P. Murphy](https://en.wikipedia.org/wiki/William_P._Murphy) | United States |
-| 1935 | [was awarded a Nobel Prize in Physiology or Medicine in 1935 for his student Hilde Mangold 's discovery of the effect now known as embryonic induction , an influence, exercised by various parts of the embryo , that directs the development of groups of cells into particular tissues and organs, the start of artificial cloning of organisms. Spemann added his name as an author to Hilde Mangold's dissertation (although she objected).](https://en.wikipedia.org/wiki/Nobel_Prize_in_Physiology_or_Medicine) | Germany |
+| 1935 | [Hans Spemann](https://en.wikipedia.org/wiki/Hans_Spemann) | Germany |
 | 1936 | [Sir Henry Hallett Dale](https://en.wikipedia.org/wiki/Henry_Hallett_Dale) | United Kingdom |
 | 1936 | [Otto Loewi](https://en.wikipedia.org/wiki/Otto_Loewi) | Germany |
 | 1937 | [Albert Szent-Györgyi](https://en.wikipedia.org/wiki/Albert_Szent-Györgyi) | Hungary |

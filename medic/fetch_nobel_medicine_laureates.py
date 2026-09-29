@@ -95,9 +95,10 @@ def parse(html: str) -> list[dict]:
                 rs = int(c.get('rowspan', 1) or 1)
                 pending_year = rs - 1
                 cur_year = year
-            elif get_name_url(c)[0]:
+            elif not name and get_name_url(c)[0]:
+                # 只取第一处姓名候选：理由列（Rationale）内的 wiki 链接不得覆盖姓名列
                 name, url = get_name_url(c)
-            elif get_country(c):
+            elif not country and get_country(c):
                 country = get_country(c)
                 rs = int(c.get('rowspan', 1) or 1)
                 pending_country = rs - 1
