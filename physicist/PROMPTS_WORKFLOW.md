@@ -1,7 +1,16 @@
 # OpenPhysicist 提示词撰写 + 社会关系入库工作流（2026-09 批次）
 
-> 本文档是 20 世纪诺贝尔物理学奖得主（161 位）批量「人物专属立传提示词撰写 + 社会关系入库」的共享工作流。
+> 本文档是诺贝尔物理学奖得主批量「人物专属立传提示词撰写 + 社会关系入库」的共享工作流。
 > 所有执行 agent 必读本文档 + 各自分批文件，然后逐人执行。
+
+## ★ 21 世纪批次差异（2026-09-28 增补，batch 清单 = `physicist/prompt_batches_21st.json`）
+
+- 数据源：`physicist/presentations/21th_century/21st_century/{Dir}/page.md`
+- 提示词落盘：`physicist/presentations/21th_century/{Dir}/{Dir}_zh.md`（21 世纪 **无存量提示词，68 人全部新写**）
+- yaml 落盘：`MySQL/data/{Dir}.yaml`；`has_biography: false`
+- 库内现状：多数人已作为 20 世纪批次的关系对手方 stub 存在（有 relation 入边、`has_social_data=0`）；seed_person.py 会按 QID→name_en UPD 复用同一记录，**勿另建别名记录**；yaml 关系条目若与库内既有行同 (from,to,type) 会撞 uq_rel 唯一键——遇 Duplicate entry 属正常幂等，跳过该条即可
+- 例外：Geoffrey Hinton 已完整入库（has_social_data=1），批次清单已标 need_relations=false
+- 其余流程（提示词结构/领域表/关系表/yaml 字段/入库/验证/红线）与下文 20 世纪流程完全一致
 
 ## 0. 路径与数据源（全部绝对路径，OpenMathAI 根 = `/Users/ericksun/workspace/codebuddy/OpenMathAI`）
 
