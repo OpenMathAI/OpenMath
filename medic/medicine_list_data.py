@@ -281,7 +281,7 @@ DATA = {
            "表彰他们关于细胞表面由遗传决定、调节免疫反应的结构的发现",
            [("Baruj Benacerraf", "巴鲁赫·贝纳塞拉夫", US),
             ("Jean Dausset", "让·多塞", "France"),
-            ("George Davis Snell", "乔治·戴维斯·斯内尔", US)]),
+            ("George D. Snell", "乔治·戴维斯·斯内尔", US)]),
     1981: ("for his discoveries concerning the functional specialization of the cerebral hemispheres || for their discoveries concerning information processing in the visual system",
            "表彰他关于大脑两半球功能特化的发现 || 表彰他们关于视觉系统中信息加工的发现",
            [("Roger Wolcott Sperry", "罗杰·沃尔科特·斯佩里", US),

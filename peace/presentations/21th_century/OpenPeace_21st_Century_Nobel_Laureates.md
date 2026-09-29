@@ -64,7 +64,7 @@
 - **个人获奖者**：24 位
 - **已立传**：0 位
 - **已 Review**：0 位
-- **已社会关系入库**：0 位
+- **已社会关系入库**：0 / 36 位
 - **拒绝领奖**：黎德寿（1973，诺贝尔和平奖历史上唯一拒绝领奖的得主）
 - **未颁奖年份**：1914–1916、1918、1923、1924、1928、1932、1939–1943、1948、1955、1956、1966、1967、1972
 - **女性获奖者**：10 位（Ellen Johnson Sirleaf、Leymah Gbowee、Malala Yousafzai、Maria Ressa、María Corina Machado、Nadia Murad、Narges Mohammadi、Shirin Ebadi、Tawakkol Karman、Wangari Muta Maathai）

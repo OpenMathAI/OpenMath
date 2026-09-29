@@ -10,6 +10,7 @@
 """
 from __future__ import annotations
 
+import re
 import time
 from collections import Counter
 from pathlib import Path
@@ -22,6 +23,45 @@ OUT21 = ROOT / "presentations" / "21th_century" / "OpenPeace_21st_Century_Nobel_
 
 NO_AWARD_YEARS = "1914–1916、1918、1923、1924、1928、1932、1939–1943、1948、1955、1956、1966、1967、1972"
 ORG_LABEL = "International organization"
+
+
+def _norm(s: str) -> str:
+    import unicodedata
+    s = unicodedata.normalize("NFKD", s or "")
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    return re.sub(r"[\s_'.()\u00b7,\-]", "", s).lower()
+
+
+_SOCIAL_CACHE: dict[str, int] | None = None
+
+# 名录显示名 → 库内 name_en 的别名（库内用全名/规范名形式）
+SOCIAL_ALIAS = {
+    "Lord Boyd-Orr": "John Boyd Orr",
+    "John Raleigh Mott": "John Mott",
+    "United Nations Children's Fund (UNICEF)": "United Nations Children's Fund",
+}
+
+
+def _social_done(name_en: str) -> bool:
+    """直查 greatminds 库：该获奖者 has_social_data 是否为 1。"""
+    name_en = SOCIAL_ALIAS.get(name_en, name_en)
+    global _SOCIAL_CACHE
+    if _SOCIAL_CACHE is None:
+        _SOCIAL_CACHE = {}
+        try:
+            import sys
+            sys.path.insert(0, str(ROOT.parent / "MySQL"))
+            from db_mysql import get_conn
+            conn = get_conn()
+            cur = conn.cursor()
+            cur.execute("SELECT name_en, has_social_data FROM people")
+            for en, soc in cur.fetchall():
+                if en:
+                    _SOCIAL_CACHE[_norm(en)] = soc
+            conn.close()
+        except Exception as e:
+            print("WARN: 数据库不可达，社会关系入库列按 🔲 处理：", e)
+    return bool(_SOCIAL_CACHE.get(_norm(name_en)))
 
 # 国家级机构获奖者（非 International organization 口径的组织）
 NATIONAL_ORGS = {"Institute of International Law", "Friends Service Council",
@@ -83,7 +123,8 @@ def write_list(path: Path, header_title: str, year_range: str, source: str,
     lines.append("\n| 年份 | 获奖者 | 国籍/所在国 | 获奖理由 | 立传 | Review | 社会关系入库 |")
     lines.append("|:--:|------|------|------|:--:|:--:|:--:|")
     for year, ne, nz, ctry, _zen, zzh in rows:
-        lines.append(f"| {year} | {ne} ({nz}) | {ctry} | {zzh} | 🔲 | 🔲 | 🔲 |")
+        rel = "✅" if _social_done(ne) else "🔲"
+        lines.append(f"| {year} | {ne} ({nz}) | {ctry} | {zzh} | 🔲 | 🔲 | {rel} |")
 
     # ------------------------- 二、统计说明 -------------------------
     individuals = sorted({ne for _, ne, _, ctry, *_ in rows if not is_org_row(ctry, ne)})
@@ -105,7 +146,8 @@ def write_list(path: Path, header_title: str, year_range: str, source: str,
     lines.append(f"- **个人获奖者**：{len(individuals)} 位")
     lines.append("- **已立传**：0 位")
     lines.append("- **已 Review**：0 位")
-    lines.append("- **已社会关系入库**：0 位")
+    rel_done = sum(1 for ne in {ne for _, ne, *_ in rows} if _social_done(ne))
+    lines.append(f"- **已社会关系入库**：{rel_done} / {len({ne for _, ne, *_ in rows})} 位")
     if multi:
         lines.append("- **多次获奖**：" + "；".join(f"{name}（{c} 次）" for name, c in multi))
     lines.append("- **拒绝领奖**：黎德寿（1973，诺贝尔和平奖历史上唯一拒绝领奖的得主）")

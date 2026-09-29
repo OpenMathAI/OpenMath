@@ -11,10 +11,33 @@
 from __future__ import annotations
 
 import re
+import sys
 import time
+import unicodedata
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "MySQL"))
+from db_mysql import get_conn
+
 from medicine_list_data import DATA
+
+
+def _norm(s: str) -> str:
+    s = unicodedata.normalize("NFKD", s or "")
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    return re.sub(r"[\s_'.()\u00b7,\-]", "", s).lower()
+
+
+def load_social_status() -> dict[str, int]:
+    """从 greatminds 库读取 has_social_data 状态，键为归一化姓名。"""
+    conn = get_conn()
+    cur = conn.cursor()
+    cur.execute("SELECT name_en, has_social_data FROM people")
+    out = {}
+    for en, soc in cur.fetchall():
+        out[_norm(en)] = int(soc or 0)
+    conn.close()
+    return out
 
 ROOT = Path(__file__).resolve().parent
 OUT20 = ROOT / "presentations" / "20th_century" / "OpenMedic_20th_Century_Nobel_Laureates.md"
@@ -79,8 +102,9 @@ FEMALE_21TH = {"Linda B. Buck", "Françoise Barré-Sinoussi", "Carol W. Greider"
 
 def write_list(path: Path, header_title: str, year_range: str, source: str,
                rows: list, years: int, extra_note: str = "", female: set[str] | None = None,
-               closing: str = "") -> None:
+               closing: str = "", social_done: dict[str, int] | None = None) -> None:
     female = female or set()
+    social_done = social_done or {}
     lines = []
     lines.append(f"# {header_title}\n")
     lines.append(f"> **本名录收录 {year_range} 年诺贝尔生理学或医学奖得主，共 {years} 个颁奖年份 / {len(rows)} 位。**\n")
@@ -98,7 +122,8 @@ def write_list(path: Path, header_title: str, year_range: str, source: str,
     lines.append("\n| 年份 | 获奖者 | 国籍 | 获奖理由 | 立传 | Review | 社会关系入库 |")
     lines.append("|:--:|------|------|------|:--:|:--:|:--:|")
     for year, ne, nz, ctry, _zen, zzh in rows:
-        lines.append(f"| {year} | {_display(ne)} ({nz}) | {ctry} | {zzh} | 🔲 | 🔲 | 🔲 |")
+        soc = "✅" if _norm(ne) in social_done else "🔲"
+        lines.append(f"| {year} | {_display(ne)} ({nz}) | {ctry} | {zzh} | 🔲 | 🔲 | {soc} |")
 
     # ------------------------- 二、统计说明 -------------------------
     persons = sorted({_display(ne) for _, ne, *_ in rows})
@@ -114,7 +139,7 @@ def write_list(path: Path, header_title: str, year_range: str, source: str,
     lines.append(f"- **获奖总人数**：{len(persons)} 位")
     lines.append("- **已立传**：0 位")
     lines.append("- **已 Review**：0 位")
-    lines.append("- **已社会关系入库**：0 位")
+    lines.append(f"- **已社会关系入库**：{sum(1 for _, ne, *_ in rows if _norm(ne) in social_done)} 位")
     lines.append("- **两度获奖者**：无（诺贝尔生理学或医学奖至今无人两度获奖）")
     if females:
         lines.append(f"- **女性获奖者**：{len(females)} 位（{'、'.join(females)}）")
@@ -138,6 +163,7 @@ def main() -> int:
     rows21 = build_rows("21th")
     years20 = sum(1 for y in sorted(DATA) if 1901 <= y <= 2000)
     years21 = sum(1 for y in sorted(DATA) if y > 2000)
+    social_done = load_social_status()
 
     write_list(
         OUT20,
@@ -148,6 +174,7 @@ def main() -> int:
         extra_note="1901–2000 年间未颁奖年份：1915–1918、1921、1925、1940–1942（两次世界大战期间）。",
         female=FEMALE_20TH,
         closing="这不是一份排名，而是一部按时间展开的医学历程：从血清疗法到基因组编辑，每一项获奖都标记着人类战胜疾病的一次跃迁。",
+        social_done=social_done,
     )
     write_list(
         OUT21,
@@ -157,6 +184,7 @@ def main() -> int:
         rows21, years21,
         female=FEMALE_21TH,
         closing="进入新世纪，生理学或医学奖持续改写人类对生命的认知：从细胞自噬到 mRNA 疫苗，从大脑定位系统到丙肝病毒的攻克。",
+        social_done=social_done,
     )
 
     total = len(rows20) + len(rows21)
