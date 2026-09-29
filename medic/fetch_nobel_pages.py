@@ -3,12 +3,13 @@
 抓取诺贝尔生理学或医学奖得主的完整 Wikipedia 页面（复用物理学家侧 fetch_nobel_pages.py 的下载方式）。
 
 每个人物会生成：
-  pages/<世纪>/<Name>/page.md          正文 Markdown（由 HTML 转换）
-  pages/<世纪>/<Name>/page.html        原始 HTML（备份）
-  pages/<世纪>/<Name>/metadata.json    Wikidata 元数据（生卒、领域、国籍、获奖等）
-  pages/<世纪>/<Name>/images.txt       页面内图片 URL 清单
+  presentations/<世纪>/<Name>/page.md          正文 Markdown（由 HTML 转换）
+  presentations/<世纪>/<Name>/page.html        原始 HTML（备份）
+  presentations/<世纪>/<Name>/metadata.json    Wikidata 元数据（生卒、领域、国籍、获奖等）
+  presentations/<世纪>/<Name>/images.txt       页面内图片 URL 清单
 
 并在 pages/INDEX.md 生成总索引。
+世纪目录命名对齐 physicist 侧：20th_century / 21th_century
 
 数据来源：presentations/Nobel_Medicine_Laureates_20th_21st_Century.md
 世纪划分：1901–2000 → 20th_century，2001–2025 → 21st_century
@@ -44,7 +45,7 @@ USER_AGENT = (
 
 ROOT = Path(__file__).resolve().parent
 LIST_MD = ROOT / "presentations" / "Nobel_Medicine_Laureates_20th_21st_Century.md"
-OUT_ROOT = ROOT / "presentations" / "pages"
+OUT_ROOT = ROOT / "presentations"
 
 
 # ---------------------------------------------------------------------------
@@ -385,7 +386,7 @@ def write_index(results: list[dict], out_root: Path) -> None:
              f"> 生成时间：{time.strftime('%Y-%m-%d %H:%M:%S')}",
              f"> 共 **{len(results)}** 人\n"]
 
-    for century in ("20th_century", "21st_century"):
+    for century in ("20th_century", "21th_century"):
         subset = [r for r in results if r.get("century") == century]
         if not subset:
             continue
@@ -395,10 +396,11 @@ def write_index(results: list[dict], out_root: Path) -> None:
             name = r["name"]
             title = r.get("title", name)
             year = r["year"]
-            rel = Path(century) / safe_dirname(title) / "page.md"
+            rel = Path("..") / century / safe_dirname(title) / "page.md"
             lines.append(f"- {year} — [{name}]({rel})")
 
-    (out_root / "INDEX.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (out_root / "pages").mkdir(parents=True, exist_ok=True)
+    (out_root / "pages" / "INDEX.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------
@@ -415,7 +417,7 @@ def parse_laureates_from_md(path: Path) -> list[dict]:
             current_century = "20th_century"
             continue
         if s.startswith("## 21 世纪"):
-            current_century = "21st_century"
+            current_century = "21th_century"
             continue
         m = row_pat.match(s)
         if m and current_century:

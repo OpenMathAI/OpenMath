@@ -111,8 +111,8 @@ def parse(html: str) -> list[dict]:
             pending_country -= 1
 
         if year and name:
-            # 清洗姓名中的生卒年括号，如 "Emil von Behring (1854–1917)"
-            name = re.sub(r'\s*\(\d{4}\s*[–-]\s*(?:\d{4})?\)$', '', name).strip()
+            # 清洗姓名中的生卒年括号，如 "Emil von Behring (1854–1917)" / "Fred Ramsdell (b. 1960)"
+            name = re.sub(r'\s*\((?:\d{4}\s*[–-]\s*(?:\d{4})?|b\.\s*\d{4})\)$', '', name).strip()
             laureates.append({'year': year, 'name': name, 'url': url, 'country': country})
 
     return laureates

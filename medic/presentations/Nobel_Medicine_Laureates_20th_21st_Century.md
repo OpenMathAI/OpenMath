@@ -133,7 +133,7 @@
 | 1977 | [Roger Guillemin](https://en.wikipedia.org/wiki/Roger_Guillemin) | France United States |
 | 1977 | [Andrew V. Schally](https://en.wikipedia.org/wiki/Andrew_Schally) | United States |
 | 1977 | [Rosalyn Yalow](https://en.wikipedia.org/wiki/Rosalyn_Sussman_Yalow) | United States |
-| 1978 | [Werner Arber (b. 1929)](https://en.wikipedia.org/wiki/Werner_Arber) | Switzerland |
+| 1978 | [Werner Arber](https://en.wikipedia.org/wiki/Werner_Arber) | Switzerland |
 | 1978 | [Daniel Nathans](https://en.wikipedia.org/wiki/Daniel_Nathans) | United States |
 | 1978 | [Hamilton O. Smith](https://en.wikipedia.org/wiki/Hamilton_O._Smith) | United States |
 | 1979 | [Allan M. Cormack](https://en.wikipedia.org/wiki/Allan_McLeod_Cormack) | South Africa United States |
@@ -143,7 +143,7 @@
 | 1980 | [George D. Snell](https://en.wikipedia.org/wiki/George_Davis_Snell) | United States |
 | 1981 | [Roger W. Sperry](https://en.wikipedia.org/wiki/Roger_Wolcott_Sperry) | United States |
 | 1981 | [David H. Hubel](https://en.wikipedia.org/wiki/David_H._Hubel) | United States |
-| 1981 | [Torsten N. Wiesel (b. 1924)](https://en.wikipedia.org/wiki/Torsten_Wiesel) | Sweden |
+| 1981 | [Torsten N. Wiesel](https://en.wikipedia.org/wiki/Torsten_Wiesel) | Sweden |
 | 1982 | [Sune K. Bergström](https://en.wikipedia.org/wiki/Sune_Bergström) | Sweden |
 | 1982 | [Bengt I. Samuelsson](https://en.wikipedia.org/wiki/Bengt_I._Samuelsson) | Sweden |
 | 1982 | [Sir John R. Vane](https://en.wikipedia.org/wiki/John_Vane) | United Kingdom |
@@ -151,8 +151,8 @@
 | 1984 | [Niels K. Jerne](https://en.wikipedia.org/wiki/Niels_Kaj_Jerne) | Denmark |
 | 1984 | [Georges J. F. Köhler](https://en.wikipedia.org/wiki/Georges_J._F._Köhler) | West Germany |
 | 1984 | [César Milstein](https://en.wikipedia.org/wiki/César_Milstein) | Argentina |
-| 1985 | [Michael S. Brown (b. 1941)](https://en.wikipedia.org/wiki/Michael_Stuart_Brown) | United States |
-| 1985 | [Joseph L. Goldstein (b. 1940)](https://en.wikipedia.org/wiki/Joseph_L._Goldstein) | United States |
+| 1985 | [Michael S. Brown](https://en.wikipedia.org/wiki/Michael_Stuart_Brown) | United States |
+| 1985 | [Joseph L. Goldstein](https://en.wikipedia.org/wiki/Joseph_L._Goldstein) | United States |
 | 1986 | [Stanley Cohen](https://en.wikipedia.org/wiki/Stanley_Cohen_(biochemist)) | United States |
 | 1986 | [Rita Levi-Montalcini](https://en.wikipedia.org/wiki/Rita_Levi-Montalcini) | Italy |
 | 1987 | [Susumu Tonegawa](https://en.wikipedia.org/wiki/Susumu_Tonegawa) | Japan |
@@ -160,94 +160,94 @@
 | 1988 | [Gertrude B. Elion](https://en.wikipedia.org/wiki/Gertrude_B._Elion) | United States |
 | 1988 | [George H. Hitchings](https://en.wikipedia.org/wiki/George_H._Hitchings) | United States |
 | 1989 | [J. Michael Bishop](https://en.wikipedia.org/wiki/J._Michael_Bishop) | United States |
-| 1989 | [Harold E. Varmus (b. 1939)](https://en.wikipedia.org/wiki/Harold_E._Varmus) | United States |
+| 1989 | [Harold E. Varmus](https://en.wikipedia.org/wiki/Harold_E._Varmus) | United States |
 | 1990 | [Joseph E. Murray](https://en.wikipedia.org/wiki/Joseph_Murray) | United States |
 | 1990 | [E. Donnall Thomas](https://en.wikipedia.org/wiki/E._Donnall_Thomas) | United States |
-| 1991 | [Erwin Neher (b. 1944)](https://en.wikipedia.org/wiki/Erwin_Neher) | Germany |
-| 1991 | [Bert Sakmann (b. 1942)](https://en.wikipedia.org/wiki/Bert_Sakmann) | Germany |
+| 1991 | [Erwin Neher](https://en.wikipedia.org/wiki/Erwin_Neher) | Germany |
+| 1991 | [Bert Sakmann](https://en.wikipedia.org/wiki/Bert_Sakmann) | Germany |
 | 1992 | [Edmond H. Fischer](https://en.wikipedia.org/wiki/Edmond_H._Fischer) | Switzerland United States |
 | 1992 | [Edwin G. Krebs](https://en.wikipedia.org/wiki/Edwin_G._Krebs) | United States |
-| 1993 | [Sir Richard J. Roberts (b. 1943)](https://en.wikipedia.org/wiki/Richard_J._Roberts) | United Kingdom |
-| 1993 | [Phillip A. Sharp (b. 1944)](https://en.wikipedia.org/wiki/Phillip_Allen_Sharp) | United States |
+| 1993 | [Sir Richard J. Roberts](https://en.wikipedia.org/wiki/Richard_J._Roberts) | United Kingdom |
+| 1993 | [Phillip A. Sharp](https://en.wikipedia.org/wiki/Phillip_Allen_Sharp) | United States |
 | 1994 | [Alfred G. Gilman](https://en.wikipedia.org/wiki/Alfred_G._Gilman) | United States |
 | 1994 | [Martin Rodbell](https://en.wikipedia.org/wiki/Martin_Rodbell) | United States |
 | 1995 | [Edward B. Lewis](https://en.wikipedia.org/wiki/Edward_B._Lewis) | United States |
-| 1995 | [Christiane Nüsslein-Volhard (b. 1942)](https://en.wikipedia.org/wiki/Christiane_Nüsslein-Volhard) | Germany |
-| 1995 | [Eric F. Wieschaus (b. 1947)](https://en.wikipedia.org/wiki/Eric_F._Wieschaus) | United States |
-| 1996 | [Peter C. Doherty (b. 1940)](https://en.wikipedia.org/wiki/Peter_C._Doherty) | Australia |
-| 1996 | [Rolf M. Zinkernagel (b. 1944)](https://en.wikipedia.org/wiki/Rolf_M._Zinkernagel) | Switzerland |
-| 1997 | [Stanley B. Prusiner (b. 1942)](https://en.wikipedia.org/wiki/Stanley_B._Prusiner) | United States |
+| 1995 | [Christiane Nüsslein-Volhard](https://en.wikipedia.org/wiki/Christiane_Nüsslein-Volhard) | Germany |
+| 1995 | [Eric F. Wieschaus](https://en.wikipedia.org/wiki/Eric_F._Wieschaus) | United States |
+| 1996 | [Peter C. Doherty](https://en.wikipedia.org/wiki/Peter_C._Doherty) | Australia |
+| 1996 | [Rolf M. Zinkernagel](https://en.wikipedia.org/wiki/Rolf_M._Zinkernagel) | Switzerland |
+| 1997 | [Stanley B. Prusiner](https://en.wikipedia.org/wiki/Stanley_B._Prusiner) | United States |
 | 1998 | [Robert F. Furchgott](https://en.wikipedia.org/wiki/Robert_F._Furchgott) | United States |
-| 1998 | [Louis J. Ignarro (b. 1941)](https://en.wikipedia.org/wiki/Louis_Ignarro) | United States |
+| 1998 | [Louis J. Ignarro](https://en.wikipedia.org/wiki/Louis_Ignarro) | United States |
 | 1998 | [Ferid Murad](https://en.wikipedia.org/wiki/Ferid_Murad) | United States |
 | 1999 | [Günter Blobel](https://en.wikipedia.org/wiki/Günter_Blobel) | United States |
 | 2000 | [Arvid Carlsson](https://en.wikipedia.org/wiki/Arvid_Carlsson) | Sweden |
 | 2000 | [Paul Greengard](https://en.wikipedia.org/wiki/Paul_Greengard) | United States |
-| 2000 | [Eric Kandel (b. 1929)](https://en.wikipedia.org/wiki/Eric_Kandel) | Austria United States |
+| 2000 | [Eric Kandel](https://en.wikipedia.org/wiki/Eric_Kandel) | Austria United States |
 
 ## 21 世纪（2001–2025，共 60 位）
 
 
 | 年份 | 姓名 | 国籍 |
 |:--:|------|:--:|
-| 2001 | [Leland H. Hartwell (b. 1939)](https://en.wikipedia.org/wiki/Leland_H._Hartwell) | United States |
-| 2001 | [Sir Tim Hunt (b. 1943)](https://en.wikipedia.org/wiki/Tim_Hunt) | United Kingdom |
-| 2001 | [Sir Paul M. Nurse (b. 1949)](https://en.wikipedia.org/wiki/Paul_Nurse) | United Kingdom |
+| 2001 | [Leland H. Hartwell](https://en.wikipedia.org/wiki/Leland_H._Hartwell) | United States |
+| 2001 | [Sir Tim Hunt](https://en.wikipedia.org/wiki/Tim_Hunt) | United Kingdom |
+| 2001 | [Sir Paul M. Nurse](https://en.wikipedia.org/wiki/Paul_Nurse) | United Kingdom |
 | 2002 | [Sydney Brenner](https://en.wikipedia.org/wiki/Sydney_Brenner) | South Africa |
-| 2002 | [H. Robert Horvitz (b. 1947)](https://en.wikipedia.org/wiki/H._Robert_Horvitz) | United States |
+| 2002 | [H. Robert Horvitz](https://en.wikipedia.org/wiki/H._Robert_Horvitz) | United States |
 | 2002 | [Sir John E. Sulston](https://en.wikipedia.org/wiki/John_Sulston) | United Kingdom |
 | 2003 | [Paul Lauterbur](https://en.wikipedia.org/wiki/Paul_Lauterbur) | United States |
 | 2003 | [Sir Peter Mansfield](https://en.wikipedia.org/wiki/Peter_Mansfield) | United Kingdom |
-| 2004 | [Richard Axel (b. 1946)](https://en.wikipedia.org/wiki/Richard_Axel) | United States |
-| 2004 | [Linda B. Buck (b. 1947)](https://en.wikipedia.org/wiki/Linda_B._Buck) | United States |
-| 2005 | [Barry J. Marshall (b. 1951)](https://en.wikipedia.org/wiki/Barry_Marshall) | Australia |
+| 2004 | [Richard Axel](https://en.wikipedia.org/wiki/Richard_Axel) | United States |
+| 2004 | [Linda B. Buck](https://en.wikipedia.org/wiki/Linda_B._Buck) | United States |
+| 2005 | [Barry J. Marshall](https://en.wikipedia.org/wiki/Barry_Marshall) | Australia |
 | 2005 | [J. Robin Warren](https://en.wikipedia.org/wiki/J._Robin_Warren) | Australia |
-| 2006 | [Andrew Z. Fire (b. 1959)](https://en.wikipedia.org/wiki/Andrew_Fire) | United States |
-| 2006 | [Craig C. Mello (b. 1960)](https://en.wikipedia.org/wiki/Craig_Mello) | United States |
-| 2007 | [Mario R. Capecchi (b. 1937)](https://en.wikipedia.org/wiki/Mario_Capecchi) | Italy United States |
-| 2007 | [Sir Martin Evans (b. 1941)](https://en.wikipedia.org/wiki/Martin_Evans) | United Kingdom |
+| 2006 | [Andrew Z. Fire](https://en.wikipedia.org/wiki/Andrew_Fire) | United States |
+| 2006 | [Craig C. Mello](https://en.wikipedia.org/wiki/Craig_Mello) | United States |
+| 2007 | [Mario R. Capecchi](https://en.wikipedia.org/wiki/Mario_Capecchi) | Italy United States |
+| 2007 | [Sir Martin Evans](https://en.wikipedia.org/wiki/Martin_Evans) | United Kingdom |
 | 2007 | [Oliver Smithies](https://en.wikipedia.org/wiki/Oliver_Smithies) | United Kingdom United States |
 | 2008 | [Harald zur Hausen](https://en.wikipedia.org/wiki/Harald_zur_Hausen) | Germany |
-| 2008 | [Françoise Barré-Sinoussi (b. 1947)](https://en.wikipedia.org/wiki/Françoise_Barré-Sinoussi) | France |
+| 2008 | [Françoise Barré-Sinoussi](https://en.wikipedia.org/wiki/Françoise_Barré-Sinoussi) | France |
 | 2008 | [Luc Montagnier](https://en.wikipedia.org/wiki/Luc_Montagnier) | France |
-| 2009 | [Elizabeth H. Blackburn (b. 1948)](https://en.wikipedia.org/wiki/Elizabeth_Blackburn) | Australia United States |
-| 2009 | [Carol W. Greider (b. 1961)](https://en.wikipedia.org/wiki/Carol_W._Greider) | United States |
-| 2009 | [Jack W. Szostak (b. 1952)](https://en.wikipedia.org/wiki/Jack_W._Szostak) | Canada United States |
+| 2009 | [Elizabeth H. Blackburn](https://en.wikipedia.org/wiki/Elizabeth_Blackburn) | Australia United States |
+| 2009 | [Carol W. Greider](https://en.wikipedia.org/wiki/Carol_W._Greider) | United States |
+| 2009 | [Jack W. Szostak](https://en.wikipedia.org/wiki/Jack_W._Szostak) | Canada United States |
 | 2010 | [Sir Robert G. Edwards](https://en.wikipedia.org/wiki/Robert_G._Edwards) | United Kingdom |
-| 2011 | [Bruce A. Beutler (b. 1957)](https://en.wikipedia.org/wiki/Bruce_Beutler) | United States |
-| 2011 | [Jules A. Hoffmann (b. 1941)](https://en.wikipedia.org/wiki/Jules_A._Hoffmann) | France |
+| 2011 | [Bruce A. Beutler](https://en.wikipedia.org/wiki/Bruce_Beutler) | United States |
+| 2011 | [Jules A. Hoffmann](https://en.wikipedia.org/wiki/Jules_A._Hoffmann) | France |
 | 2011 | [Ralph M. Steinman](https://en.wikipedia.org/wiki/Ralph_M._Steinman) | Canada |
 | 2012 | [Sir John B. Gurdon](https://en.wikipedia.org/wiki/John_Gurdon) | United Kingdom |
-| 2012 | [Shinya Yamanaka (b. 1962)](https://en.wikipedia.org/wiki/Shinya_Yamanaka) | Japan |
-| 2013 | [James E. Rothman (b. 1950)](https://en.wikipedia.org/wiki/James_E._Rothman) | United States |
-| 2013 | [Randy W. Schekman (b. 1948)](https://en.wikipedia.org/wiki/Randy_W._Schekman) | United States |
-| 2013 | [Thomas C. Südhof (b. 1955)](https://en.wikipedia.org/wiki/Thomas_C._Südhof) | Germany United States |
-| 2014 | [John O'Keefe (b. 1939)](https://en.wikipedia.org/wiki/John_O'Keefe_(neuroscientist)) | United States United Kingdom |
-| 2014 | [May-Britt Moser (b. 1963)](https://en.wikipedia.org/wiki/May-Britt_Moser) | Norway |
-| 2014 | [Edvard I. Moser (b. 1962)](https://en.wikipedia.org/wiki/Edvard_I._Moser) | Norway |
-| 2015 | [William C. Campbell (b. 1930)](https://en.wikipedia.org/wiki/William_C._Campbell_(scientist)) | Ireland United States |
-| 2015 | [Satoshi Ōmura (b. 1935)](https://en.wikipedia.org/wiki/Satoshi_Ōmura) | Japan |
-| 2015 | [Tu Youyou (b. 1930)](https://en.wikipedia.org/wiki/Tu_Youyou) | China |
-| 2016 | [Yoshinori Ohsumi (b. 1945)](https://en.wikipedia.org/wiki/Yoshinori_Ohsumi) | Japan |
-| 2017 | [Jeffrey C. Hall (b. 1945)](https://en.wikipedia.org/wiki/Jeffrey_C._Hall) | United States |
-| 2017 | [Michael Rosbash (b. 1944)](https://en.wikipedia.org/wiki/Michael_Rosbash) | United States |
-| 2017 | [Michael W. Young (b. 1949)](https://en.wikipedia.org/wiki/Michael_W._Young) | United States |
-| 2018 | [James P. Allison (b. 1948)](https://en.wikipedia.org/wiki/James_P._Allison) | United States |
-| 2018 | [Tasuku Honjo (b. 1942)](https://en.wikipedia.org/wiki/Tasuku_Honjo) | Japan |
-| 2019 | [William Kaelin Jr. (b. 1957)](https://en.wikipedia.org/wiki/William_Kaelin_Jr.) | United States |
-| 2019 | [Peter J. Ratcliffe (b. 1954)](https://en.wikipedia.org/wiki/Peter_J._Ratcliffe) | United Kingdom |
-| 2019 | [Gregg L. Semenza (b. 1956)](https://en.wikipedia.org/wiki/Gregg_L._Semenza) | United States |
-| 2020 | [Harvey J. Alter (b. 1935)](https://en.wikipedia.org/wiki/Harvey_J._Alter) | United States |
-| 2020 | [Michael Houghton (b. 1949)](https://en.wikipedia.org/wiki/Michael_Houghton_(virologist)) | United Kingdom |
-| 2020 | [Charles M. Rice (b. 1952)](https://en.wikipedia.org/wiki/Charles_M._Rice) | United States |
-| 2021 | [David Julius (b. 1955)](https://en.wikipedia.org/wiki/David_Julius) | United States |
-| 2021 | [Ardem Patapoutian (b. 1967)](https://en.wikipedia.org/wiki/Ardem_Patapoutian) | Lebanon United States |
-| 2022 | [Svante Pääbo (b. 1955)](https://en.wikipedia.org/wiki/Svante_Pääbo) | Sweden |
-| 2023 | [Katalin Karikó (b. 1955)](https://en.wikipedia.org/wiki/Katalin_Karikó) | Hungary United States |
-| 2023 | [Drew Weissman (b. 1959)](https://en.wikipedia.org/wiki/Drew_Weissman) | United States |
-| 2024 | [Victor Ambros (b. 1953)](https://en.wikipedia.org/wiki/Victor_Ambros) | United States |
-| 2024 | [Gary Ruvkun (b. 1952)](https://en.wikipedia.org/wiki/Gary_Ruvkun) | United States |
-| 2025 | [Mary E. Brunkow (b. 1961)](https://en.wikipedia.org/wiki/Mary_E._Brunkow) | United States |
-| 2025 | [Fred Ramsdell (b. 1960)](https://en.wikipedia.org/wiki/Fred_Ramsdell) | United States |
-| 2025 | [Shimon Sakaguchi (b. 1951)](https://en.wikipedia.org/wiki/Shimon_Sakaguchi) | Japan |
+| 2012 | [Shinya Yamanaka](https://en.wikipedia.org/wiki/Shinya_Yamanaka) | Japan |
+| 2013 | [James E. Rothman](https://en.wikipedia.org/wiki/James_E._Rothman) | United States |
+| 2013 | [Randy W. Schekman](https://en.wikipedia.org/wiki/Randy_W._Schekman) | United States |
+| 2013 | [Thomas C. Südhof](https://en.wikipedia.org/wiki/Thomas_C._Südhof) | Germany United States |
+| 2014 | [John O'Keefe](https://en.wikipedia.org/wiki/John_O'Keefe_(neuroscientist)) | United States United Kingdom |
+| 2014 | [May-Britt Moser](https://en.wikipedia.org/wiki/May-Britt_Moser) | Norway |
+| 2014 | [Edvard I. Moser](https://en.wikipedia.org/wiki/Edvard_I._Moser) | Norway |
+| 2015 | [William C. Campbell](https://en.wikipedia.org/wiki/William_C._Campbell_(scientist)) | Ireland United States |
+| 2015 | [Satoshi Ōmura](https://en.wikipedia.org/wiki/Satoshi_Ōmura) | Japan |
+| 2015 | [Tu Youyou](https://en.wikipedia.org/wiki/Tu_Youyou) | China |
+| 2016 | [Yoshinori Ohsumi](https://en.wikipedia.org/wiki/Yoshinori_Ohsumi) | Japan |
+| 2017 | [Jeffrey C. Hall](https://en.wikipedia.org/wiki/Jeffrey_C._Hall) | United States |
+| 2017 | [Michael Rosbash](https://en.wikipedia.org/wiki/Michael_Rosbash) | United States |
+| 2017 | [Michael W. Young](https://en.wikipedia.org/wiki/Michael_W._Young) | United States |
+| 2018 | [James P. Allison](https://en.wikipedia.org/wiki/James_P._Allison) | United States |
+| 2018 | [Tasuku Honjo](https://en.wikipedia.org/wiki/Tasuku_Honjo) | Japan |
+| 2019 | [William Kaelin Jr.](https://en.wikipedia.org/wiki/William_Kaelin_Jr.) | United States |
+| 2019 | [Peter J. Ratcliffe](https://en.wikipedia.org/wiki/Peter_J._Ratcliffe) | United Kingdom |
+| 2019 | [Gregg L. Semenza](https://en.wikipedia.org/wiki/Gregg_L._Semenza) | United States |
+| 2020 | [Harvey J. Alter](https://en.wikipedia.org/wiki/Harvey_J._Alter) | United States |
+| 2020 | [Michael Houghton](https://en.wikipedia.org/wiki/Michael_Houghton_(virologist)) | United Kingdom |
+| 2020 | [Charles M. Rice](https://en.wikipedia.org/wiki/Charles_M._Rice) | United States |
+| 2021 | [David Julius](https://en.wikipedia.org/wiki/David_Julius) | United States |
+| 2021 | [Ardem Patapoutian](https://en.wikipedia.org/wiki/Ardem_Patapoutian) | Lebanon United States |
+| 2022 | [Svante Pääbo](https://en.wikipedia.org/wiki/Svante_Pääbo) | Sweden |
+| 2023 | [Katalin Karikó](https://en.wikipedia.org/wiki/Katalin_Karikó) | Hungary United States |
+| 2023 | [Drew Weissman](https://en.wikipedia.org/wiki/Drew_Weissman) | United States |
+| 2024 | [Victor Ambros](https://en.wikipedia.org/wiki/Victor_Ambros) | United States |
+| 2024 | [Gary Ruvkun](https://en.wikipedia.org/wiki/Gary_Ruvkun) | United States |
+| 2025 | [Mary E. Brunkow](https://en.wikipedia.org/wiki/Mary_E._Brunkow) | United States |
+| 2025 | [Fred Ramsdell](https://en.wikipedia.org/wiki/Fred_Ramsdell) | United States |
+| 2025 | [Shimon Sakaguchi](https://en.wikipedia.org/wiki/Shimon_Sakaguchi) | Japan |
 
