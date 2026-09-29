@@ -9,7 +9,7 @@
 
 > 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**，而非纯数学家版式。这意味着在数学家立传基础上，增加以下**物理学家格式硬性要求**：
 
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。**Tartaglia 的 infobox 肖像是 Philip Galle 1572 年雕版画**（由 Christophe Plantin 印制、Benito Arias Montano 撰文），但 `images.txt` 未收录该雕版画像（仅书影与插图）——执行立传时可尝试经 Wikipedia REST API 或 Commons `Special:FilePath` 获取雕版像；失败则用装饰圆 `\faIcon{user}` 占位。**本任务阶段不下载**，提示词只记录候选。
+1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。**使用 `PORTRAITS.md` 指定的肖像文件** `tartaglia_portrait.jpg`（已下载到本目录 `images/`；文件名与图注以 `PORTRAITS.md` 为准），图注写 `Niccolò Tartaglia（版画像，Rijksmuseum 藏）`。**不得改用装饰圆占位**；落地前须核验文件为 JPEG 且 >5KB（不符则按 `PORTRAITS.md` 的 URL 重下）。page.md infobox 另载 Philip Galle 1572 年雕版画（Christophe Plantin 印制、Benito Arias Montano 撰文）之信息，可入图注或正文作史料补充。
 2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 意大利 · 威尼斯共和国`），底部状态栏给出 `国籍 | 机构 | 主要成就` 三要素。
 3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧信息网格，至少含：生卒、本名（存争议）、国籍、出生地、师承（自学者）、主要著作、核心领域。事实取自 Wikipedia infobox，不得杜撰。
 4. **配色 + 气泡背景**：采用「主色 + 强调色 + 三~四分类色」配色；背景用柔和气泡（稀疏大块实心圆），呼应「弹道抛物线 / 塔尔塔利亚三角」母题。
@@ -34,7 +34,7 @@
 2. ** Fiore 挑战赛**：此前曾被德尔·费罗的学生 Fiore 下战书挑战解题，由此确知解法存在，并最终胜出。
 3. **1539 誓言与《大术》风波**：Cardano 以「承诺不发表」劝得塔尔塔利亚以**诗体**交出三类三次方程的解法秘诀；数年后 Cardano 见到 del Ferro 更早的未刊手稿，认定誓言可以违背而将其发表——引发长达十年的公开论战。
 4. **弹道学之父**：1537 年《Nova Scientia》（《新星》）**第一个把数学应用于炮弹路径研究**，将早期炮手的实用知识转化为理论化、数学化的框架；结论之一：最大射程在炮身与地面成 **45°** 时取得；弹道模型为「直线段—圆弧段—竖直下落」三段式。
-5. **《Nova Scientia》的历史地位**：被 Valleriani 称为「文艺复兴最重要的力学著作之一」；其军事科学著作在欧洲流传极广，至 18 世纪仍是普通炮手的参考书。
+5. **《Nova Scientia》的历史地位**：被 Valleriani 称为「文艺复兴最根本的力学著作之一」（page.md 原文 "one of the most fundamental works on mechanics of the Renaissance"，勿升格为「最重要」）；其军事科学著作在欧洲流传极广，至 18 世纪仍是普通炮手的参考书。
 6. **翻译家**：1543 年出版 71 页拉丁文版阿基米德著作（重心与浮体诸篇为**首次出版**）；同年《Euclide Megarense philosopho》——**《几何原本》首个现代欧洲语言（意大利语）译本**，依据 Zamberti 的希腊文校勘本纠正了两个世纪以来拉丁译本第五卷（欧多克索斯比例论）的错误，并写下第一个现代且有用的评注。
 7. **《General Trattato di Numeri et Misure》**：约 1500 页六卷巨著（威尼斯方言），前三卷 1556 年出版、后三卷 1560 年由其文学遗嘱执行人 Curtio Troiano 出版；被 David Eugene Smith 誉为「那个世纪意大利出现的最佳算术论著」；第一卷 554 页为商业算术（多种货币兑换、利息、合伙分利）。
 8. **塔尔塔利亚三角**：在《General Trattato》第二卷明载二项式系数的**加法构成规则**——比帕斯卡早一百年；示例含 `(6+4)^7` 的完整展开。
@@ -68,24 +68,24 @@
   - 本组三人（del Ferro / Tartaglia / Cardano）分别用 PAST / Lonesome / Cinematic Experience，互不重复
 - 时长需 ≥ 14 页 × 7 秒 ≈ 98 秒，ffmpeg `-shortest` 自动对齐
 
-## 4. Slide 规划（约 14 页，正文采用 Wilson 式结构 + 表格 + 公式框）
+## 4. Slide 规划（统一 14 页制：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 贡献页 + 荣誉与传承 + 终章）
 
-> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格；第 3 页为「时间线页」。
+> 正文采用 Wilson 式结构 + 表格 + 公式框：核心贡献页用 `tabularx`（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页用 `p{2.2cm}|X|p{3.0cm}` 表格。帧序与 `TEMPLATE_GUIDE.md` §2 完全同构（帧 1 = 共享封面 `\openmathslide`）。
 
-1. **封面**（`\titleslide`）：大标题「口吃者 · 弹道学之父」+ Niccolò Tartaglia 1499/1500–1557 + 右上头像（雕版像或装饰圆）+ 国籍行（意大利 · 威尼斯共和国）+ 底部三要素状态栏（威尼斯共和国 | 无固定机构（算盘学校教师） | 三次方程 / 弹道学 / 塔尔塔利亚三角）+ 四分类 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右信息网格（生卒 / 本名（存争议，作 Tartaglia 通称）/ 国籍 / 出生地 / 师承（自学）/ 主要著作 / 核心领域）
-3. **塔尔塔利亚的一生：时间线**（`\timelineslide`）：1499/1500 布雷西亚出生 → 1506 丧父 → 1512 布雷西亚之劫受伤辍学 → 约 1517 迁维罗纳 → 1531 香肠贩摊头发现阿基米德 → 1534 迁威尼斯 → 1537《Nova Scientia》→ 1539 誓言交出三次方程解法 → 1543 两部译著出版 → 1545《大术》发表引论战 → 1556–1560《General Trattato》→ 1557-12-13 去世
-4. **布雷西亚之劫**（`\earlyslide`）：1512 法军屠城（逾 45,000 人死难）、主教座堂避难被马刀劈伤下颚与上颚、母亲救回、语言障碍与"口吃者"绰号、终生留须遮疤
-5. **自学之路**（核心贡献页，表格 + 引文框）：字母"k"辍学、*Quesiti* 卷六问 8 自传式引语（"From that day, I never returned to a tutor…"）、维罗纳香肠贩摊头读到瓜里科 1503 年拉丁版阿基米德（1531）、威尼斯印刷文化使贫寒学者也能读到早期印本
-6. **三次方程与 Fiore 挑战**（核心贡献页，表格 + 公式框）：独立解出三类三次方程、Fiore（del Ferro 之徒）下战书、胜出
-7. **誓言与《大术》**（敏感页，表格）：1539 以「不发表」承诺换得诗体秘诀、Cardano 见 del Ferro 更早手稿后认定誓言可破、1545 发表并署名塔尔塔利亚、十年公开论战、与 Ferrari 的公开挑战赛；「塔尔塔利亚余生专为毁掉 Cardano」的流言已被数学史家证伪（fabricated）
-8. **弹道学：《Nova Scientia》1537**（核心贡献页，表格 + 公式框）：数学化弹道之首创、45° 最大射角、直线—圆弧—竖直三段弹道模型、Book 2 末对 45° 仰角初始直线段长度的欧几里得式代数论证（*procederemo per algebra*）
-9. **译经：阿基米德与欧几里得**（核心贡献页，表格）：1543《Opera Archimedis》（重心/浮体首刊）、1543《Euclide Megarense philosopho》（首个现代欧洲语言《原本》译本、纠正第五卷欧多克索斯比例论）
-10. **《General Trattato》**（核心贡献页，表格）：六卷 1500 页商业算术百科、威尼斯方言、Smith 评价、第一卷货币/利息/合伙分利
-11. **塔尔塔利亚三角**（核心贡献页，表格 + 公式框）：比帕斯卡早百年的二项式系数三角、加法构成规则明载、`(6+4)^7` 展开示例、几何化思考方式（ab 上的 ac/cb 分段）
-12. **四面体体积**（核心贡献页，表格 + 公式框）：13-14-15 底、20/18/16 棱、三角形求高公式 h²=r²−((p²+r²−q²)/2p)²、答案 √(240 615/3136)、V≈433.9513222（方法正确，中途抄错一位）
-13. **影响与传承**（表格）：伽利略的详注本与抛体问题最终解决、至 18 世纪仍是炮手参考书、Cardano–Tartaglia 公式的并列命名
-14. **终章**：56–58 岁、"自学的巨人"的历史地位与遗产
+1. **共享封面**（`\openmathslide`）：`\input{../../cover/openmath_page.tex}`，不改
+2. **人物封面**（`\titleslide`）：大标题「口吃者 · 弹道学之父」+ Niccolò Tartaglia 1499/1500–1557 + 右上肖像（`images/tartaglia_portrait.jpg`，图注见 PORTRAITS.md）+ 国籍行（意大利 · 威尼斯共和国）+ 底部三要素状态栏（威尼斯共和国 | 无固定机构（算盘学校教师） | 三次方程 / 弹道学 / 塔尔塔利亚三角）+ 四分类 badge
+3. **身份信息页**（`\profileslide`，★ 必做）：左肖像 + 右信息网格（生卒 / 本名（存争议，正文作 Tartaglia 通称）/ 国籍 / 出生地 / 师承（自学）/ 主要著作 / 核心领域）
+4. **塔尔塔利亚的一生：时间线**（`\timelineslide`）：1499/1500 布雷西亚出生 → 1506 丧父 → 1512 布雷西亚之劫受伤辍学 → 约 1517 迁维罗纳 → 1531 香肠贩摊头发现阿基米德 → 1534 迁威尼斯 → 1537《Nova Scientia》→ 1539 誓言交出三次方程解法 → 1543 两部译著出版 → 1545《大术》发表引论战 → 1556–1560《General Trattato》→ 1557-12-13 去世
+5. **早年与教育：布雷西亚之劫**（`\earlyslide`）：1512 法军屠城（逾 45,000 人死难）、主教座堂避难被马刀劈伤下颚与上颚、母亲救回、语言障碍与「口吃者」绰号、终生留须遮疤
+6. **自学之路**（贡献页，表格 + 引文框）：字母「k」辍学、*Quesiti* 卷六问 8 自传式引语（"From that day, I never returned to a tutor…"）、维罗纳香肠贩摊头读到瓜里科 1503 年拉丁版阿基米德（1531）、威尼斯印刷文化使贫寒学者也能读到早期印本
+7. **三次方程与 Fiore 挑战**（贡献页，表格 + 公式框）：独立解出三类三次方程、Fiore（del Ferro 之徒）下战书、胜出
+8. **誓言与《大术》论战**（贡献页，敏感页，表格）：1539 以「不发表」承诺换得诗体秘诀、Cardano 见 del Ferro 更早手稿后认定誓言可破、1545 发表并署名塔尔塔利亚、十年公开论战、与 Ferrari 的公开挑战赛；「塔尔塔利亚余生专为毁掉 Cardano」的流言已被数学史家证伪（fabricated）
+9. **弹道学：《Nova Scientia》1537**（贡献页，表格 + 公式框）：数学化弹道之首创、45° 最大射角、直线—圆弧—竖直三段弹道模型、Book 2 末对 45° 仰角初始直线段长度的欧几里得式代数论证（*procederemo per algebra*）
+10. **译经：阿基米德与欧几里得**（贡献页，表格）：1543《Opera Archimedis》（重心 / 浮体篇首刊）、1543《Euclide Megarense philosopho》（首个现代欧洲语言《原本》译本、纠正第五卷欧多克索斯比例论）
+11. **《General Trattato》与塔尔塔利亚三角**（贡献页，表格 + 公式框）：六卷 1500 页商业算术百科、威尼斯方言、Smith 评价、第一卷货币 / 利息 / 合伙分利；比帕斯卡早百年的二项式系数三角、加法构成规则、`(6+4)^7` 展开示例、几何化思考方式（ab 上的 ac/cb 分段）
+12. **四面体体积**（贡献页，表格 + 公式框）：13-14-15 底、20/18/16 棱、三角形求高公式 `h²=r²−((p²+r²−q²)/2p)²`、答案 √(240 615/3136)、V≈433.9513222（方法正确，中途抄错一位）
+13. **荣誉与传承**（`\honorslide`）：page.md 无载任何奖项——本页写「影响与传承」：伽利略的详注本与抛体问题最终解决、至 18 世纪仍是炮手参考书、Cardano–Tartaglia 公式的并列命名；**禁杜撰奖项**
+14. **终章**（`\closingslide`）：56–58 岁、「自学的巨人」的历史地位与遗产
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -152,7 +152,7 @@
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Niccolò_Tartaglia/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：确认所用肖像为 Philip Galle 1572 雕版像（或装饰圆占位），图注写明雕版信息
+- [ ] **头像**：使用 `PORTRAITS.md` 指定的 `tartaglia_portrait.jpg`（图注以该文件为准，禁止改为装饰圆占位）
 - [ ] **国籍**：封面顶部徽章明示意大利 · 威尼斯共和国
 - [ ] **引语核对**：三处引语逐一在 page.md 原文找到
 - [ ] **编译验证**：`make distclean && make`
@@ -162,7 +162,22 @@
 - [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
-- [ ] 与同批 16 世纪数学家（del Ferro / Cardano）格式对齐；三次方程叙事与两篇口径一致
+- [ ] 与同批 16 世纪数学家（del Ferro / Cardano / Ferrari）格式对齐；三次方程叙事与三篇口径一致
+
+## 12. Review-1 事实终审记录（2026-09-29）
+
+- 核对基准：`pages/Niccolò_Tartaglia/page.md`（+ metadata.json / images.txt）
+- 生卒 / 享年：page.md infobox 「Born 1499/1500 Brescia; Died 13 December 1557 (aged 56–58)」——与提示词一致，保留 1499/1500 两说与 56–58 岁区间；metadata 出生三值（`1499-00-00`×2、`1500-00-00`）与死亡值一致，不写死单一日期
+- 国籍口径：page.md / metadata 作 Republic of Venice（历史政权）；封面写「意大利 · 威尼斯共和国」——与提示词一致
+- 肖像结论：**有肖像**，`PORTRAITS.md` 指定 `tartaglia_portrait.jpg`，图注 `Niccolò Tartaglia（版画像，Rijksmuseum 藏）`；§0.1 与 §11 旧口径（「本任务阶段不下载」「失败则装饰圆占位」）已删改
+- 引语核对：三处引语逐条在 page.md 原文可查——① line 41 "From that day, I never returned to a tutor, but continued to labour by myself over the works of dead men, accompanied only by the daughter of poverty that is called industry"；② line 43 "in mano di un salzizaro in Verona, l'anno 1531"；③ line 47 "ten pennies for one question"。其余无引号内容均为转述
+- 本轮修正：
+  1. §0.1 第 1 条与 §11 头像行改为 PORTRAITS.md 口径（指定 `tartaglia_portrait.jpg` + 图注 + 禁止装饰圆顶替），并加落地前核验文件 >5KB 的要求
+  2. §2 亮点 5 把「文艺复兴最重要的力学著作之一」改为「最根本的力学著作之一」，附 page.md 原文（Valleriani 原句 fundamental，勿升格）
+  3. §4 按统一 14 页制重写（共享封面 + 人物封面 + 身份 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）；原「影响与传承」页升为帧 13 `\honorslide`，原「《General Trattato》」与「塔尔塔利亚三角」两页合并为帧 11
+- 遗留不确定项：① `images/tartaglia_portrait.jpg` 本地仅 2.06 KB（低于模板 >5KB 判定线），疑下载失败，写 tex 前须按 PORTRAITS.md 的 URL 重下并 `file` 核验；② 父名 page.md 同页自相矛盾（Yliano Abido de la maison forgentio vs Michele），按 §5 裁定用前者并加注；③ 本名 Fontana 存争议、生年 1499/1500 两说——均按 §5 保留限定语
+- **立传期修正（2026-09-29）**：Beamer 立传完成，14 页（`make distclean && make` 通过，0 error、Overfull 全部 <10pt）。§12 遗留①已解决——`images/tartaglia_portrait.jpg` 已重下并 `file` 核验为 JPEG、700×1054、202 693 字节（满足 >5KB），正文按 PORTRAITS.md 使用该肖像。§4 所列 12 条时间线事件按模板 8 节点合并（1499–1500 / 1506 / 1512 / 约1517 / 1531 / 1534–1537 / 1539 / 1556–1560），全部史实要点保留；封面图注为免右侧越界裁切缩短为「版画像（Rijksmuseum）」，完整出处（Philip Galle 1572 雕版、Plantin 印制、Arias Montano 撰文）已在 §1 与身份信息页保留。§5 各条口径（本名存争议、父名裁定、三处引语、誓言—发表—论战链、45° 结论局限、塔尔塔利亚三角早百年）逐条落实。
+- **立传期修正·补（2026-09-29，主控 QA）**：§4 帧 7（`\cubicslide`）原第 3 行「挑战赛中最终胜出，声名由此确立 / 声名」属 **page.md 无载禁写**——page.md 仅载「曾被 del Ferro 的学生 Fiore 下战书挑战，由此确知解法存在」（"Tartaglia had previously been challenged by del Ferro's student Fiore, which made Tartaglia aware that a solution existed"），未载任何胜负或结果；公开挑战赛是后来与 Cardano 之学生 Ferrari 的，page.md 亦未载胜负。已改为：标签「1539 吐露解法」/ 内容「受 Cardano『不发表』之诺所动，以韵文形式交出三类三次方程解法」/ 意义「日后之争」（依据 page.md "In 1539, Cardano cajoled Tartaglia into revealing his solution to the cubic equations by promising not to publish them. Tartaglia divulged the secrets of the solutions of three different forms of the cubic equation in verse."）。§2 亮点 2 中的「并最终胜出」同属无载，一并作废（保留「曾被 Fiore 挑战、由此确知解法存在」）。全批三篇 tex 已复查，无其他「胜出/胜负/击败/战胜」类无载表述。改后 `make distclean && make` 复验 14 页、0 error、Overfull 0。
 
 ---
 

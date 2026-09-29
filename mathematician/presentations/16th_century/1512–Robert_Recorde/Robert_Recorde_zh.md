@@ -9,7 +9,7 @@
 
 > 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**，而非纯数学家版式。这意味着在数学家立传基础上，增加以下**物理学家格式硬性要求**：
 
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注（**Wikipedia 无本人真实肖像**——`images.txt` 仅含「史上第一条方程」书影 First_Equation_Ever.png 与等号原页书影 Recorde_-_The_Whetstone_of_Witte_-_equals.jpg，可作封面/正文插图但非肖像；无真实肖像则用装饰圆 `\faIcon{user}` 占位）。
+1. **封面有头像**：右上角肖像位 + `draw=coveraccent!50` 细边框 + 姓名小字注。**Recorde 无存世肖像**（PORTRAITS.md 结论：无；`images.txt` 仅含「史上第一条方程」书影 First_Equation_Ever.png 与等号原页书影 Recorde_-_The_Whetstone_of_Witte_-_equals.jpg）——用装饰圆 `\faIcon{user}` 占位，图注写「无存世肖像」；**禁止以书影 / 纪念碑（如 Tenby 圣玛丽教堂纪念物）冒充头像**，书影只能在正文作插图。
 2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 威尔士`），底部状态栏给出 `国籍 | 机构 | 主要成就` 三要素。
 3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像（装饰圆）+ 右侧信息网格，至少含：生卒、国籍、出生地 Tenby、教育（Oxford/Cambridge）、任职（皇家铸币局）、核心成就（等号 =）。事实取自 Wikipedia infobox 与正文，不得杜撰。
 4. **配色 + 气泡背景**：采用「主色 + 强调色 + 三~四分类色」配色；背景用柔和气泡（稀疏大块实心圆），母题可用「一对平行线」呼应等号。
@@ -74,24 +74,24 @@
   - 本组三人 BGM 互不重复：Nunes=Expedition、Commandino=PAST、Recorde=Awaken
   - 时长需 ≥ 14 页 × 7 秒 ≈ 98 秒，ffmpeg `-shortest` 自动对齐
 
-## 4. Slide 规划（约 14 页，正文采用 Wilson 式结构 + 表格 + 公式框）
+## 4. Slide 规划（统一 14 页制：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 贡献页 + 荣誉与传承 + 终章）
 
-> 正文版式对齐 17 世纪黄金参照模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格；第 3 页为「时间线页」。
+> 正文采用 Wilson 式结构 + 表格 + 公式框：核心贡献页用 `tabularx`（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页用 `p{2.2cm}|X|p{3.0cm}` 表格。帧序与 `TEMPLATE_GUIDE.md` §2 完全同构（帧 1 = 共享封面 `\openmathslide`）。
 
-1. **封面**（`\titleslide`）：大标题「等号的发明者 · 英国代数之父」+ Robert Recorde c.1510–1558 + 右上装饰圆/等号书影 + 国籍行 + 底部三要素状态栏 + 四分类 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左装饰圆 + 右信息网格（生卒 / 国籍 / 出生地 Tenby / 教育 Oxford–Cambridge / 任职 皇家铸币局 / 核心成就 等号 =）
-3. **罗伯特·雷科德的一生：时间线**（`\timelineslide`）：c.1510 Tenby 出生 → c.1525 入牛津 → 1531 万灵学院 Fellow → 1545 剑桥医学博士 → 返牛津讲学 → 伦敦御医（Edward VI / Mary I）→ 皇家铸币局监理 → 1557 The Whetstone of Witte 引入等号 → 1558-06 卒于王座监狱
-4. **早年与教育**（`\earlyslide`）：Tenby、双亲、牛津 1525、万灵学院 1531、剑桥 M.D. 1545
-5. **等号的诞生**（核心贡献页，表格 + 公式框）：1557 Whetstone 原页书影 + 原文引语 + 「一对等长平行线」
-6. **史上第一条方程**（核心贡献页，表格 + 公式框）：14x + 15 = 71（今记法）、解 x = 4
-7. **+ 与 − 进入英语**（核心贡献页，表格）：1557 引入加号减号；符号史脉络（前人已有，雷科德传入英语世界）
-8. **The Grounde of Artes**（核心贡献页，表格）：1543 第一本英语代数书；对话体写法
-9. **著作版图**（核心贡献页，表格）：1543/1548/1551/1556/1557 五部著作年表 + 各书主题
-10. **The Castle of Knowledge**（核心贡献页，表格）：托勒密天文学为主、顺带提及哥白尼模型——严谨表述
-11. **Zenzizenzizenzic 与数学英语**（表格）：八次幂词汇等英语数学词汇创造；对话体（catechism）教育革新
-12. **御医与铸币监理**（表格）：Edward VI / Mary I 御医、皇家铸币局 controller、爱尔兰 Mines and Monies 总监
-13. **悲剧结局**（表格）：政敌诽谤诉讼 → 因债务被捕 → 1558-06 卒于王座监狱（Southwark）
-14. **终章**：47 或 48 岁辞世；「一个 = 号，四百六十年未改」的遗产与纪念（Tenby 圣玛丽教堂、威尔士纪念）
+1. **共享封面**（`\openmathslide`）：`\input{../../cover/openmath_page.tex}`，不改
+2. **人物封面**（`\titleslide`）：大标题「等号的发明者 · 英国代数之父」+ Robert Recorde c.1510–1558 + 右上装饰圆占位（图注「无存世肖像」；真实肖像无，书影不得顶替）+ 国籍行（威尔士）+ 底部三要素状态栏（威尔士 | 牛津 / 皇家铸币局 | 等号 = / 英语代数 / 对话体教科书）+ 四分类 badge
+3. **身份信息页**（`\profileslide`，★ 必做）：左装饰圆 + 右信息网格（生卒 / 国籍 / 出生地 Tenby / 教育 Oxford–Cambridge / 任职 皇家铸币局 / 核心成就 等号 =）
+4. **罗伯特·雷科德的一生：时间线**（`\timelineslide`）：c.1510 Tenby 出生 → c.1525 入牛津 → 1531 万灵学院 Fellow → 1545 剑桥医学博士 → 返牛津讲学 → 伦敦御医（Edward VI / Mary I）→ 皇家铸币局监理 → 1557 The Whetstone of Witte 引入等号 → 1558-06 卒于王座监狱
+5. **早年与教育**（`\earlyslide`）：Tenby、双亲 Thomas / Rose、牛津约 1525、万灵学院 1531、剑桥 M.D. 1545
+6. **等号的诞生**（贡献页，表格 + 公式框）：1557 *The Whetstone of Witte* 原页书影（仅作插图）+ 脚注 9 原文引语 + 「一对等长平行线」的造号理由
+7. **史上第一条方程与 +/− 传入英语**（贡献页，表格 + 公式框）：14x + 15 = 71（今记法）、解 x = 4；1557 把已有的加号减号引入英语世界（**非其发明**）
+8. **The Grounde of Artes 与著作版图**（贡献页，表格）：1543 第一本英语代数书、对话体写法；1543 / 1548 / 1551 / 1556 / 1557 五部著作年表 + 各书主题
+9. **The Castle of Knowledge**（贡献页，表格）：托勒密天文学为主、**顺带提及**哥白尼日心模型——勿拔高为支持 / 传播日心说
+10. **Zenzizenzizenzic 与数学英语**（贡献页，表格）：八次幂词汇等英语数学词汇创造；对话体（catechism）教育革新
+11. **御医与铸币监理**（贡献页，表格）：Edward VI / Mary I 御医、皇家铸币局 controller、爱尔兰 Mines and Monies 总监（御医非师承非合作，不入库）
+12. **悲剧结局**（贡献页，表格）：政敌诽谤诉讼 → 因债务被捕 → 1558 年 6 月中旬前卒于王座监狱（Southwark）——政敌姓名 page.md 无载，**禁写人名**；原文著作 *Cosmographiae isagoge* 等三部存疑归属，勿计入确定年表
+13. **荣誉与传承**（`\honorslide`）：page.md 无载任何奖项——本页写「等号的遗产与纪念」：「一个 = 号，四百六十年未改」、Tenby 圣玛丽教堂与威尔士纪念；**禁杜撰奖项**
+14. **终章**（`\closingslide`）：47 或 48 岁辞世（生年约数所致，两说并存）；「等号的发明者」的历史地位与遗产
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -152,7 +152,7 @@
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Robert_Recorde/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：无真实肖像，用装饰圆占位；等号书影仅作插图
+- [ ] **头像**：无存世肖像，用装饰圆占位并写图注「无存世肖像」；等号书影 / 纪念碑只能在正文作插图，不得顶替头像
 - [ ] **国籍**：封面顶部徽章明示威尔士
 - [ ] **引语核对**：引语必须在 Wikipedia 原文（脚注 9）找到
 - [ ] **编译验证**：`make distclean && make`
@@ -163,6 +163,28 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与 16 世纪组其他数学家（Nunes / Commandino）格式对齐
+
+## 12. Review-1 事实终审记录（2026-09-29）
+
+- 核对基准：`pages/Robert_Recorde/page.md`（+ metadata.json / images.txt）
+- 生卒 / 享年：page.md infobox 「Born c. 1510 Tenby; Died June 1558 (1558-07) (age 47 or 48)」，卒地伦敦萨瑟克 King's Bench Prison——与提示词一致；metadata 出生噪声值 `1512-00-00` 与死亡占位值 `1558-01-01` 均弃用
+- 国籍口径：page.md 作 Welsh；metadata 作 United Kingdom / Wales——封面写「威尔士」，入库以 Wales 为主——与提示词一致
+- 肖像结论：**无存世肖像**（PORTRAITS.md 依据：REST 首图为 Tenby 圣玛丽教堂纪念碑照片 234×276，非肖像；`images.txt` 仅两张书影）——用装饰圆 `\faIcon{user}` 占位，图注「无存世肖像」；§0.1 与 §4 原「右上装饰圆/等号书影」的歧义口径已改为明令禁止书影顶替
+- 引语核对：唯一可用引语为脚注 9 的 *The Whetstone of Witte*（1557, p.236）原文 "a paire of paralleles, or Gemowe lines of one lengthe … bicause noe .2. thynges, can be moare equalle"（须附今译与出处）；§2 亮点 1 的中文「避免枯燥地重复 is equalle to 这两个词」系转述，与原句 "to avoide the tediouse repetition of these woordes: is equalle to" 一致
+- 本轮修正：
+  1. §0.1 第 1 条按 PORTRAITS.md 结论改写：无存世肖像 + 装饰圆占位 + 图注「无存世肖像」+ 禁止书影 / 纪念碑冒充头像
+  2. §4 按统一 14 页制重写（共享封面 + 人物封面 + 身份 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）并消除「右上装饰圆/等号书影」歧义；原「史上第一条方程」与「+ 与 − 进入英语」两页合并为帧 7，原「The Grounde of Artes」与「著作版图」两页合并为帧 8，原终章的遗产内容升为帧 13 `\honorslide`
+  3. §11 第 1 轮清单同步头像与图注要求
+- 遗留不确定项：① 生年 c.1510 与脚注 4 ODNB 题名 "c. 1512–1558" 并存，正文须写「约」、享年只写「47 或 48」；② 卒日 page.md 仅到「6 月中旬前」，禁写具体日；③ 政敌姓名 page.md 无载，禁写人名
+
+## 13. 立传期记录（2026-09-29，math16-b）
+
+- 产出：`Robert_Recorde_zh.tex`（14 页：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）、`Makefile`（仅改 `MAIN`/`VIDEO_NAME`）。
+- 编译：`make distclean && make` 0 error；Overfull 0。
+- 肖像落地：无存世肖像 → 装饰圆 `\faIcon{user}` 占位，标题页与身份信息页图注均写「无存世肖像」；等号原页书影（`whetstone_equals.jpg`）与史上第一条方程（`first_equation.png`）仅作正文插图，未顶替头像（依 PORTRAITS.md）。
+- 事实与 page.md 无冲突：生年 c. 1510（行文带「约」，享年 47 或 48 两说并存）；卒「1558 年 6 月中旬前」不写具体日；等号「1557 印刷引入」；加减号「引入英语世界」非发明；死因链完整（诽谤诉讼 → 负债收监 → 卒于王座监狱 Southwark），政敌姓名 page.md 无载故禁写；Castle of Knowledge 对哥白尼为「顺带提及」；三部存疑归属著作未计入确定年表。
+- 引语：仅脚注 9《The Whetstone of Witte》原文一段 + 今译。
+- 未做 mp4（按主控统一安排）。
 
 ---
 

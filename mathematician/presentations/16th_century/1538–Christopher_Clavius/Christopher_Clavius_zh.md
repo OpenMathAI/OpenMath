@@ -9,9 +9,9 @@
 
 > 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**，而非纯数学家版式。这意味着在数学家立传基础上，增加以下**物理学家格式硬性要求**：
 
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注（`images.txt` 第三图为月球 **Clavius 环形山**照片（330px `Clavius_001.jpg`），首二图为《天球论注释》1585 版书影与《Refutatio》书影，**均非肖像**；无真肖像则用装饰圆 `\faIcon{user}` 占位，环形山图可作叙事插图）。
+1. **封面有头像**：右上角肖像 `images/clavius_portrait.jpg` + `draw=coveraccent!50` 细边框 + 姓名小字注（★ PORTRAITS.md 核定：克拉维乌斯**有**传世肖像，Rijksmuseum 藏版画像 RP-P-OB-38.439；`images.txt` 三图分别为《天球论注释》1585 版书影、《Refutatio》书影与月球 **Clavius 环形山**照片（330px `Clavius_001.jpg`），**均非肖像**，只能作叙事插图）。
 2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 德国`），底部状态栏给出 `国籍 | 机构 | 主要成就` 三要素。
-3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像（装饰圆占位）+ 右侧信息网格，至少含：生卒、本名、国籍、出生地、师承、教育、主要荣誉、核心领域。事实取自 Wikipedia infobox，不得杜撰。
+3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧肖像 `clavius_portrait.jpg` + 右侧信息网格，至少含：生卒、本名、国籍、出生地、师承、教育、主要荣誉、核心领域。事实取自 Wikipedia infobox，不得杜撰；**师承 page.md 无载（Nunes 仅「可能接触」）→ 该格写「—（无载）」，禁填人名**。
 4. **配色 + 气泡背景**：采用「主色 + 强调色 + 三~四分类色」配色；背景用柔和气泡（稀疏大块实心圆）呼应「历法之轮 / 天球」的母题。
 5. **品牌口径统一**：结尾页底部品牌标注统一写 `OpenMathAI`；引号用半角 `" "`。
 
@@ -66,23 +66,25 @@
   - 与组内 Ferrari（Savage）、Bombelli（Mirage）互不重复。
   - 时长需 ≥ 13 页 × 7 秒 ≈ 91 秒，ffmpeg `-shortest` 自动对齐。
 
-## 4. Slide 规划（约 13 页，正文采用 Wilson 式结构 + 表格 + 公式框）
+## 4. Slide 规划（统一 14 页制：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 贡献页 + 荣誉与传承 + 终章）
 
-> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格；第 3 页为「时间线页」。
+> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格。
+> 页结构（14 页，TEMPLATE_GUIDE §2 标准制）：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 个核心贡献页 + 荣誉 + 终章。
 
-1. **封面**（`\titleslide`）：大标题「格里高利历的守护者」+ 克里斯托弗·克拉维乌斯 1538–1612 + 右上头像（装饰圆占位）+ 国籍行 + 底部三要素状态栏 + 四分类 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像（装饰圆）+ 右信息网格（生卒 / 本名 / 国籍 / 出生地 / 师承 / 教育 / 荣誉 / 核心领域）
-3. **克拉维乌斯的一生：时间线**（`\timelineslide`）：1538-03-25 班贝格生 → 1555 入耶稣会 → 科英布拉大学 → 1561 到罗马 / 1564 晋铎 → 1570《天球论注释》初版 → 1582 格里高利历颁行 → 1593《星盘》小数点 → 1611 伽利略来访 → 1612-02-06 卒于罗马（仅写 page.md 有年份的节点）
-4. **谜样的早年**（`\earlyslide`）：本名不详（Christoph Clau/Klau、Schlüssel 拉丁化说）；生年 1538/1537 两说；1555 入耶稣会
-5. **科英布拉与罗马**（表格）：科英布拉大学求学（可能接触 Pedro Nunes）；Collegio Romano 学神学；1564 晋铎
-6. **格里高利历改革**（核心贡献页，表格 + 公式框）：Lilius 方案、梵蒂冈委员会、Reinhold 普鲁士星表、1582 颁行；1588 辩护 / 1603 阐释著作；对 Lilius 的郑重致意
-7. **欧几里得注释**（核心贡献页，表格 + 公式框）：*Euclidis Elementorum Libri XV*（罗马 1574；科隆 1591；1627 版）
-8. **《天球论注释》与 1572 新星**（核心贡献页，表格 + 公式框）：Sacrobosco《天球论》注释 16 版 / 七次修订；1585 版独立于 Tycho 定位新星于恒星天——「天不变」被证伪
-9. **地心说的坚守与伽利略**（表格）：坚守地心模型、反对日心说但承认托勒密模型有困难；与伽利略常年通信；1611 来访、接受望远镜新发现但对月球山峦存疑、未见木星卫星
-10. **数学课程的改革**（表格）：1580 *Ordo servandus* 课程方案（光学 / 静力学 / 天文 / 声学）；哲学家阻力、方案两度被拒；1593/94 学院官方化；Grienberger 1595 信载门下约十名学生；1610 正式卸任
-11. **数学贡献：Clavius 之律与小数点**（核心贡献页，表格 + 公式框）：consequentia mirabilis；1593《星盘》三角表中的小数点（西方最早之一）
-12. **荣誉与身后**（表格）：月球环形山 Clavius；小行星 20237 Clavius；教科书影响 50 余年；《2001 太空漫游》Clavius 基地趣闻；死后学院旋即式微（1615 后名录无数学家）
-13. **终章**：73 岁、「可能是欧洲最受尊敬的天文学家」的历史地位与遗产
+1. **共享封面**（`\openmathslide`）：`\input{../../cover/openmath_page.tex}`，不改
+2. **人物封面**（`\titleslide`）：大标题「格里高利历的守护者」+ 克里斯托弗·克拉维乌斯 1538–1612 + 右上肖像 `clavius_portrait.jpg` + 国籍行「德国」+ 底部三要素状态栏 + 四分类 badge
+3. **身份信息页**（`\profileslide`，★ 必做）：左肖像 + 右信息网格（生卒 / 本名 / 国籍 / 出生地 / 师承 / 教育 / 荣誉 / 核心领域）
+4. **克拉维乌斯的一生：时间线**（`\timelineslide`，竖轴 8 节点）：1538-03-25 班贝格生 → 1555 入耶稣会 → 科英布拉大学 / 1561 到罗马 / 1564 晋铎 → 1570《天球论注释》初版 → 1582 格里高利历颁行 → 1593《星盘》小数点 → 1611 伽利略来访 → 1612-02-06 卒于罗马（仅写 page.md 有年份的节点）
+5. **早年与教育**（`\earlyslide`）：本名不详（Christoph Clau/Klau、Schlüssel 拉丁化说）；生年 1538/1537 两说；1555 入耶稣会；科英布拉大学求学（可能接触 Pedro Nunes）；Collegio Romano 学神学；1564 晋铎（师承 page.md 无载，禁写）
+6. **格里高利历改革**（贡献页，表格 + 公式框）：Lilius 提出方案、梵蒂冈委员会（发明权属 Lilius，禁写克拉维乌斯「发明」）、Reinhold 普鲁士星表、1582 颁行；1588 辩护 / 1603 阐释著作；对 Lilius 的郑重致意
+7. **欧几里得注释**（贡献页，表格 + 公式框）：*Euclidis Elementorum Libri XV*（罗马 1574；科隆 1591；1627 版）
+8. **《天球论注释》教科书**（贡献页，表格 + 公式框）：Sacrobosco《天球论》注释，1570–1618 间至少 16 版、本人七次修订且每次大幅扩充；教科书影响天文教育 50 余年
+9. **1572 新星：天界可变的证伪**（贡献页，表格 + 公式框）：1585 版注释中**独立于** Tycho Brahe 将 1572 新星定位于恒星天（仙后座），各观测者位置相同 → 必在月球之外
+10. **地心说的坚守与伽利略**（贡献页，表格）：坚守地心模型、反对日心说但承认托勒密模型有困难；与伽利略常年通信；1611 来访、接受望远镜新发现为真，但对月球山峦存疑、未见四颗木星卫星
+11. **数学课程的改革**（贡献页，表格）：1580 *Ordo servandus* 课程方案（光学 / 静力学 / 天文 / 声学）；1580 方案被拒（仍获数学教授头衔）、1586 再试遭哲学家反对；1593/94 学院官方化；Grienberger 1595 信载门下约十名学生；1610 正式卸任
+12. **数学贡献：Clavius 之律与小数点**（贡献页，表格 + 公式框）：consequentia mirabilis（由命题否定的不一致推出其为真）；1593《星盘》三角表中的小数点（西方最早之一）
+13. **荣誉与身后**（荣誉页，表格）：月球环形山 Clavius；小行星 20237 Clavius；教科书影响 50 余年；《2001 太空漫游》Clavius 基地趣闻；死后学院旋即式微（1615 后名录无数学家）
+14. **终章**（`\closingslide`）：73 岁、「可能是欧洲最受尊敬的天文学家」的历史地位与遗产
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -100,7 +102,7 @@
 - **学院时间线**：学院在克拉维乌斯 1561 到罗马前已非正式存在多年；1580 方案被拒但获数学教授头衔；1586 再试被哲学家反对；1593 或 1594 非官方课程结束、学院正式化；1610 正式卸任、非正式延续至 1612；死后 1615 名录再无数学家——年份细节勿混。
 - **metadata employer Collegio Massimo, Naples** 为 metadata-only——不入机构清单。
 - ** Reinhold**：普鲁士星表只是计算工具——不入关系，叙事一句带过。
-- **肖像红线**：`images.txt` 三图均为书影 / 环形山照片，**非肖像**——禁充当头像；无真肖像用装饰圆占位。
+- **★ 肖像口径（Review-1 更正）**：PORTRAITS.md 核定克拉维乌斯**有**传世肖像 → 用 `images/clavius_portrait.jpg`（Rijksmuseum 藏版画像 RP-P-OB-38.439，图注「Clavius 版画像（Rijksmuseum 藏 RP-P-OB-38.439）」）；`images.txt` 三图（《天球论注释》1585 书影、《Refutatio》书影、月球 Clavius 环形山照片）**均非肖像**，只能作叙事插图，严禁充当头像。
 
 ## 6. 数据库字段核对表
 
@@ -145,14 +147,14 @@
 - [ ] Nunes 仅「可能接触」，禁写导师
 - [ ] 本名均用推测措辞；学生仅「约十人」，禁列名单
 - [ ] 通信（Galileo / Grienberger）与争议（Pereira / Scaliger）类型准确
-- [ ] 书影 / 环形山图不当头像，无真肖像用装饰圆
+- [ ] 肖像用 `clavius_portrait.jpg`（Rijksmuseum 藏版画像），书影 / 环形山图仅作插图
 - [ ] 正文采用 Wilson 式：身份信息页 + 封面头像位 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Christopher_Clavius/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：确认装饰圆占位（无真肖像）；环形山 / 书影仅作插图
+- [ ] **头像**：确认 `clavius_portrait.jpg` 落地（Rijksmuseum 藏版画像 RP-P-OB-38.439）；环形山 / 书影仅作插图
 - [ ] **国籍**：封面顶部徽章明示德国
 - [ ] **引语核对**：引语必须在 Wikipedia 原文找到（如 "probably the most respected astronomer in Europe"）
 - [ ] **编译验证**：`make distclean && make`
@@ -163,3 +165,20 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同世纪数学家（Bombelli / Viète / Napier 篇）格式对齐；与物理学家侧伽利略相关篇目（若有）口径互查
+
+## 12. Review-1 事实终审记录（2026-09-29）
+
+- 核对基准：`pages/Christopher_Clavius/page.md`（+ metadata.json）
+- 生卒 / 享年：1538-03-25 生于班贝格（Bamberg, Bavaria, Holy Roman Empire）→ 1612-02-06 卒于罗马（Papal States），享年 73（page.md "aged 73"）；正文另载生年「1538 或 1537」两说，infobox 与 metadata 均取 1538-03-25 → 取 1538-03-25，可注「或 1537」
+- 国籍口径：德国（metadata nationality: Germany；page.md "Jesuit German mathematician and physicist"）→ 封面国籍行「德国」；出生地属神圣罗马帝国、卒地属教宗国，按 historical 注明
+- 肖像结论：**有**传世肖像 → `clavius_portrait.jpg`，图注「Clavius 版画像（Rijksmuseum 藏 RP-P-OB-38.439）」（PORTRAITS.md 第 9 条，更正原提示词「无真肖像」断言）；`images.txt` 三图（1585《天球论注释》书影、《Refutatio》书影、月球 Clavius 环形山照片）均非肖像，仅作插图
+- 引语核对：本篇无成段直接引语，全文转述；页内短引均逐字核过 page.md：① "probably the most respected astronomer in Europe"（page.md："he was probably the most respected astronomer in Europe"）✅；② "independently of Tycho Brahe"（page.md "located (independently of Tycho Brahe) the nova from 1572"）✅；③ "emphatic acknowledgement of Lilius' work"（§2 转述为「郑重致意」）✅；④ "it is possible that he had some kind of contact"（Nunes，仅可能）✅；⑤ "almost single-handedly" ✅
+- 本轮修正：① §0-1/§0-3/§4/§5/§10/§11 共 6 处肖像条款由「无真肖像 / 装饰圆占位」改为使用 `clavius_portrait.jpg`（依 PORTRAITS.md 权威结论），§0-3 同时补「师承格写「—（无载）」」；② §4 重排为 14 页制：补入共享封面为第 1 页、人物封面为第 2 页、早年与教育合并为第 5 页（原「谜样的早年」+「科英布拉与罗马」），并将原「《天球论注释》与 1572 新星」拆为第 8、9 两贡献页，使贡献页共 7 页（页数结构对齐 TEMPLATE_GUIDE §2 标准制）；时间线收敛为 **8 节点**（1538 → 1555 → 科英布拉/1561/1564 → 1570 → 1582 → 1593 → 1611 → 1612）；③ §4 原「方案两度被拒」改为「1580 方案被拒（仍获数学教授头衔）、1586 再试遭哲学家反对」——page.md 仅 1580 明确 denied，1586 为 opposition；④ 历法条目内加注「发明权属 Lilius，禁写克拉维乌斯发明」，与 §5 呼应
+- 遗留不确定项：① 《天球论注释》初版年份 page.md 只载「1570–1618 间至少 16 版」，「1570 初版」为最早版本锚点推断，若定稿需保守可写「1570 年代起」；② 生年 1537 说 page.md 无旁证，仅作注记；③ 卒月日之外的晋铎/到罗马月份 page.md 无载，不写；④ 曲目 The Flow of Time 未查同世纪撞曲（按纪律仅记录不改）；⑤ metadata notable_work 含 *Geometria practica*，page.md 未载，不写入叙事
+
+## 13. 立传期执行记录（Beamer，2026-09-29，math16-c）
+
+- 产出：`Christopher_Clavius_zh.tex` / `.pdf`，**14 页**（与 §4 一致：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 贡献页 + 荣誉与身后 + 终章）；`make distclean && make` **0 error**、Overfull 仅 1 处 **0.48pt**（<10pt，图注换行），体积 375 KB。
+- 肖像：用 `images/clavius_portrait.jpg`（Rijksmuseum 藏版画像 RP-P-OB-38.439），封面图注「Clavius 版画像 · Rijksmuseum 藏」、身份页图注「Clavius 版画像（Rijksmuseum 藏 RP-P-OB-38.439）」；《天球论注释》1585 书影、《Refutatio》书影、Clavius 环形山照片均未使用。
+- 硬口径落实：历法页明写「梵蒂冈委员会采纳 Lilius 提出的方案」「发明权属 Lilius」，未写克拉维乌斯「发明」格里高利历；生卒 1538-03-25 / 1612-02-06（享年 73），生年「或 1537」仅作注记；师承格写「—（page.md 无载）」；Nunes 仅「可能有所接触」；新星「独立于 Tycho Brahe」；1611 伽利略来访写「接受新发现为真 + 对月球山峦存疑、看不见四颗木星卫星」并列。
+- 与 `page.md` **无事实冲突**，未产生 §12 之外的修正。

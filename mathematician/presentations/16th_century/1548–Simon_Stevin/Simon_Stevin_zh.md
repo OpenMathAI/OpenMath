@@ -9,9 +9,9 @@
 
 > 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**，而非纯数学家版式。这意味着在数学家立传基础上，增加以下**物理学家格式硬性要求**：
 
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。Wikipedia infobox 本体无真实肖像，`images.txt` 全部为插图/雕像/书影（风帆车版画 1649、Bruges 广场雕像 1847 等）——**无真实肖像，用装饰圆 `\faIcon{user}` 占位**；可选以 Bruges 雕像照片作「纪念像」插图页（勿当肖像）。
+1. **封面有头像**：右上角肖像 `images/stevin_portrait.jpg` + `draw=coveraccent!50` 细边框 + 姓名小字注。★ PORTRAITS.md 核定斯蒂文**有**传世版画像，统一用 `stevin_portrait.jpg`，图注写「Simon Stevin（传世版画像）」；`images.txt` 的其余图（风帆车版画 1649、Bruges 广场雕像 1847 等）为插图/雕像/书影，**可作插图但须注明「纪念雕像/版画」，不得充当肖像**。
 2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 佛兰德 · 荷兰共和国`），底部状态栏给出 `国籍 | 机构 | 主要成就` 三要素。
-3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧信息网格，至少含：生卒、别名 Stevinus、国籍、出生地、职业、教育、代表著作、核心领域。事实取自 Wikipedia infobox 与 page.md，不得杜撰。
+3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧肖像 `stevin_portrait.jpg` + 右侧信息网格，至少含：生卒、别名 Stevinus、国籍、出生地、职业、教育、代表著作、核心领域。事实取自 Wikipedia infobox 与 page.md，不得杜撰（导师 page.md 无载，禁写）。
 4. **配色 + 气泡背景**：采用「主色 + 强调色 + 三~四分类色」配色；背景用柔和气泡（稀疏大块实心圆），呼应「斜面绳圈（Epitaph of Stevinus）/ 风车 / 围圈小数记法」母题。
 5. **品牌口径统一**：结尾页底部品牌标注统一写 `OpenMathAI`；引号用半角 `" "`。
 
@@ -35,8 +35,8 @@
 
 ## 2. 核心叙事亮点（用于 Slide 4-9）
 
-1. **《De Thiende》（1585，法译 La Disme）**：35 页小册，**在欧洲确立十进小数**；宣称十进币制、度量衡与权制的普遍推行「只是时间问题」——影响后世小数点记法体系（尽管其本人记法笨重）。
-2. **围圈指数记法**：以带圈数字标十分幂次（184⓪5①4②2③9④0 表 184.54290），同一符号兼用于代数幂，不避分数指数——χ 加权下标思想的先声（页面对照表可做公式框）。
+1. **《De Thiende》（1585，法译 La Disme）**：35 页小册，**在欧洲确立十进小数的日常使用**（page.md 原口径 "nobody established their daily use before Stevin"）；宣称十进币制、度量衡与权制的普遍推行「只是时间问题」；其本人记法笨重（page.md "rather unwieldy"），今用小数点另有来源（Pitiscus 1612 三角表 → Napier 1614/1619 采纳）——**禁写「发明小数」或「发明小数点」**。
+2. **围圈指数记法**：以带圈数字标十分幂次（184⓪5①4②2③9④0 表 184.54290），同一符号兼用于代数幂（page.md："he employed the same symbol for powers of algebraic quantities"），不避分数指数、仅负指数未出现——页面对照表可做公式框。
 3. **实数连续统**：据 van der Waerden，斯蒂文消除了「数」限于整数（Euclid）或有理分数（Diophantus）的古典限制——**实数构成连续统**，其一般实数概念为后世科学家默然接受；近研究认为其在实数发展中的作用被低估。
 4. **多项式介值定理**：先于柯西证明多项式的介值定理，用十等分区间的 divide-and-conquer 程序。
 5. **一般二次方程解（1594《Arithmetic》）**：把 Brahmagupta（印度，近千年前）已知的一般解带到西方世界。
@@ -74,24 +74,25 @@
   - 与本批次另一人 François Viète 的 **Cinematic Experience**（电影感/高张力）互不重复
 - 时长需 ≥ 14 页 × 7 秒 ≈ 98 秒，ffmpeg `-shortest` 自动对齐
 
-## 4. Slide 规划（约 14 页，正文采用 Wilson 式结构 + 表格 + 公式框）
+## 4. Slide 规划（统一 14 页制：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 贡献页 + 荣誉与传承 + 终章）
 
-> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格；第 3 页为「时间线页」。
+> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格。
+> 页结构（14 页，TEMPLATE_GUIDE §2 标准制）：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 个核心贡献页 + 荣誉 + 终章。原「工程与军事」「与 Prince Maurice」并入第 13 页荣誉页（素材多，勿堆砌）。
 
-1. **封面**（`\titleslide`）：大标题「十进小数与静力学 · 低地国家的实用科学大师」+ Simon Stevin 1548–1620 + 右上头像（装饰圆）+ 国籍行 + 底部三要素状态栏 + 四分类 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右信息网格（生卒 / 别名 Stevinus / 国籍 / 出生地 / 职业 / 教育 / 代表著作 / 核心领域）
-3. **斯蒂文的一生：时间线**（`\timelineslide`）：1548 Bruges 出生 → 1571 离乡（Antwerp 文书、北欧游历）→ 1577–81 Bruges 市秘书 → 1583-02-16 注册 Leiden 大学 → 1585 De Thiende → 1586 静力学/流体静力学/Delft 实验/风车专利 → 1592 waterstaet 总监 → ~1600 风帆车 → 1605–08 Wiskonstighe Ghedachtenissen → 1612 定居 The Hague → 1620 去世
-4. **早年与北欧远行**（`\earlyslide`）：Bruges、加尔文家庭、Antwerp 商行文书、北欧之行、市秘书、为避宗教迫害离乡（推断口径）
-5. **《De Thiende》1585：十进小数**（核心贡献页，表格 + 公式框）：35 页小册、La Disme、围圈记法对照表（184⓪5①4②2③9④0）、献词「祝观星者、测量者…好运」、「一切运算化为整数四则」
-6. **实数连续统与介值定理**（核心贡献页，表格 + 公式框）：van der Waerden 评价、十等分 divide-and-conquer、先于 Cauchy
-7. **代数与三角**（核心贡献页，表格）：1594《Arithmetic》一般二次方程解（Brahmagupta 千年后再传西方）、《De Driehouckhandel》三角学、多面体框架平面展开、稳定/不稳定平衡区分
-8. **静力学：Epitaph of Stevinus**（核心贡献页，表格 + 示意图）：绳圈等距重物斜面证明、力分解、Dijksterhuis「直觉使用能量守恒」
-9. **流体静力学、落体与潮汐**（核心贡献页，表格）：静水佯谬（压强只依赖高度）、1586 Delft 塔实验（不同重量同加速度）、首个月球引力潮汐说
-10. **音乐理论：等程律**（表格 + 公式框）：Van de Spiegheling der singconst（约 1605，1884 出版）、十二次方根、计算差一二单位、Vincenzo Galilei 之源
-11. **荷兰科学语言运动**（表格）：wiskunde / natuurkunde / scheikunde / sterrenkunde / meetkunde 新词表、「智慧的第二时代」、单音节词经验论证
-12. **工程与军事**（表格）：风车改进与 1586 专利（效率三倍）、waterstaet 总监（1592）、军需总监、Leiden 工程学校、Moers 堡垒（1604）、Castrametatio（1617）
-13. **与 Prince Maurice：导师与总顾问**（表格）：Leiden 结识 Willem the Silent 次子、1592 起的信任岗位、非个人账户簿记（荐于 Maurice 与 Sully）、身后纪念开篇
-14. **终章**：Bruges Simon Stevinplein 雕像（1847 落成，像座刻斜面平衡证明）、Stevin Prize（2018）、RV Simon Stevin 科考船（2012）——「理论与应用之桥」的历史地位
+1. **共享封面**（`\openmathslide`）：`\input{../../cover/openmath_page.tex}`，不改
+2. **人物封面**（`\titleslide`）：大标题「十进小数与静力学 · 低地国家的实用科学大师」+ Simon Stevin 1548–1620 + 右上肖像 `stevin_portrait.jpg`（图注「Simon Stevin（传世版画像）」）+ 国籍行「佛兰德 · 荷兰共和国」+ 底部三要素状态栏 + 四分类 badge
+3. **身份信息页**（`\profileslide`，★ 必做）：左肖像 `stevin_portrait.jpg` + 右信息网格（生卒 / 别名 Stevinus / 国籍 / 出生地 / 职业 / 教育 / 代表著作 / 核心领域）
+4. **斯蒂文的一生：时间线**（`\timelineslide`，竖轴 8 节点）：1548 Bruges 出生 → 1571 离乡（Antwerp 文书、北欧游历）→ 1577–81 Bruges 市秘书 → 1583-02-16 注册 Leiden 大学 → 1585《De Thiende》→ 1592 waterstaet 总监 → 1605–08《Wiskonstighe Ghedachtenissen》→ 1620 去世（1586 静力学/专利、~1600 风帆车、1612 定居 The Hague 等细节置于正文页）
+5. **早年与北欧远行**（`\earlyslide`）：Bruges、加尔文家庭、Antwerp 商行文书、北欧之行、市秘书、为避宗教迫害离乡（推断口径）
+6. **《De Thiende》1585：十进小数**（贡献页，表格 + 公式框）：35 页小册、La Disme、围圈记法对照表（184⓪5①4②2③9④0）、献词「祝观星者、测量者…好运」、「一切运算化为整数四则」
+7. **实数连续统与介值定理**（贡献页，表格 + 公式框）：van der Waerden 评价、十等分 divide-and-conquer、先于 Cauchy
+8. **代数与三角**（贡献页，表格）：1594《Arithmetic》一般二次方程解（Brahmagupta 千年后再传西方）、《De Driehouckhandel》三角学、多面体框架平面展开、稳定/不稳定平衡区分
+9. **静力学：Epitaph of Stevinus**（贡献页，表格 + 示意图）：绳圈等距重物斜面证明、力分解、Dijksterhuis「直觉使用能量守恒」
+10. **流体静力学、落体与潮汐**（贡献页，表格）：静水佯谬（压强只依赖高度）、1586 Delft 塔实验（不同重量同加速度）、首个月球引力潮汐说
+11. **音乐理论：等程律**（贡献页，表格 + 公式框）：Van de Spiegheling der singconst（约 1605，1884 出版）、十二次方根、计算差一二单位、Vincenzo Galilei 之源
+12. **荷兰科学语言运动**（贡献页，表格）：wiskunde / natuurkunde / scheikunde / sterrenkunde / meetkunde 新词表、「智慧的第二时代」、单音节词经验论证
+13. **工程实践、Maurice 的顾问与身后纪念**（荣誉页，表格）：风车改进与 1586 专利（效率三倍）、waterstaet 总监（1592）、军需总监、Leiden 工程学校、Moers 堡垒（1604）、Castrametatio（1617）；Leiden 结识 Willem the Silent 次子、非个人账户簿记（荐于 Maurice 与 Sully）；Bruges Simon Stevinplein 雕像（1847 落成，像座刻斜面平衡证明）、Stevin Prize（2018）、RV Simon Stevin 科考船（2012）
+14. **终章**（`\closingslide`）：「理论与应用之桥」的历史地位——数学、物理、水利、军事工程全线落地的实用科学大师
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -109,6 +110,7 @@
 - **国籍 era**：生于 Habsburg Netherlands、卒于 Dutch Republic，均为历史政权——yaml 两条 nationality 均加 `era_note: historical`；封面口径「佛兰德 · 荷兰共和国」。
 - **引语白名单**（其余一律禁编引语）：①De Thiende 献词 "Simon Stevin wishes the stargazers, surveyors, carpet measurers, body measurers in general, coin measurers and tradespeople good luck."；②"[this text] teaches us all calculations that are needed by the people without using fractions..."；③van der Waerden 对其实数概念的转述（注明转述）。其余禁编。
 - **无奖项记载**（§8 写无；Legacy 三项为纪念命名非奖项，勿混淆——Stevin Prize 2018 是荷兰 NWO 现代奖，可入 Legacy/终章，不入「斯蒂文所获奖项」）。
+- **★ 肖像口径（Review-1 更正）**：PORTRAITS.md 核定斯蒂文**有**传世版画像 → 用 `images/stevin_portrait.jpg`（图注「Simon Stevin（传世版画像）」）；Bruges 广场雕像（1847 落成，Eugène Simonis 作）与风帆车版画（1649）只能作插图，严禁充当头像。
 - ** minYears：land yacht 年份写「约 1600」；风车效率「三倍」（page.md "improved threefold"）。
 
 ## 6. 数据库字段核对表
@@ -151,14 +153,15 @@
 - [ ] Delft 塔实验不比附伽利略；介值定理限多项式；二次方程口径「带到西方」
 - [ ] 等程律计算精度不足如实写；Varignon 存疑句已回避
 - [ ] 婚姻年份两说并写；妻子/子女/父无名不入库
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像（装饰圆）+ 国籍行 + 气泡背景 + 品牌 OpenMathAI
+- [ ] 肖像用 `stevin_portrait.jpg`（传世版画像，图注「Simon Stevin（传世版画像）」）；雕像/书影/版画仅作插图并注明
+- [ ] 正文采用 Wilson 式：身份信息页 + 封面肖像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
 - [ ] `make distclean && make` 编译通过，0 错误
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Simon_Stevin/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：无真实肖像——装饰圆占位；如用 Bruges 雕像图，图注必须写「纪念雕像」非肖像
+- [ ] **肖像**：使用 `stevin_portrait.jpg`（传世版画像，PORTRAITS.md 第 11 条）；如用 Bruges 雕像图，图注必须写「纪念雕像（1847 落成，Eugène Simonis 作）」非肖像
 - [ ] **国籍**：封面顶部徽章明示「佛兰德 · 荷兰共和国」
 - [ ] **引语核对**：仅白名单引语，逐条在 page.md 找到原文
 - [ ] **编译验证**：`make distclean && make`
@@ -174,3 +177,27 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+## 12. Review-1 事实终审记录（2026-09-29）
+
+- 核对基准：`pages/Simon_Stevin/page.md`（+ metadata.json）
+- 生卒 / 享年：1548 生于 Bruges（Habsburg Netherlands）；1620 卒于 The Hague **或** Leiden（Dutch Republic），享年 71–72；page.md 明载 "The exact birth date and the date and place of his death are uncertain" → **生卒只写到年、月日与卒地均留白**（卒地两说并写），metadata date_of_birth/death 亦为 1548/1620（无月日）
+- 国籍口径：佛兰德人（Flemish，County of Flanders）；生于 Habsburg Netherlands、卒于 Dutch Republic，两条历史政权均加 era_note: historical；封面行「佛兰德 · 荷兰共和国」
+- 肖像结论：**有**传世版画像 → `stevin_portrait.jpg`，图注「Simon Stevin（传世版画像）」（PORTRAITS.md 第 11 条，更正原提示词「无真实肖像」断言）；Bruges 广场雕像（1847 落成，Eugène Simonis 作）、风帆车版画（1649）、书影等只作插图
+- 引语核对：① De Thiende 献词 "Simon Stevin wishes the stargazers, surveyors, carpet measurers, body measurers in general, coin measurers and tradespeople good luck."（page.md line 131 逐字）✅；② "[this text] teaches us all calculations that are needed by the people without using fractions. One can reduce all operations to adding, subtracting, multiplying and dividing with integers."（page.md line 131 逐字）✅；③ van der Waerden 关于实数连续统的评价（page.md line 125，按「转述」处理）✅；④ page.md line 78 Dijksterhuis "intuitively made use of the principle of conservation of energy ... long before it was formulated explicitly" ✅；⑤ page.md line 56 小数翻案句 "He was thought to have invented the decimal fractions until the middle of the 20th century" ✅（提示词按原口径转述）
+- 本轮修正：① §0/§0-3/§4-1/§4-2/§5/§10/§11 共 7 处肖像条款由「无真实肖像 / 装饰圆占位」改为使用 `stevin_portrait.jpg`（依 PORTRAITS.md 权威结论），雕像与版画降为插图；② §2-1 删去「影响后世小数点记法体系」的推论（易被读成斯蒂文影响现代小数点），改为 page.md 口径「确立十进小数的日常使用」并注明小数点来源为 Pitiscus（1612）→ Napier（1614/1619），禁写「发明小数/小数点」；③ §2-2 删去 page.md 无载的「χ 加权下标思想的先声」，改为原口径（同一符号兼用于代数幂、不避分数指数、仅负指数未出现）；④ §0-3 补「导师 page.md 无载，禁写」；⑤ §4 重排为 14 页制：补入共享封面为第 1 页、人物封面为第 2 页，7 贡献页为 6–12（De Thiende / 实数连续统与介值定理 / 代数与三角 / Epitaph of Stevinus / 流体静力学与潮汐 / 等程律 / 荷兰科学语言运动），原「工程与军事」「与 Prince Maurice」并入第 13 页荣誉页；时间线按 TEMPLATE_GUIDE 收敛为 **8 节点**（1548 → 1571 → 1577–81 → 1583 → 1585 → 1592 → 1605–08 → 1620）
+- 遗留不确定项：① 卒地 Leiden 或 The Hague 两说并存（page.md 亦并写），tex 须并写、勿单取；② 婚姻年份 1610 或 1614 两说（page.md 亦并写），妻子与四子女均无姓名记载，不入库；③ §5 提到的 Varignon 句（page.md line 80 "before Pierre Varignon"）年代倒挂（Varignon 1654–1722），按纪律回避或加「据维基页」注，不入库；④ page.md line 12 关于「斯蒂文有肖像」的 infobox 本体无图，肖像依据为 PORTRAITS.md 核定；⑤ 背景曲 Expedition 与同世纪 Nunes / Briggs 篇撞曲（按纪律仅记录不改）
+
+
+---
+
+## 13. 立传期修正（Beamer 执行，2026-09-29）
+
+- **产出**：`Simon_Stevin_zh.tex` + `Makefile`（复制 17 世纪 Johann_Bernoulli 黄金参照，仅改 MAIN/VIDEO_NAME）。共 **14 页**：共享封面 `\openmathslide` + 人物封面 + 身份信息 + 时间线 + 早年与北欧远行 + 7 贡献页（De Thiende 十进小数 / 实数连续统与介值定理 / 代数与三角 / Epitaph of Stevinus / 流体静力学与潮汐 / 等程律 / 荷兰科学语言运动）+ 荣誉页 + 终章。
+- **编译**：`make distclean && make` → **0 error**；Overfull **0**（全部 <10pt）；缺失字符 0（含带圈数字）；`pdfinfo` 14 页；PDF 268 KB。
+- **肖像**：`images/stevin_portrait.jpg`（传世版画像），封面与身份页图注「Simon Stevin（传世版画像）」；未使用 Bruges 广场雕像照（1847）与风帆车版画（1649）。
+- **事实对照 page.md**：生卒只到年（1548 — 1620），卒地 **Leiden 或 The Hague 两说并写**并标「不确定」；享年 71–72；水波及国籍口径「佛兰德（尼德兰）→ 荷兰共和国」。
+- **小数口径**：只写「1585《De Thiende》在欧洲确立十进小数的日常使用」，**未写「发明小数 / 发明小数点」**；并交代小数点来源为 Pitiscus 三角表（1612）→ Napier（1614/1619）；围圈记法存原样 `184⓪5①4②2③9④0`（同一符号兼用于代数幂，page.md 评 "rather unwieldy"）。
+- **其余红线**：介值定理限「为多项式」、早于柯西；二次方程口径「把一般解带到西方」（Brahmagupta 近千年前已载）；1586 Delft 塔实验未比附伽利略；等程律「计算精度不足、弦长差一两个单位」如实写、1884 才出版；§5 存疑的 Varignon 句**未入文**；婚姻年份未展开、妻子与子女无姓名不入文。
+- **引语**：仅用白名单 ①De Thiende 献词、②"[this text] teaches us all calculations … without using fractions …"；van der Waerden 对实数连续统的评价以「据 van der Waerden」转述；无编造引语。
+- **技术**：带圈数字 ⓪①②③④ 经 `\xeCJKDeclareCharClass{CJK}{"2460->"2473,"24EA}` 路由至 CJK 字体（缺字告警 0）；时间线 `\foreach` 采用行内字色（规避 pgffor 条件解析异常）。

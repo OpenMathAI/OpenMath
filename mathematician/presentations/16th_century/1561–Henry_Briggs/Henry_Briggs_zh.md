@@ -9,9 +9,9 @@
 
 > 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**，而非纯数学家版式。这意味着在数学家立传基础上，增加以下**物理学家格式硬性要求**：
 
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注（page.md/images.txt 无人物肖像，只有对数表书影、1625 北美地图与月球环形山照片——**用装饰圆 `\faIcon{user}` 占位**，可在插图页用 `Logarithmorum Chilias Prima` 书影）。
+1. **封面有头像**：右上角肖像 `images/briggs_portrait.jpg` + `draw=coveraccent!50` 细边框 + 姓名小字注。★ PORTRAITS.md 第 14 条核定：用 John Faber Jr 依 Isaac Seeman 所作 **1738 年美柔汀版画**（英国国家肖像馆藏），图注写「John Faber Jr 依 Isaac Seeman 所作 1738 年美柔汀版画（英国国家肖像馆藏）」；page.md/images.txt 另附对数表书影、1625 北美地图与月球环形山照片，**均可作插图但不得充当头像**。
 2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 英格兰`），底部状态栏给出 `国籍 | 机构 | 主要成就` 三要素。
-3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧信息网格，至少含：生卒、本名、国籍、出生地、教育、教席、核心领域。事实取自 Wikipedia infobox，不得杜撰。
+3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧肖像 `briggs_portrait.jpg`（图注同封面，注明系 1738 年版画）+ 右侧信息网格，至少含：生卒、本名、国籍、出生地、教育、教席、核心领域。事实取自 Wikipedia infobox，不得杜撰；导师 page.md 无载 → 该格写「—（无载）」，禁填人名（John Pell 仅 metadata-only，见 §5）。
 4. **配色 + 气泡背景**：采用「主色 + 强调色 + 三~四分类色」配色；背景用柔和气泡（稀疏大块实心圆）呼应「对数表 / 航海图」的计算母题。
 5. **品牌口径统一**：结尾页底部品牌标注统一写 `OpenMathAI`；引号用半角 `" "`。
 
@@ -40,7 +40,7 @@
 4. **《Arithmetica Logarithmica》（1624）**：对开本巨著，1–20000 与 90001–100000 共三万个自然数的 14 位对数表；其间 20001–90000 后由 Adriaan Vlacq 补齐（10 位）。**布里格斯是最早用有限差分法编制函数表的人之一**。
 5. **《Trigonometria Britannica》（1633 身后出版，Gouda 印刷）**：每度百分之一的对数正弦与正切表（14 位）+ 15 位自然正弦表 + 10 位正切/正割表；系 1617《Chilias Prima》的后继之作。
 6. **首任格雷沙姆学院几何教授（1596）**：在伦敦新创的 Gresham College 任首任几何教授近 23 年，兼授天文与航海，使格雷沙姆学院成为**英格兰数学的中心**，并从那里支持开普勒的新学说。
-7. **首任 Savilian 几何教授（1619）**：1619 年出任牛津大学首任 Savilian Professor of Geometry，1620-07 辞去格雷沙姆教席；抵牛津后不久获授 M.A.（incorporated）。
+7. **牛津 Savilian 几何教授（1619）**：1619 年出任牛津大学 Savilian Professor of Geometry（**page.md 只载 appointed，未载「首任」，禁加**；「首任」为页外史实），1620-07 辞去格雷沙姆教席；抵牛津后不久获授 M.A.（incorporated）。
 8. **现代长除法算法（c. 1600）**：今日通用的长除法具体算法由布里格斯约 1600 年引入。
 9. **航海与地理学**：与 Edward Wright 合作；1602 年《磁偏角求极高表》、1610 年赖特《航海误差》第二版附录「航海改进用表」；1619 年投资伦敦公司；1622 年《西北航道论》小册子。
 10. **品格与身后**：Dr Smith《格雷沙姆教授传》称其「品行端方、轻视财富、安于本分」；月球环形山 Briggs 以其命名。
@@ -71,24 +71,25 @@
   - 本组三人内不重复：Napier 用 Eternals、Harriot 用 Lonesome
   - 时长需 ≥ 14 页 × 7 秒 ≈ 98 秒，ffmpeg `-shortest` 自动对齐
 
-## 4. Slide 规划（约 14 页，正文采用 Wilson 式结构 + 表格 + 公式框）
+## 4. Slide 规划（统一 14 页制：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 贡献页 + 荣誉与传承 + 终章）
 
-> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格；第 3 页为「时间线页」。
+> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格。
+> 页结构（14 页，TEMPLATE_GUIDE §2 标准制）：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 个核心贡献页 + 荣誉 + 终章。原「清教徒与反占星」并入荣誉页「品格、身后与传承」（素材多，勿堆砌）。
 
-1. **封面**（`\titleslide`）：大标题「常用对数的缔造者」+ 亨利·布里格斯 1561–1630 + 右上装饰圆头像 + 国籍行 + 底部三要素状态栏 + 四分类 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右信息网格（生卒 / 本名 / 国籍 / 出生地 / 教育 / 教席 / 核心领域）
-3. **亨利·布里格斯的一生：时间线**（`\timelineslide`）：1561 约克郡出生 → 1577 入剑桥圣约翰 → 1581 毕业 / 1588 Fellow → 1592 Linacre 讲席 reader → 1596 首任格雷沙姆几何教授 → 1616/1617 两访爱丁堡 → 1617《Chilias Prima》→ 1619 Savilian 教授 → 1624《Arithmetica Logarithmica》→ 1630 去世
-4. **早年与剑桥**（`\earlyslide`）：约克郡文法学校、圣约翰学院、Linacre 讲席、与 Wright 合作航海天文
-5. **格雷沙姆学院：英格兰数学的中心**（核心贡献页，表格）：1596 首任几何教授、近 23 年讲席、支持开普勒新学说
-6. **两访纳皮尔：对数的改造**（核心贡献页，表格 + 公式框）：以 10 为底、log 10 = 1、重标度方案获采纳（年份口径见 §5）
-7. **《Logarithmorum Chilias Prima》（1617）**（核心贡献页，表格 + 公式框）：1–1000 的 14 位常用对数表
-8. **《Arithmetica Logarithmica》（1624）**（核心贡献页，表格 + 公式框）：三万个数的 14 位对数表、有限差分法、Vlacq 补算区间
-9. **《Trigonometria Britannica》（1633）**（核心贡献页，表格）：对数正弦正切表 14 位、自然正弦 15 位、Gouda 印刷身后出版
-10. **长除法算法（c. 1600）**（核心贡献页，表格 + 公式框）：今日通用长除法的引入者
-11. **航海、磁偏角与西北航道**（表格）：1602 磁偏角表、1610 赖特书附录、1619 伦敦公司、1622《西北航道论》
-12. **清教徒与反占星**（表格）：与占星作家 Christopher Heydon 之谊、本人以宗教理由拒绝占星（"a mere system of groundless conceits"）
-13. **身后与传承**（表格）：Vlacq 续算、Thompson 1952 年 20 位表、月球环形山 Briggs、Merton College 礼拜堂安葬
-14. **终章**：68 岁、「让对数可用的工程师头脑」的历史地位与遗产
+1. **共享封面**（`\openmathslide`）：`\input{../../cover/openmath_page.tex}`，不改
+2. **人物封面**（`\titleslide`）：大标题「常用对数的缔造者」+ 亨利·布里格斯 1561–1630 + 右上肖像 `briggs_portrait.jpg`（图注「John Faber Jr 依 Isaac Seeman 所作 1738 年美柔汀版画（英国国家肖像馆藏）」）+ 国籍行「英格兰」+ 底部三要素状态栏 + 四分类 badge
+3. **身份信息页**（`\profileslide`，★ 必做）：左肖像 `briggs_portrait.jpg` + 右信息网格（生卒 / 本名 / 国籍 / 出生地 / 教育 / 教席 / 核心领域；导师格写「—（无载）」）
+4. **亨利·布里格斯的一生：时间线**（`\timelineslide`，竖轴 8 节点）：1561-02-01 约克郡出生 → 1577 入剑桥圣约翰（1581 毕业、1588 Fellow）→ 1596 首任格雷沙姆几何教授 → 1616/1617 两访爱丁堡 → 1617《Chilias Prima》→ 1619 Savilian 教授 → 1624《Arithmetica Logarithmica》→ 1630-01-26 去世
+5. **早年与剑桥**（`\earlyslide`）：约克郡文法学校（拉丁 / 希腊文）、圣约翰学院、1592 Linacre 讲席 reader、与 Wright 合作航海天文
+6. **格雷沙姆学院：英格兰数学的中心**（贡献页，表格）：1596 首任几何教授、近 23 年讲席、兼授天文与航海、支持开普勒新学说
+7. **两访纳皮尔：对数的改造**（贡献页，表格 + 公式框）：以 10 为底、log 10 = 1、重标度方案获采纳（年份口径见 §5：本篇用 1616/1617）
+8. **《Logarithmorum Chilias Prima》（1617）**（贡献页，表格 + 公式框）：1–1000 的 14 位常用对数表（首千对数）
+9. **《Arithmetica Logarithmica》（1624）**（贡献页，表格 + 公式框）：三万个数的 14 位对数表、有限差分法、Vlacq 补算 20001–90000
+10. **《Trigonometria Britannica》（1633）**（贡献页，表格）：对数正弦 / 正切表 14 位、自然正弦 15 位、正切 / 正割 10 位、Gouda 印刷身后出版
+11. **长除法算法（c. 1600）**（贡献页，表格 + 公式框）：今日通用长除法具体算法的引入者
+12. **航海、磁偏角与西北航道**（贡献页，表格）：1602 磁偏角求极高表、1610 赖特《航海误差》第二版附录、1616/1618 仪器表说明、1619 伦敦公司投资、1622《西北航道论》（加州岛神话之源，口径见 §5）
+13. **品格、身后与传承**（荣誉页，表格）：清教徒、友人 Heydon 而本人反占星（"a mere system of groundless conceits"）；Dr Smith 品评、Vlacq 续算、Thompson 1952 年 20 位表、月球环形山 Briggs、Merton College 礼拜堂安葬
+14. **终章**（`\closingslide`）：68 岁、「让对数可用的工程师头脑」的历史地位与遗产
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -101,6 +102,8 @@
 - ** metadata-only 关系**：metadata.json 的 doctoral_student 列有 John Pell——**page.md 正文无载，按 frontmatter-only 纪律不入库**（§7 同步注明）。
 - **死亡与安葬**：1630-01-26 卒于牛津（享年 68），葬 Merton College 礼拜堂——「安葬于 Merton」非「任职 Merton」（metadata employer 列 Merton College 系噪声，正文无载任职，勿写）。
 - **无获奖记录**：月球环形山命名属身后纪念（eponym），勿写成奖项。
+- **★ 肖像口径（Review-1 更正）**：PORTRAITS.md 第 14 条核定布里格斯**有**传世肖像 → 用 `images/briggs_portrait.jpg`（John Faber Jr 依 Isaac Seeman 所作 1738 年美柔汀版画，英国国家肖像馆藏），图注「John Faber Jr 依 Isaac Seeman 所作 1738 年美柔汀版画（英国国家肖像馆藏）」；对数表书影、1625 北美地图、月球环形山照片均非肖像，只作插图。
+- **Savilian 表述**：page.md 仅载 1619 年被 appointed 为 Savilian Professor of Geometry，**未载「首任」**——正文禁加。
 
 ## 6. 数据库字段核对表（§21.5）
 
@@ -120,7 +123,7 @@
 
 > 仅收 page.md 明载关系；note 不写两访爱丁堡具体年份（与 Napier 页口径不一，见 §5）。
 
-- **合作 / 交往**：John Napier（collaborator，面见商讨对数重标度并受纳皮尔之托续算）、Edward Wright（collaborator，剑桥时期合作航海天文、为其著作撰写附录）、Christopher Heydon（collaborator，友人，占星作家）、Adriaan Vlacq（collaborator，续算对数表 20001–90000 区间）
+- **合作 / 交往**：John Napier（collaborator——**Briggs 页**载其得《Descriptio》后写信给纳皮尔、商讨以 10 为底的对数改造，并两度赴爱丁堡面见；「受纳皮尔之托计算修正表」见 **Napier 页**，属跨页补充，入库 note 只写「商讨对数改造」、不写年份与委托细节）、Edward Wright（collaborator，剑桥时期合作航海天文、为其著作撰写附录）、Christopher Heydon（collaborator，友人，占星作家）、Adriaan Vlacq（collaborator，续算对数表 20001–90000 区间）
 - **思想影响**：Johannes Kepler（influence，在格雷沙姆学院讲席上支持并传播开普勒新学说）
 - **不入库**：John Pell（metadata doctoral_student，page.md 无载，frontmatter-only 纪律）、长子 Henry 与次子 Thomas（仅具名；Henry 与本人同名防自环分裂）、James Ussher（仅书目列两封信）、Thomas Linacre（讲席创设者，非个人关系）、Jost Bürgi / John Dee（推测性渠道说，禁写）
 
@@ -143,14 +146,15 @@
 - [ ] John Pell 不入库（metadata-only）；两子不入库（同名防自环）
 - [ ] Merton 是安葬地非任职机构
 - [ ] 引语必须 page.md 原文；page.md 无载禁写
-- [ ] 正文采用 Wilson 式：身份信息页 + 封面头像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
+- [ ] 肖像用 `briggs_portrait.jpg`（1738 年美柔汀版画，英国国家肖像馆藏）；书影 / 地图 / 环形山照片仅作插图
+- [ ] 正文采用 Wilson 式：身份信息页 + 封面肖像 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
 - [ ] `make distclean && make` 编译通过，0 错误
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Henry_Briggs/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：page.md 无人物肖像——装饰圆占位，插图页可用 Chilias Prima 书影
+- [ ] **肖像**：使用 `briggs_portrait.jpg`（John Faber Jr 依 Isaac Seeman 所作 1738 年美柔汀版画，英国国家肖像馆藏）；《Chilias Prima》书影等仅作插图
 - [ ] **国籍**：封面顶部徽章明示英格兰
 - [ ] **引语核对**：引语必须在 Wikipedia 原文找到（如 "a mere system of groundless conceits"、Dr Smith 品评句）
 - [ ] **编译验证**：`make distclean && make`
@@ -166,3 +170,22 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+## 12. Review-1 事实终审记录（2026-09-29）
+
+- 核对基准：`pages/Henry_Briggs/page.md`（+ metadata.json）
+- 生卒 / 享年：1561-02-01 生于约克郡 Warleywood（Daisy Bank, Sowerby Bridge, near Halifax）→ 1630-01-26 卒于牛津，享年 68（page.md "aged 68"），葬 Merton College 礼拜堂；metadata date_of_birth/death 与本页一致，无噪声；metadata place_of_birth 另列 Halifax / Warley Town，page.md 载 Warleywood → 写「约克郡 Warleywood（哈利法克斯附近）」
+- 国籍口径：英格兰（Kingdom of England；metadata nationality: Kingdom of England）→ 封面国籍行「英格兰」，入库加 era_note historical
+- 肖像结论：**有**传世肖像 → `briggs_portrait.jpg`，图注「John Faber Jr 依 Isaac Seeman 所作 1738 年美柔汀版画（英国国家肖像馆藏）」（PORTRAITS.md 第 14 条，更正原提示词「无人物肖像」断言）；对数表书影、1625 北美地图、月球环形山照片均非肖像，只作插图
+- 引语核对：本篇无成段直接引语，全文转述；可核实引语两条均逐字对上 page.md：① 布里格斯贬占星句 "a mere system of groundless conceits"（page.md line 42）✅；② Dr Smith《Lives of the Gresham Professors》品评句 "a man of great probity, a condemner of riches, and contented with his own station, preferring a studious retirement to all the splendid circumstances of life."（page.md line 46，§2-10 按原意转述为「品行端方、轻视财富、安于本分」）✅；另 1622 年《西北航道论》「自称见过自荷兰带来的地图」为 page.md 原文（"Briggs stated he had seen a map that had been brought from Holland"），可用
+- 本轮修正：① §0/§0-3/§4/§5/§10/§11 共 6 处肖像条款由「无人物肖像 / 装饰圆占位」改为使用 `briggs_portrait.jpg`（1738 年美柔汀版画，依 PORTRAITS.md 权威结论）；② §2-7 删去 page.md 无载的「首任 Savilian 几何教授」表述（page.md 仅载 1619 年被 appointed），并在 §5 明令禁加；③ §4 重排为 14 页制：补入共享封面为第 1 页、人物封面为第 2 页，7 贡献页为 6–12（格雷沙姆 / 两访纳皮尔 / Chilias Prima / Arithmetica Logarithmica / Trigonometria Britannica / 长除法 / 航海与西北航道），原「清教徒与反占星」并入第 13 页荣誉页「品格、身后与传承」（避免堆砌）；④ §4-4 时间线按 TEMPLATE_GUIDE 收敛为 **8 节点**（1561 → 1577（含 1581/1588）→ 1596 → 1616/1617 → 1617 → 1619 → 1624 → 1630），1592 Linacre 讲席移入早年页；⑤ §7 Napier 条目区分「Briggs 页所载（写信商讨 + 两度面见）」与「Napier 页所载（受委托计算修正表）」，入库 note 只写「商讨对数改造」、不写年份与委托细节；⑥ §0-3 补「导师格写「—（无载）」，John Pell 仅 metadata-only」
+- 遗留不确定项：**★ 布里格斯两次爱丁堡会面年份两页矛盾**——Briggs 页作 1616 年首访、1617 年再访；Napier 页作 1615 年来访。按纪律**各自忠于本人页面、不得互改**：本篇沿用 1616/1617，入 yaml 的 note 不写年份；② Jost Bürgi《Fundamentum Astronomiae》经 John Dee 之说，page.md 为 "It has also been suggested" 的推测口径，建议不展开；③ 加州岛制图神话：1622 年小册子为「已知源头」，客观表述为「后世视为该神话之源」，不评价、不用定性词（1625 年收入 Purchas His Pilgrimes vol.3 p848）；④ 长子 Henry 与本人同名，两子均不入库（防自环 / 分裂 stub）；⑤ metadata employer 另列 St John's College，page.md 无任职记载 → 不入机构；Merton College 系安葬地非任职机构；⑥ John Pell 为 metadata-only doctoral_student，page.md 无载 → 不入库；⑦ 背景曲 Expedition 与同世纪 Nunes / Stevin 篇撞曲（按纪律仅记录不改）
+
+## 13. 立传期记录（Beamer 立传，2026-09-29）
+
+- 产出：`Henry_Briggs_zh.tex` + `Makefile`，`make distclean && make` 通过。
+- 编译：**0 error**；`Overfull` 仅 1 处 0.48pt，位于**不可修改的共享封面**（<10pt 可接受）；无 `Underfull`。PDF **14 页**。
+- 肖像：`images/briggs_portrait.jpg`（图注「John Faber Jr 依 Isaac Seeman 所作 1738 年美柔汀版画（英国国家肖像馆藏）」）；另以 `briggs_chilias_page.jpg`（thumb.wikimedia.org 下载，已 `file` 验证为 JPEG）作《Chilias Prima》页插图。
+- 红线落实：两访爱丁堡年份守 **1616/1617**（忠于本人页面），未与 Napier 篇互改；Savilian 表述仅写「1619 年出任」，**未加「首任」**；Merton 仅作安葬地、未作任职机构；John Pell 未出现。
+- 时间线：按 §4-4 的 8 节点（1561 → 1577 → 1596 → 1616–17 → 1617 → 1619 → 1624 → 1630）。
+- 事实核对：逐条对照 `pages/Henry_Briggs/page.md`，**未发现提示词与 page.md 冲突**。

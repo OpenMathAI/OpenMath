@@ -21,7 +21,7 @@
 
 - **全名**：Lodovico de Ferrari（中文惯称：洛多维科·费拉里）
 - **生卒**：1522-02-02 生于博洛尼亚（Bologna）→ 1565-10-05 逝于博洛尼亚，享年 43
-- **国籍**：意大利（Italian；出生地博洛尼亚时属教宗国 Papal States——据 Bombelli 页 1506 年起教宗尤利乌斯二世控制博洛尼亚的记载推定，立传时国籍行写「意大利」）
+- **国籍**：意大利（page.md 正文作 Italian；metadata **无** nationality 字段——封面与正文一律写「意大利」，**不得据他页（如 Bombelli 页）推定 1522 年博洛尼亚的政权归属**）
 - **身份**：数学家（page.md infobox Fields 仅 Mathematics；metadata occupation 仅 mathematician）
 - **家庭**：祖父 Bartolomeo Ferrari 被迫离开米兰迁往博洛尼亚；有寡姐 Maddalena（费拉里退休后与其同住博洛尼亚）
 - **教育轨迹**：无大学教育记载；少年时是 Gerolamo Cardano 的仆人（servant），因天资聪颖被 Cardano 亲自教授数学
@@ -65,23 +65,24 @@
   - 「强推进」匹配仆役出身、十几岁成名、42 岁退休的高密度人生节奏。
   - 时长需 ≥ 13 页 × 7 秒 ≈ 91 秒，ffmpeg `-shortest` 自动对齐。
 
-## 4. Slide 规划（约 13 页，正文采用 Wilson 式结构 + 表格 + 公式框）
+## 4. Slide 规划（统一 14 页制：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 贡献页 + 荣誉与传承 + 终章）
 
-> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格；第 3 页为「时间线页」。
+> 正文采用 Wilson 式结构 + 表格 + 公式框：核心贡献页用 `tabularx`（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页用 `p{2.2cm}|X|p{3.0cm}` 表格。帧序与 `TEMPLATE_GUIDE.md` §2 完全同构（帧 1 = 共享封面 `\openmathslide`）。
 
-1. **封面**（`\titleslide`）：大标题「四次方程的破解者」+ 洛多维科·费拉里 1522–1565 + 右上头像（装饰圆占位）+ 国籍行 + 底部三要素状态栏 + 四分类 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像（装饰圆）+ 右信息网格（生卒 / 本名 / 国籍 / 出生地 / 师承 / 教育 / 荣誉 / 核心领域）
-3. **费拉里的一生：时间线**（`\timelineslide`）：1522 博洛尼亚出生 → 少年为 Cardano 仆人、习数学 → 协助攻克三四次方程 → 十几岁获罗马教职 → 1545 与 Tartaglia 论战爆发 → 42 岁功成身退 → 1565 任博洛尼亚大学教授 → 1565-10-05 去世（仅写 page.md 有年份的节点：1522 / 1545 / 42 岁 / 1565 / 1565-10-05）
-4. **早年与出身**（`\earlyslide`）：祖父 Bartolomeo 被逐出米兰、迁居博洛尼亚；少年成为 Cardano 的仆人；因天资聪颖被 Cardano 亲自教授数学
-5. **四次方程的一般解法**（核心贡献页，表格 + 公式框）：biquadratic / quartic equation 解法，「mainly responsible」归属口径
-6. **师徒协作：三次与四次方程**（核心贡献页，表格 + 公式框）：Ferrari aided Cardano on cubic & quartic solutions；四次方程解法由 Cardano 发表
-7. **Cardano–Tartaglia 公式**（核心贡献页，表格 + 公式框）：三次方程解法归名两人；1545 年论战爆发；「塔尔塔利亚终生报复说系杜撰」的史学澄清
-8. **少年成名：罗马教职**（表格）：十几岁接替 Cardano 辞任并推荐的罗马声望教职
-9. **功成身退**（表格）：42 岁年轻富有地退休；回到故乡博洛尼亚与寡姐 Maddalena 同住
-10. **博洛尼亚大学教授**（表格）：1565 年出任博洛尼亚大学数学教授
-11. **英年早逝**（表格）：1565-10-05 去世、享年 43；白砷（white arsenic）中毒身亡——**按 page.md 口径系 legend（传说），下毒者为姐姐一说亦属 legend，须明确标注传说性质**
-12. **历史评价与遗产**（表格）：四次方程解法的归属；Cardano–Tartaglia 公式的史学共识；辟谣流传故事
-13. **终章**：43 岁、四次方程破解者的历史地位与遗产
+1. **共享封面**（`\openmathslide`）：`\input{../../cover/openmath_page.tex}`，不改
+2. **人物封面**（`\titleslide`）：大标题「四次方程的破解者」+ 洛多维科·费拉里 1522–1565 + 右上装饰圆占位（图注「无存世肖像」）+ 国籍行（意大利）+ 底部三要素状态栏（意大利 | 博洛尼亚大学 | 四次方程一般解法 / Cardano 之门 / 1545 论战）+ 四分类 badge
+3. **身份信息页**（`\profileslide`，★ 必做）：左装饰圆 + 右信息网格（生卒 / 本名 Lodovico de Ferrari / 国籍 / 出生地 / 师承 Cardano / 教育（无大学记载，Cardano 亲授）/ 荣誉（无载）/ 核心领域）
+4. **费拉里的一生：时间线**（`\timelineslide`）：1522-02-02 博洛尼亚出生 → 少年为 Cardano 仆人、习数学 → 协助攻克三四次方程 → 十几岁获罗马教职 → 1545 与 Tartaglia 论战爆发 → 42 岁功成身退 → 1565 任博洛尼亚大学教授 → 1565-10-05 去世（仅写 page.md 有据的节点：1522 / 1545 / 42 岁 / 1565 / 1565-10-05）
+5. **早年与出身**（`\earlyslide`）：祖父 Bartolomeo Ferrari 被逐出米兰、迁居博洛尼亚；少年成为 Cardano 的仆人；因天资极为聪颖（"extremely bright"）被 Cardano 亲自教授数学
+6. **四次方程的一般解法**（贡献页，表格 + 公式框）：biquadratic / quartic equation 解法，「主要由费拉里完成（mainly responsible）、由 Cardano 发表」的归属口径
+7. **师徒协作：三次与四次方程**（贡献页，表格 + 公式框）：Ferrari aided Cardano on cubic & quartic solutions；四次方程解法由 Cardano 署名发表
+8. **Cardano–Tartaglia 公式与 1545 论战**（贡献页，表格 + 公式框）：三次方程解法归名 Cardano 与 Tartaglia 二人；**1545 年**论战爆发（page.md 无 1548 与「胜出」记载，禁写）；「塔尔塔利亚终生报复说系杜撰」的史学澄清
+9. **少年成名：罗马教职**（贡献页，表格）：十几岁接替 Cardano 辞任并推荐的罗马声望教职（机构名 page.md 无载，勿具名）
+10. **功成身退**（贡献页，表格）：42 岁年轻而富有地退休；回到故乡博洛尼亚与寡姐 Maddalena 同住
+11. **博洛尼亚大学教授**（贡献页，表格）：1565 年出任博洛尼亚大学数学教授
+12. **英年早逝**（贡献页，表格）：1565-10-05 去世、享年 43；白砷（white arsenic）中毒——**page.md 口径为 "according to a legend, by his sister"，传说性质与下毒者其姐之说均须明确标注**，禁写成既定事实
+13. **荣誉与传承**（`\honorslide`）：page.md 无载任何奖项——本页写「历史评价与遗产」：四次方程解法的归属、Cardano–Tartaglia 公式的史学共识、辟谣流传故事；**禁杜撰奖项**
+14. **终章**（`\closingslide`）：43 岁、四次方程破解者的历史地位与遗产
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -93,7 +94,7 @@
 - **Cardano–Tartaglia 公式**专指**三次方程**解法、两人共享归名——勿与费拉里的四次方程混写。
 - **罗马教职**：无年份（仅 "while still in his teens"）；机构名 page.md 无载（metadata employer 的 Scuole Piatti / Ercole Gonzaga 为 metadata-only，不入机构清单）——教职写「罗马一个声望卓著的教职」即可。
 - **退休年龄**：42 岁（page.md "retired, when young at 42 years old, and wealthy"）。
-- **国籍**：metadata 无 nationality 字段；page.md 作 Italian。出生地博洛尼亚 1522 年时属教宗国（据 Bombelli 页 1506 年起的记载推定），入库补 Papal States（era_note: historical），封面国籍行写「意大利」。
+- **国籍**：page.md 正文作 Italian；metadata **无** nationality 字段。封面与正文一律用「意大利」；**不得据他页（如 Bombelli 页）推定 1522 年博洛尼亚的政权归属**——若确需 historical 政权口径，由主控另行裁定。
 - **家庭红线**：姐姐 Maddalena 仅载「寡姐、退休后同住」与传说下毒者；祖父 Bartolomeo 仅载迁居事——**无 sibling / grandparent 关系类型**，均不入库。
 - **肖像红线**：`images.txt` 首图是 Tartaglia《Terza risposta》（1547）论战檄文封面，画的是论战小册子、**不是费拉里肖像**——禁充当头像；无真肖像用装饰圆占位。
 
@@ -106,7 +107,7 @@
 | name_en | Lodovico Ferrari（metadata label） | 待写入 |
 | birth_date | 1522-02-02 | 待写入 |
 | death_date | 1565-10-05 | 待写入 |
-| nationality | Italy（+ Papal States, era_note historical） | 待写入 |
+| nationality | Italy（page.md 口径；metadata 无该字段，勿补 Papal States） | 待写入 |
 | primary_occupation | mathematician | 待写入 |
 | field_of_work | algebra / mathematics | 待写入 |
 | has_biography | false（本次只入库社会关系，Beamer 立传待做） | 待写入 |
@@ -143,9 +144,9 @@
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Lodovico_Ferrari/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：确认装饰圆占位（无真肖像）；若执行时经 REST API 找到真肖像须核对图注
-- [ ] **国籍**：封面顶部徽章明示意大利
-- [ ] **引语核对**：引语必须在 Wikipedia 原文找到（本篇 page.md 无直接引语，全文转述）
+- [ ] **头像**：确认装饰圆占位并写图注「无存世肖像」（PORTRAITS.md 结论：无）；`images.txt` 的《Terza risposta》(1547) 檄文封面只能在正文作插图，不得顶替头像
+- [ ] **国籍**：封面顶部徽章明示意大利（page.md 口径；metadata 无 nationality 字段，勿补 Papal States）
+- [ ] **引语核对**：page.md 仅零星短语可引——"extremely bright"、"according to a legend, by his sister"、"while still in his teens"、"retired, when young at 42 years old, and wealthy"；其余一律转述，禁编造
 - [ ] **编译验证**：`make distclean && make`
 - [ ] **更新提示词**：Review 修正写回本文件
 
@@ -154,3 +155,24 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同世纪数学家（Cardano / Bombelli / Tartaglia 篇）格式对齐，论战叙事口径一致
+
+## 12. Review-1 事实终审记录（2026-09-29）
+
+- 核对基准：`pages/Lodovico_Ferrari/page.md`（+ metadata.json / images.txt）
+- 生卒 / 享年：page.md infobox 「2 February 1522 – 5 October 1565 (aged 43)」，出生地与卒地均 Bologna——与提示词一致（正文与 metadata 亦一致）；享年 43，**非 46**
+- 国籍口径：page.md 正文作 Italian；metadata **无** nationality 字段。原 §1/§5/§6 据 Bombelli 页推定 1522 年博洛尼亚属教宗国的链条已删除——立传统一写「意大利」，不超出本人 page.md
+- 肖像结论：**无存世肖像**（PORTRAITS.md 依据：唯一图为 Tartaglia《Terza risposta data a messer Hieronimo Cardano et a messer Lodovico Ferraro》(1547) 论战檄文封面，非肖像）——用装饰圆 `\faIcon{user}` 占位，图注「无存世肖像」，禁止檄文封面 / 书影冒充头像（提示词原口径已正确，仅补图注与禁项）
+- 引语核对：page.md 可引短语四条（"extremely bright"；"according to a legend, by his sister"；"while still in his teens"；"retired, when young at 42 years old, and wealthy"），均逐字可查；§11 原「本篇 page.md 无直接引语，全文转述」表述**不准确**，已改正
+- 本轮修正：
+  1. §1 / §5 / §6 三处国籍口径改为「意大利 + metadata 无字段」，删除据 Bombelli 页的教宗国推定链（违反「不得超出本人 page.md」）
+  2. §4 按统一 14 页制重写（原 13 页扩为 14 帧：共享封面 + 人物封面 + 身份 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）；原「历史评价与遗产」页定为帧 13 `\honorslide`；帧 8 明确「1545 论战爆发、禁写 1548 与胜出」，帧 12 明确白砷传说性质
+  3. §11 第 1 轮头像 / 引语两条按 PORTRAITS.md 与 page.md 实况改正
+- 遗留不确定项：① 论战年份仅 1545（page.md "In 1545 a famous dispute erupted"），任务单所称 1548 与「胜出」无载禁写；② 死因与下毒者均系 legend；③ 罗马教职、metadata employer 的 Scuole Piatti / Ercole Gonzaga 均 page.md 无载或 metadata-only，不入机构清单；④ 姐姐 Maddalena 与祖父 Bartolomeo 无对应关系类型，不入库
+
+## 13. 立传期执行记录（Beamer，2026-09-29，math16-c）
+
+- 产出：`Lodovico_Ferrari_zh.tex` / `.pdf`，**14 页**（与 §4 一致：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）；`make distclean && make` **0 error**、**Overfull 全部为 0**、体积 140 KB。
+- 肖像：按 PORTRAITS.md 与 §5 用装饰圆 `\faIcon{user}` 占位，图注「无存世肖像」；《Terza risposta》(1547) 檄文封面未作插图（避免读者误当肖像）。
+- 引语：仅使用 §11 列出的可引短语（"extremely bright"、"while still in his teens"、"wealthy"、"white arsenic"）；「塔尔塔利亚终生报复说」按 §11「其余一律转述」以中文转述呈现，未引整句英文。
+- 硬口径落实：享年 43；论战仅写 1545 年爆发（无 1548、无「胜出」）；死因带「据传说」限定语；四次方程表述为「主要由费拉里完成、由 Cardano 发表」；Cardano–Tartaglia 公式专指三次方程、二人共享。
+- 与 `page.md` **无事实冲突**，未产生 §12 之外的修正。

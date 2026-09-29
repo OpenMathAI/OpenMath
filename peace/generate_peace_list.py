@@ -39,6 +39,7 @@ SOCIAL_ALIAS = {
     "Lord Boyd-Orr": "John Boyd Orr",
     "John Raleigh Mott": "John Mott",
     "United Nations Children's Fund (UNICEF)": "United Nations Children's Fund",
+    "Wangari Muta Maathai": "Wangari Maathai",
 }
 
 

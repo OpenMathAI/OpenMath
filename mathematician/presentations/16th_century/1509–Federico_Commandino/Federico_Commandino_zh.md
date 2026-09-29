@@ -9,7 +9,7 @@
 
 > 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**，而非纯数学家版式。这意味着在数学家立传基础上，增加以下**物理学家格式硬性要求**：
 
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注（`images.txt` 首选 Federico_Commandino.jpg 为真实肖像，下载 500px 到 `images/`；失败则用装饰圆 `\faIcon{user}` 占位）。
+1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。**使用 `PORTRAITS.md` 指定的肖像文件** `commandino_portrait.jpg`（已下载到本目录 `images/`，74 KB，合格；文件名与图注以 `PORTRAITS.md` 为准），图注 `Federico Commandino（传世版画像）`。**不得改用装饰圆占位**；落地前核验文件为 JPEG 且 >5KB。
 2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 意大利（乌尔比诺公国）`），底部状态栏给出 `国籍 | 机构 | 主要成就` 三要素。
 3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧信息网格，至少含：生卒、国籍、出生地、师承（Brassavola）、教育、恩主、核心领域。事实取自 Wikipedia infobox 与正文，不得杜撰。
 4. **配色 + 气泡背景**：采用「主色 + 强调色 + 三~四分类色」配色；背景用柔和气泡（稀疏大块实心圆），呼应「古希腊手稿与几何原图」母题。
@@ -69,24 +69,24 @@
   - 本组三人 BGM 互不重复：Nunes=Expedition、Commandino=PAST、Recorde=Awaken
   - 时长需 ≥ 14 页 × 7 秒 ≈ 98 秒，ffmpeg `-shortest` 自动对齐
 
-## 4. Slide 规划（约 14 页，正文采用 Wilson 式结构 + 表格 + 公式框）
+## 4. Slide 规划（统一 14 页制：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 贡献页 + 荣誉与传承 + 终章）
 
-> 正文版式对齐 17 世纪黄金参照模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格；第 3 页为「时间线页」。
+> 正文采用 Wilson 式结构 + 表格 + 公式框：核心贡献页用 `tabularx`（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页用 `p{2.2cm}|X|p{3.0cm}` 表格。帧序与 `TEMPLATE_GUIDE.md` §2 完全同构（帧 1 = 共享封面 `\openmathslide`）。
 
-1. **封面**（`\titleslide`）：大标题「古希腊数学的摆渡人 · 阿基米德再生」+ Federico Commandino 1509–1575 + 右上肖像 + 国籍行 + 底部三要素状态栏 + 四分类 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右信息网格（生卒 / 国籍 / 出生地 Urbino / 师承 Brassavola / 教育 / 恩主 / 核心领域）
-3. **费德里科·科门迪诺的一生：时间线**（`\timelineslide`）：1509 乌尔比诺出生 → 帕多瓦求学 → 费拉拉医学博士（Brassavola 门下）→ Grassi/克莱孟八世庇护 → Guidobaldo II 庇护 → 罗马（Farnese/Cervini）→ 归乌尔比诺（Francesco Maria II）→ 1565 重心著作/阿基米德浮体论 → 1575-09-05 卒于乌尔比诺
-4. **早年与教育**（`\earlyslide`）：乌尔比诺、帕多瓦、费拉拉、医学博士、从医学到数学
-5. **翻译家的事业版图**（核心贡献页，表格）：希腊文写本 → 拉丁译文；七位古希腊数学家的译业清单表
-6. **阿基米德的再生**（核心贡献页，表格 + 公式框）：浮体论二卷校注（1565 博洛尼亚）
-7. **科门迪诺定理**（核心贡献页，表格 + 公式框）：四面体四重心线共点；出自 1565 重心著作
-8. **立体重心理论**（核心贡献页，表格 + 公式框）：*Liber de centro gravitatis solidorum*（1565）
-9. **托勒密 / 阿波罗尼奥斯 / 帕普斯**（核心贡献页，表格）：《平面球体图》《晷针》《圆锥曲线论》《数学汇编》的翻译意义
-10. **师承与通信网**（表格）：学生 Guidobaldo del Monte、Bernardino Baldi；通信学者 Dasypodius / Cardano / Maurolico / Clavius
-11. **恩主与文艺复兴宫廷**（表格）：Grassi → 克莱孟八世 → Guidobaldo II → Farnese → Cervini → Francesco Maria II 的庇护链
-12. **译业的历史回响**（表格）：为伽利略时代的力学与几何备好文本基础； Commandino 定理至今存名
-13. **著作年表**（表格）：*Liber de centro gravitatis solidorum*（1565）、*Archimedis De iis quae vehuntur in aqua*（1565）
-14. **终章**：66 岁辞世于乌尔比诺；「他把古希腊数学交给了近代」的历史地位
+1. **共享封面**（`\openmathslide`）：`\input{../../cover/openmath_page.tex}`，不改
+2. **人物封面**（`\titleslide`）：大标题「古希腊数学的摆渡人 · 阿基米德再生」+ Federico Commandino 1509–1575 + 右上肖像（`images/commandino_portrait.jpg`，图注见 PORTRAITS.md）+ 国籍行（意大利 · 乌尔比诺公国）+ 底部三要素状态栏（意大利 | 无固定教职（恩主赞助） | 古希腊数学翻译 / 重心理论 / 阿基米德校勘）+ 四分类 badge
+3. **身份信息页**（`\profileslide`，★ 必做）：左肖像 + 右信息网格（生卒 / 国籍 / 出生地 Urbino / 师承 Brassavola / 教育 / 恩主 / 核心领域）
+4. **费德里科·科门迪诺的一生：时间线**（`\timelineslide`）：1509 乌尔比诺出生 → 帕多瓦求学 → 费拉拉医学博士（Brassavola 门下）→ Grassi / 克莱孟八世庇护 → Guidobaldo II 庇护 → 罗马（Farnese / Cervini）→ 归乌尔比诺（Francesco Maria II）→ 1565 重心著作 / 阿基米德浮体论 → 1575-09-05 卒于乌尔比诺
+5. **早年与教育**（`\earlyslide`）：乌尔比诺、帕多瓦、费拉拉、医学博士、从医学到数学
+6. **翻译家的事业版图**（贡献页，表格）：希腊文写本为主、阿拉伯文为次 → 拉丁译文为主、意大利文为次；七位古希腊数学家的译业清单表
+7. **阿基米德的再生**（贡献页，表格 + 公式框）：*Archimedis De iis quae vehuntur in aqua libri duo*（1565 博洛尼亚，校订并加评注）——口径为「负责出版阿基米德多部论著」，勿夸大为全部遗作首刊
+8. **科门迪诺定理与立体重心理论**（贡献页，表格 + 公式框）：四面体过各顶点到对面重心的四线共点；出自 *Liber de centro gravitatis solidorum*（1565）——定理**首次出现于该重心著作**，勿写成译欧几里得时发现
+9. **托勒密 / 阿波罗尼奥斯 / 帕普斯**（贡献页，表格）：《平面球体图》《晷针》《圆锥曲线论》《数学汇编》与阿里斯塔克斯、希罗、欧几里得的翻译意义
+10. **师承与通信网**（贡献页，表格）：学生 Guidobaldo del Monte、Bernardino Baldi；通信学者 Dasypodius / Cardano / Maurolico / Clavius（**勿延伸写 del Monte–伽利略关系**）
+11. **恩主与文艺复兴宫廷**（贡献页，表格）：Grassi → 克莱孟八世 → Guidobaldo II → Farnese → Cervini → Francesco Maria II 的庇护链（patronage，非学术合作者；克莱孟八世句的年代矛盾按 §5 照录并注存疑）
+12. **著作年表**（贡献页，表格）：*Liber de centro gravitatis solidorum*（1565）、*Archimedis De iis quae vehuntur in aqua*（1565）；可附 John Dee「据说会面」之存疑花絮（带限定语）
+13. **荣誉与传承**（`\honorslide`）：page.md 无载任何奖项——本页写「译业的历史回响」：为伽利略时代的力学与几何备好文本基础、Commandino 定理至今存名；**禁杜撰奖项**
+14. **终章**（`\closingslide`）：66 岁辞世于乌尔比诺；「他把古希腊数学交给了近代」的历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -147,7 +147,7 @@
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Federico_Commandino/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：使用 Federico_Commandino.jpg（`images.txt` 首选），失败则装饰圆占位
+- [ ] **头像**：使用 `PORTRAITS.md` 指定的 `commandino_portrait.jpg`（禁止改为装饰圆占位）
 - [ ] **国籍**：封面顶部徽章明示意大利（乌尔比诺公国）
 - [ ] **引语核对**：page.md 无直接引语，全篇应为转述
 - [ ] **编译验证**：`make distclean && make`
@@ -158,6 +158,27 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与 16 世纪组其他数学家（Nunes / Recorde）格式对齐
+
+## 12. Review-1 事实终审记录（2026-09-29）
+
+- 核对基准：`pages/Federico_Commandino/page.md`（+ metadata.json / images.txt）
+- 生卒 / 享年：page.md 「1509 – 5 September 1575」，metadata date_of_death 首选值 `1575-09-05`，两者一致，享年 66；出生仅年份 1509（page.md 无月日，metadata 的 `1509-01-01` 与 `1506-00-00` 均弃用）；卒地 page.md 正文未明写，metadata place_of_death 作 Urbino（与出生地同城，可用）
+- 国籍口径：page.md / metadata 作 Duchy of Urbino（历史政权）；封面写「意大利（乌尔比诺公国）」——与提示词一致
+- 肖像结论：**有肖像**，`PORTRAITS.md` 指定 `commandino_portrait.jpg`（本目录 `images/`，74 KB，>5KB 合格），图注 `Federico Commandino（传世版画像）`；§0.1 与 §11 旧口径（「失败则装饰圆占位」）已删改
+- 引语核对：page.md 全篇无 Commandino 直接引语——**本篇禁引语**，一律转述；§4/§10 已同步此口径
+- 本轮修正：
+  1. §0.1 第 1 条与 §11 头像行改为 PORTRAITS.md 口径（指定 `commandino_portrait.jpg` + 图注 + 禁止装饰圆顶替）
+  2. §4 按统一 14 页制重写（共享封面 + 人物封面 + 身份 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）；原「科门迪诺定理」与「立体重心理论」两页合并为帧 8，原「译业的历史回响」升为帧 13 `\honorslide`、原「著作年表」定为帧 12；帧 7/8/10/11 分别补入「勿夸大阿基米德首刊」「定理出自 1565 重心著作」「勿延伸 del Monte–伽利略」「克莱孟八世年代矛盾照录」四条口径要点
+- 撞曲记录（只记录不改）：§3.5 选定曲目 **PAST** 与德尔·费罗（del Ferro）篇相同；本组三人 Nunes / Commandino / Recorde 组内不撞（Expedition / PAST / Awaken），跨组撞曲留给主控统一协调
+- 遗留不确定项：① 克莱孟八世（1592 年即位，晚于 1575 卒年）庇护句系 page.md 原表述，须照录并加小字注记年代存疑，**不得擅自改为其他教宗**；② John Dee 仅为 "putatively met"（据说），不入库、正文须带限定语；③ 恩主链均为 patronage，不入库建关系
+
+## 13. 立传期记录（2026-09-29，math16-b）
+
+- 产出：`Federico_Commandino_zh.tex`（14 页：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）、`Makefile`（仅改 `MAIN`/`VIDEO_NAME`）。
+- 编译：`make distclean && make` 0 error；Overfull 1 处 4.75pt（<10pt 达标）。
+- 肖像落地：`commandino_portrait.jpg`；标题页图注「传世版画像」，身份信息页图注「Federico Commandino（传世版画像）」。
+- 事实与 page.md 无冲突：1509 / 1575-09-05，享年 66；生卒地均乌尔比诺；封面国籍写「意大利（乌尔比诺公国）」；克莱孟八世庇护句照录并加小字注「1592 即位，晚于卒年 1575，存疑」；John Dee 仅写「putatively met 据说会面」；科门迪诺定理注明首见于 1565 重心著作（非译欧几里得时发现）；恩主链仅叙述不入库；全篇无直接引语（page.md 无）。
+- 未做 mp4（按主控统一安排）。
 
 ---
 

@@ -65,22 +65,24 @@
   - 与组内 Ferrari（Savage 紧张论战）、Clavius（The Flow of Time 历法时间感）风格互不重复，三人覆盖「攻克 / 虚幻 / 庄重」三种气质。
   - 时长需 ≥ 13 页 × 7 秒 ≈ 91 秒，ffmpeg `-shortest` 自动对齐。
 
-## 4. Slide 规划（约 13 页，正文采用 Wilson 式结构 + 表格 + 公式框）
+## 4. Slide 规划（13 页制：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 6 贡献页 + 荣誉与传承 + 终章）
 
-> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格；第 3 页为「时间线页」。
+> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格。
+> 页结构（13 页，与同世纪 Ferrari 篇同制，TEMPLATE_GUIDE §2 允许）：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 6 个核心贡献页 + 荣誉 + 终章。
 
-1. **封面**（`\titleslide`）：大标题「虚数的驯服者」+ 拉斐尔·邦贝利 1526–1572 + 右上头像（装饰圆占位，可用《代数》1572 书影小图点缀）+ 国籍行 + 底部三要素状态栏 + 四分类 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像（装饰圆）+ 右信息网格（生卒 / 本名 / 国籍 / 出生地 / 师承 / 教育 / 荣誉 / 核心领域）
-3. **邦贝利的一生：时间线**（`\timelineslide`）：1526-01-20 博洛尼亚受洗 → 家族改姓 Mazzoli→Bombelli → 师从工程师 Clementi → 1572《代数》出版 → 1572 卒于罗马（page.md 仅这四个有年份锚点）
-4. **家族与早年**（`\earlyslide`）：Mazzoli 家族兴衰、1506 尤利乌斯二世放逐 Bentivoglio、1508 政变失败祖父被处决、父改姓 Bombelli；六子女中最长
-5. **没有大学的工程师数学家**（表格）：无大学教育、师从 Pier Francesco Clementi；「写一本人人可读的代数书」的动机
-6. **《代数》（1572）：全面综述与负数运算法则**（核心贡献页，表格 + 公式框）：欧洲第一个写下负数运算者；韵文口诀原文引用框
-7. **记号法：印刷本最早的指数记号**（核心贡献页，表格 + 公式框）：`1U3 a. 6U1 p. 40` ↔ x³=6x+40；碗形上标；韦达随后发展完整符号代数
-8. **复数运算规则**（核心贡献页，表格 + 公式框）：discriminant 判据 (a/3)³>(b/2)²、"plus of minus"/"minus of minus" 命名、复数乘法口诀原文引用框、实部归实部虚部归虚部
-9. **casus irreducibilis 的突破**（核心贡献页，表格 + 公式框）：用 del Ferro 方法在不可约情形求出实解；Cardano 等人在此放弃
-10. **平方根的迭代逼近**（核心贡献页，表格 + 公式框）：n=(a±r)² 展开、√13 近似收敛列、265/153 与 1351/780（阿基米德定 π 的界）；与 Heron / Archimedes 方法对比；Cataldi 1613 版算法注记
-11. **声誉与身后**（表格）：复数发明者之誉（generally regarded）、莱布尼茨 "outstanding master of the analytical art"、Crossley 评语、1976 月球环形山 Bombelli
-12. **终章**：1572 卒于罗马、虚数先驱的历史地位与遗产
+1. **共享封面**（`\openmathslide`）：`\input{../../cover/openmath_page.tex}`，不改
+2. **人物封面**（`\titleslide`）：大标题「虚数的驯服者」+ 拉斐尔·邦贝利 1526–1572 + 右上头像（装饰圆占位，可用《代数》1572 书影小图点缀）+ 国籍行「意大利」+ 底部三要素状态栏 + 四分类 badge
+3. **身份信息页**（`\profileslide`，★ 必做）：左头像（装饰圆）+ 右信息网格（生卒 / 本名 / 国籍 / 出生地 / 师承 / 教育 / 荣誉 / 核心领域）
+4. **邦贝利的一生：时间线**（`\timelineslide`）：1526-01-20 博洛尼亚受洗 → 家族改姓 Mazzoli→Bombelli → 师从工程师 Clementi → 1572《代数》出版 → 1572 卒于罗马（page.md 仅这几个有年份锚点）
+5. **家族与早年**（`\earlyslide`）：Mazzoli 家族兴衰、1506 尤利乌斯二世放逐 Bentivoglio、1508 政变失败祖父被处决、父改姓 Bombelli；六子女中最长
+6. **没有大学的工程师数学家**（贡献页，表格）：无大学教育、师从 Pier Francesco Clementi；「写一本人人可读的代数书」的动机
+7. **《代数》（1572）：全面综述与负数运算法则**（贡献页，表格 + 公式框）：欧洲第一个写下负数运算者；韵文口诀原文引用框
+8. **记号法：印刷本最早的指数记号**（贡献页，表格 + 公式框）：`1U3 a. 6U1 p. 40` ↔ x³=6x+40；碗形上标；韦达随后发展完整符号代数
+9. **复数运算规则**（贡献页，表格 + 公式框）：discriminant 判据 (a/3)³>(b/2)²、"plus of minus"/"minus of minus" 命名、复数乘法口诀原文引用框、实部归实部虚部归虚部
+10. **casus irreducibilis 的突破**（贡献页，表格 + 公式框）：用 del Ferro 方法在不可约情形求出实解；Cardano 等人在此放弃
+11. **平方根的迭代逼近**（贡献页，表格 + 公式框）：n=(a±r)² 展开、√13 近似收敛列、265/153 与 1351/780（阿基米德定 π 的界）；与 Heron / Archimedes 方法对比；Cataldi 1613 版算法注记
+12. **声誉与身后**（荣誉页，表格）：复数发明者之誉（generally regarded）、莱布尼茨 "outstanding master of the analytical art"、Crossley 评语、1976 月球环形山 Bombelli
+13. **终章**（`\closingslide`）：1572 卒于罗马、虚数先驱的历史地位与遗产
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -89,7 +91,7 @@
 - **★ "wild thought" 引语禁写**：任务单提示「'wild thought' 引语若用须 page.md 原文」——**page.md 全文无 "wild thought" 字样，禁用该引语**。可用引语仅限：负数口诀韵文、复数乘法口诀韵文（均为 page.md 原文）与莱布尼茨评语。
 - **「复数发明者」口径**：须按 page.md 原文 "generally regarded as the inventor of complex numbers"（**普遍视为**），禁写绝对化的「发明了复数」。
 - **出生地**：metadata place_of_birth 含 Borgo Panigale，page.md 只载 Bologna——**以 page.md 为准**，写博洛尼亚。
-- **师承**：Pier Francisco Clementi 为**工程师建筑师**（engineer-architect），职业启蒙而非大学导师；人名在 Wikipedia 为红链，note 照写、勿补无载生平。
+- **师承**：Pier Francesco Clementi 为**工程师建筑师**（engineer-architect，page.md 拼作 "Pier Francesco Clementi"），职业启蒙而非大学导师；人名在 Wikipedia 为红链，note 照写、勿补无载生平。
 - **与 Cardano**：page.md 仅载 Cardano 在 casus irreducibilis 「放弃」作对比——**无私人关系记载，禁建关系**。
 - **del Ferro / Tartaglia**：page.md 载其书 "solved equations using the method of del Ferro/Tartaglia"——方法来源可写，属**著作影响**（influence），非师承或私交；del Ferro 卒于 1526、Tartaglia 论战属 Ferrari/Cardano 侧，均无与邦贝利的直接交往记载。
 - **莱布尼茨**：读《代数》后盛赞——晚邦贝利约百年的**著作影响**，非同时代人交往；引用评语 ". . . outstanding master of the analytical art." 须按 page.md 原样（含省略号与句点）。
@@ -156,3 +158,21 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与同世纪数学家（Cardano / Ferrari / Viète 篇）格式对齐，复数叙事与 Ferrari 篇三四次方程口径衔接
+
+## 12. Review-1 事实终审记录（2026-09-29）
+
+- 核对基准：`pages/Rafael_Bombelli/page.md`（+ metadata.json）
+- 生卒 / 享年：受洗 1526-01-20（baptised，博洛尼亚），卒 1572（罗马）；page.md 两处明载 1572，metadata date_of_death 双值 ["1573","1572"] 为噪声 → 取 1572，弃 1573；生年只写 1526、日期限「受洗」口径，禁写「出生于 1526-01-20」；享年约 46 岁（卒年 1572）
+- 国籍口径：教宗国 Papal States（metadata 明载，生卒地博洛尼亚/罗马均属之）；现代对应意大利，封面国籍行写「意大利」；入库 Papal States（historical, rank 0）+ Italy（rank 1）
+- 肖像结论：**无存世肖像** → 装饰圆 `\faIcon{user}` 占位（PORTRAITS.md 第 8 条：仅《代数》1572/1579 书影与扉页，非肖像）；书影只可作插图，严禁冒充头像；图注按「无存世肖像」写
+- 引语核对：① 负数四则口诀韵文（"Plus times plus makes plus / Minus times minus makes plus / ..."，page.md 逐字）✅；② 复数乘法口诀韵文（"Plus by plus of minus, makes plus of minus. ..."，page.md 逐字）✅；③ 莱布尼茨评语 ". . . outstanding master of the analytical art."（page.md 原样，含省略号与句点）✅；④ Crossley 评语（page.md 原文）✅；⑤ "wild thought" 引语 page.md 全文无载 → 禁用 ✅（已在 §5/§10 标注）
+- 本轮修正：① §5 师承人名拼写 "Pier Francisco Clementi" → "Pier Francesco Clementi"（与 page.md line 25 及 §1/§4/§7 一致，防人名分裂）；② §4 重排为 13 页制（补入共享封面 `\openmathslide` 为第 1 页、人物封面为第 2 页，6 个核心贡献页 6–11、荣誉 12、终章 13），页数与 §3.5 音乐「≥13 页」自洽，符合 TEMPLATE_GUIDE §2 对 13 页制的允许；逐页素材均在 page.md 有依据，无删页
+- 遗留不确定项：① 卒年 1573 之说出处不明（metadata 噪声，page.md 无载，不采）；② 出生地 metadata 另列 Borgo Panigale，page.md 只载 Bologna → 以 page.md 为准写博洛尼亚；③ 卒月日 page.md 无载，不写；④ 曲目 Mirage 未查同世纪撞曲（按纪律仅记录不改）
+
+## 13. 立传期执行记录（Beamer，2026-09-29，math16-c）
+
+- 产出：`Rafael_Bombelli_zh.tex` / `.pdf`，**13 页**（与 §4 一致：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年 + 6 贡献页 + 声誉与身后 + 终章）；`make distclean && make` **0 error**、**Overfull 全部为 0**、体积 150 KB。
+- 肖像：按 PORTRAITS.md 与 §5 用装饰圆 `\faIcon{user}` 占位，图注「无存世肖像」；《代数》1572/1579 书影未作插图。
+- 引语：负数四则口诀、复数乘法口诀、莱布尼茨评语（". . . outstanding master of the analytical art."）均**逐字**取自 page.md；"wild thought" 全文未出现；「复数发明者」带「普遍视为」框定。
+- 硬口径落实：卒年 1572（弃 metadata 1573）；生年为「受洗」口径 1526-01-20，未写「出生于 1526-01-20」；国籍封面写「意大利」（教宗国史实注于身份页）；连分数写「相关方法、当时尚无概念」，未写「发明连分数」；与 Cardano / del Ferro / Tartaglia 均按著作影响处理，未建私人关系。
+- 与 `page.md` **无事实冲突**，未产生 §12 之外的修正。

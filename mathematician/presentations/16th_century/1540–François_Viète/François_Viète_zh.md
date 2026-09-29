@@ -9,9 +9,9 @@
 
 > 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**，而非纯数学家版式。这意味着在数学家立传基础上，增加以下**物理学家格式硬性要求**：
 
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。Wikipedia infobox 本体无真实肖像（仅签名与 1646 年《Opera》书影），`images.txt` 肖像候选为 Charles Meryon 1861 年蚀刻版画 `François_Viète_MET_DP813249.jpg`（MET 馆藏）——立传时下载该图；若印刷质量不可用则用装饰圆 `\faIcon{user}` 占位，并在页脚注明「后世版画」。
+1. **封面有头像**：右上角肖像 `images/viete_portrait.jpg` + `draw=coveraccent!50` 细边框 + 姓名小字注。★ PORTRAITS.md 核定韦达**有**传世肖像，统一用 `viete_portrait.jpg`（后世版画像），图注写「François Viète（后世版画像）」；Wikipedia infobox 本体无真实肖像（仅签名与 1646 年《Opera》书影），`images.txt` 的 Charles Meryon 1861 年蚀刻版画（MET 藏 `François_Viète_MET_DP813249.jpg`）**不再作首选**——若作插图须注明为 19 世纪版画，不得充当主肖像。
 2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 法兰西`），底部状态栏给出 `国籍 | 机构 | 主要成就` 三要素。
-3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧信息网格，至少含：生卒、本名（拉丁名 Franciscus Vieta）、国籍、出生地、职业、教育、代表著作、核心领域。事实取自 Wikipedia infobox 与 page.md，不得杜撰。
+3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧肖像 `viete_portrait.jpg` + 右侧信息网格，至少含：生卒、本名（拉丁名 Franciscus Vieta）、国籍、出生地、职业、教育、代表著作、核心领域。事实取自 Wikipedia infobox 与 page.md，不得杜撰（导师 page.md 无载，禁写）。
 4. **配色 + 气泡背景**：采用「主色 + 强调色 + 三~四分类色」配色；背景用柔和气泡（稀疏大块实心圆），呼应「字母符号 / 密码转盘」母题——韦达把代数从「文字叙述」变成「字母运算」。
 5. **品牌口径统一**：结尾页底部品牌标注统一写 `OpenMathAI`；引号用半角 `" "`。
 
@@ -40,7 +40,7 @@
 4. **二项式公式**：后被帕斯卡与牛顿采用。
 5. **韦达公式（Viète's formula，1593）**：数学史上**第一个无穷乘积**——π 的嵌套根式表达式；用阿基米德方法取 6×2^16 = 393,216 边形得 10 位小数。
 6. **两朝密码破译者**：1589 年起为亨利三世破译天主教联盟密信；亨利四世时代 1590 年破解西班牙 500+ 字符密码；Moreo 司令致西班牙国王信件的破译揭穿马耶讷公爵谋立，促成宗教战争和解；**西班牙国王指控韦达「使用魔法」**。
-7. **van Roomen 挑战（1593）**：荷兰大使讥法国无数学家，Adriaan van Roomen 提出全欧征解 45 次方程；韦达倚窗几分钟即看出它是 sin(x) 与 sin(x/45) 的关系，「Ut legit, ut solvit」（一读即解），次日交出其余 22 问；1595 年出版回应并回赠阿波罗尼奥斯问题，1600 年以 *Apollonius Gallus*（相似中心法）解决，两人反成挚友。
+7. **van Roomen 挑战（★ 年份须守 page.md）**：荷兰大使讥法国无数学家，Adriaan van Roomen 提出全欧征解 45 次方程；韦达倚窗几分钟即看出它是 sin(x) 与 sin(x/45) 的关系，「Ut legit, ut solvit」（一读即解），次日交出其余 22 问；page.md 载 **1595 年出版回应**并回赠阿波罗尼奥斯问题（征解提出时点 page.md 置于 1596/1597 语境，与其 1595 回应记载互有出入，非 1593），1600 年以 *Apollonius Gallus*（相似中心法）解决，两人反成挚友。**禁写「1593 年挑战」（page.md 无此年份）**。
 8. **格里高利历论战**：1600 年发表系列小册子指责克拉维乌斯（Clavius）任意改动历法计算，提出自己的历表；克拉维乌斯在韦达死后以 *Explicatio*（1603）反驳。
 9. **倍角正弦公式**：由单角正弦导出多倍角正弦的公式（1593 年已知）。
 10. **齐次性原理（homogeneity）**：方程中量须同纲（线/面/体），超前于时代；身后著述由学生 Anderson、Ghetaldi 等整理出版，笛卡尔、费马、牛顿、哈里奥特均使用其符号体系。
@@ -71,24 +71,25 @@
   - 与本批次另一人 Simon Stevin 的 **Expedition**（探索/史诗）互不重复
 - 时长需 ≥ 14 页 × 7 秒 ≈ 98 秒，ffmpeg `-shortest` 自动对齐
 
-## 4. Slide 规划（约 14 页，正文采用 Wilson 式结构 + 表格 + 公式框）
+## 4. Slide 规划（统一 14 页制：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 贡献页 + 荣誉与传承 + 终章）
 
-> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格；第 3 页为「时间线页」。
+> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格。
+> 页结构（14 页，TEMPLATE_GUIDE §2 标准制）：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 个核心贡献页 + 荣誉 + 终章。原「格里高利历论战」并入第 13 页荣誉页「历法论战、晚年与身后传承」。
 
-1. **封面**（`\titleslide`）：大标题「代数的符号化者 · 两朝密码破译者」+ François Viète 1540–1603 + 右上头像 + 国籍行 + 底部三要素状态栏 + 四分类 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右信息网格（生卒 / 本名 Franciscus Vieta / 国籍 / 出生地 / 职业 / 教育 / 代表著作 / 核心领域）
-3. **韦达的一生：时间线**（`\timelineslide`）：1540 丰特奈勒孔特出生 → 1559 LL.B. → 1564 入 Parthenay 家族任家庭教师 → 1573 雷恩高等法院参事 → 1580 maître des requêtes → 1585–89 被迫去职、四年专研数学 → 1591 《Isagoge》 → 1593 π 无穷乘积与 van Roomen 挑战 → 1594 专属破译 → 1600 Apollonius Gallus 与历法论战 → 1602 去职 → 1603-02-23 逝于巴黎
-4. **早年与法律生涯**（`\earlyslide`）：丰特奈勒孔特、Poitiers 法学、为 Soubise 家族服务、Catherine de Parthenay 的家庭教师（为其写天文/三角讲义、用小数早于 Stevin 二十年、行星椭圆轨道早于 Kepler 四十年）
-5. **新代数：符号革命**（核心贡献页，表格 + 公式框）：辅音=已知参数、元音=未知量；`nullum non problema solvere`
-6. **《Isagoge》1591 与 species logistic 三步法**（核心贡献页，表格 + 公式框）：Zetetic / Poristic / Exegetic；示例 `X^2+Xb=c`、`X^3+aX=b`（约化为二次）
-7. **韦达定理与二项式公式**（核心贡献页，表格 + 公式框）：根与系数（和/积，正根口径）；二项式公式后传 Pascal/Newton
-8. **韦达公式：π 的第一个无穷乘积**（核心贡献页，公式框）：`π = 2 × 2/√2 × 2/√(2+√2) × …`，393,216 边形、10 位小数
-9. **三角学贡献**（核心贡献页，表格）：*Canon mathematicus*（1579，超越 Regiomontanus 与 Rheticus 的表）、倍角正弦公式（1593）
-10. **两朝密码破译**（表格）：亨利三世联盟密信 → 1590 西班牙 500+ 字符密码 → Moreo 信件与马耶讷阴谋 → 宗教战争和解 → 西班牙国王指控「魔法」；1594 起专属破译；临终密码论文使当时一切加密方法过时
-11. **van Roomen 挑战与 Apollonius Gallus**（表格）：荷兰大使之讥 → 倚窗即解 → 回赠阿波罗尼奥斯问题 → 1600 相似中心法 → 挚友（van Roomen 骑马赴丰特奈住一月学新代数）
-12. **格里高利历论战：对克拉维乌斯**（表格）：1600 小册子指控任意改动 → 自拟历表 → Clavius 1603 *Explicatio* 反驳 → page.md 明载「据说韦达错了」；De Thou 记其对 Clavius 的贬评（引语按原文）
-13. **晚年与身后传承**（表格）：1602-12 去职获 20,000 埃居 → 1603-02-23 逝（死因未知，Anderson 称「a praeceps et immaturum autoris fatum」）→ Anderson/Ghetaldi/van Schooten 出版遗产 → 笛卡尔「I began, where Vieta finished」、费马/牛顿/哈里奥特用其符号
-14. **终章**：「现代代数记法之父」的历史地位——结束中世纪代数（花拉子米到 Stevin）、开启近代代数
+1. **共享封面**（`\openmathslide`）：`\input{../../cover/openmath_page.tex}`，不改
+2. **人物封面**（`\titleslide`）：大标题「代数的符号化者 · 两朝密码破译者」+ François Viète 1540–1603 + 右上肖像 `viete_portrait.jpg`（图注「François Viète（后世版画像）」）+ 国籍行「法兰西」+ 底部三要素状态栏 + 四分类 badge
+3. **身份信息页**（`\profileslide`，★ 必做）：左肖像 `viete_portrait.jpg` + 右信息网格（生卒 / 本名 Franciscus Vieta / 国籍 / 出生地 / 职业 / 教育 / 代表著作 / 核心领域；导师格写「—（无载）」）
+4. **韦达的一生：时间线**（`\timelineslide`，竖轴 8 节点）：1540 丰特奈勒孔特出生 → 1559 LL.B. → 1573 雷恩高等法院参事 → 1580 maître des requêtes → 1583–85 被联盟迫使去职、此后四年专研数学 → 1591《Isagoge》→ 1593 π 无穷乘积（韦达公式）/ 1590 年代密码破译 → 1600 Apollonius Gallus 与历法论战、1603-02-23 逝于巴黎（1564 入 Parthenay、1595 van Roomen 回应、1602-12 去职等细节置于正文页）
+5. **早年与法律生涯**（`\earlyslide`）：丰特奈勒孔特、Poitiers 法学、为 Soubise 家族服务、Catherine de Parthenay 的家庭教师（为其写天文/三角讲义、用小数早于 Stevin 二十年、行星椭圆轨道早于 Kepler 四十年）
+6. **新代数：符号革命**（贡献页，表格 + 公式框）：辅音=已知参数、元音=未知量；`nullum non problema solvere`
+7. **《Isagoge》1591 与 species logistic 三步法**（贡献页，表格 + 公式框）：Zetetic / Poristic / Exegetic；示例 `X^2+Xb=c`、`X^3+aX=b`（约化为二次）
+8. **韦达定理与二项式公式**（贡献页，表格 + 公式框）：根与系数（和/积，正根口径）；二项式公式后传 Pascal/Newton
+9. **韦达公式：π 的第一个无穷乘积**（贡献页，公式框）：`π = 2 × 2/√2 × 2/√(2+√2) × …`，393,216 边形、10 位小数
+10. **三角学贡献**（贡献页，表格）：*Canon mathematicus*（1579，超越 Regiomontanus 与 Rheticus 的表）、倍角正弦公式（1593）
+11. **两朝密码破译**（贡献页，表格）：亨利三世联盟密信 → 1590 西班牙 500+ 字符密码 → Moreo 信件与马耶讷阴谋 → 宗教战争和解 → 西班牙国王指控「魔法」；1594 起专属破译；临终密码论文使当时一切加密方法过时
+12. **van Roomen 挑战与 Apollonius Gallus**（贡献页，表格）：荷兰大使之讥 → 倚窗即解 → 回赠阿波罗尼奥斯问题 → 1600 相似中心法 → 挚友（van Roomen 骑马赴丰特奈住一月学新代数）；**年份守 page.md（1595 出版回应，征解提出见 1596/97 语境），禁写 1593**
+13. **历法论战、晚年与身后传承**（荣誉页，表格）：1600 小册子指控 Clavius 任意改动 → 自拟历表 → Clavius 1603 *Explicatio* 反驳 → page.md 明载「据说韦达错了」（De Thou 记其对 Clavius 的贬评按原文引用）；1602-12 去职获 20,000 埃居 → 1603-02-23 逝（死因未知，Anderson 称 "praeceps et immaturum autoris fatum"）→ Anderson / Ghetaldi / van Schooten 出版遗产 → 笛卡尔「I began, where Vieta finished」、费马 / 牛顿 / 哈里奥特用其符号
+14. **终章**（`\closingslide`）：「现代代数记法之父」的历史地位——结束中世纪代数（花拉子米到 Stevin）、开启近代代数
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -101,7 +102,7 @@
 - **密码破译口径**：为亨利三世（破联盟密信）与亨利四世服务属实；「西班牙国王指控其用魔法」是 page.md 原文，可写；Moreo 信件内容促成宗教战争和解是 page.md 原口径。**1594 起「专属破译敌方密码」**。
 - **Clavius 论战口径**：Viète 指控 Clavius「任意引入改正与间日、误解其前人（Lilius）著作、尤其月球周期计算」；Clavius 在**韦达死后**以 *Explicatio*（1603）巧妙反驳；page.md 明载 **"It is said that Viète was wrong"**——必须如实写韦达败于此役，禁写韦达「纠正了格里高利历」。
 - **宗教敏感点**：被天主教联盟指控同情新教，但**并非 Huguenot**；1574-04-06 入布列塔尼法院时公开宣读天主教信仰声明；终身保护新教徒，属「Politicals」（以国家稳定为先）；临终不愿告解，友人以「否则你女儿将嫁不出去」相劝；其是否信教「有争议」——**客观简述，不做单侧评价**。
-- **与 van Roomen**：先挑战后成友（De Thou 记其骑马赴 Fontenay-le-Comte 同住一月、学新代数，韦达承担其全部开销）——**禁写宿敌**。
+- **与 van Roomen**：先挑战后成友（De Thou 记其骑马赴 Fontenay-le-Comte 同住一月、学新代数，韦达承担其全部开销）——**禁写宿敌**。★ **年份口径（Review-1 更正）**：page.md 载 **1595 年出版回应**，征解提出见于 1596/1597 语境（page.md 自身 1595 回应与 1596/97 征解记载互有出入）——**全文禁用「1593 年挑战」**；1593 在 page.md 中仅属倍角正弦公式与韦达公式 π。
 - **Descartes 影响**：page.md 明载 **"Current research has not shown the extent of the direct influence"**；笛卡尔 1639 致 Mersenne 信否认读过韦达，又被传记家 Adam 指出矛盾；「I began, where Vieta finished」——influence 关系 note 必须带「直接影响程度未明」限定。
 - **引语白名单**（其余一律禁编引语）：①Isagoge 献词英译「These things which are new are wont in the beginning to be set forth rudely and formlessly…」；②De Thou 记其「伏案三日、悬肘而食」；③De Thou 转述其对 Clavius「善释原理、辑而不注出处」的评价；④"Ut legit, ut solvit"；⑤笛卡尔「I began, where Vieta finished」与 1639-02 致 Mersenne 信；⑥Anderson "praeceps et immaturum autoris fatum"。
 - **家庭口径**：两个女儿的母亲（Barbe Cottereau、Julienne Leclerc）page.md 有名，但**无配偶记载**—— daughters 入 parent-child，两位母亲不入 spouse（无婚姻载）；父 Etienne Viète 入 parent-child。
@@ -159,7 +160,7 @@
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/François_Viète/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：优先 Meryon 1861 版画（`images.txt` 第 7 条 MET 图）；不可用则装饰圆占位并注明「后世版画缺肖像」
+- [ ] **肖像**：使用 `viete_portrait.jpg`（后世版画像，图注「François Viète（后世版画像）」）；Meryon 1861 蚀刻版画（MET 藏）不再作首选
 - [ ] **国籍**：封面顶部徽章明示「法兰西」
 - [ ] **引语核对**：仅白名单五+一处引语，逐条在 page.md 找到原文
 - [ ] **编译验证**：`make distclean && make`
@@ -175,3 +176,26 @@
 
 > **开始执行。每完成一步向我汇报。**
 > **最重要的事：每写一页就 make，看到溢出就修。**
+
+## 12. Review-1 事实终审记录（2026-09-29）
+
+- 核对基准：`pages/François_Viète/page.md`（+ metadata.json）
+- 生卒 / 享年：1540 生于 Fontenay-le-Comte（Kingdom of France，今 Vendée），**出生月日 page.md 无载（仅年份）**；1603-02-23 卒于巴黎，享年 62–63（page.md "aged 62–63"）；metadata date_of_death 双值 ["1603-12-13","1603-02-23"] 为噪声 → 取 1603-02-23，弃 1603-12-13；死因未知（page.md "The cause of Viète's death is unknown"），留白
+- 国籍口径：法兰西（metadata nationality: France；page.md "Kingdom of France"）→ 封面国籍行「法兰西」；入库 France（+ Kingdom of France, era_note historical）
+- 肖像结论：**有**传世肖像 → `viete_portrait.jpg`，图注「François Viète（后世版画像）」（PORTRAITS.md 第 10 条）；不再首选 Meryon 1861 蚀刻版画（MET 藏，仅可作插图并注明 19 世纪版画）
+- 引语核对：① Isagoge 献词英译「These things which are new are wont in the beginning to be set forth rudely and formlessly…」（page.md line 139 逐字）✅；② De Thou 记「伏案三日、悬肘而食」（page.md line 69 "dwell on any one question for up to three days, his elbow on the desk, feeding himself without changing position"）✅；③ De Thou 转述其对 Clavius「善释原理、辑而不注出处」的评价（page.md line 101 逐字）✅；④ "Ut legit, ut solvit"（page.md line 107）✅；⑤ 笛卡尔「I began, where Vieta finished」与 1639-02 致 Mersenne 信（page.md lines 335/343）✅；⑥ Anderson "praeceps et immaturum autoris fatum"（page.md line 115）✅；另 page.md line 247 Tallemant des Réaux 转述 van Roomen 轶事为原文，可用（不在白名单亦不违规，白名单仅限禁编造）
+- 本轮修正：① §0-1/§0-3/§4-2/§4-3/§11 共 5 处肖像条款改为使用 `viete_portrait.jpg`（依 PORTRAITS.md 权威结论），Meryon 版画降为可选插图；② §2-7/§4/§5 共 4 处「van Roomen 挑战（1593）」改为守 page.md 年份（1595 出版回应、征解提出见 1596/97 语境），并明令禁用「1593 年挑战」——page.md 中 1593 仅属倍角正弦公式与韦达公式 π；③ §4 时间线「1585–89 被迫去职」改为「1583–85 被联盟迫使去职、此后四年专研数学」（page.md：1583–1585 联盟说服亨利三世解职；随后四年专研，1591 成书），并收敛为 **8 节点**；④ §4 重排为 14 页制：补入共享封面为第 1 页、人物封面为第 2 页，7 贡献页为 6–12（新代数 / Isagoge 三步法 / 韦达定理与二项式 / 韦达公式 π / 三角学 / 两朝密码破译 / van Roomen 与 Apollonius Gallus），原「格里高利历论战」并入第 13 页荣誉页「历法论战、晚年与身后传承」，1602-12 去职获 20,000 埃居移入该页与正文；⑤ §0-3 与 §4-3 补「导师格写『—（无载）』，禁写」
+- 遗留不确定项：① **page.md 内部年份矛盾**：line 249 载 1595 年出版对 van Roomen 的回应，line 105 却把征解置于 1596（或 1597）语境——两说均出自 page.md，tex 定稿建议写「1590 年代」或并列 1595/1596 并加「原文年份互有出入」小注，勿单取一说；② van Roomen 45 次方程征解的历史通行年份（1593）与 page.md 不符，按纪律以 page.md 为准；③ metadata employer 列 Henry III / Henry IV / Antoinette d'Aubeterre，均无对应关系类型，不入库；④ 背景曲 Cinematic Experience 与同世纪 Cardano 篇撞曲（按纪律仅记录不改）；⑤ 出生月日无载，封面只写 1540
+
+
+---
+
+## 13. 立传期修正（Beamer 执行，2026-09-29）
+
+- **产出**：`François_Viète_zh.tex` + `Makefile`（复制 17 世纪 Johann_Bernoulli 黄金参照，仅改 MAIN/VIDEO_NAME）。共 **14 页**：共享封面 `\openmathslide` + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 贡献页（新代数 / Isagoge 三步法 / 韦达定理与二项式 / 韦达公式 π / 三角学 / 两朝密码破译 / van Roomen 与 Apollonius Gallus）+ 荣誉页 + 终章。
+- **编译**：`make distclean && make` → **0 error**；Overfull **0**（全部 <10pt）；缺失字符 0；`pdfinfo` 14 页；PDF 324 KB。
+- **肖像**：`images/viete_portrait.jpg`（后世版画像），封面与身份页图注「François Viète（后世版画像）」，依 PORTRAITS.md 第 10 条；未使用 Meryon 1861 蚀刻版画。
+- **事实对照 page.md**：生卒 1540（仅年）— 1603-02-23；出生地 Fontenay-le-Comte、卒地 Paris；国籍法兰西；职业口径「律师 / 王室顾问，数学为业余研究」；身份页「师承」写「—（无载）」；π 无穷乘积「数学史上第一个无穷乘积」；韦达定理「当时仅正根」；Clavius 论战如实写「据载韦达错了」；西班牙 500+ 字符密码与「魔法」指控；van Roomen 先挑战后成友。
+- **★ 年份裁定落地（§5/§12 遗留项①）**：全文**不出现「1593 年挑战」**；正文写「1595 年发表对 van Roomen 问题的回应」，征解提出标「1596/97 语境」，专页加小字注：「page.md 载 1595 年发表回应，而征解提出的年份在 1596（或 1597）语境——原文记载互有出入，一并列出」。
+- **引语**：仅用白名单 ④「Ut legit, ut solvit」、⑤「I began, where Vieta finished」、⑥ Anderson「praeceps et immaturum autoris fatum」（中译「早逝之命」）；无编造引语。
+- **技术**：时间线 `\foreach` 采用行内字色（未用 tikz 命名 style，规避 pgffor 条件解析异常）；文本 π 一律改为数学模式 `$\pi$`，消除 lmsans 缺字告警。

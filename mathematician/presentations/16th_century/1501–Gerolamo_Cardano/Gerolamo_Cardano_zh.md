@@ -9,7 +9,7 @@
 
 > 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**，而非纯数学家版式。这意味着在数学家立传基础上，增加以下**物理学家格式硬性要求**：
 
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。**Cardano 有真实肖像**：`images.txt` 收录 `Gerolamo_Cardano_(colour).jpg`（圣安德鲁斯大学数学与统计学院藏彩色像）与 Leone Leoni 1550-51 年双面徽章像——执行立传时优先彩色像；**本任务阶段不下载**，提示词只记录候选。
+1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。**使用 `PORTRAITS.md` 指定的肖像文件** `cardano_portrait.jpg`（已下载到本目录 `images/`；文件名与图注以 `PORTRAITS.md` 为准），图注 `R. Cooper 点刻版画（Wellcome Collection V0001004）`。**不得改用装饰圆占位**；落地前须核验文件为 JPEG 且 >5KB（不符则按 `PORTRAITS.md` 的 URL 重下）。page.md 另载圣安德鲁斯大学数学与统计学院藏彩色像与 Leone Leoni 1550–51 年徽章像，可作正文插图与史料补充。
 2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 意大利 · 米兰公国`），底部状态栏给出 `国籍 | 机构 | 主要成就` 三要素。
 3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧信息网格，至少含：生卒、本名异体（Girolamo/Geronimo/Hieronymus Cardanus）、国籍、出生地、教育、主要著作、核心领域。事实取自 Wikipedia infobox，不得杜撰。
 4. **配色 + 气泡背景**：采用「主色 + 强调色 + 三~四分类色」配色；背景用柔和气泡（稀疏大块实心圆），呼应「骰子 / 万向节圆环」母题。
@@ -37,7 +37,7 @@
 5. **机械发明**：组合锁；三同心环万向节（gimbal，使罗盘/陀螺自由旋转）；带万向节的 Cardan shaft（传动轴，至今用于车辆）；二次曲线内旋轮线（hypocycloids，1570《De proportionibus》）衍生出「Cardano circles」，用于第一代高速印刷机；Cardan 齿轮机构；认为除天体外永动机不可能；1550 年引入密码书写工具 Cardan grille。
 6. **蒸汽与真空**：《De Subtilitate》中关注蒸汽的物理性质、以冷凝造真空——史学上被视为蒸汽动力研究复兴的里程碑，是通向蒸汽机的早期思想环节。
 7. **聋人教育先驱**：主张聋人有心智能力、应受教育，是最早提出聋人不必先学说话即可学习读写的人之一。
-8. **苏格兰行医（1552）**：治愈被认为不治的圣安德鲁斯大主教 John Hamilton 失语症，获 1,400 金克朗酬金；爱丁堡 1562 年仍流传其"merry tales"轶闻。
+8. **苏格兰行医（1552）**：为被认为不治、已失语的圣安德鲁斯大主教 John Hamilton 治疗奏效——page.md 载其人已气短十年，且**治疗后由其助手完成疗程**、并与同行 Casanatus 就功劳有争论（措辞见 §5），获 1,400 金克朗酬金；爱丁堡 1562 年仍流传其 "merry tales" 轶闻。
 9. **家庭悲剧与宗教裁判所**：长子 Giovanni Battista 1560 年因毒杀妻子被判斩首（Cardano 无力偿付赔偿金）；幼子 Aldo 赌徒窃财、1569 年被剥夺继承权；1570 年被宗教裁判所以异端罪名逮捕（《De rerum varietate》被指控，尤其「殉道者自戕行为由星象导致」的占星论与 1543 年发表的耶稣星盘），数月监禁、失博洛尼亚教席、弃绝后获释，全部非医学著作被列入《禁书目录》。
 10. **罗马晚年**：获教皇格里高利十三世终身年金（先被庇护五世拒绝）、入皇家医师公会、完成自传《De vita propria》，1576 年卒于罗马；月球有以他命名的 Cardanus 环形山。
 
@@ -67,24 +67,24 @@
   - 本组三人（del Ferro / Tartaglia / Cardano）分别用 PAST / Lonesome / Cinematic Experience，互不重复
 - 时长需 ≥ 14 页 × 7 秒 ≈ 98 秒，ffmpeg `-shortest` 自动对齐
 
-## 4. Slide 规划（约 14 页，正文采用 Wilson 式结构 + 表格 + 公式框）
+## 4. Slide 规划（统一 14 页制：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 贡献页 + 荣誉与传承 + 终章）
 
-> 正文版式对齐高斯模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格；第 3 页为「时间线页」。
+> 正文采用 Wilson 式结构 + 表格 + 公式框：核心贡献页用 `tabularx`（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页用 `p{2.2cm}|X|p{3.0cm}` 表格。帧序与 `TEMPLATE_GUIDE.md` §2 完全同构（帧 1 = 共享封面 `\openmathslide`）。
 
-1. **封面**（`\titleslide`）：大标题「文艺复兴全才 · 《大术》与概率的黎明」+ Gerolamo Cardano 1501–1576 + 右上头像（彩色像或徽章像）+ 国籍行（意大利 · 米兰公国）+ 底部三要素状态栏（米兰公国 | 帕维亚/帕多瓦/博洛尼亚大学 | 《大术》/ 负数系统使用 / 概率先驱）+ 四分类 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右信息网格（生卒 / 本名异体 / 国籍 / 出生地 / 教育 / 主要著作 / 核心领域）
-3. **卡尔达诺的一生：时间线**（`\timelineslide`）：1501 帕维亚出生（私生子）→ 1520 帕维亚大学 → 1525 帕多瓦医学博士 → 1531 婚 → 米兰（数学教席+行医）→ 1541 米兰医师公会主席 → 1545《Ars Magna》→ 1552 苏格兰行医 → 1560 长子被斩 → 迁博洛尼亚任医学教授 → 1570 宗教裁判所 → 罗马晚年 → 1576-09-21 去世
-4. **早年：私生子与瘟疫**（`\earlyslide`）：父 Fazio 与达·芬奇之交、母堕胎药自述与"violently taken"引语、鼠疫夺走三个兄姐、父望其学法律而他偏爱哲学与科学
-5. **求学与行医**（核心贡献页，表格）：帕维亚→战乱闭校→帕多瓦 1525 医学博士；米兰医师公会因其好斗名声与私生出身拒收（1525 多次申请被拒）；在 Piove di Sacco 无照行医；获数学教席后执照到手、双线执业成为米兰最受追捧的医生之一；1536 辞教席；拒绝丹麦/法国国王与苏格兰王后邀约；1541 任米兰医师公会主席并会见查理五世
-6. **《Ars Magna》1545（一）：三次方程**（核心贡献页，表格 + 公式框）：1539 Tartaglia 诗体传法（誓言争议，见 §5）；del Ferro 解法更早故归名首解；`ax³+bx+c=0` 缺项情形
-7. **《Ars Magna》1545（二）：四次方程与数系扩张**（核心贡献页，表格 + 公式框）：Ferrari 四次方程解法署名发表；欧洲第一个系统使用负数；承认虚数存在（性质由同代 Bombelli 首次描述）；《Opus novum de proportionibus》引入二项式系数与二项式定理
-8. **概率论先驱：《论掷骰》**（核心贡献页，表格 + 公式框）：约 1564 写成 1663 出版；赔率定义、独立事件乘法法则（存疑处照写）、出千技巧一节；赌徒与棋手的自筹生计
-9. **机械发明**（核心贡献页，表格）：组合锁、三环万向节、Cardan 轴与万向节、Cardano circles 与高速印刷机、Cardan 齿轮、Cardan grille（1550）、永动机否定、蒸汽冷凝造真空
-10. **自然哲学与音乐**（核心贡献页，表格）：两部《De Musica》音乐论著（微分音/木管史料）、12 声部经文歌 Beati estis（四重卡农）、两部自然科学百科、聋人教育主张、地质洞见（石化贝壳=海居山地，经 Lyell 引述）
-11. **苏格兰行医 1552**（表格）：大主教 Hamilton 失语症治愈、1,400 金克朗、与 Casanatus 的争论、"merry tales"轶闻
-12. **家庭悲剧与宗教裁判所**（敏感页，表格）：1560 长子斩首、1569 幼子被剥夺继承权、迁博洛尼亚任医学教授、1570 异端指控（占星论与耶稣星盘）、数月监禁失教席、弃绝获释、非医学著作入《禁书目录》
-13. **罗马晚年与遗产**（表格）：格里高利十三世终身年金、皇家医师公会、自传《De vita propria》、1576 卒、Cardanus 月球环形山、后世文化回响（Thomas Browne / Manzoni / Forster，选一两条即可）
-14. **终章**：74 岁、"最后一位文艺复兴全才式的数学家"的历史地位与遗产
+1. **共享封面**（`\openmathslide`）：`\input{../../cover/openmath_page.tex}`，不改
+2. **人物封面**（`\titleslide`）：大标题「文艺复兴全才 · 《大术》与概率的黎明」+ Gerolamo Cardano 1501–1576 + 右上肖像（`images/cardano_portrait.jpg`，图注见 PORTRAITS.md）+ 国籍行（意大利 · 米兰公国）+ 底部三要素状态栏（米兰公国 | 帕维亚/帕多瓦/博洛尼亚大学 | 《大术》/ 负数系统使用 / 概率先驱）+ 四分类 badge
+3. **身份信息页**（`\profileslide`，★ 必做）：左肖像 + 右信息网格（生卒 / 本名异体（Girolamo / Geronimo / Hieronymus Cardanus，仅此页列一次）/ 国籍 / 出生地 / 教育 / 主要著作 / 核心领域）
+4. **卡尔达诺的一生：时间线**（`\timelineslide`）：1501 帕维亚出生（私生子）→ 1520 帕维亚大学 → 1525 帕多瓦医学博士 → 1531 婚 → 米兰（数学教席 + 行医）→ 1541 米兰医师公会主席 → 1545《Ars Magna》→ 1552 苏格兰行医 → 1560 长子被斩 → 迁博洛尼亚任医学教授 → 1570 宗教裁判所 → 罗马晚年 → 1576-09-21 去世
+5. **早年与教育：私生子与瘟疫**（`\earlyslide`）：父 Fazio 与达·芬奇之交、母堕胎药自述与 "violently taken" 引语、鼠疫夺走三个兄姐、父望其学法律而他偏爱哲学与科学
+6. **求学与行医**（贡献页，表格）：帕维亚 → 战乱闭校 → 帕多瓦 1525 医学博士；米兰医师公会因其好斗名声与私生出身拒收（1525 多次申请被拒）；在 Piove di Sacco 无照行医；获数学教席后执照到手、双线执业成为米兰最受追捧的医生之一；1536 辞教席；拒绝丹麦/法国国王与苏格兰王后邀约（**他自述**，见 §5）；1541 任米兰医师公会主席并会见查理五世
+7. **《Ars Magna》1545（一）：三次方程**（贡献页，表格 + 公式框）：1539 Tartaglia 诗体传法（誓言争议，见 §5）；del Ferro 解法更早故归名首解；`ax³+bx+c=0` 缺项情形
+8. **《Ars Magna》1545（二）：四次方程与数系扩张**（贡献页，表格 + 公式框）：Ferrari 四次方程解法署名发表；欧洲第一个系统使用负数；承认虚数存在（性质由同代 Bombelli 首次描述）；《Opus novum de proportionibus》引入二项式系数与二项式定理
+9. **概率论先驱：《论掷骰》**（贡献页，表格 + 公式框）：约 1564 写成、1663 出版；赔率定义、独立事件乘法法则（存疑处照写）、出千技巧一节；赌徒与棋手的自筹生计
+10. **机械发明**（贡献页，表格）：组合锁、三环万向节、Cardan 轴与万向节、Cardano circles 与高速印刷机、Cardan 齿轮、Cardan grille（1550）、永动机否定、蒸汽冷凝造真空（万向节「非其所描述」等措辞见 §5）
+11. **自然哲学与音乐**（贡献页，表格）：两部《De Musica》音乐论著（微分音 / 木管史料）、12 声部经文歌 Beati estis（四重卡农）、两部自然科学百科、聋人教育主张、地质洞见（石化贝壳 = 海居山地，经 Lyell 引述）
+12. **苏格兰行医、家庭悲剧与宗教裁判所**（贡献页，敏感页，表格）：1552 大主教 Hamilton 治疗（1,400 金克朗、与 Casanatus 争论、"merry tales"）；1560 长子斩首、1569 幼子被剥夺继承权；迁博洛尼亚任医学教授、1570 异端指控（占星论与耶稣星盘）、数月监禁失教席、弃绝获释、非医学著作入《禁书目录》
+13. **荣誉与传承**（`\honorslide`）：page.md 无载任何奖项——本页写「罗马晚年与遗产」：格里高利十三世终身年金、皇家医师公会、自传《De vita propria》、1576 卒、Cardanus 月球环形山、后世文化回响（Thomas Browne / Manzoni / Forster，选一两条即可）；**禁杜撰奖项**
+14. **终章**（`\closingslide`）：74 岁、「最后一位文艺复兴全才式的数学家」的历史地位与遗产
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -131,7 +131,10 @@
 ## 9. 机构清单
 
 - 教育：University of Pavia（帕维亚大学，1520 入学，1524 因战乱关闭）；University of Padua（帕多瓦大学，1525 医学博士）
-- 任职：Scuole Piatti 之外的米兰数学教席（page.md 未具名机构，仅"obtained a mathematics teaching position in Milan"——**不入库**，正文表述）；University of Pavia（任教，metadata employer 明载、正文语境载其自帕维亚迁博洛尼亚，年份无载不写）；University of Bologna（博洛尼亚大学医学教授，1560 年代迁任、1570 因宗教裁判所失去教席——page.md 未载起止年份，不写年份）
+- 任职（metadata employer 三项：University of Bologna / University of Pavia×2 / Scuole Piatti）：
+  - University of Bologna（博洛尼亚大学医学教授；page.md 载其自帕维亚迁此任职、1570 因宗教裁判所失去教席——**page.md 未载起止年份，不写年份**）
+  - University of Pavia（metadata employer；page.md 未载其在帕维亚任教的年份与职称，**不写年份**）
+  - Scuole Piatti（metadata employer，米兰；page.md 仅作未具名的 "obtained a mathematics teaching position in Milan"——机构名属 metadata-only，tex 正文表述为「米兰的数学教席」，是否入库由主控裁定）
 
 ## 10. 终审清单
 
@@ -150,7 +153,7 @@
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Gerolamo_Cardano/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：确认使用 Gerolamo_Cardano_(colour).jpg 或 Leone Leoni 徽章像，图注写明藏处
+- [ ] **头像**：使用 `PORTRAITS.md` 指定的 `cardano_portrait.jpg`（图注以该文件为准，禁止改为装饰圆占位）
 - [ ] **国籍**：封面顶部徽章明示意大利 · 米兰公国
 - [ ] **引语核对**：三处引语逐一在 page.md 原文找到并注明转述层级
 - [ ] **编译验证**：`make distclean && make`
@@ -160,7 +163,22 @@
 - [ ] 检查 Overfull/Underfull 告警（<10pt 可接受）
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
-- [ ] 与同批 16 世纪数学家（del Ferro / Tartaglia）格式对齐；三次方程叙事与两篇口径完全一致
+- [ ] 与同批 16 世纪数学家（del Ferro / Tartaglia / Ferrari）格式对齐；三次方程叙事与三篇口径完全一致
+
+## 12. Review-1 事实终审记录（2026-09-29）
+
+- 核对基准：`pages/Gerolamo_Cardano/page.md`（+ metadata.json / images.txt）
+- 生卒 / 享年：page.md infobox 「24 September 1501 – 21 September 1576 (aged 74)」；出生地 Pavia、卒地 Rome——与提示词一致；metadata 死亡日噪声值 `1576-09-20` 已弃用
+- 国籍口径：page.md / metadata 作 Duchy of Milan（历史政权），卒地罗马属教皇国；封面写「意大利 · 米兰公国」——与提示词一致
+- 肖像结论：**有肖像**，`PORTRAITS.md` 指定 `cardano_portrait.jpg`，图注 `R. Cooper 点刻版画（Wellcome Collection V0001004）`；§0.1 旧口径（「本任务阶段不下载」+ 优先圣安德鲁斯彩色像）已删改
+- 引语核对：三处实载引语逐条可查——① 自传 "I was taken by violent means from my mother; I was almost dead."（page.md line 40）；② Charles Lyell《地质学原理》转述《De Subtilitate》段落（line 105，系 Lyell 文字，须注明转述来源）；③ Thomas Browne 书目评语（line 133）与 Butler《Hudibras》打油诗（line 137–142，后世评家文字）。§2 亮点 8 的 "merry tales" 亦为 Thomas Randolph 记载的原词（line 113）
+- 本轮修正：
+  1. §0.1 第 1 条与 §11 头像行改为 PORTRAITS.md 口径（指定 `cardano_portrait.jpg` + 图注 + 禁止装饰圆顶替），并加落地前核验文件 >5KB
+  2. §2 亮点 8 补「治疗后由其助手完成疗程、与 Casanatus 有功劳之争」限定，与 §5 第 102 行口径对齐（原文 "after the cure was effected by his assistant"）
+  3. §9 机构清单按 metadata employer 三项（University of Bologna / University of Pavia×2 / Scuole Piatti）重排，明确 Scuole Piatti 系 metadata-only、Pavia 任教年份 page.md 无载不写
+  4. §4 按统一 14 页制重写（共享封面 + 人物封面 + 身份 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）；原「苏格兰行医 1552」与「家庭悲剧与宗教裁判所」两页合并为帧 12，原「罗马晚年与遗产」升为帧 13 `\honorslide`
+- 遗留不确定项：① `images/cardano_portrait.jpg` 本地仅 2.06 KB（低于模板 >5KB 判定线），疑下载失败，写 tex 前须按 PORTRAITS.md 的 URL 重下并 `file` 核验；② 名字异体繁多，仅限身份信息页列一次；③ 三次方程归名叙事须与 del Ferro / Tartaglia / Ferrari 三篇口径一致（本页从简，主战场在 Tartaglia 篇）
+- **立传期修正（2026-09-29）**：Beamer 立传完成，14 页（`make distclean && make` 通过，0 error、Overfull 全部 <10pt）。§12 遗留①已解决——`images/cardano_portrait.jpg` 已重下并 `file` 核验为 JPEG、700×902、221 180 字节（满足 >5KB），正文按 PORTRAITS.md 使用该肖像，图注「R. Cooper 点刻版画（Wellcome V0001004）」（封面小字限制在 2.2cm 宽度内居中自动换行，避免越界）。§12 遗留②③落实：名字异体（Girolamo / Geronimo / Hieronymus Cardanus）仅身份信息页列一次；三次方程归名叙事从简并与 del Ferro / Tartaglia 两篇口径一致。§5 各条口径（生卒弃 09-20 噪声、万向节「并非他所描述」、「Cardano's Rings 很可能早于」、「gimbal 与 Cardan shaft 部分发明并描述」、虚数「承认存在」、负数「欧洲首个系统使用」、概率「第一个系统论述·1663 身后出版」、长子案与宗教裁判所客观简述）逐条落实。
 
 ---
 

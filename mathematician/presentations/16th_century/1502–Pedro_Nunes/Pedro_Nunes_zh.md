@@ -9,7 +9,7 @@
 
 > 本提示词正文（Beamer tex）**采用 OpenPhysicist 物理学家立传模板标杆 Kenneth G. Wilson 的形式**，而非纯数学家版式。这意味着在数学家立传基础上，增加以下**物理学家格式硬性要求**：
 
-1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注（Wikipedia 无本人真实肖像照片，`images.txt` 首选为 1843 年版画 Pedro_Nunes_April_2009-1a.jpg——里斯本发现者纪念碑上手持浑天仪的努内斯雕像局部，可用作封面图并注「纪念碑雕像」；备选 Assinatura_Pedro_Nunes.svg 签名图；均需下载到 `images/`，如失败用装饰圆 `\faIcon{user}` 占位）。
+1. **封面有头像**：右上角肖像 + `draw=coveraccent!50` 细边框 + 姓名小字注。**使用 `PORTRAITS.md` 指定的肖像文件** `nunes_portrait.png`（已下载到本目录 `images/`；文件名与图注以 `PORTRAITS.md` 为准），图注 `Pedro Nunes 像（1843 年 Panorama 杂志所刊）`。**不得改用装饰圆占位**；落地前须核验文件为 PNG/JPEG 且 >5KB。备选：里斯本发现者纪念碑雕像局部（`Pedro_Nunes_April_2009-1a.jpg`）**只能作正文插图，不得当头像**；`Assinatura_Pedro_Nunes.svg` 签名图可作版式元素。
 2. **封面有国籍**：顶部副标题明示国籍（`\faIcon{globe}\enspace 葡萄牙`），底部状态栏给出 `国籍 | 机构 | 主要成就` 三要素。
 3. **必须有身份信息页**（★ 必做）：封面之后、核心贡献之前。左侧头像 + 右侧信息网格，至少含：生卒、本名（拉丁名 Petrus Nonius）、国籍、出生地、教育、任职、核心领域。事实取自 Wikipedia infobox 与正文，不得杜撰。
 4. **配色 + 气泡背景**：采用「主色 + 强调色 + 三~四分类色」配色；背景用柔和气泡（稀疏大块实心圆），呼应「大航海时代的球面与航线」母题。
@@ -73,24 +73,24 @@
   - 本组三人 BGM 互不重复：Nunes=Expedition、Commandino=PAST、Recorde=Awaken
   - 时长需 ≥ 14 页 × 7 秒 ≈ 98 秒，ffmpeg `-shortest` 自动对齐
 
-## 4. Slide 规划（约 14 页，正文采用 Wilson 式结构 + 表格 + 公式框）
+## 4. Slide 规划（统一 14 页制：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年与教育 + 7 贡献页 + 荣誉与传承 + 终章）
 
-> 正文版式对齐 17 世纪黄金参照模板：核心贡献页采用 `tabularx` 表格（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页采用 `p{2.2cm}|X|p{3.0cm}` 表格；第 3 页为「时间线页」。
+> 正文采用 Wilson 式结构 + 表格 + 公式框：核心贡献页用 `tabularx`（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页用 `p{2.2cm}|X|p{3.0cm}` 表格。帧序与 `TEMPLATE_GUIDE.md` §2 完全同构（帧 1 = 共享封面 `\openmathslide`）。
 
-1. **封面**（`\titleslide`）：大标题「航海数学之父 · 等角航线首创者」+ Pedro Nunes 1502–1578 + 右上肖像/雕像图 + 国籍行 + 底部三要素状态栏 + 四分类 badge
-2. **身份信息页**（`\profileslide`，★ 必做）：左头像 + 右信息网格（生卒 / 拉丁名 Petrus Nonius / 国籍 / 出生地 Alcácer do Sal / 教育 / 任职 / 核心领域）
-3. **佩德罗·努内斯的一生：时间线**（`\timelineslide`）：1502 Alcácer do Sal 出生 → c.1517–1522 萨拉曼卡 → c.1529 回里斯本任教/王家宇宙志学家 → 1532 医学博士 → 1537 科英布拉数学教授 → 1547 首席王家宇宙志学家 → 1562 卸任教席 → 1578 科英布拉去世
-4. **早年与教育**（`\earlyslide`）：Alcácer do Sal、萨拉曼卡、里斯本任教（伦理/哲学/逻辑/形而上学）、1532 医学博士
-5. **等角航线 loxodrome**（核心贡献页，表格 + 公式框）：恒向航行的螺旋轨迹、与经线定角、非大圆——航海数学第一课
-6. **海图论战与墨卡托前史**（核心贡献页，表格 + 公式框）：纬线经线皆直线的海图主张、投影难题留给墨卡托解决
-7. **nonius 与测量仪器**（核心贡献页，表格 + 公式框）：同心圆刻度原理示意、第谷使用、Vernier 1631 化为游标
-8. **最短暮光问题**（核心贡献页，表格 + 公式框）：极值问题先驱、伯努利兄弟一个多世纪后重解且未全解
-9. **托勒密体系的最后改进者**（核心贡献页，表格）：地心体系的数学改进、对哥白尼仅略作引述纠错
-10. **球面三角学与几何**（核心贡献页，表格 + 公式框）：托勒密-欧几里得方法的移植
-11. **著作与多语出版**（表格）：*Tratado da sphera*(1537)、*De crepusculis*(1542)、*De erratis Orontii Finaei*(1546)、*Petri Nonii Salaciensis Opera*(1566)、*Livro de Algebra*(1567)
-12. **王室教师与学术影响**（表格）：Luís/Henry/Sebastian 三位王室学生；Clavius 的「supreme mathematical genius」评价；John Dee / Edward Wright 受其影响
-13. **身后纪念**（表格）：发现者纪念碑雕像、里斯本 Pedro Nunes 中学、Instituto Pedro Nunes、100 escudos 硬币、小行星 5313 Nunes、TAP 航空 A330 命名
-14. **终章**：76 岁辞世于科英布拉；「以数学工具驾驭海洋的第一人」的历史地位
+1. **共享封面**（`\openmathslide`）：`\input{../../cover/openmath_page.tex}`，不改
+2. **人物封面**（`\titleslide`）：大标题「航海数学之父 · 等角航线首创者」+ Pedro Nunes 1502–1578 + 右上肖像（`images/nunes_portrait.png`，图注见 PORTRAITS.md）+ 国籍行（葡萄牙）+ 底部三要素状态栏（葡萄牙 | 科英布拉大学 / 王家宇宙志学家 | 等角航线 / nonius / 海图数学化）+ 四分类 badge
+3. **身份信息页**（`\profileslide`，★ 必做）：左肖像 + 右信息网格（生卒 / 拉丁名 Petrus Nonius / 国籍 / 出生地 Alcácer do Sal / 教育 / 任职 / 核心领域）
+4. **佩德罗·努内斯的一生：时间线**（`\timelineslide`）：1502 Alcácer do Sal 出生 → c.1517–1522 萨拉曼卡 → c.1529 回里斯本任教 / 王家宇宙志学家 → 1532 医学博士 → 1537 科英布拉数学教授 → 1547 首席王家宇宙志学家 → 1562 卸任教席 → 1578-08-11 科英布拉去世
+5. **早年与教育**（`\earlyslide`）：Alcácer do Sal、萨拉曼卡（约 1517–1522）、里斯本任教（伦理 / 哲学 / 逻辑 / 形而上学）、1532 医学博士
+6. **等角航线 loxodrome**（贡献页，表格 + 公式框）：恒向航行的螺旋轨迹、与经线保持定角、非大圆（两点间最短路）——航海数学第一课
+7. **海图论战与墨卡托前史**（贡献页，表格 + 公式框）：*Tratado em defensam da carta de marear*（1537）主张纬线经线皆画成直线、投影难题未解而留给墨卡托（**勿写努内斯影响墨卡托**）
+8. **nonius 与测量仪器**（贡献页，表格 + 公式框）：同心圆逐圈内缩刻度原理、第谷使用而嫌其复杂、Clavius 与 Jacob Curtius 改进、Pierre Vernier 1631 化为游标
+9. **最短暮光问题**（贡献页，表格 + 公式框）：任一定点的最短暮光日及其时长、极值问题先驱、伯努利兄弟一个多世纪后独立重解而「less success」（只解出最短日、未定时长）
+10. **托勒密体系的最后改进者与球面三角**（贡献页，表格 + 公式框）：地心体系的数学改进、对哥白尼仅略作引述纠错；球面三角学的深刻理解与托勒密-欧几里得方法移植
+11. **著作与多语出版**（贡献页，表格）：*Tratado da sphera*(1537)、*De crepusculis*(1542)、*De erratis Orontii Finaei*(1546)、*Petri Nonii Salaciensis Opera*(1566)、*Livro de Algebra*(1567)；拉丁 / 葡 / 西多语出版的普及主张
+12. **王室教师与学术影响**（贡献页，表格）：Luís / Henry / Sebastian 三位王室学生；Clavius 的 "supreme mathematical genius" 评价（听课系 possible，见 §5）；John Dee / Edward Wright 受其影响
+13. **荣誉与传承**（`\honorslide`）：page.md 无载任何奖项——本页写「身后纪念」：发现者纪念碑雕像、里斯本 Pedro Nunes 中学、Instituto Pedro Nunes、100 escudos 硬币、小行星 5313 Nunes、TAP 航空 A330 命名；**禁杜撰奖项**
+14. **终章**（`\closingslide`）：76 岁辞世于科英布拉；「以数学工具驾驭海洋的第一人」的历史地位
 
 ## 5. 史实陷阱与敏感点（终审必须检查）
 
@@ -153,7 +153,7 @@
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Pedro_Nunes/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：使用发现者纪念碑努内斯雕像图（`images.txt` 首选，注「纪念碑雕像」），失败则装饰圆占位
+- [ ] **头像**：使用 `PORTRAITS.md` 指定的 `nunes_portrait.png`（1843 年刊像；纪念碑雕像只能作插图，禁止当头像）
 - [ ] **国籍**：封面顶部徽章明示葡萄牙
 - [ ] **引语核对**：引语必须在 Wikipedia 原文找到
 - [ ] **编译验证**：`make distclean && make`
@@ -164,6 +164,27 @@
 - [ ] 身份信息页布局与 Wilson 模板对齐
 - [ ] 中文标点 / 断行 / 间距统一
 - [ ] 与 16 世纪组其他数学家（Recorde / Commandino）格式对齐
+
+## 12. Review-1 事实终审记录（2026-09-29）
+
+- 核对基准：`pages/Pedro_Nunes/page.md`（+ metadata.json / images.txt）
+- 生卒 / 享年：page.md infobox 「Born 1502 Alcácer do Sal; Died 11 August 1578 (aged 76)」，卒地 Coimbra——与提示词一致；出生仅年份（无月日），metadata 出生三噪声值（`1492 / 1497 / 1502-01-01`）与死亡噪声值 `1577` 均已弃用
+- 国籍口径：page.md / metadata 作 Kingdom of Portugal（历史政权）；封面写现代对应「葡萄牙」——与提示词一致
+- 肖像结论：**有肖像**，`PORTRAITS.md` 指定 `nunes_portrait.png`（本目录 `images/`，480 KB，>5KB 合格），图注 `Pedro Nunes 像（1843 年 Panorama 杂志所刊）`；纪念碑雕像（`Pedro_Nunes_April_2009-1a.jpg`）按 PORTRAITS.md 只能作插图。§0.1 与 §11 旧口径（「纪念碑雕像可作封面图」「失败则装饰圆占位」）已删改
+- 引语核对：两条均可在 page.md 查到——① Clavius 评语 "supreme mathematical genius"（line 39）；② 脚注 10 葡语 «o bem, quanto mais comum e universal, tanto é mais excelente»（转引自 Calafate，须注明转引）。其余无引号内容为转述
+- 本轮修正：
+  1. §0.1 第 1 条与 §11 头像行改为 PORTRAITS.md 口径（指定 `nunes_portrait.png` + 图注；纪念碑雕像降为插图、禁止当头像、禁止装饰圆顶替）
+  2. §4 按统一 14 页制重写（共享封面 + 人物封面 + 身份 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）；原「托勒密体系」与「球面三角学」两页合并为帧 10，原「身后纪念」升为帧 13 `\honorslide`；帧 7 补明「勿写努内斯影响墨卡托」、帧 8 补 Clavius / Curtius 中间环节
+- 遗留不确定项：① 生年无月日，正文只写 1502；② 犹太血统须保留 page.md 的 "probably" 限定；③ Clavius 听课系 "It is possible that..."，入库须注 possible；④ `De crepusculis` 的成书年份与 Nunes connection 条目为脚注级花絮，勿展开
+
+## 13. 立传期记录（2026-09-29，math16-b）
+
+- 产出：`Pedro_Nunes_zh.tex`（14 页：共享封面 + 人物封面 + 身份信息 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）、`Makefile`（仅改 `MAIN`/`VIDEO_NAME`）。
+- 编译：`make distclean && make` 0 error；Overfull 1 处 4.75pt（<10pt 达标）。
+- 肖像落地：`nunes_portrait.png`（1843 年 Panorama 杂志所刊像）。标题页图注取简写「1843 年刊像」，身份信息页图注用全称「Pedro Nunes 像（1843 年 Panorama 杂志所刊）」——标题页图注缩短以避免越出右边界。
+- 事实与 page.md 无冲突：生年只写 1502（无月日）、卒 1578-08-11、享年 76；犹太血统保留「probably」限定；loxodrome 首创、墨卡托「问题承接」无师承；nonius 装置链（第谷 → Clavius/Curtius → Vernier 1631）表述为装置传承、不入库；导师 / 父母 / 配偶按 page.md 无载禁写。
+- 引语：仅用 Clavius "supreme mathematical genius"；脚注 10 葡语主张因版面取舍未入正文（未编造任何引语）。
+- 未做 mp4（按主控统一安排）。
 
 ---
 
