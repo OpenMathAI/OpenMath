@@ -1293,10 +1293,10 @@ def intro_slide(legend_lines, stats, missing_years):
   \node[draw=coveraccent!40, fill=redpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,1.10) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coveraccent!82!black} 拒领与追授}\\[2pt]
     {\fontsize{7}{8.5}\selectfont\color{coverdark!84} DECLINETXT}};
-  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,-0.85) {%%
+''' + legend_node + r'''  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,1.30) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coveramber!70!black} 空缺年份}\\[2pt]
     {\fontsize{7}{8.5}\selectfont\color{coverdark!84} GAPTXT}};
-''' + legend_node + r'''\end{tikzpicture}
+\end{tikzpicture}
 \end{center}
 \end{frame}
 }
