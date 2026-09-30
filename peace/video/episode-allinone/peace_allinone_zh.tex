@@ -1,0 +1,1462 @@
+% Nobel Peace Video — Allinone
+% 诺贝尔和平奖全得主合集（1901–2025）
+% Beamer layout mirrors physicist/video/episode-allinone（源自 turing allinone）
+% Source: peace/presentations 名录 + 离线页面 metadata.json + Wikipedia images
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\xeCJKDeclareCharClass{CJK}{"0370 -> "03FF}
+% 越南文等扩展拉丁字母走主字体（Helvetica Neue），避免缺字被静默丢弃
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{ifthen}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+% ===== 配色：和平绿 + 红十字红 + 颁奖金（区别于物理深空蓝/图灵紫）=====
+\definecolor{bgmain}{RGB}{246,249,246}
+\definecolor{coverprimary}{HTML}{2D6A4F}
+\definecolor{coveraccent}{HTML}{B03A2E}
+\definecolor{coveramber}{HTML}{C9922A}
+\definecolor{coverpurple}{HTML}{1F6E6E}
+\definecolor{coverdark}{HTML}{14251C}
+\definecolor{covermuted}{HTML}{5F6B64}
+\definecolor{coverlight}{HTML}{E7F1EA}
+\definecolor{DeepPurpleAccent}{HTML}{4A148C}
+\definecolor{titlecolor}{RGB}{20,37,28}
+\definecolor{muteddark}{RGB}{88,100,92}
+\definecolor{bluepanel}{RGB}{224,238,229}
+\definecolor{redpanel}{RGB}{247,227,224}
+\definecolor{goldpanel}{RGB}{247,239,219}
+\definecolor{purplepanel}{RGB}{221,235,235}
+\definecolor{graypanel}{RGB}{238,240,238}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\providecommand{\personhonors}{}
+\newcounter{pmark}%
+% ---- 交叉身份汇总页：居中标题模板（源自 turing allinone）----
+\def\framesubject{}
+\setbeamertemplate{frametitle}{%
+  \vspace{8pt}%
+  \centering
+  {\fontsize{13}{15}\selectfont\bfseries\color{coverprimary}\insertframetitle}\par\vspace{3pt}
+  {\footnotesize\color{mutedgray}\framesubject}\par\vspace{4pt}
+  \textcolor{coverlight}{\rule{0.95\textwidth}{0.6pt}}%
+  \vspace{-6pt}%
+}
+\definecolor{mutedgray}{RGB}{120,120,120}
+\colorlet{chemclr}{coverpurple!80}
+\colorlet{medclr}{coveraccent!80}
+\colorlet{litclr}{coverprimary!75}
+\colorlet{econclr}{covermuted}
+\colorlet{physclr}{coveramber!75}
+\colorlet{turingclr2}{coverprimary!80}
+\colorlet{wolfclr}{coveramber}
+\colorlet{btclr}{coverpurple}
+\colorlet{shawclr}{coveramber}
+\colorlet{crafoordclr}{coveraccent}
+\colorlet{japanclr}{coveraccent!75}
+\colorlet{millclr}{covermuted}
+\colorlet{fieldsclr}{coveramber}
+\colorlet{abelclr}{coveraccent}
+\colorlet{wolfmathclr}{coveramber}
+\colorlet{kyotoclr}{coverprimary}
+\colorlet{statsclr}{coverpurple}
+\colorlet{copssclr}{covermuted}
+
+% 交叉奖项徽标（数据库直查顶级奖项）
+\newcommand{\nobelchembadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt C}}
+\newcommand{\nobelmedbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\clubsuit$\kern-0.5pt M}}
+\newcommand{\nobellitbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\clubsuit$\kern-0.5pt L}}
+\newcommand{\nobeleconbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\clubsuit$\kern-0.5pt E}}
+\newcommand{\nobelpeacebadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt P}}
+\newcommand{\turingbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt T}}
+\newcommand{\fieldsbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt F}}
+\newcommand{\abelbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
+\newcommand{\wolfmathbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt M}}
+\newcommand{\wolfbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt W}}
+\newcommand{\kyotobadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
+\newcommand{\shawbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\blacklozenge$\kern-0.5pt S}}
+\newcommand{\btphysbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\bigstar$\kern-0.5pt B}}
+\newcommand{\btmathbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\bigstar$\kern-0.5pt M2}}
+\newcommand{\crafoordbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\diamond$\kern-0.5pt C}}
+\newcommand{\millenniumbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\blacklozenge$\kern-0.5pt M}}
+\newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
+\newcommand{\statsbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt S}}
+\newcommand{\copssbadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\diamondsuit$\kern-0.5pt C}}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 底部交叉荣誉边框
+\newcommand{\honorbar}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south, draw=coverprimary!55, fill=coverlight, rounded corners=6pt,
+          inner xsep=8pt, inner ysep=5pt, yshift=0.65cm, text=coverdark!85] at (current page.south) {%
+      \fontsize{7.5}{9.5}\selectfont\bfseries{\color{coverprimary} 其他殊荣}\enspace #1};
+  \end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ---- Person slide: #1 name #2 subtitle #3 img/none #4 credit/缩写 #5 获奖(年+岁) #6 life #7 country #8 inst #9 contribution ----
+\newcommand{\personslide}[9]{%
+\begin{frame}
+\stepcounter{pmark}%
+\pdfbookmark[2]{\personbookmark}{pb\arabic{pmark}}%
+\plainbar
+\vspace{-0.45cm}
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{coverdark} #1}\\[2pt]
+  {\fontsize{9.5}{11.5}\selectfont\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+\begin{columns}[c]
+\begin{column}{0.20\textwidth}
+  \centering
+  \ifthenelse{\equal{#3}{none}}{%
+    \begin{tikzpicture}
+      \node[circle, fill=coverprimary!12, draw=coverprimary!38, minimum size=2.6cm]
+        {\fontsize{16}{19}\selectfont\bfseries\color{coverprimary!75!black} #4};
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 暂无公开照片\par}
+  }{%
+    \begin{tikzpicture}
+      \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=3pt, inner sep=2.5pt, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.12}] {
+        \includegraphics[width=2.2cm,height=2.7cm,keepaspectratio]{#3}
+      };
+    \end{tikzpicture}
+  }
+\end{column}
+\begin{column}{0.40\textwidth}
+  \begin{tikzpicture}
+    \node[fill=goldpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=4.0cm, align=left] {
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 国别}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 机构}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #8}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.38\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=3.8cm, align=left] {
+      {\fontsize{8.2}{10}\selectfont\bfseries\color{coverprimary!82!black} 获奖理由}\par\vspace{3pt}
+      {\fontsize{7}{8.5}\selectfont\color{coverdark!84} #9}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\if\relax\detokenize\expandafter{\personhonors}\relax\else\honorbar{\personhonors}\fi
+\end{frame}
+}
+
+% ---- 章节分隔页 ----
+\newcommand{\sectionpageslide}[4]{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!7] (current page.north west) rectangle (current page.south east);
+\stepcounter{pmark}%
+\pdfbookmark[1]{#1}{bm\arabic{pmark}}%
+  \fill[coveramber!12] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (1.1cm);
+  \node[anchor=center, font=\fontsize{26}{32}\selectfont\bfseries, text=coverdark]
+    at ([yshift=1.10cm]current page.center) {#1};
+  \draw[coveramber, line width=1.4pt] ([yshift=0.05cm, xshift=-4.6cm]current page.center)
+    -- ([yshift=0.05cm, xshift=4.6cm]current page.center);
+  \node[anchor=center, font=\fontsize{13}{16}\selectfont, text=coverprimary!85!black]
+    at ([yshift=-0.75cm]current page.center) {#2};
+  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\itshape, text=covermuted]
+    at ([yshift=-1.85cm]current page.center) {#3};
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {#4};
+\end{tikzpicture}
+\end{frame}
+}
+
+\newcommand{\coverslide}{%
+\begin{frame}[plain]
+\pdfbookmark[1]{封面 · 诺贝尔和平奖 1901–2025}{cover}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
+  \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
+  \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
+    at ([yshift=3.35cm]current page.center) {诺贝尔和平奖：橄榄枝的世纪（1901–2025）};
+  \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
+    at ([yshift=2.50cm]current page.center) {Nobel Peace Prize · 143 条记录 / 140 位获奖者（含机构）};
+  \draw[coverprimary, line width=1.4pt] ([yshift=1.90cm, xshift=-5.2cm]current page.center)
+    -- ([yshift=1.90cm, xshift=5.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\bfseries, text=coveramber!58!black]
+    at ([yshift=1.58cm]current page.center) {从 Henry Dunant 到 Nihon Hidankyo · 人道主义者与机构一个多世纪的和平接力};
+  \node[anchor=center] at ([yshift=-1.85cm]current page.center) {
+    \begin{tikzpicture}[scale=1]
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/henrydunant.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/fredericpassy.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/elieducommun.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-3.74,1.25) {\fontsize{5}{6}\selectfont\color{covermuted} C.G.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/williamrandalcremer.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-2.86,1.25) {\fontsize{5}{6}\selectfont\color{covermuted} I.L.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/berthavonsuttner.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/theodoreroosevelt.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ernestoteodoromoneta.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/louisrenault.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/klaspontusarnoldson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/fredrikbajer.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/augustebeernaert.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/paulhenridestournellesdeconstant.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/permanentinternationalpeacebureau.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/tobiasasser.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/alfredfried.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/elihuroot.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/henrilafontaine.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/internationalcommitteeoftheredcross.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/woodrowwilson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/leonbourgeois.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/hjalmarbranting.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/christianlange.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/fridtjofnansen.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/siraustenchamberlain.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/charlesgdawes.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/aristidebriand.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/gustavstresemann.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ferdinandbuisson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ludwigquidde.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/frankbillingskellogg.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/nathansoderblom.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/janeaddams.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/nicholasmurraybutler.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/sirnormanangell.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/arthurhenderson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/carlvonossietzky.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/carlossaavedralamas.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/theviscountcecilofchelwood.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/nanseninternationalofficeforrefugees.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/internationalcommitteeoftheredcross.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/cordellhull.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/emilygreenebalch.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/johnraleighmott.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (4.18,0.75) {\fontsize{5}{6}\selectfont\color{covermuted} F.C.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/americanfriendsservicecommittee.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/lordboydorr.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ralphbunche.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/leonjouhaux.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/albertschweitzer.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/georgecatlettmarshalljr.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/officeoftheunitednationshighcommissionerforrefugees.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/lesterbowlespearson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/dominiquepire.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/philipnoelbaker.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/albertluthuli.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/daghammarskjold.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/linuspauling.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/internationalcommitteeoftheredcross.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/leagueofredcrosssocieties.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/martinlutherkingjr.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/unitednationschildrensfundunicef.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/renecassin.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/internationallabourorganization.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/normanernestborlaug.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/willybrandt.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/henrykissinger.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/leuctho.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/seanmacbride.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/eisakusato.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/andreisakharov.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/bettywilliams.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/maireadcorrigan.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/amnestyinternational.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/anwarsadat.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/menachembegin.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/motherteresa.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/adolfoperezesquivel.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/officeoftheunitednationshighcommissionerforrefugees.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/alvamyrdal.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/alfonsogarciarobles.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/lechwaesa.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/desmondtutu.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/internationalphysiciansforthepreventionofnuclearwar.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/eliewiesel.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/oscararias.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/unitednationspeacekeepingforces.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/tenzingyatsothdalailama.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/mikhailgorbachev.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/aungsansuukyi.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/rigobertamenchu.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/nelsonmandela.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/frederikwillemdeklerk.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/yasserarafat.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/yitzhakrabin.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/shimonperes.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/josephrotblat.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/pugwashconferencesonscienceandworldaffairs.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/carlosfilipeximenesbelo.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/joseramoshorta.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/internationalcampaigntobanlandmines.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jodywilliams.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/johnhume.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/davidtrimble.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/medecinssansfrontieres.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/kimdaejung.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/unitednations.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/kofiannan.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jimmycarter.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/shirinebadi.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/wangarimutamaathai.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/internationalatomicenergyagency.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/mohamedelbaradei.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/muhammadyunus.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/grameenbank.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/intergovernmentalpanelonclimatechange.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/algore.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/marttiahtisaari.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/barackobama.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/liuxiaobo.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ellenjohnsonsirleaf.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/leymahgbowee.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/tawakkolkarman.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/europeanunion.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/organisationfortheprohibitionofchemicalweapons.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/kailashsatyarthi.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/malalayousafzai.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/tunisiannationaldialoguequartet.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/juanmanuelsantos.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/internationalcampaigntoabolishnuclearweapons.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/denismukwege.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/nadiamurad.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/abiyahmed.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/worldfoodprogramme.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/mariaressa.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/dmitrymuratov.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/alesbialiatski.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/memorial.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (3.30,-1.25) {\fontsize{5}{6}\selectfont\color{covermuted} C.L.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/nargesmohammadi.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/nihonhidankyo.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/mariacorinamachado.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{12}\selectfont\bfseries, text=DeepPurpleAccent]
+    at ([yshift=1.12cm]current page.center) {\faIcon{medal}\enspace Nobel Peace Prize\enspace|\enspace 1901–2025 · 全 106 个颁奖年份};
+\end{tikzpicture}
+\end{frame}
+}
+
+\newcommand{\introslide}{%%
+\begin{frame}
+\pdfbookmark[1]{认识诺贝尔和平奖}{intro}
+\plainbar
+\sectiontitle{认识诺贝尔和平奖}{Nobel Peace Prize · 1901–2025}
+\vspace{0.05cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,3.05) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverprimary!82!black} 规模}\\[2pt]
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1901 年首颁（Henry Dunant 与 Frédéric Passy 共获）；至 2025 年共评奖 106 个年份、143 条记录，涉及 140 位获奖者（含机构），本片全收录。}};
+  \node[draw=coveraccent!40, fill=redpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,1.10) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coveraccent!82!black} 多次获奖与特殊记录}\\[2pt]
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 红十字国际委员会三度获奖（1917 · 1944 · 1963）；\\联合国难民署两度获奖（1954 · 1981）。\\黎德寿 1973 年拒绝领奖，迄今唯一。}};
+  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,-0.95) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coveramber!70!black} 空缺年份}\\[2pt]
+    {\fontsize{6.8}{8.2}\selectfont\color{coverdark!84} 19 个年份未颁奖（1914–16 · 1918 · 1923–24 · 1928 · 1932 ·\\1939–43 · 1948 · 1955–56 · 1966–67 · 1972），\\多因两次世界大战与冷战僵局。}};
+  \node[draw=coverpurple!40, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,3.05) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverpurple!82!black} 交叉荣誉 · 徽标一览}\par\vspace{3pt}
+    {\fontsize{6.6}{12.8}\selectfont\color{coverdark!84} \nobelchembadge{} 诺贝尔化学奖 · 1 位}};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\twentiethslide}{\sectionpageslide
+  {第一乐章 · 20 世纪（1901–2000）}
+  {从红十字国际委员会到金大中 · 107 条记录}
+  {}
+  {Nobel Peace Prize · 1901–2025}
+}
+
+\newcommand{\twentyfirstslide}{\sectionpageslide
+  {第二乐章 · 21 世纪（2001–2025）}
+  {从联合国到 Nihon Hidankyo · 36 条记录}
+  {}
+  {Nobel Peace Prize · 1901–2025}
+}
+
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!7] (current page.north west) rectangle (current page.south east);
+\pdfbookmark[1]{结语}{ending}
+  \fill[coveramber!12] (current page.north east) ++(-2.4,1.4) circle (1.6cm);
+  \fill[coverpurple!10] (current page.south west) ++(3.0,-1.0) circle (1.2cm);
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverdark]
+    at ([yshift=1.10cm]current page.center) {橄榄枝长青，和平代代相传};
+  \draw[coveramber, line width=1.4pt] ([yshift=0.15cm, xshift=-4.6cm]current page.center)
+    -- ([yshift=0.15cm, xshift=4.6cm]current page.center);
+  \node[anchor=center, font=\fontsize{10.5}{14}\selectfont, text=coverprimary!85!black]
+    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1901–2025 全部 140 位诺贝尔和平奖获奖者与机构};
+  \node[anchor=center, font=\fontsize{8.5}{11.5}\selectfont\itshape, text=covermuted]
+    at ([yshift=-1.70cm]current page.center) {每一次对暴力的拒绝，都是对人类尊严的重申。};
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace Nobel Peace Prize · 1901–2025};
+\end{tikzpicture}
+\end{frame}
+}
+
+
+% ========== SLIDES (chronological) ==========
+
+\newcommand{\henrydunant}{\gdef\personhonors{}\gdef\personbookmark{1901 · Henry Dunant 亨利·杜南}\personslide
+  {Henry Dunant}{亨利·杜南}
+  {images/henrydunant.jpg}{Wikipedia}
+  {1901 年（获奖时 约73岁）}{1828–1910（享年82岁）}{瑞士}{Compagnie genevoise des colonies suisses}
+  {表彰他为救助伤员、增进国际理解所做出的人道主义努力}}
+
+\newcommand{\fredericpassy}{\gdef\personhonors{}\gdef\personbookmark{1901 · Frédéric Passy 弗雷德里克·帕西}\personslide
+  {Frédéric Passy}{弗雷德里克·帕西}
+  {images/fredericpassy.jpg}{Wikipedia}
+  {1901 年（获奖时 约79岁）}{1822–1912（享年90岁）}{法国}{—}
+  {表彰他毕生致力于国际和平会议、外交与仲裁事业}}
+
+\newcommand{\elieducommun}{\gdef\personhonors{}\gdef\personbookmark{1902 · Élie Ducommun 埃利·迪科门}\personslide
+  {Élie Ducommun}{埃利·迪科门}
+  {images/elieducommun.jpg}{Wikipedia}
+  {1902 年（获奖时 约69岁）}{1833–1906（享年73岁）}{瑞士}{—}
+  {表彰他不知疲倦且娴熟地领导伯尔尼国际和平局}}
+
+\newcommand{\charlesalbertgobat}{\gdef\personhonors{}\gdef\personbookmark{1902 · Charles Albert Gobat 夏尔·阿尔贝·戈巴}\personslide
+  {Charles Albert Gobat}{夏尔·阿尔贝·戈巴}
+  {none}{C.G.}
+  {1902 年（获奖时 约59岁）}{1843–1914（享年71岁）}{瑞士}{—}
+  {表彰他对各国议会联盟卓有实效的管理}}
+
+\newcommand{\williamrandalcremer}{\gdef\personhonors{}\gdef\personbookmark{1903 · William Randal Cremer 威廉·兰德尔·克里默}\personslide
+  {William Randal Cremer}{威廉·兰德尔·克里默}
+  {images/williamrandalcremer.jpg}{Wikipedia}
+  {1903 年（获奖时 约75岁）}{1828–1908（享年80岁）}{英国}{—}
+  {表彰他长期不懈地倡导和平与仲裁理念}}
+
+\newcommand{\instituteofinternationallaw}{\gdef\personhonors{}\gdef\personbookmark{1904 · Institute of International Law 国际法研究院}\personslide
+  {Institute of International Law}{国际法研究院}
+  {none}{I.L.}
+  {1904 年}{—}{比利时}{—}
+  {表彰该机构致力于发展公法以促进国家间和平关系，并推动战争法规更加人道化}}
+
+\newcommand{\berthavonsuttner}{\gdef\personhonors{}\gdef\personbookmark{1905 · Bertha von Suttner 贝尔塔·冯·苏特纳}\personslide
+  {Bertha von Suttner}{贝尔塔·冯·苏特纳}
+  {images/berthavonsuttner.jpg}{Wikipedia}
+  {1905 年（获奖时 约62岁）}{1843–1914（享年71岁）}{奥匈帝国}{—}
+  {表彰她敢于直面并反对战争的恐怖}}
+
+\newcommand{\theodoreroosevelt}{\gdef\personhonors{}\gdef\personbookmark{1906 · Theodore Roosevelt 西奥多·罗斯福}\personslide
+  {Theodore Roosevelt}{西奥多·罗斯福}
+  {images/theodoreroosevelt.jpg}{Wikipedia}
+  {1906 年（获奖时 约48岁）}{1858–1919（享年61岁）}{美国}{—}
+  {表彰他促成当时世界上两大强国日本与俄国之间血腥战争的终结}}
+
+\newcommand{\ernestoteodoromoneta}{\gdef\personhonors{}\gdef\personbookmark{1907 · Ernesto Teodoro Moneta 埃内斯托·泰奥多罗·莫内塔}\personslide
+  {Ernesto Teodoro Moneta}{埃内斯托·泰奥多罗·莫内塔}
+  {images/ernestoteodoromoneta.jpg}{Wikipedia}
+  {1907 年（获奖时 约74岁）}{1833–1918（享年85岁）}{意大利}{—}
+  {表彰他通过新闻与和平集会（无论公开或私下）推动法国与意大利之间的相互理解}}
+
+\newcommand{\louisrenault}{\gdef\personhonors{}\gdef\personbookmark{1907 · Louis Renault 路易·勒诺}\personslide
+  {Louis Renault}{路易·勒诺}
+  {images/louisrenault.jpg}{Wikipedia}
+  {1907 年（获奖时 约64岁）}{1843–1918（享年75岁）}{法国}{University of Paris}
+  {表彰他对海牙会议与日内瓦会议的进程和成果发挥了决定性影响}}
+
+\newcommand{\klaspontusarnoldson}{\gdef\personhonors{}\gdef\personbookmark{1908 · Klas Pontus Arnoldson 克拉斯·蓬图斯·阿诺尔德松}\personslide
+  {Klas Pontus Arnoldson}{克拉斯·蓬图斯·阿诺尔德松}
+  {images/klaspontusarnoldson.jpg}{Wikipedia}
+  {1908 年（获奖时 约64岁）}{1844–1916（享年72岁）}{瑞典}{—}
+  {表彰他们以政治家、和平团体领导人、演说家与作家的身份长期为和平事业工作}}
+
+\newcommand{\fredrikbajer}{\gdef\personhonors{}\gdef\personbookmark{1908 · Fredrik Bajer 弗雷德里克·巴耶}\personslide
+  {Fredrik Bajer}{弗雷德里克·巴耶}
+  {images/fredrikbajer.jpg}{Wikipedia}
+  {1908 年（获奖时 约71岁）}{1837–1922（享年85岁）}{丹麦}{—}
+  {表彰他们以政治家、和平团体领导人、演说家与作家的身份长期为和平事业工作}}
+
+\newcommand{\augustebeernaert}{\gdef\personhonors{}\gdef\personbookmark{1909 · Auguste Beernaert 奥古斯特·贝尔纳特}\personslide
+  {Auguste Beernaert}{奥古斯特·贝尔纳特}
+  {images/augustebeernaert.jpg}{Wikipedia}
+  {1909 年（获奖时 约80岁）}{1829–1912（享年83岁）}{比利时}{—}
+  {表彰他们在国际和平与仲裁运动中的杰出地位}}
+
+\newcommand{\paulhenridestournellesdeconstant}{\gdef\personhonors{}\gdef\personbookmark{1909 · Paul Henri d'Estournelles de Constant 保罗·亨利·德埃斯特尔内勒·德·康斯坦}\personslide
+  {Paul Henri d'Estournelles de Constant}{保罗·亨利·德埃斯特尔内勒·德·康斯坦}
+  {images/paulhenridestournellesdeconstant.jpg}{Wikipedia}
+  {1909 年（获奖时 约57岁）}{1852–1924（享年72岁）}{法国}{—}
+  {表彰他们在国际和平与仲裁运动中的杰出地位}}
+
+\newcommand{\permanentinternationalpeacebureau}{\gdef\personhonors{}\gdef\personbookmark{1910 · Permanent International Peace Bureau 国际和平局}\personslide
+  {Permanent International Peace Bureau}{国际和平局}
+  {images/permanentinternationalpeacebureau.png}{Wikipedia}
+  {1910 年}{—}{国际组织}{—}
+  {表彰它作为各国和平团体之间的纽带，协助组织国际和平运动的世界性集会}}
+
+\newcommand{\tobiasasser}{\gdef\personhonors{}\gdef\personbookmark{1911 · Tobias Asser 托比亚斯·阿塞尔}\personslide
+  {Tobias Asser}{托比亚斯·阿塞尔}
+  {images/tobiasasser.jpg}{Wikipedia}
+  {1911 年（获奖时 约73岁）}{1838–1913（享年75岁）}{荷兰}{University of Amsterdam · Athenaeum Illustre of Amsterdam}
+  {表彰他作为国际法研究院共同创始人、海牙国际私法会议发起人，以及国际法律关系领域的开拓者}}
+
+\newcommand{\alfredfried}{\gdef\personhonors{}\gdef\personbookmark{1911 · Alfred Fried 阿尔弗雷德·弗里德}\personslide
+  {Alfred Fried}{阿尔弗雷德·弗里德}
+  {images/alfredfried.jpg}{Wikipedia}
+  {1911 年（获奖时 约47岁）}{1864–1921（享年57岁）}{奥匈帝国}{—}
+  {表彰他揭露并抗争其所认为的战争主要根源——国际关系中的无政府状态}}
+
+\newcommand{\elihuroot}{\gdef\personhonors{}\gdef\personbookmark{1912 · Elihu Root 伊莱休·鲁特}\personslide
+  {Elihu Root}{伊莱休·鲁特}
+  {images/elihuroot.jpg}{Wikipedia}
+  {1912 年（获奖时 约67岁）}{1845–1937（享年92岁）}{美国}{—}
+  {表彰他促进南北美洲各国之间的相互理解，并促成美国与其他国家间的重要仲裁协定}}
+
+\newcommand{\henrilafontaine}{\gdef\personhonors{}\gdef\personbookmark{1913 · Henri La Fontaine 亨利·拉方丹}\personslide
+  {Henri La Fontaine}{亨利·拉方丹}
+  {images/henrilafontaine.jpg}{Wikipedia}
+  {1913 年（获奖时 约59岁）}{1854–1943（享年89岁）}{比利时}{—}
+  {表彰他对和平国际主义组织建设的无与伦比的贡献}}
+
+\newcommand{\internationalcommitteeoftheredcross}{\gdef\personhonors{}\gdef\personbookmark{1917 · International Committee of the Red Cross 红十字国际委员会}\personslide
+  {International Committee of the Red Cross}{红十字国际委员会}
+  {images/internationalcommitteeoftheredcross.jpg}{Wikipedia}
+  {1917 年}{—}{国际组织}{—}
+  {表彰其为照顾伤兵、战俘及其家属所付出的努力}}
+
+\newcommand{\woodrowwilson}{\gdef\personhonors{}\gdef\personbookmark{1919 · Woodrow Wilson 伍德罗·威尔逊}\personslide
+  {Woodrow Wilson}{伍德罗·威尔逊}
+  {images/woodrowwilson.jpg}{Wikipedia}
+  {1919 年（获奖时 约63岁）}{1856–1924（享年68岁）}{美国}{Princeton University · Wesleyan University}
+  {表彰他作为国际联盟缔造者所发挥的作用}}
+
+\newcommand{\leonbourgeois}{\gdef\personhonors{}\gdef\personbookmark{1920 · Léon Bourgeois 莱昂·布尔茹瓦}\personslide
+  {Léon Bourgeois}{莱昂·布尔茹瓦}
+  {images/leonbourgeois.jpg}{Wikipedia}
+  {1920 年（获奖时 约69岁）}{1851–1925（享年74岁）}{法国}{—}
+  {表彰他长期致力于和平与正义事业，并在创建国际联盟中发挥的突出作用}}
+
+\newcommand{\hjalmarbranting}{\gdef\personhonors{}\gdef\personbookmark{1921 · Hjalmar Branting 亚尔马·布兰廷}\personslide
+  {Hjalmar Branting}{亚尔马·布兰廷}
+  {images/hjalmarbranting.jpg}{Wikipedia}
+  {1921 年（获奖时 约61岁）}{1860–1925（享年65岁）}{瑞典}{—}
+  {表彰他们毕生对和平事业与有组织的国际主义的贡献}}
+
+\newcommand{\christianlange}{\gdef\personhonors{}\gdef\personbookmark{1921 · Christian Lange 克里斯蒂安·朗格}\personslide
+  {Christian Lange}{克里斯蒂安·朗格}
+  {images/christianlange.jpg}{Wikipedia}
+  {1921 年（获奖时 约52岁）}{1869–1938（享年69岁）}{挪威}{—}
+  {表彰他们毕生对和平事业与有组织的国际主义的贡献}}
+
+\newcommand{\fridtjofnansen}{\gdef\personhonors{}\gdef\personbookmark{1922 · Fridtjof Nansen 弗里乔夫·南森}\personslide
+  {Fridtjof Nansen}{弗里乔夫·南森}
+  {images/fridtjofnansen.jpg}{Wikipedia}
+  {1922 年（获奖时 约61岁）}{1861–1930（享年69岁）}{挪威}{University Museum of Bergen · University of Oslo}
+  {表彰他在战俘遣返与国际救援工作中的领导作用，以及担任国际联盟难民事务高级专员的贡献}}
+
+\newcommand{\siraustenchamberlain}{\gdef\personhonors{}\gdef\personbookmark{1925 · Sir Austen Chamberlain 奥斯汀·张伯伦爵士}\personslide
+  {Sir Austen Chamberlain}{奥斯汀·张伯伦爵士}
+  {images/siraustenchamberlain.jpg}{Wikipedia}
+  {1925 年（获奖时 约62岁）}{1863–1937（享年74岁）}{英国}{—}
+  {表彰他在促成《洛迦诺公约》中的关键作用}}
+
+\newcommand{\charlesgdawes}{\gdef\personhonors{}\gdef\personbookmark{1925 · Charles G. Dawes 查尔斯·G·道威斯}\personslide
+  {Charles G. Dawes}{查尔斯·G·道威斯}
+  {images/charlesgdawes.jpg}{Wikipedia}
+  {1925 年（获奖时 约60岁）}{1865–1951（享年86岁）}{美国}{—}
+  {表彰他在促成《道威斯计划》中的关键作用}}
+
+\newcommand{\aristidebriand}{\gdef\personhonors{}\gdef\personbookmark{1926 · Aristide Briand 阿里斯蒂德·白里安}\personslide
+  {Aristide Briand}{阿里斯蒂德·白里安}
+  {images/aristidebriand.png}{Wikipedia}
+  {1926 年（获奖时 约64岁）}{1862–1932（享年70岁）}{法国}{L'Humanité}
+  {表彰他们在促成《洛迦诺公约》中的关键作用}}
+
+\newcommand{\gustavstresemann}{\gdef\personhonors{}\gdef\personbookmark{1926 · Gustav Stresemann 古斯塔夫·施特雷泽曼}\personslide
+  {Gustav Stresemann}{古斯塔夫·施特雷泽曼}
+  {images/gustavstresemann.jpg}{Wikipedia}
+  {1926 年（获奖时 约48岁）}{1878–1929（享年51岁）}{德国}{—}
+  {表彰他们在促成《洛迦诺公约》中的关键作用}}
+
+\newcommand{\ferdinandbuisson}{\gdef\personhonors{}\gdef\personbookmark{1927 · Ferdinand Buisson 费迪南·比松}\personslide
+  {Ferdinand Buisson}{费迪南·比松}
+  {images/ferdinandbuisson.jpg}{Wikipedia}
+  {1927 年（获奖时 约86岁）}{1841–1932（享年91岁）}{法国}{Faculty of Arts of Paris · University of Neuchâtel}
+  {表彰他们为法德两国形成支持和平国际合作的社会舆论做出的贡献}}
+
+\newcommand{\ludwigquidde}{\gdef\personhonors{}\gdef\personbookmark{1927 · Ludwig Quidde 路德维希·克维德}\personslide
+  {Ludwig Quidde}{路德维希·克维德}
+  {images/ludwigquidde.jpg}{Wikipedia}
+  {1927 年（获奖时 约69岁）}{1858–1941（享年83岁）}{德国}{University of Göttingen}
+  {表彰他们为法德两国形成支持和平国际合作的社会舆论做出的贡献}}
+
+\newcommand{\frankbillingskellogg}{\gdef\personhonors{}\gdef\personbookmark{1929 · Frank Billings Kellogg 弗兰克·比林斯·凯洛格}\personslide
+  {Frank Billings Kellogg}{弗兰克·比林斯·凯洛格}
+  {images/frankbillingskellogg.jpg}{Wikipedia}
+  {1929 年（获奖时 约73岁）}{1856–1937（享年81岁）}{美国}{—}
+  {表彰他在促成《凯洛格—白里安公约》（《非战公约》）中的关键作用}}
+
+\newcommand{\nathansoderblom}{\gdef\personhonors{}\gdef\personbookmark{1930 · Nathan Söderblom 纳坦·瑟德布卢姆}\personslide
+  {Nathan Söderblom}{纳坦·瑟德布卢姆}
+  {images/nathansoderblom.png}{Wikipedia}
+  {1930 年（获奖时 约64岁）}{1866–1931（享年65岁）}{瑞典}{Leipzig University · Church of Sweden}
+  {表彰他推动基督教会的合一，并帮助培育“若要国家间和平成为现实所必需的那种新心态”}}
+
+\newcommand{\janeaddams}{\gdef\personhonors{}\gdef\personbookmark{1931 · Jane Addams 简·亚当斯}\personslide
+  {Jane Addams}{简·亚当斯}
+  {images/janeaddams.jpg}{Wikipedia}
+  {1931 年（获奖时 约71岁）}{1860–1935（享年75岁）}{美国}{—}
+  {表彰他们不懈努力重振和平理想，在本国乃至全人类心中重新点燃和平精神}}
+
+\newcommand{\nicholasmurraybutler}{\gdef\personhonors{}\gdef\personbookmark{1931 · Nicholas Murray Butler 尼古拉斯·默里·巴特勒}\personslide
+  {Nicholas Murray Butler}{尼古拉斯·默里·巴特勒}
+  {images/nicholasmurraybutler.jpg}{Wikipedia}
+  {1931 年（获奖时 约69岁）}{1862–1947（享年85岁）}{美国}{Johns Hopkins University · Columbia University}
+  {表彰他们不懈努力重振和平理想，在本国乃至全人类心中重新点燃和平精神}}
+
+\newcommand{\sirnormanangell}{\gdef\personhonors{}\gdef\personbookmark{1933 · Sir Norman Angell 诺曼·安吉尔爵士}\personslide
+  {Sir Norman Angell}{诺曼·安吉尔爵士}
+  {images/sirnormanangell.jpg}{Wikipedia}
+  {1933 年（获奖时 约61岁）}{1872–1967（享年95岁）}{英国}{—}
+  {表彰他以笔揭露战争的幻象，并为国际合作与和平提出令人信服的呼吁}}
+
+\newcommand{\arthurhenderson}{\gdef\personhonors{}\gdef\personbookmark{1934 · Arthur Henderson 阿瑟·亨德森}\personslide
+  {Arthur Henderson}{阿瑟·亨德森}
+  {images/arthurhenderson.jpg}{Wikipedia}
+  {1934 年（获奖时 约71岁）}{1863–1935（享年72岁）}{英国}{—}
+  {表彰他作为 1931–1934 年国际联盟裁军会议主席所进行的不懈斗争与勇敢努力}}
+
+\newcommand{\carlvonossietzky}{\gdef\personhonors{}\gdef\personbookmark{1935 · Carl von Ossietzky 卡尔·冯·奥西茨基}\personslide
+  {Carl von Ossietzky}{卡尔·冯·奥西茨基}
+  {images/carlvonossietzky.jpg}{Wikipedia}
+  {1935 年（获奖时 约46岁）}{1889–1938（享年49岁）}{德国}{—}
+  {表彰他对思想自由与言论自由的炽热之爱，以及他对和平事业的宝贵贡献}}
+
+\newcommand{\carlossaavedralamas}{\gdef\personhonors{}\gdef\personbookmark{1936 · Carlos Saavedra Lamas 卡洛斯·萨维德拉·拉马斯}\personslide
+  {Carlos Saavedra Lamas}{卡洛斯·萨维德拉·拉马斯}
+  {images/carlossaavedralamas.jpg}{Wikipedia}
+  {1936 年（获奖时 约58岁）}{1878–1959（享年81岁）}{阿根廷}{University of Buenos Aires · National University of La Plata}
+  {表彰他作为 1933 年《阿根廷反战公约》缔造者的角色，并借此于 1935 年在巴拉圭与玻利维亚之间斡旋和平}}
+
+\newcommand{\theviscountcecilofchelwood}{\gdef\personhonors{}\gdef\personbookmark{1937 · The Viscount Cecil of Chelwood 塞西尔子爵（罗伯特·塞西尔）}\personslide
+  {The Viscount Cecil of Chelwood}{塞西尔子爵（罗伯特·塞西尔）}
+  {images/theviscountcecilofchelwood.jpg}{Wikipedia}
+  {1937 年（获奖时 约73岁）}{1864–1958（享年94岁）}{英国}{United Nations}
+  {表彰他为支持国际联盟、裁军与和平所做的不倦努力}}
+
+\newcommand{\nanseninternationalofficeforrefugees}{\gdef\personhonors{}\gdef\personbookmark{1938 · Nansen International Office for Refugees 南森国际难民办公室}\personslide
+  {Nansen International Office for Refugees}{南森国际难民办公室}
+  {images/nanseninternationalofficeforrefugees.jpg}{Wikipedia}
+  {1938 年}{—}{国际组织}{—}
+  {表彰它继承弗里乔夫·南森的事业，惠及全欧洲的难民}}
+
+\newcommand{\internationalcommitteeoftheredcrossA}{\gdef\personhonors{}\gdef\personbookmark{1944 · International Committee of the Red Cross 红十字国际委员会}\personslide
+  {International Committee of the Red Cross}{红十字国际委员会}
+  {images/internationalcommitteeoftheredcross.jpg}{Wikipedia}
+  {1944 年}{—}{国际组织}{—}
+  {表彰它在战争期间为人道事业所做的卓越工作}}
+
+\newcommand{\cordellhull}{\gdef\personhonors{}\gdef\personbookmark{1945 · Cordell Hull 科德尔·赫尔}\personslide
+  {Cordell Hull}{科德尔·赫尔}
+  {images/cordellhull.jpg}{Wikipedia}
+  {1945 年（获奖时 约74岁）}{1871–1955（享年84岁）}{美国}{—}
+  {表彰他不知疲倦地促进国际理解，并在创建联合国中发挥的关键作用}}
+
+\newcommand{\emilygreenebalch}{\gdef\personhonors{}\gdef\personbookmark{1946 · Emily Greene Balch 艾米莉·格林·巴尔奇}\personslide
+  {Emily Greene Balch}{艾米莉·格林·巴尔奇}
+  {images/emilygreenebalch.jpg}{Wikipedia}
+  {1946 年（获奖时 约79岁）}{1867–1961（享年94岁）}{美国}{Wellesley College}
+  {表彰她毕生为和平事业所做的工作}}
+
+\newcommand{\johnraleighmott}{\gdef\personhonors{}\gdef\personbookmark{1946 · John Raleigh Mott 约翰·雷利·马特}\personslide
+  {John Raleigh Mott}{约翰·雷利·马特}
+  {images/johnraleighmott.jpg}{Wikipedia}
+  {1946 年（获奖时 约81岁）}{1865–1955（享年90岁）}{美国}{—}
+  {表彰他为创建跨越国界、促进和平的宗教兄弟会所做的贡献}}
+
+\newcommand{\friendsservicecouncil}{\gdef\personhonors{}\gdef\personbookmark{1947 · Friends Service Council 公谊服务理事会}\personslide
+  {Friends Service Council}{公谊服务理事会}
+  {none}{F.C.}
+  {1947 年}{—}{英国}{—}
+  {表彰它们在国际和平运动中的开创性工作与减轻人类苦难的仁爱努力，从而促进各国人民之间的友爱}}
+
+\newcommand{\americanfriendsservicecommittee}{\gdef\personhonors{}\gdef\personbookmark{1947 · American Friends Service Committee 美国公谊服务委员会}\personslide
+  {American Friends Service Committee}{美国公谊服务委员会}
+  {images/americanfriendsservicecommittee.png}{Wikipedia}
+  {1947 年}{—}{美国}{—}
+  {表彰它们在国际和平运动中的开创性工作与减轻人类苦难的仁爱努力，从而促进各国人民之间的友爱}}
+
+\newcommand{\lordboydorr}{\gdef\personhonors{}\gdef\personbookmark{1949 · Lord Boyd-Orr 博伊德-奥尔男爵（约翰·博伊德·奥尔）}\personslide
+  {Lord Boyd-Orr}{博伊德-奥尔男爵（约翰·博伊德·奥尔）}
+  {images/lordboydorr.jpg}{Wikipedia}
+  {1949 年（获奖时 约69岁）}{1880–1971（享年91岁）}{英国}{United Nations · University of Aberdeen}
+  {表彰他毕生致力于战胜饥饿与匮乏，从而帮助消除军事冲突与战争的一大根源}}
+
+\newcommand{\ralphbunche}{\gdef\personhonors{}\gdef\personbookmark{1950 · Ralph Bunche 拉尔夫·邦奇}\personslide
+  {Ralph Bunche}{拉尔夫·邦奇}
+  {images/ralphbunche.jpg}{Wikipedia}
+  {1950 年（获奖时 约46岁）}{1904–1971（享年67岁）}{美国}{United Nations · Office of Strategic Services}
+  {表彰他在 1948–1949 年担任巴勒斯坦调停者的工作}}
+
+\newcommand{\leonjouhaux}{\gdef\personhonors{}\gdef\personbookmark{1951 · Léon Jouhaux 莱昂·茹奥}\personslide
+  {Léon Jouhaux}{莱昂·茹奥}
+  {images/leonjouhaux.jpg}{Wikipedia}
+  {1951 年（获奖时 约72岁）}{1879–1954（享年75岁）}{法国}{—}
+  {表彰他毕生通过促进社会正义与人人、国国之间的友爱来抗击战争}}
+
+\newcommand{\albertschweitzer}{\gdef\personhonors{}\gdef\personbookmark{1952 · Albert Schweitzer 阿尔贝特·施韦泽}\personslide
+  {Albert Schweitzer}{阿尔贝特·施韦泽}
+  {images/albertschweitzer.jpg}{Wikipedia}
+  {1952 年（获奖时 约77岁）}{1875–1965（享年90岁）}{法国}{University of Strasbourg}
+  {表彰他的利他主义、敬畏生命的精神与不知疲倦的人道主义工作，使人人与国国之间手足情谊的理念成为现实}}
+
+\newcommand{\georgecatlettmarshalljr}{\gdef\personhonors{}\gdef\personbookmark{1953 · George Catlett Marshall Jr. 乔治·卡特利特·马歇尔}\personslide
+  {George Catlett Marshall Jr.}{乔治·卡特利特·马歇尔}
+  {images/georgecatlettmarshalljr.jpg}{Wikipedia}
+  {1953 年（获奖时 约73岁）}{1880–1959（享年79岁）}{美国}{—}
+  {表彰他提出并主持欧洲经济复兴计划（马歇尔计划）}}
+
+\newcommand{\officeoftheunitednationshighcommissionerforrefugees}{\gdef\personhonors{}\gdef\personbookmark{1954 · Office of the United Nations High Commissioner for Refugees 联合国难民事务高级专员公署}\personslide
+  {Office of the United Nations High Commissioner for Refugees}{联合国难民事务高级专员公署}
+  {images/officeoftheunitednationshighcommissionerforrefugees.jpg}{Wikipedia}
+  {1954 年}{—}{国际组织}{—}
+  {表彰它通过向全世界难民提供帮助与保护来治愈战争创伤的努力}}
+
+\newcommand{\lesterbowlespearson}{\gdef\personhonors{}\gdef\personbookmark{1957 · Lester Bowles Pearson 莱斯特·鲍尔斯·皮尔逊}\personslide
+  {Lester Bowles Pearson}{莱斯特·鲍尔斯·皮尔逊}
+  {images/lesterbowlespearson.jpg}{Wikipedia}
+  {1957 年（获奖时 约60岁）}{1897–1972（享年75岁）}{加拿大}{University of Toronto · United Nations}
+  {表彰他在苏伊士危机后为部署联合国紧急部队做出的关键贡献}}
+
+\newcommand{\dominiquepire}{\gdef\personhonors{}\gdef\personbookmark{1958 · Dominique Pire 多米尼克·皮尔}\personslide
+  {Dominique Pire}{多米尼克·皮尔}
+  {images/dominiquepire.jpg}{Wikipedia}
+  {1958 年（获奖时 约48岁）}{1910–1969（享年59岁）}{比利时}{—}
+  {表彰他帮助难民走出难民营、回归自由与尊严生活的不懈努力}}
+
+\newcommand{\philipnoelbaker}{\gdef\personhonors{}\gdef\personbookmark{1959 · Philip Noel-Baker 菲利普·诺埃尔-贝克}\personslide
+  {Philip Noel-Baker}{菲利普·诺埃尔-贝克}
+  {images/philipnoelbaker.jpg}{Wikipedia}
+  {1959 年（获奖时 约70岁）}{1889–1982（享年93岁）}{英国}{London School of Economics and Political Science · League of Nations}
+  {表彰他长期对裁军与和平事业的贡献}}
+
+\newcommand{\albertluthuli}{\gdef\personhonors{}\gdef\personbookmark{1960 · Albert Luthuli 阿尔伯特·卢图利}\personslide
+  {Albert Luthuli}{阿尔伯特·卢图利}
+  {images/albertluthuli.jpg}{Wikipedia}
+  {1960 年（获奖时 约62岁）}{1898–1967（享年69岁）}{南非}{University of Glasgow}
+  {表彰他以非暴力方式反对种族隔离制度的斗争}}
+
+\newcommand{\daghammarskjold}{\gdef\personhonors{}\gdef\personbookmark{1961 · Dag Hammarskjöld 达格·哈马舍尔德}\personslide
+  {Dag Hammarskjöld}{达格·哈马舍尔德}
+  {images/daghammarskjold.jpg}{Wikipedia}
+  {1961 年（获奖时 约56岁）}{1905–1961（享年56岁）}{瑞典}{United Nations · Ministry of Finance of Sweden}
+  {表彰他将联合国发展为一个能够践行《联合国宪章》原则与宗旨的、卓有成效的建设性国际组织}}
+
+\newcommand{\linuspauling}{\gdef\personhonors{\nobelchembadge{} 诺贝尔化学奖 1954}\gdef\personbookmark{1962 · Linus Pauling 莱纳斯·鲍林}\personslide
+  {Linus Pauling\,\nobelchembadge{}}{莱纳斯·鲍林}
+  {images/linuspauling.jpg}{Wikipedia}
+  {1962 年（获奖时 约61岁）}{1901–1994（享年93岁）}{美国}{California Institute of Technology · Linus Pauling Institute}
+  {表彰他对抗东西方核军备竞赛的斗争}}
+
+\newcommand{\internationalcommitteeoftheredcrossB}{\gdef\personhonors{}\gdef\personbookmark{1963 · International Committee of the Red Cross 红十字国际委员会}\personslide
+  {International Committee of the Red Cross}{红十字国际委员会}
+  {images/internationalcommitteeoftheredcross.jpg}{Wikipedia}
+  {1963 年}{—}{国际组织}{—}
+  {表彰其推广《日内瓦公约》原则并与联合国开展合作}}
+
+\newcommand{\leagueofredcrosssocieties}{\gdef\personhonors{}\gdef\personbookmark{1963 · League of Red Cross Societies 红十字会协会}\personslide
+  {League of Red Cross Societies}{红十字会协会}
+  {images/leagueofredcrosssocieties.png}{Wikipedia}
+  {1963 年}{—}{国际组织}{—}
+  {表彰其推广《日内瓦公约》原则并与联合国开展合作}}
+
+\newcommand{\martinlutherkingjr}{\gdef\personhonors{}\gdef\personbookmark{1964 · Martin Luther King Jr. 马丁·路德·金}\personslide
+  {Martin Luther King Jr.}{马丁·路德·金}
+  {images/martinlutherkingjr.jpg}{Wikipedia}
+  {1964 年（获奖时 约35岁）}{1929–1968（享年39岁）}{美国}{Dexter Avenue Baptist Church · Ebenezer Baptist Church}
+  {表彰他为美国黑人争取公民权利的非暴力斗争}}
+
+\newcommand{\unitednationschildrensfundunicef}{\gdef\personhonors{}\gdef\personbookmark{1965 · United Nations Children's Fund (UNICEF) 联合国儿童基金会}\personslide
+  {United Nations Children's Fund (UNICEF)}{联合国儿童基金会}
+  {images/unitednationschildrensfundunicef.jpg}{Wikipedia}
+  {1965 年}{—}{国际组织}{—}
+  {表彰其为增进国家间团结、缩小贫富国家差距所做的努力}}
+
+\newcommand{\renecassin}{\gdef\personhonors{}\gdef\personbookmark{1968 · René Cassin 勒内·卡森}\personslide
+  {René Cassin}{勒内·卡森}
+  {images/renecassin.jpg}{Wikipedia}
+  {1968 年（获奖时 约81岁）}{1887–1976（享年89岁）}{法国}{University of Paris · University of Lille}
+  {表彰他为保障《世界人权宣言》所载人权而进行的斗争}}
+
+\newcommand{\internationallabourorganization}{\gdef\personhonors{}\gdef\personbookmark{1969 · International Labour Organization 国际劳工组织}\personslide
+  {International Labour Organization}{国际劳工组织}
+  {images/internationallabourorganization.jpg}{Wikipedia}
+  {1969 年}{—}{国际组织}{—}
+  {表彰其创建国际劳工立法，保障各国劳动条件的特定标准}}
+
+\newcommand{\normanernestborlaug}{\gdef\personhonors{}\gdef\personbookmark{1970 · Norman Ernest Borlaug 诺曼·博洛格}\personslide
+  {Norman Ernest Borlaug}{诺曼·博洛格}
+  {images/normanernestborlaug.jpg}{Wikipedia}
+  {1970 年（获奖时 约56岁）}{1914–2009（享年95岁）}{美国}{University of Iowa}
+  {表彰他带来了有充分依据的希望——绿色革命}}
+
+\newcommand{\willybrandt}{\gdef\personhonors{}\gdef\personbookmark{1971 · Willy Brandt 维利·勃兰特}\personslide
+  {Willy Brandt}{维利·勃兰特}
+  {images/willybrandt.jpg}{Wikipedia}
+  {1971 年（获奖时 约58岁）}{1913–1992（享年79岁）}{西德}{Berlin}
+  {表彰他为东西方之间有意义的对话铺平了道路}}
+
+\newcommand{\henrykissinger}{\gdef\personhonors{}\gdef\personbookmark{1973 · Henry Kissinger 亨利·基辛格}\personslide
+  {Henry Kissinger}{亨利·基辛格}
+  {images/henrykissinger.png}{Wikipedia}
+  {1973 年（获奖时 约50岁）}{1923–2023（享年100岁）}{美国}{Harvard University · Georgetown University}
+  {表彰二人共同谈判达成 1973 年越南停火}}
+
+\newcommand{\leuctho}{\gdef\personhonors{}\gdef\personbookmark{1973 · Lê Đức Thọ 黎德寿}\personslide
+  {Lê Đức Thọ}{黎德寿}
+  {images/leuctho.jpg}{Wikipedia}
+  {1973 年（获奖时 约62岁）}{1911–1990（享年79岁）}{北越}{—}
+  {表彰二人共同谈判达成 1973 年越南停火}}
+
+\newcommand{\seanmacbride}{\gdef\personhonors{}\gdef\personbookmark{1974 · Seán MacBride 肖恩·麦克布赖德}\personslide
+  {Seán MacBride}{肖恩·麦克布赖德}
+  {images/seanmacbride.jpg}{Wikipedia}
+  {1974 年（获奖时 约70岁）}{1904–1988（享年84岁）}{爱尔兰}{Amnesty International · United Nations}
+  {表彰他为在全世界保障与发展人权所做的努力}}
+
+\newcommand{\eisakusato}{\gdef\personhonors{}\gdef\personbookmark{1974 · Eisaku Satō 佐藤荣作}\personslide
+  {Eisaku Satō}{佐藤荣作}
+  {images/eisakusato.jpg}{Wikipedia}
+  {1974 年（获奖时 约73岁）}{1901–1975（享年74岁）}{日本}{Ministry of Railways}
+  {表彰他为稳定亚太地区局势做出的贡献以及签署《不扩散核武器条约》}}
+
+\newcommand{\andreisakharov}{\gdef\personhonors{}\gdef\personbookmark{1975 · Andrei Sakharov 安德烈·萨哈罗夫}\personslide
+  {Andrei Sakharov}{安德烈·萨哈罗夫}
+  {images/andreisakharov.jpg}{Wikipedia}
+  {1975 年（获奖时 约54岁）}{1921–1989（享年68岁）}{苏联}{Lebedev Physical Institute}
+  {表彰他为苏联人权、裁军以及各国间合作而进行的斗争}}
+
+\newcommand{\bettywilliams}{\gdef\personhonors{}\gdef\personbookmark{1976 · Betty Williams 贝蒂·威廉斯}\personslide
+  {Betty Williams}{贝蒂·威廉斯}
+  {images/bettywilliams.jpg}{Wikipedia}
+  {1976 年（获奖时 约33岁）}{1943–2020（享年77岁）}{英国}{Nova Southeastern University · Sam Houston State University}
+  {表彰她们为发起终止北爱尔兰暴力冲突运动所表现出的勇气}}
+
+\newcommand{\maireadcorrigan}{\gdef\personhonors{}\gdef\personbookmark{1976 · Mairead Corrigan 梅里德·科里根}\personslide
+  {Mairead Corrigan}{梅里德·科里根}
+  {images/maireadcorrigan.jpg}{Wikipedia}
+  {1976 年（获奖时 约32岁）}{1944–}{英国}{—}
+  {表彰她们为发起终止北爱尔兰暴力冲突运动所表现出的勇气}}
+
+\newcommand{\amnestyinternational}{\gdef\personhonors{}\gdef\personbookmark{1977 · Amnesty International 国际特赦组织}\personslide
+  {Amnesty International}{国际特赦组织}
+  {images/amnestyinternational.jpg}{Wikipedia}
+  {1977 年}{—}{英国}{—}
+  {表彰其为在全世界尊重人权所做的贡献}}
+
+\newcommand{\anwarsadat}{\gdef\personhonors{}\gdef\personbookmark{1978 · Anwar Sadat 安瓦尔·萨达特}\personslide
+  {Anwar Sadat}{安瓦尔·萨达特}
+  {images/anwarsadat.jpg}{Wikipedia}
+  {1978 年（获奖时 约60岁）}{1918–1981（享年63岁）}{埃及}{—}
+  {表彰二人共同谈判促成 1978 年埃及与以色列之间的和平}}
+
+\newcommand{\menachembegin}{\gdef\personhonors{}\gdef\personbookmark{1978 · Menachem Begin 梅纳赫姆·贝京}\personslide
+  {Menachem Begin}{梅纳赫姆·贝京}
+  {images/menachembegin.jpg}{Wikipedia}
+  {1978 年（获奖时 约65岁）}{1913–1992（享年79岁）}{以色列}{—}
+  {表彰二人共同谈判促成 1978 年埃及与以色列之间的和平}}
+
+\newcommand{\motherteresa}{\gdef\personhonors{}\gdef\personbookmark{1979 · Mother Teresa 特蕾莎修女}\personslide
+  {Mother Teresa}{特蕾莎修女}
+  {images/motherteresa.jpg}{Wikipedia}
+  {1979 年（获奖时 约69岁）}{1910–1997（享年87岁）}{阿尔巴尼亚}{—}
+  {表彰她为救助苦难人类所做的工作}}
+
+\newcommand{\adolfoperezesquivel}{\gdef\personhonors{}\gdef\personbookmark{1980 · Adolfo Pérez Esquivel 阿道弗·佩雷斯·埃斯基维尔}\personslide
+  {Adolfo Pérez Esquivel}{阿道弗·佩雷斯·埃斯基维尔}
+  {images/adolfoperezesquivel.jpg}{Wikipedia}
+  {1980 年（获奖时 约49岁）}{1931–}{阿根廷}{University of Buenos Aires}
+  {表彰他成为受压迫民众（尤其是拉丁美洲民众）的精神源泉}}
+
+\newcommand{\officeoftheunitednationshighcommissionerforrefugeesA}{\gdef\personhonors{}\gdef\personbookmark{1981 · Office of the United Nations High Commissioner for Refugees 联合国难民事务高级专员公署}\personslide
+  {Office of the United Nations High Commissioner for Refugees}{联合国难民事务高级专员公署}
+  {images/officeoftheunitednationshighcommissionerforrefugees.jpg}{Wikipedia}
+  {1981 年}{—}{国际组织}{—}
+  {表彰其为维护难民基本权利所做的促进工作}}
+
+\newcommand{\alvamyrdal}{\gdef\personhonors{}\gdef\personbookmark{1982 · Alva Myrdal 阿尔娃·米达尔}\personslide
+  {Alva Myrdal}{阿尔娃·米达尔}
+  {images/alvamyrdal.jpg}{Wikipedia}
+  {1982 年（获奖时 约80岁）}{1902–1986（享年84岁）}{瑞典}{United Nations}
+  {表彰他们在裁军以及无核武器区与无武器区方面的工作}}
+
+\newcommand{\alfonsogarciarobles}{\gdef\personhonors{}\gdef\personbookmark{1982 · Alfonso García Robles 阿方索·加西亚·罗夫莱斯}\personslide
+  {Alfonso García Robles}{阿方索·加西亚·罗夫莱斯}
+  {images/alfonsogarciarobles.jpg}{Wikipedia}
+  {1982 年（获奖时 约71岁）}{1911–1991（享年80岁）}{墨西哥}{United Nations}
+  {表彰他们在裁军以及无核武器区与无武器区方面的工作}}
+
+\newcommand{\lechwaesa}{\gdef\personhonors{}\gdef\personbookmark{1983 · Lech Wałęsa 莱赫·瓦文萨}\personslide
+  {Lech Wałęsa}{莱赫·瓦文萨}
+  {images/lechwaesa.jpg}{Wikipedia}
+  {1983 年（获奖时 约40岁）}{1943–}{波兰}{—}
+  {表彰他为波兰自由工会与人权进行的非暴力斗争}}
+
+\newcommand{\desmondtutu}{\gdef\personhonors{}\gdef\personbookmark{1984 · Desmond Tutu 德斯蒙德·图图}\personslide
+  {Desmond Tutu}{德斯蒙德·图图}
+  {images/desmondtutu.jpg}{Wikipedia}
+  {1984 年（获奖时 约53岁）}{1931–2021（享年90岁）}{南非}{National University of Lesotho}
+  {表彰他作为统一性领袖人物，在以非暴力运动解决南非种族隔离问题中发挥的作用}}
+
+\newcommand{\internationalphysiciansforthepreventionofnuclearwar}{\gdef\personhonors{}\gdef\personbookmark{1985 · International Physicians for the Prevention of Nuclear War 国际防止核战争医生组织}\personslide
+  {International Physicians for the Prevention of Nuclear War}{国际防止核战争医生组织}
+  {images/internationalphysiciansforthepreventionofnuclearwar.jpg}{Wikipedia}
+  {1985 年}{—}{国际组织}{—}
+  {表彰其传播权威信息，唤醒世人对核战争灾难性后果的认识}}
+
+\newcommand{\eliewiesel}{\gdef\personhonors{}\gdef\personbookmark{1986 · Elie Wiesel 埃利·维瑟尔}\personslide
+  {Elie Wiesel}{埃利·维瑟尔}
+  {images/eliewiesel.jpg}{Wikipedia}
+  {1986 年（获奖时 约58岁）}{1928–2016（享年88岁）}{美国}{Yedioth Ahronoth · Boston University}
+  {表彰他作为人类的信使：他所传递的是和平、救赎与尊严的讯息}}
+
+\newcommand{\oscararias}{\gdef\personhonors{}\gdef\personbookmark{1987 · Óscar Arias 奥斯卡·阿里亚斯}\personslide
+  {Óscar Arias}{奥斯卡·阿里亚斯}
+  {images/oscararias.jpg}{Wikipedia}
+  {1987 年（获奖时 约46岁）}{1941–}{哥斯达黎加}{Harvard University}
+  {表彰他为中美洲持久和平所做的工作}}
+
+\newcommand{\unitednationspeacekeepingforces}{\gdef\personhonors{}\gdef\personbookmark{1988 · United Nations Peace-Keeping Forces 联合国维持和平部队}\personslide
+  {United Nations Peace-Keeping Forces}{联合国维持和平部队}
+  {images/unitednationspeacekeepingforces.jpg}{Wikipedia}
+  {1988 年}{—}{国际组织}{—}
+  {表彰其防止武装冲突并为谈判创造条件}}
+
+\newcommand{\tenzingyatsothdalailama}{\gdef\personhonors{}\gdef\personbookmark{1989 · Tenzin Gyatso, 14th Dalai Lama 第十四世达赖喇嘛·丹增嘉措}\personslide
+  {Tenzin Gyatso, 14th Dalai Lama}{第十四世达赖喇嘛·丹增嘉措}
+  {images/tenzingyatsothdalailama.jpg}{Wikipedia}
+  {1989 年（获奖时 约54岁）}{1935–}{印度}{—}
+  {表彰其倡导以宽容与相互尊重为基础的和平方式，以维护本民族的历史与文化遗产}}
+
+\newcommand{\mikhailgorbachev}{\gdef\personhonors{}\gdef\personbookmark{1990 · Mikhail Gorbachev 米哈伊尔·戈尔巴乔夫}\personslide
+  {Mikhail Gorbachev}{米哈伊尔·戈尔巴乔夫}
+  {images/mikhailgorbachev.jpg}{Wikipedia}
+  {1990 年（获奖时 约59岁）}{1931–2022（享年91岁）}{苏联}{All-Union Leninist Young Communist League · The Gorbachev Foundation}
+  {表彰他在东西方关系剧变中所发挥的主导作用}}
+
+\newcommand{\aungsansuukyi}{\gdef\personhonors{}\gdef\personbookmark{1991 · Aung San Suu Kyi 昂山素季}\personslide
+  {Aung San Suu Kyi}{昂山素季}
+  {images/aungsansuukyi.jpg}{Wikipedia}
+  {1991 年（获奖时 约46岁）}{1945–}{缅甸}{United Nations}
+  {表彰她为民主与人权进行的非暴力斗争}}
+
+\newcommand{\rigobertamenchu}{\gdef\personhonors{}\gdef\personbookmark{1992 · Rigoberta Menchú 里戈韦塔·门楚}\personslide
+  {Rigoberta Menchú}{里戈韦塔·门楚}
+  {images/rigobertamenchu.jpg}{Wikipedia}
+  {1992 年（获奖时 约33岁）}{1959–}{危地马拉}{—}
+  {表彰她基于尊重原住民权利、为社会正义与族裔文化和解而进行的斗争}}
+
+\newcommand{\nelsonmandela}{\gdef\personhonors{}\gdef\personbookmark{1993 · Nelson Mandela 纳尔逊·曼德拉}\personslide
+  {Nelson Mandela}{纳尔逊·曼德拉}
+  {images/nelsonmandela.jpg}{Wikipedia}
+  {1993 年（获奖时 约75岁）}{1918–2013（享年95岁）}{南非}{—}
+  {表彰他们和平终结种族隔离制度的工作，以及为新民主南非奠定基础}}
+
+\newcommand{\frederikwillemdeklerk}{\gdef\personhonors{}\gdef\personbookmark{1993 · Frederik Willem de Klerk 弗雷德里克·威廉·德克勒克}\personslide
+  {Frederik Willem de Klerk}{弗雷德里克·威廉·德克勒克}
+  {images/frederikwillemdeklerk.jpg}{Wikipedia}
+  {1993 年（获奖时 约57岁）}{1936–2021（享年85岁）}{南非}{—}
+  {表彰他们和平终结种族隔离制度的工作，以及为新民主南非奠定基础}}
+
+\newcommand{\yasserarafat}{\gdef\personhonors{}\gdef\personbookmark{1994 · Yasser Arafat 亚西尔·阿拉法特}\personslide
+  {Yasser Arafat}{亚西尔·阿拉法特}
+  {images/yasserarafat.jpg}{Wikipedia}
+  {1994 年（获奖时 约65岁）}{1929–2004（享年75岁）}{巴勒斯坦}{—}
+  {表彰他们为在中东缔造和平所做的努力}}
+
+\newcommand{\yitzhakrabin}{\gdef\personhonors{}\gdef\personbookmark{1994 · Yitzhak Rabin 伊扎克·拉宾}\personslide
+  {Yitzhak Rabin}{伊扎克·拉宾}
+  {images/yitzhakrabin.jpg}{Wikipedia}
+  {1994 年（获奖时 约72岁）}{1922–1995（享年73岁）}{以色列}{—}
+  {表彰他们为在中东缔造和平所做的努力}}
+
+\newcommand{\shimonperes}{\gdef\personhonors{}\gdef\personbookmark{1994 · Shimon Peres 希蒙·佩雷斯}\personslide
+  {Shimon Peres}{希蒙·佩雷斯}
+  {images/shimonperes.jpg}{Wikipedia}
+  {1994 年（获奖时 约71岁）}{1923–2016（享年93岁）}{以色列}{Mossad}
+  {表彰他们为在中东缔造和平所做的努力}}
+
+\newcommand{\josephrotblat}{\gdef\personhonors{}\gdef\personbookmark{1995 · Joseph Rotblat 约瑟夫·罗特布拉特}\personslide
+  {Joseph Rotblat}{约瑟夫·罗特布拉特}
+  {images/josephrotblat.jpg}{Wikipedia}
+  {1995 年（获奖时 约87岁）}{1908–2005（享年97岁）}{波兰}{University of Edinburgh · Conservatoire national des Arts et Métiers}
+  {表彰他们为削弱核武器在国际政治中的作用、并在长远上消除核武器所做的努力}}
+
+\newcommand{\pugwashconferencesonscienceandworldaffairs}{\gdef\personhonors{}\gdef\personbookmark{1995 · Pugwash Conferences on Science and World Affairs 帕格沃什科学与世界事务会议}\personslide
+  {Pugwash Conferences on Science and World Affairs}{帕格沃什科学与世界事务会议}
+  {images/pugwashconferencesonscienceandworldaffairs.jpg}{Wikipedia}
+  {1995 年}{—}{国际组织}{—}
+  {表彰他们为削弱核武器在国际政治中的作用、并在长远上消除核武器所做的努力}}
+
+\newcommand{\carlosfilipeximenesbelo}{\gdef\personhonors{}\gdef\personbookmark{1996 · Carlos Filipe Ximenes Belo 卡洛斯·菲利佩·西门内斯·贝洛}\personslide
+  {Carlos Filipe Ximenes Belo}{卡洛斯·菲利佩·西门内斯·贝洛}
+  {images/carlosfilipeximenesbelo.jpg}{Wikipedia}
+  {1996 年（获奖时 约48岁）}{1948–}{东帝汶}{—}
+  {表彰他们为公正和平地解决东帝汶冲突所做的工作}}
+
+\newcommand{\joseramoshorta}{\gdef\personhonors{}\gdef\personbookmark{1996 · José Ramos-Horta 若泽·拉莫斯·奥尔塔}\personslide
+  {José Ramos-Horta}{若泽·拉莫斯·奥尔塔}
+  {images/joseramoshorta.jpg}{Wikipedia}
+  {1996 年（获奖时 约47岁）}{1949–}{东帝汶}{University of Oxford}
+  {表彰他们为公正和平地解决东帝汶冲突所做的工作}}
+
+\newcommand{\internationalcampaigntobanlandmines}{\gdef\personhonors{}\gdef\personbookmark{1997 · International Campaign to Ban Landmines 国际禁止地雷运动}\personslide
+  {International Campaign to Ban Landmines}{国际禁止地雷运动}
+  {images/internationalcampaigntobanlandmines.jpg}{Wikipedia}
+  {1997 年}{—}{国际组织}{—}
+  {表彰他们为禁止与清除杀伤人员地雷所做的工作}}
+
+\newcommand{\jodywilliams}{\gdef\personhonors{}\gdef\personbookmark{1997 · Jody Williams 乔迪·威廉斯}\personslide
+  {Jody Williams}{乔迪·威廉斯}
+  {images/jodywilliams.jpg}{Wikipedia}
+  {1997 年（获奖时 约47岁）}{1950–}{美国}{University of Houston}
+  {表彰他们为禁止与清除杀伤人员地雷所做的工作}}
+
+\newcommand{\johnhume}{\gdef\personhonors{}\gdef\personbookmark{1998 · John Hume 约翰·休姆}\personslide
+  {John Hume}{约翰·休姆}
+  {images/johnhume.jpg}{Wikipedia}
+  {1998 年（获奖时 约61岁）}{1937–2020（享年83岁）}{爱尔兰}{—}
+  {表彰他们为和平解决北爱尔兰冲突所做的努力}}
+
+\newcommand{\davidtrimble}{\gdef\personhonors{}\gdef\personbookmark{1998 · David Trimble 大卫·特林布尔}\personslide
+  {David Trimble}{大卫·特林布尔}
+  {images/davidtrimble.jpg}{Wikipedia}
+  {1998 年（获奖时 约54岁）}{1944–2022（享年78岁）}{英国}{Queen's University Belfast}
+  {表彰他们为和平解决北爱尔兰冲突所做的努力}}
+
+\newcommand{\medecinssansfrontieres}{\gdef\personhonors{}\gdef\personbookmark{1999 · Médecins Sans Frontières 无国界医生}\personslide
+  {Médecins Sans Frontières}{无国界医生}
+  {images/medecinssansfrontieres.jpg}{Wikipedia}
+  {1999 年}{—}{国际组织}{—}
+  {表彰该组织在多个大洲的开创性人道主义工作}}
+
+\newcommand{\kimdaejung}{\gdef\personhonors{}\gdef\personbookmark{2000 · Kim Dae-jung 金大中}\personslide
+  {Kim Dae-jung}{金大中}
+  {images/kimdaejung.jpg}{Wikipedia}
+  {2000 年（获奖时 约76岁）}{1924–2009（享年85岁）}{韩国}{University of Cambridge}
+  {表彰他为韩国及整个东亚的民主与人权所做的工作，尤其是为与朝鲜的和平和解所做的努力}}
+
+\newcommand{\unitednations}{\gdef\personhonors{}\gdef\personbookmark{2001 · United Nations 联合国}\personslide
+  {United Nations}{联合国}
+  {images/unitednations.png}{Wikipedia}
+  {2001 年}{—}{国际组织}{—}
+  {表彰他们为一个组织更完善、更和平的世界所做的工作}}
+
+\newcommand{\kofiannan}{\gdef\personhonors{}\gdef\personbookmark{2001 · Kofi Annan 科菲·安南}\personslide
+  {Kofi Annan}{科菲·安南}
+  {images/kofiannan.jpg}{Wikipedia}
+  {2001 年（获奖时 约63岁）}{1938–2018（享年80岁）}{加纳}{United Nations · World Health Organization}
+  {表彰他们为一个组织更完善、更和平的世界所做的工作}}
+
+\newcommand{\jimmycarter}{\gdef\personhonors{}\gdef\personbookmark{2002 · Jimmy Carter 吉米·卡特}\personslide
+  {Jimmy Carter}{吉米·卡特}
+  {images/jimmycarter.jpg}{Wikipedia}
+  {2002 年（获奖时 约78岁）}{1924–2024（享年100岁）}{美国}{Emory University}
+  {表彰他数十年来不知疲倦地寻求国际冲突的和平解决方案、推进民主与人权、促进经济与社会发展}}
+
+\newcommand{\shirinebadi}{\gdef\personhonors{}\gdef\personbookmark{2003 · Shirin Ebadi 希琳·伊巴迪}\personslide
+  {Shirin Ebadi}{希琳·伊巴迪}
+  {images/shirinebadi.jpg}{Wikipedia}
+  {2003 年（获奖时 约56岁）}{1947–}{伊朗}{University of Tehran}
+  {表彰她为民主与人权所做的努力，尤其聚焦于妇女与儿童的权利}}
+
+\newcommand{\wangarimutamaathai}{\gdef\personhonors{}\gdef\personbookmark{2004 · Wangari Muta Maathai 旺加里·马塔伊}\personslide
+  {Wangari Muta Maathai}{旺加里·马塔伊}
+  {images/wangarimutamaathai.jpg}{Wikipedia}
+  {2004 年（获奖时 约64岁）}{1940–2011（享年71岁）}{肯尼亚}{Yale University}
+  {表彰她对可持续发展、民主与和平的贡献}}
+
+\newcommand{\internationalatomicenergyagency}{\gdef\personhonors{}\gdef\personbookmark{2005 · International Atomic Energy Agency 国际原子能机构}\personslide
+  {International Atomic Energy Agency}{国际原子能机构}
+  {images/internationalatomicenergyagency.png}{Wikipedia}
+  {2005 年}{—}{国际组织}{—}
+  {表彰他们为防止核能被用于军事目的、并确保和平利用核能以最安全的方式进行所做的努力}}
+
+\newcommand{\mohamedelbaradei}{\gdef\personhonors{}\gdef\personbookmark{2005 · Mohamed ElBaradei 穆罕默德·巴拉迪}\personslide
+  {Mohamed ElBaradei}{穆罕默德·巴拉迪}
+  {images/mohamedelbaradei.png}{Wikipedia}
+  {2005 年（获奖时 约63岁）}{1942–}{埃及}{United Nations}
+  {表彰他们为防止核能被用于军事目的、并确保和平利用核能以最安全的方式进行所做的努力}}
+
+\newcommand{\muhammadyunus}{\gdef\personhonors{}\gdef\personbookmark{2006 · Muhammad Yunus 穆罕默德·尤努斯}\personslide
+  {Muhammad Yunus}{穆罕默德·尤努斯}
+  {images/muhammadyunus.jpg}{Wikipedia}
+  {2006 年（获奖时 约66岁）}{1940–}{孟加拉国}{University of Dhaka · Q1784748}
+  {表彰他们自下而上促进社会与经济发展的努力}}
+
+\newcommand{\grameenbank}{\gdef\personhonors{}\gdef\personbookmark{2006 · Grameen Bank 格莱珉银行}\personslide
+  {Grameen Bank}{格莱珉银行}
+  {images/grameenbank.jpg}{Wikipedia}
+  {2006 年}{—}{孟加拉国}{—}
+  {表彰他们自下而上促进社会与经济发展的努力}}
+
+\newcommand{\intergovernmentalpanelonclimatechange}{\gdef\personhonors{}\gdef\personbookmark{2007 · Intergovernmental Panel on Climate Change 政府间气候变化专门委员会}\personslide
+  {Intergovernmental Panel on Climate Change}{政府间气候变化专门委员会}
+  {images/intergovernmentalpanelonclimatechange.jpg}{Wikipedia}
+  {2007 年}{—}{国际组织}{—}
+  {表彰他们为积累与传播人为气候变化的知识、并为应对此类变化所需的措施奠定基础所做的努力}}
+
+\newcommand{\algore}{\gdef\personhonors{}\gdef\personbookmark{2007 · Al Gore 阿尔·戈尔}\personslide
+  {Al Gore}{阿尔·戈尔}
+  {images/algore.jpg}{Wikipedia}
+  {2007 年（获奖时 约59岁）}{1948–}{美国}{University of California, Los Angeles · Q1784748}
+  {表彰他们为积累与传播人为气候变化的知识、并为应对此类变化所需的措施奠定基础所做的努力}}
+
+\newcommand{\marttiahtisaari}{\gdef\personhonors{}\gdef\personbookmark{2008 · Martti Ahtisaari 马尔蒂·阿赫蒂萨里}\personslide
+  {Martti Ahtisaari}{马尔蒂·阿赫蒂萨里}
+  {images/marttiahtisaari.jpg}{Wikipedia}
+  {2008 年（获奖时 约71岁）}{1937–2023（享年86岁）}{芬兰}{United Nations}
+  {表彰他三十多年来在多个大洲为解决国际冲突所做的重要努力}}
+
+\newcommand{\barackobama}{\gdef\personhonors{}\gdef\personbookmark{2009 · Barack Obama 巴拉克·奥巴马}\personslide
+  {Barack Obama}{巴拉克·奥巴马}
+  {images/barackobama.jpg}{Wikipedia}
+  {2009 年（获奖时 约48岁）}{1961–}{美国}{Business International Corporation · New York Public Interest Research Group}
+  {表彰他为加强国际外交与各国人民间合作所做的非凡努力}}
+
+\newcommand{\liuxiaobo}{\gdef\personhonors{}\gdef\personbookmark{2010 · Liu Xiaobo 刘晓波}\personslide
+  {Liu Xiaobo}{刘晓波}
+  {images/liuxiaobo.jpg}{Wikipedia}
+  {2010 年（获奖时 约55岁）}{1955–2017（享年62岁）}{中国}{Columbia University · Johns Hopkins University}
+  {表彰他在中国为基本人权而进行的长期非暴力斗争}}
+
+\newcommand{\ellenjohnsonsirleaf}{\gdef\personhonors{}\gdef\personbookmark{2011 · Ellen Johnson Sirleaf 埃伦·约翰逊·瑟利夫}\personslide
+  {Ellen Johnson Sirleaf}{埃伦·约翰逊·瑟利夫}
+  {images/ellenjohnsonsirleaf.jpg}{Wikipedia}
+  {2011 年（获奖时 约73岁）}{1938–}{利比里亚}{World Bank · Citibank}
+  {表彰她们以非暴力方式维护妇女安全、争取妇女充分参与和平建设工作的权利}}
+
+\newcommand{\leymahgbowee}{\gdef\personhonors{}\gdef\personbookmark{2011 · Leymah Gbowee 莱伊曼·古博薇}\personslide
+  {Leymah Gbowee}{莱伊曼·古博薇}
+  {images/leymahgbowee.jpg}{Wikipedia}
+  {2011 年（获奖时 约39岁）}{1972–}{利比里亚}{Columbia University}
+  {表彰她们以非暴力方式维护妇女安全、争取妇女充分参与和平建设工作的权利}}
+
+\newcommand{\tawakkolkarman}{\gdef\personhonors{}\gdef\personbookmark{2011 · Tawakkol Karman 塔瓦库勒·卡曼}\personslide
+  {Tawakkol Karman}{塔瓦库勒·卡曼}
+  {images/tawakkolkarman.jpg}{Wikipedia}
+  {2011 年（获奖时 约32岁）}{1979–}{也门}{—}
+  {表彰她们以非暴力方式维护妇女安全、争取妇女充分参与和平建设工作的权利}}
+
+\newcommand{\europeanunion}{\gdef\personhonors{}\gdef\personbookmark{2012 · European Union 欧洲联盟}\personslide
+  {European Union}{欧洲联盟}
+  {images/europeanunion.jpg}{Wikipedia}
+  {2012 年}{—}{国际组织}{—}
+  {表彰其六十余年来对推进欧洲和平与和解、民主与人权的贡献}}
+
+\newcommand{\organisationfortheprohibitionofchemicalweapons}{\gdef\personhonors{}\gdef\personbookmark{2013 · Organisation for the Prohibition of Chemical Weapons 禁止化学武器组织}\personslide
+  {Organisation for the Prohibition of Chemical Weapons}{禁止化学武器组织}
+  {images/organisationfortheprohibitionofchemicalweapons.jpg}{Wikipedia}
+  {2013 年}{—}{国际组织}{—}
+  {表彰其为消除化学武器所做的广泛努力}}
+
+\newcommand{\kailashsatyarthi}{\gdef\personhonors{}\gdef\personbookmark{2014 · Kailash Satyarthi 凯拉什·萨蒂亚尔蒂}\personslide
+  {Kailash Satyarthi}{凯拉什·萨蒂亚尔蒂}
+  {images/kailashsatyarthi.jpg}{Wikipedia}
+  {2014 年（获奖时 约60岁）}{1954–}{印度}{International Center for Early Childhood Education and Labour}
+  {表彰他们对抗对儿童与青年的压迫、争取所有儿童受教育权的斗争}}
+
+\newcommand{\malalayousafzai}{\gdef\personhonors{}\gdef\personbookmark{2014 · Malala Yousafzai 马拉拉·优素福扎伊}\personslide
+  {Malala Yousafzai}{马拉拉·优素福扎伊}
+  {images/malalayousafzai.jpg}{Wikipedia}
+  {2014 年（获奖时 约17岁）}{1997–}{巴基斯坦}{Malala Fund}
+  {表彰他们对抗对儿童与青年的压迫、争取所有儿童受教育权的斗争}}
+
+\newcommand{\tunisiannationaldialoguequartet}{\gdef\personhonors{}\gdef\personbookmark{2015 · Tunisian National Dialogue Quartet 突尼斯全国对话四方机制}\personslide
+  {Tunisian National Dialogue Quartet}{突尼斯全国对话四方机制}
+  {images/tunisiannationaldialoguequartet.jpg}{Wikipedia}
+  {2015 年}{—}{突尼斯}{—}
+  {表彰其在 2011 年茉莉花革命后为突尼斯建设多元民主做出的决定性贡献}}
+
+\newcommand{\juanmanuelsantos}{\gdef\personhonors{}\gdef\personbookmark{2016 · Juan Manuel Santos 胡安·曼努埃尔·桑托斯}\personslide
+  {Juan Manuel Santos}{胡安·曼努埃尔·桑托斯}
+  {images/juanmanuelsantos.jpg}{Wikipedia}
+  {2016 年（获奖时 约65岁）}{1951–}{哥伦比亚}{—}
+  {表彰他坚定不移地结束该国长达 50 余年的内战}}
+
+\newcommand{\internationalcampaigntoabolishnuclearweapons}{\gdef\personhonors{}\gdef\personbookmark{2017 · International Campaign to Abolish Nuclear Weapons 国际废除核武器运动}\personslide
+  {International Campaign to Abolish Nuclear Weapons}{国际废除核武器运动}
+  {images/internationalcampaigntoabolishnuclearweapons.jpg}{Wikipedia}
+  {2017 年}{—}{国际组织}{—}
+  {表彰其唤起世人关注任何使用核武器行为的人道主义灾难性后果，并开创性地推动以条约禁绝此类武器}}
+
+\newcommand{\denismukwege}{\gdef\personhonors{}\gdef\personbookmark{2018 · Denis Mukwege 德尼·穆奎格}\personslide
+  {Denis Mukwege}{德尼·穆奎格}
+  {images/denismukwege.jpg}{Wikipedia}
+  {2018 年（获奖时 约63岁）}{1955–}{刚果（金）}{Panzi Hospital}
+  {表彰他们为终结在战争与武装冲突中将性暴力用作武器所做的努力}}
+
+\newcommand{\nadiamurad}{\gdef\personhonors{}\gdef\personbookmark{2018 · Nadia Murad 纳迪娅·穆拉德}\personslide
+  {Nadia Murad}{纳迪娅·穆拉德}
+  {images/nadiamurad.jpg}{Wikipedia}
+  {2018 年（获奖时 约25岁）}{1993–}{伊拉克}{—}
+  {表彰他们为终结在战争与武装冲突中将性暴力用作武器所做的努力}}
+
+\newcommand{\abiyahmed}{\gdef\personhonors{}\gdef\personbookmark{2019 · Abiy Ahmed 阿比·艾哈迈德}\personslide
+  {Abiy Ahmed}{阿比·艾哈迈德}
+  {images/abiyahmed.jpg}{Wikipedia}
+  {2019 年（获奖时 约43岁）}{1976–}{埃塞俄比亚}{—}
+  {表彰他为实现和平与国际合作所做的努力，尤其是为解决与邻国厄立特里亚边界冲突采取的决定性行动}}
+
+\newcommand{\worldfoodprogramme}{\gdef\personhonors{}\gdef\personbookmark{2020 · World Food Programme 世界粮食计划署}\personslide
+  {World Food Programme}{世界粮食计划署}
+  {images/worldfoodprogramme.jpg}{Wikipedia}
+  {2020 年}{—}{国际组织}{—}
+  {表彰其为战胜饥饿所做的努力、对改善冲突地区和平条件的贡献，以及在防止将饥饿用作战争与冲突武器方面的推动作用}}
+
+\newcommand{\mariaressa}{\gdef\personhonors{}\gdef\personbookmark{2021 · Maria Ressa 玛丽亚·雷萨}\personslide
+  {Maria Ressa}{玛丽亚·雷萨}
+  {images/mariaressa.jpg}{Wikipedia}
+  {2021 年（获奖时 约58岁）}{1963–}{菲律宾}{Rappler}
+  {表彰他们为捍卫言论自由所做的努力——言论自由是民主与持久和平的前提条件}}
+
+\newcommand{\dmitrymuratov}{\gdef\personhonors{}\gdef\personbookmark{2021 · Dmitry Muratov 德米特里·穆拉托夫}\personslide
+  {Dmitry Muratov}{德米特里·穆拉托夫}
+  {images/dmitrymuratov.jpg}{Wikipedia}
+  {2021 年（获奖时 约60岁）}{1961–}{俄罗斯}{Novaya Gazeta · Komsomolskaya Pravda}
+  {表彰他们为捍卫言论自由所做的努力——言论自由是民主与持久和平的前提条件}}
+
+\newcommand{\alesbialiatski}{\gdef\personhonors{}\gdef\personbookmark{2022 · Ales Bialiatski 阿列斯·比亚利亚茨基}\personslide
+  {Ales Bialiatski}{阿列斯·比亚利亚茨基}
+  {images/alesbialiatski.jpg}{Wikipedia}
+  {2022 年（获奖时 约60岁）}{1962–}{白俄罗斯}{Viasna Human Rights Centre · Maksim Bahdanovič Literary Museum, Minsk}
+  {{\fontsize{6}{7.2}\selectfont 本届和平奖得主是其母国民间社会的代表。他们多年来倡导批评权力的权利、维护公民的基本权利，并为记录战争罪行、侵犯人权与滥用权力做出了杰出努力。他们共同彰显了民间社会对和平与民主的重要意义。}}}
+
+\newcommand{\memorial}{\gdef\personhonors{}\gdef\personbookmark{2022 · Memorial 纪念人权组织}\personslide
+  {Memorial}{纪念人权组织}
+  {images/memorial.jpg}{Wikipedia}
+  {2022 年}{—}{俄罗斯}{—}
+  {{\fontsize{6}{7.2}\selectfont 本届和平奖得主是其母国民间社会的代表。他们多年来倡导批评权力的权利、维护公民的基本权利，并为记录战争罪行、侵犯人权与滥用权力做出了杰出努力。他们共同彰显了民间社会对和平与民主的重要意义。}}}
+
+\newcommand{\centreforcivilliberties}{\gdef\personhonors{}\gdef\personbookmark{2022 · Centre for Civil Liberties 公民自由中心}\personslide
+  {Centre for Civil Liberties}{公民自由中心}
+  {none}{C.L.}
+  {2022 年}{—}{乌克兰}{—}
+  {{\fontsize{6}{7.2}\selectfont 本届和平奖得主是其母国民间社会的代表。他们多年来倡导批评权力的权利、维护公民的基本权利，并为记录战争罪行、侵犯人权与滥用权力做出了杰出努力。他们共同彰显了民间社会对和平与民主的重要意义。}}}
+
+\newcommand{\nargesmohammadi}{\gdef\personhonors{}\gdef\personbookmark{2023 · Narges Mohammadi 纳尔格斯·穆罕默迪}\personslide
+  {Narges Mohammadi}{纳尔格斯·穆罕默迪}
+  {images/nargesmohammadi.jpg}{Wikipedia}
+  {2023 年（获奖时 约51岁）}{1972–}{伊朗}{Defenders of Human Rights Center}
+  {表彰她对抗伊朗对妇女的压迫、为促进所有人的人权与自由而进行的斗争}}
+
+\newcommand{\nihonhidankyo}{\gdef\personhonors{}\gdef\personbookmark{2024 · Nihon Hidankyo 日本原水爆被害者团体协议会（日本被团协）}\personslide
+  {Nihon Hidankyo}{日本原水爆被害者团体协议会（日本被团协）}
+  {images/nihonhidankyo.png}{Wikipedia}
+  {2024 年}{—}{日本}{—}
+  {表彰其为实现无核武器世界所做的努力，以及通过亲历者证言昭示核武器绝不应再次被使用}}
+
+\newcommand{\mariacorinamachado}{\gdef\personhonors{}\gdef\personbookmark{2025 · María Corina Machado 玛丽亚·科里娜·马查多}\personslide
+  {María Corina Machado}{玛丽亚·科里娜·马查多}
+  {images/mariacorinamachado.jpg}{Wikipedia}
+  {2025 年（获奖时 约58岁）}{1967–}{委内瑞拉}{Andrés Bello Catholic University · Radio Caracas Radio}
+  {表彰她不知疲倦地促进委内瑞拉人民的民主权利，并为实现从专制到民主的公正和平过渡而斗争}}
+
+
+% ========== MAIN ==========
+\begin{document}
+
+\coverslide
+\introslide
+
+\begin{frame}{双料与大满贯 · 诺贝尔和平奖得主身份总览}
+\pdfbookmark[1]{双料与大满贯 · 交叉身份总览}{crosssummary}
+\vspace{-4pt}
+\centering
+\begin{tikzpicture}
+  \node[anchor=north west, text width=8.0cm, align=left,
+        font=\fontsize{5.5}{6.5}\selectfont, text=chemclr!70!black]
+    at (-1.70,0.00) {Pauling};
+
+  \node[fill=chemclr, rounded corners=4pt, text width=3.5cm, minimum height=0.55cm,
+        inner sep=0pt, align=center, anchor=north west] at (-5.4,0.00)
+    {\fontsize{5.5}{6.5}\selectfont\bfseries\color{white}$\clubsuit$\;\; 诺贝尔化学奖\;\; 1人};
+
+  \fill[coverlight, rounded corners=4pt] (-5.5,-1.33) rectangle (5.6,-0.83);
+  \node[anchor=north, text width=3.7cm, align=center,
+        font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=coverprimary]
+    at (-3.60,-0.93) {首届\;\; Henry Dunant \& Frédéric Passy\;(1901)};
+
+  \node[anchor=north, text width=3.7cm, align=center,
+        font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=coverprimary]
+    at (0.00,-0.93) {106 个颁奖年份\;\; 143 条记录 / 140 位获奖者};
+  \node[anchor=north, text width=3.7cm, align=center,
+        font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=coverprimary]
+    at (3.60,-0.93) {唯一拒奖\;\; Lê Đức Thọ\;(1973)};
+
+\end{tikzpicture}
+\end{frame}
+
+
+\twentiethslide
+\henrydunant
+\fredericpassy
+\elieducommun
+\charlesalbertgobat
+\williamrandalcremer
+\instituteofinternationallaw
+\berthavonsuttner
+\theodoreroosevelt
+\ernestoteodoromoneta
+\louisrenault
+\klaspontusarnoldson
+\fredrikbajer
+\augustebeernaert
+\paulhenridestournellesdeconstant
+\permanentinternationalpeacebureau
+\tobiasasser
+\alfredfried
+\elihuroot
+\henrilafontaine
+\internationalcommitteeoftheredcross
+\woodrowwilson
+\leonbourgeois
+\hjalmarbranting
+\christianlange
+\fridtjofnansen
+\siraustenchamberlain
+\charlesgdawes
+\aristidebriand
+\gustavstresemann
+\ferdinandbuisson
+\ludwigquidde
+\frankbillingskellogg
+\nathansoderblom
+\janeaddams
+\nicholasmurraybutler
+\sirnormanangell
+\arthurhenderson
+\carlvonossietzky
+\carlossaavedralamas
+\theviscountcecilofchelwood
+\nanseninternationalofficeforrefugees
+\internationalcommitteeoftheredcrossA
+\cordellhull
+\emilygreenebalch
+\johnraleighmott
+\friendsservicecouncil
+\americanfriendsservicecommittee
+\lordboydorr
+\ralphbunche
+\leonjouhaux
+\albertschweitzer
+\georgecatlettmarshalljr
+\officeoftheunitednationshighcommissionerforrefugees
+\lesterbowlespearson
+\dominiquepire
+\philipnoelbaker
+\albertluthuli
+\daghammarskjold
+\linuspauling
+\internationalcommitteeoftheredcrossB
+\leagueofredcrosssocieties
+\martinlutherkingjr
+\unitednationschildrensfundunicef
+\renecassin
+\internationallabourorganization
+\normanernestborlaug
+\willybrandt
+\henrykissinger
+\leuctho
+\seanmacbride
+\eisakusato
+\andreisakharov
+\bettywilliams
+\maireadcorrigan
+\amnestyinternational
+\anwarsadat
+\menachembegin
+\motherteresa
+\adolfoperezesquivel
+\officeoftheunitednationshighcommissionerforrefugeesA
+\alvamyrdal
+\alfonsogarciarobles
+\lechwaesa
+\desmondtutu
+\internationalphysiciansforthepreventionofnuclearwar
+\eliewiesel
+\oscararias
+\unitednationspeacekeepingforces
+\tenzingyatsothdalailama
+\mikhailgorbachev
+\aungsansuukyi
+\rigobertamenchu
+\nelsonmandela
+\frederikwillemdeklerk
+\yasserarafat
+\yitzhakrabin
+\shimonperes
+\josephrotblat
+\pugwashconferencesonscienceandworldaffairs
+\carlosfilipeximenesbelo
+\joseramoshorta
+\internationalcampaigntobanlandmines
+\jodywilliams
+\johnhume
+\davidtrimble
+\medecinssansfrontieres
+\kimdaejung
+\twentyfirstslide
+\unitednations
+\kofiannan
+\jimmycarter
+\shirinebadi
+\wangarimutamaathai
+\internationalatomicenergyagency
+\mohamedelbaradei
+\muhammadyunus
+\grameenbank
+\intergovernmentalpanelonclimatechange
+\algore
+\marttiahtisaari
+\barackobama
+\liuxiaobo
+\ellenjohnsonsirleaf
+\leymahgbowee
+\tawakkolkarman
+\europeanunion
+\organisationfortheprohibitionofchemicalweapons
+\kailashsatyarthi
+\malalayousafzai
+\tunisiannationaldialoguequartet
+\juanmanuelsantos
+\internationalcampaigntoabolishnuclearweapons
+\denismukwege
+\nadiamurad
+\abiyahmed
+\worldfoodprogramme
+\mariaressa
+\dmitrymuratov
+\alesbialiatski
+\memorial
+\centreforcivilliberties
+\nargesmohammadi
+\nihonhidankyo
+\mariacorinamachado
+
+\closingslide
+\end{document}
