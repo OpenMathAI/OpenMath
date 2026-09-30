@@ -10,6 +10,7 @@
 """
 from __future__ import annotations
 
+import json
 import re
 import sys
 import time
@@ -37,6 +38,37 @@ def load_social_status() -> dict[str, int]:
     for en, soc in cur.fetchall():
         out[_norm(en)] = int(soc or 0)
     conn.close()
+    return out
+
+
+def load_social_by_qid() -> dict[str, int]:
+    """qid -> has_social_data（名录显示名与库内规范名有差异时的二级匹配键）。"""
+    conn = get_conn()
+    cur = conn.cursor()
+    cur.execute("SELECT qid, has_social_data FROM people WHERE qid IS NOT NULL")
+    out = {qid: int(soc or 0) for qid, soc in cur.fetchall()}
+    conn.close()
+    return out
+
+
+def load_qid_by_data_name() -> dict[str, str]:
+    """归一化(DATA 显示名) -> qid，来源：pages/*/metadata.json 的 label/name。"""
+    pages = ROOT / "presentations" / "pages"
+    out: dict[str, str] = {}
+    for century in ("20th_century", "21th_century"):
+        for d in sorted((pages / century).iterdir()):
+            if not d.is_dir():
+                continue
+            try:
+                meta = json.loads((d / "metadata.json").read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            qid = meta.get("qid")
+            if not qid:
+                continue
+            for key in (meta.get("label"), meta.get("name")):
+                if key:
+                    out.setdefault(_norm(key), qid)
     return out
 
 ROOT = Path(__file__).resolve().parent
@@ -96,9 +128,20 @@ FEMALE_21TH = {"Elinor Ostrom", "Esther Duflo", "Claudia Goldin"}
 
 def write_list(path: Path, header_title: str, year_range: str, source: str,
                rows: list, years: int, extra_note: str = "", female: set[str] | None = None,
-               closing: str = "", social_done: dict[str, int] | None = None) -> None:
+               closing: str = "", social_done: dict[str, int] | None = None,
+               social_by_qid: dict[str, int] | None = None,
+               qid_by_data_name: dict[str, str] | None = None) -> None:
     female = female or set()
     social_done = social_done or {}
+    social_by_qid = social_by_qid or {}
+    qid_by_data_name = qid_by_data_name or {}
+
+    def _is_social_done(name_en: str) -> bool:
+        if social_done.get(_norm(name_en)) == 1:
+            return True
+        qid = qid_by_data_name.get(_norm(name_en))
+        return bool(qid) and social_by_qid.get(qid) == 1
+
     lines = []
     lines.append(f"# {header_title}\n")
     lines.append(f"> **本名录收录 {year_range} 年诺贝尔经济学奖得主，共 {years} 个颁奖年份 / {len(rows)} 位。**\n")
@@ -116,8 +159,8 @@ def write_list(path: Path, header_title: str, year_range: str, source: str,
     lines.append("\n| 年份 | 获奖者 | 国籍 | 获奖理由 | 立传 | Review | 社会关系入库 |")
     lines.append("|:--:|------|------|------|:--:|:--:|:--:|")
     for year, ne, nz, ctry, _zen, zzh in rows:
-        # 注意：按 has_social_data 值判断（库内存在记录但未入库显示 🔲）
-        soc = "✅" if social_done.get(_norm(ne)) == 1 else "🔲"
+        # 注意：按 has_social_data 值判断（库内存在记录但未入库显示 🔲）；名称差异时按 QID 二级匹配
+        soc = "✅" if _is_social_done(ne) else "🔲"
         lines.append(f"| {year} | {_display(ne)} ({nz}) | {ctry} | {zzh} | 🔲 | 🔲 | {soc} |")
 
     # ------------------------- 二、统计说明 -------------------------
@@ -134,7 +177,7 @@ def write_list(path: Path, header_title: str, year_range: str, source: str,
     lines.append(f"- **获奖总人数**：{len(persons)} 位")
     lines.append("- **已立传**：0 位")
     lines.append("- **已 Review**：0 位")
-    lines.append(f"- **已社会关系入库**：{sum(1 for _, ne, *_ in rows if social_done.get(_norm(ne)) == 1)} 位")
+    lines.append(f"- **已社会关系入库**：{sum(1 for _, ne, *_ in rows if _is_social_done(ne))} 位")
     lines.append("- **两度获奖者**：无（诺贝尔经济学奖至今无人两度获奖）")
     if females:
         lines.append(f"- **女性获奖者**：{len(females)} 位（{'、'.join(females)}）")
@@ -161,6 +204,8 @@ def main() -> int:
     years20 = sum(1 for y in sorted(DATA) if 1969 <= y <= 2000)
     years21 = sum(1 for y in sorted(DATA) if y > 2000)
     social_done = load_social_status()
+    social_by_qid = load_social_by_qid()
+    qid_by_data_name = load_qid_by_data_name()
 
     write_list(
         OUT20,
@@ -174,6 +219,8 @@ def main() -> int:
         closing="从弗里希与廷贝亨创立经济计量学，到卢卡斯的理性预期革命，20 世纪最后三十年的经济学奖"
                 "勾勒出这门学科数学化、精细化与现代宏观经济学成型的完整轨迹。",
         social_done=social_done,
+        social_by_qid=social_by_qid,
+        qid_by_data_name=qid_by_data_name,
     )
     write_list(
         OUT21,
@@ -186,6 +233,8 @@ def main() -> int:
         closing="进入新世纪，经济学奖不断拓展学科的边界：从行为经济学到机制设计，从自然实验到随机对照试验，"
                 "从契约理论到制度与繁荣的长期之问。",
         social_done=social_done,
+        social_by_qid=social_by_qid,
+        qid_by_data_name=qid_by_data_name,
     )
 
     total = len(rows20) + len(rows21)
