@@ -657,7 +657,7 @@ def age_str(p):
     pg = p.get("page") or {}
     y1 = (pg.get("dob") or "")[:4]
     if re.match(r"^\d{4}$", y1):
-        return "约%d岁" % (p["year"] - int(y1))
+        return "约 %d 岁" % (p["year"] - int(y1))
     return ""
 
 
@@ -803,9 +803,9 @@ HEADER = r"""% Nobel Literature Video — Allinone
     \end{tikzpicture}
   }
 \end{column}
-\begin{column}{0.40\textwidth}
+\begin{column}{0.42\textwidth}
   \begin{tikzpicture}
-    \node[fill=goldpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=4.0cm, align=left] {
+    \node[fill=goldpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=4.7cm, align=left] {
       {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
       {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
       {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 国别}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
@@ -813,9 +813,9 @@ HEADER = r"""% Nobel Literature Video — Allinone
     };
   \end{tikzpicture}
 \end{column}
-\begin{column}{0.38\textwidth}
+\begin{column}{0.36\textwidth}
   \begin{tikzpicture}
-    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=3.8cm, align=left] {
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=3.5cm, align=left] {
       {\fontsize{8.2}{10}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\par\vspace{3pt}
       {\fontsize{7}{8.5}\selectfont\color{coverdark!84} #9}
     };
