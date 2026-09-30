@@ -1,0 +1,2165 @@
+% Nobel Physiology or Medicine Video — Allinone
+% 诺贝尔生理学或医学奖全得主合集（1901–2025）
+% Beamer layout mirrors physicist/video/episode-allinone
+% Source: medic/presentations 名录 + 离线页面 metadata.json + Wikipedia images
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\xeCJKDeclareCharClass{CJK}{"0370 -> "03FF}
+% 希腊字母（μ τ 等）走中文字体，避免 lmsans8 缺字被静默丢弃
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{ifthen}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+% ===== 配色：医学红 + 医疗青蓝 + 颁奖金（区别于物理深空蓝/图灵紫/菲尔兹金）=====
+\definecolor{bgmain}{RGB}{245,246,248}
+\definecolor{coverprimary}{HTML}{8B1A1A}
+\definecolor{coveraccent}{HTML}{1E5F74}
+\definecolor{coveramber}{HTML}{C9922A}
+\definecolor{coverpurple}{HTML}{0E7490}
+\definecolor{coverdark}{HTML}{1F1010}
+\definecolor{covermuted}{HTML}{6E6161}
+\definecolor{coverlight}{HTML}{F3E6E6}
+\definecolor{DeepPurpleAccent}{HTML}{5B2A86}
+\definecolor{titlecolor}{RGB}{31,16,16}
+\definecolor{muteddark}{RGB}{96,84,84}
+\definecolor{bluepanel}{RGB}{229,236,245}
+\definecolor{redpanel}{RGB}{246,228,228}
+\definecolor{goldpanel}{RGB}{247,239,219}
+\definecolor{purplepanel}{RGB}{221,235,235}
+\definecolor{graypanel}{RGB}{238,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\providecommand{\personhonors}{}
+\newcounter{pmark}%
+\newcommand{\recordcount}{232}
+\newcommand{\personcount}{232}
+\newcommand{\awardyearcount}{116}
+\newcommand{\twentiethrecordcount}{172}
+\newcommand{\twentyfirstrecordcount}{60}
+% ---- 双料与大满贯页：居中标题模板（源自 turing allinone）----
+\def\framesubject{}
+\setbeamertemplate{frametitle}{%
+  \vspace{8pt}%
+  \centering
+  {\fontsize{13}{15}\selectfont\bfseries\color{coverprimary}\insertframetitle}\par\vspace{3pt}
+  {\footnotesize\color{mutedgray}\framesubject}\par\vspace{4pt}
+  \textcolor{coverlight}{\rule{0.95\textwidth}{0.6pt}}%
+  \vspace{-6pt}%
+}
+\definecolor{mutedgray}{RGB}{120,120,120}
+\colorlet{wolfclr}{coverprimary}
+\colorlet{btclr}{coverpurple}
+\colorlet{shawclr}{coveramber}
+\colorlet{crafoordclr}{coveraccent}
+\colorlet{japanclr}{coveraccent!75}
+\colorlet{chemclr}{coverpurple!80}
+\colorlet{turingclr2}{coverprimary!80}
+\colorlet{millclr}{covermuted}
+
+% 交叉奖项徽标：★W 沃尔夫物理学奖 · ▲T 图灵奖
+\newcommand{\wolfbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt W}}
+\newcommand{\turingbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt T}}
+% --- 数据库直查顶级交叉奖项徽标 ---
+\newcommand{\nobelchembadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt C}}
+\newcommand{\nobelmedbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\clubsuit$\kern-0.5pt M}}
+\newcommand{\nobellitbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\clubsuit$\kern-0.5pt L}}
+\newcommand{\nobeleconbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\clubsuit$\kern-0.5pt E}}
+\newcommand{\nobelpeacebadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt P}}
+\newcommand{\fieldsbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt F}}
+\newcommand{\abelbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
+\newcommand{\wolfmathbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt M}}
+\newcommand{\kyotobadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
+\newcommand{\shawbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\blacklozenge$\kern-0.5pt S}}
+\newcommand{\btphysbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\bigstar$\kern-0.5pt B}}
+\newcommand{\btmathbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\bigstar$\kern-0.5pt M2}}
+\newcommand{\crafoordbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\diamond$\kern-0.5pt C}}
+\newcommand{\millenniumbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\blacklozenge$\kern-0.5pt M}}
+\newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
+\newcommand{\statsbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt S}}
+\newcommand{\copssbadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\diamondsuit$\kern-0.5pt C}}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 底部交叉荣誉边框
+\newcommand{\honorbar}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south, draw=coverprimary!55, fill=coverlight, rounded corners=6pt,
+          inner xsep=8pt, inner ysep=5pt, yshift=0.65cm, text=coverdark!85] at (current page.south) {%
+      \fontsize{7.5}{9.5}\selectfont\bfseries{\color{coverprimary} 其他殊荣}\enspace #1};
+  \end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ---- Person slide: #1 name #2 subtitle #3 img/none #4 credit/缩写 #5 获奖(年+岁) #6 life #7 country #8 inst #9 contribution ----
+\newcommand{\personslide}[9]{%
+\begin{frame}
+\stepcounter{pmark}%
+\pdfbookmark[2]{\personbookmark}{pb\arabic{pmark}}%
+\plainbar
+\vspace{-0.45cm}
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{coverdark} #1}\\[2pt]
+  {\fontsize{9.5}{11.5}\selectfont\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+\begin{columns}[c]
+\begin{column}{0.20\textwidth}
+  \centering
+  \ifthenelse{\equal{#3}{none}}{%
+    \begin{tikzpicture}
+      \node[circle, fill=coverprimary!12, draw=coverprimary!38, minimum size=2.6cm]
+        {\fontsize{16}{19}\selectfont\bfseries\color{coverprimary!75!black} #4};
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 暂无公开照片\par}
+  }{%
+    \begin{tikzpicture}
+      \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=3pt, inner sep=2.5pt, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.12}] {
+        \includegraphics[width=2.2cm,height=2.7cm,keepaspectratio]{#3}
+      };
+    \end{tikzpicture}
+  }
+\end{column}
+\begin{column}{0.40\textwidth}
+  \begin{tikzpicture}
+    \node[fill=goldpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=4.0cm, align=left] {
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 国别}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 机构}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #8}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.38\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=3.8cm, align=left] {
+      {\fontsize{8.2}{10}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\par\vspace{3pt}
+      {\fontsize{7}{8.5}\selectfont\color{coverdark!84} #9}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\if\relax\detokenize\expandafter{\personhonors}\relax\else\honorbar{\personhonors}\fi
+\end{frame}
+}
+
+% ---- 章节分隔页 ----
+\newcommand{\sectionpageslide}[4]{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!7] (current page.north west) rectangle (current page.south east);
+\stepcounter{pmark}%
+\pdfbookmark[1]{#1}{bm\arabic{pmark}}%
+  \fill[coveramber!12] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (1.1cm);
+  \node[anchor=center, font=\fontsize{26}{32}\selectfont\bfseries, text=coverdark]
+    at ([yshift=1.10cm]current page.center) {#1};
+  \draw[coveramber, line width=1.4pt] ([yshift=0.05cm, xshift=-4.6cm]current page.center)
+    -- ([yshift=0.05cm, xshift=4.6cm]current page.center);
+  \node[anchor=center, font=\fontsize{13}{16}\selectfont, text=coverprimary!85!black]
+    at ([yshift=-0.75cm]current page.center) {#2};
+  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\itshape, text=covermuted]
+    at ([yshift=-1.85cm]current page.center) {#3};
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {#4};
+\end{tikzpicture}
+\end{frame}
+}
+
+\newcommand{\coverslide}{%%
+\begin{frame}[plain]
+\pdfbookmark[1]{封面 · 诺贝尔生理学或医学奖 1901–2025}{cover}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
+  \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
+  \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
+    at ([yshift=3.35cm]current page.center) {诺贝尔生理学或医学奖：生命科学的世纪（1901–2025）};
+  \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
+    at ([yshift=2.50cm]current page.center) {Nobel Prize in Physiology or Medicine · \recordcount 条记录 / \personcount 位得主};
+  \draw[coverprimary, line width=1.4pt] ([yshift=1.90cm, xshift=-5.2cm]current page.center)
+    -- ([yshift=1.90cm, xshift=5.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\bfseries, text=coveramber!58!black]
+    at ([yshift=1.58cm]current page.center) {从血清疗法到 mRNA 疫苗 · 一部人类战胜疾病的世纪史诗};
+  \node[anchor=center] at ([yshift=-1.85cm]current page.center) {
+    \begin{tikzpicture}[scale=1]
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/emilvonbehring.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ronaldross.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/nielsrybergfinsen.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ivanpavlov.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/robertkoch.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/camillogolgi.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/santiagoramonycajal.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/charleslouisalphonselaveran.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/eliemetchnikoff.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/paulehrlich.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/emiltheodorkocher.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/albrechtkossel.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/allvargullstrand.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/alexiscarrel.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/charlesrichet.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/robertbarany.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/julesbordet.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/augustkrogh.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/archibaldhill.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ottofritzmeyerhof.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/frederickbanting.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/johnmacleod.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/willemeinthoven.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/johannesfibiger.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/juliuswagnerjauregg.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/charlesnicolle.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/christiaaneijkman.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/frederickgowlandhopkins.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/karllandsteiner.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ottoheinrichwarburg.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/charlesscottsherrington.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/edgaradrian.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/thomashuntmorgan.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/georgewhipple.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/georgeminot.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/williampmurphy.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/hansspemann.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/henryhallettdale.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ottoloewi.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/albertszentgyorgyi.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/corneilleheymans.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/gerharddomagk.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/henrikdam.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/edwardadelbertdoisy.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/josepherlanger.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/herbertspencergasser.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/alexanderfleming.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ernstchain.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/howardflorey.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/hermannjosephmuller.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/carlferdinandcori.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/gertycori.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/bernardohoussay.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/paulhermannmuller.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/walterrudolfhess.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/antonioegasmoniz.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/philipshowalterhench.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/edwardcalvinkendall.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/tadeusreichstein.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/maxtheiler.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/selmanwaksman.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/hansadolfkrebs.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/fritzalbertlipmann.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/johnfranklinenders.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (1.98,1.25) {\fontsize{5}{6}\selectfont\color{covermuted} F.R.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/thomashuckleweller.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/hugotheorell.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/andrefredericcournand.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/wernerforssmann.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (4.18,1.25) {\fontsize{5}{6}\selectfont\color{covermuted} D.R.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/danielbovet.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/georgewellsbeadle.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/edwardlawrietatum.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/joshualederberg.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/arthurkornberg.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/severoochoa.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/frankmacfarlaneburnet.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/petermedawar.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/georgvonbekesy.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/franciscrick.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jameswatson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/mauricewilkins.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/johneccles.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/alanlloydhodgkin.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/andrewhuxley.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/konrademilbloch.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/feodorfelixkonradlynen.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/francoisjacob.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/andremichellwoff.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jacquesmonod.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/francispeytonrous.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/charlesbrentonhuggins.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ragnargranit.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/haldankefferhartline.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/georgewald.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/robertwholley.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/hargobindkhorana.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/marshallwarrennirenberg.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/maxdelbruck.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/alfredhershey.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/salvadorluria.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/juliusaxelrod.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ulfvoneuler.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/bernardkatz.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/earlwilbursutherlandjr.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/geraldedelman.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/rodneyrobertporter.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/karlvonfrisch.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/konradlorenz.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/nikolaastinbergen.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/albertclaude.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/christiandeduve.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/georgeemilpalade.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/davidbaltimore.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/renatodulbecco.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/howardmartintemin.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/baruchsamuelblumberg.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/danielcarletongajdusek.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/rogerguillemin.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/andrewschally.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/rosalynsussmanyalow.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/wernerarber.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/danielnathans.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/hamiltonosmith.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/allanmcleodcormack.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/godfreyhounsfield.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/barujbenacerraf.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jeandausset.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-1.54,-0.25) {\fontsize{5}{6}\selectfont\color{covermuted} G.S.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/rogerwolcottsperry.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/davidhhubel.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/torstenwiesel.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/sunebergstrom.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/bengtisamuelsson.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/johnvane.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/barbaramcclintock.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/nielskajjerne.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (2.42,-0.25) {\fontsize{5}{6}\selectfont\color{covermuted} G.K.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (2.86,-0.25) {\fontsize{5}{6}\selectfont\color{covermuted} C.M.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/michaelstuartbrown.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/josephlgoldstein.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/stanleycohen.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ritalevimontalcini.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,-0.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/susumutonegawa.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jamesblack.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/gertrudebelion.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-4.18,-0.75) {\fontsize{5}{6}\selectfont\color{covermuted} G.H.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jmichaelbishop.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/haroldevarmus.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-2.86,-0.75) {\fontsize{5}{6}\selectfont\color{covermuted} J.M.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/edonnallthomas.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/erwinneher.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/bertsakmann.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/edmondhfischer.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/edwingkrebs.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/richardjroberts.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/phillipallensharp.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/alfredggilman.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/martinrodbell.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/edwardblewis.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/christianenussleinvolhard.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ericfwieschaus.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/petercdoherty.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/rolfmzinkernagel.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/stanleybprusiner.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/robertffurchgott.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/louisignarro.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,-0.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/feridmurad.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/gunterblobel.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/arvidcarlsson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/paulgreengard.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/erickandel.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-3.30,-1.25) {\fontsize{5}{6}\selectfont\color{covermuted} L.H.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/timhunt.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/paulnurse.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/sydneybrenner.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-1.54,-1.25) {\fontsize{5}{6}\selectfont\color{covermuted} H.H.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/johnsulston.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-0.66,-1.25) {\fontsize{5}{6}\selectfont\color{covermuted} P.L.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-0.22,-1.25) {\fontsize{5}{6}\selectfont\color{covermuted} P.M.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/richardaxel.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/lindabbuck.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/barrymarshall.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jrobinwarren.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/andrewfire.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/craigmello.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/mariocapecchi.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (3.30,-1.25) {\fontsize{5}{6}\selectfont\color{covermuted} M.E.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (3.74,-1.25) {\fontsize{5}{6}\selectfont\color{covermuted} O.S.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (4.18,-1.25) {\fontsize{5}{6}\selectfont\color{covermuted} H.H.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,-1.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/francoisebarresinoussi.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (5.06,-1.25) {\fontsize{5}{6}\selectfont\color{covermuted} L.M.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/elizabethblackburn.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-4.62,-1.75) {\fontsize{5}{6}\selectfont\color{covermuted} C.G.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-4.18,-1.75) {\fontsize{5}{6}\selectfont\color{covermuted} J.S.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-3.74,-1.75) {\fontsize{5}{6}\selectfont\color{covermuted} R.E.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/brucebeutler.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/julesahoffmann.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ralphmsteinman.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/johngurdon.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/shinyayamanaka.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jameserothman.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-0.66,-1.75) {\fontsize{5}{6}\selectfont\color{covermuted} R.S.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-0.22,-1.75) {\fontsize{5}{6}\selectfont\color{covermuted} T.S.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/johnokeefe.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (0.66,-1.75) {\fontsize{5}{6}\selectfont\color{covermuted} M.M.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (1.10,-1.75) {\fontsize{5}{6}\selectfont\color{covermuted} E.M.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (1.54,-1.75) {\fontsize{5}{6}\selectfont\color{covermuted} W.C.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/satoshiomura.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/tuyouyou.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/yoshinoriohsumi.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jeffreychall.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.74,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/michaelrosbash.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/michaelwyoung.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jamespallison.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,-1.75) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/tasukuhonjo.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/williamkaelinjr.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/peterjratcliffe.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/gregglsemenza.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/harveyjalter.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/michaelhoughton.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/charlesmrice.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/davidjulius.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ardempatapoutian.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/svantepaabo.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/katalinkariko.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/drewweissman.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/victorambros.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/garyruvkun.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/maryebrunkow.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (1.10,-2.25) {\fontsize{5}{6}\selectfont\color{covermuted} F.R.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,-2.25) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/shimonsakaguchi.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{12}\selectfont\bfseries, text=DeepPurpleAccent]
+    at ([yshift=1.12cm]current page.center) {\faIcon{heartbeat}\enspace Nobel Prize in Physiology or Medicine\enspace|\enspace 1901–2025 · 全 232 位得主};
+\end{tikzpicture}
+\end{frame}
+}
+
+\newcommand{\introslide}{%%
+\begin{frame}
+\pdfbookmark[1]{认识诺贝尔生理学或医学奖}{intro}
+\plainbar
+\sectiontitle{认识诺贝尔生理学或医学奖}{Nobel Prize in Physiology or Medicine · 1901–2025}
+\vspace{0.05cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,3.05) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverprimary!82!black} 规模}\\[2pt]
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1901 年首颁（von Behring）；至 2025 年共评奖 \awardyearcount 个年份、\recordcount 条记录，涉及 \personcount 位独立得主。}};
+  \node[draw=coveraccent!40, fill=redpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,1.10) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coveraccent!82!black} 两度获奖}\\[2pt]
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 生理学或医学奖至今无人两度获奖，\\也无人跨物理/化学双诺奖。}};
+  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,-0.85) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coveramber!70!black} 空缺年份}\\[2pt]
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 9 个年份未颁奖（1915–18 · 1921 · 1925 · 1940–42），多因两次世界大战。}};
+  \node[draw=coverpurple!40, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,3.05) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverpurple!82!black} 女性得主}\par\vspace{3pt}
+    {\fontsize{5.5}{6.8}\selectfont\color{coverdark!84} 格蒂·特蕾莎·科里（1947）、罗莎琳·雅洛（1977）、芭芭拉·麦克林托克（1983）、丽塔·列维-蒙塔尔奇尼（1986） \\
+    格特鲁德·贝勒·埃利恩（1988）、克里斯蒂安娜·尼斯莱因-福尔哈德（1995）、琳达·巴克（2004）、弗朗索瓦丝·巴尔-西诺西（2008） \\
+    伊丽莎白·海伦·布莱克本（2009）、卡罗尔·格雷德（2009）、梅-布里特·莫泽（2014）、屠呦呦（2015） \\
+    卡塔琳·考里科（2023）、玛丽·埃伦·布伦科（2025）}};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\twentiethslide}{\sectionpageslide
+  {第一乐章 · 20 世纪（1901–2000）}
+  {从血清疗法到基因工程 · \twentiethrecordcount 位得主}
+  {}
+  {Nobel Prize in Physiology or Medicine · 1901–2025}
+}
+
+\newcommand{\twentyfirstslide}{\sectionpageslide
+  {第二乐章 · 21 世纪（2001–2025）}
+  {从基因组学到 mRNA 疫苗 · \twentyfirstrecordcount 位得主}
+  {}
+  {Nobel Prize in Physiology or Medicine · 1901–2025}
+}
+
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!7] (current page.north west) rectangle (current page.south east);
+\pdfbookmark[1]{结语}{ending}
+  \fill[coveramber!12] (current page.north east) ++(-2.4,1.4) circle (1.6cm);
+  \fill[coverpurple!10] (current page.south west) ++(3.0,-1.0) circle (1.2cm);
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverdark]
+    at ([yshift=1.10cm]current page.center) {生命不息，求索不止};
+  \draw[coveramber, line width=1.4pt] ([yshift=0.15cm, xshift=-4.6cm]current page.center)
+    -- ([yshift=0.15cm, xshift=4.6cm]current page.center);
+  \node[anchor=center, font=\fontsize{10.5}{14}\selectfont, text=coverprimary!85!black]
+    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1901–2025 全部 \personcount 位独立诺贝尔生理学或医学奖得主};
+  \node[anchor=center, font=\fontsize{8.5}{11.5}\selectfont\itshape, text=covermuted]
+    at ([yshift=-1.70cm]current page.center) {他们以仁心与智识，一次次改写人类与疾病的对抗史。};
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\faIcon{heartbeat}\enspace Nobel Prize in Physiology or Medicine · 1901–2025};
+\end{tikzpicture}
+\end{frame}
+}
+
+
+% ========== SLIDES (chronological) ==========
+
+\newcommand{\emilvonbehring}{\gdef\personhonors{}\gdef\personbookmark{1901 · Emil von Behring 埃米尔·冯·贝林}\personslide
+  {Emil von Behring}{埃米尔·冯·贝林}
+  {images/emilvonbehring.jpg}{Wikipedia}
+  {1901 年（获奖时 47 岁）}{1854–1917（享年63岁）}{德国}{University of Marburg · Martin Luther University Halle-Wittenberg}
+  {表彰他在血清疗法方面的工作，尤其是其应用于防治白喉，为医学科学开辟了新路，并因此为医生提供了战胜疾病与死亡的制胜武器}}
+
+\newcommand{\ronaldross}{\gdef\personhonors{}\gdef\personbookmark{1902 · Ronald Ross 罗纳德·罗斯}\personslide
+  {Ronald Ross}{罗纳德·罗斯}
+  {images/ronaldross.jpg}{Wikipedia}
+  {1902 年（获奖时 45 岁）}{1857–1932（享年75岁）}{英国}{King's College London}
+  {表彰他在疟疾方面的工作，揭示了疟疾如何进入机体，为该疾病的成功研究及防治方法奠定了基础}}
+
+\newcommand{\nielsrybergfinsen}{\gdef\personhonors{}\gdef\personbookmark{1903 · Niels Ryberg Finsen 尼尔斯·吕贝格·芬森}\personslide
+  {Niels Ryberg Finsen}{尼尔斯·吕贝格·芬森}
+  {images/nielsrybergfinsen.jpg}{Wikipedia}
+  {1903 年（获奖时 43 岁）}{1860–1904（享年44岁）}{丹麦}{University of Copenhagen}
+  {表彰他利用聚光辐射治疗疾病特别是寻常狼疮的贡献，为医学科学开辟了新途径}}
+
+\newcommand{\ivanpavlov}{\gdef\personhonors{}\gdef\personbookmark{1904 · Ivan Pavlov 伊万·巴甫洛夫}\personslide
+  {Ivan Pavlov}{伊万·巴甫洛夫}
+  {images/ivanpavlov.jpg}{Wikipedia}
+  {1904 年（获奖时 55 岁）}{1849–1936（享年87岁）}{俄罗斯}{Saint Petersburg State University · S. M. Kirov Military Medical Academy}
+  {表彰他在消化生理学方面的工作，使该领域的重要知识得到转变与扩充}}
+
+\newcommand{\robertkoch}{\gdef\personhonors{}\gdef\personbookmark{1905 · Robert Koch 罗伯特·科赫}\personslide
+  {Robert Koch}{罗伯特·科赫}
+  {images/robertkoch.jpg}{Wikipedia}
+  {1905 年（获奖时 62 岁）}{1843–1910（享年67岁）}{德国}{Humboldt-Universität zu Berlin}
+  {表彰他在结核病方面的研究与发现}}
+
+\newcommand{\camillogolgi}{\gdef\personhonors{}\gdef\personbookmark{1906 · Camillo Golgi 卡米洛·高尔基}\personslide
+  {Camillo Golgi}{卡米洛·高尔基}
+  {images/camillogolgi.jpg}{Wikipedia}
+  {1906 年（获奖时 63 岁）}{1843–1926（享年83岁）}{意大利}{University of Siena · University of Pavia}
+  {表彰他们在神经系统结构方面的工作}}
+
+\newcommand{\santiagoramonycajal}{\gdef\personhonors{}\gdef\personbookmark{1906 · Santiago Ramón y Cajal 圣地亚哥·拉蒙·卡哈尔}\personslide
+  {Santiago Ramón y Cajal}{圣地亚哥·拉蒙·卡哈尔}
+  {images/santiagoramonycajal.jpg}{Wikipedia}
+  {1906 年（获奖时 54 岁）}{1852–1934（享年82岁）}{西班牙}{Universidad Central · University of Barcelona}
+  {表彰他们在神经系统结构方面的工作}}
+
+\newcommand{\charleslouisalphonselaveran}{\gdef\personhonors{}\gdef\personbookmark{1907 · Charles Louis Alphonse Laveran 夏尔·路易·阿方斯·拉韦朗}\personslide
+  {Charles Louis Alphonse Laveran}{夏尔·路易·阿方斯·拉韦朗}
+  {images/charleslouisalphonselaveran.jpg}{Wikipedia}
+  {1907 年（获奖时 62 岁）}{1845–1922（享年77岁）}{法国}{Pasteur Institute · French Defence Health service}
+  {表彰他关于原生动物在致病中所起作用的工作}}
+
+\newcommand{\eliemetchnikoff}{\gdef\personhonors{}\gdef\personbookmark{1908 · Élie Metchnikoff 埃黎耶·梅契尼科夫}\personslide
+  {Élie Metchnikoff}{埃黎耶·梅契尼科夫}
+  {images/eliemetchnikoff.jpg}{Wikipedia}
+  {1908 年（获奖时 63 岁）}{1845–1916（享年71岁）}{俄罗斯}{Odesa University · Imperial St. Petersburg University}
+  {表彰他们在免疫方面的工作}}
+
+\newcommand{\paulehrlich}{\gdef\personhonors{}\gdef\personbookmark{1908 · Paul Ehrlich 保罗·埃尔利希}\personslide
+  {Paul Ehrlich}{保罗·埃尔利希}
+  {images/paulehrlich.jpg}{Wikipedia}
+  {1908 年（获奖时 54 岁）}{1854–1915（享年61岁）}{德国}{Charité · Frederick William University Berlin}
+  {表彰他们在免疫方面的工作}}
+
+\newcommand{\emiltheodorkocher}{\gdef\personhonors{}\gdef\personbookmark{1909 · Emil Theodor Kocher 埃米尔·特奥多尔·科赫尔}\personslide
+  {Emil Theodor Kocher}{埃米尔·特奥多尔·科赫尔}
+  {images/emiltheodorkocher.jpg}{Wikipedia}
+  {1909 年（获奖时 68 岁）}{1841–1917（享年76岁）}{瑞士}{University of Bern}
+  {表彰他在甲状腺的生理学、病理学与外科学方面的工作}}
+
+\newcommand{\albrechtkossel}{\gdef\personhonors{}\gdef\personbookmark{1910 · Albrecht Kossel 阿尔布雷希特·科塞尔}\personslide
+  {Albrecht Kossel}{阿尔布雷希特·科塞尔}
+  {images/albrechtkossel.jpg}{Wikipedia}
+  {1910 年（获奖时 57 岁）}{1853–1927（享年74岁）}{德国}{Humboldt-Universität zu Berlin · University of Marburg}
+  {表彰他通过对蛋白质（包括核酸物质）的研究，对细胞化学知识的贡献}}
+
+\newcommand{\allvargullstrand}{\gdef\personhonors{}\gdef\personbookmark{1911 · Allvar Gullstrand 阿尔瓦·古尔斯特兰德}\personslide
+  {Allvar Gullstrand}{阿尔瓦·古尔斯特兰德}
+  {images/allvargullstrand.png}{Wikipedia}
+  {1911 年（获奖时 49 岁）}{1862–1930（享年68岁）}{瑞典}{Uppsala University}
+  {表彰他在眼的屈光学方面的工作}}
+
+\newcommand{\alexiscarrel}{\gdef\personhonors{}\gdef\personbookmark{1912 · Alexis Carrel 亚历克西·卡雷尔}\personslide
+  {Alexis Carrel}{亚历克西·卡雷尔}
+  {images/alexiscarrel.jpg}{Wikipedia}
+  {1912 年（获奖时 39 岁）}{1873–1944（享年71岁）}{法国}{University of Chicago · The Rockefeller University}
+  {表彰他在血管缝合以及血管与器官移植方面的工作}}
+
+\newcommand{\charlesrichet}{\gdef\personhonors{}\gdef\personbookmark{1913 · Charles Richet 夏尔·里歇}\personslide
+  {Charles Richet}{夏尔·里歇}
+  {images/charlesrichet.jpg}{Wikipedia}
+  {1913 年（获奖时 63 岁）}{1850–1935（享年85岁）}{法国}{Collège de France}
+  {表彰他在过敏反应方面的工作}}
+
+\newcommand{\robertbarany}{\gdef\personhonors{}\gdef\personbookmark{1914 · Robert Bárány 罗伯特·巴拉尼}\personslide
+  {Robert Bárány}{罗伯特·巴拉尼}
+  {images/robertbarany.jpg}{Wikipedia}
+  {1914 年（获奖时 38 岁）}{1876–1936（享年60岁）}{奥匈帝国}{University of Vienna · Uppsala University}
+  {表彰他在前庭器官的生理学与病理学方面的工作}}
+
+\newcommand{\julesbordet}{\gdef\personhonors{}\gdef\personbookmark{1919 · Jules Bordet 朱尔斯·博尔代}\personslide
+  {Jules Bordet}{朱尔斯·博尔代}
+  {images/julesbordet.jpg}{Wikipedia}
+  {1919 年（获奖时 49 岁）}{1870–1961（享年91岁）}{比利时}{Université libre de Bruxelles}
+  {表彰他与免疫相关的发现}}
+
+\newcommand{\augustkrogh}{\gdef\personhonors{}\gdef\personbookmark{1920 · August Krogh 奥古斯特·克罗格}\personslide
+  {August Krogh}{奥古斯特·克罗格}
+  {images/augustkrogh.jpg}{Wikipedia}
+  {1920 年（获奖时 46 岁）}{1874–1949（享年75岁）}{丹麦}{University of Copenhagen}
+  {表彰他发现毛细血管运动调节机制}}
+
+\newcommand{\archibaldhill}{\gdef\personhonors{}\gdef\personbookmark{1922 · Archibald Hill 阿奇博尔德·希尔}\personslide
+  {Archibald Hill}{阿奇博尔德·希尔}
+  {images/archibaldhill.jpg}{Wikipedia}
+  {1922 年（获奖时 36 岁）}{1886–1977（享年91岁）}{英国}{University College London · University of Cambridge}
+  {表彰他关于肌肉产热的发现}}
+
+\newcommand{\ottofritzmeyerhof}{\gdef\personhonors{}\gdef\personbookmark{1922 · Otto Fritz Meyerhof 奥托·弗里茨·迈尔霍夫}\personslide
+  {Otto Fritz Meyerhof}{奥托·弗里茨·迈尔霍夫}
+  {images/ottofritzmeyerhof.jpg}{Wikipedia}
+  {1922 年（获奖时 38 岁）}{1884–1951（享年67岁）}{德国}{Kiel University · Heidelberg University}
+  {表彰他发现肌肉中氧耗量与乳酸代谢之间的固定关系}}
+
+\newcommand{\frederickbanting}{\gdef\personhonors{}\gdef\personbookmark{1923 · Frederick Banting 弗雷德里克·班廷}\personslide
+  {Frederick Banting}{弗雷德里克·班廷}
+  {images/frederickbanting.jpg}{Wikipedia}
+  {1923 年（获奖时 32 岁）}{1891–1941（享年50岁）}{加拿大}{Hospital for Sick Children · University of Toronto}
+  {表彰他们发现胰岛素}}
+
+\newcommand{\johnmacleod}{\gdef\personhonors{}\gdef\personbookmark{1923 · John Macleod 约翰·麦克劳德}\personslide
+  {John Macleod}{约翰·麦克劳德}
+  {images/johnmacleod.png}{Wikipedia}
+  {1923 年（获奖时 47 岁）}{1876–1935（享年59岁）}{加拿大}{University of Toronto · Leipzig University}
+  {表彰他们发现胰岛素}}
+
+\newcommand{\willemeinthoven}{\gdef\personhonors{}\gdef\personbookmark{1924 · Willem Einthoven 威廉·埃因托芬}\personslide
+  {Willem Einthoven}{威廉·埃因托芬}
+  {images/willemeinthoven.jpg}{Wikipedia}
+  {1924 年（获奖时 64 岁）}{1860–1927（享年67岁）}{荷兰}{Leiden University}
+  {表彰他发现心电图机制}}
+
+\newcommand{\johannesfibiger}{\gdef\personhonors{}\gdef\personbookmark{1926 · Johannes Fibiger 约翰内斯·菲比格}\personslide
+  {Johannes Fibiger}{约翰内斯·菲比格}
+  {images/johannesfibiger.jpg}{Wikipedia}
+  {1926 年（获奖时 59 岁）}{1867–1928（享年61岁）}{丹麦}{University of Copenhagen}
+  {表彰他发现螺旋体癌（Spiroptera carcinoma）}}
+
+\newcommand{\juliuswagnerjauregg}{\gdef\personhonors{}\gdef\personbookmark{1927 · Julius Wagner-Jauregg 朱利叶斯·瓦格纳-尧雷格}\personslide
+  {Julius Wagner-Jauregg}{朱利叶斯·瓦格纳-尧雷格}
+  {images/juliuswagnerjauregg.png}{Wikipedia}
+  {1927 年（获奖时 70 岁）}{1857–1940（享年83岁）}{奥地利}{University of Vienna · University of Graz}
+  {表彰他发现疟疾接种在治疗麻痹性痴呆中的疗效}}
+
+\newcommand{\charlesnicolle}{\gdef\personhonors{}\gdef\personbookmark{1928 · Charles Nicolle 夏尔·尼科尔}\personslide
+  {Charles Nicolle}{夏尔·尼科尔}
+  {images/charlesnicolle.jpg}{Wikipedia}
+  {1928 年（获奖时 62 岁）}{1866–1936（享年70岁）}{法国}{Collège de France · Pasteur Institute}
+  {表彰他在斑疹伤寒方面的工作}}
+
+\newcommand{\christiaaneijkman}{\gdef\personhonors{}\gdef\personbookmark{1929 · Christiaan Eijkman 克里斯蒂安·艾克曼}\personslide
+  {Christiaan Eijkman}{克里斯蒂安·艾克曼}
+  {images/christiaaneijkman.jpg}{Wikipedia}
+  {1929 年（获奖时 71 岁）}{1858–1930（享年72岁）}{荷兰}{Utrecht University}
+  {表彰他发现抗神经炎维生素}}
+
+\newcommand{\frederickgowlandhopkins}{\gdef\personhonors{}\gdef\personbookmark{1929 · Frederick Gowland Hopkins 弗雷德里克·高兰·霍普金斯}\personslide
+  {Frederick Gowland Hopkins}{弗雷德里克·高兰·霍普金斯}
+  {images/frederickgowlandhopkins.jpg}{Wikipedia}
+  {1929 年（获奖时 68 岁）}{1861–1947（享年86岁）}{英国}{King's College London · University of Cambridge}
+  {表彰他发现促进生长的维生素}}
+
+\newcommand{\karllandsteiner}{\gdef\personhonors{}\gdef\personbookmark{1930 · Karl Landsteiner 卡尔·兰德施泰纳}\personslide
+  {Karl Landsteiner}{卡尔·兰德施泰纳}
+  {images/karllandsteiner.jpg}{Wikipedia}
+  {1930 年（获奖时 62 岁）}{1868–1943（享年75岁）}{奥地利}{University of Vienna · University of Geneva}
+  {表彰他发现人类血型}}
+
+\newcommand{\ottoheinrichwarburg}{\gdef\personhonors{}\gdef\personbookmark{1931 · Otto Heinrich Warburg 奥托·海因里希·瓦尔堡}\personslide
+  {Otto Heinrich Warburg}{奥托·海因里希·瓦尔堡}
+  {images/ottoheinrichwarburg.jpg}{Wikipedia}
+  {1931 年（获奖时 48 岁）}{1883–1970（享年87岁）}{德国}{Humboldt-Universität zu Berlin · Kaiser Wilhelm Society}
+  {表彰他发现呼吸酶的性质与作用方式}}
+
+\newcommand{\charlesscottsherrington}{\gdef\personhonors{}\gdef\personbookmark{1932 · Charles Scott Sherrington 查尔斯·斯科特·谢灵顿}\personslide
+  {Charles Scott Sherrington}{查尔斯·斯科特·谢灵顿}
+  {images/charlesscottsherrington.jpg}{Wikipedia}
+  {1932 年（获奖时 75 岁）}{1857–1952（享年95岁）}{英国}{Magdalen College · University of Liverpool}
+  {表彰他们关于神经元功能的发现}}
+
+\newcommand{\edgaradrian}{\gdef\personhonors{}\gdef\personbookmark{1932 · Edgar Adrian 埃德加·阿德里安}\personslide
+  {Edgar Adrian}{埃德加·阿德里安}
+  {images/edgaradrian.png}{Wikipedia}
+  {1932 年（获奖时 43 岁）}{1889–1977（享年88岁）}{英国}{University of Cambridge}
+  {表彰他们关于神经元功能的发现}}
+
+\newcommand{\thomashuntmorgan}{\gdef\personhonors{}\gdef\personbookmark{1933 · Thomas Hunt Morgan 托马斯·亨特·摩尔根}\personslide
+  {Thomas Hunt Morgan}{托马斯·亨特·摩尔根}
+  {images/thomashuntmorgan.png}{Wikipedia}
+  {1933 年（获奖时 67 岁）}{1866–1945（享年79岁）}{美国}{Bryn Mawr College · California Institute of Technology}
+  {表彰他关于染色体在遗传中所起作用的发现}}
+
+\newcommand{\georgewhipple}{\gdef\personhonors{}\gdef\personbookmark{1934 · George Whipple 乔治·惠普尔}\personslide
+  {George Whipple}{乔治·惠普尔}
+  {images/georgewhipple.jpg}{Wikipedia}
+  {1934 年（获奖时 56 岁）}{1878–1976（享年98岁）}{美国}{University of Rochester · University of California}
+  {表彰他们关于贫血的肝脏疗法的发现}}
+
+\newcommand{\georgeminot}{\gdef\personhonors{}\gdef\personbookmark{1934 · George Minot 乔治·迈诺特}\personslide
+  {George Minot}{乔治·迈诺特}
+  {images/georgeminot.jpg}{Wikipedia}
+  {1934 年（获奖时 49 岁）}{1885–1950（享年65岁）}{美国}{Harvard University · Johns Hopkins University}
+  {表彰他们关于贫血的肝脏疗法的发现}}
+
+\newcommand{\williampmurphy}{\gdef\personhonors{}\gdef\personbookmark{1934 · William P. Murphy 威廉·帕里·墨菲}\personslide
+  {William P. Murphy}{威廉·帕里·墨菲}
+  {images/williampmurphy.jpg}{Wikipedia}
+  {1934 年（获奖时 42 岁）}{1892–1987（享年95岁）}{美国}{Harvard University}
+  {表彰他们关于贫血的肝脏疗法的发现}}
+
+\newcommand{\hansspemann}{\gdef\personhonors{}\gdef\personbookmark{1935 · Hans Spemann 汉斯·施佩曼}\personslide
+  {Hans Spemann}{汉斯·施佩曼}
+  {images/hansspemann.jpg}{Wikipedia}
+  {1935 年（获奖时 66 岁）}{1869–1941（享年72岁）}{德国}{University of Freiburg · Humboldt-Universität zu Berlin}
+  {表彰他发现胚胎发育中的组织者效应}}
+
+\newcommand{\henryhallettdale}{\gdef\personhonors{}\gdef\personbookmark{1936 · Henry Hallett Dale 亨利·哈利特·戴尔}\personslide
+  {Henry Hallett Dale}{亨利·哈利特·戴尔}
+  {images/henryhallettdale.jpg}{Wikipedia}
+  {1936 年（获奖时 61 岁）}{1875–1968（享年93岁）}{英国}{University College London}
+  {表彰他们关于神经冲动化学传递的发现}}
+
+\newcommand{\ottoloewi}{\gdef\personhonors{}\gdef\personbookmark{1936 · Otto Loewi 奥托·勒维}\personslide
+  {Otto Loewi}{奥托·勒维}
+  {images/ottoloewi.jpg}{Wikipedia}
+  {1936 年（获奖时 63 岁）}{1873–1961（享年88岁）}{奥地利}{University of Vienna · University College London}
+  {表彰他们关于神经冲动化学传递的发现}}
+
+\newcommand{\albertszentgyorgyi}{\gdef\personhonors{}\gdef\personbookmark{1937 · Albert Szent-Györgyi 阿尔伯特·圣捷尔吉}\personslide
+  {Albert Szent-Györgyi}{阿尔伯特·圣捷尔吉}
+  {images/albertszentgyorgyi.jpg}{Wikipedia}
+  {1937 年（获奖时 44 岁）}{1893–1986（享年93岁）}{匈牙利}{University of Groningen · Leiden University}
+  {表彰他与生物氧化燃烧过程有关的发现，特别是关于维生素 C 和延胡索酸催化的研究}}
+
+\newcommand{\corneilleheymans}{\gdef\personhonors{}\gdef\personbookmark{1938 · Corneille Heymans 科内耶·海曼斯}\personslide
+  {Corneille Heymans}{科内耶·海曼斯}
+  {images/corneilleheymans.jpg}{Wikipedia}
+  {1938 年（获奖时 46 岁）}{1892–1968（享年76岁）}{比利时}{University College London · Ghent University}
+  {表彰他发现窦房与主动脉机制在呼吸调节中的作用}}
+
+\newcommand{\gerharddomagk}{\gdef\personhonors{}\gdef\personbookmark{1939 · Gerhard Domagk 格哈德·多马克}\personslide
+  {Gerhard Domagk}{格哈德·多马克}
+  {images/gerharddomagk.jpg}{Wikipedia}
+  {1939 年（获奖时 44 岁）}{1895–1964（享年69岁）}{德国}{University of Münster · University of Greifswald}
+  {表彰他发现百浪多息（prontosil）的抗菌作用}}
+
+\newcommand{\henrikdam}{\gdef\personhonors{}\gdef\personbookmark{1943 · Henrik Dam 亨里克·达姆}\personslide
+  {Henrik Dam}{亨里克·达姆}
+  {images/henrikdam.jpg}{Wikipedia}
+  {1943 年（获奖时 48 岁）}{1895–1976（享年81岁）}{丹麦}{Technical University of Denmark · University of Copenhagen}
+  {表彰他发现维生素 K}}
+
+\newcommand{\edwardadelbertdoisy}{\gdef\personhonors{}\gdef\personbookmark{1943 · Edward Adelbert Doisy 爱德华·阿德尔伯特·多伊西}\personslide
+  {Edward Adelbert Doisy}{爱德华·阿德尔伯特·多伊西}
+  {images/edwardadelbertdoisy.jpg}{Wikipedia}
+  {1943 年（获奖时 50 岁）}{1893–1986（享年93岁）}{美国}{Washington University in St. Louis · Saint Louis University}
+  {表彰他发现维生素 K}}
+
+\newcommand{\josepherlanger}{\gdef\personhonors{}\gdef\personbookmark{1944 · Joseph Erlanger 约瑟夫·厄尔兰格}\personslide
+  {Joseph Erlanger}{约瑟夫·厄尔兰格}
+  {images/josepherlanger.jpg}{Wikipedia}
+  {1944 年（获奖时 70 岁）}{1874–1965（享年91岁）}{美国}{Johns Hopkins University · Washington University in St. Louis}
+  {表彰他们关于单条神经纤维高度分化功能的发现}}
+
+\newcommand{\herbertspencergasser}{\gdef\personhonors{}\gdef\personbookmark{1944 · Herbert Spencer Gasser 赫伯特·斯宾塞·加瑟}\personslide
+  {Herbert Spencer Gasser}{赫伯特·斯宾塞·加瑟}
+  {images/herbertspencergasser.jpg}{Wikipedia}
+  {1944 年（获奖时 56 岁）}{1888–1963（享年75岁）}{美国}{Washington University in St. Louis · The Rockefeller University}
+  {表彰他们关于单条神经纤维高度分化功能的发现}}
+
+\newcommand{\alexanderfleming}{\gdef\personhonors{}\gdef\personbookmark{1945 · Alexander Fleming 亚历山大·弗莱明}\personslide
+  {Alexander Fleming}{亚历山大·弗莱明}
+  {images/alexanderfleming.jpg}{Wikipedia}
+  {1945 年（获奖时 64 岁）}{1881–1955（享年74岁）}{英国}{Imperial College London · University of London}
+  {表彰他们发现青霉素及其对多种传染性疾病的疗效}}
+
+\newcommand{\ernstchain}{\gdef\personhonors{}\gdef\personbookmark{1945 · Ernst Chain 恩斯特·伯利斯·钱恩}\personslide
+  {Ernst Chain}{恩斯特·伯利斯·钱恩}
+  {images/ernstchain.jpg}{Wikipedia}
+  {1945 年（获奖时 39 岁）}{1906–1979（享年73岁）}{英国}{Imperial College London · University of Oxford}
+  {表彰他们发现青霉素及其对多种传染性疾病的疗效}}
+
+\newcommand{\howardflorey}{\gdef\personhonors{}\gdef\personbookmark{1945 · Howard Florey 霍华德·沃尔特·弗洛里}\personslide
+  {Howard Florey}{霍华德·沃尔特·弗洛里}
+  {images/howardflorey.jpg}{Wikipedia}
+  {1945 年（获奖时 47 岁）}{1898–1968（享年70岁）}{澳大利亚}{University of Sheffield}
+  {表彰他们发现青霉素及其对多种传染性疾病的疗效}}
+
+\newcommand{\hermannjosephmuller}{\gdef\personhonors{}\gdef\personbookmark{1946 · Hermann Joseph Muller 赫尔曼·约瑟夫·马勒}\personslide
+  {Hermann Joseph Muller}{赫尔曼·约瑟夫·马勒}
+  {images/hermannjosephmuller.jpg}{Wikipedia}
+  {1946 年（获奖时 56 岁）}{1890–1967（享年77岁）}{美国}{University of Texas at Austin · Rice University}
+  {表彰他发现 X 射线辐照可诱发突变}}
+
+\newcommand{\carlferdinandcori}{\gdef\personhonors{}\gdef\personbookmark{1947 · Carl Ferdinand Cori 卡尔·费迪南德·科里}\personslide
+  {Carl Ferdinand Cori}{卡尔·费迪南德·科里}
+  {images/carlferdinandcori.jpg}{Wikipedia}
+  {1947 年（获奖时 51 岁）}{1896–1984（享年88岁）}{美国}{Washington University in St. Louis · Q219563}
+  {表彰他们发现糖原催化转化的过程}}
+
+\newcommand{\gertycori}{\gdef\personhonors{}\gdef\personbookmark{1947 · Gerty Cori 格蒂·特蕾莎·科里}\personslide
+  {Gerty Cori}{格蒂·特蕾莎·科里}
+  {images/gertycori.jpg}{Wikipedia}
+  {1947 年（获奖时 51 岁）}{1896–1957（享年61岁）}{美国}{Washington University in St. Louis}
+  {表彰他们发现糖原催化转化的过程}}
+
+\newcommand{\bernardohoussay}{\gdef\personhonors{}\gdef\personbookmark{1947 · Bernardo Houssay 贝尔纳多·奥赛}\personslide
+  {Bernardo Houssay}{贝尔纳多·奥赛}
+  {images/bernardohoussay.jpg}{Wikipedia}
+  {1947 年（获奖时 60 岁）}{1887–1971（享年84岁）}{阿根廷}{University of Buenos Aires}
+  {表彰他发现脑垂体前叶激素在糖代谢中所起的作用}}
+
+\newcommand{\paulhermannmuller}{\gdef\personhonors{}\gdef\personbookmark{1948 · Paul Hermann Müller 保罗·赫尔曼·米勒}\personslide
+  {Paul Hermann Müller}{保罗·赫尔曼·米勒}
+  {images/paulhermannmuller.jpg}{Wikipedia}
+  {1948 年（获奖时 49 岁）}{1899–1965（享年66岁）}{瑞士}{—}
+  {表彰他发现 DDT 作为接触性毒剂对多种节肢动物的高效杀灭作用}}
+
+\newcommand{\walterrudolfhess}{\gdef\personhonors{}\gdef\personbookmark{1949 · Walter Rudolf Hess 瓦尔特·鲁道夫·赫斯}\personslide
+  {Walter Rudolf Hess}{瓦尔特·鲁道夫·赫斯}
+  {images/walterrudolfhess.jpg}{Wikipedia}
+  {1949 年（获奖时 68 岁）}{1881–1973（享年92岁）}{瑞士}{University of Zurich}
+  {表彰他发现间脑的功能性组织及其对内脏活动的协调作用}}
+
+\newcommand{\antonioegasmoniz}{\gdef\personhonors{}\gdef\personbookmark{1949 · António Egas Moniz 安东尼奥·埃加斯·莫尼斯}\personslide
+  {António Egas Moniz}{安东尼奥·埃加斯·莫尼斯}
+  {images/antonioegasmoniz.jpg}{Wikipedia}
+  {1949 年（获奖时 75 岁）}{1874–1955（享年81岁）}{葡萄牙}{University of Coimbra · University of Lisbon}
+  {表彰他发现脑白质切断术对某些精神疾病的治疗价值}}
+
+\newcommand{\philipshowalterhench}{\gdef\personhonors{}\gdef\personbookmark{1950 · Philip Showalter Hench 菲利普·肖瓦尔特·亨奇}\personslide
+  {Philip Showalter Hench}{菲利普·肖瓦尔特·亨奇}
+  {images/philipshowalterhench.jpg}{Wikipedia}
+  {1950 年（获奖时 54 岁）}{1896–1965（享年69岁）}{美国}{Mayo Clinic}
+  {表彰他们关于肾上腺皮质激素及其结构和生物学效应的发现}}
+
+\newcommand{\edwardcalvinkendall}{\gdef\personhonors{}\gdef\personbookmark{1950 · Edward Calvin Kendall 爱德华·卡尔文·肯德尔}\personslide
+  {Edward Calvin Kendall}{爱德华·卡尔文·肯德尔}
+  {images/edwardcalvinkendall.jpg}{Wikipedia}
+  {1950 年（获奖时 64 岁）}{1886–1972（享年86岁）}{美国}{Mayo Clinic}
+  {表彰他们关于肾上腺皮质激素及其结构和生物学效应的发现}}
+
+\newcommand{\tadeusreichstein}{\gdef\personhonors{}\gdef\personbookmark{1950 · Tadeus Reichstein 塔德乌什·赖希施泰因}\personslide
+  {Tadeus Reichstein}{塔德乌什·赖希施泰因}
+  {images/tadeusreichstein.jpg}{Wikipedia}
+  {1950 年（获奖时 53 岁）}{1897–1996（享年99岁）}{瑞士}{University of Basel}
+  {表彰他们关于肾上腺皮质激素及其结构和生物学效应的发现}}
+
+\newcommand{\maxtheiler}{\gdef\personhonors{}\gdef\personbookmark{1951 · Max Theiler 马克斯·泰累尔}\personslide
+  {Max Theiler}{马克斯·泰累尔}
+  {images/maxtheiler.jpg}{Wikipedia}
+  {1951 年（获奖时 52 岁）}{1899–1972（享年73岁）}{南非}{Harvard University · The Rockefeller University}
+  {表彰他关于黄热病及其防治的发现}}
+
+\newcommand{\selmanwaksman}{\gdef\personhonors{}\gdef\personbookmark{1952 · Selman Waksman 塞尔曼·亚伯拉罕·瓦克斯曼}\personslide
+  {Selman Waksman}{塞尔曼·亚伯拉罕·瓦克斯曼}
+  {images/selmanwaksman.jpg}{Wikipedia}
+  {1952 年（获奖时 64 岁）}{1888–1973（享年85岁）}{美国}{Rutgers University · New Jersey Agricultural Experiment Station}
+  {表彰他发现链霉素——第一种对结核病有效的抗生素}}
+
+\newcommand{\hansadolfkrebs}{\gdef\personhonors{}\gdef\personbookmark{1953 · Hans Adolf Krebs 汉斯·阿道夫·克雷布斯}\personslide
+  {Hans Adolf Krebs}{汉斯·阿道夫·克雷布斯}
+  {images/hansadolfkrebs.jpg}{Wikipedia}
+  {1953 年（获奖时 53 岁）}{1900–1981（享年81岁）}{英国}{University of Sheffield · University of Oxford}
+  {表彰他发现柠檬酸循环}}
+
+\newcommand{\fritzalbertlipmann}{\gdef\personhonors{}\gdef\personbookmark{1953 · Fritz Albert Lipmann 弗里茨·阿尔伯特·李普曼}\personslide
+  {Fritz Albert Lipmann}{弗里茨·阿尔伯特·李普曼}
+  {images/fritzalbertlipmann.jpg}{Wikipedia}
+  {1953 年（获奖时 54 岁）}{1899–1986（享年87岁）}{美国}{Harvard University · The Rockefeller University}
+  {表彰他发现辅酶 A 及其对中间代谢的重要性}}
+
+\newcommand{\johnfranklinenders}{\gdef\personhonors{}\gdef\personbookmark{1954 · John Franklin Enders 约翰·富兰克林·恩德斯}\personslide
+  {John Franklin Enders}{约翰·富兰克林·恩德斯}
+  {images/johnfranklinenders.jpg}{Wikipedia}
+  {1954 年（获奖时 57 岁）}{1897–1985（享年88岁）}{美国}{Harvard University}
+  {表彰他们发现脊髓灰质炎病毒能够在多种类型的组织培养中生长}}
+
+\newcommand{\frederickchapmanrobbins}{\gdef\personhonors{}\gdef\personbookmark{1954 · Frederick Chapman Robbins 弗雷德里克·查普曼·罗宾斯}\personslide
+  {Frederick Chapman Robbins}{弗雷德里克·查普曼·罗宾斯}
+  {none}{F.R.}
+  {1954 年（获奖时 38 岁）}{1916–2003（享年87岁）}{美国}{Case Western Reserve University}
+  {表彰他们发现脊髓灰质炎病毒能够在多种类型的组织培养中生长}}
+
+\newcommand{\thomashuckleweller}{\gdef\personhonors{}\gdef\personbookmark{1954 · Thomas Huckle Weller 托马斯·哈克尔·韦勒}\personslide
+  {Thomas Huckle Weller}{托马斯·哈克尔·韦勒}
+  {images/thomashuckleweller.jpg}{Wikipedia}
+  {1954 年（获奖时 39 岁）}{1915–2008（享年93岁）}{美国}{Harvard University}
+  {表彰他们发现脊髓灰质炎病毒能够在多种类型的组织培养中生长}}
+
+\newcommand{\hugotheorell}{\gdef\personhonors{}\gdef\personbookmark{1955 · Hugo Theorell 胡戈·特奥雷尔}\personslide
+  {Hugo Theorell}{胡戈·特奥雷尔}
+  {images/hugotheorell.jpg}{Wikipedia}
+  {1955 年（获奖时 52 岁）}{1903–1982（享年79岁）}{瑞典}{Karolinska Institutet · Uppsala University}
+  {表彰他关于氧化酶的性质和作用方式的发现}}
+
+\newcommand{\andrefredericcournand}{\gdef\personhonors{}\gdef\personbookmark{1956 · André Frédéric Cournand 安德烈·弗雷德里克·库尔南}\personslide
+  {André Frédéric Cournand}{安德烈·弗雷德里克·库尔南}
+  {images/andrefredericcournand.jpg}{Wikipedia}
+  {1956 年（获奖时 61 岁）}{1895–1988（享年93岁）}{美国}{Columbia University}
+  {表彰他们关于心导管术和循环系统病理变化的发现}}
+
+\newcommand{\wernerforssmann}{\gdef\personhonors{}\gdef\personbookmark{1956 · Werner Forssmann 维尔纳·福斯曼}\personslide
+  {Werner Forssmann}{维尔纳·福斯曼}
+  {images/wernerforssmann.jpg}{Wikipedia}
+  {1956 年（获奖时 52 岁）}{1904–1979（享年75岁）}{德国}{Johannes Gutenberg University Mainz}
+  {表彰他们关于心导管术和循环系统病理变化的发现}}
+
+\newcommand{\dickinsonwrichards}{\gdef\personhonors{}\gdef\personbookmark{1956 · Dickinson W. Richards 迪金森·伍德拉夫·理查兹}\personslide
+  {Dickinson W. Richards}{迪金森·伍德拉夫·理查兹}
+  {none}{D.R.}
+  {1956 年（获奖时 61 岁）}{1895–1973（享年78岁）}{美国}{Columbia University}
+  {表彰他们关于心导管术和循环系统病理变化的发现}}
+
+\newcommand{\danielbovet}{\gdef\personhonors{}\gdef\personbookmark{1957 · Daniel Bovet 达尼埃尔·博韦}\personslide
+  {Daniel Bovet}{达尼埃尔·博韦}
+  {images/danielbovet.jpg}{Wikipedia}
+  {1957 年（获奖时 50 岁）}{1907–1992（享年85岁）}{瑞士}{Pasteur Institute · Sapienza University of Rome}
+  {表彰他发现能抑制某些体内物质作用的合成化合物，尤其是它们对血管系统和骨骼肌的作用}}
+
+\newcommand{\georgewellsbeadle}{\gdef\personhonors{}\gdef\personbookmark{1958 · George Wells Beadle 乔治·韦尔斯·比德尔}\personslide
+  {George Wells Beadle}{乔治·韦尔斯·比德尔}
+  {images/georgewellsbeadle.jpg}{Wikipedia}
+  {1958 年（获奖时 55 岁）}{1903–1989（享年86岁）}{美国}{Harvard University · University of Chicago}
+  {表彰他们发现基因通过调节特定的化学过程而起作用}}
+
+\newcommand{\edwardlawrietatum}{\gdef\personhonors{}\gdef\personbookmark{1958 · Edward Lawrie Tatum 爱德华·劳里·塔特姆}\personslide
+  {Edward Lawrie Tatum}{爱德华·劳里·塔特姆}
+  {images/edwardlawrietatum.jpg}{Wikipedia}
+  {1958 年（获奖时 49 岁）}{1909–1975（享年66岁）}{美国}{Stanford University · The Rockefeller University}
+  {表彰他们发现基因通过调节特定的化学过程而起作用}}
+
+\newcommand{\joshualederberg}{\gdef\personhonors{}\gdef\personbookmark{1958 · Joshua Lederberg 乔舒亚·莱德伯格}\personslide
+  {Joshua Lederberg}{乔舒亚·莱德伯格}
+  {images/joshualederberg.jpg}{Wikipedia}
+  {1958 年（获奖时 33 岁）}{1925–2008（享年83岁）}{美国}{University of Wisconsin–Madison · Stanford University}
+  {表彰他关于细菌遗传重组及细菌遗传物质组织的发现}}
+
+\newcommand{\arthurkornberg}{\gdef\personhonors{}\gdef\personbookmark{1959 · Arthur Kornberg 阿瑟·科恩伯格}\personslide
+  {Arthur Kornberg}{阿瑟·科恩伯格}
+  {images/arthurkornberg.jpg}{Wikipedia}
+  {1959 年（获奖时 41 岁）}{1918–2007（享年89岁）}{美国}{United States National Institutes of Health · Washington University in St. Louis}
+  {表彰他们发现核糖核酸和脱氧核糖核酸生物合成的机制}}
+
+\newcommand{\severoochoa}{\gdef\personhonors{}\gdef\personbookmark{1959 · Severo Ochoa 塞韦罗·奥乔亚}\personslide
+  {Severo Ochoa}{塞韦罗·奥乔亚}
+  {images/severoochoa.jpg}{Wikipedia}
+  {1959 年（获奖时 54 岁）}{1905–1993（享年88岁）}{美国}{New York University · Q219563}
+  {表彰他们发现核糖核酸和脱氧核糖核酸生物合成的机制}}
+
+\newcommand{\frankmacfarlaneburnet}{\gdef\personhonors{}\gdef\personbookmark{1960 · Frank Macfarlane Burnet 弗兰克·麦克法兰·伯内特}\personslide
+  {Frank Macfarlane Burnet}{弗兰克·麦克法兰·伯内特}
+  {images/frankmacfarlaneburnet.jpg}{Wikipedia}
+  {1960 年（获奖时 61 岁）}{1899–1985（享年86岁）}{澳大利亚}{University of Melbourne}
+  {表彰发现获得性免疫耐受}}
+
+\newcommand{\petermedawar}{\gdef\personhonors{}\gdef\personbookmark{1960 · Peter Medawar 彼得·布赖恩·梅达沃}\personslide
+  {Peter Medawar}{彼得·布赖恩·梅达沃}
+  {images/petermedawar.jpg}{Wikipedia}
+  {1960 年（获奖时 45 岁）}{1915–1987（享年72岁）}{英国}{University College London · Magdalen College}
+  {表彰发现获得性免疫耐受}}
+
+\newcommand{\georgvonbekesy}{\gdef\personhonors{}\gdef\personbookmark{1961 · Georg von Békésy 格奥尔格·冯·贝凯希}\personslide
+  {Georg von Békésy}{格奥尔格·冯·贝凯希}
+  {images/georgvonbekesy.jpg}{Wikipedia}
+  {1961 年（获奖时 62 岁）}{1899–1972（享年73岁）}{美国}{Harvard University · Eötvös Loránd University}
+  {表彰他发现耳蜗内刺激的物理机制}}
+
+\newcommand{\franciscrick}{\gdef\personhonors{}\gdef\personbookmark{1962 · Francis Crick 弗朗西斯·克里克}\personslide
+  {Francis Crick}{弗朗西斯·克里克}
+  {images/franciscrick.jpg}{Wikipedia}
+  {1962 年（获奖时 46 岁）}{1916–2004（享年88岁）}{英国}{University of Cambridge · Salk Institute for Biological Studies}
+  {表彰他们关于核酸分子结构及其对生物体内信息传递意义的发现}}
+
+\newcommand{\jameswatson}{\gdef\personhonors{}\gdef\personbookmark{1962 · James Watson 詹姆斯·杜威·沃森}\personslide
+  {James Watson}{詹姆斯·杜威·沃森}
+  {images/jameswatson.jpg}{Wikipedia}
+  {1962 年（获奖时 34 岁）}{1928–2025（享年97岁）}{美国}{Harvard University · University of Cambridge}
+  {表彰他们关于核酸分子结构及其对生物体内信息传递意义的发现}}
+
+\newcommand{\mauricewilkins}{\gdef\personhonors{}\gdef\personbookmark{1962 · Maurice Wilkins 莫里斯·休·弗雷德里克·威尔金斯}\personslide
+  {Maurice Wilkins}{莫里斯·休·弗雷德里克·威尔金斯}
+  {images/mauricewilkins.jpg}{Wikipedia}
+  {1962 年（获奖时 46 岁）}{1916–2004（享年88岁）}{英国}{University of California, Berkeley · King's College London}
+  {表彰他们关于核酸分子结构及其对生物体内信息传递意义的发现}}
+
+\newcommand{\johneccles}{\gdef\personhonors{}\gdef\personbookmark{1963 · John Eccles 约翰·卡鲁·埃克尔斯}\personslide
+  {John Eccles}{约翰·卡鲁·埃克尔斯}
+  {images/johneccles.jpg}{Wikipedia}
+  {1963 年（获奖时 60 岁）}{1903–1997（享年94岁）}{澳大利亚}{University of Otago · University at Buffalo}
+  {表彰他们关于神经细胞膜外周与中枢部分兴奋和抑制的离子机制的发现}}
+
+\newcommand{\alanlloydhodgkin}{\gdef\personhonors{}\gdef\personbookmark{1963 · Alan Lloyd Hodgkin 艾伦·劳埃德·霍奇金}\personslide
+  {Alan Lloyd Hodgkin}{艾伦·劳埃德·霍奇金}
+  {images/alanlloydhodgkin.jpg}{Wikipedia}
+  {1963 年（获奖时 49 岁）}{1914–1998（享年84岁）}{英国}{University of Cambridge}
+  {表彰他们关于神经细胞膜外周与中枢部分兴奋和抑制的离子机制的发现}}
+
+\newcommand{\andrewhuxley}{\gdef\personhonors{}\gdef\personbookmark{1963 · Andrew Huxley 安德鲁·菲尔丁·赫胥黎}\personslide
+  {Andrew Huxley}{安德鲁·菲尔丁·赫胥黎}
+  {images/andrewhuxley.jpg}{Wikipedia}
+  {1963 年（获奖时 46 岁）}{1917–2012（享年95岁）}{英国}{University College London}
+  {表彰他们关于神经细胞膜外周与中枢部分兴奋和抑制的离子机制的发现}}
+
+\newcommand{\konrademilbloch}{\gdef\personhonors{}\gdef\personbookmark{1964 · Konrad Emil Bloch 康拉德·布洛赫}\personslide
+  {Konrad Emil Bloch}{康拉德·布洛赫}
+  {images/konrademilbloch.jpg}{Wikipedia}
+  {1964 年（获奖时 52 岁）}{1912–2000（享年88岁）}{美国}{Harvard University · University of Chicago}
+  {表彰他们关于胆固醇和脂肪酸代谢的机制与调节的发现}}
+
+\newcommand{\feodorfelixkonradlynen}{\gdef\personhonors{}\gdef\personbookmark{1964 · Feodor Felix Konrad Lynen 费奥多尔·吕嫩}\personslide
+  {Feodor Felix Konrad Lynen}{费奥多尔·吕嫩}
+  {images/feodorfelixkonradlynen.jpg}{Wikipedia}
+  {1964 年（获奖时 53 岁）}{1911–1979（享年68岁）}{德国}{Ludwig-Maximilians-Universität München · Max Planck Institute of Biochemistry}
+  {表彰他们关于胆固醇和脂肪酸代谢的机制与调节的发现}}
+
+\newcommand{\francoisjacob}{\gdef\personhonors{}\gdef\personbookmark{1965 · François Jacob 弗朗索瓦·雅各布}\personslide
+  {François Jacob}{弗朗索瓦·雅各布}
+  {images/francoisjacob.jpg}{Wikipedia}
+  {1965 年（获奖时 45 岁）}{1920–2013（享年93岁）}{法国}{Collège de France}
+  {表彰他们关于酶与病毒合成的遗传控制的发现}}
+
+\newcommand{\andremichellwoff}{\gdef\personhonors{}\gdef\personbookmark{1965 · André Michel Lwoff 安德烈·利沃夫}\personslide
+  {André Michel Lwoff}{安德烈·利沃夫}
+  {images/andremichellwoff.jpg}{Wikipedia}
+  {1965 年（获奖时 63 岁）}{1902–1994（享年92岁）}{法国}{Pasteur Institute}
+  {表彰他们关于酶与病毒合成的遗传控制的发现}}
+
+\newcommand{\jacquesmonod}{\gdef\personhonors{}\gdef\personbookmark{1965 · Jacques Monod 雅克·莫诺}\personslide
+  {Jacques Monod}{雅克·莫诺}
+  {images/jacquesmonod.jpg}{Wikipedia}
+  {1965 年（获奖时 55 岁）}{1910–1976（享年66岁）}{法国}{Collège de France · Science Faculty of Paris}
+  {表彰他们关于酶与病毒合成的遗传控制的发现}}
+
+\newcommand{\francispeytonrous}{\gdef\personhonors{}\gdef\personbookmark{1966 · Francis Peyton Rous 佩顿·劳斯}\personslide
+  {Francis Peyton Rous}{佩顿·劳斯}
+  {images/francispeytonrous.jpg}{Wikipedia}
+  {1966 年（获奖时 87 岁）}{1879–1970（享年91岁）}{美国}{The Rockefeller University}
+  {表彰他发现致肿瘤病毒}}
+
+\newcommand{\charlesbrentonhuggins}{\gdef\personhonors{}\gdef\personbookmark{1966 · Charles Brenton Huggins 查尔斯·布伦顿·哈金斯}\personslide
+  {Charles Brenton Huggins}{查尔斯·布伦顿·哈金斯}
+  {images/charlesbrentonhuggins.jpg}{Wikipedia}
+  {1966 年（获奖时 65 岁）}{1901–1997（享年96岁）}{美国}{University of Chicago · University of Michigan}
+  {表彰他关于前列腺癌激素疗法的发现}}
+
+\newcommand{\ragnargranit}{\gdef\personhonors{}\gdef\personbookmark{1967 · Ragnar Granit 拉格纳·格拉尼特}\personslide
+  {Ragnar Granit}{拉格纳·格拉尼特}
+  {images/ragnargranit.jpg}{Wikipedia}
+  {1967 年（获奖时 67 岁）}{1900–1991（享年91岁）}{芬兰}{Karolinska Institutet}
+  {表彰他们关于眼中初级生理与化学视觉过程的发现}}
+
+\newcommand{\haldankefferhartline}{\gdef\personhonors{}\gdef\personbookmark{1967 · Haldan Keffer Hartline 霍尔登·凯弗·哈特兰}\personslide
+  {Haldan Keffer Hartline}{霍尔登·凯弗·哈特兰}
+  {images/haldankefferhartline.jpg}{Wikipedia}
+  {1967 年（获奖时 64 岁）}{1903–1983（享年80岁）}{美国}{Cornell University · Johns Hopkins University}
+  {表彰他们关于眼中初级生理与化学视觉过程的发现}}
+
+\newcommand{\georgewald}{\gdef\personhonors{}\gdef\personbookmark{1967 · George Wald 乔治·沃尔德}\personslide
+  {George Wald}{乔治·沃尔德}
+  {images/georgewald.jpg}{Wikipedia}
+  {1967 年（获奖时 61 岁）}{1906–1997（享年91岁）}{美国}{Harvard University · University of Chicago}
+  {表彰他们关于眼中初级生理与化学视觉过程的发现}}
+
+\newcommand{\robertwholley}{\gdef\personhonors{}\gdef\personbookmark{1968 · Robert W. Holley 罗伯特·威廉·霍利}\personslide
+  {Robert W. Holley}{罗伯特·威廉·霍利}
+  {images/robertwholley.jpg}{Wikipedia}
+  {1968 年（获奖时 46 岁）}{1922–1993（享年71岁）}{美国}{Cornell University}
+  {表彰他们解读遗传密码及其在蛋白质合成中功能的发现}}
+
+\newcommand{\hargobindkhorana}{\gdef\personhonors{}\gdef\personbookmark{1968 · Har Gobind Khorana 哈尔·戈宾·霍拉纳}\personslide
+  {Har Gobind Khorana}{哈尔·戈宾·霍拉纳}
+  {images/hargobindkhorana.jpg}{Wikipedia}
+  {1968 年（获奖时 46 岁）}{1922–2011（享年89岁）}{美国}{Massachusetts Institute of Technology · University of British Columbia}
+  {表彰他们解读遗传密码及其在蛋白质合成中功能的发现}}
+
+\newcommand{\marshallwarrennirenberg}{\gdef\personhonors{}\gdef\personbookmark{1968 · Marshall Warren Nirenberg 马歇尔·沃伦·尼伦伯格}\personslide
+  {Marshall Warren Nirenberg}{马歇尔·沃伦·尼伦伯格}
+  {images/marshallwarrennirenberg.jpg}{Wikipedia}
+  {1968 年（获奖时 41 岁）}{1927–2010（享年83岁）}{美国}{United States National Institutes of Health}
+  {表彰他们解读遗传密码及其在蛋白质合成中功能的发现}}
+
+\newcommand{\maxdelbruck}{\gdef\personhonors{}\gdef\personbookmark{1969 · Max Delbrück 马克斯·德尔布吕克}\personslide
+  {Max Delbrück}{马克斯·德尔布吕克}
+  {images/maxdelbruck.jpg}{Wikipedia}
+  {1969 年（获奖时 63 岁）}{1906–1981（享年75岁）}{美国}{Vanderbilt University · California Institute of Technology}
+  {表彰他们关于病毒复制机制和病毒遗传结构的发现}}
+
+\newcommand{\alfredhershey}{\gdef\personhonors{}\gdef\personbookmark{1969 · Alfred Hershey 阿尔弗雷德·赫尔希}\personslide
+  {Alfred Hershey}{阿尔弗雷德·赫尔希}
+  {images/alfredhershey.jpg}{Wikipedia}
+  {1969 年（获奖时 61 岁）}{1908–1997（享年89岁）}{美国}{Washington University in St. Louis}
+  {表彰他们关于病毒复制机制和病毒遗传结构的发现}}
+
+\newcommand{\salvadorluria}{\gdef\personhonors{}\gdef\personbookmark{1969 · Salvador Luria 萨尔瓦多·卢里亚}\personslide
+  {Salvador Luria}{萨尔瓦多·卢里亚}
+  {images/salvadorluria.jpg}{Wikipedia}
+  {1969 年（获奖时 57 岁）}{1912–1991（享年79岁）}{美国}{Massachusetts Institute of Technology · University of Illinois Urbana-Champaign}
+  {表彰他们关于病毒复制机制和病毒遗传结构的发现}}
+
+\newcommand{\juliusaxelrod}{\gdef\personhonors{}\gdef\personbookmark{1970 · Julius Axelrod 朱利叶斯·阿克塞尔罗德}\personslide
+  {Julius Axelrod}{朱利叶斯·阿克塞尔罗德}
+  {images/juliusaxelrod.jpg}{Wikipedia}
+  {1970 年（获奖时 58 岁）}{1912–2004（享年92岁）}{美国}{United States National Institutes of Health}
+  {表彰他们关于神经末梢体液递质及其贮存、释放和失活机制的发现}}
+
+\newcommand{\ulfvoneuler}{\gdef\personhonors{}\gdef\personbookmark{1970 · Ulf von Euler 乌尔夫·冯·奥伊勒}\personslide
+  {Ulf von Euler}{乌尔夫·冯·奥伊勒}
+  {images/ulfvoneuler.jpg}{Wikipedia}
+  {1970 年（获奖时 65 岁）}{1905–1983（享年78岁）}{瑞典}{Karolinska Institutet}
+  {表彰他们关于神经末梢体液递质及其贮存、释放和失活机制的发现}}
+
+\newcommand{\bernardkatz}{\gdef\personhonors{}\gdef\personbookmark{1970 · Bernard Katz 伯纳德·卡茨}\personslide
+  {Bernard Katz}{伯纳德·卡茨}
+  {images/bernardkatz.jpg}{Wikipedia}
+  {1970 年（获奖时 59 岁）}{1911–2003（享年92岁）}{英国}{University College London}
+  {表彰他们关于神经末梢体液递质及其贮存、释放和失活机制的发现}}
+
+\newcommand{\earlwilbursutherlandjr}{\gdef\personhonors{}\gdef\personbookmark{1971 · Earl Wilbur Sutherland Jr. 厄尔·萨瑟兰}\personslide
+  {Earl Wilbur Sutherland Jr.}{厄尔·萨瑟兰}
+  {images/earlwilbursutherlandjr.jpg}{Wikipedia}
+  {1971 年（获奖时 56 岁）}{1915–1974（享年59岁）}{美国}{Vanderbilt University · Case Western Reserve University}
+  {表彰他关于激素作用机制的发现}}
+
+\newcommand{\geraldedelman}{\gdef\personhonors{}\gdef\personbookmark{1972 · Gerald Edelman 杰拉尔德·埃德尔曼}\personslide
+  {Gerald Edelman}{杰拉尔德·埃德尔曼}
+  {images/geraldedelman.jpg}{Wikipedia}
+  {1972 年（获奖时 43 岁）}{1929–2014（享年85岁）}{美国}{The Rockefeller University}
+  {表彰他们关于抗体化学结构的发现}}
+
+\newcommand{\rodneyrobertporter}{\gdef\personhonors{}\gdef\personbookmark{1972 · Rodney Robert Porter 罗德尼·罗伯特·波特}\personslide
+  {Rodney Robert Porter}{罗德尼·罗伯特·波特}
+  {images/rodneyrobertporter.jpg}{Wikipedia}
+  {1972 年（获奖时 55 岁）}{1917–1985（享年68岁）}{英国}{Imperial College London · University of Oxford}
+  {表彰他们关于抗体化学结构的发现}}
+
+\newcommand{\karlvonfrisch}{\gdef\personhonors{}\gdef\personbookmark{1973 · Karl von Frisch 卡尔·冯·弗里施}\personslide
+  {Karl von Frisch}{卡尔·冯·弗里施}
+  {images/karlvonfrisch.png}{Wikipedia}
+  {1973 年（获奖时 87 岁）}{1886–1982（享年96岁）}{奥地利}{Ludwig-Maximilians-Universität München · University of Graz}
+  {表彰他们关于个体与社会行为模式的组织和引发的发现}}
+
+\newcommand{\konradlorenz}{\gdef\personhonors{}\gdef\personbookmark{1973 · Konrad Lorenz 康拉德·洛伦茨}\personslide
+  {Konrad Lorenz}{康拉德·洛伦茨}
+  {images/konradlorenz.jpg}{Wikipedia}
+  {1973 年（获奖时 70 岁）}{1903–1989（享年86岁）}{奥地利}{University of Vienna · Ludwig-Maximilians-Universität München}
+  {表彰他们关于个体与社会行为模式的组织和引发的发现}}
+
+\newcommand{\nikolaastinbergen}{\gdef\personhonors{}\gdef\personbookmark{1973 · Nikolaas Tinbergen 尼古拉斯·廷贝亨}\personslide
+  {Nikolaas Tinbergen}{尼古拉斯·廷贝亨}
+  {images/nikolaastinbergen.jpg}{Wikipedia}
+  {1973 年（获奖时 66 岁）}{1907–1988（享年81岁）}{英国}{Leiden University · University of Oxford}
+  {表彰他们关于个体与社会行为模式的组织和引发的发现}}
+
+\newcommand{\albertclaude}{\gdef\personhonors{}\gdef\personbookmark{1974 · Albert Claude 阿尔伯特·克劳德}\personslide
+  {Albert Claude}{阿尔伯特·克劳德}
+  {images/albertclaude.jpg}{Wikipedia}
+  {1974 年（获奖时 76 岁）}{1898–1983（享年85岁）}{比利时}{The Rockefeller University · Université libre de Bruxelles}
+  {表彰他们关于细胞的结构与功能组织的发现}}
+
+\newcommand{\christiandeduve}{\gdef\personhonors{}\gdef\personbookmark{1974 · Christian de Duve 克里斯蒂安·德·迪夫}\personslide
+  {Christian de Duve}{克里斯蒂安·德·迪夫}
+  {images/christiandeduve.jpg}{Wikipedia}
+  {1974 年（获奖时 57 岁）}{1917–2013（享年96岁）}{比利时}{The Rockefeller University · Catholic University of Leuven (1834–1968)}
+  {表彰他们关于细胞的结构与功能组织的发现}}
+
+\newcommand{\georgeemilpalade}{\gdef\personhonors{}\gdef\personbookmark{1974 · George Emil Palade 乔治·埃米尔·帕拉德}\personslide
+  {George Emil Palade}{乔治·埃米尔·帕拉德}
+  {images/georgeemilpalade.jpg}{Wikipedia}
+  {1974 年（获奖时 62 岁）}{1912–2008（享年96岁）}{美国}{Yale University · University of California, San Diego}
+  {表彰他们关于细胞的结构与功能组织的发现}}
+
+\newcommand{\davidbaltimore}{\gdef\personhonors{}\gdef\personbookmark{1975 · David Baltimore 戴维·巴尔的摩}\personslide
+  {David Baltimore}{戴维·巴尔的摩}
+  {images/davidbaltimore.jpg}{Wikipedia}
+  {1975 年（获奖时 37 岁）}{1938–2025（享年87岁）}{美国}{Massachusetts Institute of Technology · California Institute of Technology}
+  {表彰他们关于肿瘤病毒与细胞遗传物质之间相互作用的发现}}
+
+\newcommand{\renatodulbecco}{\gdef\personhonors{}\gdef\personbookmark{1975 · Renato Dulbecco 雷纳托·杜尔贝科}\personslide
+  {Renato Dulbecco}{雷纳托·杜尔贝科}
+  {images/renatodulbecco.jpg}{Wikipedia}
+  {1975 年（获奖时 61 岁）}{1914–2012（享年98岁）}{美国}{California Institute of Technology · Human Genome Project}
+  {表彰他们关于肿瘤病毒与细胞遗传物质之间相互作用的发现}}
+
+\newcommand{\howardmartintemin}{\gdef\personhonors{}\gdef\personbookmark{1975 · Howard Martin Temin 霍华德·马丁·特明}\personslide
+  {Howard Martin Temin}{霍华德·马丁·特明}
+  {images/howardmartintemin.jpg}{Wikipedia}
+  {1975 年（获奖时 41 岁）}{1934–1994（享年60岁）}{美国}{University of Wisconsin–Madison}
+  {表彰他们关于肿瘤病毒与细胞遗传物质之间相互作用的发现}}
+
+\newcommand{\baruchsamuelblumberg}{\gdef\personhonors{}\gdef\personbookmark{1976 · Baruch Samuel Blumberg 巴鲁克·萨缪尔·布伦伯格}\personslide
+  {Baruch Samuel Blumberg}{巴鲁克·萨缪尔·布伦伯格}
+  {images/baruchsamuelblumberg.jpg}{Wikipedia}
+  {1976 年（获奖时 51 岁）}{1925–2011（享年86岁）}{美国}{Balliol College · University of Pennsylvania}
+  {表彰他们关于传染病起源与传播新机制的发现}}
+
+\newcommand{\danielcarletongajdusek}{\gdef\personhonors{}\gdef\personbookmark{1976 · Daniel Carleton Gajdusek 丹尼尔·卡尔顿·盖杜谢克}\personslide
+  {Daniel Carleton Gajdusek}{丹尼尔·卡尔顿·盖杜谢克}
+  {images/danielcarletongajdusek.jpg}{Wikipedia}
+  {1976 年（获奖时 53 岁）}{1923–2008（享年85岁）}{美国}{—}
+  {表彰他们关于传染病起源与传播新机制的发现}}
+
+\newcommand{\rogerguillemin}{\gdef\personhonors{}\gdef\personbookmark{1977 · Roger Guillemin 罗歇·夏尔·吉耶曼}\personslide
+  {Roger Guillemin}{罗歇·夏尔·吉耶曼}
+  {images/rogerguillemin.jpg}{Wikipedia}
+  {1977 年（获奖时 53 岁）}{1924–2024（享年100岁）}{美国}{Collège de France · Salk Institute for Biological Studies}
+  {表彰他们关于脑肽类激素生成的发现}}
+
+\newcommand{\andrewschally}{\gdef\personhonors{}\gdef\personbookmark{1977 · Andrew Schally 安德鲁·沙利}\personslide
+  {Andrew Schally}{安德鲁·沙利}
+  {images/andrewschally.jpg}{Wikipedia}
+  {1977 年（获奖时 51 岁）}{1926–2024（享年98岁）}{美国}{Tulane University · LSU New Orleans}
+  {表彰他们关于脑肽类激素生成的发现}}
+
+\newcommand{\rosalynsussmanyalow}{\gdef\personhonors{}\gdef\personbookmark{1977 · Rosalyn Sussman Yalow 罗莎琳·雅洛}\personslide
+  {Rosalyn Sussman Yalow}{罗莎琳·雅洛}
+  {images/rosalynsussmanyalow.jpg}{Wikipedia}
+  {1977 年（获奖时 56 岁）}{1921–2011（享年90岁）}{美国}{Yeshiva University · Hunter College}
+  {表彰她开发肽类激素的放射免疫分析法}}
+
+\newcommand{\wernerarber}{\gdef\personhonors{}\gdef\personbookmark{1978 · Werner Arber 维尔纳·阿尔伯}\personslide
+  {Werner Arber}{维尔纳·阿尔伯}
+  {images/wernerarber.jpg}{Wikipedia}
+  {1978 年（获奖时 49 岁）}{1929–}{瑞士}{University of Southern California · University of Geneva}
+  {表彰他们发现限制性内切酶及其在分子遗传学问题上的应用}}
+
+\newcommand{\danielnathans}{\gdef\personhonors{}\gdef\personbookmark{1978 · Daniel Nathans 丹尼尔·纳森斯}\personslide
+  {Daniel Nathans}{丹尼尔·纳森斯}
+  {images/danielnathans.jpg}{Wikipedia}
+  {1978 年（获奖时 50 岁）}{1928–1999（享年71岁）}{美国}{Johns Hopkins University}
+  {表彰他们发现限制性内切酶及其在分子遗传学问题上的应用}}
+
+\newcommand{\hamiltonosmith}{\gdef\personhonors{}\gdef\personbookmark{1978 · Hamilton O. Smith 汉密尔顿·奥内尔·史密斯}\personslide
+  {Hamilton O. Smith}{汉密尔顿·奥内尔·史密斯}
+  {images/hamiltonosmith.jpg}{Wikipedia}
+  {1978 年（获奖时 47 岁）}{1931–2025（享年94岁）}{美国}{Johns Hopkins University · Johns Hopkins School of Medicine}
+  {表彰他们发现限制性内切酶及其在分子遗传学问题上的应用}}
+
+\newcommand{\allanmcleodcormack}{\gdef\personhonors{}\gdef\personbookmark{1979 · Allan McLeod Cormack 艾伦·麦克劳德·科马克}\personslide
+  {Allan McLeod Cormack}{艾伦·麦克劳德·科马克}
+  {images/allanmcleodcormack.jpg}{Wikipedia}
+  {1979 年（获奖时 55 岁）}{1924–1998（享年74岁）}{美国}{University of Cape Town · Tufts University}
+  {表彰计算机辅助断层成像（CT）的研制}}
+
+\newcommand{\godfreyhounsfield}{\gdef\personhonors{}\gdef\personbookmark{1979 · Godfrey Hounsfield 戈弗雷·纽博尔德·豪斯菲尔德}\personslide
+  {Godfrey Hounsfield}{戈弗雷·纽博尔德·豪斯菲尔德}
+  {images/godfreyhounsfield.jpg}{Wikipedia}
+  {1979 年（获奖时 60 岁）}{1919–2004（享年85岁）}{英国}{—}
+  {表彰计算机辅助断层成像（CT）的研制}}
+
+\newcommand{\barujbenacerraf}{\gdef\personhonors{}\gdef\personbookmark{1980 · Baruj Benacerraf 巴鲁赫·贝纳塞拉夫}\personslide
+  {Baruj Benacerraf}{巴鲁赫·贝纳塞拉夫}
+  {images/barujbenacerraf.jpg}{Wikipedia}
+  {1980 年（获奖时 60 岁）}{1920–2011（享年91岁）}{美国}{Harvard University · New York University}
+  {表彰他们关于细胞表面由遗传决定、调节免疫反应的结构的发现}}
+
+\newcommand{\jeandausset}{\gdef\personhonors{}\gdef\personbookmark{1980 · Jean Dausset 让·多塞}\personslide
+  {Jean Dausset}{让·多塞}
+  {images/jeandausset.jpg}{Wikipedia}
+  {1980 年（获奖时 64 岁）}{1916–2009（享年93岁）}{法国}{Collège de France · Paris Medical Faculty}
+  {表彰他们关于细胞表面由遗传决定、调节免疫反应的结构的发现}}
+
+\newcommand{\georgedsnell}{\gdef\personhonors{}\gdef\personbookmark{1980 · George D. Snell 乔治·戴维斯·斯内尔}\personslide
+  {George D. Snell}{乔治·戴维斯·斯内尔}
+  {none}{G.S.}
+  {1980 年（获奖时 77 岁）}{1903–1996（享年93岁）}{美国}{Jackson Laboratory}
+  {表彰他们关于细胞表面由遗传决定、调节免疫反应的结构的发现}}
+
+\newcommand{\rogerwolcottsperry}{\gdef\personhonors{}\gdef\personbookmark{1981 · Roger Wolcott Sperry 罗杰·沃尔科特·斯佩里}\personslide
+  {Roger Wolcott Sperry}{罗杰·沃尔科特·斯佩里}
+  {images/rogerwolcottsperry.jpg}{Wikipedia}
+  {1981 年（获奖时 68 岁）}{1913–1994（享年81岁）}{美国}{Harvard University · California Institute of Technology}
+  {表彰他关于大脑两半球功能特化的发现}}
+
+\newcommand{\davidhhubel}{\gdef\personhonors{}\gdef\personbookmark{1981 · David H. Hubel 戴维·亨特·休伯尔}\personslide
+  {David H. Hubel}{戴维·亨特·休伯尔}
+  {images/davidhhubel.jpg}{Wikipedia}
+  {1981 年（获奖时 55 岁）}{1926–2013（享年87岁）}{美国}{Harvard University · Johns Hopkins University}
+  {表彰他们关于视觉系统中信息加工的发现}}
+
+\newcommand{\torstenwiesel}{\gdef\personhonors{}\gdef\personbookmark{1981 · Torsten Wiesel 托斯滕·尼尔斯·维泽尔}\personslide
+  {Torsten Wiesel}{托斯滕·尼尔斯·维泽尔}
+  {images/torstenwiesel.jpg}{Wikipedia}
+  {1981 年（获奖时 57 岁）}{1924–}{美国}{Johns Hopkins University · Harvard University}
+  {表彰他们关于视觉系统中信息加工的发现}}
+
+\newcommand{\sunebergstrom}{\gdef\personhonors{}\gdef\personbookmark{1982 · Sune Bergström 苏内·贝里斯特伦}\personslide
+  {Sune Bergström}{苏内·贝里斯特伦}
+  {images/sunebergstrom.jpg}{Wikipedia}
+  {1982 年（获奖时 66 岁）}{1916–2004（享年88岁）}{瑞典}{Lund University · Karolinska Institutet}
+  {表彰他们关于前列腺素及相关生物活性物质的发现}}
+
+\newcommand{\bengtisamuelsson}{\gdef\personhonors{}\gdef\personbookmark{1982 · Bengt I. Samuelsson 本特·英格马·萨穆埃尔松}\personslide
+  {Bengt I. Samuelsson}{本特·英格马·萨穆埃尔松}
+  {images/bengtisamuelsson.png}{Wikipedia}
+  {1982 年（获奖时 48 岁）}{1934–2024（享年90岁）}{瑞典}{Karolinska Institutet}
+  {表彰他们关于前列腺素及相关生物活性物质的发现}}
+
+\newcommand{\johnvane}{\gdef\personhonors{}\gdef\personbookmark{1982 · John Vane 约翰·罗伯特·文}\personslide
+  {John Vane}{约翰·罗伯特·文}
+  {images/johnvane.jpg}{Wikipedia}
+  {1982 年（获奖时 55 岁）}{1927–2004（享年77岁）}{英国}{Queen Mary University of London · University of London}
+  {表彰他们关于前列腺素及相关生物活性物质的发现}}
+
+\newcommand{\barbaramcclintock}{\gdef\personhonors{}\gdef\personbookmark{1983 · Barbara McClintock 芭芭拉·麦克林托克}\personslide
+  {Barbara McClintock}{芭芭拉·麦克林托克}
+  {images/barbaramcclintock.jpg}{Wikipedia}
+  {1983 年（获奖时 81 岁）}{1902–1992（享年90岁）}{美国}{University of Missouri · Cold Spring Harbor Laboratory}
+  {表彰她发现可移动的遗传元件}}
+
+\newcommand{\nielskajjerne}{\gdef\personhonors{}\gdef\personbookmark{1984 · Niels Kaj Jerne 尼尔斯·凯·耶恩}\personslide
+  {Niels Kaj Jerne}{尼尔斯·凯·耶恩}
+  {images/nielskajjerne.jpg}{Wikipedia}
+  {1984 年（获奖时 73 岁）}{1911–1994（享年83岁）}{丹麦}{University of Pittsburgh}
+  {表彰他们关于免疫系统发育和调控特异性的理论，以及发现单克隆抗体产生的原理}}
+
+\newcommand{\georgesjfkohler}{\gdef\personhonors{}\gdef\personbookmark{1984 · Georges J. F. Köhler 乔治·让·弗朗茨·克勒}\personslide
+  {Georges J. F. Köhler}{乔治·让·弗朗茨·克勒}
+  {none}{G.K.}
+  {1984 年（获奖时 38 岁）}{1946–1995（享年49岁）}{德国}{University of Freiburg · Max Planck Institute of Immunobiology and Epigenetics}
+  {表彰他们关于免疫系统发育和调控特异性的理论，以及发现单克隆抗体产生的原理}}
+
+\newcommand{\cesarmilstein}{\gdef\personhonors{}\gdef\personbookmark{1984 · César Milstein 塞萨尔·米尔斯坦}\personslide
+  {César Milstein}{塞萨尔·米尔斯坦}
+  {none}{C.M.}
+  {1984 年（获奖时 57 岁）}{1927–2002（享年75岁）}{阿根廷}{University of Buenos Aires}
+  {表彰他们关于免疫系统发育和调控特异性的理论，以及发现单克隆抗体产生的原理}}
+
+\newcommand{\michaelstuartbrown}{\gdef\personhonors{}\gdef\personbookmark{1985 · Michael Stuart Brown 迈克尔·斯图尔特·布朗}\personslide
+  {Michael Stuart Brown}{迈克尔·斯图尔特·布朗}
+  {images/michaelstuartbrown.jpg}{Wikipedia}
+  {1985 年（获奖时 44 岁）}{1941–}{美国}{University of Texas System · University of Texas Southwestern Medical Center}
+  {表彰他们关于胆固醇代谢调节的发现}}
+
+\newcommand{\josephlgoldstein}{\gdef\personhonors{}\gdef\personbookmark{1985 · Joseph L. Goldstein 约瑟夫·伦纳德·戈尔茨坦}\personslide
+  {Joseph L. Goldstein}{约瑟夫·伦纳德·戈尔茨坦}
+  {images/josephlgoldstein.jpg}{Wikipedia}
+  {1985 年（获奖时 45 岁）}{1940–}{美国}{University of Texas System}
+  {表彰他们关于胆固醇代谢调节的发现}}
+
+\newcommand{\stanleycohen}{\gdef\personhonors{}\gdef\personbookmark{1986 · Stanley Cohen 斯坦利·科恩}\personslide
+  {Stanley Cohen}{斯坦利·科恩}
+  {images/stanleycohen.jpg}{Wikipedia}
+  {1986 年（获奖时 64 岁）}{1922–2020（享年98岁）}{美国}{Vanderbilt University · Washington University in St. Louis}
+  {表彰他们发现生长因子}}
+
+\newcommand{\ritalevimontalcini}{\gdef\personhonors{}\gdef\personbookmark{1986 · Rita Levi-Montalcini 丽塔·列维-蒙塔尔奇尼}\personslide
+  {Rita Levi-Montalcini}{丽塔·列维-蒙塔尔奇尼}
+  {images/ritalevimontalcini.jpg}{Wikipedia}
+  {1986 年（获奖时 77 岁）}{1909–2012（享年103岁）}{意大利}{Washington University in St. Louis}
+  {表彰他们发现生长因子}}
+
+\newcommand{\susumutonegawa}{\gdef\personhonors{}\gdef\personbookmark{1987 · Susumu Tonegawa 利根川进}\personslide
+  {Susumu Tonegawa}{利根川进}
+  {images/susumutonegawa.jpg}{Wikipedia}
+  {1987 年（获奖时 48 岁）}{1939–2026（享年87岁）}{日本}{Massachusetts Institute of Technology · Salk Institute for Biological Studies}
+  {表彰他发现抗体多样性产生的遗传学原理}}
+
+\newcommand{\jamesblack}{\gdef\personhonors{}\gdef\personbookmark{1988 · James Black 詹姆斯·怀特·布莱克}\personslide
+  {James Black}{詹姆斯·怀特·布莱克}
+  {images/jamesblack.jpg}{Wikipedia}
+  {1988 年（获奖时 64 岁）}{1924–2010（享年86岁）}{英国}{University College London · King's College London}
+  {表彰他们发现药物治疗的重要原理}}
+
+\newcommand{\gertrudebelion}{\gdef\personhonors{}\gdef\personbookmark{1988 · Gertrude B. Elion 格特鲁德·贝勒·埃利恩}\personslide
+  {Gertrude B. Elion}{格特鲁德·贝勒·埃利恩}
+  {images/gertrudebelion.jpg}{Wikipedia}
+  {1988 年（获奖时 70 岁）}{1918–1999（享年81岁）}{美国}{Duke University}
+  {表彰他们发现药物治疗的重要原理}}
+
+\newcommand{\georgehhitchings}{\gdef\personhonors{}\gdef\personbookmark{1988 · George H. Hitchings 乔治·赫伯特·希钦斯}\personslide
+  {George H. Hitchings}{乔治·赫伯特·希钦斯}
+  {none}{G.H.}
+  {1988 年（获奖时 83 岁）}{1905–1998（享年93岁）}{美国}{Duke University · Case Western Reserve University}
+  {表彰他们发现药物治疗的重要原理}}
+
+\newcommand{\jmichaelbishop}{\gdef\personhonors{}\gdef\personbookmark{1989 · J. Michael Bishop 约翰·迈克尔·毕晓普}\personslide
+  {J. Michael Bishop}{约翰·迈克尔·毕晓普}
+  {images/jmichaelbishop.jpg}{Wikipedia}
+  {1989 年（获奖时 53 岁）}{1936–2026（享年90岁）}{美国}{University of California, San Francisco · National Institute of Allergy and Infectious Diseases}
+  {表彰他们发现逆转录病毒癌基因的细胞起源}}
+
+\newcommand{\haroldevarmus}{\gdef\personhonors{}\gdef\personbookmark{1989 · Harold E. Varmus 哈罗德·埃利奥特·瓦慕斯}\personslide
+  {Harold E. Varmus}{哈罗德·埃利奥特·瓦慕斯}
+  {images/haroldevarmus.jpg}{Wikipedia}
+  {1989 年（获奖时 50 岁）}{1939–}{美国}{Cornell University · University of California, San Francisco}
+  {表彰他们发现逆转录病毒癌基因的细胞起源}}
+
+\newcommand{\josephmurray}{\gdef\personhonors{}\gdef\personbookmark{1990 · Joseph Murray 约瑟夫·爱德华·默里}\personslide
+  {Joseph Murray}{约瑟夫·爱德华·默里}
+  {none}{J.M.}
+  {1990 年（获奖时 71 岁）}{1919–2012（享年93岁）}{美国}{Harvard University}
+  {表彰他们关于器官和细胞移植治疗人类疾病的发现}}
+
+\newcommand{\edonnallthomas}{\gdef\personhonors{}\gdef\personbookmark{1990 · E. Donnall Thomas 唐纳尔·托马斯}\personslide
+  {E. Donnall Thomas}{唐纳尔·托马斯}
+  {images/edonnallthomas.jpg}{Wikipedia}
+  {1990 年（获奖时 70 岁）}{1920–2012（享年92岁）}{美国}{Q219563}
+  {表彰他们关于器官和细胞移植治疗人类疾病的发现}}
+
+\newcommand{\erwinneher}{\gdef\personhonors{}\gdef\personbookmark{1991 · Erwin Neher 埃尔温·内尔}\personslide
+  {Erwin Neher}{埃尔温·内尔}
+  {images/erwinneher.jpg}{Wikipedia}
+  {1991 年（获奖时 47 岁）}{1944–}{德国}{University of Göttingen}
+  {表彰他们关于细胞内单离子通道功能的发现}}
+
+\newcommand{\bertsakmann}{\gdef\personhonors{}\gdef\personbookmark{1991 · Bert Sakmann 贝特·萨克曼}\personslide
+  {Bert Sakmann}{贝特·萨克曼}
+  {images/bertsakmann.jpg}{Wikipedia}
+  {1991 年（获奖时 49 岁）}{1942–}{德国}{University of Göttingen · Heidelberg University}
+  {表彰他们关于细胞内单离子通道功能的发现}}
+
+\newcommand{\edmondhfischer}{\gdef\personhonors{}\gdef\personbookmark{1992 · Edmond H. Fischer 埃德蒙·亨利·费希尔}\personslide
+  {Edmond H. Fischer}{埃德蒙·亨利·费希尔}
+  {images/edmondhfischer.jpg}{Wikipedia}
+  {1992 年（获奖时 72 岁）}{1920–2021（享年101岁）}{美国}{Q219563}
+  {表彰他们发现可逆蛋白质磷酸化作为一种生物调节机制}}
+
+\newcommand{\edwingkrebs}{\gdef\personhonors{}\gdef\personbookmark{1992 · Edwin G. Krebs 埃德温·格哈德·克雷布斯}\personslide
+  {Edwin G. Krebs}{埃德温·格哈德·克雷布斯}
+  {images/edwingkrebs.jpg}{Wikipedia}
+  {1992 年（获奖时 74 岁）}{1918–2009（享年91岁）}{美国}{Q219563}
+  {表彰他们发现可逆蛋白质磷酸化作为一种生物调节机制}}
+
+\newcommand{\richardjroberts}{\gdef\personhonors{}\gdef\personbookmark{1993 · Richard J. Roberts 理查德·约翰·罗伯茨}\personslide
+  {Richard J. Roberts}{理查德·约翰·罗伯茨}
+  {images/richardjroberts.jpg}{Wikipedia}
+  {1993 年（获奖时 50 岁）}{1943–}{英国}{New England Biolabs · Harvard University}
+  {表彰他们发现断裂基因}}
+
+\newcommand{\phillipallensharp}{\gdef\personhonors{}\gdef\personbookmark{1993 · Phillip Allen Sharp 菲利普·艾伦·夏普}\personslide
+  {Phillip Allen Sharp}{菲利普·艾伦·夏普}
+  {images/phillipallensharp.jpg}{Wikipedia}
+  {1993 年（获奖时 49 岁）}{1944–}{美国}{Massachusetts Institute of Technology · California Institute of Technology}
+  {表彰他们发现断裂基因}}
+
+\newcommand{\alfredggilman}{\gdef\personhonors{}\gdef\personbookmark{1994 · Alfred G. Gilman 阿尔弗雷德·古德曼·吉尔曼}\personslide
+  {Alfred G. Gilman}{阿尔弗雷德·古德曼·吉尔曼}
+  {images/alfredggilman.jpg}{Wikipedia}
+  {1994 年（获奖时 53 岁）}{1941–2015（享年74岁）}{美国}{University of Texas at Dallas · University of Virginia}
+  {表彰他们发现 G 蛋白及这些蛋白在细胞信号转导中的作用}}
+
+\newcommand{\martinrodbell}{\gdef\personhonors{}\gdef\personbookmark{1994 · Martin Rodbell 马丁·罗德贝尔}\personslide
+  {Martin Rodbell}{马丁·罗德贝尔}
+  {images/martinrodbell.jpg}{Wikipedia}
+  {1994 年（获奖时 69 岁）}{1925–1998（享年73岁）}{美国}{University of North Carolina at Chapel Hill · Duke University}
+  {表彰他们发现 G 蛋白及这些蛋白在细胞信号转导中的作用}}
+
+\newcommand{\edwardblewis}{\gdef\personhonors{}\gdef\personbookmark{1995 · Edward B. Lewis 爱德华·布赖恩特·刘易斯}\personslide
+  {Edward B. Lewis}{爱德华·布赖恩特·刘易斯}
+  {images/edwardblewis.png}{Wikipedia}
+  {1995 年（获奖时 77 岁）}{1918–2004（享年86岁）}{美国}{California Institute of Technology}
+  {表彰他们关于早期胚胎发育遗传控制的发现}}
+
+\newcommand{\christianenussleinvolhard}{\gdef\personhonors{}\gdef\personbookmark{1995 · Christiane Nüsslein-Volhard 克里斯蒂安娜·尼斯莱因-福尔哈德}\personslide
+  {Christiane Nüsslein-Volhard}{克里斯蒂安娜·尼斯莱因-福尔哈德}
+  {images/christianenussleinvolhard.jpg}{Wikipedia}
+  {1995 年（获奖时 53 岁）}{1942–}{德国}{University of Tübingen · European Molecular Biology Laboratory}
+  {表彰他们关于早期胚胎发育遗传控制的发现}}
+
+\newcommand{\ericfwieschaus}{\gdef\personhonors{}\gdef\personbookmark{1995 · Eric F. Wieschaus 埃里克·弗朗西斯·威绍斯}\personslide
+  {Eric F. Wieschaus}{埃里克·弗朗西斯·威绍斯}
+  {images/ericfwieschaus.jpg}{Wikipedia}
+  {1995 年（获奖时 48 岁）}{1947–}{美国}{Princeton University · Duke University}
+  {表彰他们关于早期胚胎发育遗传控制的发现}}
+
+\newcommand{\petercdoherty}{\gdef\personhonors{}\gdef\personbookmark{1996 · Peter C. Doherty 彼得·查尔斯·多尔蒂}\personslide
+  {Peter C. Doherty}{彼得·查尔斯·多尔蒂}
+  {images/petercdoherty.jpg}{Wikipedia}
+  {1996 年（获奖时 56 岁）}{1940–}{澳大利亚}{University of Sussex · University of Tennessee}
+  {表彰他们关于细胞介导免疫防御特异性的发现}}
+
+\newcommand{\rolfmzinkernagel}{\gdef\personhonors{}\gdef\personbookmark{1996 · Rolf M. Zinkernagel 罗尔夫·马丁·青克纳格尔}\personslide
+  {Rolf M. Zinkernagel}{罗尔夫·马丁·青克纳格尔}
+  {images/rolfmzinkernagel.jpg}{Wikipedia}
+  {1996 年（获奖时 52 岁）}{1944–}{瑞士}{University of Zurich}
+  {表彰他们关于细胞介导免疫防御特异性的发现}}
+
+\newcommand{\stanleybprusiner}{\gdef\personhonors{}\gdef\personbookmark{1997 · Stanley B. Prusiner 斯坦利·本·普鲁西纳}\personslide
+  {Stanley B. Prusiner}{斯坦利·本·普鲁西纳}
+  {images/stanleybprusiner.jpg}{Wikipedia}
+  {1997 年（获奖时 55 岁）}{1942–}{美国}{University of California, San Francisco · University of California, Berkeley}
+  {表彰他发现朊病毒——一种新的感染生物学原理}}
+
+\newcommand{\robertffurchgott}{\gdef\personhonors{}\gdef\personbookmark{1998 · Robert F. Furchgott 罗伯特·弗朗西斯·弗奇戈特}\personslide
+  {Robert F. Furchgott}{罗伯特·弗朗西斯·弗奇戈特}
+  {images/robertffurchgott.jpg}{Wikipedia}
+  {1998 年（获奖时 82 岁）}{1916–2009（享年93岁）}{美国}{University of Miami · Washington University in St. Louis}
+  {表彰他们关于一氧化氮作为心血管系统信号分子的发现}}
+
+\newcommand{\louisignarro}{\gdef\personhonors{}\gdef\personbookmark{1998 · Louis Ignarro 路易斯·伊格纳罗}\personslide
+  {Louis Ignarro}{路易斯·伊格纳罗}
+  {images/louisignarro.jpg}{Wikipedia}
+  {1998 年（获奖时 57 岁）}{1941–}{美国}{University of California, Los Angeles · Tulane University}
+  {表彰他们关于一氧化氮作为心血管系统信号分子的发现}}
+
+\newcommand{\feridmurad}{\gdef\personhonors{}\gdef\personbookmark{1998 · Ferid Murad 费里德·穆拉德}\personslide
+  {Ferid Murad}{费里德·穆拉德}
+  {images/feridmurad.jpg}{Wikipedia}
+  {1998 年（获奖时 62 岁）}{1936–2023（享年87岁）}{美国}{University of Texas at Austin · Stanford University}
+  {表彰他们关于一氧化氮作为心血管系统信号分子的发现}}
+
+\newcommand{\gunterblobel}{\gdef\personhonors{}\gdef\personbookmark{1999 · Günter Blobel 京特·布洛贝尔}\personslide
+  {Günter Blobel}{京特·布洛贝尔}
+  {images/gunterblobel.jpg}{Wikipedia}
+  {1999 年（获奖时 63 岁）}{1936–2018（享年82岁）}{美国}{The Rockefeller University}
+  {表彰他发现蛋白质具有控制其在细胞内运输和定位的内在信号}}
+
+\newcommand{\arvidcarlsson}{\gdef\personhonors{}\gdef\personbookmark{2000 · Arvid Carlsson 阿维德·卡尔松}\personslide
+  {Arvid Carlsson}{阿维德·卡尔松}
+  {images/arvidcarlsson.jpg}{Wikipedia}
+  {2000 年（获奖时 77 岁）}{1923–2018（享年95岁）}{瑞典}{University of Gothenburg · Lund University}
+  {表彰他们关于神经系统中信号传导的发现}}
+
+\newcommand{\paulgreengard}{\gdef\personhonors{}\gdef\personbookmark{2000 · Paul Greengard 保罗·格林加德}\personslide
+  {Paul Greengard}{保罗·格林加德}
+  {images/paulgreengard.jpg}{Wikipedia}
+  {2000 年（获奖时 75 岁）}{1925–2019（享年94岁）}{美国}{The Rockefeller University · University of Cambridge}
+  {表彰他们关于神经系统中信号传导的发现}}
+
+\newcommand{\erickandel}{\gdef\personhonors{}\gdef\personbookmark{2000 · Eric Kandel 埃里克·坎德尔}\personslide
+  {Eric Kandel}{埃里克·坎德尔}
+  {images/erickandel.jpg}{Wikipedia}
+  {2000 年（获奖时 71 岁）}{1929–}{美国}{Columbia University}
+  {表彰他们关于神经系统中信号传导的发现}}
+
+\newcommand{\lelandhhartwell}{\gdef\personhonors{}\gdef\personbookmark{2001 · Leland H. Hartwell 利兰·哈特韦尔}\personslide
+  {Leland H. Hartwell}{利兰·哈特韦尔}
+  {none}{L.H.}
+  {2001 年（获奖时 62 岁）}{1939–}{美国}{Q219563 · Arizona State University}
+  {表彰他们发现细胞周期的关键调节因子}}
+
+\newcommand{\timhunt}{\gdef\personhonors{}\gdef\personbookmark{2001 · Tim Hunt 蒂姆·亨特}\personslide
+  {Tim Hunt}{蒂姆·亨特}
+  {images/timhunt.jpg}{Wikipedia}
+  {2001 年（获奖时 58 岁）}{1943–}{英国}{Cancer Research UK}
+  {表彰他们发现细胞周期的关键调节因子}}
+
+\newcommand{\paulnurse}{\gdef\personhonors{}\gdef\personbookmark{2001 · Paul Nurse 保罗·马斯顿·纳斯}\personslide
+  {Paul Nurse}{保罗·马斯顿·纳斯}
+  {images/paulnurse.jpg}{Wikipedia}
+  {2001 年（获奖时 52 岁）}{1949–}{英国}{University of Oxford · Francis Crick Institute}
+  {表彰他们发现细胞周期的关键调节因子}}
+
+\newcommand{\sydneybrenner}{\gdef\personhonors{}\gdef\personbookmark{2002 · Sydney Brenner 悉尼·布伦纳}\personslide
+  {Sydney Brenner}{悉尼·布伦纳}
+  {images/sydneybrenner.jpg}{Wikipedia}
+  {2002 年（获奖时 75 岁）}{1927–2019（享年92岁）}{英国}{University of Cambridge · University of California, Berkeley}
+  {表彰他们关于「器官发育和程序性细胞死亡的遗传调控」的发现}}
+
+\newcommand{\hroberthorvitz}{\gdef\personhonors{}\gdef\personbookmark{2002 · H. Robert Horvitz 霍华德·罗伯特·霍维茨}\personslide
+  {H. Robert Horvitz}{霍华德·罗伯特·霍维茨}
+  {none}{H.H.}
+  {2002 年（获奖时 55 岁）}{1947–}{美国}{Massachusetts Institute of Technology · Howard Hughes Medical Institute}
+  {表彰他们关于「器官发育和程序性细胞死亡的遗传调控」的发现}}
+
+\newcommand{\johnsulston}{\gdef\personhonors{}\gdef\personbookmark{2002 · John Sulston 约翰·爱德华·苏尔斯顿}\personslide
+  {John Sulston}{约翰·爱德华·苏尔斯顿}
+  {images/johnsulston.jpg}{Wikipedia}
+  {2002 年（获奖时 60 岁）}{1942–2018（享年76岁）}{英国}{University of Manchester · University of Cambridge}
+  {表彰他们关于「器官发育和程序性细胞死亡的遗传调控」的发现}}
+
+\newcommand{\paullauterbur}{\gdef\personhonors{}\gdef\personbookmark{2003 · Paul Lauterbur 保罗·劳特伯}\personslide
+  {Paul Lauterbur}{保罗·劳特伯}
+  {none}{P.L.}
+  {2003 年（获奖时 74 岁）}{1929–2007（享年78岁）}{美国}{University of Illinois Urbana-Champaign · University of Illinois Chicago}
+  {表彰他们关于磁共振成像的发现}}
+
+\newcommand{\petermansfield}{\gdef\personhonors{}\gdef\personbookmark{2003 · Peter Mansfield 彼得·曼斯菲尔德}\personslide
+  {Peter Mansfield}{彼得·曼斯菲尔德}
+  {none}{P.M.}
+  {2003 年（获奖时 70 岁）}{1933–2017（享年84岁）}{英国}{University of Nottingham}
+  {表彰他们关于磁共振成像的发现}}
+
+\newcommand{\richardaxel}{\gdef\personhonors{}\gdef\personbookmark{2004 · Richard Axel 理查德·阿克塞尔}\personslide
+  {Richard Axel}{理查德·阿克塞尔}
+  {images/richardaxel.jpg}{Wikipedia}
+  {2004 年（获奖时 58 岁）}{1946–}{美国}{Johns Hopkins School of Medicine · Columbia University}
+  {表彰他们发现气味受体并阐明嗅觉系统的组织结构}}
+
+\newcommand{\lindabbuck}{\gdef\personhonors{}\gdef\personbookmark{2004 · Linda B. Buck 琳达·巴克}\personslide
+  {Linda B. Buck}{琳达·巴克}
+  {images/lindabbuck.jpg}{Wikipedia}
+  {2004 年（获奖时 57 岁）}{1947–}{美国}{Harvard Medical School · Q219563}
+  {表彰他们发现气味受体并阐明嗅觉系统的组织结构}}
+
+\newcommand{\barrymarshall}{\gdef\personhonors{}\gdef\personbookmark{2005 · Barry Marshall 巴里·马歇尔}\personslide
+  {Barry Marshall}{巴里·马歇尔}
+  {images/barrymarshall.jpg}{Wikipedia}
+  {2005 年（获奖时 54 岁）}{1951–}{澳大利亚}{Royal Perth Hospital · University of Virginia}
+  {表彰他们发现幽门螺杆菌及其在胃炎和消化性溃疡病中的作用}}
+
+\newcommand{\jrobinwarren}{\gdef\personhonors{}\gdef\personbookmark{2005 · J. Robin Warren 罗宾·沃伦}\personslide
+  {J. Robin Warren}{罗宾·沃伦}
+  {images/jrobinwarren.jpg}{Wikipedia}
+  {2005 年（获奖时 68 岁）}{1937–2024（享年87岁）}{澳大利亚}{University of Western Australia}
+  {表彰他们发现幽门螺杆菌及其在胃炎和消化性溃疡病中的作用}}
+
+\newcommand{\andrewfire}{\gdef\personhonors{}\gdef\personbookmark{2006 · Andrew Fire 安德鲁·法尔}\personslide
+  {Andrew Fire}{安德鲁·法尔}
+  {images/andrewfire.jpg}{Wikipedia}
+  {2006 年（获奖时 47 岁）}{1959–}{美国}{Johns Hopkins University · Stanford University}
+  {表彰他们发现 RNA 干扰——双链 RNA 引发的基因沉默}}
+
+\newcommand{\craigmello}{\gdef\personhonors{}\gdef\personbookmark{2006 · Craig Mello 克雷格·梅洛}\personslide
+  {Craig Mello}{克雷格·梅洛}
+  {images/craigmello.png}{Wikipedia}
+  {2006 年（获奖时 46 岁）}{1960–}{美国}{United States Geological Survey · Duke University}
+  {表彰他们发现 RNA 干扰——双链 RNA 引发的基因沉默}}
+
+\newcommand{\mariocapecchi}{\gdef\personhonors{}\gdef\personbookmark{2007 · Mario Capecchi 马里奥·伦佐·卡佩基}\personslide
+  {Mario Capecchi}{马里奥·伦佐·卡佩基}
+  {images/mariocapecchi.jpg}{Wikipedia}
+  {2007 年（获奖时 70 岁）}{1937–}{美国}{Harvard University · University of Utah}
+  {表彰他们发现利用胚胎干细胞在小鼠中引入特定基因修饰的原理}}
+
+\newcommand{\martinevans}{\gdef\personhonors{}\gdef\personbookmark{2007 · Martin Evans 马丁·约翰·埃文斯}\personslide
+  {Martin Evans}{马丁·约翰·埃文斯}
+  {none}{M.E.}
+  {2007 年（获奖时 66 岁）}{1941–}{英国}{University College London · Cardiff University}
+  {表彰他们发现利用胚胎干细胞在小鼠中引入特定基因修饰的原理}}
+
+\newcommand{\oliversmithies}{\gdef\personhonors{}\gdef\personbookmark{2007 · Oliver Smithies 奥利弗·史密西斯}\personslide
+  {Oliver Smithies}{奥利弗·史密西斯}
+  {none}{O.S.}
+  {2007 年（获奖时 82 岁）}{1925–2017（享年92岁）}{美国}{University of Toronto · University of Wisconsin–Madison}
+  {表彰他们发现利用胚胎干细胞在小鼠中引入特定基因修饰的原理}}
+
+\newcommand{\haraldzurhausen}{\gdef\personhonors{}\gdef\personbookmark{2008 · Harald zur Hausen 哈拉尔德·楚尔·豪森}\personslide
+  {Harald zur Hausen}{哈拉尔德·楚尔·豪森}
+  {none}{H.H.}
+  {2008 年（获奖时 72 岁）}{1936–2023（享年87岁）}{德国}{University of Erlangen–Nuremberg · University of Freiburg}
+  {表彰他发现导致宫颈癌的人乳头瘤病毒}}
+
+\newcommand{\francoisebarresinoussi}{\gdef\personhonors{}\gdef\personbookmark{2008 · Françoise Barré-Sinoussi 弗朗索瓦丝·巴尔-西诺西}\personslide
+  {Françoise Barré-Sinoussi}{弗朗索瓦丝·巴尔-西诺西}
+  {images/francoisebarresinoussi.jpg}{Wikipedia}
+  {2008 年（获奖时 61 岁）}{1947–}{法国}{Pasteur Institute · French National Institute of Health and Medical Research}
+  {表彰他们发现人类免疫缺陷病毒}}
+
+\newcommand{\lucmontagnier}{\gdef\personhonors{}\gdef\personbookmark{2008 · Luc Montagnier 吕克·蒙塔尼耶}\personslide
+  {Luc Montagnier}{吕克·蒙塔尼耶}
+  {none}{L.M.}
+  {2008 年（获奖时 76 岁）}{1932–2022（享年90岁）}{法国}{Pasteur Institute · Queens College}
+  {表彰他们发现人类免疫缺陷病毒}}
+
+\newcommand{\elizabethblackburn}{\gdef\personhonors{}\gdef\personbookmark{2009 · Elizabeth Blackburn 伊丽莎白·海伦·布莱克本}\personslide
+  {Elizabeth Blackburn}{伊丽莎白·海伦·布莱克本}
+  {images/elizabethblackburn.jpg}{Wikipedia}
+  {2009 年（获奖时 61 岁）}{1948–}{美国}{University of Oxford · University of California, San Francisco}
+  {表彰他们发现端粒和端粒酶如何保护染色体}}
+
+\newcommand{\carolwgreider}{\gdef\personhonors{}\gdef\personbookmark{2009 · Carol W. Greider 卡罗尔·格雷德}\personslide
+  {Carol W. Greider}{卡罗尔·格雷德}
+  {none}{C.G.}
+  {2009 年（获奖时 48 岁）}{1961–}{美国}{Johns Hopkins University · Cold Spring Harbor Laboratory}
+  {表彰他们发现端粒和端粒酶如何保护染色体}}
+
+\newcommand{\jackwszostak}{\gdef\personhonors{}\gdef\personbookmark{2009 · Jack W. Szostak 杰克·绍斯塔克}\personslide
+  {Jack W. Szostak}{杰克·绍斯塔克}
+  {none}{J.S.}
+  {2009 年（获奖时 57 岁）}{1952–}{美国}{Harvard University · Harvard Medical School}
+  {表彰他们发现端粒和端粒酶如何保护染色体}}
+
+\newcommand{\robertgedwards}{\gdef\personhonors{}\gdef\personbookmark{2010 · Robert G. Edwards 罗伯特·杰弗里·爱德华兹}\personslide
+  {Robert G. Edwards}{罗伯特·杰弗里·爱德华兹}
+  {none}{R.E.}
+  {2010 年（获奖时 85 岁）}{1925–2013（享年88岁）}{英国}{University of Cambridge}
+  {表彰体外受精技术的研制}}
+
+\newcommand{\brucebeutler}{\gdef\personhonors{}\gdef\personbookmark{2011 · Bruce Beutler 布鲁斯·博伊特勒}\personslide
+  {Bruce Beutler}{布鲁斯·博伊特勒}
+  {images/brucebeutler.jpg}{Wikipedia}
+  {2011 年（获奖时 54 岁）}{1957–}{美国}{Scripps Research · The Rockefeller University}
+  {表彰他们关于先天免疫激活的发现}}
+
+\newcommand{\julesahoffmann}{\gdef\personhonors{}\gdef\personbookmark{2011 · Jules A. Hoffmann 朱尔斯·霍夫曼}\personslide
+  {Jules A. Hoffmann}{朱尔斯·霍夫曼}
+  {images/julesahoffmann.jpg}{Wikipedia}
+  {2011 年（获奖时 70 岁）}{1941–}{法国}{French Academy of Sciences}
+  {表彰他们关于先天免疫激活的发现}}
+
+\newcommand{\ralphmsteinman}{\gdef\personhonors{}\gdef\personbookmark{2011 · Ralph M. Steinman 拉尔夫·斯坦曼}\personslide
+  {Ralph M. Steinman}{拉尔夫·斯坦曼}
+  {images/ralphmsteinman.jpg}{Wikipedia}
+  {2011 年（获奖时 68 岁）}{1943–2011（享年68岁）}{加拿大}{The Rockefeller University}
+  {表彰他发现树突状细胞及其在获得性免疫中的作用}}
+
+\newcommand{\johngurdon}{\gdef\personhonors{}\gdef\personbookmark{2012 · John Gurdon 约翰·格登}\personslide
+  {John Gurdon}{约翰·格登}
+  {images/johngurdon.jpg}{Wikipedia}
+  {2012 年（获奖时 79 岁）}{1933–2025（享年92岁）}{英国}{University of Oxford · University of Cambridge}
+  {表彰成熟细胞可被重编程为多能细胞的发现}}
+
+\newcommand{\shinyayamanaka}{\gdef\personhonors{}\gdef\personbookmark{2012 · Shinya Yamanaka 山中伸弥}\personslide
+  {Shinya Yamanaka}{山中伸弥}
+  {images/shinyayamanaka.jpg}{Wikipedia}
+  {2012 年（获奖时 50 岁）}{1962–}{日本}{Kyoto University · Nara Institute of Science and Technology}
+  {表彰成熟细胞可被重编程为多能细胞的发现}}
+
+\newcommand{\jameserothman}{\gdef\personhonors{}\gdef\personbookmark{2013 · James E. Rothman 詹姆斯·罗斯曼}\personslide
+  {James E. Rothman}{詹姆斯·罗斯曼}
+  {images/jameserothman.jpg}{Wikipedia}
+  {2013 年（获奖时 63 岁）}{1950–}{美国}{Princeton University · Yale School of Medicine}
+  {表彰他们发现调节囊泡运输的机制——细胞内主要的运输系统}}
+
+\newcommand{\randywschekman}{\gdef\personhonors{}\gdef\personbookmark{2013 · Randy W. Schekman 兰迪·韦恩·谢克曼}\personslide
+  {Randy W. Schekman}{兰迪·韦恩·谢克曼}
+  {none}{R.S.}
+  {2013 年（获奖时 65 岁）}{1948–}{美国}{University of California, Berkeley}
+  {表彰他们发现调节囊泡运输的机制——细胞内主要的运输系统}}
+
+\newcommand{\thomascsudhof}{\gdef\personhonors{}\gdef\personbookmark{2013 · Thomas C. Südhof 托马斯·聚德霍夫}\personslide
+  {Thomas C. Südhof}{托马斯·聚德霍夫}
+  {none}{T.S.}
+  {2013 年（获奖时 58 岁）}{1955–}{美国}{University of Göttingen · Stanford University}
+  {表彰他们发现调节囊泡运输的机制——细胞内主要的运输系统}}
+
+\newcommand{\johnokeefe}{\gdef\personhonors{}\gdef\personbookmark{2014 · John O'Keefe 约翰·奥基夫}\personslide
+  {John O'Keefe}{约翰·奥基夫}
+  {images/johnokeefe.jpg}{Wikipedia}
+  {2014 年（获奖时 75 岁）}{1939–}{美国}{University College London}
+  {表彰他们发现构成大脑定位系统的细胞}}
+
+\newcommand{\maybrittmoser}{\gdef\personhonors{}\gdef\personbookmark{2014 · May-Britt Moser 梅-布里特·莫泽}\personslide
+  {May-Britt Moser}{梅-布里特·莫泽}
+  {none}{M.M.}
+  {2014 年（获奖时 51 岁）}{1963–}{挪威}{Norwegian University of Science and Technology · University of Oslo}
+  {表彰他们发现构成大脑定位系统的细胞}}
+
+\newcommand{\edvardimoser}{\gdef\personhonors{}\gdef\personbookmark{2014 · Edvard I. Moser 爱德华·莫泽}\personslide
+  {Edvard I. Moser}{爱德华·莫泽}
+  {none}{E.M.}
+  {2014 年（获奖时 52 岁）}{1962–}{挪威}{Norwegian University of Science and Technology}
+  {表彰他们发现构成大脑定位系统的细胞}}
+
+\newcommand{\williamccampbell}{\gdef\personhonors{}\gdef\personbookmark{2015 · William C. Campbell 威廉·坎贝尔}\personslide
+  {William C. Campbell}{威廉·坎贝尔}
+  {none}{W.C.}
+  {2015 年（获奖时 85 岁）}{1930–}{爱尔兰}{Drew University}
+  {表彰他们关于对抗线虫寄生感染的新型疗法的发现}}
+
+\newcommand{\satoshiomura}{\gdef\personhonors{}\gdef\personbookmark{2015 · Satoshi Ōmura 大村智}\personslide
+  {Satoshi Ōmura}{大村智}
+  {images/satoshiomura.jpg}{Wikipedia}
+  {2015 年（获奖时 80 岁）}{1935–}{日本}{The Kitasato Institute · Wesleyan University}
+  {表彰他们关于对抗线虫寄生感染的新型疗法的发现}}
+
+\newcommand{\tuyouyou}{\gdef\personhonors{}\gdef\personbookmark{2015 · Tu Youyou 屠呦呦}\personslide
+  {Tu Youyou}{屠呦呦}
+  {images/tuyouyou.jpg}{Wikipedia}
+  {2015 年（获奖时 85 岁）}{1930–}{中国}{—}
+  {表彰她关于疟疾新型疗法的发现}}
+
+\newcommand{\yoshinoriohsumi}{\gdef\personhonors{}\gdef\personbookmark{2016 · Yoshinori Ohsumi 大隅良典}\personslide
+  {Yoshinori Ohsumi}{大隅良典}
+  {images/yoshinoriohsumi.jpg}{Wikipedia}
+  {2016 年（获奖时 71 岁）}{1945–}{日本}{Graduate University for Advanced Studies · Tokyo Institute of Technology}
+  {表彰他发现细胞自噬机制}}
+
+\newcommand{\jeffreychall}{\gdef\personhonors{}\gdef\personbookmark{2017 · Jeffrey C. Hall 杰弗里·霍尔}\personslide
+  {Jeffrey C. Hall}{杰弗里·霍尔}
+  {images/jeffreychall.jpg}{Wikipedia}
+  {2017 年（获奖时 72 岁）}{1945–}{美国}{Brandeis University}
+  {表彰他们发现控制昼夜节律的分子机制}}
+
+\newcommand{\michaelrosbash}{\gdef\personhonors{}\gdef\personbookmark{2017 · Michael Rosbash 迈克尔·罗斯巴什}\personslide
+  {Michael Rosbash}{迈克尔·罗斯巴什}
+  {images/michaelrosbash.jpg}{Wikipedia}
+  {2017 年（获奖时 73 岁）}{1944–}{美国}{Brandeis University}
+  {表彰他们发现控制昼夜节律的分子机制}}
+
+\newcommand{\michaelwyoung}{\gdef\personhonors{}\gdef\personbookmark{2017 · Michael W. Young 迈克尔·沃伦·扬}\personslide
+  {Michael W. Young}{迈克尔·沃伦·扬}
+  {images/michaelwyoung.jpg}{Wikipedia}
+  {2017 年（获奖时 68 岁）}{1949–}{美国}{University of Texas at Austin · The Rockefeller University}
+  {表彰他们发现控制昼夜节律的分子机制}}
+
+\newcommand{\jamespallison}{\gdef\personhonors{}\gdef\personbookmark{2018 · James P. Allison 詹姆斯·艾利森}\personslide
+  {James P. Allison}{詹姆斯·艾利森}
+  {images/jamespallison.jpg}{Wikipedia}
+  {2018 年（获奖时 70 岁）}{1948–}{美国}{The University of Texas MD Anderson Cancer Center · Scripps Research}
+  {表彰他们通过抑制负向免疫调节发现癌症疗法}}
+
+\newcommand{\tasukuhonjo}{\gdef\personhonors{}\gdef\personbookmark{2018 · Tasuku Honjo 本庶佑}\personslide
+  {Tasuku Honjo}{本庶佑}
+  {images/tasukuhonjo.jpg}{Wikipedia}
+  {2018 年（获奖时 76 岁）}{1942–}{日本}{University of Tokyo · Kyoto University}
+  {表彰他们通过抑制负向免疫调节发现癌症疗法}}
+
+\newcommand{\williamkaelinjr}{\gdef\personhonors{}\gdef\personbookmark{2019 · William Kaelin Jr. 威廉·凯林}\personslide
+  {William Kaelin Jr.}{威廉·凯林}
+  {images/williamkaelinjr.jpg}{Wikipedia}
+  {2019 年（获奖时 62 岁）}{1957–}{美国}{Harvard University · Dana–Farber Cancer Institute}
+  {表彰他们发现细胞如何感知并适应氧供应}}
+
+\newcommand{\peterjratcliffe}{\gdef\personhonors{}\gdef\personbookmark{2019 · Peter J. Ratcliffe 彼得·拉特克利夫}\personslide
+  {Peter J. Ratcliffe}{彼得·拉特克利夫}
+  {images/peterjratcliffe.jpg}{Wikipedia}
+  {2019 年（获奖时 65 岁）}{1954–}{英国}{University of Oxford · Francis Crick Institute}
+  {表彰他们发现细胞如何感知并适应氧供应}}
+
+\newcommand{\gregglsemenza}{\gdef\personhonors{}\gdef\personbookmark{2019 · Gregg L. Semenza 格雷格·塞门扎}\personslide
+  {Gregg L. Semenza}{格雷格·塞门扎}
+  {images/gregglsemenza.jpg}{Wikipedia}
+  {2019 年（获奖时 63 岁）}{1956–}{美国}{Johns Hopkins University}
+  {表彰他们发现细胞如何感知并适应氧供应}}
+
+\newcommand{\harveyjalter}{\gdef\personhonors{}\gdef\personbookmark{2020 · Harvey J. Alter 哈维·詹姆斯·奥尔特}\personslide
+  {Harvey J. Alter}{哈维·詹姆斯·奥尔特}
+  {images/harveyjalter.jpg}{Wikipedia}
+  {2020 年（获奖时 85 岁）}{1935–}{美国}{Georgetown University · United States National Institutes of Health}
+  {表彰发现丙型肝炎病毒}}
+
+\newcommand{\michaelhoughton}{\gdef\personhonors{}\gdef\personbookmark{2020 · Michael Houghton 迈克尔·霍顿}\personslide
+  {Michael Houghton}{迈克尔·霍顿}
+  {images/michaelhoughton.jpg}{Wikipedia}
+  {2020 年（获奖时 71 岁）}{1949–}{英国}{University of Alberta · Chiron Corporation}
+  {表彰发现丙型肝炎病毒}}
+
+\newcommand{\charlesmrice}{\gdef\personhonors{}\gdef\personbookmark{2020 · Charles M. Rice 查尔斯·赖斯}\personslide
+  {Charles M. Rice}{查尔斯·赖斯}
+  {images/charlesmrice.jpg}{Wikipedia}
+  {2020 年（获奖时 68 岁）}{1952–}{美国}{The Rockefeller University}
+  {表彰发现丙型肝炎病毒}}
+
+\newcommand{\davidjulius}{\gdef\personhonors{}\gdef\personbookmark{2021 · David Julius 戴维·朱利叶斯}\personslide
+  {David Julius}{戴维·朱利叶斯}
+  {images/davidjulius.jpg}{Wikipedia}
+  {2021 年（获奖时 66 岁）}{1955–}{美国}{University of California, San Francisco · UCSF Medical Center}
+  {表彰他们发现温度和触觉受体}}
+
+\newcommand{\ardempatapoutian}{\gdef\personhonors{}\gdef\personbookmark{2021 · Ardem Patapoutian 阿德姆·帕塔普蒂安}\personslide
+  {Ardem Patapoutian}{阿德姆·帕塔普蒂安}
+  {images/ardempatapoutian.jpg}{Wikipedia}
+  {2021 年（获奖时 54 岁）}{1967–}{美国}{Scripps Research}
+  {表彰他们发现温度和触觉受体}}
+
+\newcommand{\svantepaabo}{\gdef\personhonors{}\gdef\personbookmark{2022 · Svante Pääbo 斯万特·帕博}\personslide
+  {Svante Pääbo}{斯万特·帕博}
+  {images/svantepaabo.jpg}{Wikipedia}
+  {2022 年（获奖时 67 岁）}{1955–}{瑞典}{Ludwig-Maximilians-Universität München · Max Planck Institute for Evolutionary Anthropology}
+  {表彰他关于已灭绝人类基因组和人类进化的发现}}
+
+\newcommand{\katalinkariko}{\gdef\personhonors{}\gdef\personbookmark{2023 · Katalin Karikó 卡塔琳·考里科}\personslide
+  {Katalin Karikó}{卡塔琳·考里科}
+  {images/katalinkariko.jpg}{Wikipedia}
+  {2023 年（获奖时 68 岁）}{1955–}{美国}{University of Pennsylvania · BioNTech}
+  {表彰他们关于核苷碱基修饰的发现，这些发现使针对 COVID-19 的有效 mRNA 疫苗得以研制}}
+
+\newcommand{\drewweissman}{\gdef\personhonors{}\gdef\personbookmark{2023 · Drew Weissman 德鲁·韦斯曼}\personslide
+  {Drew Weissman}{德鲁·韦斯曼}
+  {images/drewweissman.jpg}{Wikipedia}
+  {2023 年（获奖时 64 岁）}{1959–}{美国}{Perelman School of Medicine at the University of Pennsylvania · University of Pennsylvania}
+  {表彰他们关于核苷碱基修饰的发现，这些发现使针对 COVID-19 的有效 mRNA 疫苗得以研制}}
+
+\newcommand{\victorambros}{\gdef\personhonors{}\gdef\personbookmark{2024 · Victor Ambros 维克托·安布罗斯}\personslide
+  {Victor Ambros}{维克托·安布罗斯}
+  {images/victorambros.jpg}{Wikipedia}
+  {2024 年（获奖时 71 岁）}{1953–}{美国}{Harvard University · University of Massachusetts Medical School}
+  {表彰他们发现 microRNA 及其在转录后基因调控中的作用}}
+
+\newcommand{\garyruvkun}{\gdef\personhonors{}\gdef\personbookmark{2024 · Gary Ruvkun 加里·鲁夫昆}\personslide
+  {Gary Ruvkun}{加里·鲁夫昆}
+  {images/garyruvkun.jpg}{Wikipedia}
+  {2024 年（获奖时 72 岁）}{1952–}{美国}{Harvard University}
+  {表彰他们发现 microRNA 及其在转录后基因调控中的作用}}
+
+\newcommand{\maryebrunkow}{\gdef\personhonors{}\gdef\personbookmark{2025 · Mary E. Brunkow 玛丽·埃伦·布伦科}\personslide
+  {Mary E. Brunkow}{玛丽·埃伦·布伦科}
+  {images/maryebrunkow.jpg}{Wikipedia}
+  {2025 年（获奖时 64 岁）}{1961–}{美国}{Institute for Systems Biology · UCB}
+  {表彰他们关于外周免疫耐受的发现}}
+
+\newcommand{\fredramsdell}{\gdef\personhonors{}\gdef\personbookmark{2025 · Fred Ramsdell 弗雷德·拉姆斯德尔}\personslide
+  {Fred Ramsdell}{弗雷德·拉姆斯德尔}
+  {none}{F.R.}
+  {2025 年（获奖时 65 岁）}{1960–}{美国}{Parker Institute for Cancer Immunotherapy · United States National Institutes of Health}
+  {表彰他们关于外周免疫耐受的发现}}
+
+\newcommand{\shimonsakaguchi}{\gdef\personhonors{}\gdef\personbookmark{2025 · Shimon Sakaguchi 坂口志文}\personslide
+  {Shimon Sakaguchi}{坂口志文}
+  {images/shimonsakaguchi.jpg}{Wikipedia}
+  {2025 年（获奖时 74 岁）}{1951–}{日本}{University of Osaka · Kyoto University}
+  {表彰他们关于外周免疫耐受的发现}}
+
+
+% ========== MAIN ==========
+\begin{document}
+
+\coverslide
+\introslide
+
+\begin{frame}{诺贝尔生理学或医学奖得主身份总览}
+\pdfbookmark[1]{医学奖得主身份总览}{crosssummary}
+\vspace{-4pt}
+\centering
+\begin{tikzpicture}
+  \fill[coverlight, rounded corners=4pt] (-5.5,-0.75) rectangle (5.6,-0.25);
+  \node[anchor=north, text width=3.7cm, align=center,
+        font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=coverprimary]
+    at (-3.60,-0.35) {首届\;\; Emil von Behring\;(1901)};
+
+  \node[anchor=north, text width=3.7cm, align=center,
+        font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=coverprimary]
+    at (0.00,-0.35) {\awardyearcount 届\;\; \recordcount 条记录 / \personcount 位独立得主};
+  \node[anchor=north, text width=3.7cm, align=center,
+        font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=coverprimary]
+    at (3.60,-0.35) {两度获奖者\;\; 无};
+
+\end{tikzpicture}
+\end{frame}
+
+
+\twentiethslide
+\emilvonbehring
+\ronaldross
+\nielsrybergfinsen
+\ivanpavlov
+\robertkoch
+\camillogolgi
+\santiagoramonycajal
+\charleslouisalphonselaveran
+\eliemetchnikoff
+\paulehrlich
+\emiltheodorkocher
+\albrechtkossel
+\allvargullstrand
+\alexiscarrel
+\charlesrichet
+\robertbarany
+\julesbordet
+\augustkrogh
+\archibaldhill
+\ottofritzmeyerhof
+\frederickbanting
+\johnmacleod
+\willemeinthoven
+\johannesfibiger
+\juliuswagnerjauregg
+\charlesnicolle
+\christiaaneijkman
+\frederickgowlandhopkins
+\karllandsteiner
+\ottoheinrichwarburg
+\charlesscottsherrington
+\edgaradrian
+\thomashuntmorgan
+\georgewhipple
+\georgeminot
+\williampmurphy
+\hansspemann
+\henryhallettdale
+\ottoloewi
+\albertszentgyorgyi
+\corneilleheymans
+\gerharddomagk
+\henrikdam
+\edwardadelbertdoisy
+\josepherlanger
+\herbertspencergasser
+\alexanderfleming
+\ernstchain
+\howardflorey
+\hermannjosephmuller
+\carlferdinandcori
+\gertycori
+\bernardohoussay
+\paulhermannmuller
+\walterrudolfhess
+\antonioegasmoniz
+\philipshowalterhench
+\edwardcalvinkendall
+\tadeusreichstein
+\maxtheiler
+\selmanwaksman
+\hansadolfkrebs
+\fritzalbertlipmann
+\johnfranklinenders
+\frederickchapmanrobbins
+\thomashuckleweller
+\hugotheorell
+\andrefredericcournand
+\wernerforssmann
+\dickinsonwrichards
+\danielbovet
+\georgewellsbeadle
+\edwardlawrietatum
+\joshualederberg
+\arthurkornberg
+\severoochoa
+\frankmacfarlaneburnet
+\petermedawar
+\georgvonbekesy
+\franciscrick
+\jameswatson
+\mauricewilkins
+\johneccles
+\alanlloydhodgkin
+\andrewhuxley
+\konrademilbloch
+\feodorfelixkonradlynen
+\francoisjacob
+\andremichellwoff
+\jacquesmonod
+\francispeytonrous
+\charlesbrentonhuggins
+\ragnargranit
+\haldankefferhartline
+\georgewald
+\robertwholley
+\hargobindkhorana
+\marshallwarrennirenberg
+\maxdelbruck
+\alfredhershey
+\salvadorluria
+\juliusaxelrod
+\ulfvoneuler
+\bernardkatz
+\earlwilbursutherlandjr
+\geraldedelman
+\rodneyrobertporter
+\karlvonfrisch
+\konradlorenz
+\nikolaastinbergen
+\albertclaude
+\christiandeduve
+\georgeemilpalade
+\davidbaltimore
+\renatodulbecco
+\howardmartintemin
+\baruchsamuelblumberg
+\danielcarletongajdusek
+\rogerguillemin
+\andrewschally
+\rosalynsussmanyalow
+\wernerarber
+\danielnathans
+\hamiltonosmith
+\allanmcleodcormack
+\godfreyhounsfield
+\barujbenacerraf
+\jeandausset
+\georgedsnell
+\rogerwolcottsperry
+\davidhhubel
+\torstenwiesel
+\sunebergstrom
+\bengtisamuelsson
+\johnvane
+\barbaramcclintock
+\nielskajjerne
+\georgesjfkohler
+\cesarmilstein
+\michaelstuartbrown
+\josephlgoldstein
+\stanleycohen
+\ritalevimontalcini
+\susumutonegawa
+\jamesblack
+\gertrudebelion
+\georgehhitchings
+\jmichaelbishop
+\haroldevarmus
+\josephmurray
+\edonnallthomas
+\erwinneher
+\bertsakmann
+\edmondhfischer
+\edwingkrebs
+\richardjroberts
+\phillipallensharp
+\alfredggilman
+\martinrodbell
+\edwardblewis
+\christianenussleinvolhard
+\ericfwieschaus
+\petercdoherty
+\rolfmzinkernagel
+\stanleybprusiner
+\robertffurchgott
+\louisignarro
+\feridmurad
+\gunterblobel
+\arvidcarlsson
+\paulgreengard
+\erickandel
+\twentyfirstslide
+\lelandhhartwell
+\timhunt
+\paulnurse
+\sydneybrenner
+\hroberthorvitz
+\johnsulston
+\paullauterbur
+\petermansfield
+\richardaxel
+\lindabbuck
+\barrymarshall
+\jrobinwarren
+\andrewfire
+\craigmello
+\mariocapecchi
+\martinevans
+\oliversmithies
+\haraldzurhausen
+\francoisebarresinoussi
+\lucmontagnier
+\elizabethblackburn
+\carolwgreider
+\jackwszostak
+\robertgedwards
+\brucebeutler
+\julesahoffmann
+\ralphmsteinman
+\johngurdon
+\shinyayamanaka
+\jameserothman
+\randywschekman
+\thomascsudhof
+\johnokeefe
+\maybrittmoser
+\edvardimoser
+\williamccampbell
+\satoshiomura
+\tuyouyou
+\yoshinoriohsumi
+\jeffreychall
+\michaelrosbash
+\michaelwyoung
+\jamespallison
+\tasukuhonjo
+\williamkaelinjr
+\peterjratcliffe
+\gregglsemenza
+\harveyjalter
+\michaelhoughton
+\charlesmrice
+\davidjulius
+\ardempatapoutian
+\svantepaabo
+\katalinkariko
+\drewweissman
+\victorambros
+\garyruvkun
+\maryebrunkow
+\fredramsdell
+\shimonsakaguchi
+
+\closingslide
+\end{document}
