@@ -12,7 +12,7 @@
 
 | # | 人物 | 目录 | 肖像 | 文件名 |
 |:--:|------|------|:--:|------|
-| 1 | 德尔·费罗 | `1465–Scipione_del_Ferro` | **无** | 装饰圆占位 |
+| 1 | 德尔·费罗 | `1465–Scipione_del_Ferro` | 有（2026-09-30 用户补充，非 REST 来源） | `ferro_portrait.jpg` |
 | 2 | 塔尔塔利亚 | `1500–Niccolò_Tartaglia` | 有 | `tartaglia_portrait.jpg` |
 | 3 | 卡尔达诺 | `1501–Gerolamo_Cardano` | 有 | `cardano_portrait.jpg` |
 | 4 | 努内斯 | `1502–Pedro_Nunes` | 有 | `nunes_portrait.png` |
@@ -28,6 +28,11 @@
 | 14 | 布里格斯 | `1561–Henry_Briggs` | 有 | `briggs_portrait.jpg` |
 
 ## URL 明细与图注建议
+
+### 1. 德尔·费罗（Scipione del Ferro）— 2026-09-30 补录
+- 来源：**用户提供** `images/Scipione del Ferro.jpeg`（273×320），主控用 `sips -s format jpeg -s dpiHeight 72 -s dpiWidth 72` 转存为 `images/ferro_portrait.jpg`，原文件已移出工作区。非 REST/Commons 来源，故不在上表 URL 之列。
+- 图注：封面写短形式 `Scipione del Ferro`（4.8pt，防右侧越界），身份信息页写 `Scipione del Ferro（1465–1526）`。
+- 口径：传世无确证的同时代肖像，此为后世版画像性质——图注只写姓名，**不写「同时代肖像」**。
 
 ### 2. 塔尔塔利亚（Niccolò Tartaglia）
 - URL：`https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Portret_van_Niccolo_Tartaglia_Nicolavs_Tartaglia_Brixianvs_%28titel_op_object%29_Portretten_van_beroemde_Europese_geleerden_%28serietitel%29_Virorum_doctorum_de_Disciplinis_benemerentium_effigies_%28serietitel%29%2C_RP-P-1909-4459.jpg/500px-Portret_van_Niccolo_Tartaglia_Nicolavs_Tartaglia_Brixianvs_%28titel_op_object%29_Portretten_van_beroemde_Europese_geleerden_%28serietitel%29_Virorum_doctorum_de_Disciplinis_benemerentium_effigies_%28serietitel%29%2C_RP-P-1909-4459.jpg`
@@ -71,11 +76,12 @@
 - URL：`https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Henry-Briggs.jpg/500px-Henry-Briggs.jpg`
 - 图注：`John Faber Jr 依 Isaac Seeman 所作 1738 年美柔汀版画（英国国家肖像馆藏）`
 
-## 无肖像四人（装饰圆占位，图注写「无存世肖像」或对应依据）
+## 无肖像三人（装饰圆占位，图注写「无存世肖像」或对应依据）
+
+> 原为 4 人；德尔·费罗已于 2026-09-30 由用户补充版画像 `ferro_portrait.jpg`（273×320，非 REST/Commons 来源，传世无确证同期肖像，图注只写姓名），转入「有肖像」名单。
 
 | 人物 | 依据 |
 |---|---|
-| 德尔·费罗 | `images.txt` 仅数学公式 SVG；已知无存世肖像 |
 | 雷科德 | REST 首图为威尔士 Tenby 圣玛丽教堂纪念碑照片（234×276），非肖像；`page.md` 无肖像 |
 | 费拉里 | 唯一图为 Tartaglia《Terza risposta》（1547）檄文封面，非肖像 |
 | 邦贝利 | 仅《代数》1572/1579 书影与扉页，非肖像 |

@@ -72,8 +72,8 @@
 > 正文采用 Wilson 式结构 + 表格 + 公式框：核心贡献页用 `tabularx`（`m{3.4cm}|X|p{3.0cm}`）+ `\fcolorbox` 公式框；生平页用 `p{2.2cm}|X|p{3.0cm}` 表格。帧序与 `TEMPLATE_GUIDE.md` §2 完全同构（帧 1 = 共享封面 `\openmathslide`）。
 
 1. **共享封面**（`\openmathslide`）：`\input{../../cover/openmath_page.tex}`，不改
-2. **人物封面**（`\titleslide`）：大标题「三次方程的首解者 · 守密的博洛尼亚教授」+ Scipione del Ferro 1465–1526 + 右上装饰圆占位（图注「无存世肖像」）+ 国籍行（意大利）+ 底部三要素状态栏（意大利 | 博洛尼亚大学 | 首解缺二次项三次方程）+ 四分类 badge
-3. **身份信息页**（`\profileslide`，★ 必做）：左装饰圆 + 右信息网格（生卒 / 国籍 / 出生地 / 教育 / 任职 / 主要成就 / 核心领域；师承格写「无载」）
+2. **人物封面**（`\titleslide`）：大标题「三次方程的首解者 · 守密的博洛尼亚教授」+ Scipione del Ferro 1465–1526 + 右上真肖像 `ferro_portrait.jpg`（图注「Scipione del Ferro」）+ 国籍行（意大利）+ 底部三要素状态栏（意大利 | 博洛尼亚大学 | 首解缺二次项三次方程）+ 四分类 badge
+3. **身份信息页**（`\profileslide`，★ 必做）：左真肖像 `ferro_portrait.jpg`（图注「Scipione del Ferro（1465–1526）」）+ 右信息网格（生卒 / 国籍 / 出生地 / 教育 / 任职 / 主要成就 / 核心领域；师承格写「无载」）
 4. **德尔·费罗的一生：时间线**（`\timelineslide`）：1465-02-06 博洛尼亚出生 → 1496 博洛尼亚大学算术与几何讲师 →（解出缺二次项三次方程，page.md 无年份，**禁编**）→ 1526-11-05 去世、笔记本传女婿 della Nave → 1543 Cardano / Ferrari 博洛尼亚之行 → 1545《大术》归名
 5. **早年与博洛尼亚**（`\earlyslide`）：造纸业之父 Floriano 与印刷术时代、很可能就读博洛尼亚大学、1496 讲席、晚年商业事务
 6. **三次方程问题**（贡献页，表格 + 公式框）：Pacioli 在《Summa》宣称三次方程不可解激发学界兴趣（page.md 作 conjecture，保留「推测」措辞）；一般三次方程经 `x=x'+a` 代换化为两类缺二次项型 `x³+px=q` 与 `x³=px+q`
@@ -138,14 +138,14 @@
 - [ ] Pacioli 刺激说、方法路线、两类全解说均保留「推测」措辞
 - [ ] 《大术》归名表述：del Ferro 首解、Cardano 主动署名
 - [ ] 禁写 Tartaglia/Fiore 优先权之争（本篇 page.md 无载）
-- [ ] 正文采用 14 页制（帧 1 共享封面 + 帧 2 人物封面 + 身份信息页 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）：装饰圆占位 + 国籍行 + 气泡背景 + 品牌 OpenMathAI
+- [ ] 正文采用 14 页制（帧 1 共享封面 + 帧 2 人物封面 + 身份信息页 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）：真肖像 `ferro_portrait.jpg` + 国籍行 + 气泡背景 + 品牌 OpenMathAI
 - [ ] `make distclean && make` 编译通过，0 错误
 
 ## 11. Review 流程规范（两轮 Review）
 
 ### 第 1 轮（Review-1）：事实终审
 - [ ] **结合本地 Wikipedia**：读取 `pages/Scipione_del_Ferro/page.md` 建立事实基准，逐页对照 Beamer tex 全部事实
-- [ ] **头像**：无存世肖像，确认装饰圆占位且图注写「无存世肖像」，未用书影 / 纪念碑顶替
+- [ ] **头像**：使用 `images/ferro_portrait.jpg`（2026-09-30 用户补充），图注写姓名（后世版画像口径，**不称「同时代肖像」**），未用书影 / 纪念碑顶替
 - [ ] **国籍**：封面顶部徽章明示意大利
 - [ ] **引语核对**：本篇无直接引语可用——禁编造引语
 - [ ] **编译验证**：`make distclean && make`
@@ -162,7 +162,7 @@
 - 核对基准：`pages/Scipione_del_Ferro/page.md`（+ metadata.json / images.txt）
 - 生卒 / 享年：1465-02-06 生、1526-11-05 卒，page.md infobox 明载 aged 61；出生地、卒地均 Bologna——与提示词逐字一致；metadata 死亡日噪声值 `1526-00-00` 已弃用
 - 国籍口径：page.md / metadata 作 Lordship of Bologna、Papal States（历史政权）；封面与正文用现代「意大利」，入库保留历史政权 + `era_note: historical`——与提示词一致
-- 肖像结论：**无存世肖像**（images.txt 逐条核验：12 条全为 Wikimedia 数学公式 SVG，无任何图片）；用装饰圆 `\faIcon{user}` 占位，图注「无存世肖像」，禁止书影 / 纪念碑 / 雕像冒充头像
+- 肖像结论：**起初判「无」**（images.txt 逐条核验：12 条全为 Wikimedia 数学公式 SVG，无任何图片）→ 用装饰圆占位；**2026-09-30 用户补充版画像后改为真肖像 `images/ferro_portrait.jpg`**（详见本节末「肖像补充」条），仍禁止书影 / 纪念碑 / 雕像冒充头像
 - 引语核对：本篇无直接引语，全文转述；§5 节引的三处英文（"first discovered"、"it is not known today with certainty what method del Ferro used"、"There are conjectures about whether..."）均在 page.md 原句可查，仅作措辞依据
 - 本轮修正：
   1. §4 按主控统一 14 页制重写（共享封面 + 人物封面 + 身份信息 + 时间线 + 早年 + 7 贡献页 + 荣誉与传承 + 终章）并逐帧标注宏名；删去原第 12 页「历史坐标」（与悬案页、遗产页重叠，无独立 page.md 依据），原「遗产与评价」升为帧 13 `\honorslide`
@@ -172,6 +172,7 @@
 - 撞曲记录（只记录不改）：§3.5 选定曲目 **PAST** 与科门迪诺（Commandino）篇相同；本组三人 del Ferro / Tartaglia / Cardano 组内不撞（PAST / Lonesome / Cinematic Experience），跨组撞曲留给主控统一协调
 - 遗留不确定项：无（导师、解出年份、奖项三处 page.md 均无载，§5/§10 已明令留白）
 - **立传期修正（2026-09-29）**：Beamer 立传完成，14 页（`make distclean && make` 通过，0 error、Overfull 全部 <10pt）。逐页对照 `page.md` 无新事实冲突：生卒 1465-02-06 / 1526-11-05（享年 61）、无导师格写「无载」、时间线中「解出缺二次项三次方程」不带年份、Pacioli 刺激说与两类全解说均保留「推测 / 怀疑」措辞、《大术》归名表述为 Cardano 主动署名。封面右上角装饰圆图注由「Scipione del Ferro（1465–1526）· 无存世肖像」缩短为「无存世肖像（1465–1526）」以免右侧越界裁切，姓名与生卒仍见于标题行与身份信息页。
+- **肖像补充（2026-09-30）**：用户提供 `images/Scipione del Ferro.jpeg`（273×320）→ `sips -s format jpeg -s dpiHeight 72 -s dpiWidth 72` 转存为 `images/ferro_portrait.jpg`（并避开 JFIF density 1x1 触发 xelatex「Dimension too large」的老坑），原文件移出工作区。tex 改动：`\titleslide` 与 `\profileslide` 两处装饰圆占位改为 `\includegraphics[width=.../height=...,keepaspectratio]{ferro_portrait.jpg}`；封面图注改用 4.8pt 短形式「Scipione del Ferro」（原「（1465–1526）」会在页面右缘裁切）。复验：`make distclean && make` → 14 页、0 error、0 Overfull，封面与身份页目检通过。方法论提醒：取真实日志的单遍 `xelatex` 会覆盖 PDF，之后必须 `touch *.tex && make` 强制重编，否则 latexmk 报「Nothing to be done」而留下 remember picture 定位错乱的文件（本次曾复现）。PORTRAITS.md 与本世纪总表已同步（真肖像 10→11、装饰圆 4→3）。
 
 ---
 
