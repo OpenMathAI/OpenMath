@@ -178,7 +178,8 @@ def load_page_index():
                               dob=(props.get("date_of_birth") or [""])[0],
                               dod=(props.get("date_of_death") or [""])[0],
                               employer=props.get("employer") or [],
-                              occupation=props.get("occupation") or []))
+                              occupation=props.get("occupation") or [],
+                              works=props.get("notable_works") or props.get("notable_work") or []))
     return pages
 
 
@@ -653,6 +654,197 @@ def occ_str(p):
     return " · ".join(out) if out else "作家"
 
 
+# metadata 缺 notable_works 的 25 位：常见代表作兜底（通行英文/原文题名）
+WORKS_FALLBACK = {
+    "Sully Prudhomme": ["Stances et Poèmes"],
+    "Bjørnstjerne Bjørnson": ["Synnøve Solbakken", "Peasant Tales"],
+    "Giosuè Carducci": ["Rime nuove", "Inno a Satana"],
+    "José Echegaray": ["The Grand Galeoto"],
+    "Paul von Heyse": ["Kinder der Welt"],
+    "Verner von Heidenstam": ["Karolinerna"],
+    "Karl Adolph Gjellerup": ["Møllen (The Mill)"],
+    "Henrik Pontoppidan": ["Lykke-Per (Lucky Per)"],
+    "Henri Bergson": ["Creative Evolution", "Time and Free Will"],
+    "Jacinto Benavente": ["Los intereses creados (The Bonds of Interest)"],
+    "William Butler Yeats": ["The Tower", "The Winding Stair"],
+    "Pär Lagerkvist": ["Barabbas", "The Dwarf"],
+    "Frans Eemil Sillanpää": ["Silja", "Meek Heritage"],
+    "Gabriela Mistral": ["Desolación", "Tala"],
+    "Juan Ramón Jiménez": ["Platero y yo (Platero and I)"],
+    "Eyvind Johnson": ["Strändernas svall (Return to Ithaca)"],
+    "Harry Martinson": ["Aniara"],
+    "Halldór Laxness": ["Independent People", "The Fish Can Sing"],
+    "Nelly Sachs": ["O the Chimneys"],
+    "Jaroslav Seifert": ["The Plague Column", "Mother"],
+    "Jean-Paul Sartre": ["Nausea", "Being and Nothingness"],
+    "Octavio Paz": ["The Labyrinth of Solitude", "Sunstone"],
+    "Vicente Aleixandre": ["La destrucción o el amor"],
+    "Rudolf Christoph Eucken": ["The Meaning and Value of Life"],
+    "Erik Axel Karlfeldt": ["Flora och Pomona"],
+}
+
+QID_RE = re.compile(r"^Q\d+$")
+
+# metadata infobox 排序漏掉最著名作品时的少量人工订正
+WORKS_OVERRIDE = {
+    "Albert Camus": ["The Stranger (L'Étranger)", "The Plague (La Peste)", "The Myth of Sisyphus"],
+    "Pearl Buck": ["The Good Earth"],
+    "Orhan Pamuk": ["My Name Is Red", "The Black Book", "Snow"],
+    "Toni Morrison": ["Beloved", "Song of Solomon", "The Bluest Eye"],
+    "Samuel Beckett": ["Waiting for Godot", "Molloy", "Malone Dies"],
+    "Henryk Sienkiewicz": ["Quo Vadis", "With Fire and Sword", "The Deluge"],
+    "Eugene O'Neill": ["Long Day's Journey into Night", "The Iceman Cometh", "Strange Interlude"],
+    "Luigi Pirandello": ["Six Characters in Search of an Author", "The Late Mattia Pascal"],
+}
+
+
+def works_str(p):
+    items = WORKS_OVERRIDE.get(p["name"])
+    if not items:
+        items = [w for w in ((p.get("page") or {}).get("works") or [])
+                 if w and not QID_RE.match(str(w))]
+    if not items:
+        items = WORKS_FALLBACK.get(p["name"], [])
+    return " · ".join(items[:3]) if items else "—"
+
+
+# 各得主代表作的通行中文译名（与 works_str 展示顺序一一对应）
+WORKS_ZH = {
+    "Sully Prudhomme": ["《长短诗集》"],
+    "Theodor Mommsen": ["《罗马史》", "《拉丁铭文集成》"],
+    "Bjørnstjerne Bjørnson": ["《辛诺夫·索巴肯》", "《乡村故事》"],
+    "Frédéric Mistral": ["《米瑞伊》", "《费利布里热宝库》", "《金岛》"],
+    "José Echegaray": ["《伟大的加莱奥托》"],
+    "Henryk Sienkiewicz": ["《你往何处去》", "《火与剑》", "《洪流》"],
+    "Giosuè Carducci": ["《新诗集》", "《撒旦颂》"],
+    "Rudyard Kipling": ["《丛林之书》", "《基姆》", "《如果——》"],
+    "Rudolf Christoph Eucken": ["《人生的意义与价值》"],
+    "Selma Lagerlöf": ["《古斯塔夫·贝林的故事》", "《尼尔斯骑鹅旅行记》", "《耶路撒冷》"],
+    "Paul von Heyse": ["《世界的孩子们》"],
+    "Maurice Maeterlinck": ["《闯入者》", "《盲人》", "《室内》"],
+    "Gerhart Hauptmann": ["《群鼠》", "《汉奈蕾升天记》", "《织工》"],
+    "Rabindranath Tagore": ["《吉檀迦利》", "《家庭与世界》", "《帕努辛赫诗抄》"],
+    "Romain Rolland": ["《约翰·克利斯朵夫》", "《佩吉》", "《托尔斯泰传》"],
+    "Verner von Heidenstam": ["《卡罗林人》"],
+    "Karl Adolph Gjellerup": ["《磨坊》"],
+    "Henrik Pontoppidan": ["《幸运儿彼尔》"],
+    "Carl Spitteler": ["《我们的瑞士立场》", "《奥林匹斯的春天》"],
+    "Knut Hamsun": ["《饥饿》", "《大地的生长》"],
+    "Anatole France": ["《泰绮思》", "《诸神渴了》", "《红百合》"],
+    "Jacinto Benavente": ["《利害关系》"],
+    "William Butler Yeats": ["《塔楼》", "《盘旋的楼梯》"],
+    "Władysław Reymont": ["《农民》", "《福地》"],
+    "George Bernard Shaw": ["《皮格马利翁》", "《圣女贞德》", "《华伦夫人的职业》"],
+    "Grazia Deledda": ["《风中芦苇》", "《埃利亚斯·波尔托卢》", "《母亲》"],
+    "Henri Bergson": ["《创造进化论》", "《时间与自由意志》"],
+    "Sigrid Undset": ["《克丽丝丁》", "《珍妮》", "《赫斯特维肯的主人》"],
+    "Thomas Mann": ["《布登勃洛克一家》", "《魔山》", "《魂断威尼斯》"],
+    "Sinclair Lewis": ["《这里不可能发生》", "《巴比特》"],
+    "Erik Axel Karlfeldt": ["《弗洛拉与波莫娜》"],
+    "John Galsworthy": ["《福尔赛世家》", "《圣徒的历程》", "《银匣》"],
+    "Ivan Bunin": ["《乡村》", "《幽暗的林荫道》", "《阿尔谢尼耶夫的一生》"],
+    "Luigi Pirandello": ["《六个寻找剧作家的角色》", "《已故的帕斯卡尔》"],
+    "Eugene O'Neill": ["《长夜漫漫路迢迢》", "《送冰的人来了》", "《奇异的插曲》"],
+    "Roger Martin du Gard": ["《让·巴鲁瓦》", "《蒂博一家》"],
+    "Pearl Buck": ["《大地》"],
+    "Frans Eemil Sillanpää": ["《少女西丽亚》", "《温顺的遗产》"],
+    "Johannes Vilhelm Jensen": ["《国王的没落》", "《希默兰的故事》", "《漫长的旅行》"],
+    "Gabriela Mistral": ["《绝望》", "《塔拉》"],
+    "Hermann Hesse": ["《玻璃球游戏》", "《德米安》", "《荒原狼》"],
+    "André Gide": ["《背德者》", "《窄门》", "《田园交响曲》"],
+    "Thomas Stearns Eliot": ["《荒原》", "《四个四重奏》", "《空心人》"],
+    "William Faulkner": ["《喧哗与骚动》", "《我弥留之际》", "《八月之光》"],
+    "Bertrand Russell": ["《自由之路》", "《我的哲学的发展》", "《哲学问题》"],
+    "Pär Lagerkvist": ["《巴拉巴》", "《侏儒》"],
+    "François Mauriac": ["《苔蕾丝·德斯盖鲁》", "《爱的荒漠》", "《给麻风病人的吻》"],
+    "Winston Churchill": ["《英语民族史》", "《第二次世界大战回忆录》", "《战时旅行者》"],
+    "Ernest Hemingway": ["《白象似的群山》", "《乞力马扎罗的雪》", "《老人与海》"],
+    "Halldór Laxness": ["《独立的人们》", "《会唱歌的鱼》"],
+    "Juan Ramón Jiménez": ["《小银和我》"],
+    "Albert Camus": ["《局外人》", "《鼠疫》", "《西西弗神话》"],
+    "Boris Pasternak": ["《日瓦戈医生》"],
+    "Salvatore Quasimodo": ["《希腊抒情诗》", "《而顿时已是黄昏》", "《沉没的双簧管》"],
+    "Saint-John Perse": ["《阿纳巴斯》", "《航标》", "《颂歌》"],
+    "Ivo Andrić": ["《德里纳河上的桥》", "《奥梅尔帕夏·拉塔斯》", "《彼岸》"],
+    "John Steinbeck": ["《人鼠之间》", "《愤怒的葡萄》", "《伊甸之东》"],
+    "Giorgos Seferis": ["《转折》"],
+    "Jean-Paul Sartre": ["《恶心》", "《存在与虚无》"],
+    "Mikhail Sholokhov": ["《一个人的遭遇》", "《静静的顿河》", "《被开垦的处女地》"],
+    "Shmuel Yosef Agnon": ["《或此或彼》", "《婚礼华盖》", "《夜间来客》"],
+    "Nelly Sachs": ["《哦，烟囱》"],
+    "Miguel Ángel Asturias": ["《危地马拉传说》", "《穆拉塔》"],
+    "Yasunari Kawabata": ["《伊豆的舞女》", "《雪国》", "《千只鹤》"],
+    "Samuel Beckett": ["《等待戈多》", "《莫洛伊》", "《马龙之死》"],
+    "Aleksandr Solzhenitsyn": ["《伊凡·杰尼索维奇的一天》", "《第一圈》", "《癌症楼》"],
+    "Pablo Neruda": ["《黄昏》", "《二十首情诗与绝望的歌》", "《大地上的居所》"],
+    "Heinrich Böll": ["《九点半的台球》", "《丧失名誉的卡塔琳娜·布卢姆》", "《小丑之见》"],
+    "Patrick White": ["《沃斯》"],
+    "Eyvind Johnson": ["《回到伊萨卡》"],
+    "Harry Martinson": ["《阿尼阿拉号》"],
+    "Eugenio Montale": ["《乌贼骨》", "《境遇》", "《风暴及其他》"],
+    "Saul Bellow": ["《奥吉·马奇历险记》", "《赫索格》", "《雨王亨德森》"],
+    "Vicente Aleixandre": ["《毁灭或爱情》"],
+    "Isaac Bashevis Singer": ["《卢布林的魔术师》", "《傻瓜吉姆佩尔》", "《疯子》"],
+    "Odysseas Elytis": ["《理所当然》"],
+    "Czesław Miłosz": ["《被禁锢的头脑》", "《鲜花广场》", "《世界末日之歌》"],
+    "Elias Canetti": ["《迷惘》", "《获救之舌》", "《群众与权力》"],
+    "Gabriel García Márquez": ["《百年孤独》", "《族长的秋天》", "《霍乱时期的爱情》"],
+    "William Golding": ["《蝇王》", "《直到世界尽头》"],
+    "Jaroslav Seifert": ["《瘟疫柱》", "《妈妈》"],
+    "Claude Simon": ["《向皮耶罗·德拉·弗朗切斯卡致敬》"],
+    "Wole Soyinka": ["《失序的季节》", "《阐释者》", "《极乐国土编年史》"],
+    "Joseph Brodsky": ["《戈尔布诺夫与戈尔恰科夫》"],
+    "Naguib Mahfouz": ["《尊敬的阁下》", "《努比亚的拉杜比丝》", "《米拉玛尔》"],
+    "Camilo José Cela": ["《帕斯夸尔·杜阿尔特一家》", "《蜂房》", "《阿尔卡里亚之旅》"],
+    "Octavio Paz": ["《孤独的迷宫》", "《太阳石》"],
+    "Nadine Gordimer": ["《保守的人》", "《伯格的女儿》", "《七月的人民》"],
+    "Derek Walcott": ["《奥梅罗斯》", "《猴山梦》", "《卡佩曼》"],
+    "Toni Morrison": ["《宠儿》", "《所罗门之歌》", "《最蓝的眼睛》"],
+    "Kenzaburō Ōe": ["《个人的体验》", "《万延元年的足球队》"],
+    "Seamus Heaney": ["《一位自然主义者之死》", "《区与环》", "《人之链》"],
+    "Wisława Szymborska": ["《空房间里的猫》"],
+    "Dario Fo": ["《大天使不玩弹球》", "《滑稽神秘剧》", "《一个无政府主义者的意外死亡》"],
+    "José Saramago": ["《耶稣基督的福音》", "《失明症漫记》", "《复明症漫记》"],
+    "Günter Grass": ["《铁皮鼓》", "《猫与鼠》", "《狗年月》"],
+    "Gao Xingjian": ["《彼岸》", "《灵山》"],
+    "Vidiadhar Surajprasad Naipaul": ["《毕司沃斯先生的房子》", "《自由国度》", "《大河湾》"],
+    "Imre Kertész": ["《无命运的人生》", "《清算》"],
+    "John Maxwell Coetzee": ["《迈克尔·K的生活和时代》"],
+    "Elfriede Jelinek": ["《钢琴教师》", "《恋爱的女人》", "《死者的孩子》"],
+    "Harold Pinter": ["《房间》", "《生日晚会》", "《送菜升降机》"],
+    "Orhan Pamuk": ["《我的名字叫红》", "《黑书》", "《雪》"],
+    "Doris Lessing": ["《野草在歌唱》", "《金色笔记》", "《好恐怖分子》"],
+    "Jean-Marie Gustave Le Clézio": ["《诉讼笔录》", "《沙漠》"],
+    "Herta Müller": ["《低地》", "《护照》", "《风中绿李》"],
+    "Mario Vargas Llosa": ["《城市与狗》", "《绿房子》", "《酒吧长谈》"],
+    "Tomas Tranströmer": ["《波罗的海》", "《为生者和死者》", "《悲伤的贡多拉》"],
+    "Mo Yan": ["《红高粱家族》", "《酒国》", "《生死疲劳》"],
+    "Alice Munro": ["《幸福过了头》", "《亲爱的生活》", "《我一直想告诉你的事》"],
+    "Patrick Modiano": ["《星形广场》", "《环城大道》", "《暗店街》"],
+    "Svetlana Alexievich": ["《锌皮娃娃兵》", "《切尔诺贝利的悲鸣》", "《战争中没有女性》"],
+    "Bob Dylan": ["《像一块滚石》", "《重访 61 号公路》", "《全数带回家》"],
+    "Kazuo Ishiguro": ["《浮世画家》", "《长日将尽》", "《我辈孤雏》"],
+    "Olga Tokarczuk": ["《雅各布之书》", "《云游》", "《白天的房子，夜晚的房子》"],
+    "Peter Handke": ["《冒犯观众》", "《守门员面对罚点球时的焦虑》", "《梦外之悲》"],
+    "Louise Glück": ["《阿弗尔诺》", "《草场》", "《野鸢尾》"],
+    "Abdulrazak Gurnah": ["《遗弃》", "《天堂》", "《砾石之心》"],
+    "Annie Ernaux": ["《空衣橱》", "《一个男人的位置》", "《悠悠岁月》"],
+    "Jon Fosse": ["《名字》", "《忧郁》", "《忧郁之二》"],
+    "Han Kang": ["《素食者》", "《少年来了》", "《希腊语课》"],
+    "László Krasznahorkai": ["《撒旦探戈》", "《反抗的忧郁》", "《战争与战争》"],
+}
+
+
+def works_zh_str(p):
+    zh = WORKS_ZH.get(p["name"])
+    if zh:
+        en = works_str(p)
+        if en == "—":
+            return "—"
+        return " · ".join(zh[:3])
+    return "—"
+
+
 def age_str(p):
     pg = p.get("page") or {}
     y1 = (pg.get("dob") or "")[:4]
@@ -774,7 +966,7 @@ HEADER = r"""% Nobel Literature Video — Allinone
 \vspace{0.06cm}
 }
 
-% ---- Person slide: #1 name #2 subtitle #3 img/none #4 credit/缩写 #5 获奖(年+岁) #6 life #7 country #8 inst #9 contribution ----
+% ---- Person slide: #1 name #2 subtitle #3 img/none #4 credit/缩写 #5 获奖(年+岁) #6 life #7 country #8 inst #9 contribution；代表作经 \personworks 传入 ----
 \newcommand{\personslide}[9]{%
 \begin{frame}
 \stepcounter{pmark}%
@@ -822,6 +1014,11 @@ HEADER = r"""% Nobel Literature Video — Allinone
   \end{tikzpicture}
 \end{column}
 \end{columns}
+\vspace{0.16cm}
+\begin{center}
+  {\fontsize{7.5}{9.5}\selectfont\bfseries\color{coverprimary!70!black} 代表作}\enspace{\fontsize{7.5}{9.5}\selectfont\color{coverdark!85} \personworks}\\[1.5pt]
+  {\fontsize{7}{9}\selectfont\bfseries\color{coveraccent!70!black} 代表作中译}\enspace{\fontsize{7}{9}\selectfont\color{coverdark!75} \personworkszh}
+\end{center}
 \if\relax\detokenize\expandafter{\personhonors}\relax\else\honorbar{\personhonors}\fi
 \end{frame}
 }
@@ -855,15 +1052,17 @@ def person_tex(p):
     img = "images/" + p["img_file"] if p["img_file"] else "none"
     credit = "Wikipedia" if p["img_file"] else initials(p["name"])
     age = age_str(p)
-    year_str = "%d 年（获奖时 %s 岁）" % (p["year"], age) if age else "%d 年" % p["year"]
+    year_str = "%d 年（获奖时 %s）" % (p["year"], age) if age else "%d 年" % p["year"]
     contrib = esc(p["citation"])
-    return ("\\newcommand{\\%s}{\\gdef\\personhonors{%s}\\gdef\\personbookmark{%d · %s %s}\\personslide\n"
+    return ("\\newcommand{\\%s}{\\gdef\\personhonors{%s}\\gdef\\personbookmark{%d · %s %s}"
+            "\\gdef\\personworks{%s}\\gdef\\personworkszh{%s}\\personslide\n"
             "  {%s}{%s}\n"
             "  {%s}{%s}\n"
             "  {%s}{%s}{%s}{%s}\n"
             "  {%s}}\n" % (
                 p["slug"], p["honors_tex"],
                 p["year"], esc(p["name"]), esc(p["zh"] or ""),
+                esc(works_str(p)), esc(works_zh_str(p)),
                 esc(p["name"]) + (p["badges_tex"] or ""), esc(p["zh"] or p["name"]),
                 img, credit,
                 esc(year_str), esc(life_str(p)), esc(country_zh(p["country"])), esc(occ_str(p)),
@@ -1046,6 +1245,10 @@ def make_cover(people):
 ''' + grid_tikz + r'''
   \node[anchor=center, font=\fontsize{10}{12}\selectfont\bfseries, text=DeepPurpleAccent]
     at ([yshift=1.12cm]current page.center) {\faIcon{medal}\enspace Nobel Prize in Literature\enspace|\enspace 1901–2025 · 全 \personcount 位得主};
+  \node[anchor=center, font=\fontsize{6.5}{9}\selectfont, text=covermuted]
+    at ([yshift=0.74cm]current page.center) {和平与文学奖项的评价素来多元而有争议；};
+  \node[anchor=center, font=\fontsize{6.5}{9}\selectfont, text=covermuted]
+    at ([yshift=0.42cm]current page.center) {本片作为史料性回顾，只陈述“谁在何年获奖”，不作任何立场表达。};
 \end{tikzpicture}
 \end{frame}
 }
@@ -1168,7 +1371,7 @@ VIDEO_NAME  = literature_allinone_zh
 OUTPUT_DIR  = output
 IMAGES_DIR  = $(OUTPUT_DIR)/images
 SLIDES_TXT  = $(OUTPUT_DIR)/slides.txt
-DURATION    = 7
+DURATION    = 4
 BGM         = $(wildcard *.wav)
 LATEXMK     = latexmk
 PDFTOPPM    = pdftoppm

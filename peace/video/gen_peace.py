@@ -1196,9 +1196,9 @@ def main():
     with open(os.path.join(EP, "Makefile"), "w", encoding="utf-8") as f:
         f.write(MAKEFILE)
     # BGM 软链（同 physicist 约定）
-    wav = os.path.join(EP, "bgm.wav")
+    wav = os.path.join(EP, "Timeless.wav")
     if not os.path.lexists(wav):
-        os.symlink("../../../music_audio/bgm.wav", wav)
+        os.symlink("/Users/ericksun/workspace/codebuddy/OpenMathAI/music_audio/alex-productions/42-SyPUvzEkPyc-Timeless.wav", wav)
 
 
 if __name__ == "__main__":
