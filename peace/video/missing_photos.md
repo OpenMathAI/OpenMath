@@ -1,16 +1,12 @@
 # Nobel Peace Video Series — Missing Portrait Checklist
 
 > Source: `peace/presentations/pages/{20th,21th}_century/<Dir>/images.txt`（自动下载）
-> 共 143 条记录 / 140 位获奖者中 **4 位** 缺真人肖像，待人工补图。
+> 共 143 条记录 / 140 位获奖者中 **0 位** 缺真人肖像，待人工补图。
 
 ## 缺照片获奖者
 
 | 年份 | 获奖者 | 占位文件 | 页面目录 | 备注 |
 |---|---|---|---|---|
-| 1902 | Charles Albert Gobat | `episode-allinone/images/charlesalbertgobat.jpg` | `pages/20th_century/Charles_Albert_Gobat` | images.txt 无匹配人像（已过滤旗帜/签名/图标），或候选图下载失败 |
-| 1904 | Institute of International Law | `episode-allinone/images/instituteofinternationallaw.jpg` | `pages/20th_century/Institut_de_Droit_International` | images.txt 无匹配人像（已过滤旗帜/签名/图标），或候选图下载失败 |
-| 1947 | Friends Service Council | `episode-allinone/images/friendsservicecouncil.jpg` | `pages/20th_century/Quaker_Peace_and_Social_Witness` | images.txt 无匹配人像（已过滤旗帜/签名/图标），或候选图下载失败 |
-| 2022 | Centre for Civil Liberties | `episode-allinone/images/centreforcivilliberties.jpg` | `pages/21th_century/Centre_for_Civil_Liberties_Ukrainian_civil_society_organization` | images.txt 无匹配人像（已过滤旗帜/签名/图标），或候选图下载失败 |
 
 ## 如何补图
 
@@ -21,5 +17,5 @@
 ## 当前状态
 
 - 总获奖者：**140 位**（含机构，1901–2025）
-- 真人肖像在位：**139 条记录**
-- 缺肖像（占位）：**4 条记录**
+- 真人肖像在位：**143 条记录**
+- 缺肖像（占位）：**0 条记录**

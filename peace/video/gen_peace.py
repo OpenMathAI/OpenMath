@@ -942,6 +942,10 @@ def make_cover(people, n_records, n_people, n_years):
 ''' + grid_tikz + r'''
   \node[anchor=center, font=\fontsize{10}{12}\selectfont\bfseries, text=DeepPurpleAccent]
     at ([yshift=1.12cm]current page.center) {\faIcon{medal}\enspace Nobel Peace Prize\enspace|\enspace 1901–2025 · 全 %d 个颁奖年份};
+  \node[anchor=center, font=\fontsize{6.8}{8.5}\selectfont\itshape, text=covermuted]
+    at ([yshift=0.62cm]current page.center) {和平与文学奖项的评价素来多元而有争议；};
+  \node[anchor=center, font=\fontsize{6.8}{8.5}\selectfont\itshape, text=covermuted]
+    at ([yshift=0.32cm]current page.center) {本片作为史料性回顾，只陈述“谁在何年获奖”，不作任何立场表达。};
 \end{tikzpicture}
 \end{frame}
 }
@@ -1044,7 +1048,7 @@ VIDEO_NAME  = peace_allinone_zh
 OUTPUT_DIR  = output
 IMAGES_DIR  = $(OUTPUT_DIR)/images
 SLIDES_TXT  = $(OUTPUT_DIR)/slides.txt
-DURATION    = 7
+DURATION    = 4
 BGM         = $(wildcard *.wav)
 LATEXMK     = latexmk
 PDFTOPPM    = pdftoppm
