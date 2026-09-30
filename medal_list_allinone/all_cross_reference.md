@@ -127,7 +127,7 @@
 | **Ivan Sutherland**（伊万·萨瑟兰） | 1988 | 2012 | 美国 | Sketchpad、计算机图形学之父（京都奖为 2012 先进技术部门；2004 是 Alan Kay，勿混） |
 | **Alan Kay**（艾伦·凯） | 2003 | 2004 | 美国 | Smalltalk、个人计算愿景 |
 
-> ⚠️ 库内噪声（2026-09-30 发现）：`award_laureate` 中 Ivan Sutherland 有 Kyoto Prize 2004 / 2012 双行——2004 实为 Alan Kay，Sutherland 的 2004 行待主控清理（清理后图灵×京都仍为 7 人）。
+> ⚠️ 库内噪声已清理（2026-09-30）：`award_laureate` 曾存在 Ivan Sutherland 的 Kyoto Prize 2004 误行（source 为本文档旧版，2004 实为 Alan Kay）——已删除，现库内仅剩 Sutherland 2012 一行，图灵×京都 7 人。
 
 ### ★★ 双奖 · 图灵 + 哥德尔奖（3 人）
 
