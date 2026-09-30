@@ -964,15 +964,15 @@ def intro_slide(legend_lines, n_records, n_people, n_years):
   \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,3.05) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coverprimary!82!black} 规模}\\[2pt]
     {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1901 年首颁（Henry Dunant 与 Frédéric Passy 共获）；至 2025 年共评奖 ''' + str(n_years) + r''' 个年份、''' + str(n_records) + r''' 条记录，涉及 ''' + str(n_people) + r''' 位获奖者（含机构），本片全收录。}};
-  \node[draw=coveraccent!40, fill=redpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,1.10) {%%
+  \node[draw=coveraccent!40, fill=redpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,0.55) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coveraccent!82!black} 多次获奖与特殊记录}\\[2pt]
     {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 红十字国际委员会三度获奖（1917 · 1944 · 1963）；\\联合国难民署两度获奖（1954 · 1981）。\\黎德寿 1973 年拒绝领奖，迄今唯一。}};
-  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,-0.95) {%%
-    {\fontsize{8}{9.5}\selectfont\bfseries\color{coveramber!70!black} 空缺年份}\\[2pt]
-    {\fontsize{6.8}{8.2}\selectfont\color{coverdark!84} 19 个年份未颁奖（1914–16 · 1918 · 1923–24 · 1928 · 1932 ·\\1939–43 · 1948 · 1955–56 · 1966–67 · 1972），\\多因两次世界大战与冷战僵局。}};
   \node[draw=coverpurple!40, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,3.05) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coverpurple!82!black} 交叉荣誉 · 徽标一览}\par\vspace{3pt}
     {\fontsize{6.6}{12.8}\selectfont\color{coverdark!84} ''' + legend_tex + r'''}};
+  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,1.10) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coveramber!70!black} 空缺年份}\\[2pt]
+    {\fontsize{6.8}{8.2}\selectfont\color{coverdark!84} 19 个年份未颁奖（1914–16 · 1918 · 1923–24 · 1928 · 1932 ·\\1939–43 · 1948 · 1955–56 · 1966–67 · 1972），\\多因两次世界大战与冷战僵局。}};
 \end{tikzpicture}
 \end{center}
 \end{frame}
@@ -1176,8 +1176,7 @@ def main():
         out.append(person_tex(p))
     out.append("\n% ========== MAIN ==========\n\\begin{document}\n")
     out.append("\\coverslide\n\\introslide\n")
-    summary_tex = cross_summary_slide(build_summary_rows(people), n_years, n_records, n_people)
-    body = [summary_tex]
+    body = []
     cur = None
     for p in people:
         if p["century"] != cur:
