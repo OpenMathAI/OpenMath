@@ -1,10 +1,10 @@
-# Makefile for Nobel Physics allinone video.
-MAIN        = physicist_allinone_zh
-VIDEO_NAME  = physicist_allinone_zh
+# Makefile for Nobel Economics allinone video.
+MAIN        = economics_allinone_zh
+VIDEO_NAME  = economics_allinone_zh
 OUTPUT_DIR  = output
 IMAGES_DIR  = $(OUTPUT_DIR)/images
 SLIDES_TXT  = $(OUTPUT_DIR)/slides.txt
-DURATION    = 4
+DURATION    = 7
 BGM         = $(wildcard *.wav)
 LATEXMK     = latexmk
 PDFTOPPM    = pdftoppm

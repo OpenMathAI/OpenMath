@@ -1,0 +1,1117 @@
+% Nobel Economics Video — Allinone
+% 诺贝尔经济学奖全得主合集（1969–2025）
+% Beamer layout mirrors physicist/video/episode-allinone
+% Source: economics/presentations 名录 + 离线页面 metadata.json + Wikipedia images
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold]
+\xeCJKDeclareCharClass{CJK}{"0370 -> "03FF}
+% 希腊字母（μ τ 等）走中文字体，避免 lmsans8 缺字被静默丢弃
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{adjustbox}\usepackage{fontawesome5}\usepackage{ifthen}\usepackage{amssymb}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+
+% ===== 配色：深空蓝 + 颁奖金 + 量子青（区别于图灵紫/菲尔兹金/阿贝尔蓝/COPSS蓝）=====
+\definecolor{bgmain}{RGB}{245,247,250}
+\definecolor{coverprimary}{HTML}{14406B}
+\definecolor{coveraccent}{HTML}{B03A2E}
+\definecolor{coveramber}{HTML}{C9922A}
+\definecolor{coverpurple}{HTML}{1F6E6E}
+\definecolor{coverdark}{HTML}{10202F}
+\definecolor{covermuted}{HTML}{5F6B78}
+\definecolor{coverlight}{HTML}{E8EFF7}
+\definecolor{DeepPurpleAccent}{HTML}{4A148C}
+\definecolor{titlecolor}{RGB}{16,32,47}
+\definecolor{muteddark}{RGB}{90,100,112}
+\definecolor{bluepanel}{RGB}{223,233,244}
+\definecolor{redpanel}{RGB}{247,227,224}
+\definecolor{goldpanel}{RGB}{247,239,219}
+\definecolor{purplepanel}{RGB}{221,235,235}
+\definecolor{graypanel}{RGB}{238,240,244}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\providecommand{\personhonors}{}
+\newcounter{pmark}%
+\newcommand{\recordcount}{99}
+\newcommand{\personcount}{99}
+\newcommand{\awardyearcount}{57}
+\newcommand{\twentiethrecordcount}{TWENTIETH99}
+\newcommand{\twentyfirstrecordcount}{TWENTYFIRST99}
+% ---- 双料与大满贯页：居中标题模板（源自 turing allinone）----
+\def\framesubject{}
+\setbeamertemplate{frametitle}{%
+  \vspace{8pt}%
+  \centering
+  {\fontsize{13}{15}\selectfont\bfseries\color{coverprimary}\insertframetitle}\par\vspace{3pt}
+  {\footnotesize\color{mutedgray}\framesubject}\par\vspace{4pt}
+  \textcolor{coverlight}{\rule{0.95\textwidth}{0.6pt}}%
+  \vspace{-6pt}%
+}
+\definecolor{mutedgray}{RGB}{120,120,120}
+\colorlet{wolfclr}{coverprimary}
+\colorlet{btclr}{coverpurple}
+\colorlet{abelclr}{coveraccent}
+\colorlet{shawclr}{coveramber}
+\colorlet{crafoordclr}{coveraccent}
+\colorlet{japanclr}{coveraccent!75}
+\colorlet{chemclr}{coverpurple!80}
+\colorlet{turingclr2}{coverprimary!80}
+\colorlet{millclr}{covermuted}
+
+% 交叉奖项徽标：★W 沃尔夫物理学奖 · ▲T 图灵奖
+\newcommand{\wolfbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt W}}
+\newcommand{\turingbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt T}}
+% --- 数据库直查顶级交叉奖项徽标 ---
+\newcommand{\nobelchembadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt C}}
+\newcommand{\nobelmedbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\clubsuit$\kern-0.5pt M}}
+\newcommand{\nobellitbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\clubsuit$\kern-0.5pt L}}
+\newcommand{\nobeleconbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\clubsuit$\kern-0.5pt E}}
+\newcommand{\nobelpeacebadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt P}}
+\newcommand{\fieldsbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt F}}
+\newcommand{\abelbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\bigstar$\kern-0.5pt A}}
+\newcommand{\wolfmathbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt M}}
+\newcommand{\wolfeconbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt W2}}
+\newcommand{\kyotobadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt K}}
+\newcommand{\shawbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\blacklozenge$\kern-0.5pt S}}
+\newcommand{\btphysbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\bigstar$\kern-0.5pt B}}
+\newcommand{\btmathbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\bigstar$\kern-0.5pt M2}}
+\newcommand{\crafoordbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\diamond$\kern-0.5pt C}}
+\newcommand{\millenniumbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\blacklozenge$\kern-0.5pt M}}
+\newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
+\newcommand{\statsbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt S}}
+\newcommand{\copssbadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\diamondsuit$\kern-0.5pt C}}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+  \draw[coverprimary, opacity=0.40, line width=0.8pt] ([yshift=0.4cm]current page.south west) -- ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 底部交叉荣誉边框
+\newcommand{\honorbar}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south, draw=coverprimary!55, fill=coverlight, rounded corners=6pt,
+          inner xsep=8pt, inner ysep=5pt, yshift=0.65cm, text=coverdark!85] at (current page.south) {%
+      \fontsize{7.5}{9.5}\selectfont\bfseries{\color{coverprimary} 其他殊荣}\enspace #1};
+  \end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ---- Person slide: #1 name #2 subtitle #3 img/none #4 credit/缩写 #5 获奖(年+岁) #6 life #7 country #8 inst #9 contribution ----
+\newcommand{\personslide}[9]{%
+\begin{frame}
+\stepcounter{pmark}%
+\pdfbookmark[2]{\personbookmark}{pb\arabic{pmark}}%
+\plainbar
+\vspace{-0.45cm}
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{coverdark} #1}\\[2pt]
+  {\fontsize{9.5}{11.5}\selectfont\color{muteddark} #2}
+\end{center}
+\vspace{0.1cm}
+\begin{columns}[c]
+\begin{column}{0.20\textwidth}
+  \centering
+  \ifthenelse{\equal{#3}{none}}{%
+    \begin{tikzpicture}
+      \node[circle, fill=coverprimary!12, draw=coverprimary!38, minimum size=2.6cm]
+        {\fontsize{16}{19}\selectfont\bfseries\color{coverprimary!75!black} #4};
+    \end{tikzpicture}
+    {\par\vspace{1pt}\fontsize{6.2}{7.2}\selectfont\color{covermuted} 暂无公开照片\par}
+  }{%
+    \begin{tikzpicture}
+      \node[draw=coverprimary!28, line width=0.7pt, fill=white, rounded corners=3pt, inner sep=2.5pt, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt, opacity=0.12}] {
+        \includegraphics[width=2.2cm,height=2.7cm,keepaspectratio]{#3}
+      };
+    \end{tikzpicture}
+  }
+\end{column}
+\begin{column}{0.40\textwidth}
+  \begin{tikzpicture}
+    \node[fill=goldpanel, rounded corners=4pt, inner xsep=6pt, inner ysep=5pt, text width=4.0cm, align=left] {
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 获奖}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #5}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 生卒}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #6}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 国别}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #7}\\[2.5pt]
+      {\fontsize{7}{8.5}\selectfont\bfseries\color{coverprimary!70!black} 机构}\enspace{\fontsize{7}{8.5}\selectfont\color{coverdark!85} #8}
+    };
+  \end{tikzpicture}
+\end{column}
+\begin{column}{0.38\textwidth}
+  \begin{tikzpicture}
+    \node[draw=coverprimary!35, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=3.8cm, align=left] {
+      {\fontsize{8.2}{10}\selectfont\bfseries\color{coverprimary!82!black} 核心贡献}\par\vspace{3pt}
+      {\fontsize{7}{8.5}\selectfont\color{coverdark!84} #9}
+    };
+  \end{tikzpicture}
+\end{column}
+\end{columns}
+\if\relax\detokenize\expandafter{\personhonors}\relax\else\honorbar{\personhonors}\fi
+\end{frame}
+}
+
+% ---- 章节分隔页 ----
+\newcommand{\sectionpageslide}[4]{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!7] (current page.north west) rectangle (current page.south east);
+\stepcounter{pmark}%
+\pdfbookmark[1]{#1}{bm\arabic{pmark}}%
+  \fill[coveramber!12] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (1.1cm);
+  \node[anchor=center, font=\fontsize{26}{32}\selectfont\bfseries, text=coverdark]
+    at ([yshift=1.10cm]current page.center) {#1};
+  \draw[coveramber, line width=1.4pt] ([yshift=0.05cm, xshift=-4.6cm]current page.center)
+    -- ([yshift=0.05cm, xshift=4.6cm]current page.center);
+  \node[anchor=center, font=\fontsize{13}{16}\selectfont, text=coverprimary!85!black]
+    at ([yshift=-0.75cm]current page.center) {#2};
+  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\itshape, text=covermuted]
+    at ([yshift=-1.85cm]current page.center) {#3};
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {#4};
+\end{tikzpicture}
+\end{frame}
+}
+
+\newcommand{\coverslide}{%%
+\begin{frame}[plain]
+\pdfbookmark[1]{封面 · 诺贝尔经济学奖 1969–2025}{cover}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
+  \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
+  \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
+  \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
+  \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
+    at ([yshift=3.35cm]current page.center) {诺贝尔经济学奖：理解世界的学问（1969–2025）};
+  \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
+    at ([yshift=2.50cm]current page.center) {Nobel Memorial Prize in Economic Sciences · \recordcount 条记录 / \personcount 位得主};
+  \draw[coverprimary, line width=1.4pt] ([yshift=1.90cm, xshift=-5.2cm]current page.center)
+    -- ([yshift=1.90cm, xshift=5.2cm]current page.center);
+  \node[anchor=center, font=\fontsize{9.5}{12.5}\selectfont\bfseries, text=coveramber!58!black]
+    at ([yshift=1.58cm]current page.center) {从计量模型到机制设计与随机实验 · 兼具图灵奖交叉得主一览};
+  \node[anchor=center] at ([yshift=-1.85cm]current page.center) {
+    \begin{tikzpicture}[scale=1]
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ragnarfrisch.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jantinbergen.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/paulsamuelson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/simonkuznets.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/johnhicks.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/kennetharrow.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/wassilyleontief.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/gunnarmyrdal.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/friedrichhayek.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/leonidkantorovich.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/tjallingkoopmans.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/miltonfriedman.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/bertilohlin.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jamesmeade.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/herbertasimon.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (1.54,1.00) {\fontsize{5}{6}\selectfont\color{covermuted} T.S.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/warthurlewis.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/lawrenceklein.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jamestobin.png}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (3.30,1.00) {\fontsize{5}{6}\selectfont\color{covermuted} G.S.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (3.74,1.00) {\fontsize{5}{6}\selectfont\color{covermuted} G.D.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/richardstone.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/francomodigliani.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jamesmbuchanan.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/robertsolow.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/mauriceallais.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/trygvehaavelmo.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-3.74,0.50) {\fontsize{5}{6}\selectfont\color{covermuted} H.M.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-3.30,0.50) {\fontsize{5}{6}\selectfont\color{covermuted} M.M.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/williamfsharpe.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ronaldcoase.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/garybecker.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/robertfogel.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/douglassnorth.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-0.66,0.50) {\fontsize{5}{6}\selectfont\color{covermuted} J.H.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/johnforbesnashjr.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/reinhardselten.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/robertlucasjr.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jamesmirrlees.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (1.54,0.50) {\fontsize{5}{6}\selectfont\color{covermuted} W.V.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/robertcmerton.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/myronscholes.png}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.86,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/amartyasen.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/robertmundell.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (3.74,0.50) {\fontsize{5}{6}\selectfont\color{covermuted} J.H.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/danielmcfadden.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/georgeakerlof.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/michaelspence.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/josephstiglitz.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/danielkahneman.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/vernonlsmith.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/robertfengle.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-3.30,0.00) {\fontsize{5}{6}\selectfont\color{covermuted} C.G.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.86,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/finnekydland.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/edwardcprescott.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.98,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/robertaumann.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/thomasschelling.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.10,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/edmundphelps.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.66,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/leonidhurwicz.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/ericmaskin.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.22,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/rogermyerson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (0.66,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/paulkrugman.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.10,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/elinorostrom.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.54,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/oliverewilliamson.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (1.98,0.00) {\fontsize{5}{6}\selectfont\color{covermuted} P.D.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/daletmortensen.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (2.86,0.00) {\fontsize{5}{6}\selectfont\color{covermuted} C.P.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (3.30,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/thomasjsargent.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (3.74,0.00) {\fontsize{5}{6}\selectfont\color{covermuted} C.S.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/alvineroth.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/lloydshapley.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,0.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/eugenefama.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,-0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/larspeterhansen.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,-0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/robertjshiller.png}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-4.18,-0.50) {\fontsize{5}{6}\selectfont\color{covermuted} J.T.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.74,-0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/angusdeaton.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-3.30,-0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/oliverhart.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-2.86,-0.50) {\fontsize{5}{6}\selectfont\color{covermuted} B.H.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-2.42,-0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/richardthaler.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-1.98,-0.50) {\fontsize{5}{6}\selectfont\color{covermuted} W.N.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-1.54,-0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/paulromer.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-1.10,-0.50) {\fontsize{5}{6}\selectfont\color{covermuted} A.B.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (-0.66,-0.50) {\fontsize{5}{6}\selectfont\color{covermuted} E.D.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-0.22,-0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/michaelkremer.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (0.22,-0.50) {\fontsize{5}{6}\selectfont\color{covermuted} P.M.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (0.66,-0.50) {\fontsize{5}{6}\selectfont\color{covermuted} R.W.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (1.10,-0.50) {\fontsize{5}{6}\selectfont\color{covermuted} D.C.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (1.54,-0.50) {\fontsize{5}{6}\selectfont\color{covermuted} J.A.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (1.98,-0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/guidoimbens.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (2.42,-0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/benbernanke.jpg}};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (2.86,-0.50) {\fontsize{5}{6}\selectfont\color{covermuted} D.D.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (3.30,-0.50) {\fontsize{5}{6}\selectfont\color{covermuted} P.D.};
+      \node[circle, fill=coverprimary!8, draw=coverprimary!30, minimum size=0.36000000000000004cm, inner sep=0pt] at (3.74,-0.50) {\fontsize{5}{6}\selectfont\color{covermuted} C.G.};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.18,-0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/daronacemoglu.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (4.62,-0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/simonjohnson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (5.06,-0.50) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/jamesarobinson.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-5.06,-1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/joelmokyr.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.62,-1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/philippeaghion.jpg}};
+      \node[inner sep=0pt, draw=coverprimary!22, line width=0.2pt] at (-4.18,-1.00) {\includegraphics[width=0.4cm,height=0.46cm,keepaspectratio]{images/peterhowitt.jpg}};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{10}{12}\selectfont\bfseries, text=DeepPurpleAccent]
+    at ([yshift=1.12cm]current page.center) {\faIcon{medal}\enspace Nobel Memorial Prize in Economic Sciences\enspace|\enspace 1969–2025 · 全 \personcount 位得主};
+\end{tikzpicture}
+\end{frame}
+}
+
+\newcommand{\introslide}{%%
+\begin{frame}
+\pdfbookmark[1]{认识诺贝尔经济学奖}{intro}
+\plainbar
+\sectiontitle{认识诺贝尔经济学奖}{Nobel Memorial Prize in Economic Sciences · 1969–2025}
+\vspace{0.05cm}
+\begin{center}
+\begin{tikzpicture}
+  \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,3.05) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverprimary!82!black} 规模}\\[2pt]
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1969 年首颁（Frisch 与 Tinbergen）；至 2025 年共评奖 \awardyearcount 个年份、\recordcount 条记录，涉及 \personcount 位独立得主。}};
+  \node[draw=coveraccent!40, fill=redpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,1.10) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coveraccent!82!black} 奖项由来}\\[2pt]
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 非诺贝尔遗嘱所设五大奖：1968 年瑞典央行为纪念诺贝尔而增设；\\Herbert A. Simon 兼获 1975 年图灵奖。}};
+  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,-0.85) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coveramber!70!black} 颁奖节奏}\\[2pt]
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1969 年至今每年颁发，无空缺年份。}};
+  \node[draw=coverpurple!40, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,3.05) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverpurple!82!black} 交叉荣誉 · 徽标一览}\par\vspace{3pt}
+    {\fontsize{6.6}{12.8}\selectfont\color{coverdark!84} \turingbadge{} 图灵奖 · 1 位 \\
+    \abelbadge{} 阿贝尔奖 · 1 位}};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+}
+
+\newcommand{\twentiethslide}{\sectionpageslide
+  {第一乐章 · 20 世纪（1969–2000）}
+  {从计量模型与一般均衡到博弈论 · 46 位得主}
+  {}
+  {Nobel Prize in Physics · 1901–2025}
+}
+
+\newcommand{\twentyfirstslide}{\sectionpageslide
+  {第二乐章 · 21 世纪（2001–2025）}
+  {从信息不对称到机制设计与随机实验 · 53 位得主}
+  {}
+  {Nobel Prize in Physics · 1901–2025}
+}
+
+\newcommand{\closingslide}{%
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverprimary!7] (current page.north west) rectangle (current page.south east);
+\pdfbookmark[1]{结语}{ending}
+  \fill[coveramber!12] (current page.north east) ++(-2.4,1.4) circle (1.6cm);
+  \fill[coverpurple!10] (current page.south west) ++(3.0,-1.0) circle (1.2cm);
+  \node[anchor=center, font=\fontsize{22}{28}\selectfont\bfseries, text=coverdark]
+    at ([yshift=1.10cm]current page.center) {看不见的手，看得见的智慧};
+  \draw[coveramber, line width=1.4pt] ([yshift=0.15cm, xshift=-4.6cm]current page.center)
+    -- ([yshift=0.15cm, xshift=4.6cm]current page.center);
+  \node[anchor=center, font=\fontsize{10.5}{14}\selectfont, text=coverprimary!85!black]
+    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1969–2025 全部 \personcount 位诺贝尔经济学奖得主};
+  \node[anchor=center, font=\fontsize{8.5}{11.5}\selectfont\itshape, text=covermuted]
+    at ([yshift=-1.70cm]current page.center) {他们的每一次追问，都在重新理解人类的选择与协作。};
+  \node[anchor=south, font=\scriptsize, text=coverdark!40]
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace Nobel Memorial Prize in Economic Sciences · 1969–2025};
+\end{tikzpicture}
+\end{frame}
+}
+
+
+% ========== SLIDES (chronological) ==========
+
+\newcommand{\ragnarfrisch}{\gdef\personhonors{}\gdef\personbookmark{1969 · Ragnar Frisch 拉格纳·弗里施}\personslide
+  {Ragnar Frisch}{拉格纳·弗里施}
+  {images/ragnarfrisch.jpg}{Wikipedia}
+  {1969 年（获奖时 74 岁）}{1895–1973}{挪威}{University of Oslo}
+  {表彰他们为经济过程分析开发并应用了动态模型}}
+
+\newcommand{\jantinbergen}{\gdef\personhonors{}\gdef\personbookmark{1969 · Jan Tinbergen 扬·廷贝亨}\personslide
+  {Jan Tinbergen}{扬·廷贝亨}
+  {images/jantinbergen.jpg}{Wikipedia}
+  {1969 年（获奖时 66 岁）}{1903–1994}{荷兰}{Netherlands School of Economics · Bureau for Economic Policy Analysis}
+  {表彰他们为经济过程分析开发并应用了动态模型}}
+
+\newcommand{\paulsamuelson}{\gdef\personhonors{}\gdef\personbookmark{1970 · Paul Samuelson 保罗·萨缪尔森}\personslide
+  {Paul Samuelson}{保罗·萨缪尔森}
+  {images/paulsamuelson.jpg}{Wikipedia}
+  {1970 年（获奖时 55 岁）}{1915–2009}{美国}{Massachusetts Institute of Technology · MIT Sloan School of Management}
+  {表彰他发展静态与动态经济理论的科学工作，并积极推动经济科学分析水平的提升}}
+
+\newcommand{\simonkuznets}{\gdef\personhonors{}\gdef\personbookmark{1971 · Simon Kuznets 西蒙·库兹涅茨}\personslide
+  {Simon Kuznets}{西蒙·库兹涅茨}
+  {images/simonkuznets.jpg}{Wikipedia}
+  {1971 年（获奖时 70 岁）}{1901–1985}{美国}{Harvard University · Johns Hopkins University}
+  {表彰他对经济增长的实证性阐释，使人们对经济与社会结构及发展过程有了更新、更深的认识}}
+
+\newcommand{\johnhicks}{\gdef\personhonors{}\gdef\personbookmark{1972 · John Hicks 约翰·希克斯}\personslide
+  {John Hicks}{约翰·希克斯}
+  {images/johnhicks.jpg}{Wikipedia}
+  {1972 年（获奖时 68 岁）}{1904–1989}{英国}{University of Manchester · London School of Economics and Political Science}
+  {表彰他们在一般经济均衡理论与福利理论方面的开创性贡献}}
+
+\newcommand{\kennetharrow}{\gdef\personhonors{}\gdef\personbookmark{1972 · Kenneth Arrow 肯尼斯·阿罗}\personslide
+  {Kenneth Arrow}{肯尼斯·阿罗}
+  {images/kennetharrow.jpg}{Wikipedia}
+  {1972 年（获奖时 51 岁）}{1921–2017}{美国}{University of Chicago · Santa Fe Institute}
+  {表彰他们在一般经济均衡理论与福利理论方面的开创性贡献}}
+
+\newcommand{\wassilyleontief}{\gdef\personhonors{}\gdef\personbookmark{1973 · Wassily Leontief 华西里·列昂惕夫}\personslide
+  {Wassily Leontief}{华西里·列昂惕夫}
+  {images/wassilyleontief.jpg}{Wikipedia}
+  {1973 年（获奖时 67 岁）}{1906–1999}{苏联/美国}{New York University · Kiel University}
+  {表彰他发展了投入产出方法并将其应用于重要经济问题}}
+
+\newcommand{\gunnarmyrdal}{\gdef\personhonors{}\gdef\personbookmark{1974 · Gunnar Myrdal 贡纳尔·缪尔达尔}\personslide
+  {Gunnar Myrdal}{贡纳尔·缪尔达尔}
+  {images/gunnarmyrdal.jpg}{Wikipedia}
+  {1974 年（获奖时 76 岁）}{1898–1987}{瑞典}{Stockholm School of Economics · Stockholm University}
+  {表彰他们在货币理论与经济波动理论方面的开创性工作，以及对经济、社会与制度现象相互依存关系的深刻分析}}
+
+\newcommand{\friedrichhayek}{\gdef\personhonors{}\gdef\personbookmark{1974 · Friedrich Hayek 弗里德里希·哈耶克}\personslide
+  {Friedrich Hayek}{弗里德里希·哈耶克}
+  {images/friedrichhayek.jpg}{Wikipedia}
+  {1974 年（获奖时 75 岁）}{1899–1992}{奥地利/英国}{University of Salzburg · University of Freiburg}
+  {表彰他们在货币理论与经济波动理论方面的开创性工作，以及对经济、社会与制度现象相互依存关系的深刻分析}}
+
+\newcommand{\leonidkantorovich}{\gdef\personhonors{}\gdef\personbookmark{1975 · Leonid Kantorovich 列昂尼德·康托罗维奇}\personslide
+  {Leonid Kantorovich}{列昂尼德·康托罗维奇}
+  {images/leonidkantorovich.jpg}{Wikipedia}
+  {1975 年（获奖时 63 岁）}{1912–1986}{苏联}{St. Petersburg State Transport University · Military Engineering-Technical University}
+  {表彰他们对资源最优配置理论的贡献}}
+
+\newcommand{\tjallingkoopmans}{\gdef\personhonors{}\gdef\personbookmark{1975 · Tjalling Koopmans 佳林·库普曼斯}\personslide
+  {Tjalling Koopmans}{佳林·库普曼斯}
+  {images/tjallingkoopmans.jpg}{Wikipedia}
+  {1975 年（获奖时 65 岁）}{1910–1985}{荷兰/美国}{Princeton University · Yale University}
+  {表彰他们对资源最优配置理论的贡献}}
+
+\newcommand{\miltonfriedman}{\gdef\personhonors{}\gdef\personbookmark{1976 · Milton Friedman 米尔顿·弗里德曼}\personslide
+  {Milton Friedman}{米尔顿·弗里德曼}
+  {images/miltonfriedman.jpg}{Wikipedia}
+  {1976 年（获奖时 64 岁）}{1912–2006}{美国}{University of Chicago}
+  {表彰他在消费分析、货币史与货币理论领域的成就，以及他对稳定化政策复杂性的论证}}
+
+\newcommand{\bertilohlin}{\gdef\personhonors{}\gdef\personbookmark{1977 · Bertil Ohlin 贝蒂尔·奥林}\personslide
+  {Bertil Ohlin}{贝蒂尔·奥林}
+  {images/bertilohlin.jpg}{Wikipedia}
+  {1977 年（获奖时 78 岁）}{1899–1979}{瑞典}{University of Copenhagen · Stockholm School of Economics}
+  {表彰他们对国际贸易与国际资本流动理论的开创性贡献}}
+
+\newcommand{\jamesmeade}{\gdef\personhonors{}\gdef\personbookmark{1977 · James Meade 詹姆斯·米德}\personslide
+  {James Meade}{詹姆斯·米德}
+  {images/jamesmeade.jpg}{Wikipedia}
+  {1977 年（获奖时 70 岁）}{1907–1995}{英国}{London School of Economics and Political Science}
+  {表彰他们对国际贸易与国际资本流动理论的开创性贡献}}
+
+\newcommand{\herbertasimon}{\gdef\personhonors{\turingbadge{} 图灵奖 1975}\gdef\personbookmark{1978 · Herbert A. Simon 赫伯特·西蒙}\personslide
+  {Herbert A. Simon\,\turingbadge{}}{赫伯特·西蒙}
+  {images/herbertasimon.jpg}{Wikipedia}
+  {1978 年（获奖时 62 岁）}{1916–2001}{美国}{Carnegie Mellon University · Illinois Institute of Technology}
+  {表彰他对经济组织内部决策过程的开创性研究}}
+
+\newcommand{\theodoreschultz}{\gdef\personhonors{}\gdef\personbookmark{1979 · Theodore Schultz 西奥多·舒尔茨}\personslide
+  {Theodore Schultz}{西奥多·舒尔茨}
+  {none}{T.S.}
+  {1979 年（获奖时 77 岁）}{1902–1998}{美国}{Iowa State University · University of Chicago}
+  {表彰他们对经济发展的开创性研究，尤其着重考虑了发展中国家的问题}}
+
+\newcommand{\warthurlewis}{\gdef\personhonors{}\gdef\personbookmark{1979 · W. Arthur Lewis 威廉·阿瑟·刘易斯}\personslide
+  {W. Arthur Lewis}{威廉·阿瑟·刘易斯}
+  {images/warthurlewis.jpg}{Wikipedia}
+  {1979 年（获奖时 64 岁）}{1915–1991}{圣卢西亚/英国}{Princeton University · Victoria University of Manchester}
+  {表彰他们对经济发展的开创性研究，尤其着重考虑了发展中国家的问题}}
+
+\newcommand{\lawrenceklein}{\gdef\personhonors{}\gdef\personbookmark{1980 · Lawrence Klein 劳伦斯·克莱因}\personslide
+  {Lawrence Klein}{劳伦斯·克莱因}
+  {images/lawrenceklein.jpg}{Wikipedia}
+  {1980 年（获奖时 60 岁）}{1920–2013}{美国}{University of Michigan · University of Pennsylvania}
+  {表彰他创建经济计量模型并将其应用于经济波动与经济政策分析}}
+
+\newcommand{\jamestobin}{\gdef\personhonors{}\gdef\personbookmark{1981 · James Tobin 詹姆斯·托宾}\personslide
+  {James Tobin}{詹姆斯·托宾}
+  {images/jamestobin.png}{Wikipedia}
+  {1981 年（获奖时 63 岁）}{1918–2002}{美国}{Yale University}
+  {表彰他对金融市场及其与支出决策、就业、生产和价格关系的分析}}
+
+\newcommand{\georgestigler}{\gdef\personhonors{}\gdef\personbookmark{1982 · George Stigler 乔治·斯蒂格勒}\personslide
+  {George Stigler}{乔治·斯蒂格勒}
+  {none}{G.S.}
+  {1982 年（获奖时 71 岁）}{1911–1991}{美国}{University of Chicago · Columbia University}
+  {表彰他对产业结构、市场运作以及公共监管的成因与效果的开创性研究}}
+
+\newcommand{\gerarddebreu}{\gdef\personhonors{}\gdef\personbookmark{1983 · Gérard Debreu 杰拉尔·德布勒}\personslide
+  {Gérard Debreu}{杰拉尔·德布勒}
+  {none}{G.D.}
+  {1983 年（获奖时 62 岁）}{1921–2004}{法国}{University of California, Berkeley · Yale University}
+  {表彰他将新的分析方法引入经济理论，并对一般均衡理论作出了严格的重构}}
+
+\newcommand{\richardstone}{\gdef\personhonors{}\gdef\personbookmark{1984 · Richard Stone 理查德·斯通}\personslide
+  {Richard Stone}{理查德·斯通}
+  {images/richardstone.jpg}{Wikipedia}
+  {1984 年（获奖时 71 岁）}{1913–1991}{英国}{University of Cambridge}
+  {表彰他对国民经济核算体系发展的奠基性贡献，从而极大改善了实证经济分析的基础}}
+
+\newcommand{\francomodigliani}{\gdef\personhonors{}\gdef\personbookmark{1985 · Franco Modigliani 弗兰科·莫迪利安尼}\personslide
+  {Franco Modigliani}{弗兰科·莫迪利安尼}
+  {images/francomodigliani.jpg}{Wikipedia}
+  {1985 年（获奖时 67 岁）}{1918–2003}{意大利}{Massachusetts Institute of Technology · MIT Sloan School of Management}
+  {表彰他对储蓄与金融市场的开创性分析}}
+
+\newcommand{\jamesmbuchanan}{\gdef\personhonors{}\gdef\personbookmark{1986 · James M. Buchanan 詹姆斯·布坎南}\personslide
+  {James M. Buchanan}{詹姆斯·布坎南}
+  {images/jamesmbuchanan.jpg}{Wikipedia}
+  {1986 年（获奖时 67 岁）}{1919–2013}{美国}{George Mason University · Florida State University}
+  {表彰他为经济与政治决策理论奠定了契约与宪制基础}}
+
+\newcommand{\robertsolow}{\gdef\personhonors{}\gdef\personbookmark{1987 · Robert Solow 罗伯特·索洛}\personslide
+  {Robert Solow}{罗伯特·索洛}
+  {images/robertsolow.jpg}{Wikipedia}
+  {1987 年（获奖时 63 岁）}{1924–2023}{美国}{Massachusetts Institute of Technology · MIT Sloan School of Management}
+  {表彰他对经济增长理论的贡献}}
+
+\newcommand{\mauriceallais}{\gdef\personhonors{}\gdef\personbookmark{1988 · Maurice Allais 莫里斯·阿莱}\personslide
+  {Maurice Allais}{莫里斯·阿莱}
+  {images/mauriceallais.jpg}{Wikipedia}
+  {1988 年（获奖时 77 岁）}{1911–2010}{法国}{Paris Nanterre University}
+  {表彰他对市场理论与资源有效利用理论的开创性贡献}}
+
+\newcommand{\trygvehaavelmo}{\gdef\personhonors{}\gdef\personbookmark{1989 · Trygve Haavelmo 特里夫·哈维默}\personslide
+  {Trygve Haavelmo}{特里夫·哈维默}
+  {images/trygvehaavelmo.jpg}{Wikipedia}
+  {1989 年（获奖时 78 岁）}{1911–1999}{挪威}{Harvard University · University of Chicago}
+  {表彰他阐明了经济计量学的概率论基础，并对联立经济结构进行了分析}}
+
+\newcommand{\harrymarkowitz}{\gdef\personhonors{}\gdef\personbookmark{1990 · Harry Markowitz 哈里·马科维茨}\personslide
+  {Harry Markowitz}{哈里·马科维茨}
+  {none}{H.M.}
+  {1990 年（获奖时 63 岁）}{1927–2023}{美国}{University of Tokyo · University of California, San Diego}
+  {表彰他们在金融经济学理论方面的开创性工作}}
+
+\newcommand{\mertonmiller}{\gdef\personhonors{}\gdef\personbookmark{1990 · Merton Miller 默顿·米勒}\personslide
+  {Merton Miller}{默顿·米勒}
+  {none}{M.M.}
+  {1990 年（获奖时 67 岁）}{1923–2000}{美国}{University of Chicago · Carnegie Mellon University}
+  {表彰他们在金融经济学理论方面的开创性工作}}
+
+\newcommand{\williamfsharpe}{\gdef\personhonors{}\gdef\personbookmark{1990 · William F. Sharpe 威廉·夏普}\personslide
+  {William F. Sharpe}{威廉·夏普}
+  {images/williamfsharpe.jpg}{Wikipedia}
+  {1990 年（获奖时 56 岁）}{1934–}{美国}{Q219563 · Stanford University}
+  {表彰他们在金融经济学理论方面的开创性工作}}
+
+\newcommand{\ronaldcoase}{\gdef\personhonors{}\gdef\personbookmark{1991 · Ronald Coase 罗纳德·科斯}\personslide
+  {Ronald Coase}{罗纳德·科斯}
+  {images/ronaldcoase.jpg}{Wikipedia}
+  {1991 年（获奖时 81 岁）}{1910–2013}{英国}{University of Chicago · University at Buffalo}
+  {表彰他发现并阐明了交易成本和产权对经济制度结构与运行的重要意义}}
+
+\newcommand{\garybecker}{\gdef\personhonors{}\gdef\personbookmark{1992 · Gary Becker 加里·贝克尔}\personslide
+  {Gary Becker}{加里·贝克尔}
+  {images/garybecker.jpg}{Wikipedia}
+  {1992 年（获奖时 62 岁）}{1930–2014}{美国}{University of Chicago · Columbia University}
+  {表彰他将微观经济分析的领域扩展到包括非市场行为在内的人类行为与互动的广泛范围}}
+
+\newcommand{\robertfogel}{\gdef\personhonors{}\gdef\personbookmark{1993 · Robert Fogel 罗伯特·福格尔}\personslide
+  {Robert Fogel}{罗伯特·福格尔}
+  {images/robertfogel.jpg}{Wikipedia}
+  {1993 年（获奖时 67 岁）}{1926–2013}{美国}{University of Chicago · Harvard University}
+  {表彰他们运用经济理论与量化方法重新开展经济史研究，以解释经济与制度变迁}}
+
+\newcommand{\douglassnorth}{\gdef\personhonors{}\gdef\personbookmark{1993 · Douglass North 道格拉斯·诺思}\personslide
+  {Douglass North}{道格拉斯·诺思}
+  {images/douglassnorth.jpg}{Wikipedia}
+  {1993 年（获奖时 73 岁）}{1920–2015}{美国}{Q219563 · Washington University in St. Louis}
+  {表彰他们运用经济理论与量化方法重新开展经济史研究，以解释经济与制度变迁}}
+
+\newcommand{\johnharsanyi}{\gdef\personhonors{}\gdef\personbookmark{1994 · John Harsanyi 约翰·海萨尼}\personslide
+  {John Harsanyi}{约翰·海萨尼}
+  {none}{J.H.}
+  {1994 年（获奖时 74 岁）}{1920–2000}{匈牙利/美国}{University of California, Berkeley · Wayne State University}
+  {表彰他们在非合作博弈理论中关于均衡的开创性分析}}
+
+\newcommand{\johnforbesnashjr}{\gdef\personhonors{\abelbadge{} 阿贝尔奖 2015}\gdef\personbookmark{1994 · John Forbes Nash Jr. 小约翰·福布斯·纳什}\personslide
+  {John Forbes Nash Jr.\,\abelbadge{}}{小约翰·福布斯·纳什}
+  {images/johnforbesnashjr.jpg}{Wikipedia}
+  {1994 年（获奖时 66 岁）}{1928–2015}{美国}{Princeton University · Massachusetts Institute of Technology}
+  {表彰他们在非合作博弈理论中关于均衡的开创性分析}}
+
+\newcommand{\reinhardselten}{\gdef\personhonors{}\gdef\personbookmark{1994 · Reinhard Selten 莱因哈德·泽尔腾}\personslide
+  {Reinhard Selten}{莱因哈德·泽尔腾}
+  {images/reinhardselten.jpg}{Wikipedia}
+  {1994 年（获奖时 64 岁）}{1930–2016}{德国}{Freie Universität Berlin · University of Bonn}
+  {表彰他们在非合作博弈理论中关于均衡的开创性分析}}
+
+\newcommand{\robertlucasjr}{\gdef\personhonors{}\gdef\personbookmark{1995 · Robert Lucas, Jr. 罗伯特·卢卡斯}\personslide
+  {Robert Lucas, Jr.}{罗伯特·卢卡斯}
+  {images/robertlucasjr.jpg}{Wikipedia}
+  {1995 年（获奖时 58 岁）}{1937–2023}{美国}{University of Chicago · Carnegie Mellon University}
+  {表彰他提出并应用理性预期假说，从而改变了宏观经济分析并深化了人们对经济政策的理解}}
+
+\newcommand{\jamesmirrlees}{\gdef\personhonors{}\gdef\personbookmark{1996 · James Mirrlees 詹姆斯·莫里斯}\personslide
+  {James Mirrlees}{詹姆斯·莫里斯}
+  {images/jamesmirrlees.jpg}{Wikipedia}
+  {1996 年（获奖时 60 岁）}{1936–2018}{英国}{Massachusetts Institute of Technology · University of California, Berkeley}
+  {表彰他们对不对称信息下激励经济理论的基础性贡献}}
+
+\newcommand{\williamvickrey}{\gdef\personhonors{}\gdef\personbookmark{1996 · William Vickrey 威廉·维克里}\personslide
+  {William Vickrey}{威廉·维克里}
+  {none}{W.V.}
+  {1996 年（获奖时 82 岁）}{1914–1996}{加拿大/美国}{Columbia University}
+  {表彰他们对不对称信息下激励经济理论的基础性贡献}}
+
+\newcommand{\robertcmerton}{\gdef\personhonors{}\gdef\personbookmark{1997 · Robert C. Merton 罗伯特·默顿}\personslide
+  {Robert C. Merton}{罗伯特·默顿}
+  {images/robertcmerton.jpg}{Wikipedia}
+  {1997 年（获奖时 53 岁）}{1944–}{美国}{Harvard University · Massachusetts Institute of Technology}
+  {表彰他们提出了确定衍生品价值的新方法}}
+
+\newcommand{\myronscholes}{\gdef\personhonors{}\gdef\personbookmark{1997 · Myron Scholes 迈伦·斯科尔斯}\personslide
+  {Myron Scholes}{迈伦·斯科尔斯}
+  {images/myronscholes.png}{Wikipedia}
+  {1997 年（获奖时 56 岁）}{1941–}{加拿大/美国}{Massachusetts Institute of Technology · MIT Sloan School of Management}
+  {表彰他们提出了确定衍生品价值的新方法}}
+
+\newcommand{\amartyasen}{\gdef\personhonors{}\gdef\personbookmark{1998 · Amartya Sen 阿马蒂亚·森}\personslide
+  {Amartya Sen}{阿马蒂亚·森}
+  {images/amartyasen.jpg}{Wikipedia}
+  {1998 年（获奖时 65 岁）}{1933–}{印度}{Harvard University · London School of Economics and Political Science}
+  {表彰他对福利经济学的贡献}}
+
+\newcommand{\robertmundell}{\gdef\personhonors{}\gdef\personbookmark{1999 · Robert Mundell 罗伯特·蒙代尔}\personslide
+  {Robert Mundell}{罗伯特·蒙代尔}
+  {images/robertmundell.jpg}{Wikipedia}
+  {1999 年（获奖时 67 岁）}{1932–2021}{加拿大}{Johns Hopkins University · Stanford University}
+  {表彰他对不同汇率制度下货币与财政政策的分析，以及对最优货币区域的分析}}
+
+\newcommand{\jamesheckman}{\gdef\personhonors{}\gdef\personbookmark{2000 · James Heckman 詹姆斯·赫克曼}\personslide
+  {James Heckman}{詹姆斯·赫克曼}
+  {none}{J.H.}
+  {2000 年（获奖时 56 岁）}{1944–}{美国}{University College London · University of Chicago}
+  {表彰他发展了分析选择性样本的理论与方法}}
+
+\newcommand{\danielmcfadden}{\gdef\personhonors{}\gdef\personbookmark{2000 · Daniel McFadden 丹尼尔·麦克法登}\personslide
+  {Daniel McFadden}{丹尼尔·麦克法登}
+  {images/danielmcfadden.jpg}{Wikipedia}
+  {2000 年（获奖时 63 岁）}{1937–}{美国}{Massachusetts Institute of Technology · University of Southern California}
+  {表彰他发展了分析离散选择的理论与方法}}
+
+\newcommand{\georgeakerlof}{\gdef\personhonors{}\gdef\personbookmark{2001 · George Akerlof 乔治·阿克洛夫}\personslide
+  {George Akerlof}{乔治·阿克洛夫}
+  {images/georgeakerlof.jpg}{Wikipedia}
+  {2001 年（获奖时 61 岁）}{1940–}{美国}{University of California, Berkeley · London School of Economics and Political Science}
+  {表彰他们对信息不对称市场的分析}}
+
+\newcommand{\michaelspence}{\gdef\personhonors{}\gdef\personbookmark{2001 · Michael Spence 迈克尔·斯宾塞}\personslide
+  {Michael Spence}{迈克尔·斯宾塞}
+  {images/michaelspence.jpg}{Wikipedia}
+  {2001 年（获奖时 58 岁）}{1943–}{美国}{Harvard University · New York University}
+  {表彰他们对信息不对称市场的分析}}
+
+\newcommand{\josephstiglitz}{\gdef\personhonors{}\gdef\personbookmark{2001 · Joseph Stiglitz 约瑟夫·斯蒂格利茨}\personslide
+  {Joseph Stiglitz}{约瑟夫·斯蒂格利茨}
+  {images/josephstiglitz.jpg}{Wikipedia}
+  {2001 年（获奖时 58 岁）}{1943–}{美国}{University of Oxford · Princeton University}
+  {表彰他们对信息不对称市场的分析}}
+
+\newcommand{\danielkahneman}{\gdef\personhonors{}\gdef\personbookmark{2002 · Daniel Kahneman 丹尼尔·卡尼曼}\personslide
+  {Daniel Kahneman}{丹尼尔·卡尼曼}
+  {images/danielkahneman.jpg}{Wikipedia}
+  {2002 年（获奖时 68 岁）}{1934–2024}{美国/以色列}{Hebrew University of Jerusalem · Center for Advanced Study in the Behavioral Sciences}
+  {表彰他将心理学研究的洞见融入经济科学，特别是关于不确定条件下的人类判断与决策}}
+
+\newcommand{\vernonlsmith}{\gdef\personhonors{}\gdef\personbookmark{2002 · Vernon L. Smith 弗农·史密斯}\personslide
+  {Vernon L. Smith}{弗农·史密斯}
+  {images/vernonlsmith.jpg}{Wikipedia}
+  {2002 年（获奖时 75 岁）}{1927–}{美国}{Brown University · Purdue University}
+  {表彰他将实验室实验确立为实证经济分析的工具，尤其是对各种市场机制的研究}}
+
+\newcommand{\robertfengle}{\gdef\personhonors{}\gdef\personbookmark{2003 · Robert F. Engle 罗伯特·恩格尔}\personslide
+  {Robert F. Engle}{罗伯特·恩格尔}
+  {images/robertfengle.jpg}{Wikipedia}
+  {2003 年（获奖时 61 岁）}{1942–}{美国}{Massachusetts Institute of Technology · New York University}
+  {表彰他提出了分析具有时变波动性的经济时间序列的方法（ARCH）}}
+
+\newcommand{\clivegranger}{\gdef\personhonors{}\gdef\personbookmark{2003 · Clive Granger 克莱夫·格兰杰}\personslide
+  {Clive Granger}{克莱夫·格兰杰}
+  {none}{C.G.}
+  {2003 年（获奖时 69 岁）}{1934–2009}{英国}{University of California, San Diego · University of Nottingham}
+  {表彰他提出了分析具有共同趋势的经济时间序列的方法（协整）}}
+
+\newcommand{\finnekydland}{\gdef\personhonors{}\gdef\personbookmark{2004 · Finn E. Kydland 芬恩·基德兰德}\personslide
+  {Finn E. Kydland}{芬恩·基德兰德}
+  {images/finnekydland.jpg}{Wikipedia}
+  {2004 年（获奖时 61 岁）}{1943–}{挪威}{University of California, Santa Barbara · Carnegie Mellon University}
+  {表彰他们对动态宏观经济学的贡献：经济政策的时间一致性与经济周期背后的驱动力量}}
+
+\newcommand{\edwardcprescott}{\gdef\personhonors{}\gdef\personbookmark{2004 · Edward C. Prescott 爱德华·普雷斯科特}\personslide
+  {Edward C. Prescott}{爱德华·普雷斯科特}
+  {images/edwardcprescott.jpg}{Wikipedia}
+  {2004 年（获奖时 64 岁）}{1940–2022}{美国}{University of Minnesota · Arizona State University}
+  {表彰他们对动态宏观经济学的贡献：经济政策的时间一致性与经济周期背后的驱动力量}}
+
+\newcommand{\robertaumann}{\gdef\personhonors{}\gdef\personbookmark{2005 · Robert Aumann 罗伯特·奥曼}\personslide
+  {Robert Aumann}{罗伯特·奥曼}
+  {images/robertaumann.jpg}{Wikipedia}
+  {2005 年（获奖时 75 岁）}{1930–}{美国/以色列}{Stony Brook University · Hebrew University of Jerusalem}
+  {表彰他们通过博弈论分析增进了我们对冲突与合作的理解}}
+
+\newcommand{\thomasschelling}{\gdef\personhonors{}\gdef\personbookmark{2005 · Thomas Schelling 托马斯·谢林}\personslide
+  {Thomas Schelling}{托马斯·谢林}
+  {images/thomasschelling.jpg}{Wikipedia}
+  {2005 年（获奖时 84 岁）}{1921–2016}{美国}{Harvard University · Yale University}
+  {表彰他们通过博弈论分析增进了我们对冲突与合作的理解}}
+
+\newcommand{\edmundphelps}{\gdef\personhonors{}\gdef\personbookmark{2006 · Edmund Phelps 埃德蒙·费尔普斯}\personslide
+  {Edmund Phelps}{埃德蒙·费尔普斯}
+  {images/edmundphelps.jpg}{Wikipedia}
+  {2006 年（获奖时 73 岁）}{1933–2026}{美国}{Columbia University · University of Pennsylvania}
+  {表彰他对宏观经济政策中跨期权衡的分析}}
+
+\newcommand{\leonidhurwicz}{\gdef\personhonors{}\gdef\personbookmark{2007 · Leonid Hurwicz 莱昂尼德·赫维奇}\personslide
+  {Leonid Hurwicz}{莱昂尼德·赫维奇}
+  {images/leonidhurwicz.jpg}{Wikipedia}
+  {2007 年（获奖时 90 岁）}{1917–2008}{波兰/美国}{University of Chicago · University of Minnesota}
+  {表彰他们奠定了机制设计理论的基础}}
+
+\newcommand{\ericmaskin}{\gdef\personhonors{}\gdef\personbookmark{2007 · Eric Maskin 埃里克·马斯金}\personslide
+  {Eric Maskin}{埃里克·马斯金}
+  {images/ericmaskin.jpg}{Wikipedia}
+  {2007 年（获奖时 57 岁）}{1950–}{美国}{Princeton University · Harvard University}
+  {表彰他们奠定了机制设计理论的基础}}
+
+\newcommand{\rogermyerson}{\gdef\personhonors{}\gdef\personbookmark{2007 · Roger Myerson 罗杰·迈尔森}\personslide
+  {Roger Myerson}{罗杰·迈尔森}
+  {images/rogermyerson.jpg}{Wikipedia}
+  {2007 年（获奖时 56 岁）}{1951–}{美国}{Northwestern University · University of Chicago}
+  {表彰他们奠定了机制设计理论的基础}}
+
+\newcommand{\paulkrugman}{\gdef\personhonors{}\gdef\personbookmark{2008 · Paul Krugman 保罗·克鲁格曼}\personslide
+  {Paul Krugman}{保罗·克鲁格曼}
+  {images/paulkrugman.jpg}{Wikipedia}
+  {2008 年（获奖时 55 岁）}{1953–}{美国}{Banco de Portugal · Yale University}
+  {表彰他对贸易模式与经济活动区位的分析}}
+
+\newcommand{\elinorostrom}{\gdef\personhonors{}\gdef\personbookmark{2009 · Elinor Ostrom 埃莉诺·奥斯特罗姆}\personslide
+  {Elinor Ostrom}{埃莉诺·奥斯特罗姆}
+  {images/elinorostrom.jpg}{Wikipedia}
+  {2009 年（获奖时 76 岁）}{1933–2012}{美国}{Indiana University · Arizona State University}
+  {表彰她对经济治理尤其是公共资源的分析}}
+
+\newcommand{\oliverewilliamson}{\gdef\personhonors{}\gdef\personbookmark{2009 · Oliver E. Williamson 奥利弗·威廉姆森}\personslide
+  {Oliver E. Williamson}{奥利弗·威廉姆森}
+  {images/oliverewilliamson.jpg}{Wikipedia}
+  {2009 年（获奖时 77 岁）}{1932–2020}{美国}{Yale University · University of California, Berkeley}
+  {表彰他对经济治理尤其是企业边界的分析}}
+
+\newcommand{\peterdiamond}{\gdef\personhonors{}\gdef\personbookmark{2010 · Peter Diamond 彼得·戴蒙德}\personslide
+  {Peter Diamond}{彼得·戴蒙德}
+  {none}{P.D.}
+  {2010 年（获奖时 70 岁）}{1940–}{美国}{Massachusetts Institute of Technology · University of California, Berkeley}
+  {表彰他们对存在搜寻摩擦的市场的分析}}
+
+\newcommand{\daletmortensen}{\gdef\personhonors{}\gdef\personbookmark{2010 · Dale T. Mortensen 戴尔·莫滕森}\personslide
+  {Dale T. Mortensen}{戴尔·莫滕森}
+  {images/daletmortensen.jpg}{Wikipedia}
+  {2010 年（获奖时 71 岁）}{1939–2014}{美国}{Northwestern University · Aarhus University}
+  {表彰他们对存在搜寻摩擦的市场的分析}}
+
+\newcommand{\christopherapissarides}{\gdef\personhonors{}\gdef\personbookmark{2010 · Christopher A. Pissarides 克里斯托弗·皮萨里德斯}\personslide
+  {Christopher A. Pissarides}{克里斯托弗·皮萨里德斯}
+  {none}{C.P.}
+  {2010 年（获奖时 62 岁）}{1948–}{塞浦路斯/英国}{University of Southampton · London School of Economics and Political Science}
+  {表彰他们对存在搜寻摩擦的市场的分析}}
+
+\newcommand{\thomasjsargent}{\gdef\personhonors{}\gdef\personbookmark{2011 · Thomas J. Sargent 托马斯·萨金特}\personslide
+  {Thomas J. Sargent}{托马斯·萨金特}
+  {images/thomasjsargent.jpg}{Wikipedia}
+  {2011 年（获奖时 68 岁）}{1943–}{美国}{New York University · University of Chicago}
+  {表彰他们对宏观经济中因果关系的实证研究}}
+
+\newcommand{\christopherasims}{\gdef\personhonors{}\gdef\personbookmark{2011 · Christopher A. Sims 克里斯托弗·西姆斯}\personslide
+  {Christopher A. Sims}{克里斯托弗·西姆斯}
+  {none}{C.S.}
+  {2011 年（获奖时 69 岁）}{1942–2026}{美国}{Princeton University · Harvard University}
+  {表彰他们对宏观经济中因果关系的实证研究}}
+
+\newcommand{\alvineroth}{\gdef\personhonors{}\gdef\personbookmark{2012 · Alvin E. Roth 阿尔文·罗思}\personslide
+  {Alvin E. Roth}{阿尔文·罗思}
+  {images/alvineroth.jpg}{Wikipedia}
+  {2012 年（获奖时 61 岁）}{1951–}{美国}{Stanford University · Harvard University}
+  {表彰他们关于稳定配置的理论与市场设计的实践}}
+
+\newcommand{\lloydshapley}{\gdef\personhonors{}\gdef\personbookmark{2012 · Lloyd Shapley 劳埃德·沙普利}\personslide
+  {Lloyd Shapley}{劳埃德·沙普利}
+  {images/lloydshapley.jpg}{Wikipedia}
+  {2012 年（获奖时 89 岁）}{1923–2016}{美国}{RAND Corporation · University of California, Los Angeles}
+  {表彰他们关于稳定配置的理论与市场设计的实践}}
+
+\newcommand{\eugenefama}{\gdef\personhonors{}\gdef\personbookmark{2013 · Eugene Fama 尤金·法马}\personslide
+  {Eugene Fama}{尤金·法马}
+  {images/eugenefama.jpg}{Wikipedia}
+  {2013 年（获奖时 74 岁）}{1939–}{美国}{University of Chicago}
+  {表彰他们对资产价格的实证分析}}
+
+\newcommand{\larspeterhansen}{\gdef\personhonors{}\gdef\personbookmark{2013 · Lars Peter Hansen 拉尔斯·彼得·汉森}\personslide
+  {Lars Peter Hansen}{拉尔斯·彼得·汉森}
+  {images/larspeterhansen.jpg}{Wikipedia}
+  {2013 年（获奖时 61 岁）}{1952–}{美国}{University of Chicago · Carnegie Mellon University}
+  {表彰他们对资产价格的实证分析}}
+
+\newcommand{\robertjshiller}{\gdef\personhonors{}\gdef\personbookmark{2013 · Robert J. Shiller 罗伯特·希勒}\personslide
+  {Robert J. Shiller}{罗伯特·希勒}
+  {images/robertjshiller.png}{Wikipedia}
+  {2013 年（获奖时 67 岁）}{1946–}{美国}{Yale University · University of Pennsylvania}
+  {表彰他们对资产价格的实证分析}}
+
+\newcommand{\jeantirole}{\gdef\personhonors{}\gdef\personbookmark{2014 · Jean Tirole 让·梯若尔}\personslide
+  {Jean Tirole}{让·梯若尔}
+  {none}{J.T.}
+  {2014 年（获奖时 61 岁）}{1953–}{法国}{Toulouse Capitole University · École polytechnique}
+  {表彰他对市场力量与监管的分析}}
+
+\newcommand{\angusdeaton}{\gdef\personhonors{}\gdef\personbookmark{2015 · Angus Deaton 安格斯·迪顿}\personslide
+  {Angus Deaton}{安格斯·迪顿}
+  {images/angusdeaton.jpg}{Wikipedia}
+  {2015 年（获奖时 70 岁）}{1945–}{英国/美国}{Princeton University · University of Bristol}
+  {表彰他对消费、贫困与福利的分析}}
+
+\newcommand{\oliverhart}{\gdef\personhonors{}\gdef\personbookmark{2016 · Oliver Hart 奥利弗·哈特}\personslide
+  {Oliver Hart}{奥利弗·哈特}
+  {images/oliverhart.jpg}{Wikipedia}
+  {2016 年（获奖时 68 岁）}{1948–}{英国/美国}{Harvard University · London School of Economics and Political Science}
+  {表彰他们对契约理论的贡献}}
+
+\newcommand{\bengtholmstrom}{\gdef\personhonors{}\gdef\personbookmark{2016 · Bengt Holmström 本特·霍姆斯特罗姆}\personslide
+  {Bengt Holmström}{本特·霍姆斯特罗姆}
+  {none}{B.H.}
+  {2016 年（获奖时 67 岁）}{1949–}{芬兰}{Massachusetts Institute of Technology · MIT Sloan School of Management}
+  {表彰他们对契约理论的贡献}}
+
+\newcommand{\richardthaler}{\gdef\personhonors{}\gdef\personbookmark{2017 · Richard Thaler 理查德·塞勒}\personslide
+  {Richard Thaler}{理查德·塞勒}
+  {images/richardthaler.jpg}{Wikipedia}
+  {2017 年（获奖时 72 岁）}{1945–}{美国}{Massachusetts Institute of Technology · University of Chicago}
+  {表彰他对行为经济学的贡献}}
+
+\newcommand{\williamnordhaus}{\gdef\personhonors{}\gdef\personbookmark{2018 · William Nordhaus 威廉·诺德豪斯}\personslide
+  {William Nordhaus}{威廉·诺德豪斯}
+  {none}{W.N.}
+  {2018 年（获奖时 77 岁）}{1941–}{美国}{Yale University}
+  {表彰他将气候变化纳入长期宏观经济分析}}
+
+\newcommand{\paulromer}{\gdef\personhonors{}\gdef\personbookmark{2018 · Paul Romer 保罗·罗默}\personslide
+  {Paul Romer}{保罗·罗默}
+  {images/paulromer.jpg}{Wikipedia}
+  {2018 年（获奖时 63 岁）}{1955–}{美国}{New York University · University of California, Berkeley}
+  {表彰他将技术创新纳入长期宏观经济分析}}
+
+\newcommand{\abhijitbanerjee}{\gdef\personhonors{}\gdef\personbookmark{2019 · Abhijit Banerjee 阿比吉特·班纳吉}\personslide
+  {Abhijit Banerjee}{阿比吉特·班纳吉}
+  {none}{A.B.}
+  {2019 年（获奖时 58 岁）}{1961–}{印度/美国}{Massachusetts Institute of Technology · Princeton University}
+  {表彰他们以实验性方法减轻全球贫困}}
+
+\newcommand{\estherduflo}{\gdef\personhonors{}\gdef\personbookmark{2019 · Esther Duflo 埃丝特·迪弗洛}\personslide
+  {Esther Duflo}{埃丝特·迪弗洛}
+  {none}{E.D.}
+  {2019 年（获奖时 47 岁）}{1972–}{法国/美国}{Massachusetts Institute of Technology · Collège de France}
+  {表彰他们以实验性方法减轻全球贫困}}
+
+\newcommand{\michaelkremer}{\gdef\personhonors{}\gdef\personbookmark{2019 · Michael Kremer 迈克尔·克雷默}\personslide
+  {Michael Kremer}{迈克尔·克雷默}
+  {images/michaelkremer.jpg}{Wikipedia}
+  {2019 年（获奖时 55 岁）}{1964–}{美国}{Harvard University · Massachusetts Institute of Technology}
+  {表彰他们以实验性方法减轻全球贫困}}
+
+\newcommand{\paulmilgrom}{\gdef\personhonors{}\gdef\personbookmark{2020 · Paul Milgrom 保罗·米尔格罗姆}\personslide
+  {Paul Milgrom}{保罗·米尔格罗姆}
+  {none}{P.M.}
+  {2020 年（获奖时 72 岁）}{1948–}{美国}{Stanford University}
+  {表彰他们对拍卖理论的改进以及新拍卖形式的发明}}
+
+\newcommand{\robertbwilson}{\gdef\personhonors{}\gdef\personbookmark{2020 · Robert B. Wilson 罗伯特·威尔逊}\personslide
+  {Robert B. Wilson}{罗伯特·威尔逊}
+  {none}{R.W.}
+  {2020 年（获奖时 83 岁）}{1937–}{美国}{Stanford University}
+  {表彰他们对拍卖理论的改进以及新拍卖形式的发明}}
+
+\newcommand{\davidcard}{\gdef\personhonors{}\gdef\personbookmark{2021 · David Card 戴维·卡德}\personslide
+  {David Card}{戴维·卡德}
+  {none}{D.C.}
+  {2021 年（获奖时 65 岁）}{1956–}{加拿大/美国}{University of California, Berkeley · University of Chicago}
+  {表彰他对劳动经济学的实证贡献}}
+
+\newcommand{\joshuaangrist}{\gdef\personhonors{}\gdef\personbookmark{2021 · Joshua Angrist 约书亚·安格里斯特}\personslide
+  {Joshua Angrist}{约书亚·安格里斯特}
+  {none}{J.A.}
+  {2021 年（获奖时 61 岁）}{1960–}{美国/以色列}{Harvard University · Massachusetts Institute of Technology}
+  {表彰他们对因果关系分析方法论的贡献}}
+
+\newcommand{\guidoimbens}{\gdef\personhonors{}\gdef\personbookmark{2021 · Guido Imbens 吉多·因本斯}\personslide
+  {Guido Imbens}{吉多·因本斯}
+  {images/guidoimbens.jpg}{Wikipedia}
+  {2021 年（获奖时 58 岁）}{1963–}{美国/荷兰}{Harvard University · Stanford University}
+  {表彰他们对因果关系分析方法论的贡献}}
+
+\newcommand{\benbernanke}{\gdef\personhonors{}\gdef\personbookmark{2022 · Ben Bernanke 本·伯南克}\personslide
+  {Ben Bernanke}{本·伯南克}
+  {images/benbernanke.jpg}{Wikipedia}
+  {2022 年（获奖时 69 岁）}{1953–}{美国}{Princeton University · New York University}
+  {表彰他们关于银行与金融危机的研究}}
+
+\newcommand{\douglasdiamond}{\gdef\personhonors{}\gdef\personbookmark{2022 · Douglas Diamond 道格拉斯·戴蒙德}\personslide
+  {Douglas Diamond}{道格拉斯·戴蒙德}
+  {none}{D.D.}
+  {2022 年（获奖时 69 岁）}{1953–}{美国}{University of Chicago}
+  {表彰他们关于银行与金融危机的研究}}
+
+\newcommand{\philiphdybvig}{\gdef\personhonors{}\gdef\personbookmark{2022 · Philip H. Dybvig 菲利普·迪布维格}\personslide
+  {Philip H. Dybvig}{菲利普·迪布维格}
+  {none}{P.D.}
+  {2022 年（获奖时 67 岁）}{1955–}{美国}{Princeton University · Yale University}
+  {表彰他们关于银行与金融危机的研究}}
+
+\newcommand{\claudiagoldin}{\gdef\personhonors{}\gdef\personbookmark{2023 · Claudia Goldin 克劳迪娅·戈尔丁}\personslide
+  {Claudia Goldin}{克劳迪娅·戈尔丁}
+  {none}{C.G.}
+  {2023 年（获奖时 77 岁）}{1946–}{美国}{Harvard University · National Bureau of Economic Research}
+  {表彰她增进了我们对女性劳动力市场表现的理解}}
+
+\newcommand{\daronacemoglu}{\gdef\personhonors{}\gdef\personbookmark{2024 · Daron Acemoglu 达龙·阿西莫格鲁}\personslide
+  {Daron Acemoglu}{达龙·阿西莫格鲁}
+  {images/daronacemoglu.jpg}{Wikipedia}
+  {2024 年（获奖时 57 岁）}{1967–}{土耳其/美国}{Massachusetts Institute of Technology · London School of Economics and Political Science}
+  {表彰他们关于制度如何形成并影响繁荣的研究}}
+
+\newcommand{\simonjohnson}{\gdef\personhonors{}\gdef\personbookmark{2024 · Simon Johnson 西蒙·约翰逊}\personslide
+  {Simon Johnson}{西蒙·约翰逊}
+  {images/simonjohnson.jpg}{Wikipedia}
+  {2024 年（获奖时 61 岁）}{1963–}{英国/美国}{Massachusetts Institute of Technology · MIT Sloan School of Management}
+  {表彰他们关于制度如何形成并影响繁荣的研究}}
+
+\newcommand{\jamesarobinson}{\gdef\personhonors{}\gdef\personbookmark{2024 · James A. Robinson 詹姆斯·罗宾逊}\personslide
+  {James A. Robinson}{詹姆斯·罗宾逊}
+  {images/jamesarobinson.jpg}{Wikipedia}
+  {2024 年（获奖时 64 岁）}{1960–}{英国/美国}{Harris School of Public Policy · John F. Kennedy School of Government}
+  {表彰他们关于制度如何形成并影响繁荣的研究}}
+
+\newcommand{\joelmokyr}{\gdef\personhonors{}\gdef\personbookmark{2025 · Joel Mokyr 乔尔·莫基尔}\personslide
+  {Joel Mokyr}{乔尔·莫基尔}
+  {images/joelmokyr.jpg}{Wikipedia}
+  {2025 年（获奖时 79 岁）}{1946–}{美国/以色列}{Northwestern University · Tel Aviv University}
+  {表彰他识别了通过技术进步实现持续增长的前提条件}}
+
+\newcommand{\philippeaghion}{\gdef\personhonors{}\gdef\personbookmark{2025 · Philippe Aghion 菲利普·阿吉翁}\personslide
+  {Philippe Aghion}{菲利普·阿吉翁}
+  {images/philippeaghion.jpg}{Wikipedia}
+  {2025 年（获奖时 69 岁）}{1956–}{法国}{Harvard University · Massachusetts Institute of Technology}
+  {表彰他们关于通过创造性破坏实现持续增长的理论}}
+
+\newcommand{\peterhowitt}{\gdef\personhonors{}\gdef\personbookmark{2025 · Peter Howitt 彼得·豪伊特}\personslide
+  {Peter Howitt}{彼得·豪伊特}
+  {images/peterhowitt.jpg}{Wikipedia}
+  {2025 年（获奖时 79 岁）}{1946–}{加拿大}{Brown University · University of Western Ontario}
+  {表彰他们关于通过创造性破坏实现持续增长的理论}}
+
+
+% ========== MAIN ==========
+\begin{document}
+
+\coverslide
+\introslide
+
+\begin{frame}{双料与大满贯 · 诺贝尔经济学奖得主身份总览}
+\pdfbookmark[1]{双料与大满贯 · 交叉身份总览}{crosssummary}
+\vspace{-4pt}
+\centering
+\begin{tikzpicture}
+  \node[anchor=north west, text width=8.0cm, align=left,
+        font=\fontsize{5.5}{6.5}\selectfont, text=turingclr2!70!black]
+    at (-1.70,0.00) {Simon};
+
+  \node[fill=turingclr2, rounded corners=4pt, text width=3.5cm, minimum height=0.55cm,
+        inner sep=0pt, align=center, anchor=north west] at (-5.4,0.00)
+    {\fontsize{5.5}{6.5}\selectfont\bfseries\color{white}$\blacktriangle$\;\; 图灵奖\;\; 1人};
+
+  \node[anchor=north west, text width=8.0cm, align=left,
+        font=\fontsize{5.5}{6.5}\selectfont, text=abelclr!70!black]
+    at (-1.70,-0.58) {Jr.};
+
+  \node[fill=abelclr, rounded corners=4pt, text width=3.5cm, minimum height=0.55cm,
+        inner sep=0pt, align=center, anchor=north west] at (-5.4,-0.58)
+    {\fontsize{5.5}{6.5}\selectfont\bfseries\color{white}$\bigstar$\;\; 阿贝尔奖\;\; 1人};
+
+  \fill[coverlight, rounded corners=4pt] (-5.5,-1.91) rectangle (5.6,-1.41);
+  \node[anchor=north, text width=3.7cm, align=center,
+        font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=coverprimary]
+    at (-3.60,-1.51) {首届\;\; Ragnar Frisch · Jan Tinbergen\;(1969)};
+
+  \node[anchor=north, text width=3.7cm, align=center,
+        font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=coverprimary]
+    at (0.00,-1.51) {\awardyearcount 届\;\; \recordcount 条记录 / \personcount 位独立得主};
+  \node[anchor=north, text width=3.7cm, align=center,
+        font=\fontsize{4.5}{5.5}\selectfont\bfseries, text=coverprimary]
+    at (3.60,-1.51) {兼获图灵奖\;\; Herbert A. Simon};
+
+\end{tikzpicture}
+\end{frame}
+
+
+\twentiethslide
+\ragnarfrisch
+\jantinbergen
+\paulsamuelson
+\simonkuznets
+\johnhicks
+\kennetharrow
+\wassilyleontief
+\gunnarmyrdal
+\friedrichhayek
+\leonidkantorovich
+\tjallingkoopmans
+\miltonfriedman
+\bertilohlin
+\jamesmeade
+\herbertasimon
+\theodoreschultz
+\warthurlewis
+\lawrenceklein
+\jamestobin
+\georgestigler
+\gerarddebreu
+\richardstone
+\francomodigliani
+\jamesmbuchanan
+\robertsolow
+\mauriceallais
+\trygvehaavelmo
+\harrymarkowitz
+\mertonmiller
+\williamfsharpe
+\ronaldcoase
+\garybecker
+\robertfogel
+\douglassnorth
+\johnharsanyi
+\johnforbesnashjr
+\reinhardselten
+\robertlucasjr
+\jamesmirrlees
+\williamvickrey
+\robertcmerton
+\myronscholes
+\amartyasen
+\robertmundell
+\jamesheckman
+\danielmcfadden
+\twentyfirstslide
+\georgeakerlof
+\michaelspence
+\josephstiglitz
+\danielkahneman
+\vernonlsmith
+\robertfengle
+\clivegranger
+\finnekydland
+\edwardcprescott
+\robertaumann
+\thomasschelling
+\edmundphelps
+\leonidhurwicz
+\ericmaskin
+\rogermyerson
+\paulkrugman
+\elinorostrom
+\oliverewilliamson
+\peterdiamond
+\daletmortensen
+\christopherapissarides
+\thomasjsargent
+\christopherasims
+\alvineroth
+\lloydshapley
+\eugenefama
+\larspeterhansen
+\robertjshiller
+\jeantirole
+\angusdeaton
+\oliverhart
+\bengtholmstrom
+\richardthaler
+\williamnordhaus
+\paulromer
+\abhijitbanerjee
+\estherduflo
+\michaelkremer
+\paulmilgrom
+\robertbwilson
+\davidcard
+\joshuaangrist
+\guidoimbens
+\benbernanke
+\douglasdiamond
+\philiphdybvig
+\claudiagoldin
+\daronacemoglu
+\simonjohnson
+\jamesarobinson
+\joelmokyr
+\philippeaghion
+\peterhowitt
+
+\closingslide
+\end{document}
