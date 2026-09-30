@@ -1,0 +1,454 @@
+% =============================================================
+%  常用对数的缔造者：亨利·布里格斯 (Henry Briggs)
+%  Beamer 演示 —— 参照数学家立传模板（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/16th_century/pages/Henry_Briggs
+%  设计母题：对数表格线 / 航海图经纬 —— 柔和气泡呼应计算的秩序感
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：学院深红 + 黄铜仪器金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{7A1E28}     % 主色 — 学院深红（剑桥圣约翰 / Savilian 教席）
+\definecolor{accentclr}{HTML}{D08C2E}   % 强调色 — 黄铜仪器金（象限仪 / 星盘的黄铜时代）
+\definecolor{badgeA}{HTML}{1E4E79}      % 分类 1 — 常用对数 · 靛蓝
+\definecolor{badgeB}{HTML}{2F6B4F}      % 分类 2 — 对数表工程 · 深绿
+\definecolor{badgeC}{HTML}{B5651D}      % 分类 3 — 航海与制图 · 航海赭
+\definecolor{badgeD}{HTML}{4A5A6A}      % 分类 4 — 教席传承 · 石板灰
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{227,235,244}
+\definecolor{panelB}{RGB}{228,240,232}
+\definecolor{panelC}{RGB}{247,235,222}
+\definecolor{panelD}{RGB}{233,236,240}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「对数表格线 / 航海图经纬」的秩序感
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!12] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 英格兰\enspace·\enspace 格雷沙姆与牛津双教席\enspace·\enspace 对数表工程师};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {亨利·布里格斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Henry Briggs\enspace·\enspace 1561 — 1630};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!80!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {常用对数 · 对数表 · 长除法 · 航海制图};
+  \draw[accentclr!75, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {常用对数\\Common Log\par\scriptsize 以 10 为底};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {对数表\\Tables\par\scriptsize 14 位精度};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {航海与制图\\Navigation\par\scriptsize 西北航道};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {教席传承\\Chairs\par\scriptsize 格雷沙姆 · 牛津};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把纳皮尔的对数改造为以 10 为底，让它成为每个计算者的工具。};
+  % 肖像（John Faber Jr 依 Isaac Seeman 所作 1738 年美柔汀版画）
+  \node[draw=accentclr!60, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{briggs_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.3}{6.4}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Henry Briggs (1561–1630)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英格兰\enspace|\enspace \faIcon{university}\enspace 剑桥 · 格雷沙姆 · 牛津\enspace|\enspace 常用对数 · 长除法 · 航海};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{mainclr!95!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{亨利·布里格斯 - 从剑桥到格雷沙姆}{生卒 · 本名 · 国籍 · 教育 · 教席 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（1738 年美柔汀版画）
+  \node[draw=accentclr!60, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{briggs_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.9}{7.1}\selectfont\itshape, text=covermuted, align=center, text width=3.7cm]
+    at (-6.0,-2.25) {John Faber Jr 依 Isaac Seeman 所作 1738 年美柔汀版画（英国国家肖像馆藏）};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!55, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1561-02-01 — 1630-01-26\\[2pt]\lab{本名}\quad Henry Briggs\\[2pt]\lab{国籍}\quad 英格兰（Kingdom of England）};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{出生地}\quad 约克郡 Warleywood\\[2pt]
+     \quad 哈利法克斯附近\\[2pt]
+     \lab{教育}\quad 圣约翰学院 · 剑桥（1577–1581）};
+  \node[infob, fill=panelD, draw=badgeD!50, anchor=south] at (-1.6,-1.85)
+    {\lab{教席}\quad 格雷沙姆几何教授（1596–1620）\\[2pt]
+     \quad 牛津 Savilian 几何教授（1619–1630）\\[2pt]
+     \lab{安葬}\quad Merton College 礼拜堂};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数学 · 天文学 · 航海\\[2pt]
+     \lab{身份}\quad 数学家 · 天文学家 · 大学教授\\[2pt]
+     \lab{信仰}\quad 虔诚的清教徒};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 亨利·布里格斯的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{亨利·布里格斯的一生}{1561 — 1630 · 从约克郡到牛津}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.4cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{mainclr!88!black}}
+]
+  \draw[mainclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1561/生于约克郡 Warleywood，哈利法克斯附近,
+    2.2/1577/入剑桥圣约翰学院，1581 年毕业、1588 年当选 Fellow,
+    1.5/1596/出任格雷沙姆学院首任几何教授,
+    0.8/1616–17/两度赴爱丁堡面见纳皮尔，商讨以 10 为底的对数,
+    0.1/1617/出版《Logarithmorum Chilias Prima》（首千对数）,
+    -0.6/1619/出任牛津 Savilian 几何教授,
+    -1.3/1624/出版《Arithmetica Logarithmica》,
+    -2.0/1630/于牛津去世，享年 68
+  }{
+    \fill[mainclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与剑桥 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与剑桥 (1561–1592)}{文法学校 · 圣约翰学院 · Linacre 讲席}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!75}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{1561} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于约克郡 Warleywood（哈利法克斯附近）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{英格兰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{1577} & \cellcolor{panelA}\textcolor{badgeA!82!black}{先习拉丁文与希腊文，后入剑桥大学圣约翰学院} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1581 年毕业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{1588} & \cellcolor{panelA}\textcolor{badgeA!82!black}{当选圣约翰学院 Fellow；1592 年任 Linacre 创设的物理讲席 reader} & \cellcolor{panelC}\textcolor{badgeC!82!black}{兼授数学讲席} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{1592 起} & \cellcolor{panelA}\textcolor{badgeA!82!black}{对航海与天文产生兴趣，与 Edward Wright 合作研习} & \cellcolor{panelC}\textcolor{badgeC!82!black}{航海天文} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 导师 page.md 无载；其学术起步主要靠剑桥与格雷沙姆的教职历练。}
+\end{center}
+\end{frame}}
+
+% --- 5. 格雷沙姆学院：英格兰数学的中心 ---
+\newcommand{\greshamslide}{\begin{frame}\plainbar\sectiontitle{格雷沙姆学院：英格兰数学的中心}{1596 首任几何教授 · 讲席近 23 年}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!75}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{2.8cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{首任几何教授} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1596 年出任新创的格雷沙姆学院首任几何教授} & \cellcolor{panelB}\textcolor{badgeB!82!black}{讲席近 23 年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{兼授科目} & \cellcolor{panelA}\textcolor{badgeA!82!black}{除几何外，同时讲授天文学与航海} & \cellcolor{panelB}\textcolor{badgeB!82!black}{应用数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{学术中心} & \cellcolor{panelA}\textcolor{badgeA!82!black}{使格雷沙姆学院成为英格兰数学的中心} & \cellcolor{panelB}\textcolor{badgeB!82!black}{支持开普勒新学说} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他从这个讲席上，支持并传播开普勒的新学说。}
+\end{center}
+\end{frame}}
+
+% --- 6. 两访纳皮尔：对数的改造 ---
+\newcommand{\napierconferenceslide}{\begin{frame}\plainbar\sectiontitle{两访纳皮尔：对数的改造}{1616 首访、次年再访 · 以 10 为底}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!75}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{布里格斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{以 10 为底} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在讲席上提出以 10 为底的对数，使 $\log 10 = 1$} & \cellcolor{panelB}\textcolor{badgeB!82!black}{常用对数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{两访爱丁堡} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1616 年首访纳皮尔，次年再度前往商讨} & \cellcolor{panelB}\textcolor{badgeB!82!black}{改造方案获采纳} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{结果} & \cellcolor{panelA}\textcolor{badgeA!82!black}{归来后着手计算并出版常用对数表} & \cellcolor{panelB}\textcolor{badgeB!82!black}{「布里格斯对数」} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!80}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mainclr!90!black} 常用对数（Briggsian logarithms）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\log_{10} 10 = 1$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 《Logarithmorum Chilias Prima》（1617） ---
+\newcommand{\chiliasslide}{\begin{frame}\plainbar\sectiontitle{《Logarithmorum Chilias Prima》(1617)}{首千对数 · 1–1000 的 14 位常用对数}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{accentclr!75}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.2cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{出版} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1617 年，第二次访爱丁堡归来当年出版} & \cellcolor{panelB}\textcolor{badgeB!82!black}{首千对数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{内容} & \cellcolor{panelA}\textcolor{badgeA!82!black}{给出 1–1000 整数的 14 位常用对数表} & \cellcolor{panelB}\textcolor{badgeB!82!black}{十进制对数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{意义} & \cellcolor{panelA}\textcolor{badgeA!82!black}{使对数成为可查表使用的计算工具} & \cellcolor{panelB}\textcolor{badgeB!82!black}{迅速传播} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.34cm}
+\begin{center}
+\includegraphics[height=1.95cm]{briggs_chilias_page.jpg}\\[1pt]
+{\fontsize{6.4}{8}\selectfont\itshape\color{covermuted} 1617 年《Chilias Prima》：$1$–$1000$ 的 14 位常用对数（图示整数 0–67）}
+\end{center}
+\end{frame}}
+
+% --- 8. 《Arithmetica Logarithmica》（1624） ---
+\newcommand{\arithmeticalogarithmicaslide}{\begin{frame}\plainbar\sectiontitle{《Arithmetica Logarithmica》(1624)}{对开本巨著 · 有限差分法}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!75}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{布里格斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{覆盖范围} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1624 年出版，含 1–20000 与 90001–100000 共三万个自然数的 14 位对数} & \cellcolor{panelA}\textcolor{badgeA!82!black}{对开本巨著} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{编制方法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{是最早使用有限差分法编制函数表的人之一} & \cellcolor{panelA}\textcolor{badgeA!82!black}{表格计算} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{后续补齐} & \cellcolor{panelB}\textcolor{badgeB!82!black}{20001–90000 后由 Adriaan Vlacq 补算（10 位）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1952 年 Thompson 补 20 位表} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!80}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mainclr!90!black} 对数把乘法化为加法}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\log_{10}(ab) = \log_{10} a + \log_{10} b$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 《Trigonometria Britannica》（1633） ---
+\newcommand{\trigonometricaslide}{\begin{frame}\plainbar\sectiontitle{《Trigonometria Britannica》(1633)}{身后出版 · 对数正弦与正切表}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!75}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{2.8cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{身后出版} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1631 年在 Gouda 印刷，1633 年出版} & \cellcolor{panelA}\textcolor{badgeA!82!black}{身后之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{对数表} & \cellcolor{panelB}\textcolor{badgeB!82!black}{每度百分之一的对数正弦与正切表（14 位）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{三角计算} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{自然值表} & \cellcolor{panelB}\textcolor{badgeB!82!black}{15 位自然正弦表，以及 10 位正切与正割表} & \cellcolor{panelA}\textcolor{badgeA!82!black}{后继之作} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 它是 1617 年《Chilias Prima》的后继之作。}
+\end{center}
+\end{frame}}
+
+% --- 10. 长除法算法（c. 1600） ---
+\newcommand{\longdivisionslide}{\begin{frame}\plainbar\sectiontitle{长除法算法 (c. 1600)}{今日通用竖式除法的引入者}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!75}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{布里格斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{算法引入} & \cellcolor{panelD}\textcolor{badgeD!82!black}{今日通用的长除法具体算法，约 1600 年由他引入} & \cellcolor{panelA}\textcolor{badgeA!82!black}{算术教学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{通用格式} & \cellcolor{panelD}\textcolor{badgeD!82!black}{成为此后通用的竖式除法格式} & \cellcolor{panelA}\textcolor{badgeA!82!black}{沿用至今} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{计算传统} & \cellcolor{panelD}\textcolor{badgeD!82!black}{与其对数表编制同属「计算工程」的传统} & \cellcolor{panelA}\textcolor{badgeA!82!black}{制表精神} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!80}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{mainclr!90!black} 带余除法（division with remainder）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$a = b\,q + r, \qquad 0 \le r < b$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 航海、磁偏角与西北航道 ---
+\newcommand{\navigationslide}{\begin{frame}\plainbar\sectiontitle{航海、磁偏角与西北航道}{航海用表 · 制图与一桩神话}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!75}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{2.8cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{磁偏角表} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1602 年《A Table to find the Height of the Pole...》} & \cellcolor{panelA}\textcolor{badgeA!82!black}{航海用表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{赖特附录} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1610 年 Edward Wright《航海误差》第二版附录「航海改进用表」} & \cellcolor{panelA}\textcolor{badgeA!82!black}{合作成果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{西北航道} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1622 年《A Treatise on the North-West Passage...》小册子} & \cellcolor{panelA}\textcolor{badgeA!82!black}{后世视为加州岛神话之源} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 小册子自称见过自荷兰带来的地图；1625 年收入 Purchas His Pilgrimes。}
+\end{center}
+\end{frame}}
+
+% --- 12. 品格、身后与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{品格、身后与传承}{清教徒 · 拒斥占星 · 身后的纪念}
+\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!75}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{品格与信仰} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 虔诚的清教徒\item 友人 Heydon 为占星作家，而本人以宗教理由拒斥占星，称其为 "a mere system of groundless conceits"\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{品行端方} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{身后} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1630 年卒于牛津，葬 Merton College 礼拜堂；Adriaan Vlacq 续算其对数表} & \cellcolor{panelB}\textcolor{badgeB!82!black}{传承有序} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{mainclr!92!black}{纪念} & \cellcolor{panelD}\textcolor{badgeD!82!black}{月球环形山 Briggs（身后命名）· 1952 年 Thompson 编 20 位对数表} & \cellcolor{panelA}\textcolor{badgeA!82!black}{eponym} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} Dr Smith《格雷沙姆教授传》称其「品行端方、轻视财富、安于本分」。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他把纳皮尔的对数，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {变成了人人可查的常用对数。};
+\draw[accentclr!75, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是三十万个数的 14 位对数表，与「布里格斯对数」之名。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {亨利·布里格斯\quad Henry Briggs\quad 1561 — 1630};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 常用对数 · 对数表 · 长除法\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\greshamslide
+\napierconferenceslide
+\chiliasslide
+\arithmeticalogarithmicaslide
+\trigonometricaslide
+\longdivisionslide
+\navigationslide
+\honorslide
+\closingslide
+\end{document}

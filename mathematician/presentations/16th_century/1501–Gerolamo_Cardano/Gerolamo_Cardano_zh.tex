@@ -1,0 +1,458 @@
+% =============================================================
+%  文艺复兴全才 · 《大术》与概率的黎明：吉罗拉莫·卡尔达诺
+%  Beamer 演示 —— 参照 17 世纪 Johann_Bernoulli 模板（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/16th_century/pages/Gerolamo_Cardano
+%  设计母题：骰子点阵 / 万向节同心圆环 —— 柔和气泡呼应环环相扣的机巧
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：文艺复兴紫 + 代数金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{246,245,248}
+\definecolor{mainclr}{HTML}{4A2A6A}      % 文艺复兴紫 — 博学者的华贵
+\definecolor{accentclr}{HTML}{C9A227}    % 代数金 — 《Ars Magna》的尊崇
+\definecolor{badgeA}{HTML}{2F4470}       % 代数 — 靛蓝
+\definecolor{badgeB}{HTML}{8C1515}       % 概率 — 骰子红
+\definecolor{badgeC}{HTML}{8A5A2B}       % 机械 — 青铜
+\definecolor{badgeD}{HTML}{1E5631}       % 医学 — 深绿
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{42,26,64}
+\definecolor{muteddark}{RGB}{84,72,104}
+\definecolor{panelA}{RGB}{228,233,245}
+\definecolor{panelB}{RGB}{246,231,231}
+\definecolor{panelC}{RGB}{244,238,228}
+\definecolor{panelD}{RGB}{226,238,230}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应骰子点阵与万向节同心环
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 意大利\enspace·\enspace 米兰公国\enspace·\enspace 文艺复兴全才};
+  \node[anchor=center, font=\fontsize{26}{32}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {吉罗拉莫·卡尔达诺};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Gerolamo Cardano\enspace·\enspace 1501 — 1576};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!72!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {文艺复兴全才 ·《大术》与概率的黎明};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {代数\\Ars Magna\par\scriptsize 负数 · 虚数};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {概率\\Probability\par\scriptsize 论掷骰};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {机械\\Mechanics\par\scriptsize 万向节 · 密码};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {医学\\Medicine\par\scriptsize 行医与教育};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他写下《大术》，也第一次算清了骰子里的概率。};
+  % 肖像（R. Cooper 点刻版画）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{cardano_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted, text width=2.2cm, align=center]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {R. Cooper 点刻版画（Wellcome V0001004）};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 米兰公国\enspace|\enspace \faIcon{university}\enspace 帕维亚 · 帕多瓦 · 博洛尼亚\enspace|\enspace 《大术》· 负数 · 概率先驱};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{吉罗拉莫·卡尔达诺 - 文艺复兴的全才}{生卒 · 本名异体 · 国籍 · 教育 · 著作 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{cardano_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted, text width=3.6cm, align=center]
+    at (-6.0,-2.25) {R. Cooper 点刻版画（Wellcome V0001004）};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1501-09-24 — 1576-09-21\\[2pt]
+     \lab{本名异体}\quad Girolamo · Geronimo · Hieronymus Cardanus\\[2pt]
+     \lab{国籍}\quad 意大利（米兰公国）};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 帕维亚大学 1520\\[2pt]
+     \quad 帕多瓦大学 1525 医学博士\\[2pt]
+     \lab{主要著作}\quad 《Ars Magna》(1545)};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 帕维亚（米兰公国）\\[2pt]\lab{卒地}\quad 罗马（教皇国）\\[2pt]\lab{领域}\quad 代数 · 医学 · 概率};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{家庭}\quad 父 Fazio Cardano；妻 Lucia Banderini\\[2pt]
+     \lab{身份}\quad 数学家 · 医生 · 占星家 · 赌徒\\[2pt]
+     \lab{身后}\quad 月球 Cardanus 环形山};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 卡尔达诺的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{卡尔达诺的一生}{1501 — 1576 · 从帕维亚到罗马}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.8cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1501/生于帕维亚，父 Fazio Cardano 为法学名家兼达·芬奇密友；他是私生子,
+    2.2/1520–1525/入帕维亚大学；战事迫使学校 1524 关闭，转帕多瓦并于 1525 年获医学博士,
+    1.5/1531/在 Piove di Sacco 无照行医，娶 Lucia Banderini,
+    0.8/1536–1541/获米兰数学教席并行医，1536 辞教席；1541 任米兰医师公会主席,
+    0.1/1545/出版《Ars Magna》，归名 del Ferro 与 Ferrari 的解法,
+    -0.6/1552/赴苏格兰为已失语的圣安德鲁斯大主教 John Hamilton 治病,
+    -1.3/1560–1570/长子被斩；迁博洛尼亚任医学教授；1570 遭宗教裁判所逮捕,
+    -2.0/1576/获教皇格里高利十三世终身年金，卒于罗马，享年 74
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育：私生子与瘟疫 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育：私生子与瘟疫 (1501–1520)}{达·芬奇密友之子 · 疫中降生 · 违父之愿}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1501} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于帕维亚，父 Fazio Cardano 为数学才华出众的法学家、达·芬奇的密友；他是私生子} & \cellcolor{panelD}\textcolor{badgeD!82!black}{私生之子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1501} & \cellcolor{panelA}\textcolor{badgeA!82!black}{母临产前为避鼠疫自米兰迁往帕维亚，另三个孩子死于疫病} & \cellcolor{panelD}\textcolor{badgeD!82!black}{疫中降生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{自述} & \cellcolor{panelA}\textcolor{badgeA!82!black}{母曾服多种堕胎药："I was taken by violent means from my mother; I was almost dead."} & \cellcolor{panelD}\textcolor{badgeD!82!black}{险死而生} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1520} & \cellcolor{panelA}\textcolor{badgeA!82!black}{入帕维亚大学；父望其学法律，他偏爱哲学与科学} & \cellcolor{panelD}\textcolor{badgeD!82!black}{违父之愿} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他从出生的第一天起，就在疫病与意外中幸存。}
+\end{center}
+\end{frame}}
+
+% --- 5. 求学与行医 ---
+\newcommand{\studiessslide}{\begin{frame}\plainbar\sectiontitle{求学与行医}{1525 医学博士 · 被米兰医师公会拒收 · 双线执业}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1525} & \cellcolor{panelD}\textcolor{badgeD!82!black}{战事迫使帕维亚大学 1524 年关闭，转入帕多瓦大学并获医学博士} & \cellcolor{panelC}\textcolor{badgeC!82!black}{医学博士} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1525} & \cellcolor{panelD}\textcolor{badgeD!82!black}{多次申请米兰医师公会，因好斗名声与私生出身被拒} & \cellcolor{panelC}\textcolor{badgeC!82!black}{被拒门外} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1531–1536} & \cellcolor{panelD}\textcolor{badgeD!82!black}{先于 Piove di Sacco 无照行医，后获米兰数学教席与行医执照，成为最受追捧的医生之一，1536 辞教席} & \cellcolor{panelC}\textcolor{badgeC!82!black}{双线执业} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1541} & \cellcolor{panelD}\textcolor{badgeD!82!black}{任米兰医师公会主席并会见查理五世；他自述曾拒绝丹麦、法国国王与苏格兰王后的聘约} & \cellcolor{panelC}\textcolor{badgeC!82!black}{声名远播} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他既是斗士，也是米兰最抢手的医生。}
+\end{center}
+\end{frame}}
+
+% --- 6. 《Ars Magna》1545（一）：三次方程 ---
+\newcommand{\arsmagnaoneslide}{\begin{frame}\plainbar\sectiontitle{《Ars Magna》1545（一）：三次方程}{1539 诗体相授 · del Ferro 首解归名 · 十年论战}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1539 相授} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Tartaglia 以诗体将缺项三次方程解法传给他；Tartaglia 后来声称他曾发誓不公开} & \cellcolor{panelD}\textcolor{badgeD!82!black}{诗体秘法} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{归名} & \cellcolor{panelA}\textcolor{badgeA!82!black}{因 del Ferro 的解法更早，《大术》以 del Ferro 为首解者归名} & \cellcolor{panelD}\textcolor{badgeD!82!black}{诚实归名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{论战} & \cellcolor{panelA}\textcolor{badgeA!82!black}{由此引发与 Tartaglia 长达十年的争议} & \cellcolor{panelD}\textcolor{badgeD!82!black}{归属之争} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 缺项三次方程（现代记法）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$ax^{3}+bx+c=0$\qquad（今称 Cardano–Tartaglia formula）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 《Ars Magna》1545（二）：四次方程与数系扩张 ---
+\newcommand{\arsmagnatwoslide}{\begin{frame}\plainbar\sectiontitle{《Ars Magna》1545（二）：四次方程与数系扩张}{署名发表 Ferrari 的四次方程解法 · 欧洲首个系统使用负数}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{四次方程} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以署名方式发表其学生 Ferrari 的四次方程解法} & \cellcolor{panelD}\textcolor{badgeD!82!black}{署名归功} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{负数} & \cellcolor{panelA}\textcolor{badgeA!82!black}{欧洲第一个系统使用负数} & \cellcolor{panelD}\textcolor{badgeD!82!black}{数系之始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{虚数} & \cellcolor{panelA}\textcolor{badgeA!82!black}{承认虚数的存在，但不理解其性质；性质首次由同代 Bombelli 描述} & \cellcolor{panelD}\textcolor{badgeD!82!black}{承认存在} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{二项式} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在《Opus novum de proportionibus》引入二项式系数与二项式定理} & \cellcolor{panelD}\textcolor{badgeD!82!black}{西传} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 二项式定理（binomial theorem）}\\[2pt]
+  {\fontsize{12}{15.5}\selectfont\color{mainclr!88!black}$(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^{k}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 概率论先驱：《论掷骰》 ---
+\newcommand{\probabilityslide}{\begin{frame}\plainbar\sectiontitle{概率论先驱：《论掷骰》}{约 1564 写成 · 1663 出版 · 第一个对概率的系统论述}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.8cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{《论掷骰》} & \cellcolor{panelB}\textcolor{badgeB!82!black}{《Liber de ludo aleae》约 1564 年写成，迟至 1663 年（身后 87 年）才出版} & \cellcolor{panelD}\textcolor{badgeD!82!black}{身后刊行} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{系统论述} & \cellcolor{panelB}\textcolor{badgeB!82!black}{含第一个对概率的系统论述，并有一节讲出千技巧} & \cellcolor{panelD}\textcolor{badgeD!82!black}{概率开创} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{赔率} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以掷骰定义赔率，即有利结果与不利结果之比} & \cellcolor{panelD}\textcolor{badgeD!82!black}{定义赔率} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{乘法法则} & \cellcolor{panelB}\textcolor{badgeB!82!black}{知晓独立事件的乘法法则，但不确定该乘哪些值} & \cellcolor{panelD}\textcolor{badgeD!82!black}{存疑之处} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 赔率与概率（odds / probability）}\\[2pt]
+  {\fontsize{12}{15.5}\selectfont\color{mainclr!88!black}赔率 $=$ 有利结果数 $:$ 不利结果数；\quad $P=\dfrac{\text{有利结果数}}{\text{总结果数}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 机械发明 ---
+\newcommand{\inventionsslide}{\begin{frame}\plainbar\sectiontitle{机械发明}{万向节 · Cardano 轴 · 高速印刷 · 密码工具}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{2.9cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{万向节} & \cellcolor{panelC}\textcolor{badgeC!82!black}{三同心环万向节使罗盘或陀螺自由旋转；gimbal 与 Cardan shaft 系他「部分发明并描述」；通称 Cardan joint 的万向节并非他所描述} & \cellcolor{panelA}\textcolor{badgeA!82!black}{措辞须谨慎} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Cardano 环} & \cellcolor{panelC}\textcolor{badgeC!82!black}{所谓「Cardano's Rings」（中国环）被认为很可能早于他} & \cellcolor{panelA}\textcolor{badgeA!82!black}{很可能早于} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{内旋轮线} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1570《De proportionibus》的内旋轮线衍生出「Cardano circles」，用于第一代高速印刷机} & \cellcolor{panelA}\textcolor{badgeA!82!black}{高速印刷} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{机械与密码} & \cellcolor{panelC}\textcolor{badgeC!82!black}{组合锁、Cardan 齿轮机构、1550 年引入的 Cardan grille 密码书写工具} & \cellcolor{panelA}\textcolor{badgeA!82!black}{机巧与密码} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{蒸汽与真空} & \cellcolor{panelC}\textcolor{badgeC!82!black}{《De Subtilitate》以冷凝造真空，被视为蒸汽动力研究复兴的里程碑；并认为除天体外永动机不可能} & \cellcolor{panelA}\textcolor{badgeA!82!black}{通向蒸汽机} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 10. 自然哲学与音乐 ---
+\newcommand{\philosophyslide}{\begin{frame}\plainbar\sectiontitle{自然哲学与音乐}{两部《De Musica》· 聋人教育 · 地质洞见}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{2.9cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{两部音乐论著} & \cellcolor{panelD}\textcolor{badgeD!82!black}{两部《De Musica》：1663 年收入全集的一部讨论木管乐器；1574 年出版的一部藏梵蒂冈图书馆，讨论微分音与 16 世纪演奏实践} & \cellcolor{panelA}\textcolor{badgeA!82!black}{微分音史料} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{作曲} & \cellcolor{panelD}\textcolor{badgeD!82!black}{12 声部经文歌 Beati estis，含四重卡农} & \cellcolor{panelA}\textcolor{badgeA!82!black}{传世之作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{自然百科} & \cellcolor{panelD}\textcolor{badgeD!82!black}{两部自然科学百科（《De Subtilitate》《De rerum varietate》），杂陈发明、事实与秘术} & \cellcolor{panelA}\textcolor{badgeA!82!black}{百科全书式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{聋人教育} & \cellcolor{panelD}\textcolor{badgeD!82!black}{主张聋人有心智能力、应受教育，是最早提出聋人不必先学说话即可学习读写的人之一} & \cellcolor{panelA}\textcolor{badgeA!82!black}{教育先驱} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{地质洞见} & \cellcolor{panelD}\textcolor{badgeD!82!black}{论石化贝壳：它们表明海洋曾在此山地栖留（经 Lyell《地质学原理》转述）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{地质洞见} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 11. 苏格兰行医、家庭悲剧与宗教裁判所（敏感页） ---
+\newcommand{\tragedyslide}{\begin{frame}\plainbar\sectiontitle{苏格兰行医、家庭悲剧与宗教裁判所}{1552 大主教 · 1560 长子被斩 · 1570 异端之狱}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{2.7cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1552 苏格兰} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与西班牙医生 Casanatus 赴苏格兰，为已失语、被认为不治的圣安德鲁斯大主教 John Hamilton 治病；治疗奏效，获 1,400 金克朗。他自述此后由助手完成疗程，并曾与 Casanatus 就功劳有争论} & \cellcolor{panelB}\textcolor{badgeB!82!black}{医名远播} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1560 长子} & \cellcolor{panelA}\textcolor{badgeA!82!black}{长子 Giovanni Battista 因毒杀妻子被判斩首；Cardano 无力偿付对方家庭要求的赔偿金} & \cellcolor{panelB}\textcolor{badgeB!82!black}{家庭悲剧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1569 幼子} & \cellcolor{panelA}\textcolor{badgeA!82!black}{幼子 Aldo Urbano 是赌徒、窃取父亲钱财，1569 年被剥夺继承权} & \cellcolor{panelB}\textcolor{badgeB!82!black}{剥夺继承} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1570 异端} & \cellcolor{panelA}\textcolor{badgeA!82!black}{被科莫的宗教裁判官以异端罪名逮捕，指控针对《De rerum varietate》的占星论与《De Supplemento Almanach》(1543) 的耶稣星盘；监禁数月、失去博洛尼亚教席，弃绝后获释，非医学著作被列入《禁书目录》} & \cellcolor{panelB}\textcolor{badgeB!82!black}{异端之狱} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{frame}}
+
+% --- 12. 罗马晚年与遗产 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{罗马晚年与遗产}{page.md 无载任何奖项 · 教皇年金 · 月球环形山}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{晚年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{获教皇格里高利十三世终身年金（先被庇护五世拒绝），入皇家医师公会，完成自传《De vita propria》} & \cellcolor{panelD}\textcolor{badgeD!82!black}{罗马晚年} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{纪念} & \cellcolor{panelC}\textcolor{badgeC!82!black}{月球有以他命名的 Cardanus 环形山} & \cellcolor{panelD}\textcolor{badgeD!82!black}{天上之名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{后世回响} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Thomas Browne 评其「求知甚勤，而信之过易」；Manzoni《约婚夫妇》中的 Don Ferrante 是他的崇拜者} & \cellcolor{panelD}\textcolor{badgeD!82!black}{文化回响} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{定位} & \cellcolor{panelD}\textcolor{badgeD!82!black}{文艺复兴全才：数学家、医生、占星家、赌徒，写下逾 200 部科学著作} & \cellcolor{panelD}\textcolor{badgeD!82!black}{一代全才} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他一生横跨代数、医学与星辰，是文艺复兴最后的全才之一。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他算清了骰子里的概率，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!80!black] at ([yshift=0.4cm]current page.center) {也在虚数里看见了新的世界。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是《大术》的一页代数，与两百余部横跨诸学的著作。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {吉罗拉莫·卡尔达诺\quad Gerolamo Cardano\quad 1501 — 1576};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 代数 · 概率 · 机械 · 医学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\studiessslide
+\arsmagnaoneslide
+\arsmagnatwoslide
+\probabilityslide
+\inventionsslide
+\philosophyslide
+\tragedyslide
+\honorslide
+\closingslide
+\end{document}

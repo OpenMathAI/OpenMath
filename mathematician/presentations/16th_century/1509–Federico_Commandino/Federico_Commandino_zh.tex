@@ -1,0 +1,457 @@
+% =============================================================
+%  古希腊数学的摆渡人 · 阿基米德再生：费德里科·科门迪诺 (Federico Commandino)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式
+%  资料来源：mathematician/presentations/16th_century/pages/Federico_Commandino
+%  设计母题：抄本 / 书页 / 几何原图 —— 柔和气泡呼应古典复兴的静态之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：乌尔比诺赭红 + 手稿羊皮金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{7A3B2E}        % 乌尔比诺赭红 — 宫廷赭色 / 古典手稿
+\definecolor{accentclr}{HTML}{B98A2F}      % 手稿羊皮金 — 希腊抄本与拉丁译本的书卷感
+\definecolor{badgeA}{HTML}{3D5A80}         % 翻译事业 — 靛蓝
+\definecolor{badgeB}{HTML}{0E7C7B}         % 阿基米德 — 青绿
+\definecolor{badgeC}{HTML}{C87F2F}         % 重心理论 — 琥珀
+\definecolor{badgeD}{HTML}{8E5572}         % 师承通信 — 玫红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{58,26,22}
+\definecolor{muteddark}{RGB}{88,72,64}
+\definecolor{panelA}{RGB}{228,232,244}
+\definecolor{panelB}{RGB}{220,240,238}
+\definecolor{panelC}{RGB}{248,235,220}
+\definecolor{panelD}{RGB}{243,232,238}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应抄本、书页与几何图形
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 意大利（乌尔比诺公国）\enspace·\enspace 古希腊数学的摆渡人};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {费德里科·科门迪诺};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Federico Commandino\enspace·\enspace 1509 — 1575};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!75!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {古希腊数学翻译 · 阿基米德校勘 · 重心理论 · 通信网};
+  \draw[accentclr!70, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {翻译事业\\Translation\par\scriptsize 希腊 → 拉丁};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {阿基米德\\Archimedes\par\scriptsize 浮体论};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {重心理论\\Centroids\par\scriptsize 1565 论著};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {师承通信\\Network\par\scriptsize 跨国学者};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把阿基米德、帕普斯与欧几里得，从希腊抄本摆渡到近代世界。};
+  % 肖像（传世版画像）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{commandino_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {传世版画像};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 意大利\enspace|\enspace \faIcon{university}\enspace 无固定教职（恩主赞助）\enspace|\enspace 古希腊数学翻译 · 重心理论 · 阿基米德校勘};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!92!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{费德里科·科门迪诺 - 从乌尔比诺到罗马}{生卒 · 国籍 · 出生地 · 师承 · 教育 · 恩主 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（传世版画像）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{commandino_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted, align=center, text width=4.0cm]
+    at (-6.0,-2.25) {Federico Commandino\\（传世版画像）};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1509 — 1575-09-05\\[2pt]\lab{国籍}\quad 意大利（乌尔比诺公国）\\[2pt]\lab{出生地}\quad Urbino};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 帕多瓦大学 · 费拉拉大学\\[2pt]
+     \quad 医学博士\\[2pt]\lab{师承}\quad Antonio Musa Brassavola};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{恩主}\quad 克莱孟八世 · Guidobaldo II · Farnese · Cervini 等\\[2pt]\lab{任职}\quad 无固定教职（赖恩主赞助）};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数学 · 几何 · 重心理论\\[2pt]
+     \quad 数学史 · 希腊著作整理\\[2pt]
+     \lab{身份}\quad 人文主义者 · 翻译家 · 医师};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 费德里科·科门迪诺的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{费德里科·科门迪诺的一生}{1509 — 1575 · 从乌尔比诺到罗马，再归乌尔比诺}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.4cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!92!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1509/生于乌尔比诺（Urbino）,
+    2.2/求学/入帕多瓦、费拉拉，师从 Brassavola 获医学博士,
+    1.5/维泰博/受主教 Grassi 与教宗克莱孟八世庇护,
+    0.8/乌尔比诺/受公爵 Guidobaldo II della Rovere 赞助,
+    0.1/罗马/随枢机 Ranuccio Farnese 赴罗马，受枢机 Cervini 庇护,
+    -0.6/归乡/被 Francesco Maria II della Rovere 请回乌尔比诺,
+    -1.3/1565/出版《重心论》与阿基米德《浮体论》,
+    -2.0/1575/卒于乌尔比诺，享年 66
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育}{乌尔比诺出生 · 帕多瓦求学 · 费拉拉医学博士}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.95}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{1509} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于乌尔比诺（Duchy of Urbino），出身本城} & \cellcolor{panelB}\textcolor{badgeB!82!black}{乌尔比诺} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{求学} & \cellcolor{panelA}\textcolor{badgeA!82!black}{先就读帕多瓦大学，后转费拉拉大学} & \cellcolor{panelB}\textcolor{badgeB!82!black}{两校求学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{费拉拉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{师从 Antonio Musa Brassavola，获医学博士} & \cellcolor{panelB}\textcolor{badgeB!82!black}{医学博士} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 医学博士出身，却以数学翻译名世——16 世纪学者「一身多职」的典型。}
+\end{center}
+\end{frame}}
+
+% --- 5. 翻译家的事业版图（核心贡献页） ---
+\newcommand{\translationslide}{\begin{frame}\plainbar\sectiontitle{翻译家的事业版图}{希腊写本 → 拉丁译本 · 覆盖希腊几何正典}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{科门迪诺的做法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{写本来源} & \cellcolor{panelA}\textcolor{badgeA!82!black}{底本以希腊文写本为主、阿拉伯文为次} & \cellcolor{panelB}\textcolor{badgeB!82!black}{双源校勘} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{译文语言} & \cellcolor{panelA}\textcolor{badgeA!82!black}{译文以拉丁文为主、意大利文为次} & \cellcolor{panelB}\textcolor{badgeB!82!black}{面向欧洲学界} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{覆盖谱系} & \cellcolor{panelA}\textcolor{badgeA!82!black}{从阿基米德、欧几里得到阿波罗尼奥斯、帕普斯——几乎覆盖希腊几何正典} & \cellcolor{panelB}\textcolor{badgeB!82!black}{正典谱系} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他的毕生中心事业，是翻译、校勘并出版古代数学家的著作。}
+\end{center}
+\end{frame}}
+
+% --- 6. 阿基米德的再生（核心贡献页） ---
+\newcommand{\archimedesslide}{\begin{frame}\plainbar\sectiontitle{阿基米德的再生}{1565 博洛尼亚 · 校订并加评注}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{科门迪诺的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{出版} & \cellcolor{panelB}\textcolor{badgeB!82!black}{负责出版阿基米德多部论著——非全部遗作的首次刊行} & \cellcolor{panelA}\textcolor{badgeA!82!black}{重新流通} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{代表作} & \cellcolor{panelB}\textcolor{badgeB!82!black}{《Archimedis De iis quae vehuntur in aqua libri duo》（浮体论二卷，1565 博洛尼亚）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{校订成果} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{方式} & \cellcolor{panelB}\textcolor{badgeB!82!black}{restituti et commentariis illustrati——校订并加评注} & \cellcolor{panelA}\textcolor{badgeA!82!black}{文本+注解} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!90!black} 浮体论的核心结论（现代记法）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black}$F_{\text{浮}}=\rho_{\text{液}}\,g\,V_{\text{排}}$\quad（阿基米德《浮体论》所述原理之现代形式）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 科门迪诺定理与立体重心理论（核心贡献页） ---
+\newcommand{\centroidslide}{\begin{frame}\plainbar\sectiontitle{科门迪诺定理与立体重心理论}{1565《Liber de centro gravitatis solidorum》}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{科门迪诺的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{科门迪诺定理} & \cellcolor{panelC}\textcolor{badgeC!82!black}{四面体过各顶点到对面重心的四线共点} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以他命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{首次出处} & \cellcolor{panelC}\textcolor{badgeC!82!black}{首见于其重心著作《立体重心论》（1565）——非译欧几里得时发现} & \cellcolor{panelA}\textcolor{badgeA!82!black}{原创著作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{理论地位} & \cellcolor{panelC}\textcolor{badgeC!82!black}{立体重心理论的系统几何处理，承阿基米德而来} & \cellcolor{panelA}\textcolor{badgeA!82!black}{启下世纪力学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!90!black} 四面体重心（科门迪诺定理，现代记法）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black}$\vec{G}=\dfrac{\vec{A}+\vec{B}+\vec{C}+\vec{D}}{4}$\quad（四线共点于重心，比 3:1）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 希腊正典的译业谱系 ---
+\newcommand{\classicsslide}{\begin{frame}\plainbar\sectiontitle{希腊正典的译业谱系}{托勒密 · 阿波罗尼奥斯 · 帕普斯 · 阿里斯塔克斯 · 希罗 · 欧几里得}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.86}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{2.8cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{原著者}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{译作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{领域}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{托勒密} & \cellcolor{panelD}\textcolor{badgeD!82!black}{《平面球体图》（Planisphere）·《晷针》（Analemma）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{球面天文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{阿波罗尼奥斯} & \cellcolor{panelD}\textcolor{badgeD!82!black}{《圆锥曲线论》（Conics）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{圆锥曲线正典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{帕普斯} & \cellcolor{panelD}\textcolor{badgeD!82!black}{《数学汇编》（Mathematical collection）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{希腊几何总汇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{阿里斯塔克斯} & \cellcolor{panelD}\textcolor{badgeD!82!black}{《论日月的大小与距离》} & \cellcolor{panelA}\textcolor{badgeA!82!black}{天文测量} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{希罗 · 欧几里得} & \cellcolor{panelD}\textcolor{badgeD!82!black}{《气体力学》（Pneumatics）·《几何原本》（Elements）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{机械与几何基石} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 希腊几何的正典谱系，经他之手在拉丁世界重新流通。}
+\end{center}
+\end{frame}}
+
+% --- 9. 师承与通信网 ---
+\newcommand{\networkslide}{\begin{frame}\plainbar\sectiontitle{师承与通信网}{两位学生 · 四位通信学者}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{2.8cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{人物}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{关系}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{领域}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{Guidobaldo del Monte} & \cellcolor{panelD}\textcolor{badgeD!82!black}{学生（不延伸其与伽利略之关系）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{力学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{Bernardino Baldi} & \cellcolor{panelD}\textcolor{badgeD!82!black}{学生} & \cellcolor{panelA}\textcolor{badgeA!82!black}{数学史 · 传记} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{Conrad Dasypodius} & \cellcolor{panelD}\textcolor{badgeD!82!black}{通信学者} & \cellcolor{panelA}\textcolor{badgeA!82!black}{数学 · 天文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{Gerolamo Cardano} & \cellcolor{panelD}\textcolor{badgeD!82!black}{通信学者} & \cellcolor{panelA}\textcolor{badgeA!82!black}{代数 · 医学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{Francesco Maurolico} & \cellcolor{panelD}\textcolor{badgeD!82!black}{通信学者} & \cellcolor{panelA}\textcolor{badgeA!82!black}{几何 · 天文} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{Christopher Clavius} & \cellcolor{panelD}\textcolor{badgeD!82!black}{通信学者} & \cellcolor{panelA}\textcolor{badgeA!82!black}{数学 · 历法} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他是古典数学复兴跨国通信网中的关键节点。}
+\end{center}
+\end{frame}}
+
+% --- 10. 恩主与文艺复兴宫廷 ---
+\newcommand{\patronslide}{\begin{frame}\plainbar\sectiontitle{恩主与文艺复兴宫廷}{一纸庇护，一段译业 · 恩主非学术合作者}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{2.8cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{恩主}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{身份}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{庇护方式}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{Grassi} & \cellcolor{panelB}\textcolor{badgeB!82!black}{维泰博主教} & \cellcolor{panelA}\textcolor{badgeA!82!black}{最初的赞助} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{克莱孟八世} & \cellcolor{panelB}\textcolor{badgeB!82!black}{教宗} & \cellcolor{panelA}\textcolor{badgeA!82!black}{庇护（年代存疑，见注）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{Guidobaldo II} & \cellcolor{panelB}\textcolor{badgeB!82!black}{乌尔比诺公爵} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在乌尔比诺赞助} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{Ranuccio Farnese} & \cellcolor{panelB}\textcolor{badgeB!82!black}{枢机} & \cellcolor{panelA}\textcolor{badgeA!82!black}{携其赴罗马} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{Cervini} & \cellcolor{panelB}\textcolor{badgeB!82!black}{枢机（短暂在位为教宗玛策禄二世）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在罗马庇护} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{Francesco Maria II} & \cellcolor{panelB}\textcolor{badgeB!82!black}{乌尔比诺公爵} & \cellcolor{panelA}\textcolor{badgeA!82!black}{请其归乌尔比诺} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.08cm}
+\begin{center}
+{\fontsize{7.2}{9.4}\selectfont\itshape\color{covermuted} 注：page.md 记其受克莱孟八世庇护；而克莱孟八世 1592 年即位，晚于其卒年 1575——此为条目原表述，照录并注存疑。}
+\end{center}
+\end{frame}}
+
+% --- 11. 著作年表 ---
+\newcommand{\workslide}{\begin{frame}\plainbar\sectiontitle{著作年表}{原创重心论 · 阿基米德校订 · 译本汇编}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.92}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{1.9cm}|>{\scriptsize}X|>{\scriptsize}p{2.7cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{年份}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{著作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{类别}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{1565} & \cellcolor{panelC}\textcolor{badgeC!82!black}{《Liber de centro gravitatis solidorum》（立体重心论）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{原创著作} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{1565} & \cellcolor{panelC}\textcolor{badgeC!82!black}{《Archimedis De iis quae vehuntur in aqua libri duo》（博洛尼亚）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{校订 + 评注} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{终生} & \cellcolor{panelC}\textcolor{badgeC!82!black}{阿基米德 / 阿里斯塔克斯 / 帕普斯 / 希罗 / 托勒密 / 阿波罗尼奥斯 / 欧几里得 诸译本} & \cellcolor{panelA}\textcolor{badgeA!82!black}{译本汇编} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.1cm}
+\begin{center}
+{\fontsize{7.4}{9.6}\selectfont\itshape\color{covermuted} 存疑花絮：page.md 记其在乌尔比诺「putatively met John Dee」（据说曾与 John Dee 会面）——推测性表述，不入库。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{译业的历史回响 · 一个定理的名字}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{文本基础} & \cellcolor{panelB}\textcolor{badgeB!82!black}{为伽利略时代的力学与几何，备好希腊正典的拉丁文本} & \cellcolor{panelA}\textcolor{badgeA!82!black}{承前启后} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{定理存名} & \cellcolor{panelB}\textcolor{badgeB!82!black}{「科门迪诺定理」至今以他命名，存于重心理论} & \cellcolor{panelA}\textcolor{badgeA!82!black}{数学史印记} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{学术枢纽} & \cellcolor{panelB}\textcolor{badgeB!82!black}{沟通希腊写本与拉丁世界的跨国通信网} & \cellcolor{panelA}\textcolor{badgeA!82!black}{文艺复兴摆渡人} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} page.md 未载任何奖项——本页只记译业回响，不立虚名。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他把古希腊数学交给了近代，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!90!black] at ([yshift=0.4cm]current page.center) {也把阿基米德还给世界。};
+\draw[accentclr!70, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是重新流通的希腊正典，与以他命名的重心定理。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {费德里科·科门迪诺\quad Federico Commandino\quad 1509 — 1575};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 古希腊数学翻译 · 重心理论 · 阿基米德校勘\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\translationslide
+\archimedesslide
+\centroidslide
+\classicsslide
+\networkslide
+\patronslide
+\workslide
+\honorslide
+\closingslide
+\end{document}

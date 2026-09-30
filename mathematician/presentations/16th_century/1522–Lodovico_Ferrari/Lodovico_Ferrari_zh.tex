@@ -1,0 +1,450 @@
+% =============================================================
+%  四次方程的破解者 · 卡尔达诺之门：洛多维科·费拉里 (Lodovico Ferrari)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/16th_century/pages/Lodovico_Ferrari
+%  设计母题：根式塔（radicandi）—— 层层开方、由仆役登堂入室的结构之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色（语义见注释）=====
+\definecolor{bgmain}{RGB}{247,246,249}          % 浅灰白底
+\definecolor{mainclr}{HTML}{6B1F2A}             % 主色：博洛尼亚深红（文艺复兴砖城 / 师门传承）
+\definecolor{accentclr}{HTML}{C9A227}           % 强调色：代数金（16 世纪方程论解法的尊崇）
+\definecolor{badgeA}{HTML}{4C5FD5}              % 分类 1：四次方程 — 靛蓝
+\definecolor{badgeB}{HTML}{0E7C7B}              % 分类 2：三次方程 — 青绿
+\definecolor{badgeC}{HTML}{E07B30}              % 分类 3：论战 — 琥珀
+\definecolor{badgeD}{HTML}{B76E79}              % 分类 4：师门 — 玫红
+\definecolor{panelA}{RGB}{228,232,250}          % 四次方程信息块
+\definecolor{panelB}{RGB}{220,240,238}          % 三次方程信息块
+\definecolor{panelC}{RGB}{248,233,220}          % 论战信息块
+\definecolor{panelD}{RGB}{246,233,235}          % 师门信息块
+\definecolor{goldpanel}{RGB}{255,245,225}       % 金底信息块
+\definecolor{graypanel}{RGB}{244,244,242}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「根式塔」层层开方
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 意大利\enspace·\enspace 四次方程的破解者\enspace·\enspace 卡尔达诺之门};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {洛多维科·费拉里};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Lodovico Ferrari\enspace·\enspace 1522 — 1565};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {四次方程一般解法 · Cardano–Tartaglia 公式 · 1545 论战};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {四次方程\\Quartic\par\scriptsize 一般解法};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {三次方程\\Cubic\par\scriptsize 与 Cardano 协作};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {论战\\Dispute\par\scriptsize 1545 与 Tartaglia};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {师门\\Legacy\par\scriptsize 卡尔达诺之门};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他从卡尔达诺的仆役起步，成了四次方程一般解法的破解者。};
+  % 肖像：无存世肖像 → 装饰圆占位
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[font=\fontsize{46}{46}\selectfont, text=accentclr!55] at (1.0,1.45) {\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {无存世肖像};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 意大利\enspace|\enspace \faIcon{university}\enspace 博洛尼亚大学\enspace|\enspace 四次方程一般解法};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{洛多维科·费拉里 - 从仆役到破解者}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧：无存世肖像 → 装饰圆占位
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.6,3.4);
+      \node[font=\fontsize{54}{54}\selectfont, text=accentclr!55] at (1.3,1.7) {\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.05) {无存世肖像};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1522-02-02 — 1565-10-05\\[2pt]\lab{本名}\quad Lodovico de Ferrari\\[2pt]\lab{国籍}\quad 意大利};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 无大学教育记载\\[2pt]
+     \quad 由 Cardano 亲自教授\\[2pt]\lab{师承}\quad Gerolamo Cardano};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 博洛尼亚（Bologna）\\[2pt]\lab{荣誉}\quad —（page.md 无载）\\[2pt]\lab{身后}\quad 博洛尼亚};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 代数 · 方程论\\[2pt]
+     \quad 数学（Mathematics）\\[2pt]
+     \lab{身份}\quad 数学家};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 费拉里的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{洛多维科·费拉里的一生}{1522 — 1565 · 只有 43 年的短暂人生}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.4cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1522/生于博洛尼亚（时属意大利）, 
+    2.2/少年/成为 Gerolamo Cardano 的仆人, 
+    1.5/少年/因天资极为聪颖，被 Cardano 亲自教授数学, 
+    0.8/成年/协助 Cardano 攻克三次与四次方程, 
+    0.1/十几岁/接获罗马一个声望卓著的教职, 
+    -0.6/1545/与塔尔塔利亚的三次方程归属论战爆发, 
+    -1.3/42 岁/功成身退，年轻而富有, 
+    -2.0/1565/出任博洛尼亚大学数学教授；同年 10 月 5 日去世，享年 43
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与出身 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与出身 (1522–1545)}{博洛尼亚出生 · 少年为仆 · 卡爾达诺亲授数学}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1522} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于博洛尼亚；祖父 Bartolomeo Ferrari 被迫离开米兰、迁居博洛尼亚} & \cellcolor{panelB}\textcolor{badgeB!82!black}{博洛尼亚} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{少年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{成为 Gerolamo Cardano 的仆人（servant）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{仆役入门} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{少年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{因天资极为聪颖（"extremely bright"），Cardano 开始亲自教他数学} & \cellcolor{panelB}\textcolor{badgeB!82!black}{获授数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{早年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{无大学教育记载，学识全赖 Cardano 亲授} & \cellcolor{panelB}\textcolor{badgeB!82!black}{自学成家} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从仆役到登堂入室的代数学家，他只用了一代人的时间。}
+\end{center}
+\end{frame}}
+
+% --- 5. 四次方程的一般解法（核心贡献页） ---
+\newcommand{\quarticslide}{\begin{frame}\plainbar\sectiontitle{四次方程的一般解法}{quartic / biquadratic · 主要由费拉里完成、由卡尔达诺发表}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{费拉里的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{四次方程} & \cellcolor{panelA}\textcolor{badgeA!82!black}{给出 quartic（biquadratic）方程的一般解法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{代数史的里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{归属口径} & \cellcolor{panelA}\textcolor{badgeA!82!black}{四次方程解法主要由费拉里完成} & \cellcolor{panelB}\textcolor{badgeB!82!black}{由 Cardano 署名发表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{方法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以配方降次，化归为辅助三次方程} & \cellcolor{panelB}\textcolor{badgeB!82!black}{影响后世代数} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 四次方程（quartic equation）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$x^{4}+bx^{3}+cx^{2}+dx+e=0$}\\[3pt]
+  {\fontsize{9}{12}\selectfont\color{mainclr!78!black} 化归为辅助三次方程，再配方降次求解}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 师徒协作：三次与四次方程（核心贡献页） ---
+\newcommand{\cubicslide}{\begin{frame}\plainbar\sectiontitle{师徒协作：三次与四次方程}{Ferrari aided Cardano on the cubic \& quartic solutions}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{费拉里的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{三次方程} & \cellcolor{panelB}\textcolor{badgeB!82!black}{协助 Cardano 求解三次方程} & \cellcolor{panelA}\textcolor{badgeA!82!black}{方程论双峰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{四次方程} & \cellcolor{panelB}\textcolor{badgeB!82!black}{协助并主责四次方程解法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{由 Cardano 发表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{师门} & \cellcolor{panelB}\textcolor{badgeB!82!black}{既是卡爾达诺的仆役，也是他的门生} & \cellcolor{panelA}\textcolor{badgeA!82!black}{文艺复兴奇迹} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 三次方程（cubic equation）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black}$x^{3}+px+q=0$}\\[3pt]
+  {\fontsize{11.5}{14}\selectfont\color{mainclr!88!black}$x=\sqrt[3]{-\dfrac{q}{2}+\sqrt{\left(\dfrac{q}{2}\right)^{2}+\left(\dfrac{p}{3}\right)^{3}}}+\sqrt[3]{-\dfrac{q}{2}-\sqrt{\left(\dfrac{q}{2}\right)^{2}+\left(\dfrac{p}{3}\right)^{3}}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Cardano–Tartaglia 公式与 1545 论战（核心贡献页） ---
+\newcommand{\disputeslide}{\begin{frame}\plainbar\sectiontitle{Cardano–Tartaglia 公式与 1545 论战}{三次方程解法归名二人 · 1545 年论战爆发}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{费拉里与论战}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{论战} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1545 年与塔尔塔利亚爆发著名论战} & \cellcolor{panelA}\textcolor{badgeA!82!black}{围绕三次方程解法归属} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{归名} & \cellcolor{panelC}\textcolor{badgeC!82!black}{数学史界并称 Cardano–Tartaglia 公式} & \cellcolor{panelA}\textcolor{badgeA!82!black}{二人共享} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{辟谣} & \cellcolor{panelC}\textcolor{badgeC!82!black}{流传的「塔尔塔利亚终生报复说」系后人杜撰} & \cellcolor{panelA}\textcolor{badgeA!82!black}{史学澄清} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 三次方程解法（Cardano–Tartaglia formula）}\\[2pt]
+  {\fontsize{11.5}{14}\selectfont\color{mainclr!88!black} 数学史界的共识：三次方程的解法公式归属于卡尔达诺与塔尔塔利亚二人}\\[3pt]
+  {\fontsize{9}{12}\selectfont\color{mainclr!78!black} 后世流传的「塔尔塔利亚终生报复说」，据载系后世杜撰。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 少年成名：罗马教职（核心贡献页） ---
+\newcommand{\romeslide}{\begin{frame}\plainbar\sectiontitle{少年成名：罗马教职}{while still in his teens · 接替卡尔达诺的教职}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经过}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{年龄} & \cellcolor{panelA}\textcolor{badgeA!82!black}{还在十几岁时（while still in his teens）即获教职} & \cellcolor{panelB}\textcolor{badgeB!82!black}{少年成名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{机缘} & \cellcolor{panelA}\textcolor{badgeA!82!black}{卡尔达诺辞去该职，并推荐他接任} & \cellcolor{panelB}\textcolor{badgeB!82!black}{师恩所托} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{地点} & \cellcolor{panelA}\textcolor{badgeA!82!black}{罗马一个声望卓著的教职} & \cellcolor{panelB}\textcolor{badgeB!82!black}{登上讲坛} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个仆役出身的少年，就此登上文艺复兴的讲坛。}
+\end{center}
+\end{frame}}
+
+% --- 9. 功成身退（核心贡献页） ---
+\newcommand{\retireslide}{\begin{frame}\plainbar\sectiontitle{功成身退}{42 岁 · 年轻而富有}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经过}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{退休} & \cellcolor{panelA}\textcolor{badgeA!82!black}{42 岁即退休，且已富有（wealthy）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{代数学家的异数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{定居} & \cellcolor{panelA}\textcolor{badgeA!82!black}{返回故乡博洛尼亚} & \cellcolor{panelB}\textcolor{badgeB!82!black}{落叶归根} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{家人} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与寡姐 Maddalena 同住} & \cellcolor{panelB}\textcolor{badgeB!82!black}{手足相伴} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他没有把一生都交给讲坛，而是选择在盛年退场。}
+\end{center}
+\end{frame}}
+
+% --- 10. 博洛尼亚大学教授（核心贡献页） ---
+\newcommand{\bolognaslide}{\begin{frame}\plainbar\sectiontitle{博洛尼亚大学教授}{1565 · 荣归故里}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经过}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1565} & \cellcolor{panelA}\textcolor{badgeA!82!black}{出任博洛尼亚大学数学教授} & \cellcolor{panelB}\textcolor{badgeB!82!black}{荣归故里} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{故乡} & \cellcolor{panelA}\textcolor{badgeA!82!black}{博洛尼亚（Bologna），文艺复兴的大学之城} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学术重镇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{转折} & \cellcolor{panelA}\textcolor{badgeA!82!black}{就任后不久即去世} & \cellcolor{panelB}\textcolor{badgeB!82!black}{人生终章} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从博洛尼亚出发，最终也回到博洛尼亚。}
+\end{center}
+\end{frame}}
+
+% --- 11. 英年早逝（核心贡献页） ---
+\newcommand{\deathslide}{\begin{frame}\plainbar\sectiontitle{英年早逝}{1565-10-05 · 享年 43}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经过}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{卒日} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1565 年 10 月 5 日卒于博洛尼亚，享年 43} & \cellcolor{panelB}\textcolor{badgeB!82!black}{英年早逝} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{死因} & \cellcolor{panelC}\textcolor{badgeC!82!black}{据传说死于白砷（white arsenic）中毒} & \cellcolor{panelC}\textcolor{badgeC!82!black}{传说性质，非定论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{下毒者} & \cellcolor{panelC}\textcolor{badgeC!82!black}{传说下毒者为其姐} & \cellcolor{panelC}\textcolor{badgeC!82!black}{须带「据传说」} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一代代数奇才，43 岁的人生戛然而止。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与传承 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与传承}{历史评价与遗产 · page.md 无载任何奖项}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{四次方程} & \cellcolor{panelA}\textcolor{badgeA!82!black}{四次方程解法主要由费拉里完成，由卡尔达诺发表} & \cellcolor{panelB}\textcolor{badgeB!82!black}{代数史里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{公式归名} & \cellcolor{panelA}\textcolor{badgeA!82!black}{三次方程解法并称 Cardano–Tartaglia 公式} & \cellcolor{panelB}\textcolor{badgeB!82!black}{二人共享} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{史学} & \cellcolor{panelA}\textcolor{badgeA!82!black}{「塔尔塔利亚终生报复说」被认定为杜撰} & \cellcolor{panelB}\textcolor{badgeB!82!black}{澄清流传故事} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他没有留下列传式的光环，却留下了方程论最硬核的成就。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他破解了四次方程，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {也在盛年退出了舞台。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {四次方程的破解者 —— 洛多维科·费拉里};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {洛多维科·费拉里\quad Lodovico Ferrari\quad 1522 — 1565};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 四次方程 · 三次方程 · 1545 论战\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\quarticslide
+\cubicslide
+\disputeslide
+\romeslide
+\retireslide
+\bolognaslide
+\deathslide
+\honorslide
+\closingslide
+\end{document}

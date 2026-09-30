@@ -1,0 +1,459 @@
+% =============================================================
+%  代数的符号化者 · 两朝密码破译者：弗朗索瓦·韦达 (François Viète)
+%  Beamer 演示 —— 参照 17 世纪 Johann Bernoulli 黄金模板（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/16th_century/pages/François_Viète/page.md
+%  设计母题：字母符号 / 密码转盘 —— 柔和气泡呼应符号化的灵动
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：法兰西宫廷深蓝 + 文艺复兴鎏金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,245,242}
+\definecolor{mainclr}{HTML}{1F3A5F}        % 主色 — 法兰西宫廷深蓝（瓦卢瓦/波旁）
+\definecolor{accentclr}{HTML}{B8860B}      % 强调色 — 文艺复兴鎏金
+\definecolor{badgeA}{HTML}{3A5BA0}         % 新代数 — 靛蓝
+\definecolor{badgeB}{HTML}{8C2F2F}         % 密码破译 — 深红
+\definecolor{badgeC}{HTML}{0F766E}         % 三角与 π — 青绿
+\definecolor{badgeD}{HTML}{C77B30}         % 历法论战与律师生涯 — 琥珀
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{22,32,54}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{226,232,246}
+\definecolor{panelB}{RGB}{246,228,228}
+\definecolor{panelC}{RGB}{219,240,237}
+\definecolor{panelD}{RGB}{248,235,219}
+\definecolor{goldpanel}{RGB}{252,245,226}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「字母符号 / 密码转盘」
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeC!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeB!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=12.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 法兰西\enspace·\enspace 代数的符号化者\enspace·\enspace 两朝密码破译者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {弗朗索瓦·韦达};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {François Viète\enspace·\enspace 1540 — 1603};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {新代数 · 韦达公式 $\pi$ · 两朝密码破译};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {新代数\\Algebra Nova\par\scriptsize 符号化};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {密码破译\\Cryptography\par\scriptsize 两朝};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {三角与 $\pi$\\Trigonometry\par\scriptsize 无穷乘积};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {历法论战\\Calendar\par\scriptsize 律师生涯};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把代数从文字叙述，变成了字母之间的运算。};
+  % 肖像（后世版画像）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{viete_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {François Viète (1540–1603)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 法兰西\enspace|\enspace \faIcon{university}\enspace 普瓦捷大学 · 雷恩/巴黎高等法院\enspace|\enspace 代数 · 三角学 · 密码学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{弗朗索瓦·韦达 - 从丰特奈到巴黎}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（后世版画像）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{viete_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.9}{7.2}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {François Viète（后世版画像）};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1540 — 1603-02-23\\[2pt]\lab{本名}\quad Franciscus Vieta（拉丁名）\\[2pt]\lab{国籍}\quad 法兰西};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 普瓦捷大学\\[2pt]
+     \quad 1559 年获法学士（LL.B.）\\[2pt]\lab{师承}\quad —（无载）};
+  \node[infob, fill=panelC, draw=badgeC!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 丰特奈勒孔特（法国）\\[2pt]\lab{身份}\quad 律师 · 王室顾问\\[2pt]\lab{代表著作}\quad 《Isagoge》(1591)};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 代数（新代数）· 三角学\\[2pt]
+     \quad 几何 · 天文学 · 密码学\\[2pt]
+     \lab{生涯}\quad 亨利三世、亨利四世枢密顾问};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 弗朗索瓦·韦达的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{弗朗索瓦·韦达的一生}{1540 — 1603 · 从丰特奈勒孔特到巴黎}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\yyear/\ytxt in {
+    2.9/1540/生于丰特奈勒孔特（今旺代省）,
+    2.2/1559/于普瓦捷获法学士（LL.B.）,
+    1.5/1573/任雷恩高等法院参事,
+    0.8/1580/任巴黎 maître des requêtes，服务于王,
+    0.1/1583–85/被天主教联盟迫使去职，此后四年专研数学,
+    -0.6/1591/出版《Isagoge》，创立新代数,
+    -1.3/1593/发现 $\pi$ 的无穷乘积（韦达公式）,
+    -2.0/1600–03/1600《Apollonius Gallus》；1603 逝于巴黎
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[anchor=east, font=\fontsize{8.2}{10.2}\selectfont\bfseries, text=accentclr!88!black] at (-0.25,\y) {\yyear};
+    \node[anchor=west, font=\fontsize{7}{9}\selectfont, align=left, text width=8.6cm] at (0.35,\y) {\ytxt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与法律生涯 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与法律生涯 (1540–1585)}{丰特奈勒孔特出生 · 普瓦捷法学 · 苏比斯家族}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1540} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于丰特奈勒孔特；祖父为拉罗歇尔商人、父 Etienne Viète 为律师} & \cellcolor{panelC}\textcolor{badgeC!82!black}{方济各会学校} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1558–59} & \cellcolor{panelA}\textcolor{badgeA!82!black}{入普瓦捷学法律，1559 年获法学士（LL.B.）；次年执业} & \cellcolor{panelC}\textcolor{badgeC!82!black}{律师出身} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1564} & \cellcolor{panelA}\textcolor{badgeA!82!black}{入苏比斯家族服务，任 Catherine de Parthenay 的家庭教师，为她撰写天文与三角讲义} & \cellcolor{panelC}\textcolor{badgeC!82!black}{早用小数、先见椭圆轨道} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1583–85} & \cellcolor{panelA}\textcolor{badgeA!82!black}{被天主教联盟指控同情新教，亨利三世解其职；隐退后四年专研数学} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1591 成《Isagoge》} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他为 Parthenay 小姐所写的讲义中，已用十进小数，并先于开普勒看出行星的椭圆轨道。}
+\end{center}
+\end{frame}}
+
+% --- 5. 新代数：符号革命（核心贡献页） ---
+\newcommand{\symbolslide}{\begin{frame}\plainbar\sectiontitle{新代数：符号革命}{第一个符号代数 · the father of modern algebraic notation}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{韦达的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{符号化} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首创用字母表示方程中的参数与未知量} & \cellcolor{panelC}\textcolor{badgeC!82!black}{现代代数记法之父} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{记号分工} & \cellcolor{panelA}\textcolor{badgeA!82!black}{辅音表已知量（B、D 等），元音表未知量（A、E 等）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{有别于后世笛卡尔惯例} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{结束程序代数} & \cellcolor{panelA}\textcolor{badgeA!82!black}{为代数建立与几何同等的严格基础，宣称无不可解之题} & \cellcolor{panelC}\textcolor{badgeC!82!black}{自花拉子米到斯蒂文的中世纪代数终结} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 新代数（New algebra）—— 第一个符号代数}\\[3pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$X^{2}+Xb=c \qquad X^{3}+aX=b$}\\[2pt]
+  {\fontsize{8}{10.5}\selectfont\color{muteddark} 一切问题皆可解：\textit{nullum non problema solvere}}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 《Isagoge》1591 与 species logistic 三步法（核心贡献页） ---
+\newcommand{\isagogeslide}{\begin{frame}\plainbar\sectiontitle{《Isagoge》1591 与 species logistic 三步法}{符号逻辑术：Zetetic → Poristic → Exegetic}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{韦达的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Isagoge} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1591《In artem analyticem isagoge》（又称 Algebra Nova）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{献给 Catherine de Parthenay} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Zetetic · Poristic} & \cellcolor{panelA}\textcolor{badgeA!82!black}{把问题化为方程（辅音=已知、元音=未知），讨论并求解} & \cellcolor{panelC}\textcolor{badgeC!82!black}{符号逻辑术前两步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Exegetic} & \cellcolor{panelA}\textcolor{badgeA!82!black}{回到原问题，以几何或数值构造给出解} & \cellcolor{panelC}\textcolor{badgeC!82!black}{第三步：构造} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} species logistic（符号逻辑术）三步法}\\[3pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black} Zetetic（列方程）\ $\longrightarrow$\ Poristic（析解）\ $\longrightarrow$\ Exegetic（构造）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 韦达定理与二项式公式（核心贡献页） ---
+\newcommand{\vietasformulaslide}{\begin{frame}\plainbar\sectiontitle{韦达定理与二项式公式}{根与系数的关系 · 当时仅认正根}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{韦达的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{韦达定理} & \cellcolor{panelA}\textcolor{badgeA!82!black}{给出多项式系数与其根之和、之积的关系} & \cellcolor{panelC}\textcolor{badgeC!82!black}{Vieta's formulas} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{正根口径} & \cellcolor{panelA}\textcolor{badgeA!82!black}{当时只把正根视为根，定理仅就正根陈述} & \cellcolor{panelC}\textcolor{badgeC!82!black}{尚未及复根} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{二项式公式} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首创二项式公式，后为帕斯卡与牛顿采用} & \cellcolor{panelC}\textcolor{badgeC!82!black}{后继影响深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 韦达定理（Vieta's formulas）}\\[3pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black}
+  $\begin{cases}
+  r_{1}+r_{2}=-\dfrac{b}{a}\\[5pt]
+  r_{1}\,r_{2}=\dfrac{c}{a}
+  \end{cases}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 韦达公式：π 的第一个无穷乘积（核心贡献页） ---
+\newcommand{\piformulaslide}{\begin{frame}\plainbar\sectiontitle{韦达公式：$\pi$ 的第一个无穷乘积}{1593 · 数学史上第一个无穷乘积}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{韦达的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{无穷乘积} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1593 年由几何与三角计算得出 $\pi$ 的嵌套根式表达式} & \cellcolor{panelA}\textcolor{badgeA!82!black}{数学史上第一个无穷乘积} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{韦达公式} & \cellcolor{panelC}\textcolor{badgeC!82!black}{以反复半角关系构造无穷乘积} & \cellcolor{panelA}\textcolor{badgeA!82!black}{亦名 Viète's formula} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{精度} & \cellcolor{panelC}\textcolor{badgeC!82!black}{套用阿基米德法取 6 × 2$^{16}$ = 393,216 边形} & \cellcolor{panelA}\textcolor{badgeA!82!black}{得 $\pi$ 的 10 位小数} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 韦达公式（Viète's formula，1593）}\\[3pt]
+  {\fontsize{11.5}{15}\selectfont\color{mainclr!88!black}$\pi = 2 \times \dfrac{2}{\sqrt{2}} \times \dfrac{2}{\sqrt{2+\sqrt{2}}} \times \dfrac{2}{\sqrt{2+\sqrt{2+\sqrt{2}}}} \times \cdots$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 三角学贡献（核心贡献页） ---
+\newcommand{\trigslide}{\begin{frame}\plainbar\sectiontitle{三角学贡献}{Canon mathematicus · 倍角正弦公式}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{韦达的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{三角表} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1579《Canon mathematicus, seu ad triangula》三角函数表} & \cellcolor{panelA}\textcolor{badgeA!82!black}{超越 Regiomontanus 与 Rheticus 之表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{倍角正弦} & \cellcolor{panelC}\textcolor{badgeC!82!black}{由单角正弦导出多倍角正弦的公式（1593 年已知）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{早于 de Moivre 公式之思想} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{贯通} & \cellcolor{panelC}\textcolor{badgeC!82!black}{三角计算是其代数与几何方法的核心工具} & \cellcolor{panelA}\textcolor{badgeA!82!black}{$\pi$ 无穷乘积亦源于此} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他自费印行的三角表，比前代的 Regiomontanus 与 Rheticus 更精确。}
+\end{center}
+\end{frame}}
+
+% --- 10. 两朝密码破译（核心贡献页） ---
+\newcommand{\cipherslide}{\begin{frame}\plainbar\sectiontitle{两朝密码破译}{亨利三世与亨利四世的宫廷密码师}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{韦达的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{亨利三世} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1589 年起于图尔破译天主教联盟及国王敌人的密信} & \cellcolor{panelD}\textcolor{badgeD!82!black}{王室倚重} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{亨利四世} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1590 年破解西班牙 500+ 字符密码；揭 Moreo 信件马耶讷谋立} & \cellcolor{panelD}\textcolor{badgeD!82!black}{促成宗教战争和解} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{魔法指控} & \cellcolor{panelB}\textcolor{badgeB!82!black}{西班牙国王指控其用魔法；1594 起专任破译敌方密码} & \cellcolor{panelD}\textcolor{badgeD!82!black}{晚年密码论文令时法尽废} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他破译的西班牙密信，令法军得以尽读敌方全部文电。}
+\end{center}
+\end{frame}}
+
+% --- 11. van Roomen 挑战与 Apollonius Gallus（核心贡献页） ---
+\newcommand{\roomenslide}{\begin{frame}\plainbar\sectiontitle{van Roomen 挑战与 Apollonius Gallus}{一读即解 · 先挑战后成友}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{韦达的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{全欧征解} & \cellcolor{panelA}\textcolor{badgeA!82!black}{荷兰大使讥法国无数学家；van Roomen 提出 45 次方程征解} & \cellcolor{panelC}\textcolor{badgeC!82!black}{征解提出见 1596/97 语境} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{一读即解} & \cellcolor{panelA}\textcolor{badgeA!82!black}{倚窗数分钟即看出它与 sin(x)、sin(x/45) 的关系；次日交其余 22 问} & \cellcolor{panelC}\textcolor{badgeC!82!black}{"Ut legit, ut solvit"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{回赠与 1600} & \cellcolor{panelA}\textcolor{badgeA!82!black}{回赠阿波罗尼奥斯问题；1600《Apollonius Gallus》以相似中心法求解} & \cellcolor{panelC}\textcolor{badgeC!82!black}{两人反成挚友} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.25cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 韦达 1595 年发表对 van Roomen 问题的回应；昔日挑战者骑马赴丰特奈，同住一月求学新代数。}\\[2pt]
+{\fontsize{6.2}{7.8}\selectfont\itshape\color{covermuted} 注：page.md 载 1595 年发表回应，而征解提出的年份在 1596（或 1597）语境——原文记载互有出入，一并列出。}
+\end{center}
+\end{frame}}
+
+% --- 12. 历法论战、晚年与身后传承（荣誉页） ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{历法论战、晚年与身后传承}{格里高利历之争 · 现代代数记法之父}
+\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{历法论战} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1600 年发系列小册子，指控 Clavius 任意引入改正与间日、误解前人 Lilius；Clavius 于韦达身后以 \textit{Explicatio}（1603）反驳} & \cellcolor{panelB}\textcolor{badgeB!82!black}{据载「韦达错了」} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{晚年} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1602-12 去职，获 20,000 埃居；1603-02-23 逝于巴黎，死因不明} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Anderson 叹其"早逝之命"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{传承} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Anderson、Ghetaldi、van Schooten 整理出版其遗著；其符号体系被笛卡尔、费马、牛顿、哈里奥特采用} & \cellcolor{panelB}\textcolor{badgeB!82!black}{"I began, where Vieta finished"} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他把代数从文字叙述变为字母运算，终结了中世纪代数，开启了近代代数。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他把代数，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {从文字变成了符号。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是符号化的代数，与两朝密码战的传奇。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {弗朗索瓦·韦达\quad François Viète\quad 1540 — 1603};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 新代数 · 三角学 · 密码学\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\symbolslide
+\isagogeslide
+\vietasformulaslide
+\piformulaslide
+\trigslide
+\cipherslide
+\roomenslide
+\honorslide
+\closingslide
+\end{document}

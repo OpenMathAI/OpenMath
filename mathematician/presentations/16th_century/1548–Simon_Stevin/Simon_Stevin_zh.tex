@@ -1,0 +1,459 @@
+% =============================================================
+%  十进小数与静力学 · 低地国家的实用科学大师：西蒙·斯蒂文 (Simon Stevin)
+%  Beamer 演示 —— 参照 17 世纪 Johann Bernoulli 黄金模板（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/16th_century/pages/Simon_Stevin/page.md
+%  设计母题：斜面绳圈 / 风车翼 / 围圈数字 —— 柔和气泡呼应水乡工程与实用科学
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+% 带圈数字（围圈记法 ⓪①②③④）路由至 CJK 字体
+\xeCJKDeclareCharClass{CJK}{"2460->"2473,"24EA}
+
+% ===== 配色：低地国海蓝 + 风车琥珀 + 四分类色 =====
+\definecolor{bgmain}{RGB}{245,247,246}
+\definecolor{mainclr}{HTML}{175873}        % 主色 — 低地国海蓝（尼德兰水乡 / 北海）
+\definecolor{accentclr}{HTML}{D08C2E}      % 强调色 — 风车琥珀（工程实用）
+\definecolor{badgeA}{HTML}{0B5351}         % 十进小数 — 墨青
+\definecolor{badgeB}{HTML}{3E5F8A}         % 静力学·流体 — 石板蓝
+\definecolor{badgeC}{HTML}{6B4E9B}         % 音乐理论 — 紫
+\definecolor{badgeD}{HTML}{5B7553}         % 工程与荷兰科学语言 — 橄榄绿
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,38,50}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{221,239,236}
+\definecolor{panelB}{RGB}{226,232,242}
+\definecolor{panelC}{RGB}{233,228,246}
+\definecolor{panelD}{RGB}{231,238,227}
+\definecolor{goldpanel}{RGB}{252,244,228}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「斜面绳圈 / 风车翼 / 围圈数字」
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeD!12] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeC!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=12.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 佛兰德\enspace·\enspace 荷兰共和国\enspace·\enspace 实用科学大师};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {西蒙·斯蒂文};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Simon Stevin\enspace·\enspace 1548 — 1620};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {十进小数 · 静力学 · 流体静力学 · 荷兰科学语言};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {十进小数\\De Thiende\par\scriptsize 围圈记法};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {静力学\\Statics\par\scriptsize 斜面平衡};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {音乐理论\\Music Theory\par\scriptsize 等程律};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {工程实践\\Engineering\par\scriptsize 风车 · 堡垒};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把理论与应用连成一体，让数学服务于堤坝、风车与军队。};
+  % 肖像（传世版画像）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{stevin_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Simon Stevin (1548–1620)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 佛兰德 · 荷兰共和国\enspace|\enspace \faIcon{university}\enspace 莱顿大学\enspace|\enspace 数学 · 力学 · 工程};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{西蒙·斯蒂文 - 从布鲁日到海牙}{生卒 · 别名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（传世版画像）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{stevin_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.9}{7.2}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Simon Stevin（传世版画像）};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1548 — 1620（月日无载）\\[2pt]\lab{别名}\quad Stevinus\\[2pt]\lab{国籍}\quad 佛兰德（尼德兰）};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 莱顿大学\\[2pt]
+     \quad 1583-02-16 注册，未毕业\\[2pt]\lab{师承}\quad —（无载）};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 布鲁日（今比利时）\\[2pt]\lab{身份}\quad 毛里茨亲王总顾问与导师\\[2pt]\lab{代表著作}\quad 《De Thiende》(1585)};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数学 · 力学 · 流体静力学\\[2pt]
+     \quad 音乐理论 · 工程\\[2pt]
+     \lab{生涯}\quad waterstaet 总监 · 军需总监};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 西蒙·斯蒂文的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{西蒙·斯蒂文的一生}{1548 — 1620 · 从布鲁日到海牙}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\yyear/\ytxt in {
+    2.9/1548/生于布鲁日（哈布斯堡尼德兰）,
+    2.2/1571/离乡：安特卫普商行文书，后游历北欧,
+    1.5/1577–81/返布鲁日任市秘书,
+    0.8/1583/以 Simon Stevinus Brugensis 注册莱顿大学,
+    0.1/1585/出版《De Thiende》，在欧洲确立十进小数,
+    -0.6/1592/任 waterstaet（公共工程）总监,
+    -1.3/1605–08/出版《Wisconstighe Ghedachtenissen》,
+    -2.0/1620/去世（卒地莱顿或海牙，不确定）
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[anchor=east, font=\fontsize{8.0}{10.0}\selectfont\bfseries, text=accentclr!88!black] at (-0.25,\y) {\yyear};
+    \node[anchor=west, font=\fontsize{7}{9}\selectfont, align=left, text width=8.6cm] at (0.35,\y) {\ytxt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与北欧远行 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与北欧远行 (1548–1583)}{布鲁日出生 · 加尔文家庭 · 商行文书 · 北欧游历}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1548} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于布鲁日；母 Cathelijne 后嫁加尔文派家庭，斯蒂文很可能在加尔文信仰中长大} & \cellcolor{panelB}\textcolor{badgeB!82!black}{推测受拉丁学校教育} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1571–77} & \cellcolor{panelA}\textcolor{badgeA!82!black}{离布鲁日，先在安特卫普当商行文书；或游历普鲁士、波兰、丹麦、挪威、瑞典等北欧地} & \cellcolor{panelB}\textcolor{badgeB!82!black}{视界大开} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1577–81} & \cellcolor{panelA}\textcolor{badgeA!82!black}{返布鲁日任市秘书，供职于 Brugse Vrije 的 Jan de Brune 办公室} & \cellcolor{panelB}\textcolor{badgeB!82!black}{公职历练} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1583} & \cellcolor{panelA}\textcolor{badgeA!82!black}{迁莱顿，以「Simon Stevinus Brugensis」注册莱顿大学，在册至 1590} & \cellcolor{panelB}\textcolor{badgeB!82!black}{未毕业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 离乡或为躲避西班牙统治者对新教徒的迫害；1576 年的宗教宽容令或可解释他 1577 年返布鲁日。}
+\end{center}
+\end{frame}}
+
+% --- 5. 《De Thiende》1585：十进小数（核心贡献页） ---
+\newcommand{\decimalslide}{\begin{frame}\plainbar\sectiontitle{《De Thiende》1585：十进小数}{在欧洲确立十进小数的日常使用 · 三百年翻案史}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{斯蒂文的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{著作} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1585 年 35 页小册《De Thiende》（法译 La Disme）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{在欧洲确立其日常使用} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{围圈记法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以带圈数字标十分幂次；同一符号兼用于代数幂} & \cellcolor{panelB}\textcolor{badgeB!82!black}{page.md 评为 "rather unwieldy"} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{小数点来源} & \cellcolor{panelA}\textcolor{badgeA!82!black}{小数点始见 Pitiscus 三角表（1612），被 Napier 采纳（1614/1619）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{非其发明} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 围圈指数记法（De Thiende, 1585）}\\[3pt]
+  {\fontsize{11.5}{15}\selectfont\color{mainclr!88!black} 184.54290\ \ $\longrightarrow$\ \ 184⓪5①4②2③9④0}
+  \end{minipage}%
+}
+\end{center}
+\vspace{-0.05cm}
+\begin{center}
+{\fontsize{7.2}{9.6}\selectfont\itshape\color{coverdark!80} "[this text] teaches us all calculations that are needed by the people without using fractions. One can reduce all operations to adding, subtracting, multiplying and dividing with integers."}
+\end{center}
+\end{frame}}
+
+% --- 6. 实数连续统与介值定理（核心贡献页） ---
+\newcommand{\continuumslide}{\begin{frame}\plainbar\sectiontitle{实数连续统与介值定理}{van der Waerden 的评价 · 先于柯西}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{斯蒂文的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{实数连续统} & \cellcolor{panelC}\textcolor{badgeC!82!black}{据 van der Waerden，消除「数」限于整数（Euclid）或有理分数（Diophantus）的古典限制} & \cellcolor{panelB}\textcolor{badgeB!82!black}{实数构成连续统} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{地位} & \cellcolor{panelC}\textcolor{badgeC!82!black}{其一般实数概念为后世科学家（默然或明确）接受；近研究认为其作用被低估} & \cellcolor{panelB}\textcolor{badgeB!82!black}{对实数发展贡献卓著} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{介值定理} & \cellcolor{panelC}\textcolor{badgeC!82!black}{为多项式证明介值定理，用十等分区间的 divide-and-conquer 程序} & \cellcolor{panelB}\textcolor{badgeB!82!black}{早于柯西之证} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 介值定理（为多项式）}\\[3pt]
+  {\fontsize{11.5}{15}\selectfont\color{mainclr!88!black} $f(a)<0<f(b)\ \Longrightarrow\ \exists\,c\in(a,b):\ f(c)=0$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 代数与三角（核心贡献页） ---
+\newcommand{\algebratrigslide}{\begin{frame}\plainbar\sectiontitle{代数与三角}{一般二次方程解 · De Driehouckhandel}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{斯蒂文的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{二次方程} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1594《Arithmetic》给出一般二次方程解} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Brahmagupta 近千年前已载，今带到西方} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{三角学} & \cellcolor{panelA}\textcolor{badgeA!82!black}{著《De Driehouckhandel》（三角学）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{收于《Wisconstighe Ghedachtenissen》} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{几何与平衡} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首个把正/半正多面体框架在平面展开；区分稳定与不稳定平衡} & \cellcolor{panelB}\textcolor{badgeB!82!black}{几何与力学洞见} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他把代数与三角、多面体展开与平衡分类，都纳入实用的数学工具箱。}
+\end{center}
+\end{frame}}
+
+% --- 8. 静力学：Epitaph of Stevinus（核心贡献页） ---
+\newcommand{\staticslide}{\begin{frame}\plainbar\sectiontitle{静力学：Epitaph of Stevinus}{斜面平衡 · 先于其明确表述的能量守恒直觉}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{斯蒂文的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{斜面平衡} & \cellcolor{panelB}\textcolor{badgeB!82!black}{以「绳圈等距重物」图证明斜面上力的平衡条件} & \cellcolor{panelD}\textcolor{badgeD!82!black}{所需重物与斜边长成正比} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{力分解} & \cellcolor{panelB}\textcolor{badgeB!82!black}{效果按三角形「高 / 斜边」（斜面倾角的正弦）折算} & \cellcolor{panelD}\textcolor{badgeD!82!black}{即 sin 因子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{能量守恒} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Dijksterhuis 指其证明借永动机归谬，「直觉使用了能量守恒原理」} & \cellcolor{panelD}\textcolor{badgeD!82!black}{早于其明确表述} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} Epitaph of Stevinus（斜面平衡，第三边水平时）}\\[3pt]
+  {\fontsize{12}{15}\selectfont\color{mainclr!88!black} $\dfrac{W_{1}}{W_{2}}=\dfrac{l_{1}}{l_{2}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 流体静力学、落体与潮汐（核心贡献页） ---
+\newcommand{\hydroslide}{\begin{frame}\plainbar\sectiontitle{流体静力学、落体与潮汐}{静水佯谬 · Delft 塔实验 · 月球引力潮汐}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{斯蒂文的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{静水佯谬} & \cellcolor{panelB}\textcolor{badgeB!82!black}{发现液体压强与容器形状、底面积无关，只取决于高度} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Stevin's law} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{侧壁压强} & \cellcolor{panelB}\textcolor{badgeB!82!black}{给出侧壁任意部分的压强度量} & \cellcolor{panelD}\textcolor{badgeD!82!black}{流体静力学奠基} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{落体与潮汐} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1586 Delft 塔实验：不同重量物体加速度相同；首个用月球引力解释潮汐} & \cellcolor{panelD}\textcolor{badgeD!82!black}{流体与重力洞见} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 压强只取决于深度，而非容器形状——静水佯谬颠覆了直觉。}
+\end{center}
+\end{frame}}
+
+% --- 10. 音乐理论：等程律（核心贡献页） ---
+\newcommand{\temperamentslide}{\begin{frame}\plainbar\sectiontitle{音乐理论：等程律}{Van de Spiegheling der singconst · 十二次方根}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{斯蒂文的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{手稿} & \cellcolor{panelC}\textcolor{badgeC!82!black}{未完成手稿《Van de Spiegheling der singconst》（约 1605）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{死后三百年，1884 才出版} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{等程律} & \cellcolor{panelC}\textcolor{badgeC!82!black}{西方首个与 2 的十二次方根相联系的表述} & \cellcolor{panelA}\textcolor{badgeA!82!black}{十二平均律之源} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{精度与启发} & \cellcolor{panelC}\textcolor{badgeC!82!black}{计算精度不足，弦长数字差一两个单位；受 Vincenzo Galilei 著述启发} & \cellcolor{panelA}\textcolor{badgeA!82!black}{如实记载} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 等程律（equal temperament）}\\[3pt]
+  {\fontsize{11.5}{15}\selectfont\color{mainclr!88!black} $\sqrt[12]{2}$ —— 西方首次与十二次方根相联系的等程律表述}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 荷兰科学语言运动（核心贡献页） ---
+\newcommand{\langslide}{\begin{frame}\plainbar\sectiontitle{荷兰科学语言运动}{让工匠也读得懂科学 · 智慧的第二时代}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{斯蒂文的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{核心新词} & \cellcolor{panelD}\textcolor{badgeD!82!black}{wiskunde（数学）、natuurkunde（物理）、scheikunde（化学）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{荷兰语科学词汇} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{更多新词} & \cellcolor{panelD}\textcolor{badgeD!82!black}{sterrenkunde（天文）、meetkunde（几何）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{非希腊/拉丁借词} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{目标} & \cellcolor{panelD}\textcolor{badgeD!82!black}{恢复「智慧的第二时代」；以单音节词经验论证荷兰语之优} & \cellcolor{panelA}\textcolor{badgeA!82!black}{让非拉丁读者受用} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.05cm}
+\begin{center}
+{\fontsize{7.2}{9.6}\selectfont\itshape\color{coverdark!80} "Simon Stevin wishes the stargazers, surveyors, carpet measurers, body measurers in general, coin measurers and tradespeople good luck."}
+\end{center}
+\end{frame}}
+
+% --- 12. 工程实践、Maurice 的顾问与身后纪念（荣誉页） ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{工程实践、Maurice 的顾问与身后纪念}{风车 · 水政 · 堡垒 · 纪念命名}
+\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.74}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.6cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{2.9cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{工程} & \cellcolor{panelD}\textcolor{badgeD!82!black}{风车改进与 1586 专利（抽水效率三倍，慢轮 + 齿轮啮合）；waterstaet 总监（1592）；国家陆军军需总监；受命创办莱顿大学工程学校；Moers 堡垒设计（1604）；Castrametatio（1617）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{实用科学落地} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{顾问} & \cellcolor{panelD}\textcolor{badgeD!82!black}{莱顿结识毛里茨（Willem the Silent 次子），任其首席顾问与导师；推行国家层面「非个人账户」簿记，荐于 Maurice 与 Sully} & \cellcolor{panelB}\textcolor{badgeB!82!black}{亲王屡屡问计} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{身后纪念} & \cellcolor{panelD}\textcolor{badgeD!82!black}{布鲁日 Simon Stevinplein 雕像（1847 落成，像座刻斜面平衡证明）；RV Simon Stevin 科考船（2012）；Stevin Prize（2018）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{纪念命名} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从风车与水闸，到账簿与堡垒，他把数学变成了低地国家的立国之器。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他把数学，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {带进了堤坝与风车。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是十进小数的日常，与斜面平衡的优雅。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {西蒙·斯蒂文\quad Simon Stevin\quad 1548 — 1620};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 十进小数 · 静力学 · 工程\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\decimalslide
+\continuumslide
+\algebratrigslide
+\staticslide
+\hydroslide
+\temperamentslide
+\langslide
+\honorslide
+\closingslide
+\end{document}

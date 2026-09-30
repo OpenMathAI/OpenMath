@@ -1,0 +1,464 @@
+% =============================================================
+%  格里高利历的守护者 · 耶稣会数学家：克里斯托弗·克拉维乌斯 (Christopher Clavius, SJ)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/16th_century/pages/Christopher_Clavius
+%  设计母题：天球层 / 历法之轮 —— 圆周叠转的秩序之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色（语义见注释）=====
+\definecolor{bgmain}{RGB}{247,246,249}          % 浅灰白底
+\definecolor{mainclr}{HTML}{16324F}             % 主色：教廷深蓝（罗马学院 / 教廷历法改革的庄重）
+\definecolor{accentclr}{HTML}{C9A227}           % 强调色：历法金（1582 年历法改革的划时代）
+\definecolor{badgeA}{HTML}{8B5A2B}              % 分类 1：历法改革 — 古铜
+\definecolor{badgeB}{HTML}{1B4D6B}              % 分类 2：天文学 — 深青
+\definecolor{badgeC}{HTML}{0E7C7B}              % 分类 3：欧几里得 — 青绿
+\definecolor{badgeD}{HTML}{7A1E28}              % 分类 4：耶稣会教育 — 玫红
+\definecolor{panelA}{RGB}{243,233,222}          % 历法信息块
+\definecolor{panelB}{RGB}{222,236,243}          % 天文信息块
+\definecolor{panelC}{RGB}{220,240,238}          % 欧几里得信息块
+\definecolor{panelD}{RGB}{246,231,233}          % 耶稣会信息块
+\definecolor{goldpanel}{RGB}{255,245,225}       % 金底信息块
+\definecolor{graypanel}{RGB}{244,244,242}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「天球层 / 历法之轮」
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 德国\enspace·\enspace 耶稣会数学家\enspace·\enspace 格里高利历的守护者};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {克里斯托弗·克拉维乌斯};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Christopher Clavius, SJ\enspace·\enspace 1538 — 1612};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {格里高利历 · 《天球论注释》· 1572 新星 · 数学课程};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {历法改革\\Calendar\par\scriptsize 格里高利历};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {天文学\\Astronomy\par\scriptsize 1572 新星};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {欧几里得\\Euclid\par\scriptsize 十五卷注释};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {耶稣会教育\\Jesuit\par\scriptsize 数学学院};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他为全世界重排了时间，也在新旧天文学之间守到最后。};
+  % 肖像：Rijksmuseum 藏版画像
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{clavius_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {Clavius 版画像 · Rijksmuseum 藏};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 德国\enspace|\enspace \faIcon{university}\enspace 罗马学院\enspace|\enspace 格里高利历改革 · 天文学};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{克里斯托弗·克拉维乌斯 - 历法守护者}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（Rijksmuseum 藏版画像 RP-P-OB-38.439）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.6,3.4);
+      \node[anchor=center] at (1.3,1.7) {\includegraphics[width=2.6cm,height=3.4cm,keepaspectratio]{clavius_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.8}{7.0}\selectfont\itshape, text=covermuted, align=center, text width=4.0cm]
+    at (-5.85,-2.05) {Clavius 版画像\newline （Rijksmuseum 藏 RP-P-OB-38.439）};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1538-03-25 — 1612-02-06\\[2pt]\lab{国籍}\quad 德国\\[2pt]\lab{享年}\quad 73};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{本名}\quad 不详（学者推测）\\[2pt]
+     \lab{师承}\quad —（page.md 无载）\\[2pt]\lab{出生地}\quad 班贝格（巴伐利亚）};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{教育}\quad 科英布拉大学\\[2pt]\quad 罗马学院（Collegio Romano）\\[2pt]\lab{身份}\quad 耶稣会士（SJ）};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 数学 · 天文学\\[2pt]
+     \lab{职位}\quad 罗马学院数学家之首\\[2pt]
+     \lab{荣誉}\quad —（page.md 无载）};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 克拉维乌斯的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{克里斯托弗·克拉维乌斯的一生}{1538 — 1612 · 从班贝格到罗马学院}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7.4}{9.4}\selectfont, align=left, text width=8.6cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1538/3 月 25 日生于班贝格（巴伐利亚，神圣罗马帝国），正文另载或为 1537, 
+    2.2/1555/加入耶稣会（Society of Jesus）, 
+    1.5/1564/于罗马学院研习神学后晋铎, 
+    0.8/1570/《天球论注释》初版（1570–1618 间至少 16 版）, 
+    0.1/1582/格里高利历经教宗格里高利十三世下令颁行, 
+    -0.6/1593/《星盘》三角表中使用小数点, 
+    -1.3/1611/伽利略到罗马拜访，讨论望远镜新观测, 
+    -2.0/1612/2 月 6 日卒于罗马，享年 73
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1538–1564)}{本名难考 · 班贝格出生 · 科英布拉与罗马}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1538} & \cellcolor{panelA}\textcolor{badgeA!82!black}{3 月 25 日生于班贝格（巴伐利亚，神圣罗马帝国）；正文另载或为 1537} & \cellcolor{panelC}\textcolor{badgeC!82!black}{生年两说} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{本名} & \cellcolor{panelA}\textcolor{badgeA!82!black}{本名不详；学者推测或为 Christoph Clau / Klau，Clavius 或为 Schlüssel 之拉丁化} & \cellcolor{panelC}\textcolor{badgeC!82!black}{推测} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1555} & \cellcolor{panelA}\textcolor{badgeA!82!black}{加入耶稣会；赴葡萄牙科英布拉大学求学（可能与 Pedro Nunes 有所接触）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{入会} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1564} & \cellcolor{panelA}\textcolor{badgeA!82!black}{于罗马学院研习神学后晋铎（师承 page.md 无载）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{晋铎} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个连本名都难以确考的德国人，将成为罗马学院最负盛名的数学家。}
+\end{center}
+\end{frame}}
+
+% --- 5. 格里高利历改革（核心贡献页） ---
+\newcommand{\calendarslide}{\begin{frame}\plainbar\sectiontitle{格里高利历改革}{Lilius 提出方案 · 克拉维乌斯为委员会成员与辩护者}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{克拉维乌斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{方案} & \cellcolor{panelA}\textcolor{badgeA!82!black}{梵蒂冈委员会采纳 Aloysius Lilius 提出的历法方案} & \cellcolor{panelB}\textcolor{badgeB!82!black}{发明权属 Lilius} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{颁行} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1582 年经教宗格里高利十三世下令在天主教国家颁行} & \cellcolor{panelB}\textcolor{badgeB!82!black}{今日世界通用} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{辩护} & \cellcolor{panelA}\textcolor{badgeA!82!black}{著《新罗马历辩护》（1588）与《解释》（1603）} & \cellcolor{panelB}\textcolor{badgeB!82!black}{对 Lilius 郑重致意} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 格里高利历（Gregorian calendar）}\\[3pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black} 置闰规则：能被 4 整除者为闰年，世纪年须能被 400 整除}\\[3pt]
+  {\fontsize{9}{12}\selectfont\color{mainclr!78!black}（据此 1700、1800、1900 年非闰年）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 欧几里得注释（核心贡献页） ---
+\newcommand{\euclidslide}{\begin{frame}\plainbar\sectiontitle{欧几里得注释}{Euclidis Elementorum Libri XV · 罗马 1574}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{克拉维乌斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{著作} & \cellcolor{panelC}\textcolor{badgeC!82!black}{为欧几里得《几何原本》作注释：\textit{Euclidis Elementorum Libri XV}} & \cellcolor{panelD}\textcolor{badgeD!82!black}{罗马 1574} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{再版} & \cellcolor{panelC}\textcolor{badgeC!82!black}{科隆 1591；1627 年版} & \cellcolor{panelD}\textcolor{badgeD!82!black}{流传甚广} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{体例} & \cellcolor{panelC}\textcolor{badgeC!82!black}{以注释体例梳理欧几里得的公理与命题} & \cellcolor{panelD}\textcolor{badgeD!82!black}{几何之基} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 欧几里得《几何原本》}\\[3pt]
+  {\fontsize{12}{15}\selectfont\color{mainclr!88!black}\textit{Euclidis Elementorum Libri XV}}\\[3pt]
+  {\fontsize{10}{13}\selectfont\color{mainclr!78!black} 罗马 1574 · 科隆 1591 · 1627}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 《天球论注释》教科书（核心贡献页） ---
+\newcommand{\sphaeraslide}{\begin{frame}\plainbar\sectiontitle{《天球论注释》教科书}{In Sphaeram Ioannis de Sacro Bosco commentarius}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{克拉维乌斯的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{注疏} & \cellcolor{panelB}\textcolor{badgeB!82!black}{为 Sacrobosco 的《天球论》（De Sphaera）作注释} & \cellcolor{panelC}\textcolor{badgeC!82!black}{中世纪经典} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{版本} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1570–1618 年间至少 16 版} & \cellcolor{panelC}\textcolor{badgeC!82!black}{本人七次修订、每次大幅扩充} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{影响} & \cellcolor{panelB}\textcolor{badgeB!82!black}{逾五十年用于天文教育，遍及欧洲内外} & \cellcolor{panelC}\textcolor{badgeC!82!black}{传世教科书} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 天球之书（De Sphaera）}\\[3pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black}\textit{In Sphaeram Ioannis de Sacro Bosco commentarius}}\\[3pt]
+  {\fontsize{10}{13}\selectfont\color{mainclr!78!black} 1570 — 1618 间至少 16 版}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 1572 新星：天界可变的证伪（核心贡献页） ---
+\newcommand{\novaslide}{\begin{frame}\plainbar\sectiontitle{1572 新星：天界可变的证伪}{独立于第谷·布拉赫 · 定位于恒星天}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{克拉维乌斯的论证}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{观测} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1585 版注释中将 1572 新星定位于恒星天（仙后座）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{独立于 Tycho Brahe} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{论证} & \cellcolor{panelB}\textcolor{badgeB!82!black}{该星的位置对所有观测者完全相同} & \cellcolor{panelC}\textcolor{badgeC!82!black}{必在月球之外} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{结论} & \cellcolor{panelB}\textcolor{badgeB!82!black}{「天界不变」的教条由此被证伪} & \cellcolor{panelC}\textcolor{badgeC!82!black}{天文学转折} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 天界可变（the heavens could change）}\\[3pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black} 1572 新星位于恒星天、各观测者所见位置相同}\\[3pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black} $\Rightarrow$ 它必在月球之外，「天不变」的教条被证伪}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 地心说的坚守与伽利略（核心贡献页） ---
+\newcommand{\geocentricslide}{\begin{frame}\plainbar\sectiontitle{地心说的坚守与伽利略}{坚守地心 · 与伽利略通信与 1611 之会}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经过}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{立场} & \cellcolor{panelB}\textcolor{badgeB!82!black}{严格坚持地心模型，反对哥白尼日心说} & \cellcolor{panelD}\textcolor{badgeD!82!black}{旧天文学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{张力} & \cellcolor{panelB}\textcolor{badgeB!82!black}{但承认托勒密模型存在困难} & \cellcolor{panelD}\textcolor{badgeD!82!black}{两面并存} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{伽利略} & \cellcolor{panelB}\textcolor{badgeB!82!black}{常年通信；1611 年伽利略来访，他接受新发现为真，却对月球山峦存疑、且称看不见四颗木星卫星} & \cellcolor{panelD}\textcolor{badgeD!82!black}{新旧之交} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他站在旧宇宙的尽头，却为新观测打开了一道门缝。}
+\end{center}
+\end{frame}}
+
+% --- 10. 数学课程的改革（核心贡献页） ---
+\newcommand{\curriculumslide}{\begin{frame}\plainbar\sectiontitle{数学课程的改革}{Ordo servandus（1580）· 光学 · 静力学 · 天文 · 声学}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{经过}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{方案} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1580《Ordo servandus in addiscendis disciplinis mathematicis》，含一年/两年/三年三套课程} & \cellcolor{panelA}\textcolor{badgeA!82!black}{数学课程方案} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{受阻} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1580 方案被拒（仍获数学教授头衔）；1586 再试遭哲学家反对} & \cellcolor{panelA}\textcolor{badgeA!82!black}{孤军奋战} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{学院} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1593 或 1594 年起课程正式化；1595 年书信载门下约十名学生} & \cellcolor{panelA}\textcolor{badgeA!82!black}{数学得立} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 在数学常遭讥讽的年代，他几乎凭一己之力立起严格的数学课程。}
+\end{center}
+\end{frame}}
+
+% --- 11. 数学贡献：Clavius 之律与小数点（核心贡献页） ---
+\newcommand{\logicslide}{\begin{frame}\plainbar\sectiontitle{数学贡献：Clavius 之律与小数点}{consequentia mirabilis · 1593《星盘》}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{克拉维乌斯的贡献}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{逻辑} & \cellcolor{panelC}\textcolor{badgeC!82!black}{由命题之否定的不一致，推出该命题为真} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以他命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{时间} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1593 年《星盘》三角表中使用小数点} & \cellcolor{panelA}\textcolor{badgeA!82!black}{西方最早之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{应用} & \cellcolor{panelC}\textcolor{badgeC!82!black}{撰《日晷八卷》（1581）与钟表之书（1599）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{应用数学} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} Clavius 之律（consequentia mirabilis）}\\[3pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black} 由命题之否定的不一致，推出该命题为真}\\[3pt]
+  {\fontsize{13}{16}\selectfont\color{mainclr!88!black}$(\lnot p \to p) \to p$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与身后 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{荣誉与身后}{月球环形山 · 小行星 · 学派式微}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{月球} & \cellcolor{panelB}\textcolor{badgeB!82!black}{月球上以他命名的大环形山 Clavius} & \cellcolor{panelA}\textcolor{badgeA!82!black}{天穹留名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{小行星} & \cellcolor{panelB}\textcolor{badgeB!82!black}{小行星 20237 Clavius} & \cellcolor{panelA}\textcolor{badgeA!82!black}{星际纪念} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{身后} & \cellcolor{panelB}\textcolor{badgeB!82!black}{教科书影响天文教育五十余年；1615 年后学院名录再无数学家} & \cellcolor{panelA}\textcolor{badgeA!82!black}{学派式微} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他守护了旧天文学，也成就了数学在耶稣会中的百年地位。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他为世界重排了时间，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {也在新旧天文学之间守到最后。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {格里高利历的守护者 —— 克里斯托弗·克拉维乌斯};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {克里斯托弗·克拉维乌斯（Christopher Clavius, SJ）\quad 1538 — 1612};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 格里高利历 · 天文学 · 数学课程\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\calendarslide
+\euclidslide
+\sphaeraslide
+\novaslide
+\geocentricslide
+\curriculumslide
+\logicslide
+\honorslide
+\closingslide
+\end{document}

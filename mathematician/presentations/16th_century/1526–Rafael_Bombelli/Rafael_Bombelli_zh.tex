@@ -1,0 +1,461 @@
+% =============================================================
+%  虚数的驯服者 · 工程师数学家：拉斐尔·邦贝利 (Rafael Bombelli)
+%  Beamer 演示 —— 参照物理学家 Kenneth G. Wilson 模板样式（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/16th_century/pages/Rafael_Bombelli
+%  设计母题：实部 ⊕ 虚部 —— 两界交叠、如海市蜃楼般的结构之美
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色（语义见注释）=====
+\definecolor{bgmain}{RGB}{247,246,249}          % 浅灰白底
+\definecolor{mainclr}{HTML}{1F4E5F}             % 主色：深青（工程师数学家的冷峻底色 / 台伯河水）
+\definecolor{accentclr}{HTML}{C9A227}           % 强调色：古铜金（1572《代数》刊本的 dignitas）
+\definecolor{badgeA}{HTML}{7C3AED}              % 分类 1：虚数 — 幻紫
+\definecolor{badgeB}{HTML}{E07B30}              % 分类 2：负数 — 琥珀
+\definecolor{badgeC}{HTML}{0E7C7B}              % 分类 3：记号法 — 青绿
+\definecolor{badgeD}{HTML}{4C5FD5}              % 分类 4：逼近法 — 靛蓝
+\definecolor{panelA}{RGB}{236,228,250}          % 虚数信息块
+\definecolor{panelB}{RGB}{248,233,220}          % 负数信息块
+\definecolor{panelC}{RGB}{220,240,238}          % 记号法信息块
+\definecolor{panelD}{RGB}{228,232,250}          % 逼近法信息块
+\definecolor{goldpanel}{RGB}{255,245,225}       % 金底信息块
+\definecolor{graypanel}{RGB}{244,244,242}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「实部 ⊕ 虚部」两界交叠
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeC!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeB!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 意大利\enspace·\enspace 虚数的驯服者\enspace·\enspace 工程师数学家};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {拉斐尔·邦贝利};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Rafael Bombelli\enspace·\enspace 1526 — 1572};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {\textit{L'Algebra}（1572）· plus of minus · 负数运算法则};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {虚数\\Imaginary\par\scriptsize plus of minus};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {负数\\Negative\par\scriptsize 四则口诀};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {记号法\\Notation\par\scriptsize 指数记号};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {逼近法\\Roots\par\scriptsize 平方根迭代};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他让「不可能的」平方根，成为可以运算的数。};
+  % 肖像：无存世肖像 → 装饰圆占位
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[font=\fontsize{46}{46}\selectfont, text=accentclr!55] at (1.0,1.45) {\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {无存世肖像};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 意大利\enspace|\enspace \faIcon{book}\enspace \textit{L'Algebra}（1572）\enspace|\enspace 虚数运算规则的确立者};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页（★ Wilson 模板硬性要求） ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{拉斐尔·邦贝利 - 虚数的驯服者}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧：无存世肖像 → 装饰圆占位
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (2.6,3.4);
+      \node[font=\fontsize{54}{54}\selectfont, text=accentclr!55] at (1.3,1.7) {\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.05) {无存世肖像};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生年}\quad 1526-01-20（受洗）\\[2pt]\lab{卒年}\quad 1572（罗马）\\[2pt]\lab{国籍}\quad 意大利（教宗国）};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=north] at (3.5,2.3)
+    {\lab{本名}\quad Rafael Bombelli\\[2pt]
+     \quad （本姓 Mazzoli，改姓 Bombelli）\\[2pt]\lab{师承}\quad Pier Francesco Clementi};
+  \node[infob, fill=panelA, draw=badgeA!50, anchor=south] at (-1.6,-1.85)
+    {\lab{教育}\quad 未受大学教育\\[2pt]\lab{职业}\quad 数学家 · 工程师\\[2pt]\lab{出生地}\quad 博洛尼亚（Bologna）};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 代数 · 复数\\[2pt]
+     \quad 数学（Mathematics）\\[2pt]
+     \lab{身后}\quad 卒于罗马};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 邦贝利的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{拉斐尔·邦贝利的一生}{1526 — 1572 · 从政变家族到虚数先驱}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7.4}{9.4}\selectfont, align=left, text width=8.6cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1508/祖父卷入 Bentivoglio 复辟博洛尼亚的政变，事败被俘处决, 
+    1.9/此后/父 Antonio Mazzoli 改姓 Bombelli，重返博洛尼亚, 
+    0.9/1526/1 月 20 日在博洛尼亚受洗，为六子女中最年长者, 
+    -0.1/早年/师从工程师建筑师 Pier Francesco Clementi, 
+    -1.1/1572/刊行《代数》（\textit{L'Algebra}），全面综述当时已知代数, 
+    -2.1/1572/卒于罗马
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 家族与早年 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{家族与早年 (1506–1526)}{政变家族的子弟 · 更姓避祸 · 博洛尼亚受洗}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1506} & \cellcolor{panelA}\textcolor{badgeA!82!black}{教宗尤利乌斯二世当权，放逐统治博洛尼亚的 Bentivoglio 家族} & \cellcolor{panelC}\textcolor{badgeC!82!black}{家族前史} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1508} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Bentivoglio 家族企图夺回博洛尼亚，事败；祖父参与政变被俘处决} & \cellcolor{panelC}\textcolor{badgeC!82!black}{家道中落} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{此后} & \cellcolor{panelA}\textcolor{badgeA!82!black}{父 Antonio Mazzoli 改姓 Bombelli，得以重返博洛尼亚} & \cellcolor{panelC}\textcolor{badgeC!82!black}{更姓避祸} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1526} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1 月 20 日受洗于博洛尼亚，是六子女中最年长者} & \cellcolor{panelC}\textcolor{badgeC!82!black}{邦贝利} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个政变失败家族的子弟，后来以一部《代数》留名数学史。}
+\end{center}
+\end{frame}}
+
+% --- 5. 没有大学的工程师数学家（核心贡献页） ---
+\newcommand{\engineerslide}{\begin{frame}\plainbar\sectiontitle{没有大学的工程师数学家}{received no college education · 师从工程师建筑师}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{邦贝利的经历}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{教育} & \cellcolor{panelD}\textcolor{badgeD!82!black}{未受大学教育（received no college education）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{自学成家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{师承} & \cellcolor{panelD}\textcolor{badgeD!82!black}{由工程师建筑师 Pier Francesco Clementi 传授} & \cellcolor{panelC}\textcolor{badgeC!82!black}{职业启蒙} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{动机} & \cellcolor{panelD}\textcolor{badgeD!82!black}{嫌名家著作晦涩，欲写一本人人可读、自足的代数书} & \cellcolor{panelC}\textcolor{badgeC!82!black}{著书立说} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 为谁而写？}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black} 不是又一部只有数学家才看得懂的艰深论著，}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black} 而是一本无需高等教育的读者也能读懂的书。}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 《代数》（1572）：负数运算法则（核心贡献页） ---
+\newcommand{\algebraslide}{\begin{frame}\plainbar\sectiontitle{《代数》（1572）：负数运算法则}{\textit{L'Algebra} · 欧洲第一个写下负数运算法则的人}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{《代数》的内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{成书} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1572 年出版，全面综述当时已知的代数} & \cellcolor{panelC}\textcolor{badgeC!82!black}{集大成} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{首创} & \cellcolor{panelB}\textcolor{badgeB!82!black}{欧洲第一个写下负数运算法则的人} & \cellcolor{panelC}\textcolor{badgeC!82!black}{负数的算术} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{文风} & \cellcolor{panelB}\textcolor{badgeB!82!black}{语言简明，人人可懂，且不失详尽} & \cellcolor{panelC}\textcolor{badgeC!82!black}{自足之书} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 负数运算法则（page.md 原文）}\\[3pt]
+  \begin{minipage}{5.5cm}\raggedright\fontsize{7.6}{10.4}\selectfont\color{mainclr!88!black}
+  "Plus times plus makes plus\\
+  Minus times minus makes plus\\
+  Plus times minus makes minus\\
+  Minus times plus makes minus
+  \end{minipage}\hfill
+  \begin{minipage}{5.5cm}\raggedright\fontsize{7.6}{10.4}\selectfont\color{mainclr!88!black}
+  Plus 8 times plus 8 makes plus 64\\
+  Minus 5 times minus 6 makes plus 30\\
+  Minus 4 times plus 5 makes minus 20\\
+  Plus 5 times minus 4 makes minus 20"
+  \end{minipage}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 记号法：印刷本最早的指数记号（核心贡献页） ---
+\newcommand{\notationslide}{\begin{frame}\plainbar\sectiontitle{记号法：印刷本最早的指数记号}{1U3 a. 6U1 p. 40 ·《代数》第二卷首创}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{邦贝利的记号}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{首创} & \cellcolor{panelC}\textcolor{badgeC!82!black}{《代数》第二卷首次在印刷本中使用指数记号} & \cellcolor{panelD}\textcolor{badgeD!82!black}{符号之始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{形式} & \cellcolor{panelC}\textcolor{badgeC!82!black}{以碗形上标记号书写 $x^{3}=6x+40$} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1U3 a. 6U1 p. 40} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{后续} & \cellcolor{panelC}\textcolor{badgeC!82!black}{完整符号代数随后由韦达发展} & \cellcolor{panelD}\textcolor{badgeD!82!black}{承前启后} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 指数记号（index notation）}\\[3pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$1U3\ \text{a.}\ 6U1\ \text{p.}\ 40\quad\Longleftrightarrow\quad x^{3}=6x+40$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 复数运算规则（核心贡献页） ---
+\newcommand{\complexslide}{\begin{frame}\plainbar\sectiontitle{复数运算规则}{plus of minus / minus of minus · 实部归实部、虚部归虚部}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{邦贝利的规则}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{命名} & \cellcolor{panelA}\textcolor{badgeA!82!black}{称 $i$ 为 "plus of minus"、$-i$ 为 "minus of minus"} & \cellcolor{panelD}\textcolor{badgeD!82!black}{既非正也非负} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{判据} & \cellcolor{panelA}\textcolor{badgeA!82!black}{$x^{3}=ax+b$ 在 $(a/3)^{3}>(b/2)^{2}$ 时出现复数解} & \cellcolor{panelD}\textcolor{badgeD!82!black}{判别式为负} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{运算} & \cellcolor{panelA}\textcolor{badgeA!82!black}{实部加实部，虚部加虚部} & \cellcolor{panelD}\textcolor{badgeD!82!black}{复数算术} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 复数乘法口诀（page.md 原文）}\\[3pt]
+  \begin{minipage}{11.4cm}\centering\fontsize{7.4}{9.9}\selectfont\color{mainclr!88!black}
+  "Plus by plus of minus, makes plus of minus.\\
+  Minus by plus of minus, makes minus of minus.\\
+  Plus by minus of minus, makes minus of minus.\\
+  Minus by minus of minus, makes plus of minus.\\
+  Plus of minus by plus of minus, makes minus.\\
+  Plus of minus by minus of minus, makes plus.\\
+  Minus of minus by plus of minus, makes plus.\\
+  Minus of minus by minus of minus makes minus."
+  \end{minipage}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. casus irreducibilis 的突破（核心贡献页） ---
+\newcommand{\casusslide}{\begin{frame}\plainbar\sectiontitle{casus irreducibilis 的突破}{不可约情形 · 卡尔达诺等人放弃之处}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{邦贝利的突破}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{难题} & \cellcolor{panelA}\textcolor{badgeA!82!black}{在不可约情形（casus irreducibilis）中求三次方程的实解} & \cellcolor{panelC}\textcolor{badgeC!82!black}{众人止步} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{方法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{采用 del Ferro / Tartaglia 的解法} & \cellcolor{panelC}\textcolor{badgeC!82!black}{方法来源} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{突破} & \cellcolor{panelA}\textcolor{badgeA!82!black}{卡尔达诺等人放弃之处，邦贝利求得实解} & \cellcolor{panelC}\textcolor{badgeC!82!black}{复数入算} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 三次方程（cubic equation）}\\[3pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$x^{3}=ax+b,\qquad (a/3)^{3}>(b/2)^{2}$}\\[3pt]
+  {\fontsize{9}{12}\selectfont\color{mainclr!78!black} 判别式为负，须处理负数的平方根}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 平方根的迭代逼近（核心贡献页） ---
+\newcommand{\rootsslide}{\begin{frame}\plainbar\sectiontitle{平方根的迭代逼近}{与简单连分数相关的方法 · $\sqrt{13}$ 的收敛列}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{邦贝利的方法}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{方法} & \cellcolor{panelD}\textcolor{badgeD!82!black}{用与简单连分数相关的方法逼近平方根} & \cellcolor{panelB}\textcolor{badgeB!82!black}{当时尚无连分数概念} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{展开} & \cellcolor{panelD}\textcolor{badgeD!82!black}{由 $n=(a\pm r)^{2}$ 反复代入求得 $r$} & \cellcolor{panelB}\textcolor{badgeB!82!black}{逐次逼近} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{结果} & \cellcolor{panelD}\textcolor{badgeD!82!black}{$\sqrt{13}$ 的近似列收敛至 3.605550883\ldots} & \cellcolor{panelB}\textcolor{badgeB!82!black}{精度惊人} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 平方根逼近（square roots）}\\[3pt]
+  {\fontsize{11.5}{14}\selectfont\color{mainclr!88!black}$n=(a\pm r)^{2}=a^{2}\pm 2ar+r^{2},\quad 0<r<1$}\\[3pt]
+  {\fontsize{11.5}{14}\selectfont\color{mainclr!88!black}$\sqrt{13}\approx 3\frac{2}{3},\ 3\frac{3}{5},\ 3\frac{20}{33},\ 3\frac{66}{109},\ \cdots$}\\[3pt]
+  {\fontsize{10.5}{13}\selectfont\color{mainclr!82!black}$\dfrac{265}{153}<\sqrt{3}<\dfrac{1351}{780}$（阿基米德定 $\pi$ 所用之界）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 声誉与身后 ---
+\newcommand{\reputationslide}{\begin{frame}\plainbar\sectiontitle{声誉与身后}{复数发明者之誉 · 莱布尼茨的盛赞 · 月球环形山}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{发明者之誉} & \cellcolor{panelA}\textcolor{badgeA!82!black}{学界普遍视为复数的发明者（generally regarded）} & \cellcolor{panelD}\textcolor{badgeD!82!black}{前无古人} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{莱布尼茨} & \cellcolor{panelA}\textcolor{badgeA!82!black}{读《代数》后赞其为 ". . . outstanding master of the analytical art."} & \cellcolor{panelD}\textcolor{badgeD!82!black}{身后盛誉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{命名} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1976 年，月球环形山以邦贝利命名} & \cellcolor{panelD}\textcolor{badgeD!82!black}{天穹留名} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一个被海市蜃楼般的数吸引的工程师，最终驯服了它们。}
+\end{center}
+\end{frame}}
+
+% --- 12. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他把负数的平方根，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {从怪物变成了工具。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {虚数的驯服者 —— 拉斐尔·邦贝利};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {拉斐尔·邦贝利\quad Rafael Bombelli\quad 1526 — 1572};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 虚数 · 负数 · 复数 · 代数\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\engineerslide
+\algebraslide
+\notationslide
+\complexslide
+\casusslide
+\rootsslide
+\reputationslide
+\closingslide
+\end{document}

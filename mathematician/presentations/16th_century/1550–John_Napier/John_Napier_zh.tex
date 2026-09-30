@@ -1,0 +1,462 @@
+% =============================================================
+%  对数的发现者 · 神奇的梅尔切斯顿：约翰·纳皮尔 (John Napier)
+%  Beamer 演示 —— 参照数学家立传模板（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/16th_century/pages/John_Napier
+%  设计母题：对数表刻度 / 算筹阵列 —— 柔和气泡呼应计算的秩序感
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：苏格兰高地深靛 + 对数表金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{16324F}     % 主色 — 苏格兰高地深靛（梅尔切斯顿塔 / 苏格兰夜空）
+\definecolor{accentclr}{HTML}{C9A227}   % 强调色 — 对数表金（黄铜计算时代）
+\definecolor{badgeA}{HTML}{4C5FD5}      % 分类 1 — 对数 · 靛蓝
+\definecolor{badgeB}{HTML}{0E7C7B}      % 分类 2 — 计算器械 · 青绿
+\definecolor{badgeC}{HTML}{E07B30}      % 分类 3 — 球面三角 · 琥珀
+\definecolor{badgeD}{HTML}{52307C}      % 分类 4 — 神学与传说 · 深紫
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{228,232,250}
+\definecolor{panelB}{RGB}{220,240,238}
+\definecolor{panelC}{RGB}{248,233,220}
+\definecolor{panelD}{RGB}{242,235,246}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「对数表刻度 / 算筹阵列」的计算秩序
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 苏格兰\enspace·\enspace 对数的发现者\enspace·\enspace 梅尔切斯顿领主};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {约翰·纳皮尔};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {John Napier\enspace·\enspace 1550 — 1617};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {对数 · 纳皮尔算筹 · 小数点 · 球面三角};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {对数\\Logarithms\par\scriptsize 1614《Descriptio》};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {计算器械\\Devices\par\scriptsize 算筹 · Promptuary};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {球面三角\\Spherical\par\scriptsize 圆部分法则};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {神学\\Theology\par\scriptsize 《A Plaine Discovery》};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把繁复的乘除化为加减，为此后数百年的科学计算铺平了道路。};
+  % 肖像（1616 年肖像）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{napier_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {John Napier (1550–1617)};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 苏格兰\enspace|\enspace \faIcon{university}\enspace 圣安德鲁斯大学\enspace|\enspace 对数 · 算筹 · 小数点};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{约翰·纳皮尔 - 从梅尔切斯顿塔到对数表}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（1616 年肖像）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{napier_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {John Napier of Merchiston，1616 年肖像};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1550-02-01 — 1617-04-04\\[2pt]\lab{本名}\quad John Napier of Merchiston\\[2pt]\lab{国籍}\quad 苏格兰（Kingdom of Scotland）};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{出生地}\quad 爱丁堡梅尔切斯顿塔\\[2pt]\lab{教育}\quad 圣安德鲁斯大学（未完成）\\[2pt]\lab{师承}\quad —（无载）};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{身份}\quad 数学家 · 物理学家 · 天文学家\\[2pt]\lab{头衔}\quad 梅尔切斯顿第 8 代领主\\[2pt]\lab{身后}\quad 葬 St Cuthbert's 教堂};
+  \node[infob, fill=panelD, draw=badgeD!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 对数 · 计算器械\\[2pt]
+     \quad 球面三角 · 十进制记法\\[2pt]
+     \lab{代表作}\quad 《Descriptio》(1614)};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 约翰·纳皮尔的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{约翰·纳皮尔的一生}{1550 — 1617 · 从梅尔切斯顿塔到对数表}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.4cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1550/生于爱丁堡梅尔切斯顿塔，父为梅尔切斯顿领主,
+    2.2/约 1563/十三岁入圣安德鲁斯大学圣萨尔瓦多学院,
+    1.5/1571/自欧陆学成返苏，已能通读希腊语,
+    0.8/1593/出版《A Plaine Discovery》,
+    0.1/1596/上书《Secret inventions》为国防献策,
+    -0.6/1614/《Mirifici Logarithmorum Canonis Descriptio》问世,
+    -1.3/1615/布里格斯来访，商讨对数重标度,
+    -2.0/1617/于梅尔切斯顿城堡去世，享年 67
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育 (1550–1574)}{梅尔切斯顿塔出生 · 圣安德鲁斯求学 · 欧陆游学}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1550} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于爱丁堡梅尔切斯顿塔；父 Sir Archibald Napier 为领主，出生时年仅 16 岁} & \cellcolor{panelB}\textcolor{badgeB!82!black}{领主之子} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1560} & \cellcolor{panelA}\textcolor{badgeA!82!black}{舅父 Adam Bothwell 致信其父，建议送约翰赴法国或佛兰德斯求学} & \cellcolor{panelB}\textcolor{badgeB!82!black}{欧陆就读不可考} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{约 1563} & \cellcolor{panelA}\textcolor{badgeA!82!black}{十三岁入圣安德鲁斯大学圣萨尔瓦多学院；宗教改革致校务纷扰} & \cellcolor{panelB}\textcolor{badgeB!82!black}{无完成学业的记录} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1571} & \cellcolor{panelA}\textcolor{badgeA!82!black}{返苏格兰时已通希腊语；1574 年在 Gartness 购得城堡} & \cellcolor{panelB}\textcolor{badgeB!82!black}{归乡与置业} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他终身为梅尔切斯顿领主，在家研究与著述，未任公职。}
+\end{center}
+\end{frame}}
+
+% --- 5. 《Mirifici Logarithmorum Canonis Descriptio》（1614） ---
+\newcommand{\descriptioslide}{\begin{frame}\plainbar\sectiontitle{《Mirifici Logarithmorum Canonis Descriptio》}{1614 · 对数的发现}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{纳皮尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{对数的发现} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1614 年提出对数，把乘除化为加减} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算史上的转折} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{篇幅结构} & \cellcolor{panelA}\textcolor{badgeA!82!black}{57 页说明 + 90 页三角函数对数表} & \cellcolor{panelB}\textcolor{badgeB!82!black}{工具与理论并重} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{传播} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Edward Wright 的英译本 1616 年问世} & \cellcolor{panelB}\textcolor{badgeB!82!black}{迅速被格雷沙姆学院接受} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 对数（logarithm）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\log_{b} x = y \iff b^{\,y} = x \qquad (b>0,\ b\neq 1)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 从纳皮尔对数到常用对数 ---
+\newcommand{\commonlogslide}{\begin{frame}\plainbar\sectiontitle{从纳皮尔对数到常用对数}{1615 布里格斯来访 · 重标度与委托计算}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{纳皮尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{重标度} & \cellcolor{panelA}\textcolor{badgeA!82!black}{1615 年布里格斯到访爱丁堡，商讨对数重标度} & \cellcolor{panelB}\textcolor{badgeB!82!black}{常用对数的起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{常数 e 的困难} & \cellcolor{panelA}\textcolor{badgeA!82!black}{实用上的困难来自今日称为 e 的常数} & \cellcolor{panelB}\textcolor{badgeB!82!black}{e 非二人所发现} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{委托计算} & \cellcolor{panelA}\textcolor{badgeA!82!black}{纳皮尔把修正对数表的计算委托给布里格斯} & \cellcolor{panelB}\textcolor{badgeB!82!black}{分工与传承} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 常用对数（base-10 logarithm）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$\log_{10} 10 = 1$}\\[3pt]
+  {\fontsize{8}{10.5}\selectfont\color{muteddark} 常数 e 由 Jacob Bernoulli 在数十年后发现}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. Napier's bones 与 Promptuary ---
+\newcommand{\bonesslide}{\begin{frame}\plainbar\sectiontitle{Napier's bones 与 Promptuary}{编号算筹的乘法工具}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{纳皮尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{格子乘法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{Fibonacci 已用的格子乘法被改良为编号算筹} & \cellcolor{panelA}\textcolor{badgeA!82!black}{乘法工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Napier's bones} & \cellcolor{panelB}\textcolor{badgeB!82!black}{一组带数字刻度的算杆，排布后逐位相乘} & \cellcolor{panelA}\textcolor{badgeA!82!black}{便携计算} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Promptuary} & \cellcolor{panelB}\textcolor{badgeB!82!black}{另一种早期计算器械，同属其计算工具谱系} & \cellcolor{panelA}\textcolor{badgeA!82!black}{器械先驱} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 格子乘法（lattice multiplication）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black}$a_{i}\,b_{j}\ \longrightarrow\ \text{按 }10^{\,i+j}\ \text{错位相加}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 8. 小数点的推广 ---
+\newcommand{\decimalslide}{\begin{frame}\plainbar\sectiontitle{小数点的推广}{改进 Stevin 记法 · 句点作小数分隔符}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{纳皮尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{改进记法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{改进 Simon Stevin 的十进制记数法} & \cellcolor{panelB}\textcolor{badgeB!82!black}{十进小数} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{句点分隔} & \cellcolor{panelA}\textcolor{badgeA!82!black}{引入句点（.）作为整数与小数部分的分隔符} & \cellcolor{panelB}\textcolor{badgeB!82!black}{今日通用记法} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{身后传译} & \cellcolor{panelA}\textcolor{badgeA!82!black}{《构造》1889 年由 Macdonald 英译} & \cellcolor{panelB}\textcolor{badgeB!82!black}{影响至今} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.6}{11.5}\selectfont\itshape\color{mainclr!88!black} "In numbers distinguished thus by a period in their midst, whatever is written after the period is a fraction..."}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{muteddark} —— 1889 年 Macdonald 英译《The Construction of the Wonderful Canon of Logarithms》}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 球面三角学与圆部分法则 ---
+\newcommand{\sphericalslide}{\begin{frame}\plainbar\sectiontitle{球面三角学与圆部分法则}{Napier's Rules of Circular Parts}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{纳皮尔的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{圆部分法则} & \cellcolor{panelC}\textcolor{badgeC!82!black}{《Descriptio》讨论球面三角定理，即圆部分法则} & \cellcolor{panelA}\textcolor{badgeA!82!black}{十组恒等式} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{纳皮尔圆} & \cellcolor{panelC}\textcolor{badgeC!82!black}{以圆或五边形排列五个部分，构成记忆法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{记忆工具} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{口诀} & \cellcolor{panelC}\textcolor{badgeC!82!black}{中间部取正弦、相邻部取正切、相对部取余弦} & \cellcolor{panelA}\textcolor{badgeA!82!black}{化繁为简} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 圆部分法则（Napier's Rules of Circular Parts）}\\[2pt]
+  {\fontsize{11}{14}\selectfont\color{mainclr!88!black}$\sin a = \tan\!\left(\tfrac{\pi}{2}-B\right)\tan b = \cos\!\left(\tfrac{\pi}{2}-c\right)\cos\!\left(\tfrac{\pi}{2}-A\right)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 防御发明（1596）与「术士」传闻 ---
+\newcommand{\defenseslide}{\begin{frame}\plainbar\sectiontitle{防御发明（1596）与「术士」传闻}{秘密发明上书 · 传说中的逸事}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{纳皮尔的主张}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{说明}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1596 上书} & \cellcolor{panelD}\textcolor{badgeD!82!black}{6 月 7 日呈《Secret inventions...》为国防献策} & \cellcolor{panelA}\textcolor{badgeA!82!black}{国防提案} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{具体构想} & \cellcolor{panelD}\textcolor{badgeD!82!black}{两种远距烧船的聚光镜 · 特种炮弹 · 防火枪的金属战车} & \cellcolor{panelA}\textcolor{badgeA!82!black}{未付诸实施} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{身后传闻} & \cellcolor{panelD}\textcolor{badgeD!82!black}{黑公鸡捉贼、醉鸽捕鸟等逸事，均系传闻口径} & \cellcolor{panelA}\textcolor{badgeA!82!black}{勿作事实} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他与 Robert Logan of Restalrig 的寻宝契约确有其文，但从未履行。}
+\end{center}
+\end{frame}}
+
+% --- 11. 神学著作《A Plaine Discovery》（1593） ---
+\newcommand{\theologyslide}{\begin{frame}\plainbar\sectiontitle{神学著作《A Plaine Discovery》（1593）}{以数学分析《启示录》}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{最重要之作} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1593 年以英文写成，自视为他最重要的一部著作} & \cellcolor{panelA}\textcolor{badgeA!82!black}{神学与数学} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{末世推算} & \cellcolor{panelD}\textcolor{badgeD!82!black}{定第七号角为 1541 年，预言末日为 1688 或 1700 年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{数学化解读} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{多语译本} & \cellcolor{panelD}\textcolor{badgeD!82!black}{荷兰 1600 · 法国 1602 · 德国 1611/1615 · 英文新版 1611} & \cellcolor{panelA}\textcolor{badgeA!82!black}{流传甚广} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 1594-01-29 的献词呈献给 James VI，劝其先正己家与宫廷。}
+\end{center}
+\end{frame}}
+
+% --- 12. 影响、追随者与身后纪念 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{影响、追随者与身后纪念}{格雷沙姆学院的接受 · 身后 eponym}
+\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{早期追随者} & \cellcolor{panelA}\textcolor{badgeA!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item 仪器制造者 Edmund Gunter、John Speidell\item Henry Briggs 改用常用对数并重算对数表\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{对数迅速传播} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{历史影响} & \cellcolor{panelA}\textcolor{badgeA!82!black}{对数的发明被视为十进制算术普及的最大单一因素} & \cellcolor{panelB}\textcolor{badgeB!82!black}{计算革命} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{身后纪念} & \cellcolor{panelB}\textcolor{badgeB!82!black}{电学单位 neper · 月球环形山 Neper · 爱丁堡纳皮尔大学} & \cellcolor{panelA}\textcolor{badgeA!82!black}{eponym} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 法、西、葡语至今称自然对数为「纳皮尔对数」。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他把乘法化作了加法，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {也为后世留下了对数。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是一张对数表，和一座「神奇的梅尔切斯顿」的传说。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {约翰·纳皮尔\quad John Napier\quad 1550 — 1617};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 对数 · 算筹 · 小数点\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\descriptioslide
+\commonlogslide
+\bonesslide
+\decimalslide
+\sphericalslide
+\defenseslide
+\theologyslide
+\honorslide
+\closingslide
+\end{document}

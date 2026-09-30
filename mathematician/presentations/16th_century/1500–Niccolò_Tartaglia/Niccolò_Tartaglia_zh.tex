@@ -1,0 +1,467 @@
+% =============================================================
+%  口吃者 · 弹道学之父：尼科洛·塔尔塔利亚 (Niccolò Tartaglia)
+%  Beamer 演示 —— 参照 17 世纪 Johann_Bernoulli 模板（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/16th_century/pages/Niccolò_Tartaglia
+%  设计母题：弹道抛物线 / 数字三角 —— 柔和气泡呼应几何的流动
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：威尼斯深蓝 + 火药铜橙 + 四分类色 =====
+\definecolor{bgmain}{RGB}{244,246,248}
+\definecolor{mainclr}{HTML}{16324F}      % 威尼斯深蓝 — 亚得里亚海的深沉
+\definecolor{accentclr}{HTML}{B85C00}    % 火药铜橙 — 弹道学 / 军事工程
+\definecolor{badgeA}{HTML}{2F4470}       % 三次方程 — 靛蓝
+\definecolor{badgeB}{HTML}{C9A227}       % 算术三角 — 暗金
+\definecolor{badgeC}{HTML}{145C54}       % 译经 — 深绿
+\definecolor{badgeD}{HTML}{46356B}       % 命运 — 暗紫
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,38,60}
+\definecolor{muteddark}{RGB}{70,84,100}
+\definecolor{panelA}{RGB}{228,233,245}
+\definecolor{panelB}{RGB}{250,242,220}
+\definecolor{panelC}{RGB}{224,240,236}
+\definecolor{panelD}{RGB}{235,231,242}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应弹道抛物线与数字三角
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!12] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!12] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 意大利\enspace·\enspace 威尼斯共和国\enspace·\enspace 口吃者};
+  \node[anchor=center, font=\fontsize{26}{32}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {尼科洛·塔尔塔利亚};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Niccolò Tartaglia\enspace·\enspace 1499/1500 — 1557};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!78!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {口吃者 · 弹道学之父 · 完全自学者};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {三次方程\\Cubic\par\scriptsize Cardano–Tartaglia};
+      \node[badge, fill=accentclr] at (-1.68,0)
+        {弹道学\\Ballistics\par\scriptsize Nova Scientia};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {译经\\Translations\par\scriptsize 阿基米德 · 欧几里得};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {自学者\\Self-taught\par\scriptsize 算盘学校教师};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他把数学送进炮兵的军械库，也把三次方程的解法带进了十年论战。};
+  % 肖像（Rijksmuseum 藏版画像）
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{tartaglia_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {版画像（Rijksmuseum）};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 威尼斯共和国\enspace|\enspace \faIcon{university}\enspace 算盘学校（无固定院校）\enspace|\enspace 三次方程 · 弹道学 · 塔尔塔利亚三角};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{尼科洛·塔尔塔利亚 - 从布雷西亚到威尼斯}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{tartaglia_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {Niccolò Tartaglia（1499/1500–1557）};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1499/1500 — 1557-12-13\\[2pt]\lab{本名}\quad Niccolò Fontana（一说，存争议）\\[2pt]\lab{国籍}\quad 意大利（威尼斯共和国）};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 完全自学（autodidact）\\[2pt]
+     \lab{师承}\quad 无（自学者）\\[2pt]\lab{著作}\quad 《General Trattato》};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 布雷西亚（威尼斯共和国）\\[2pt]\lab{卒地}\quad 威尼斯\\[2pt]\lab{领域}\quad 代数 · 弹道学 · 几何};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.5,-1.85)
+    {\lab{家庭}\quad 1506 年丧父\\[2pt]
+     \lab{身份}\quad 数学家 · 工程师 · 测绘师\\[2pt]
+     \lab{影响}\quad Al-Khwarizmi、Euclid};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 塔尔塔利亚的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{塔尔塔利亚的一生}{1499/1500 — 1557 · 从布雷西亚到威尼斯}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.6cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1499–1500/生于布雷西亚，父 Yliano Abido 为信使骑手,
+    2.2/1506/父遇劫被害，一家陷于贫困,
+    1.5/1512/布雷西亚之劫中被马刀劈伤，落下「口吃者」绰号,
+    0.8/约1517/迁维罗纳；学到字母「k」即因贫辍学，此后完全自学,
+    0.1/1531/在维罗纳的香肠贩摊头读到瓜里科版阿基米德,
+    -0.6/1534–1537/迁威尼斯；1537 年发表《Nova Scientia》,
+    -1.3/1539/以诗体授出三次方程解法；1545《大术》引发十年论战,
+    -2.0/1556–1560/《General Trattato》成书；1557-12-13 逝于威尼斯
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与教育：布雷西亚之劫 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与教育：布雷西亚之劫 (1506–1512)}{丧父 · 屠城 · 马刀留下的语言障碍}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1499/1500} & \cellcolor{panelD}\textcolor{badgeD!82!black}{生于布雷西亚，父为往返邻近城镇送信的信使骑手} & \cellcolor{panelA}\textcolor{badgeA!82!black}{贫寒之家} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1506} & \cellcolor{panelD}\textcolor{badgeD!82!black}{父遇劫被害，母与三个孩子陷于贫困} & \cellcolor{panelA}\textcolor{badgeA!82!black}{失怙} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1512} & \cellcolor{panelD}\textcolor{badgeD!82!black}{法军攻陷布雷西亚，逾 45,000 居民遇难；一家避难主教座堂，他被士兵以马刀劈伤下颚与上颚} & \cellcolor{panelA}\textcolor{badgeA!82!black}{屠城之劫} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1512} & \cellcolor{panelD}\textcolor{badgeD!82!black}{母救回一命，却留下语言障碍；此后终生留须遮疤、不剃} & \cellcolor{panelA}\textcolor{badgeA!82!black}{「口吃者」} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 一场屠城，给了他一个伴随一生的绰号。}
+\end{center}
+\end{frame}}
+
+% --- 5. 自学之路 ---
+\newcommand{\selfstudyslide}{\begin{frame}\plainbar\sectiontitle{自学之路}{字母「k」即辍学 · 「死人们的著作」与「贫穷之女」}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{辍学} & \cellcolor{panelD}\textcolor{badgeD!82!black}{约 14 岁随 Master Francesco 学写字母表，学到「k」时无力缴费，此后再未请过教师} & \cellcolor{panelA}\textcolor{badgeA!82!black}{自学起点} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{自白} & \cellcolor{panelD}\textcolor{badgeD!82!black}{《Quesiti》卷六问 8 的自传式自述} & \cellcolor{panelA}\textcolor{badgeA!82!black}{第一手文字} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{时代之利} & \cellcolor{panelD}\textcolor{badgeD!82!black}{威尼斯位居欧洲印刷文化前沿，早期印本连贫寒学者也能读到} & \cellcolor{panelA}\textcolor{badgeA!82!black}{自学之便} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{8.6}{11.5}\selectfont\itshape\color{mainclr!88!black} "From that day, I never returned to a tutor, but continued to labour by myself over the works of dead men, accompanied only by the daughter of poverty that is called industry"}\\[3pt]
+  {\fontsize{7.5}{9.5}\selectfont\color{muteddark} —— 《Quesiti》卷六问 8}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 三次方程与 Fiore 挑战 ---
+\newcommand{\cubicslide}{\begin{frame}\plainbar\sectiontitle{三次方程与 Fiore 挑战}{独立解出三类三次方程 · 今称 Cardano–Tartaglia formula}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{独立解出} & \cellcolor{panelA}\textcolor{badgeA!82!black}{独立解出三类不同形式三次方程的解法} & \cellcolor{panelC}\textcolor{badgeC!82!black}{并列命名} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Fiore 挑战} & \cellcolor{panelA}\textcolor{badgeA!82!black}{德尔·费罗的学生 Fiore 下战书挑战解题，由此确知解法存在} & \cellcolor{panelC}\textcolor{badgeC!82!black}{解题决斗} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1539 吐露解法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{受 Cardano「不发表」之诺所动，以韵文形式交出三类三次方程解法} & \cellcolor{panelC}\textcolor{badgeC!82!black}{日后之争} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 三次方程求根公式（今称 Cardano–Tartaglia formula）}\\[2pt]
+  {\fontsize{11.5}{15}\selectfont\color{mainclr!88!black}$x=\sqrt[3]{\dfrac{q}{2}+\sqrt{\dfrac{q^{2}}{4}+\dfrac{p^{3}}{27}}}+\sqrt[3]{\dfrac{q}{2}-\sqrt{\dfrac{q^{2}}{4}+\dfrac{p^{3}}{27}}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 誓言与《大术》论战（敏感页） ---
+\newcommand{\oathslide}{\begin{frame}\plainbar\sectiontitle{誓言与《大术》论战}{1539 承诺 · 破誓发表 · 十年论战}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{阶段}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1539 承诺} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Cardano 以「承诺不发表」劝得塔尔塔利亚以诗体交出三类解法} & \cellcolor{panelC}\textcolor{badgeC!82!black}{诗体秘诀} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{破誓} & \cellcolor{panelA}\textcolor{badgeA!82!black}{数年后 Cardano 见到 del Ferro 更早的未刊成果，认定誓言可以违背} & \cellcolor{panelC}\textcolor{badgeC!82!black}{发表（仍署名塔尔塔利亚）} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{论战} & \cellcolor{panelA}\textcolor{badgeA!82!black}{塔尔塔利亚极为愤怒，与 Cardano 的学生 Ferrari 公开挑战赛，论战持续十年} & \cellcolor{panelC}\textcolor{badgeC!82!black}{归属之争} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{流言} & \cellcolor{panelD}\textcolor{badgeD!82!black}{「塔尔塔利亚余生专为毁掉 Cardano」的说法，已被数学史家证伪} & \cellcolor{panelC}\textcolor{badgeC!82!black}{存疑} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.12cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 数学史家把功劳并记两人，称作 Cardano–Tartaglia formula。}
+\end{center}
+\end{frame}}
+
+% --- 8. 弹道学：《Nova Scientia》1537 ---
+\newcommand{\ballisticsslide}{\begin{frame}\plainbar\sectiontitle{弹道学：《Nova Scientia》1537}{第一个把数学应用于炮弹路径研究}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{首创} & \cellcolor{panelD}\textcolor{badgeD!82!black}{第一个把数学应用于炮弹路径的研究，把炮手的实用知识理论化、数学化} & \cellcolor{panelA}\textcolor{badgeA!82!black}{弹道学之始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{45° 结论} & \cellcolor{panelD}\textcolor{badgeD!82!black}{最大射程在炮身与地面成 45° 时取得} & \cellcolor{panelA}\textcolor{badgeA!82!black}{结论之一} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{三段模型} & \cellcolor{panelD}\textcolor{badgeD!82!black}{弹道为「直线段—圆弧段—竖直下落」三段式} & \cellcolor{panelA}\textcolor{badgeA!82!black}{后被伽利略部分取代} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{流传} & \cellcolor{panelD}\textcolor{badgeD!82!black}{军事科学著作在欧洲流传极广，至 18 世纪仍是普通炮手的参考书} & \cellcolor{panelA}\textcolor{badgeA!82!black}{影响深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.32cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 最大射程角（range of a projectile）}\\[2pt]
+  {\fontsize{12}{15.5}\selectfont\color{mainclr!88!black}$\theta_{\max}=45^{\circ}$（对真空斜抛恰为真）}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 9. 译经：阿基米德与欧几里得 ---
+\newcommand{\translationsslide}{\begin{frame}\plainbar\sectiontitle{译经：阿基米德与欧几里得}{1543 · 重心与浮体篇首刊 · 《原本》首个现代欧洲语言译本}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{《Opera Archimedis》} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1543 年出版 71 页拉丁文版阿基米德，重心与浮体诸篇为首次出版} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首刊} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{《Euclide Megarense》} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1543 年出版《几何原本》首个现代欧洲语言（意大利语）译本} & \cellcolor{panelA}\textcolor{badgeA!82!black}{里程碑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{纠正} & \cellcolor{panelC}\textcolor{badgeC!82!black}{依据 Zamberti 的希腊文校勘本，纠正两个世纪以来拉丁译本第五卷（欧多克索斯比例论）之误，并写下第一个现代且有用的评注} & \cellcolor{panelA}\textcolor{badgeA!82!black}{比例论复兴} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 数学由此走出大学，流向更广泛的识字公众。}
+\end{center}
+\end{frame}}
+
+% --- 10. 《General Trattato》与塔尔塔利亚三角 ---
+\newcommand{\trattatoslide}{\begin{frame}\plainbar\sectiontitle{《General Trattato》与塔尔塔利亚三角}{六卷约 1500 页 · 二项式系数比帕斯卡早一百年}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{2.9cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{巨著} & \cellcolor{panelB}\textcolor{badgeB!82!black}{约 1500 页六卷，以威尼斯方言写成；前三卷 1556 年出版，后三卷 1560 年由其文学遗嘱执行人 Curtio Troiano 出版} & \cellcolor{panelA}\textcolor{badgeA!82!black}{算术百科} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{评价} & \cellcolor{panelB}\textcolor{badgeB!82!black}{David Eugene Smith 誉之为「那个世纪意大利出现的最佳算术论著」} & \cellcolor{panelA}\textcolor{badgeA!82!black}{盛赞} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{第一卷} & \cellcolor{panelB}\textcolor{badgeB!82!black}{554 页商业算术：多种货币兑换、计算利息、合伙分利} & \cellcolor{panelA}\textcolor{badgeA!82!black}{实用之书} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{三角} & \cellcolor{panelB}\textcolor{badgeB!82!black}{第二卷明载二项式系数的加法构成规则，比帕斯卡早一百年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{早一百年} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.34cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 二项式系数三角（Tartaglia's triangle，亦称帕斯卡三角）}\\[2pt]
+  {\fontsize{11.5}{15}\selectfont\color{mainclr!88!black}$\dbinom{n}{k}=\dbinom{n-1}{k-1}+\dbinom{n-1}{k}\qquad(6+4)^{7}$ 的系数展开}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 四面体体积 ---
+\newcommand{\tetrahedronslide}{\begin{frame}\plainbar\sectiontitle{四面体体积}{底 13-14-15 · 棱 20/18/16 · 方法正确}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{2.6cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{示例} & \cellcolor{panelC}\textcolor{badgeC!82!black}{底为 13-14-15 三角形、棱长为 20、18、16 的不规则四面体} & \cellcolor{panelA}\textcolor{badgeA!82!black}{立体几何} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{方法} & \cellcolor{panelC}\textcolor{badgeC!82!black}{底三角形分割为 5-12-13 与 9-12-15，在垂直平面内立三角形求其高} & \cellcolor{panelA}\textcolor{badgeA!82!black}{算法示范} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{结果} & \cellcolor{panelC}\textcolor{badgeC!82!black}{答案 $\sqrt{240\tfrac{615}{3136}}$，体积 $V\approx 433.9513222$（方法正确，中途抄错一位）} & \cellcolor{panelA}\textcolor{badgeA!82!black}{结果} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 三角形求高公式（源自余弦定理）}\\[2pt]
+  {\fontsize{12}{15.5}\selectfont\color{mainclr!88!black}$h^{2}=r^{2}-\left(\dfrac{p^{2}+r^{2}-q^{2}}{2p}\right)^{2}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与传承（page.md 无载奖项 —— 写影响与传承） ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{影响与传承}{page.md 无载任何奖项 · 伽利略的详注本}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{影响伽利略} & \cellcolor{panelA}\textcolor{badgeA!82!black}{伽利略拥有其「批注详尽」的弹道著作，并在此基础上最终解决抛体问题} & \cellcolor{panelC}\textcolor{badgeC!82!black}{薪火相传} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{长久流传} & \cellcolor{panelD}\textcolor{badgeD!82!black}{军事科学著作至 18 世纪仍是普通炮手的参考书} & \cellcolor{panelC}\textcolor{badgeC!82!black}{历久不衰} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{并列命名} & \cellcolor{panelB}\textcolor{badgeB!82!black}{数学史家把三次方程求根公式并记两人：Cardano–Tartaglia formula} & \cellcolor{panelC}\textcolor{badgeC!82!black}{并享其名} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 从炮手的军械库到伽利略的手稿，他的数学走了很远。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他从军械与论战中走来，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {把数学交给了炮手与后世。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是弹道的抛物线，与一颗写满系数的数字三角。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {尼科洛·塔尔塔利亚\quad Niccolò Tartaglia\quad 1499/1500 — 1557};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 三次方程 · 弹道学 · 译经\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\selfstudyslide
+\cubicslide
+\oathslide
+\ballisticsslide
+\translationsslide
+\trattatoslide
+\tetrahedronslide
+\honorslide
+\closingslide
+\end{document}

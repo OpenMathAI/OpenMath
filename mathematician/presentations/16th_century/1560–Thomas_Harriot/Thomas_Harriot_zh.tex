@@ -1,0 +1,459 @@
+% =============================================================
+%  早于伽利略的望月者 · 未发表的天才：托马斯·哈里奥特 (Thomas Harriot)
+%  Beamer 演示 —— 参照数学家立传模板（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/16th_century/pages/Thomas_Harriot
+%  设计母题：月面环形山 / 手稿墨迹 —— 柔和气泡呼应观测与书写的质感
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：月岩灰蓝 + 月色金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,246,249}
+\definecolor{mainclr}{HTML}{37474F}     % 主色 — 月岩灰蓝（1609 年月面图 / Syon House 屋顶夜观）
+\definecolor{accentclr}{HTML}{E0A458}   % 强调色 — 月色金（望远镜中的第一缕月光）
+\definecolor{badgeA}{HTML}{5B2A86}      % 分类 1 — 代数记号 · 深紫
+\definecolor{badgeB}{HTML}{1B5E8C}      % 分类 2 — 天文观测 · 深天蓝
+\definecolor{badgeC}{HTML}{175E54}      % 分类 3 — 航海与罗阿诺克 · 青绿
+\definecolor{badgeD}{HTML}{A63A2B}      % 分类 4 — 未刊手稿 · 赭红
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{18,22,58}
+\definecolor{muteddark}{RGB}{72,68,96}
+\definecolor{panelA}{RGB}{235,230,246}
+\definecolor{panelB}{RGB}{224,236,246}
+\definecolor{panelC}{RGB}{224,240,236}
+\definecolor{panelD}{RGB}{246,232,229}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应「月面环形山 / 手稿墨迹」的观测与书写
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!5] (current page.north west) rectangle (current page.south east);
+  \fill[badgeB!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeC!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeA!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!10] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 英格兰\enspace·\enspace 早于伽利略的望月者\enspace·\enspace 未发表的天才};
+  \node[anchor=center, font=\fontsize{27}{33}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {托马斯·哈里奥特};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Thomas Harriot\enspace·\enspace c. 1560 — 1621};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!75!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {月球绘图 · 太阳黑子 · 符号代数 · 折射定律};
+  \draw[accentclr!70, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {符号代数\\Symbolic\par\scriptsize 不等号 $< >$};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {天文观测\\Astronomy\par\scriptsize 望远镜月图};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {航海\\Navigation\par\scriptsize 罗阿诺克远征};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {未刊手稿\\Manuscripts\par\scriptsize 《Praxis》1631};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他先于伽利略把望远镜对准月亮，却把成果留在了手稿箱里。};
+  % 肖像（传为 1602 年像，来历不明）
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}
+      \clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[anchor=center] at (1.0,1.45) {\includegraphics[width=2.0cm,height=2.9cm,keepaspectratio]{harriot_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north east, font=\fontsize{5.3}{6.4}\selectfont\itshape, text=covermuted]
+    at ([xshift=7.86cm, yshift=1.42cm]current page.center) {传为 Thomas Harriot（1602）};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 英格兰\enspace|\enspace \faIcon{university}\enspace 牛津 St Mary Hall\enspace|\enspace 月球绘图 · 太阳黑子 · 符号代数};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!90!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{托马斯·哈里奥特 - 一位未发表的天才}{生卒 · 本名 · 国籍 · 教育 · 资助人 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧肖像（传为 1602 年像）
+  \node[draw=accentclr!60, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[anchor=center] at (1.5,1.95) {\includegraphics[width=3.0cm,height=3.9cm,keepaspectratio]{harriot_portrait.jpg}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.9}{7.1}\selectfont\itshape, text=covermuted, align=center, text width=3.7cm]
+    at (-6.0,-2.25) {传为 Thomas Harriot（1602 年像， Trinity College, Oxford 藏），来历不明};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!50, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad c. 1560 — 1621-07-02\\[2pt]\lab{本名}\quad Thomas Harriot\\[2pt]\lab{国籍}\quad 英格兰（Kingdom of England）};
+  \node[infob, fill=panelB, draw=badgeB!45, anchor=north] at (3.5,2.3)
+    {\lab{出生地}\quad 牛津（英格兰）\\[2pt]\lab{教育}\quad St Mary Hall, Oxford（1577 注册）\\[2pt]\lab{导师}\quad —（无载）};
+  \node[infob, fill=panelC, draw=badgeC!50, anchor=south] at (-1.6,-1.85)
+    {\lab{资助人}\quad Walter Raleigh\\[2pt]
+     \quad Henry Percy（诺森伯兰伯爵）\\[2pt]
+     \lab{家庭}\quad —（无载）};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=south] at (3.5,-1.85)
+    {\lab{核心领域}\quad 天文学 · 代数\\[2pt]
+     \quad 光学 · 航海 · 民族志\\[2pt]
+     \lab{身份}\quad 天文学家 · 数学家 · 制图师};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 托马斯·哈里奥特的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{托马斯·哈里奥特的一生}{c. 1560 — 1621 · 从牛津到 Syon House}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.4cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!85!black}}
+]
+  \draw[accentclr!75, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/c.1560/生于牛津，父母与家世 page.md 无载,
+    2.2/1577/入牛津大学 St Mary Hall，其名见于注册簿,
+    1.5/1585–86/随罗利资助的远征队赴罗阿诺克岛,
+    0.8/1588/出版生前唯一著作《弗吉尼亚新地真实简报》,
+    0.1/1595/获诺森伯兰伯爵赠达勒姆地产并长期受其赞助,
+    -0.6/1609/以望远镜绘下首幅月面图，早伽利略近四个月,
+    -1.3/1610/自 12 月起观测太阳黑子,
+    -2.0/1621/于伦敦去世，享年 60–61（1631 年《Praxis》身后出版）
+  }{
+    \fill[accentclr!85] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与牛津 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与牛津 (c.1560–1580)}{St Mary Hall 求学 · 毕业即研习航海}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!70}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{c.1560} & \cellcolor{panelB}\textcolor{badgeB!82!black}{生于牛津；父母与家世 page.md 无载} & \cellcolor{panelC}\textcolor{badgeC!82!black}{出生地牛津} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{1577} & \cellcolor{panelB}\textcolor{badgeB!82!black}{入牛津大学 St Mary Hall，其名见于学院注册簿} & \cellcolor{panelC}\textcolor{badgeC!82!black}{求学牛津} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{1580} & \cellcolor{panelB}\textcolor{badgeB!82!black}{获牛津学士学位，随即研习航海，使用星盘与六分仪} & \cellcolor{panelC}\textcolor{badgeC!82!black}{航海技术} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{毕业后} & \cellcolor{panelB}\textcolor{badgeB!82!black}{为罗利麾下船长讲授航海技术，成果记于《Articon》} & \cellcolor{panelC}\textcolor{badgeC!82!black}{后世遗失} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他生前极少发表，多数成果长期锁在手稿箱中。}
+\end{center}
+\end{frame}}
+
+% --- 5. 罗阿诺克远征与《真实简报》（1588） ---
+\newcommand{\roanokeslide}{\begin{frame}\plainbar\sectiontitle{罗阿诺克远征与《真实简报》(1588)}{生前唯一出版的著作}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!70}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{哈里奥特的记述}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{罗阿诺克远征} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1585–86 随罗利资助、Ralph Lane 率领的探险队赴罗阿诺克岛} & \cellcolor{panelA}\textcolor{badgeA!82!black}{唯一一次远征} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{生前唯一出版物} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1588 年《A Briefe and True Report of the New Found Land of Virginia》} & \cellcolor{panelA}\textcolor{badgeA!82!black}{影响后世殖民者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{早期人口记述} & \cellcolor{panelC}\textcolor{badgeC!82!black}{含对北美原住民人口的早期记述} & \cellcolor{panelA}\textcolor{badgeA!82!black}{史料价值} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!75}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{7.6}{10}\selectfont\itshape\color{mainclr!88!black} "Many things they sawe with us...as mathematical instruments, sea compasses...[and] spring clocks that seemed to goe of themselves..."}\\[2pt]
+  {\fontsize{7}{9}\selectfont\color{muteddark} —— 1588 年《A Briefe and True Report of the New Found Land of Virginia》}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 阿尔冈昆语与语音字母 ---
+\newcommand{\algonquianslide}{\begin{frame}\plainbar\sectiontitle{阿尔冈昆语与语音字母}{从 Wanchese 与 Manteo 学来的语言}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!70}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{2.8cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{语言师承} & \cellcolor{panelC}\textcolor{badgeC!82!black}{向两位原住民 Wanchese 与 Manteo 学习卡罗莱纳阿尔冈昆语} & \cellcolor{panelA}\textcolor{badgeA!82!black}{队中唯一通译者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{语音字母} & \cellcolor{panelC}\textcolor{badgeC!82!black}{自创语音转写字母表，记录该语言的发音} & \cellcolor{panelA}\textcolor{badgeA!82!black}{语言记录} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{关键角色} & \cellcolor{panelC}\textcolor{badgeC!82!black}{是启航前唯一已习得该语的英格兰人} & \cellcolor{panelA}\textcolor{badgeA!82!black}{远征成败所系} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 语言的掌握，使他成为探险队中不可或缺的一员。}
+\end{center}
+\end{frame}}
+
+% --- 7. 月球绘图（1609–1613） ---
+\newcommand{\moonslide}{\begin{frame}\plainbar\sectiontitle{月球绘图 (1609–1613)}{最早的望远镜天体观测 · 然伽利略先发表}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.78}
+\arrayrulecolor{accentclr!70}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.0cm}|>{\scriptsize}X|>{\scriptsize}p{3.2cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{哈里奥特的观测}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{首幅月图} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1609-08-05（儒略历 07-26）以望远镜绘下月面} & \cellcolor{panelA}\textcolor{badgeA!82!black}{最早的望远镜天体观测} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{早于伽利略} & \cellcolor{panelB}\textcolor{badgeB!82!black}{早伽利略 1609-11-30 的观测近四个月} & \cellcolor{panelA}\textcolor{badgeA!82!black}{然伽利略先发表且更精细} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{全月面图} & \cellcolor{panelB}\textcolor{badgeB!82!black}{至 1613 年已绘两幅全月面图，环形山位置准确} & \cellcolor{panelA}\textcolor{badgeA!82!black}{数十年内无人超越} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.34cm}
+\begin{center}
+\includegraphics[height=1.95cm]{harriot_moon_1609.jpg}\\[1pt]
+{\fontsize{6.4}{8}\selectfont\itshape\color{covermuted} Harriot 1609 年 8 月的月面图（观测笔记）}
+\end{center}
+\end{frame}}
+
+% --- 8. 太阳黑子（1610） ---
+\newcommand{\sunspotsslide}{\begin{frame}\plainbar\sectiontitle{太阳黑子 (1610)}{以望远镜直接观日 · 揭示太阳自转}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!70}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.4cm}|>{\scriptsize}X|>{\scriptsize}p{2.8cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{首次观测} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1610 年 12 月起以望远镜观测太阳黑子} & \cellcolor{panelA}\textcolor{badgeA!82!black}{最早的太阳黑子观测} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{观测方式} & \cellcolor{panelB}\textcolor{badgeB!82!black}{直接以望远镜窥日（危险方式），幸无眼部受伤记录} & \cellcolor{panelA}\textcolor{badgeA!82!black}{条件未知} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{记录与结论} & \cellcolor{panelB}\textcolor{badgeB!82!black}{199 幅黑子图、累计约 690 次观测，揭示太阳自转} & \cellcolor{panelA}\textcolor{badgeA!82!black}{支持日心说 · 未发表} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 伽利略的黑子观测于 1613 年公开发表。}
+\end{center}
+\end{frame}}
+
+% --- 9. 折射定律与光学 ---
+\newcommand{\refractionslide}{\begin{frame}\plainbar\sectiontitle{折射定律与光学}{早于斯涅耳约 20 年 · 影响开普勒}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!70}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{哈里奥特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{折射定律} & \cellcolor{panelA}\textcolor{badgeA!82!black}{发现 Snell's law 早于斯涅耳约 20 年} & \cellcolor{panelB}\textcolor{badgeB!82!black}{生前未发表} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{光学通信} & \cellcolor{panelA}\textcolor{badgeA!82!black}{与开普勒通信，陈述其光学思想} & \cellcolor{panelB}\textcolor{badgeB!82!black}{影响开普勒猜想} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{研究场所} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Syon House 期间系统研究折射定律} & \cellcolor{panelB}\textcolor{badgeB!82!black}{手稿未刊} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!75}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 折射定律（Snell's law）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$n_{1}\sin\theta_{1} = n_{2}\sin\theta_{2}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 10. 符号代数与不等号 ---
+\newcommand{\algebraslide}{\begin{frame}\plainbar\sectiontitle{符号代数与不等号}{首次广泛使用 $<$ 与 $>$ · 英国代数学派}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!70}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{哈里奥特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{不等号} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首次广泛使用不等号 $<$ 与 $>$} & \cellcolor{panelB}\textcolor{badgeB!82!black}{经 1631 年身后《Praxis》面世} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{记法革新} & \cellcolor{panelA}\textcolor{badgeA!82!black}{约 1600 年引入接近现代记法的代数符号体系} & \cellcolor{panelB}\textcolor{badgeB!82!black}{未知数运算如数字} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{学派} & \cellcolor{panelA}\textcolor{badgeA!82!black}{开创英国代数学派} & \cellcolor{panelB}\textcolor{badgeB!82!black}{影响深远} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!75}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 不等号（inequality signs）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$a < b \quad\Longleftrightarrow\quad b > a$}\\[2pt]
+  {\fontsize{7.4}{9.5}\selectfont\color{muteddark} 其符号随 1631 年身后出版的《Artis Analyticae Praxis》面世}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 球堆积、二进制与复利 ---
+\newcommand{\packingslide}{\begin{frame}\plainbar\sectiontitle{球堆积、二进制与复利}{炮弹密堆 · 二进制记数 · 连续复利}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!70}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{哈里奥特的工作}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{球堆积} & \cellcolor{panelD}\textcolor{badgeD!82!black}{受罗利之托研究甲板炮弹的最密堆叠} & \cellcolor{panelB}\textcolor{badgeB!82!black}{理论近于原子论} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{原子论之嫌} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1605 年后一度因此被指控信奉原子论} & \cellcolor{panelB}\textcolor{badgeB!82!black}{学说争议} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{二进制} & \cellcolor{panelD}\textcolor{badgeD!82!black}{早莱布尼茨数十年发明二进制记数与算术} & \cellcolor{panelB}\textcolor{badgeB!82!black}{1920 年代才为人知} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!75}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 连续复利（continuous compounding）}\\[2pt]
+  {\fontsize{12}{15}\selectfont\color{mainclr!88!black}$\left(1+\dfrac{1}{n}\right)^{n}$ —— 约 1620 年手稿中的早期思想}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 12. 晚年处境与身后纪念 ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{晚年处境与身后纪念}{赞助人失势 · 未刊手稿 · 身后的命名}
+\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!70}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{赞助人失势} & \cellcolor{panelD}\textcolor{badgeD!82!black}{\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\leftmargin}{1.1em}\item Raleigh 最先失宠\item Northumberland 1605 年因火药阴谋下狱；哈里奥特受审、短暂入狱后获释\end{itemize}} & \cellcolor{panelB}\textcolor{badgeB!82!black}{处境逆转} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{Syon House 学者圈} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Walter Warner · Robert Hues · William Lower 等聚集于伯爵府邸} & \cellcolor{panelB}\textcolor{badgeB!82!black}{研究共同体} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!92!black}{身后纪念} & \cellcolor{panelC}\textcolor{badgeC!82!black}{月球环形山 Harriot（1970）· 系外行星 55 Cancri Af 定名 Harriot（2015）· 威廉玛丽学院天文台} & \cellcolor{panelA}\textcolor{badgeA!82!black}{eponym} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 2009 年 Syon House 立牌，纪念其首次望远镜观月 400 周年。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他先于伽利略望月，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {却只把成果留在手稿里。};
+\draw[accentclr!70, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {400 余页未刊手稿，迟至数百年后才重见天日。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {托马斯·哈里奥特\quad Thomas Harriot\quad c. 1560 — 1621};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 月球绘图 · 太阳黑子 · 符号代数\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\roanokeslide
+\algonquianslide
+\moonslide
+\sunspotsslide
+\refractionslide
+\algebraslide
+\packingslide
+\honorslide
+\closingslide
+\end{document}

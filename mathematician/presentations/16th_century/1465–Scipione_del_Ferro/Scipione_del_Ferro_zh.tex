@@ -1,0 +1,443 @@
+% =============================================================
+%  三次方程的首解者 · 守密的博洛尼亚教授：斯皮奥内·德尔·费罗
+%  Beamer 演示 —— 参照 17 世纪 Johann_Bernoulli 模板（身份信息页 + 气泡背景）
+%  资料来源：mathematician/presentations/16th_century/pages/Scipione_del_Ferro
+%  设计母题：封存的手稿 / 密写的笔记本 —— 柔和气泡呼应羊皮纸的沉静
+% =============================================================
+\documentclass[aspectratio=169,14pt]{beamer}
+\usetheme{default}\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill{\scriptsize\color{covermuted}\insertframenumber/\inserttotalframenumber}\hspace{0.4cm}\vspace{0.15cm}}
+\usepackage{fontspec}\usepackage{xeCJK}
+\setCJKmainfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setCJKsansfont{PingFang SC}[BoldFont=PingFang SC Semibold, ItalicFont=PingFang SC]
+\setmainfont{Helvetica Neue}[BoldFont=Helvetica Neue Bold]
+\usepackage{xcolor}\usepackage{tikz}\usepackage{graphicx}\usepackage{fix-cm}\usepackage{adjustbox}\usepackage{fontawesome5}
+\usepackage{amsmath}\usepackage{amssymb}\usepackage{stmaryrd}
+\usepackage{booktabs}\usepackage{tabularx}\usepackage{array}\usepackage{colortbl}
+\usetikzlibrary{positioning,calc,arrows.meta,shadows}
+\graphicspath{{images/}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% ===== 配色：博洛尼亚赭红 + 手稿羊皮金 + 四分类色 =====
+\definecolor{bgmain}{RGB}{247,245,242}
+\definecolor{mainclr}{HTML}{6E2B2B}      % 博洛尼亚赭红 — 15-16 世纪之交的厚重
+\definecolor{accentclr}{HTML}{C9A227}    % 手稿羊皮金 — 未发表的手稿笔记本
+\definecolor{badgeA}{HTML}{2F4470}       % 三次方程 — 靛蓝
+\definecolor{badgeB}{HTML}{54626F}       % 守密文化 — 石板灰
+\definecolor{badgeC}{HTML}{1B4D3E}       % 传承 — 深绿
+\definecolor{badgeD}{HTML}{B8860B}       % 考据 — 琥珀
+\definecolor{coverdark}{HTML}{1F2937}
+\definecolor{covermuted}{HTML}{64748B}
+\definecolor{titlecolor}{RGB}{42,22,22}
+\definecolor{muteddark}{RGB}{92,74,74}
+\definecolor{panelA}{RGB}{228,233,245}
+\definecolor{panelB}{RGB}{232,234,237}
+\definecolor{panelC}{RGB}{223,238,232}
+\definecolor{panelD}{RGB}{248,240,221}
+\definecolor{goldpanel}{RGB}{255,245,225}
+\definecolor{graypanel}{RGB}{244,244,242}
+\setbeamercolor{background canvas}{bg=bgmain}
+
+\newcommand{\plainbar}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.4cm]current page.south east);
+\end{tikzpicture}%
+}
+
+% 气泡背景：柔和稀疏实心圆，呼应封存手稿的沉静
+\newcommand{\deckbackground}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accentclr!4] (current page.north west) rectangle (current page.south east);
+  \fill[badgeA!12] (current page.north west) ++(2.0,-2.0) circle (2.6cm);
+  \fill[badgeB!10] (current page.south east) ++(-2.4,2.0) circle (3.0cm);
+  \fill[badgeC!10] (current page.north east) ++(-3.2,-2.4) circle (1.6cm);
+  \fill[badgeD!12] (current page.south west) ++(2.8,2.2) circle (1.2cm);
+  \fill[coverdark, opacity=0.06] (current page.south west) rectangle ([yshift=0.42cm]current page.south east);
+\end{tikzpicture}%
+}
+
+\newcommand{\sectiontitle}[2]{%
+\vspace{-0.52cm}
+\begin{center}
+  {\fontsize{20}{24}\selectfont\bfseries\color{titlecolor} #1}\\[2pt]
+  {\fontsize{7.5}{9.5}\selectfont\itshape\color{muteddark} #2}
+\end{center}
+\vspace{0.06cm}
+}
+
+% ========================= SLIDES =========================
+
+\input{../../cover/openmath_page.tex}
+
+% --- 1. 封面 ---
+\newcommand{\titleslide}{%
+\begin{frame}[plain]
+\deckbackground
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center, font=\fontsize{11}{15}\selectfont\bfseries, text=mainclr!85!black,
+    align=center, text width=11.5cm]
+    at ([xshift=-0.94cm, yshift=3.55cm]current page.center) {\faIcon{globe}\enspace 意大利\enspace·\enspace 博洛尼亚\enspace·\enspace 三次方程首解者};
+  \node[anchor=center, font=\fontsize{26}{32}\selectfont\bfseries, text=mainclr!92!black]
+    at ([xshift=-0.35cm, yshift=2.45cm]current page.center) {斯皮奥内·德尔·费罗};
+  \node[anchor=center, font=\fontsize{12}{16}\selectfont, text=mainclr!68!black]
+    at ([xshift=-0.35cm, yshift=1.55cm]current page.center) {Scipione del Ferro\enspace·\enspace 1465 — 1526};
+  \node[anchor=center, font=\fontsize{9}{12}\selectfont\itshape, text=accentclr!70!black]
+    at ([xshift=-0.35cm, yshift=1.1cm]current page.center) {三次方程的首解者 · 守密的博洛尼亚教授 · 缺二次项型};
+  \draw[accentclr!60, line width=1.4pt] ([yshift=0.65cm, xshift=-4.9cm]current page.center)
+    -- ([yshift=0.65cm, xshift=4.9cm]current page.center);
+  \node[anchor=center] at ([yshift=-0.78cm]current page.center) {
+    \begin{tikzpicture}[
+        badge/.style={rounded corners=7pt, draw=white!55!black, line width=0.7pt,
+          text width=2.55cm, align=center, font=\footnotesize\bfseries,
+          text=white, minimum height=1.78cm, inner sep=6pt}
+      ]
+      \node[badge, fill=badgeA] at (-5.05,0)
+        {三次方程\\Cubic Equation\par\scriptsize 缺二次项型};
+      \node[badge, fill=badgeB] at (-1.68,0)
+        {守密文化\\Secrecy\par\scriptsize 挑战决斗};
+      \node[badge, fill=badgeC] at (1.68,0)
+        {笔记本传承\\Notebook\par\scriptsize della Nave};
+      \node[badge, fill=badgeD] at (5.05,0)
+        {其他贡献\\Fractions\par\scriptsize 分数有理化};
+    \end{tikzpicture}
+  };
+  \node[anchor=center, font=\fontsize{9.5}{13}\selectfont\itshape, text=muteddark, align=center, text width=12cm]
+    at ([yshift=-2.35cm]current page.center)
+    {他第一个解开了缺二次项的三次方程，却一生拒绝将其发表。};
+  % 肖像：无存世肖像 → 装饰圆占位
+  \node[draw=accentclr!50, line width=1.2pt, rounded corners=6pt, fill=white, inner sep=2pt]
+    at ([xshift=6.86cm, yshift=3.0cm]current page.center)
+    {\begin{tikzpicture}\clip[rounded corners=4pt] (0,0) rectangle (2.0,2.9);
+      \node[font=\fontsize{40}{40}\selectfont, text=accentclr!60] at (1.0,1.45) {\faIcon{user}};\end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{5.5}{6.5}\selectfont\itshape, text=covermuted]
+    at ([xshift=6.86cm, yshift=1.42cm]current page.center) {无存世肖像（1465–1526）};
+  \node[anchor=south, font=\fontsize{7}{8.5}\selectfont, text=coverdark!55]
+    at ([yshift=0.38cm]current page.south)
+    {\faIcon{globe}\enspace 意大利\enspace|\enspace \faIcon{university}\enspace 博洛尼亚大学\enspace|\enspace 首解缺二次项三次方程};
+\end{tikzpicture}
+\end{frame}
+}
+
+% --- 2. 身份信息页 ---
+\newcommand{\lab}[1]{{\fontsize{7.0}{8.8}\selectfont\bfseries\color{accentclr!88!black} #1}}
+\newcommand{\profileslide}{\begin{frame}\plainbar\sectiontitle{斯皮奥内·德尔·费罗 - 守密的博洛尼亚人}{生卒 · 本名 · 国籍 · 教育 · 师承 · 核心领域}
+\begin{center}\begin{tikzpicture}[
+    infob/.style={rounded corners=6pt, inner xsep=9pt, inner ysep=8pt, text width=4.35cm,
+      font=\fontsize{7.2}{9.2}\selectfont, align=left}
+  ]
+  % 左侧：无存世肖像 → 装饰圆占位
+  \node[draw=accentclr!55, line width=1.2pt, rounded corners=5pt, fill=white, inner sep=3pt]
+    at (-6.0,0.1) {\begin{tikzpicture}
+      \clip[rounded corners=3pt] (0,0) rectangle (3.0,3.9);
+      \node[font=\fontsize{56}{56}\selectfont, text=accentclr!55] at (1.5,1.95) {\faIcon{user}};
+    \end{tikzpicture}};
+  \node[anchor=north, font=\fontsize{6.2}{7.4}\selectfont\itshape, text=covermuted]
+    at (-6.0,-2.25) {无存世肖像（1465–1526）};
+  % 右侧 2×2 信息网格
+  \node[infob, fill=goldpanel, draw=accentclr!45, anchor=north] at (-1.6,2.3)
+    {\lab{生卒}\quad 1465-02-06 — 1526-11-05\\[2pt]\lab{本名}\quad Scipione del Ferro\\[2pt]\lab{国籍}\quad 意大利（博洛尼亚）};
+  \node[infob, fill=panelA, draw=badgeA!45, anchor=north] at (3.5,2.3)
+    {\lab{教育}\quad 博洛尼亚大学（很可能就读）\\[2pt]
+     \lab{师承}\quad 无载\\[2pt]\lab{任职}\quad 博洛尼亚大学算术与几何讲师};
+  \node[infob, fill=panelB, draw=badgeB!50, anchor=south] at (-1.6,-1.85)
+    {\lab{出生地}\quad 博洛尼亚（意大利）\\[2pt]\lab{卒地}\quad 博洛尼亚\\[2pt]\lab{领域}\quad 代数 · 算术 · 几何};
+  \node[infob, fill=panelC, draw=badgeC!45, anchor=south] at (3.5,-1.85)
+    {\lab{家庭}\quad 有一女，名 Filippa\\[2pt]
+     \lab{身份}\quad 数学家 · 大学教师\\[2pt]
+     \lab{身后}\quad 笔记本传女婿 della Nave};
+\end{tikzpicture}\end{center}\end{frame}}
+
+% --- 3. 德尔·费罗的一生：时间线 ---
+\newcommand{\timelineslide}{\begin{frame}\plainbar\sectiontitle{德尔·费罗的一生}{1465 — 1526 · 从博洛尼亚讲席到《大术》归名}
+\vspace{-0.55cm}
+\begin{center}
+\begin{tikzpicture}[
+  event/.style={font=\fontsize{7}{9}\selectfont, align=left, text width=8.4cm},
+  yr/.style={font=\fontsize{8.5}{10.5}\selectfont\bfseries\color{accentclr!88!black}}
+]
+  \draw[accentclr!70, line width=1.4pt] (0,2.9) -- (0,-2.9);
+  \foreach \y/\year/\txt in {
+    2.9/1465/生于博洛尼亚，父 Floriano 从事造纸业,
+    2.2/1496/受聘博洛尼亚大学算术与几何讲师,
+    1.5/生前/解出缺二次项三次方程（页内未载年份）,
+    0.8/生前/拒绝发表，只向少数亲友与学生展示,
+    0.1/1526/11 月 5 日逝于博洛尼亚，享年 61,
+    -0.6/1526/女婿 della Nave 继承笔记本并接替教席,
+    -1.3/1543/Cardano 与 Ferrari 赴博洛尼亚拜访 della Nave,
+    -2.0/1545/《大术》明文归名：del Ferro 首解
+  }{
+    \fill[accentclr!80] (0,\y) circle (2.2pt);
+    \node[yr, anchor=east] at (-0.25,\y) {\year};
+    \node[event, anchor=west] at (0.35,\y) {\txt};
+  }
+\end{tikzpicture}
+\end{center}
+\end{frame}}
+
+% --- 4. 早年与博洛尼亚 ---
+\newcommand{\earlyslide}{\begin{frame}\plainbar\sectiontitle{早年与博洛尼亚 (1465–1496)}{造纸业之家 · 很可能就读博洛尼亚大学 · 1496 年获讲席}
+\vspace{-0.52cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.9}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}p{2.2cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{时间}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{事件}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{结果}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1465} & \cellcolor{panelA}\textcolor{badgeA!82!black}{生于博洛尼亚，父 Floriano Ferro 从事造纸业} & \cellcolor{panelC}\textcolor{badgeC!82!black}{书香之门} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{少年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{很可能就读博洛尼亚大学} & \cellcolor{panelC}\textcolor{badgeC!82!black}{Bologna 学脉} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1496} & \cellcolor{panelA}\textcolor{badgeA!82!black}{受聘博洛尼亚大学算术与几何讲师} & \cellcolor{panelC}\textcolor{badgeC!82!black}{讲席} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{晚年} & \cellcolor{panelA}\textcolor{badgeA!82!black}{兼营商业事务} & \cellcolor{panelC}\textcolor{badgeC!82!black}{生计所系} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 造纸与印刷的时代，让他早年的阅读成为可能。}
+\end{center}
+\end{frame}}
+
+% --- 5. 三次方程问题 ---
+\newcommand{\cubicslide}{\begin{frame}\plainbar\sectiontitle{三次方程问题}{Pacioli 之称不可解 · 化归为两类缺二次项型}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{时代之问} & \cellcolor{panelA}\textcolor{badgeA!82!black}{Pacioli 在《Summa de arithmetica》称三次方程不可解，激起学界兴趣；是否与此相关仅属推测} & \cellcolor{panelC}\textcolor{badgeC!82!black}{悬而未决} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{化归} & \cellcolor{panelA}\textcolor{badgeA!82!black}{一般三次方程经 $x=x'+a$ 代换即可消去二次项} & \cellcolor{panelC}\textcolor{badgeC!82!black}{化为两类} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{两类} & \cellcolor{panelA}\textcolor{badgeA!82!black}{对正数 $p$、$q$，归为缺二次项型} & \cellcolor{panelC}\textcolor{badgeC!82!black}{缺二次项型} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 缺二次项三次方程（depressed cubic）}\\[2pt]
+  {\fontsize{12.5}{16}\selectfont\color{mainclr!88!black}$x^{3}+px=q,\qquad x^{3}=px+q\qquad (p,q>0)$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 6. 首解与可能的路线 ---
+\newcommand{\solutionslide}{\begin{frame}\plainbar\sectiontitle{首解与可能的路线}{今已不可确知其所用方法 · 据推测的类比路线}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{类比} & \cellcolor{panelA}\textcolor{badgeA!82!black}{由二次型恒等式 $x=\sqrt{a+\sqrt{b}}+\sqrt{a-\sqrt{b}}$ 猜想三次对应式} & \cellcolor{panelC}\textcolor{badgeC!82!black}{据推测} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{猜想式} & \cellcolor{panelA}\textcolor{badgeA!82!black}{$x=\sqrt[3]{a+\sqrt{b}}+\sqrt[3]{a-\sqrt{b}}$ 满足 $x^{3}=(3\sqrt[3]{a^{2}-b})x+2a$} & \cellcolor{panelC}\textcolor{badgeC!82!black}{后被证实为真} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{结论} & \cellcolor{panelA}\textcolor{badgeA!82!black}{经参数代换可导出缺二次项三次方程的求根公式} & \cellcolor{panelC}\textcolor{badgeC!82!black}{首解之法} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 求根公式（后世所称 Cardano 公式之雏形）}\\[2pt]
+  {\fontsize{11.5}{15}\selectfont\color{mainclr!88!black}$x=\sqrt[3]{\dfrac{q}{2}+\sqrt{\dfrac{q^{2}}{4}+\dfrac{p^{3}}{27}}}+\sqrt[3]{\dfrac{q}{2}-\sqrt{\dfrac{q^{2}}{4}+\dfrac{p^{3}}{27}}}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 7. 守密文化与挑战决斗 ---
+\newcommand{\secrecyslide}{\begin{frame}\plainbar\sectiontitle{守密文化与挑战决斗}{无存世著作 · 只向少数亲友与学生展示}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{无存世著作} & \cellcolor{panelB}\textcolor{badgeB!82!black}{没有任何手稿存世，他拒绝发表} & \cellcolor{panelC}\textcolor{badgeC!82!black}{守密} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{守密缘由} & \cellcolor{panelB}\textcolor{badgeB!82!black}{当时数学家公开互相挑战，败者失去资助或教席} & \cellcolor{panelC}\textcolor{badgeC!82!black}{留一手自卫} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{展示范围} & \cellcolor{panelB}\textcolor{badgeB!82!black}{只向极少数亲友与学生展示} & \cellcolor{panelC}\textcolor{badgeC!82!black}{圈内流传} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 为自保而沉默，最强的成果被留作挑战时的盾牌。}
+\end{center}
+\end{frame}}
+
+% --- 8. 笔记本的传承 ---
+\newcommand{\notebookslide}{\begin{frame}\plainbar\sectiontitle{笔记本的传承}{1526 身后 · 女婿兼学生 Annibale della Nave}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{笔记本} & \cellcolor{panelC}\textcolor{badgeC!82!black}{他有一本记录全部重要发现的笔记本} & \cellcolor{panelA}\textcolor{badgeA!82!black}{唯一遗存} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{继承} & \cellcolor{panelC}\textcolor{badgeC!82!black}{1526 年去世后，由女婿兼学生 Annibale della Nave 继承} & \cellcolor{panelA}\textcolor{badgeA!82!black}{家学相承} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{教席} & \cellcolor{panelC}\textcolor{badgeC!82!black}{della Nave 接替其在博洛尼亚大学的教席} & \cellcolor{panelA}\textcolor{badgeA!82!black}{学脉延续} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 这本笔记本，是他与后世之间唯一的桥。}
+\end{center}
+\end{frame}}
+
+% --- 9. 1543 博洛尼亚之行与《大术》 ---
+\newcommand{\arsmagnaslide}{\begin{frame}\plainbar\sectiontitle{1543 博洛尼亚之行与《大术》}{Cardano 与 Ferrari 到访 · 1545 明文归名}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1543} & \cellcolor{panelD}\textcolor{badgeD!82!black}{Cardano 与其学生 Ferrari 专程赴博洛尼亚拜访 della Nave，见到笔记本} & \cellcolor{panelA}\textcolor{badgeA!82!black}{手稿重见} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{笔记本内容} & \cellcolor{panelD}\textcolor{badgeD!82!black}{其中载有缺二次项三次方程的解法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{传播之始} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{1545} & \cellcolor{panelD}\textcolor{badgeD!82!black}{《Ars Magna》明文写道：是 del Ferro 第一个解出三次方程，书中解法即其方法} & \cellcolor{panelA}\textcolor{badgeA!82!black}{优先权确证} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} Cardano 的主动归名，把首解之功还给了沉默的博洛尼亚人。}
+\end{center}
+\end{frame}}
+
+% --- 10. 其他贡献 ---
+\newcommand{\otherslide}{\begin{frame}\plainbar\sectiontitle{其他贡献}{分数有理化 · 定角圆规几何}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{主题}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{分数有理化} & \cellcolor{panelA}\textcolor{badgeA!82!black}{分母含立方根之和的分数有理化} & \cellcolor{panelC}\textcolor{badgeC!82!black}{代数技巧} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{定角圆规} & \cellcolor{panelA}\textcolor{badgeA!82!black}{以固定在某一角度的圆规研究几何问题（所知甚少）} & \cellcolor{panelC}\textcolor{badgeC!82!black}{几何探索} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.3cm}
+\begin{center}
+\fcolorbox{accentclr!70}{goldpanel}{%
+  \begin{minipage}{11.7cm}
+  \centering
+  {\fontsize{9}{12}\selectfont\bfseries\color{accentclr!85!black} 分数有理化（rationalization）}\\[2pt]
+  {\fontsize{12}{15.5}\selectfont\color{mainclr!88!black}$\dfrac{1}{\sqrt[3]{a}+\sqrt[3]{b}}=\dfrac{\sqrt[3]{a^{2}}-\sqrt[3]{ab}+\sqrt[3]{b^{2}}}{a+b}$}
+  \end{minipage}%
+}
+\end{center}
+\end{frame}}
+
+% --- 11. 两个悬案 ---
+\newcommand{\openquestionsslide}{\begin{frame}\plainbar\sectiontitle{两个悬案}{Pacioli 刺激说 · 两类全解说 · 均保留推测措辞}
+\vspace{-0.55cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.82}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize}m{3.4cm}|>{\scriptsize}X|>{\scriptsize}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{悬案}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{内容}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{状态}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{Pacioli 刺激说} & \cellcolor{panelD}\textcolor{badgeD!82!black}{是否因 Pacioli 1501–1502 短暂任教博洛尼亚而钻研三次方程 —— page.md 作 conjecture} & \cellcolor{panelB}\textcolor{badgeB!82!black}{存疑} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{两类全解说} & \cellcolor{panelD}\textcolor{badgeD!82!black}{是否两类缺二次项方程都解出 —— 未知；1925 Ettore Bortolotti 发现的手稿使其「怀疑」两类皆解} & \cellcolor{panelB}\textcolor{badgeB!82!black}{存疑} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{-0.15cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 两处悬案，至今仍以「推测」与「怀疑」存留。}
+\end{center}
+\end{frame}}
+
+% --- 12. 荣誉与传承（page.md 无载奖项 —— 写遗产与评价） ---
+\newcommand{\honorslide}{\begin{frame}\plainbar\sectiontitle{遗产与评价}{page.md 无载任何奖项 · 守密者的悖论}\vspace{-0.2cm}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.72}
+\arrayrulecolor{accentclr!65}
+\begin{tabularx}{12.4cm}{>{\bfseries\scriptsize\centering\arraybackslash}m{2.8cm}|>{\scriptsize}X|>{\scriptsize\centering\arraybackslash}p{3.0cm}}
+\toprule
+\rowcolor{mainclr}\multicolumn{1}{c|}{\footnotesize\color{white}\textbf{类别}} & \multicolumn{1}{c|}{\footnotesize\color{white}\textbf{代表}} & \multicolumn{1}{c}{\footnotesize\color{white}\textbf{意义}} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{遗产} & \cellcolor{panelA}\textcolor{badgeA!82!black}{首解缺二次项三次方程，其方法经《大术》流传后世} & \cellcolor{panelC}\textcolor{badgeC!82!black}{三次方程首解者} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{悖论} & \cellcolor{panelB}\textcolor{badgeB!82!black}{为自保而沉默，首创之名几近湮没} & \cellcolor{panelC}\textcolor{badgeC!82!black}{守密者的代价} \\
+\midrule
+\cellcolor{goldpanel}\textcolor{accentclr!88!black}{归名} & \cellcolor{panelD}\textcolor{badgeD!82!black}{1545《Ars Magna》的诚实归名，使他留于青史} & \cellcolor{panelC}\textcolor{badgeC!82!black}{青史留名} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{0.02cm}
+\begin{center}
+{\fontsize{8.5}{11}\selectfont\bfseries\color{coverdark!88} 他没有留下一部书，只留下一段被《大术》记下的功名。}
+\end{center}
+\end{frame}}
+
+% --- 13. 结束页 ---
+\newcommand{\closingslide}{\begin{frame}[plain]\deckbackground\begin{tikzpicture}[remember picture, overlay]
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=mainclr!90!black] at ([yshift=1.5cm]current page.center) {他第一个解开了三次方程，};
+\node[font=\fontsize{22}{28}\selectfont\bfseries, text=accentclr!85!black] at ([yshift=0.4cm]current page.center) {却把答案藏进了笔记本。};
+\draw[accentclr!60, line width=1.3pt] ([yshift=-0.5cm, xshift=-4.2cm]current page.center) -- ([yshift=-0.5cm, xshift=4.2cm]current page.center);
+\node[font=\fontsize{9}{12}\selectfont, text=mainclr!70!black] at ([yshift=-1.2cm]current page.center) {他留下的，是缺二次项型三次方程的解法，与一段沉默的首解。};
+\node[font=\fontsize{8}{10}\selectfont, text=mainclr!60!black] at ([yshift=-2.0cm]current page.center) {斯皮奥内·德尔·费罗\quad Scipione del Ferro\quad 1465 — 1526};
+\node[font=\fontsize{5.5}{7}\selectfont, text=coverdark!40] at ([yshift=0.35cm]current page.south) {\faIcon{expand-alt}\enspace 三次方程 · 分数有理化 · 守密\enspace|\enspace OpenMathAI};
+\end{tikzpicture}\end{frame}}
+
+\begin{document}
+\openmathslide
+\titleslide
+\profileslide
+\timelineslide
+\earlyslide
+\cubicslide
+\solutionslide
+\secrecyslide
+\notebookslide
+\arsmagnaslide
+\otherslide
+\openquestionsslide
+\honorslide
+\closingslide
+\end{document}
