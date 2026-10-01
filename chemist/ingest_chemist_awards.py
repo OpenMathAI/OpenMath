@@ -40,6 +40,8 @@ CANONICAL = {
     "National Academy of Sciences": "Member of the National Academy of Sciences",
     "Turing Award": "ACM A.M. Turing Award",
     "Wolf Prize": "Wolf Prize in Chemistry",
+    "UNESCO L'Oréal Award": "L'Oréal-UNESCO Award for Women in Science",
+    "L'Oréal-UNESCO Award for Women in Science (2008)": "L'Oréal-UNESCO Award for Women in Science",
 }
 
 # manifest db_name_en → 库内规范名（people.name_en）

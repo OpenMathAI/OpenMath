@@ -485,6 +485,26 @@
 | **Robert Robinson**（罗伯特·鲁宾逊） | 1932 |
 | **Tomas Lindahl**（托马斯·林达尔） | 2007 |
 
+##### × Wolf Prize in Chemistry（15 人）
+
+| 姓名 | 获奖年份 |
+|---|---|
+| **Ada Yonath**（阿达·约纳特） | 2006 |
+| **Ahmed Zewail**（艾哈迈德·泽维尔） | 1993 |
+| **Carolyn Bertozzi**（卡罗琳·贝尔托齐） | 2022 |
+| **Elias James Corey**（伊利亚斯·詹姆斯·科里） | 1986 |
+| **Emmanuelle Charpentier**（埃玛纽埃勒·沙尔庞捷） | — |
+| **Gerhard Ertl**（格哈德·埃特尔） | 1998 |
+| **Jennifer Doudna**（珍妮弗·道德纳） | — |
+| **John Polanyi**（约翰·波拉尼） | 1982 |
+| **John Pople**（约翰·波普尔） | 1992 |
+| **Karl Barry Sharpless**（卡尔·巴里·夏普莱斯） | 2001 |
+| **Omar M. Yaghi**（奥马尔·亚吉） | 2018 |
+| **Richard R. Ernst**（理查德·恩斯特） | 1991 |
+| **Rudolph A. Marcus**（鲁道夫·马库斯） | 1985 |
+| **Ryōji Noyori**（野依良治） | 2001 |
+| **William E. Moerner**（威廉·E·莫尔纳） | 2008 |
+
 ##### × ForMemRS（13 人）
 
 | 姓名 | 获奖年份 |
@@ -538,24 +558,6 @@
 | **Robert Burns Woodward**（罗伯特·伯恩斯·伍德沃德） | 1956 |
 | **Vincent du Vigneaud**（文森特·迪维尼奥） | 1945 |
 | **Wendell Meredith Stanley**（温德尔·梅雷迪思·斯坦利） | 1946 |
-
-##### × Wolf Prize in Chemistry（13 人）
-
-| 姓名 | 获奖年份 |
-|---|---|
-| **Ada Yonath**（阿达·约纳特） | 2006 |
-| **Ahmed Zewail**（艾哈迈德·泽维尔） | 1993 |
-| **Carolyn Bertozzi**（卡罗琳·贝尔托齐） | 2022 |
-| **Elias James Corey**（伊利亚斯·詹姆斯·科里） | 1986 |
-| **Gerhard Ertl**（格哈德·埃特尔） | 1998 |
-| **John Polanyi**（约翰·波拉尼） | 1982 |
-| **John Pople**（约翰·波普尔） | 1992 |
-| **Karl Barry Sharpless**（卡尔·巴里·夏普莱斯） | 2001 |
-| **Omar M. Yaghi**（奥马尔·亚吉） | 2018 |
-| **Richard R. Ernst**（理查德·恩斯特） | 1991 |
-| **Rudolph A. Marcus**（鲁道夫·马库斯） | 1985 |
-| **Ryōji Noyori**（野依良治） | 2001 |
-| **William E. Moerner**（威廉·E·莫尔纳） | 2008 |
 
 ##### × Elliott Cresson Medal（10 人）
 
@@ -1467,7 +1469,7 @@
 | 姓名 | 荣誉 | 年份 |
 |---|---|---|
 | **Aaron Ciechanover**（阿龙·切哈诺沃） | EMET Prize | 2002 |
-| **Ada Yonath**（阿达·约纳特） | L'Oréal-UNESCO Award for Women in Science (2008) | — |
+| **Ada Yonath**（阿达·约纳特） | L'Oréal-UNESCO Award for Women in Science | 2008 |
 | **Adolf Butenandt**（阿道夫·布特南特） | Kriegsverdienstkreuz | 1942 |
 | **Ahmed Zewail**（艾哈迈德·泽维尔） | E. Bright Wilson Award | 1997 |
 | **Ahmed Zewail**（艾哈迈德·泽维尔） | King Faisal International Prize for Science | 1989 |
@@ -1736,7 +1738,7 @@
 | **Susumu Tonegawa**（利根川进） | 1982 |
 | **Torsten Wiesel**（托斯滕·尼尔斯·维泽尔） | 1978 |
 
-##### × Gairdner Foundation International Award（29 人）
+##### × Gairdner Foundation International Award（28 人）
 
 | 姓名 | 获奖年份 |
 |---|---|
@@ -1765,8 +1767,7 @@
 | **Rolf M. Zinkernagel**（罗尔夫·马丁·青克纳格尔） | 1986 |
 | **Shinya Yamanaka**（山中伸弥） | 2009 |
 | **Sune Bergström**（苏内·贝里斯特伦） | 1972 |
-| **Sydney Brenner**（悉尼·布伦纳） | 1978 |
-| **Sydney Brenner**（悉尼·布伦纳） | 1991 |
+| **Sydney Brenner**（悉尼·布伦纳） | 1978 · 1991 |
 | **Ulf von Euler**（乌尔夫·冯·奥伊勒） | 1961 |
 | **Yoshinori Ohsumi**（大隅良典） | 2015 |
 
@@ -3161,7 +3162,7 @@
 | Wolf Prize in Mathematics × Abel Prize | 17 |
 | Nobel Prize in Physiology or Medicine × Wolf Prize in Medicine | 16 |
 | Fields Medal × Wolf Prize in Mathematics | 16 |
-| Nobel Prize in Chemistry × Wolf Prize in Chemistry | 13 |
+| Nobel Prize in Chemistry × Wolf Prize in Chemistry | 15 |
 | ACM A.M. Turing Award × Kyoto Prize | 7 |
 | Fields Medal × Abel Prize | 7 |
 | Nobel Prize in Physiology or Medicine × Kyoto Prize | 6 |
@@ -3170,6 +3171,7 @@
 | ACM A.M. Turing Award × Wolf Prize in Physics | 2 |
 | ACM A.M. Turing Award × Nevanlinna Prize | 2 |
 | Abel Prize × Chern Medal | 2 |
+| Wolf Prize in Chemistry × Wolf Prize in Medicine | 2 |
 | Wolf Prize in Medicine × Kyoto Prize | 2 |
 | Nobel Prize in Physics × Nobel Prize in Chemistry | 1 |
 | Nobel Prize in Physics × ACM A.M. Turing Award | 1 |
@@ -3202,7 +3204,7 @@
 | **Jack Dongarra**（杰克·唐加拉） | 18 | ACM A.M. Turing Award · ACM Fellow · ACM/IEEE Ken Kennedy Award · Fellow of the American Association for the Advancement of Science · Fellow of the Royal Society · Foreign Member of the Royal Society · Foreign Member of the Russian Academy of Sciences · IEEE Computer Pioneer Award · IEEE Computer Society Charles Babbage Award · IEEE Fellow · IEEE Medal of Excellence in Scalable Computing · Member of the National Academy of Engineering · Member of the National Academy of Sciences · National Medal of Science · SIAM Activity Group on Supercomputing Career Prize · SIAM Fellow · SIAM/ACM Prize in Computational Science and Engineering · Sidney Fernbach Award |
 | **Andrey Kolmogorov**（安德烈·柯尔莫哥洛夫） | 17 | Balzan Prize · doctor honoris causa from the University of Paris · Foreign Member of the Royal Society · Helmholtz Medal · Hero of Socialist Labour · Jubilee Medal "In Commemoration of the 100th Anniversary of the Birth of Vladimir Ilyich Lenin" · Lenin Prize · Lobachevsky Prize · Medal "For Valiant Labour in the Great Patriotic War 1941–1945" · Order of Lenin · Order of the October Revolution · Order of the Patriotic War, 1st class · Order of the Red Banner of Labour · PL Chebyshev Gold Medal · Stalin Prize · Stalin Prize, 2nd degree · Wolf Prize in Mathematics |
 | **Ivan Sutherland**（伊万·萨瑟兰） | 17 | ACM A.M. Turing Award · ACM Fellow · ACM Software System Award · BBVA Foundation Frontiers of Knowledge Award · Computer History Museum Fellow · Computerworld Honors Program Leadership Award · EFF Pioneer Award · Honorary Doctorate (UNC Chapel Hill) · IEEE Computer Pioneer Award · IEEE Emanuel R. Piore Award · IEEE John von Neumann Medal · Kyoto Prize · Member of the National Academy of Engineering · Member of the National Academy of Sciences · National Inventors Hall of Fame · R&D 100 Award · Washington Award |
-| **Shafi Goldwasser**（沙菲·戈德瓦瑟） | 17 | AAAS Fellow · ACM A.M. Turing Award · ACM Athena Lecturer · ACM Fellow · ACM Grace Murray Hopper Award · BBVA Foundation Frontiers of Knowledge Award · Benjamin Franklin Medal in Computer and Cognitive Science · Gödel Prize · IACR Fellow · IEEE Emanuel R. Piore Award · L'Oréal-UNESCO for Women in Science Award · Member of the American Academy of Arts and Sciences · Member of the National Academy of Engineering · Member of the National Academy of Sciences · Royal Society Fellow · RSA Award for Excellence in Mathematics · Suffrage Science award |
+| **Shafi Goldwasser**（沙菲·戈德瓦瑟） | 17 | AAAS Fellow · ACM A.M. Turing Award · ACM Athena Lecturer · ACM Fellow · ACM Grace Murray Hopper Award · BBVA Foundation Frontiers of Knowledge Award · Benjamin Franklin Medal in Computer and Cognitive Science · Gödel Prize · IACR Fellow · IEEE Emanuel R. Piore Award · L'Oréal-UNESCO Award for Women in Science · Member of the American Academy of Arts and Sciences · Member of the National Academy of Engineering · Member of the National Academy of Sciences · Royal Society Fellow · RSA Award for Excellence in Mathematics · Suffrage Science award |
 | **David A. Patterson**（大卫·帕特森） | 17 | AAAS Fellow · ACM A.M. Turing Award · ACM Distinguished Service Award · ACM Fellow · ACM-IEEE Eckert–Mauchly Award · BBVA Foundation Frontiers of Knowledge Award · Charles Stark Draper Prize · Computer History Museum Fellow · Fellow of the American Academy of Arts and Sciences · IEEE Fellow · IFIP Jean-Claude Laprie Award · Japan Computer & Communication Prize · Karlstrom Outstanding Educator Award · Member of the National Academy of Engineering · Member of the National Academy of Sciences · Richard A. Tapia Achievement Award · Silicon Valley Engineering Hall of Fame |
 | **Roger Penrose**（罗杰·彭罗斯） | 17 | Adams Prize · Albert Einstein Medal · Copley Medal · Dalton Medal · De Morgan Medal · Dirac Medal (IOP) · Eddington Medal · Fellow of the Royal Society · Fonseca Prize · Heineman Prize · James Scott Prize Lectureship · Karl Schwarzschild Medal · Knight Bachelor · Naylor Prize and Lectureship · Nobel Prize in Physics · Royal Medal · Wolf Prize in Physics |
 | **Sydney Brenner**（悉尼·布伦纳） | 17 | Albert Lasker Medical Research Award · Copley Medal · Dan David Prize · Gairdner Foundation International Award · Genetics Society of America Medal · Harvey Prize · King Faisal International Prize in Medicine · Krebs Medal · Kyoto Prize · Louis-Jeantet Prize for Medicine · Max Delbrück Medal · Mendel Medal · Nobel Prize in Physiology or Medicine · Novartis-Drew Award · Rosenstiel Award · Royal Medal · William Bate Hardy Prize |

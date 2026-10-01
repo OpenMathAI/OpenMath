@@ -114,6 +114,7 @@ NAME_CANONICAL = {
     "Royal Society Copley Medal": "Copley Medal",
     "National Academy of Sciences": "Member of the National Academy of Sciences",
     "Turing Award": "ACM A.M. Turing Award",
+    "UNESCO L'Oréal Award": "L'Oréal-UNESCO Award for Women in Science",
 }
 
 
