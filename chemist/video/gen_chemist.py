@@ -220,6 +220,8 @@ TOP_AWARDS = {
     2: ("\\abelbadge", "阿贝尔奖"),
     3: ("\\wolfmathbadge", "沃尔夫数学奖"),
     243: ("\\wolfbadge", "沃尔夫物理学奖"),
+    925: ("\\wolfbadge", "沃尔夫化学奖"),
+    962: ("\\wolfbadge", "沃尔夫医学奖"),
     27: ("\\kyotobadge", "京都奖"),
     28: ("\\shawbadge", "邵逸夫奖"),
     29: ("\\btmathbadge", "数学突破奖"),
@@ -959,9 +961,9 @@ def intro_slide(legend_lines):
   \node[draw=coverpurple!40, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,3.05) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coverpurple!82!black} 交叉荣誉 · 徽标一览}\par\vspace{3pt}
     {\fontsize{6.6}{12.8}\selectfont\color{coverdark!84} LEGENDPLACEHOLDER}};
-  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,1.10) {%%
+  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,-0.85) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coveramber!70!black} 空缺年份}\\[2pt]
-    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 8 个年份未颁奖（1916 · 1917 · 1919 · 1924 ·\\ 1933 · 1940–42），遵循遗嘱「宁缺毋滥」。}};
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 8 个年份未颁奖（1916 · 1917 · 1919 ·\\ 1924 · 1933 · 1940–42），遵循遗嘱「宁缺毋滥」。}};
 \end{tikzpicture}
 \end{center}
 \end{frame}
