@@ -207,6 +207,16 @@ TOP_AWARDS = {
     41: ("\\japanbadge", "日本国际奖"),
     18: ("\\statsbadge", "国际统计学奖"),
     17: ("\\copssbadge", "考普斯会长奖"),
+    402: ("\\legionbadge", "荣誉军团勋章"),
+    1266: ("\\sakharovbadge", "萨哈罗夫奖"),
+    1252: ("\\rightlivingbadge", "正确生活方式奖"),
+    451: ("\\pmofbadge", "总统自由勋章"),
+    1238: ("\\congressbadge", "国会金质奖章"),
+    35: ("\\nmsbadge", "国家科学奖章"),
+    405: ("\\vnbushbadge", "万尼瓦尔·布什奖"),
+    1239: ("\\aztecbadge", "阿兹特克雄鹰勋章"),
+    1243: ("\\pacembadge", "地上和平奖"),
+    1283: ("\\havelbadge", "哈维尔人权奖"),
 }
 SELF_AWARD = 857  # 和平奖本身，本片不作为交叉
 
@@ -654,6 +664,16 @@ HEADER = r"""% Nobel Peace Video — Allinone
 \newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
 \newcommand{\statsbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt S}}
 \newcommand{\copssbadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\diamondsuit$\kern-0.5pt C}}
+\newcommand{\legionbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\diamondsuit$\kern-0.5pt L}}
+\newcommand{\sakharovbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt Sa}}
+\newcommand{\rightlivingbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt RL}}
+\newcommand{\nmsbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\spadesuit$\kern-0.5pt N}}
+\newcommand{\pmofbadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\spadesuit$\kern-0.5pt PF}}
+\newcommand{\congressbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt CG}}
+\newcommand{\vnbushbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\diamond$\kern-0.5pt VB}}
+\newcommand{\aztecbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt AE}}
+\newcommand{\pacembadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt PT}}
+\newcommand{\havelbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt VH}}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]

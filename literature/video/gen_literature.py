@@ -251,6 +251,20 @@ TOP_AWARDS = {
     41: ("\\japanbadge", "日本国际奖"),
     18: ("\\statsbadge", "国际统计学奖"),
     17: ("\\copssbadge", "考普斯会长奖"),
+    39: ("\\frsbadge", "英国皇家学会院士"),
+    132: ("\\demorganbadge", "德摩根奖章"),
+    47: ("\\sylvesterbadge", "西尔维斯特奖章"),
+    260: ("\\kalingabadge", "卡林加奖"),
+    261: ("\\jerusalembadge", "耶路撒冷奖"),
+    262: ("\\sonningbadge", "松宁奖"),
+    263: ("\\ossietzkybadge", "奥西茨基奖章"),
+    1179: ("\\bookerbadge", "布克奖"),
+    1185: ("\\whitbreadbadge", "惠特布雷德奖"),
+    79: ("\\stalinbadge", "斯大林奖"),
+    83: ("\\leninbadge", "列宁奖"),
+    1177: ("\\intpeacebadge", "国际和平奖"),
+    875: ("\\stalinpeacebadge", "斯大林和平奖"),
+    831: ("\\pourlemeritebadge", "蓝马克斯勋章"),
 }
 
 
@@ -940,6 +954,20 @@ HEADER = r"""% Nobel Literature Video — Allinone
 \newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
 \newcommand{\statsbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt S}}
 \newcommand{\copssbadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\diamondsuit$\kern-0.5pt C}}
+\newcommand{\frsbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\bigstar$\kern-0.5pt RS}}
+\newcommand{\demorganbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\diamond$\kern-0.5pt DM}}
+\newcommand{\sylvesterbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt Sv}}
+\newcommand{\kalingabadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacklozenge$\kern-0.5pt Ka}}
+\newcommand{\jerusalembadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt Je}}
+\newcommand{\sonningbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\diamond$\kern-0.5pt So}}
+\newcommand{\ossietzkybadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt Os}}
+\newcommand{\bookerbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\clubsuit$\kern-0.5pt Bk}}
+\newcommand{\whitbreadbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt Wh}}
+\newcommand{\stalinbadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\spadesuit$\kern-0.5pt St}}
+\newcommand{\leninbadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\spadesuit$\kern-0.5pt Le}}
+\newcommand{\intpeacebadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt IP}}
+\newcommand{\stalinpeacebadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\spadesuit$\kern-0.5pt SPm}}
+\newcommand{\pourlemeritebadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\diamond$\kern-0.5pt PLM}}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]
