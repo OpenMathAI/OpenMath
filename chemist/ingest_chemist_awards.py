@@ -31,7 +31,10 @@ FRAGMENTS = {
     "Award", "Science Award", "TED", "TÜBİTAK", "Class",
 }
 # 解析垃圾：陨石坑/人名/爵位缩写等（曾入库已删，加黑名单防复建）
-JUNK = {"Soddy crater", "Jerome Karle", "Knighted", "OM", "IEEE"}
+JUNK = {"Soddy crater", "Jerome Karle", "Knighted", "OM", "IEEE",
+        # 裸 "Wolf Prize" 有歧义（化学/医学域都有化学得主获过），跳过不生成；
+        # 真实行已按学科在库（13 人沃尔夫化学 + Tsien/Hershko/Charpentier/Doudna 沃尔夫医学）。
+        "Wolf Prize"}
 # 奖项名归一：infobox 变体写法 → 库内规范名
 CANONICAL = {
     "Nobel Prize for Chemistry": "Nobel Prize in Chemistry",
@@ -39,7 +42,6 @@ CANONICAL = {
     "Royal Society Copley Medal": "Copley Medal",
     "National Academy of Sciences": "Member of the National Academy of Sciences",
     "Turing Award": "ACM A.M. Turing Award",
-    "Wolf Prize": "Wolf Prize in Chemistry",
     "UNESCO L'Oréal Award": "L'Oréal-UNESCO Award for Women in Science",
     "L'Oréal-UNESCO Award for Women in Science (2008)": "L'Oréal-UNESCO Award for Women in Science",
 }

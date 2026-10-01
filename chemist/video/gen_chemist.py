@@ -233,6 +233,9 @@ TOP_AWARDS = {
     41: ("\\japanbadge", "日本国际奖"),
     18: ("\\statsbadge", "国际统计学奖"),
     17: ("\\copssbadge", "考普斯会长奖"),
+    35: ("\\nmsbadge", "国家科学奖章"),
+    129: ("\\copleybadge", "科普利奖章"),
+    686: ("\\laskerbadge", "拉斯克奖"),
 }
 
 
@@ -662,6 +665,9 @@ HEADER = r"""% Nobel Chemistry Video — Allinone
 \newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
 \newcommand{\statsbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt S}}
 \newcommand{\copssbadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\diamondsuit$\kern-0.5pt C}}
+\newcommand{\nmsbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\spadesuit$\kern-0.5pt N}}
+\newcommand{\copleybadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamond$\kern-0.5pt Cp}}
+\newcommand{\laskerbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt L}}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]
