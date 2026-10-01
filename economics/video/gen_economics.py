@@ -1011,7 +1011,7 @@ def intro_slide(legend_lines):
   \node[draw=coverpurple!40, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,3.05) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coverpurple!82!black} 交叉荣誉 · 徽标一览}\par\vspace{3pt}
     {\fontsize{6.6}{12.8}\selectfont\color{coverdark!84} LEGENDPLACEHOLDER}};
-  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,1.10) {%%
+  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,-0.85) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coveramber!70!black} 颁奖节奏}\\[2pt]
     {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1969 年至今每年颁发，无空缺年份。}};
 \end{tikzpicture}
@@ -1168,12 +1168,24 @@ def main():
     os.makedirs(EP, exist_ok=True)
     out = [HEADER.replace("{EP}", "allinone").replace("{TITLE}", "合集").replace("{RANGE}", "1901–2025")]
     out.append(make_cover(people))
-    # 徽标图例：按 TOP_AWARDS 顺序收集本片涉及的 (badge,label) 及人次
+    # 徽标图例：按 (badge,label) 合并统计人数（同标签多 id 合一，如内默斯奖两奖项）
+    legend_agg = {}
+    for q in people:
+        seen = set()
+        for it in (q.get("cross_items") or []):
+            key = (it[0], it[1])
+            if key in seen:
+                continue
+            seen.add(key)
+            legend_agg.setdefault(key, set()).add(q["slug"])
     legend_lines = []
-    for aid, (badge, label) in TOP_AWARDS.items():
-        cnt = sum(1 for q in people for it in (q.get("cross_items") or []) if it[0] == badge and it[1] == label)
-        if cnt:
-            legend_lines.append("%s{} %s · %d 位" % (badge, label, cnt))
+    done = set()
+    for aid, key in TOP_AWARDS.items():
+        if key in done or key not in legend_agg:
+            continue
+        done.add(key)
+        badge, label = key
+        legend_lines.append("%s{} %s · %d 位" % (badge, label, len(legend_agg[key])))
     out.append(intro_slide(legend_lines))
     summary_tex = ""
     out.append(section_slide("twentiethslide",
