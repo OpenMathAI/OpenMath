@@ -35,17 +35,18 @@ for label, v in [("award_laureate→people 缺", a1), ("award_laureate→awards 
 
 print()
 print("=" * 60)
-print("B. 同一人物同奖项重复行（含 year=0 与真实年份并存）")
+print("B. 同一人物同奖项同年份重复行（多年份获奖不视为重复）")
 print("=" * 60)
-dup = q("""SELECT al.person_id, p.name_en, a.name_en, GROUP_CONCAT(IFNULL(al.year,0) ORDER BY al.year) ys, COUNT(*) c
+dup = q("""SELECT al.person_id, p.name_en, a.name_en, al.year, COUNT(*) c
 FROM award_laureate al JOIN people p ON p.id=al.person_id JOIN awards a ON a.id=al.award_id
-GROUP BY al.person_id, al.award_id HAVING c>1 ORDER BY c DESC, p.name_en LIMIT 30""")
+GROUP BY al.person_id, al.award_id, al.year HAVING c>1
+ORDER BY c DESC, p.name_en LIMIT 30""")
 if dup:
     for r in dup:
-        print(f"  ⚠️ {r[1]} | {r[2]} | years={r[3]} (x{r[4]})")
-        issues.append(f"重复行: {r[1]} {r[2]} {r[3]}")
+        print(f"  ⚠️ {r[1]} | {r[2]} | year={r[3]} (x{r[4]})")
+        issues.append(f"同年重复行: {r[1]} {r[2]} {r[3]}")
 else:
-    print("  ✅ 无")
+    print("  ✅ 无同年重复")
 
 print()
 print("=" * 60)
@@ -116,13 +117,14 @@ multi3 = q("""SELECT p.name_en, COUNT(DISTINCT al.award_id) c FROM award_laureat
 JOIN people p ON p.id=al.person_id GROUP BY al.person_id, p.name_en HAVING c>=3 ORDER BY c DESC LIMIT 10""")
 print(f"  ℹ️ ≥3 奖得主 top10（v_multi_award 未区分获奖类型/会士类荣誉）：")
 for r in multi3:
-    print(f"     {r[1]}: {r[2]} 项")
+    print(f"     {r[0]}: {r[1]} 项")
 idx = q("SHOW INDEX FROM award_laureate")
 idx_cols = {(i[2], i[4]) for i in idx}
 print(f"  ℹ️ award_laureate 索引: {sorted({i[4] for i in idx})}")
-nobel_rows = q("""SELECT a.name_en, COUNT(al.person_id) FROM awards a LEFT JOIN award_laureate al ON al.award_id=a.id
-WHERE a.award_type='nobel' GROUP BY a.id, a.name_en""")
-print("  ℹ️ Nobel 五奖+经济覆盖：")
+nobel_rows = q("""SELECT a.name_en, COUNT(DISTINCT al.person_id) FROM awards a
+LEFT JOIN award_laureate al ON al.award_id=a.id
+WHERE a.id IN (22,23,24,25,26,857) GROUP BY a.id, a.name_en""")
+print("  ℹ️ Nobel 六奖覆盖：")
 for r in nobel_rows:
     print(f"     {r[0]}: {r[1]} 人")
 
