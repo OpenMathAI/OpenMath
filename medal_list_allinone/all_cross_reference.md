@@ -485,26 +485,6 @@
 | **Robert Robinson**（罗伯特·鲁宾逊） | 1932 |
 | **Tomas Lindahl**（托马斯·林达尔） | 2007 |
 
-##### × Wolf Prize in Chemistry（15 人）
-
-| 姓名 | 获奖年份 |
-|---|---|
-| **Ada Yonath**（阿达·约纳特） | 2006 |
-| **Ahmed Zewail**（艾哈迈德·泽维尔） | 1993 |
-| **Carolyn Bertozzi**（卡罗琳·贝尔托齐） | 2022 |
-| **Elias James Corey**（伊利亚斯·詹姆斯·科里） | 1986 |
-| **Emmanuelle Charpentier**（埃玛纽埃勒·沙尔庞捷） | — |
-| **Gerhard Ertl**（格哈德·埃特尔） | 1998 |
-| **Jennifer Doudna**（珍妮弗·道德纳） | — |
-| **John Polanyi**（约翰·波拉尼） | 1982 |
-| **John Pople**（约翰·波普尔） | 1992 |
-| **Karl Barry Sharpless**（卡尔·巴里·夏普莱斯） | 2001 |
-| **Omar M. Yaghi**（奥马尔·亚吉） | 2018 |
-| **Richard R. Ernst**（理查德·恩斯特） | 1991 |
-| **Rudolph A. Marcus**（鲁道夫·马库斯） | 1985 |
-| **Ryōji Noyori**（野依良治） | 2001 |
-| **William E. Moerner**（威廉·E·莫尔纳） | 2008 |
-
 ##### × ForMemRS（13 人）
 
 | 姓名 | 获奖年份 |
@@ -558,6 +538,24 @@
 | **Robert Burns Woodward**（罗伯特·伯恩斯·伍德沃德） | 1956 |
 | **Vincent du Vigneaud**（文森特·迪维尼奥） | 1945 |
 | **Wendell Meredith Stanley**（温德尔·梅雷迪思·斯坦利） | 1946 |
+
+##### × Wolf Prize in Chemistry（13 人）
+
+| 姓名 | 获奖年份 |
+|---|---|
+| **Ada Yonath**（阿达·约纳特） | 2006 |
+| **Ahmed Zewail**（艾哈迈德·泽维尔） | 1993 |
+| **Carolyn Bertozzi**（卡罗琳·贝尔托齐） | 2022 |
+| **Elias James Corey**（伊利亚斯·詹姆斯·科里） | 1986 |
+| **Gerhard Ertl**（格哈德·埃特尔） | 1998 |
+| **John Polanyi**（约翰·波拉尼） | 1982 |
+| **John Pople**（约翰·波普尔） | 1992 |
+| **Karl Barry Sharpless**（卡尔·巴里·夏普莱斯） | 2001 |
+| **Omar M. Yaghi**（奥马尔·亚吉） | 2018 |
+| **Richard R. Ernst**（理查德·恩斯特） | 1991 |
+| **Rudolph A. Marcus**（鲁道夫·马库斯） | 1985 |
+| **Ryōji Noyori**（野依良治） | 2001 |
+| **William E. Moerner**（威廉·E·莫尔纳） | 2008 |
 
 ##### × Elliott Cresson Medal（10 人）
 
@@ -3163,7 +3161,7 @@
 | Wolf Prize in Mathematics × Abel Prize | 17 |
 | Nobel Prize in Physiology or Medicine × Wolf Prize in Medicine | 16 |
 | Fields Medal × Wolf Prize in Mathematics | 16 |
-| Nobel Prize in Chemistry × Wolf Prize in Chemistry | 15 |
+| Nobel Prize in Chemistry × Wolf Prize in Chemistry | 13 |
 | ACM A.M. Turing Award × Kyoto Prize | 7 |
 | Fields Medal × Abel Prize | 7 |
 | Nobel Prize in Physiology or Medicine × Kyoto Prize | 6 |
@@ -3172,7 +3170,6 @@
 | ACM A.M. Turing Award × Wolf Prize in Physics | 2 |
 | ACM A.M. Turing Award × Nevanlinna Prize | 2 |
 | Abel Prize × Chern Medal | 2 |
-| Wolf Prize in Chemistry × Wolf Prize in Medicine | 2 |
 | Wolf Prize in Medicine × Kyoto Prize | 2 |
 | Nobel Prize in Physics × Nobel Prize in Chemistry | 1 |
 | Nobel Prize in Physics × ACM A.M. Turing Award | 1 |
@@ -3233,7 +3230,8 @@
 
 > ★ Turing 行按 2026-09-29 库内直查口径更新（原 34 人/42% 系未计冯·诺依曼奖章全量）；诺贝尔物理学奖行更新为含 21 世纪的库内全量口径。
 > ★ 2026-09-30 复查：数学四大奖交叉（16/17/7/2/1/5）、沃尔夫物理×物理诺奖 26、图灵荣誉覆盖 79/81 均与直查一致；新增图灵+IEEE 荣誉奖章 4 人；和平奖 143 人与数学/图灵/COPSS 零交叉。
-> ★ 2026-10-01 全量补充：六大诺奖 + 图灵的人群交叉覆盖——医学 191/232、化学 168/198、经济 57/99、和平 40/143、文学 6/122 有其他荣誉；
+> ★ 2026-10-01 全量补充：六大诺奖 + 图灵的人群交叉覆盖——医学 191/232、化学 168/198、经济 52/99、和平 35/140、文学 6/122 有其他荣誉
+>（变体归并后口径，与第三节自动块标题一致；归并前曾为 57/40）；
 > 两两交叉矩阵、五个诺奖人群的逐奖项明细与多重荣誉 Top 25 见第八节（脚本生成，幂等可复跑）。
 
 ---
