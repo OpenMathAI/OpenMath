@@ -1286,7 +1286,16 @@ def make_cover(people):
 
 
 def intro_slide(legend_lines, stats, missing_years):
-    legend_tex = " \\\\\r\n    ".join(legend_lines)
+    # 每行放 1~2 个奖项（奇数末行单列），避免面板纵向溢出
+    rows = []
+    for i in range(0, len(legend_lines), 2):
+        a = legend_lines[i]
+        b = legend_lines[i + 1] if i + 1 < len(legend_lines) else ""
+        if b:
+            rows.append("\\makebox[3.8cm][l]{" + a + "}" + b)
+        else:
+            rows.append(a)
+    legend_tex = " \\\\\r\n    ".join(rows)
     scale_txt = ("1901 年首颁（Sully Prudhomme）；至 2025 年共评奖 %d 个年份、%d 条记录，"
                  "涉及 %d 位独立作家。1904 年曾由 Frédéric Mistral 与 José Echegaray 两人共享，"
                  "为文学奖史上唯一一次。"
