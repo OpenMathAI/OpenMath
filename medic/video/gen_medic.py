@@ -241,6 +241,19 @@ TOP_AWARDS = {
     41: ("\\japanbadge", "日本国际奖"),
     18: ("\\statsbadge", "国际统计学奖"),
     17: ("\\copssbadge", "考普斯会长奖"),
+    962: ("\\wolfbadge", "沃尔夫医学奖"),
+    925: ("\\wolfbadge", "沃尔夫化学奖"),
+    35: ("\\nmsbadge", "国家科学奖章"),
+    129: ("\\copleybadge", "科普利奖章"),
+    686: ("\\laskerbadge", "拉斯克奖"),
+    1053: ("\\laskerbadge", "拉斯克奖"),
+    1065: ("\\laskerbadge", "拉斯克奖"),
+    1075: ("\\laskerbadge", "拉斯克奖"),
+    1113: ("\\laskerbadge", "拉斯克奖"),
+    1146: ("\\laskerbadge", "拉斯克奖"),
+    1175: ("\\laskerbadge", "拉斯克奖"),
+    108: ("\\kyotobadge", "京都奖"),
+    722: ("\\kyotobadge", "京都奖"),
 }
 
 
@@ -663,6 +676,9 @@ HEADER = r"""% Nobel Physiology or Medicine Video — Allinone
 \newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
 \newcommand{\statsbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt S}}
 \newcommand{\copssbadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\diamondsuit$\kern-0.5pt C}}
+\newcommand{\nmsbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\spadesuit$\kern-0.5pt N}}
+\newcommand{\copleybadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\diamond$\kern-0.5pt Cp}}
+\newcommand{\laskerbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt L}}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]
@@ -978,7 +994,7 @@ def intro_slide(legend_lines):
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coveramber!70!black} 空缺年份}\\[2pt]
     {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 9 个年份未颁奖（1915–18 · 1921 · 1925 · 1940–42），多因两次世界大战。}};
   \node[draw=coverpurple!40, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,3.05) {%%
-    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverpurple!82!black} 女性得主}\par\vspace{3pt}
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverpurple!82!black} 交叉荣誉 · 徽标一览}\par\vspace{3pt}
     {\fontsize{6.5}{11}\selectfont\color{coverdark!84} LEGENDPLACEHOLDER}};
 \end{tikzpicture}
 \end{center}
@@ -1145,25 +1161,20 @@ def main():
         hdr = hdr.replace(k, v)
     out = [hdr]
     out.append(make_cover(people))
-    # 女性得主图例：按获奖年份排序，每行约 4 位
-    females = [p for p in people if (p.get("page") or {}).get("sex") == "female"]
-    females.sort(key=lambda p: p["year"])
-    fnames = ["%s（%d）" % (esc(p["zh"] or p["name"]), p["year"]) for p in females]
-    # 每行最多 2 位，但累计超过 30 字符时强制换行（避免超长名字溢出面板）
+    # 交叉荣誉图例：按 TOP_AWARDS 交叉人数降序（每位仅计一次）
+    cross_count = {}
+    for p in people:
+        seen = set()
+        for badge, label, yr in (p.get("cross_items") or []):
+            if (badge, label) in seen:
+                continue
+            seen.add((badge, label))
+            cross_count.setdefault((badge, label), set()).add(p["slug"])
     legend_lines = []
-    cur, cur_len = [], 0
-    for fn in fnames:
-        add = len(fn) + (1 if cur else 0)
-        if cur and cur_len + add > 30:
-            legend_lines.append("、".join(cur))
-            cur, cur_len = [], 0
-            add = len(fn)
-        cur.append(fn)
-        cur_len += add
-    if cur:
-        legend_lines.append("、".join(cur))
+    for (badge, label), slugs in sorted(cross_count.items(), key=lambda kv: (-len(kv[1]), kv[0][1])):
+        legend_lines.append("%s{} %s · %d 位" % (badge, label, len(slugs)))
     if not legend_lines:
-        legend_lines = ["暂无（metadata 未标注性别）"]
+        legend_lines = ["暂无交叉荣誉记录"]
     out.append(intro_slide(legend_lines))
     out.append(section_slide("twentiethslide",
                              "第一乐章 · 20 世纪（1901–2000）",
