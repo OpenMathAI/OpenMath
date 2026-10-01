@@ -241,6 +241,17 @@ TOP_AWARDS = {
     41: ("\\japanbadge", "日本国际奖"),
     18: ("\\statsbadge", "国际统计学奖"),
     17: ("\\copssbadge", "考普斯会长奖"),
+    1187: ("\\clarkbadge", "克拉克奖章"),
+    35: ("\\nmsbadge", "国家科学奖章"),
+    191: ("\\bbvabadge", "BBVA 前沿知识奖"),
+    1199: ("\\nemmersbadge", "内默斯奖"),
+    1212: ("\\nemmersbadge", "内默斯奖"),
+    224: ("\\jvnbadge", "约翰·冯·诺依曼奖"),
+    1198: ("\\frischbadge", "弗里施奖章"),
+    37: ("\\nasbadge", "美国科学院院士"),
+    451: ("\\pmofbadge", "总统自由勋章"),
+    299: ("\\vntbadge", "冯·诺依曼理论奖"),
+    325: ("\\vntbadge", "冯·诺依曼理论奖"),
 }
 
 
@@ -673,6 +684,15 @@ HEADER = r"""% Nobel Economics Video — Allinone
 \newcommand{\japanbadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt J}}
 \newcommand{\statsbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt S}}
 \newcommand{\copssbadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\diamondsuit$\kern-0.5pt C}}
+\newcommand{\clarkbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\spadesuit$\kern-0.5pt Cl}}
+\newcommand{\nmsbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\spadesuit$\kern-0.5pt N}}
+\newcommand{\nasbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacktriangle$\kern-0.5pt NA}}
+\newcommand{\bbvabadge}{\raisebox{0.55ex}{\tiny\color{coveraccent}$\heartsuit$\kern-0.5pt B}}
+\newcommand{\nemmersbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\diamond$\kern-0.5pt Ne}}
+\newcommand{\jvnbadge}{\raisebox{0.55ex}{\tiny\color{coverpurple}$\blacklozenge$\kern-0.5pt JN}}
+\newcommand{\frischbadge}{\raisebox{0.55ex}{\tiny\color{coveramber}$\bigstar$\kern-0.5pt Fr}}
+\newcommand{\pmofbadge}{\raisebox{0.55ex}{\tiny\color{covermuted}$\spadesuit$\kern-0.5pt PF}}
+\newcommand{\vntbadge}{\raisebox{0.55ex}{\tiny\color{coverprimary}$\blacktriangle$\kern-0.5pt VT}}
 
 \newcommand{\plainbar}{%
 \begin{tikzpicture}[remember picture, overlay]
