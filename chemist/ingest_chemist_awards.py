@@ -36,6 +36,10 @@ JUNK = {"Soddy crater", "Jerome Karle", "Knighted", "OM", "IEEE"}
 CANONICAL = {
     "Nobel Prize for Chemistry": "Nobel Prize in Chemistry",
     "Nobel Prize": "Nobel Prize in Chemistry",
+    "Royal Society Copley Medal": "Copley Medal",
+    "National Academy of Sciences": "Member of the National Academy of Sciences",
+    "Turing Award": "ACM A.M. Turing Award",
+    "Wolf Prize": "Wolf Prize in Chemistry",
 }
 
 # manifest db_name_en → 库内规范名（people.name_en）

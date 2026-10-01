@@ -39,6 +39,8 @@ JUNK = {
 }
 # 末尾带括号年份的残片（如 "FRS (2020)"、"Nobel Prize in Literature (1971)"）
 TRAILING_YEAR_PAT = re.compile(r"\s*\(\d{4}\)\s*$")
+# 纯年份/QID 形奖项名（解析碎片）
+DEGENERATE_PAT = re.compile(r"^(Q\d+|\d{4})$")
 
 NOBEL_MED = "Nobel Prize in Physiology or Medicine"
 NOBEL_LIT = "Nobel Prize in Literature"
@@ -107,6 +109,14 @@ PROJECTS = {
 }
 
 
+# 各项目通用变体名归一（get_or_create 前应用）
+NAME_CANONICAL = {
+    "Royal Society Copley Medal": "Copley Medal",
+    "National Academy of Sciences": "Member of the National Academy of Sciences",
+    "Turing Award": "ACM A.M. Turing Award",
+}
+
+
 def get_or_create_award(cur, name_en):
     cur.execute("SELECT id FROM awards WHERE name_en=%s", (name_en,))
     r = cur.fetchone()
@@ -147,22 +157,34 @@ def norm_year(y):
 
 
 def canonical_nobel(project_canonical, name):
-    """Nobel 变体智能归一：剥尾缀年份，按学科关键词映射到本项目诺奖规范名。"""
+    """Nobel 变体智能归一：剥尾缀年份，按学科关键词映射到本项目诺奖规范名。
+    覆盖："Nobel Prize..."、"Nobel Memorial Prize..."、年份前缀（"2010 Nobel Peace Prize"）。"""
     n = TRAILING_YEAR_PAT.sub("", name).strip()
-    if re.match(r"^Nobel [Pp]rize", n) and n not in project_canonical.values():
+    if n in project_canonical.values():
+        return n
+    if re.search(r"Nobel", n, re.I):
         low = n.lower()
+        target = None
         if "chemis" in low:
-            return "Nobel Prize in Chemistry"
-        if "medic" in low or "physiol" in low:
-            return NOBEL_MED
-        if "litera" in low:
-            return NOBEL_LIT
-        if "econ" in low:
-            return NOBEL_ECO
-        if "peace" in low:
-            return NOBEL_PEA
-        # 裸 "Nobel Prize" / "Nobel prize" → 本项目诺奖
-        return next(iter(project_canonical.values()))
+            target = "Nobel Prize in Chemistry"
+        elif "medic" in low or "physiol" in low:
+            target = NOBEL_MED
+        elif "litera" in low:
+            target = NOBEL_LIT
+        elif "memorial" in low or "econ" in low:
+            target = NOBEL_ECO
+        elif "peace" in low:
+            target = NOBEL_PEA
+        elif "physic" in low:
+            target = "Nobel Prize in Physics"
+        else:
+            target = next(iter(project_canonical.values()))
+        # 仅当目标属于本项目可归一族时归并（避免把别人的诺奖错归本项目）
+        if target in set(project_canonical.values()) | {
+            "Nobel Prize in Chemistry", "Nobel Prize in Physics",
+            NOBEL_MED, NOBEL_LIT, NOBEL_ECO, NOBEL_PEA,
+        }:
+            return target
     return n
 
 
@@ -212,11 +234,19 @@ def process(conn, cfg, project):
             for n, y in parse_awards(cell):
                 if NOISE_PAT.search(n) or n in FRAGMENTS or n in JUNK:
                     continue
+                if DEGENERATE_PAT.match(n):
+                    # 纯年份/QID：把年份信息交给 y，奖项名丢弃
+                    if re.fullmatch(r"\d{4}", n) and not y:
+                        y = n
+                    continue
                 # 名内嵌年份（如 "Nobel Prize in Literature (1971)"）剥出并作为年份源
                 tm = TRAILING_YEAR_PAT.search(n)
                 if tm and not y:
                     y = tm.group(0).strip("() ")
                 n2 = canonical_nobel(canonical, n)
+                n2 = NAME_CANONICAL.get(n2, n2)
+                if project == "medicine" and n2 == "Wolf Prize":
+                    n2 = "Wolf Prize in Medicine"
                 if n2 in FRAGMENTS or n2 in JUNK or NOISE_PAT.search(n2):
                     continue
                 transformed = n2 != n or n in canonical
