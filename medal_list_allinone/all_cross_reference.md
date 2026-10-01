@@ -486,26 +486,6 @@
 | **Robert Robinson**（罗伯特·鲁宾逊） | 1932 |
 | **Tomas Lindahl**（托马斯·林达尔） | 2007 |
 
-##### × Wolf Prize in Chemistry（15 人）
-
-| 姓名 | 获奖年份 |
-|---|---|
-| **Ada Yonath**（阿达·约纳特） | 2006 |
-| **Ahmed Zewail**（艾哈迈德·泽维尔） | 1993 |
-| **Carolyn Bertozzi**（卡罗琳·贝尔托齐） | 2022 |
-| **Elias James Corey**（伊利亚斯·詹姆斯·科里） | 1986 |
-| **Emmanuelle Charpentier**（埃玛纽埃勒·沙尔庞捷） | — |
-| **Gerhard Ertl**（格哈德·埃特尔） | 1998 |
-| **Jennifer Doudna**（珍妮弗·道德纳） | — |
-| **John Polanyi**（约翰·波拉尼） | 1982 |
-| **John Pople**（约翰·波普尔） | 1992 |
-| **Karl Barry Sharpless**（卡尔·巴里·夏普莱斯） | 2001 |
-| **Omar M. Yaghi**（奥马尔·亚吉） | 2018 |
-| **Richard R. Ernst**（理查德·恩斯特） | 1991 |
-| **Rudolph A. Marcus**（鲁道夫·马库斯） | 1985 |
-| **Ryōji Noyori**（野依良治） | 2001 |
-| **William E. Moerner**（威廉·E·莫尔纳） | 2008 |
-
 ##### × ForMemRS（13 人）
 
 | 姓名 | 获奖年份 |
@@ -559,6 +539,24 @@
 | **Robert Burns Woodward**（罗伯特·伯恩斯·伍德沃德） | 1956 |
 | **Vincent du Vigneaud**（文森特·迪维尼奥） | 1945 |
 | **Wendell Meredith Stanley**（温德尔·梅雷迪思·斯坦利） | 1946 |
+
+##### × Wolf Prize in Chemistry（13 人）
+
+| 姓名 | 获奖年份 |
+|---|---|
+| **Ada Yonath**（阿达·约纳特） | 2006 |
+| **Ahmed Zewail**（艾哈迈德·泽维尔） | 1993 |
+| **Carolyn Bertozzi**（卡罗琳·贝尔托齐） | 2022 |
+| **Elias James Corey**（伊利亚斯·詹姆斯·科里） | 1986 |
+| **Gerhard Ertl**（格哈德·埃特尔） | 1998 |
+| **John Polanyi**（约翰·波拉尼） | 1982 |
+| **John Pople**（约翰·波普尔） | 1992 |
+| **Karl Barry Sharpless**（卡尔·巴里·夏普莱斯） | 2001 |
+| **Omar M. Yaghi**（奥马尔·亚吉） | 2018 |
+| **Richard R. Ernst**（理查德·恩斯特） | 1991 |
+| **Rudolph A. Marcus**（鲁道夫·马库斯） | 1985 |
+| **Ryōji Noyori**（野依良治） | 2001 |
+| **William E. Moerner**（威廉·E·莫尔纳） | 2008 |
 
 ##### × Elliott Cresson Medal（10 人）
 
@@ -960,8 +958,8 @@
 | 姓名 | 获奖年份 |
 |---|---|
 | **Avram Hershko**（阿夫拉姆·赫什科） | 2001 |
-| **Emmanuelle Charpentier**（埃玛纽埃勒·沙尔庞捷） | — |
-| **Jennifer Doudna**（珍妮弗·道德纳） | — |
+| **Emmanuelle Charpentier**（埃玛纽埃勒·沙尔庞捷） | 2020 |
+| **Jennifer Doudna**（珍妮弗·道德纳） | 2020 |
 | **Roger Y. Tsien**（钱永健） | 2004 |
 
 ##### × Enrico Fermi Award（3 人）
@@ -3164,19 +3162,20 @@
 | Wolf Prize in Mathematics × Abel Prize | 17 |
 | Nobel Prize in Physiology or Medicine × Wolf Prize in Medicine | 16 |
 | Fields Medal × Wolf Prize in Mathematics | 16 |
-| Nobel Prize in Chemistry × Wolf Prize in Chemistry | 15 |
+| Nobel Prize in Chemistry × Wolf Prize in Chemistry | 13 |
 | ACM A.M. Turing Award × Kyoto Prize | 7 |
 | Fields Medal × Abel Prize | 7 |
 | Nobel Prize in Physiology or Medicine × Kyoto Prize | 6 |
 | Nobel Prize in Chemistry × Wolf Prize in Medicine | 4 |
+| Nobel Prize in Physics × Kyoto Prize in Advanced Technology | 3 |
 | ACM A.M. Turing Award × Gödel Prize | 3 |
 | ACM A.M. Turing Award × Wolf Prize in Physics | 2 |
 | ACM A.M. Turing Award × Nevanlinna Prize | 2 |
 | Abel Prize × Chern Medal | 2 |
-| Wolf Prize in Chemistry × Wolf Prize in Medicine | 2 |
 | Wolf Prize in Medicine × Kyoto Prize | 2 |
 | Nobel Prize in Physics × Nobel Prize in Chemistry | 1 |
 | Nobel Prize in Physics × ACM A.M. Turing Award | 1 |
+| Nobel Prize in Physics × Kyoto Prize in Basic Sciences | 1 |
 | Nobel Prize in Chemistry × Nobel Peace Prize | 1 |
 | Nobel Prize in Chemistry × Wolf Prize in Physics | 1 |
 | Nobel Prize in Chemistry × Kyoto Prize | 1 |
@@ -3188,6 +3187,7 @@
 | Wolf Prize in Mathematics × Kyoto Prize | 1 |
 | Abel Prize × Gödel Prize | 1 |
 | COPSS Presidents' Award × Gauss Prize | 1 |
+| Wolf Prize in Physics × Kyoto Prize in Basic Sciences | 1 |
 
 ### 多重荣誉 Top 25（全库，奖项数 ≥10）
 

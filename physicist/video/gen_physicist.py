@@ -243,6 +243,8 @@ TOP_AWARDS = {
     3: ("\\wolfmathbadge", "沃尔夫数学奖"),
     243: ("\\wolfbadge", "沃尔夫物理学奖"),
     27: ("\\kyotobadge", "京都奖"),
+    108: ("\\kyotobadge", "京都奖（基础科学）"),
+    722: ("\\kyotobadge", "京都奖（先进技术）"),
     28: ("\\shawbadge", "邵逸夫奖"),
     29: ("\\btmathbadge", "数学突破奖"),
     557: ("\\btphysbadge", "基础物理学突破奖"),
