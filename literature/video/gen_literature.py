@@ -585,7 +585,7 @@ def life_str(p):
     y1 = dob[:4] if re.match(r"^\d{4}", dob) else ""
     y2 = dod[:4] if re.match(r"^\d{4}", dod) else ""
     if y1 and y2:
-        return "%s–%s" % (y1, y2)
+        return "%s–%s（享年%d岁）" % (y1, y2, int(y2) - int(y1))
     if y1:
         return y1 + "–"
     return ""
@@ -980,7 +980,8 @@ HEADER = r"""% Nobel Literature Video — Allinone
 \newcommand{\honorbar}[1]{%
   \begin{tikzpicture}[remember picture, overlay]
     \node[anchor=south, draw=coverprimary!55, fill=coverlight, rounded corners=6pt,
-          inner xsep=8pt, inner ysep=5pt, yshift=0.65cm, text=coverdark!85] at (current page.south) {%
+          inner xsep=8pt, inner ysep=5pt, yshift=0.65cm, text=coverdark!85,
+          text width=12.2cm, align=center] at (current page.south) {%
       \fontsize{7.5}{9.5}\selectfont\bfseries{\color{coverprimary} 其他殊荣}\enspace #1};
   \end{tikzpicture}%
 }
