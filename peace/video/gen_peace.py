@@ -821,6 +821,16 @@ CHIP_STYLE = {
     "日本国际奖": ("$\\heartsuit$", "japanclr"),
     "国际统计学奖": ("$\\blacktriangle$", "statsclr"),
     "考普斯会长奖": ("$\\diamondsuit$", "copssclr"),
+    "荣誉军团勋章": ("$\\diamondsuit$", "crafoordclr"),
+    "萨哈罗夫奖": ("$\\blacktriangle$", "turingclr2"),
+    "正确生活方式奖": ("$\\bigstar$", "fieldsclr"),
+    "总统自由勋章": ("$\\spadesuit$", "copssclr"),
+    "国会金质奖章": ("$\\bigstar$", "shawclr"),
+    "国家科学奖章": ("$\\spadesuit$", "physclr"),
+    "万尼瓦尔·布什奖": ("$\\diamond$", "crafoordclr"),
+    "阿兹特克雄鹰勋章": ("$\\blacklozenge$", "kyotoclr"),
+    "地上和平奖": ("$\\heartsuit$", "japanclr"),
+    "哈维尔人权奖": ("$\\blacktriangle$", "turingclr2"),
 }
 BADGE_BY_LABEL = {label: badge for badge, label in TOP_AWARDS.values() if label in CHIP_STYLE}
 ROW_ORDER = list(BADGE_BY_LABEL.keys())
@@ -974,7 +984,16 @@ def make_cover(people, n_records, n_people, n_years):
 
 def intro_slide(legend_lines, n_records, n_people, n_years):
     if legend_lines:
-        legend_tex = " \\\\\n    ".join(legend_lines)
+        # 每行放 1~2 个奖项，避免面板纵向溢出
+        rows = []
+        for i in range(0, len(legend_lines), 2):
+            a = legend_lines[i]
+            b = legend_lines[i + 1] if i + 1 < len(legend_lines) else ""
+            if b:
+                rows.append("\\makebox[3.8cm][l]{" + a + "}" + b)
+            else:
+                rows.append(a)
+        legend_tex = " \\\\\n    ".join(rows)
     else:
         legend_tex = "本片得主暂无其他顶级奖项交叉记录"
     return (r'''\newcommand{\introslide}{%%
