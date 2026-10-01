@@ -1298,15 +1298,15 @@ def intro_slide(legend_lines, stats, missing_years):
                    % (len(missing_years), " · ".join(str(y) for y in missing_years)))
     else:
         gap_txt = "本统计区间内每个年份均有颁奖。"
-    if legend_lines:
-        legend_node = r'''  \node[draw=coverpurple!40, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,3.05) {%%
-    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverpurple!82!black} 交叉荣誉 · 徽标一览}\par\vspace{3pt}
-    {\fontsize{6.6}{12.8}\selectfont\color{coverdark!84} LEGENDPLACEHOLDER}};
-'''
-    else:
-        legend_node = r'''  \node[draw=coverpurple!40, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,3.05) {%%
+    if not legend_lines:
+        legend_lines = ["暂无交叉荣誉记录"]
+    curated_node = r'''  \node[draw=coverpurple!40, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,3.05) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coverpurple!82!black} 从普吕多姆到克拉斯诺霍尔卡伊}\par\vspace{3pt}
     {\fontsize{7}{9}\selectfont\color{coverdark!84} 诗歌、小说、戏剧与歌词：文学奖的年轮横跨一个多世纪，\\授予「在文学领域创作出具有理想倾向的最佳作品的人」。}};
+'''
+    legend_node = r'''  \node[draw=coverpurple!40, fill=purplepanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,1.10) {%%
+    {\fontsize{8}{9.5}\selectfont\bfseries\color{coverpurple!82!black} 交叉荣誉 · 徽标一览}\par\vspace{3pt}
+    {\fontsize{6.6}{12.8}\selectfont\color{coverdark!84} LEGENDPLACEHOLDER}};
 '''
     tex = r'''\newcommand{\introslide}{%%
 \begin{frame}
@@ -1322,10 +1322,10 @@ def intro_slide(legend_lines, stats, missing_years):
   \node[draw=coveraccent!40, fill=redpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,1.10) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coveraccent!82!black} 拒领与追授}\\[2pt]
     {\fontsize{7}{8.5}\selectfont\color{coverdark!84} DECLINETXT}};
-''' + legend_node + r'''  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=7.6cm, align=left, anchor=north west] at (0.30,1.30) {%%
+  \node[draw=coveramber!45, fill=goldpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,-0.85) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coveramber!70!black} 空缺年份}\\[2pt]
     {\fontsize{7}{8.5}\selectfont\color{coverdark!84} GAPTXT}};
-\end{tikzpicture}
+''' + curated_node + legend_node + r'''\end{tikzpicture}
 \end{center}
 \end{frame}
 }
