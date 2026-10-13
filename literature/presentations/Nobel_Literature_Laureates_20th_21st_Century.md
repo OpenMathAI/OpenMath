@@ -141,3 +141,4 @@
 | 2024 | [Han Kang](https://en.wikipedia.org/wiki/Han_Kang) | South Korea (Korean) |
 | 2025 | [László Krasznahorkai](https://en.wikipedia.org/wiki/László_Krasznahorkai) | Hungary (Hungarian) |
 
+| 2026 | [Anne Carson](https://en.wikipedia.org/wiki/Anne_Carson) | Canada (Canadian) |

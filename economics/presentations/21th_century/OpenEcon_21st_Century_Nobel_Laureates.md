@@ -70,6 +70,8 @@
 | 2025 | Joel Mokyr (乔尔·莫基尔) | United States / Israel | 表彰他识别了通过技术进步实现持续增长的前提条件 | 🔲 | 🔲 | ✅ |
 | 2025 | Philippe Aghion (菲利普·阿吉翁) | France | 表彰他们关于通过创造性破坏实现持续增长的理论 | 🔲 | 🔲 | ✅ |
 | 2025 | Peter Howitt (彼得·豪伊特) | Canada | 表彰他们关于通过创造性破坏实现持续增长的理论 | 🔲 | 🔲 | ✅ |
+| 2026 | Robert E. Hall (罗伯特·霍尔) | United States | 表彰其为宏观经济稳定奠定微观经济学基础 | 🔲 | 🔲 | ✅ |
+| 2026 | Michael Woodford (迈克尔·伍德福特) | United States | 表彰其为宏观经济稳定奠定微观经济学基础 | 🔲 | 🔲 | ✅ |
 
 ---
 

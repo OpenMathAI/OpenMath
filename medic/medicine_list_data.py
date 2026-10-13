@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""OpenMedic 名录数据：诺贝尔生理学或医学奖 1901–2025。
+"""OpenMedic 名录数据：诺贝尔生理学或医学奖 1901–2026。
 
 DATA = {年份: (获奖理由英文, 获奖理由中文, [(姓名en, 姓名zh, 国籍), ...])}
 获奖理由为 Nobel 官方 citation；共享理由年份为全年份共通；拆分理由年份（如
@@ -475,4 +475,9 @@ DATA = {
            [("Mary E. Brunkow", "玛丽·埃伦·布伦科", US),
             ("Fred Ramsdell", "弗雷德·拉姆斯德尔", US),
             ("Shimon Sakaguchi", "坂口志文", "Japan")]),
+    2026: ("for their discoveries concerning light-gated ion channels and optogenetics",
+           "表彰他们关于光控离子通道和光遗传学的发现",
+           [("Karl Deisseroth", "卡尔·代塞尔罗思", US),
+            ("Peter Hegemann", "彼得·黑格曼", "Germany"),
+            ("Georg Nagel", "格奥尔格·纳格尔", "Germany")]),
 }

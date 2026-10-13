@@ -81,6 +81,8 @@
 | 2025 | Susumu Kitagawa (北川进) | Japanese | 表彰他们发展了金属有机框架 | 🔲 | 🔲 | ✅ |
 | 2025 | Richard Robson (理查德·罗布森) | British | 表彰他们发展了金属有机框架 | 🔲 | 🔲 | ✅ |
 | 2025 | Omar M. Yaghi (奥马尔·亚吉) | Jordanian American Saudi | 表彰他们发展了金属有机框架 | 🔲 | 🔲 | ✅ |
+| 2026 | Henri B. Kagan (亨利·B·卡根) | French | 表彰他们发现不对称有机合成中的非线性效应和自催化作用 | 🔲 | 🔲 | ✅ |
+| 2026 | Kenso Soai (硖合宪三) | Japanese | 表彰他们发现不对称有机合成中的非线性效应和自催化作用 | 🔲 | 🔲 | ✅ |
 
 ---
 

@@ -119,4 +119,6 @@
 | 2025 | [Joel Mokyr](https://en.wikipedia.org/wiki/Joel_Mokyr) | United States / Israel |
 | 2025 | [Philippe Aghion](https://en.wikipedia.org/wiki/Philippe_Aghion) | France |
 | 2025 | [Peter Howitt](https://en.wikipedia.org/wiki/Peter_Howitt_(economist)) | Canada |
+| 2026 | [Robert E. Hall](https://en.wikipedia.org/wiki/Robert_Hall_(economist)) | United States |
+| 2026 | [Michael Woodford](https://en.wikipedia.org/wiki/Michael_Woodford) | United States |
 

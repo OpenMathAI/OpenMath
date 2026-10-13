@@ -1,12 +1,13 @@
 # Nobel Economics Video Series — Missing Portrait Checklist
 
 > Source: `economics/presentations/pages/{20th_century,21th_century}/<Dir>/images.txt`（自动下载 2026-09-30）
-> 共 99 位得主中 **0 位** 缺真人肖像，待人工补图。
+> 共 101 位得主中 **1 位** 缺真人肖像，待人工补图。
 
 ## 缺照片得主
 
 | 年份 | 得主 | 占位文件 | 页面目录 | 备注 |
 |---|---|---|---|---|
+| 2026 | Michael Woodford | `episode-allinone/images/michaelwoodford.jpg` | `pages/21th_century/Michael_Woodford` | images.txt 无匹配人像（已过滤旗帜/签名/图标），或候选图下载失败 |
 
 ## 如何补图
 
@@ -16,6 +17,6 @@
 
 ## 当前状态
 
-- 总得主：**99 位**（1969–2025）
-- 真人肖像在位：**99 位**
-- 缺肖像（占位）：**0 位**
+- 总得主：**101 位**（1969–2026）
+- 真人肖像在位：**100 位**
+- 缺肖像（占位）：**1 位**

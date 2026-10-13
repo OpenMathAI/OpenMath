@@ -295,6 +295,12 @@ def build_db_cross(people):
                 badge, label = TOP_AWARDS[aid]
                 items.append((badge, label, str(yr) if yr else ""))
         items.sort(key=lambda t: t[2] or "9999")
+        # 两度化学诺奖得主：另一年的本奖作为交叉徽章（精修口径：「诺贝尔化学奖 YYYY（两度得主）」，
+        # 只进 honorbar，不进姓名行徽章）
+        cur.execute("SELECT year FROM award_laureate WHERE person_id=%s AND award_id=23 AND year<>%s", (rec, p["year"]))
+        oys = [r[0] for r in cur.fetchall() if r[0]]
+        if oys:
+            p["two_time_tex"] = "\\nobelchembadge{} 诺贝尔化学奖 %d（两度得主）" % oys[0]
         p["cross_items"] = items
         if items:
             n_cross += 1
@@ -304,13 +310,17 @@ def build_db_cross(people):
 
 
 def cross_tex(p, db_ok):
+    extra = p.get("two_time_tex") or ""
     if db_ok:
         items = p.get("cross_items") or []
-        if not items:
+        if not items and not extra:
             p["badges_str"] = ""
             return ""
         p["badges_str"] = ("\\," if items else "") + "".join(b + "{}" for b, _, _ in items)
-        return " \\enspace ".join("%s{} %s%s" % (b, lab, (" " + y) if y else "") for b, lab, y in items)
+        body = " \\enspace ".join("%s{} %s%s" % (b, lab, (" " + y) if y else "") for b, lab, y in items)
+        if extra and body:
+            return extra + " \\enspace " + body
+        return extra or body
     items = static_cross_items(p)
     if not items:
         p["badges_str"] = ""
@@ -580,7 +590,7 @@ def age_str(p):
 
 # ---------------- tex 生成 ----------------
 HEADER = r"""% Nobel Chemistry Video — Allinone
-% 诺贝尔化学奖全得主合集（1901–2025）
+% 诺贝尔化学奖全得主合集（1901–2026）
 % Beamer layout mirrors physicist/video/episode-allinone
 % Source: chemist/presentations 名录 + 离线页面 metadata.json + Wikipedia images
 \documentclass[aspectratio=169,14pt]{beamer}
@@ -925,14 +935,14 @@ def make_cover(people):
     grid_tikz = "\n".join(grid)
     return r'''\newcommand{\coverslide}{%%
 \begin{frame}[plain]
-\pdfbookmark[1]{封面 · 诺贝尔化学奖 1901–2025}{cover}
+\pdfbookmark[1]{封面 · 诺贝尔化学奖 1901–2026}{cover}
 \begin{tikzpicture}[remember picture, overlay]
   \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
   \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
   \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
   \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
   \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
-    at ([yshift=3.35cm]current page.center) {诺贝尔化学奖：分子的世纪（1901–2025）};
+    at ([yshift=3.35cm]current page.center) {诺贝尔化学奖：分子的世纪（1901–2026）};
   \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
     at ([yshift=2.50cm]current page.center) {Nobel Prize in Chemistry · \recordcount 条记录 / \personcount 位得主};
   \draw[coverprimary, line width=1.4pt] ([yshift=1.90cm, xshift=-5.2cm]current page.center)
@@ -941,7 +951,7 @@ def make_cover(people):
     at ([yshift=1.58cm]current page.center) {从 van 't Hoff 到蛋白质结构预测 · 兼具诺贝尔物理学奖与和平奖交叉得主一览};
 ''' + grid_tikz + r'''
   \node[anchor=center, font=\fontsize{10}{12}\selectfont\bfseries, text=DeepPurpleAccent]
-    at ([yshift=1.12cm]current page.center) {\faIcon{medal}\enspace Nobel Prize in Chemistry\enspace|\enspace 1901–2025 · 全 \personcount 位得主};
+    at ([yshift=1.12cm]current page.center) {\faIcon{medal}\enspace Nobel Prize in Chemistry\enspace|\enspace 1901–2026 · 全 \personcount 位得主};
 \end{tikzpicture}
 \end{frame}
 }
@@ -954,13 +964,13 @@ def intro_slide(legend_lines):
 \begin{frame}
 \pdfbookmark[1]{认识诺贝尔化学奖}{intro}
 \plainbar
-\sectiontitle{认识诺贝尔化学奖}{Nobel Prize in Chemistry · 1901–2025}
+\sectiontitle{认识诺贝尔化学奖}{Nobel Prize in Chemistry · 1901–2026}
 \vspace{0.05cm}
 \begin{center}
 \begin{tikzpicture}
   \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,3.05) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coverprimary!82!black} 规模}\\[2pt]
-    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1901 年首颁（van 't Hoff）；至 2025 年共评奖 \awardyearcount 个年份、\recordcount 条记录，涉及 \personcount 位独立得主。}};
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1901 年首颁（van 't Hoff）；至 2026 年共评奖 \awardyearcount 个年份、\recordcount 条记录，涉及 \personcount 位独立得主。}};
   \node[draw=coveraccent!40, fill=redpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,1.10) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coveraccent!82!black} 两度获奖}\\[2pt]
     {\fontsize{7}{8.5}\selectfont\color{coverdark!84} Frederick Sanger（1958 · 1980）与 K. Barry Sharpless（2001 · 2022）两度化学奖；\\Marie Curie 更跨物理（1903）与化学（1911）双科。}};
@@ -978,7 +988,7 @@ def intro_slide(legend_lines):
 def section_slide(name, sub, note):
     return ('\\newcommand{\\%s}{\\sectionpageslide\n'
             '  {%s}\n  {%s}\n  {%s}\n'
-            '  {Nobel Prize in Chemistry · 1901–2025}\n}\n' % (name, sub, note, ""))
+            '  {Nobel Prize in Chemistry · 1901–2026}\n}\n' % (name, sub, note, ""))
 
 
 def ending_slide():
@@ -994,11 +1004,11 @@ def ending_slide():
   \draw[coveramber, line width=1.4pt] ([yshift=0.15cm, xshift=-4.6cm]current page.center)
     -- ([yshift=0.15cm, xshift=4.6cm]current page.center);
   \node[anchor=center, font=\fontsize{10.5}{14}\selectfont, text=coverprimary!85!black]
-    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1901–2025 全部 \personcount 位独立诺贝尔化学奖得主};
+    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1901–2026 全部 \personcount 位独立诺贝尔化学奖得主};
   \node[anchor=center, font=\fontsize{8.5}{11.5}\selectfont\itshape, text=covermuted]
     at ([yshift=-1.70cm]current page.center) {他们的每一次追问，都在扩展人类认知的边界。};
   \node[anchor=south, font=\scriptsize, text=coverdark!40]
-    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace Nobel Prize in Chemistry · 1901–2025};
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace Nobel Prize in Chemistry · 1901–2026};
 \end{tikzpicture}
 \end{frame}
 }
@@ -1025,7 +1035,7 @@ def write_missing_md(people):
               "2. 保存为 `.jpg`（首选）/`.jpeg`/`.png`/`.webp`，命名与下表占位文件同名（扩展名可不同），放入 `chemist/video/episode-allinone/images/`。",
               "3. 重新运行 `python3 gen_chemist.py`（自动检测非空文件并使用），再 `make pdf && make video`。", "",
               "## 当前状态", "",
-              "- 总得主：**%d 位**（1901–2025）" % len(people),
+              "- 总得主：**%d 位**（1901–2026）" % len(people),
               "- 真人肖像在位：**%d 位**" % (len(people) - len(missing)),
               "- 缺肖像（占位）：**%d 位**" % len(missing)]
     with open(os.path.join(VID, "missing_photos.md"), "w", encoding="utf-8") as f:
@@ -1124,7 +1134,7 @@ def main():
     os.makedirs(EP, exist_ok=True)
     os.makedirs(os.path.join(EP, "figures"), exist_ok=True)
     stats = doc_stats(people)
-    out = [HEADER.replace("{EP}", "allinone").replace("{TITLE}", "合集").replace("{RANGE}", "1901–2025")
+    out = [HEADER.replace("{EP}", "allinone").replace("{TITLE}", "合集").replace("{RANGE}", "1901–2026")
                  .replace("RECORDCOUNT", str(stats["records"]))
                  .replace("PERSONCOUNT", str(stats["unique_people"]))
                  .replace("AWARDYEARCOUNT", str(stats["award_years"]))

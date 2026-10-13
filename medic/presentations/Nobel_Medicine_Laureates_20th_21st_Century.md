@@ -251,3 +251,6 @@
 | 2025 | [Fred Ramsdell](https://en.wikipedia.org/wiki/Fred_Ramsdell) | United States |
 | 2025 | [Shimon Sakaguchi](https://en.wikipedia.org/wiki/Shimon_Sakaguchi) | Japan |
 
+| 2026 | [Karl Deisseroth](https://en.wikipedia.org/wiki/Karl_Deisseroth) | United States |
+| 2026 | [Peter Hegemann](https://en.wikipedia.org/wiki/Peter_Hegemann) | Germany |
+| 2026 | [Georg Nagel](https://en.wikipedia.org/wiki/Georg_Nagel) | Germany |

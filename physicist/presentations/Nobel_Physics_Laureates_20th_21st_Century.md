@@ -249,3 +249,4 @@
 | 2025 | [Michel H. Devoret](https://en.wikipedia.org/wiki/Michel_H._Devoret) | France |
 | 2025 | [John M. Martinis](https://en.wikipedia.org/wiki/John_M._Martinis) | United States |
 
+| 2026 | [Francis Halzen](https://en.wikipedia.org/wiki/Francis_Halzen) | Belgium |

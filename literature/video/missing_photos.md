@@ -1,7 +1,7 @@
 # Nobel Literature Video Series — Missing Portrait Checklist
 
 > Source: `literature/presentations/pages/{20th,21st}_century/<Dir>/images.txt`（自动下载 2026-09-30）
-> 共 122 位得主中 **0 位** 缺真人肖像，待人工补图。
+> 共 123 位得主中 **0 位** 缺真人肖像，待人工补图。
 
 ## 缺照片得主
 
@@ -16,6 +16,6 @@
 
 ## 当前状态
 
-- 总得主：**122 位**（1901–2025）
-- 真人肖像在位：**122 位**
+- 总得主：**123 位**（1901–2026）
+- 真人肖像在位：**123 位**
 - 缺肖像（占位）：**0 位**

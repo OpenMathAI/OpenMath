@@ -75,6 +75,9 @@
 | 2025 | Mary E. Brunkow (玛丽·埃伦·布伦科) | United States | 表彰他们关于外周免疫耐受的发现 | 🔲 | 🔲 | ✅ |
 | 2025 | Fred Ramsdell (弗雷德·拉姆斯德尔) | United States | 表彰他们关于外周免疫耐受的发现 | 🔲 | 🔲 | ✅ |
 | 2025 | Shimon Sakaguchi (坂口志文) | Japan | 表彰他们关于外周免疫耐受的发现 | 🔲 | 🔲 | ✅ |
+| 2026 | Karl Deisseroth (卡尔·代塞尔罗思) | United States | 表彰他们关于光控离子通道和光遗传学的发现 | 🔲 | 🔲 | ✅ |
+| 2026 | Peter Hegemann (彼得·黑格曼) | Germany | 表彰他们关于光控离子通道和光遗传学的发现 | 🔲 | 🔲 | ✅ |
+| 2026 | Georg Nagel (格奥尔格·纳格尔) | Germany | 表彰他们关于光控离子通道和光遗传学的发现 | 🔲 | 🔲 | ✅ |
 
 ---
 

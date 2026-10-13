@@ -869,7 +869,7 @@ def age_str(p):
 
 # ---------------- tex 生成 ----------------
 HEADER = r"""% Nobel Literature Video — Allinone
-% 诺贝尔文学奖全得主合集（1901–2025）
+% 诺贝尔文学奖全得主合集（1901–2026）
 % Beamer layout mirrors physicist/video/episode-allinone
 % Source: literature/presentations 名录 + 离线页面 metadata.json + Wikipedia images
 \documentclass[aspectratio=169,14pt]{beamer}
@@ -1257,14 +1257,14 @@ def make_cover(people):
     tagline = "从 %s 到 %s · 世界文学群像与跨奖交叉得主一览" % (people[0]["name"], people[-1]["name"])
     tex = r'''\newcommand{\coverslide}{%%
 \begin{frame}[plain]
-\pdfbookmark[1]{封面 · 诺贝尔文学奖 1901–2025}{cover}
+\pdfbookmark[1]{封面 · 诺贝尔文学奖 1901–2026}{cover}
 \begin{tikzpicture}[remember picture, overlay]
   \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
   \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
   \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
   \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
   \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
-    at ([yshift=3.35cm]current page.center) {诺贝尔文学奖：文字的百年回声（1901–2025）};
+    at ([yshift=3.35cm]current page.center) {诺贝尔文学奖：文字的百年回声（1901–2026）};
   \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
     at ([yshift=2.50cm]current page.center) {Nobel Prize in Literature · \recordcount 条记录 / \personcount 位得主};
   \draw[coverprimary, line width=1.4pt] ([yshift=1.90cm, xshift=-5.2cm]current page.center)
@@ -1273,7 +1273,7 @@ def make_cover(people):
     at ([yshift=1.58cm]current page.center) {TAGLINE};
 ''' + grid_tikz + r'''
   \node[anchor=center, font=\fontsize{10}{12}\selectfont\bfseries, text=DeepPurpleAccent]
-    at ([yshift=1.12cm]current page.center) {\faIcon{medal}\enspace Nobel Prize in Literature\enspace|\enspace 1901–2025 · 全 \personcount 位得主};
+    at ([yshift=1.12cm]current page.center) {\faIcon{medal}\enspace Nobel Prize in Literature\enspace|\enspace 1901–2026 · 全 \personcount 位得主};
   \node[anchor=center, font=\fontsize{6.5}{9}\selectfont, text=covermuted]
     at ([yshift=0.74cm]current page.center) {和平与文学奖项的评价素来多元而有争议；};
   \node[anchor=center, font=\fontsize{6.5}{9}\selectfont, text=covermuted]
@@ -1296,7 +1296,7 @@ def intro_slide(legend_lines, stats, missing_years):
         else:
             rows.append(a)
     legend_tex = " \\\\\r\n    ".join(rows)
-    scale_txt = ("1901 年首颁（Sully Prudhomme）；至 2025 年共评奖 %d 个年份、%d 条记录，"
+    scale_txt = ("1901 年首颁（Sully Prudhomme）；至 2026 年共评奖 %d 个年份、%d 条记录，"
                  "涉及 %d 位独立作家。1904 年曾由 Frédéric Mistral 与 José Echegaray 两人共享，"
                  "为文学奖史上唯一一次。"
                  % (stats["award_years"], stats["records"], stats["unique_people"]))
@@ -1321,7 +1321,7 @@ def intro_slide(legend_lines, stats, missing_years):
 \begin{frame}
 \pdfbookmark[1]{认识诺贝尔文学奖}{intro}
 \plainbar
-\sectiontitle{认识诺贝尔文学奖}{Nobel Prize in Literature · 1901–2025}
+\sectiontitle{认识诺贝尔文学奖}{Nobel Prize in Literature · 1901–2026}
 \vspace{0.05cm}
 \begin{center}
 \begin{tikzpicture}
@@ -1348,7 +1348,7 @@ def intro_slide(legend_lines, stats, missing_years):
 def section_slide(name, sub, note):
     return ('\\newcommand{\\%s}{\\sectionpageslide\n'
             '  {%s}\n  {%s}\n  {%s}\n'
-            '  {Nobel Prize in Literature · 1901–2025}\n}\n' % (name, sub, note, ""))
+            '  {Nobel Prize in Literature · 1901–2026}\n}\n' % (name, sub, note, ""))
 
 
 def ending_slide():
@@ -1364,11 +1364,11 @@ def ending_slide():
   \draw[coveramber, line width=1.4pt] ([yshift=0.15cm, xshift=-4.6cm]current page.center)
     -- ([yshift=0.15cm, xshift=4.6cm]current page.center);
   \node[anchor=center, font=\fontsize{10.5}{14}\selectfont, text=coverprimary!85!black]
-    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1901–2025 全部 \personcount 位独立诺贝尔文学奖得主};
+    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1901–2026 全部 \personcount 位独立诺贝尔文学奖得主};
   \node[anchor=center, font=\fontsize{8.5}{11.5}\selectfont\itshape, text=covermuted]
     at ([yshift=-1.70cm]current page.center) {他们的每一次书写，都在为人类留下共同的记忆。};
   \node[anchor=south, font=\scriptsize, text=coverdark!40]
-    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace Nobel Prize in Literature · 1901–2025};
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace Nobel Prize in Literature · 1901–2026};
 \end{tikzpicture}
 \end{frame}
 }
@@ -1395,7 +1395,7 @@ def write_missing_md(people):
               "2. 保存为 `.jpg`（首选）/`.jpeg`/`.png`/`.webp`，命名与下表占位文件同名（扩展名可不同），放入 `literature/video/episode-allinone/images/`。",
               "3. 重新运行 `python3 gen_literature.py`（自动检测非空文件并使用），再 `make pdf && make video`。", "",
               "## 当前状态", "",
-              "- 总得主：**%d 位**（1901–2025）" % len(people),
+              "- 总得主：**%d 位**（1901–2026）" % len(people),
               "- 真人肖像在位：**%d 位**" % (len(people) - len(missing)),
               "- 缺肖像（占位）：**%d 位**" % len(missing)]
     with open(os.path.join(VID, "missing_photos.md"), "w", encoding="utf-8") as f:

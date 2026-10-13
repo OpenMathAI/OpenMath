@@ -162,3 +162,4 @@
 | 2024 | [Nihon Hidankyo](https://en.wikipedia.org/wiki/Nihon_Hidankyo) | Japan |
 | 2025 | [María Corina Machado](https://en.wikipedia.org/wiki/María_Corina_Machado) | Venezuela |
 
+| 2026 | [Navanethem Pillay](https://en.wikipedia.org/wiki/Navanethem_Pillay) | South Africa |

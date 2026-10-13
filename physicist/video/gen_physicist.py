@@ -581,7 +581,8 @@ def life_str(p):
     y1 = dob[:4] if re.match(r"^\d{4}", dob) else ""
     y2 = dod[:4] if re.match(r"^\d{4}", dod) else ""
     if y1 and y2:
-        return "%s–%s" % (y1, y2)
+        # 精修口径：卒年补享年（按周年计）
+        return "%s–%s（享年%d岁）" % (y1, y2, int(y2) - int(y1))
     if y1:
         return y1 + "–"
     return ""
@@ -594,16 +595,25 @@ def inst_str(p):
 
 
 def age_str(p):
+    """获奖时年龄：有精确生日算实岁（逝世者按逝世日，在世者按当年 10 月诺奖公布）；
+    只有出生年份给约数。均不带「岁」，由调用方拼接。"""
     pg = p.get("page") or {}
-    y1 = (pg.get("dob") or "")[:4]
+    dob = (pg.get("dob") or "")
+    m = re.match(r"^(\d{4})-(\d{2})-(\d{2})", dob)
+    if m:
+        by, bmo, bd = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        # 「获奖时」一律按当年 10 月（诺奖公布月）计，与逝世无关
+        ry, rmo, rd = p["year"], 10, 1
+        return "%d" % (ry - by - ((rmo, rd) < (bmo, bd)))
+    y1 = dob[:4]
     if re.match(r"^\d{4}$", y1):
-        return "约%d岁" % (p["year"] - int(y1))
+        return "约%d" % (p["year"] - int(y1))
     return ""
 
 
 # ---------------- tex 生成 ----------------
 HEADER = r"""% Nobel Physics Video — Allinone
-% 诺贝尔物理学奖全得主合集（1901–2025）
+% 诺贝尔物理学奖全得主合集（1901–2026）
 % Beamer layout mirrors turing/video/episode-allinone
 % Source: physicist/presentations 名录 + 离线页面 metadata.json + Wikipedia images
 \documentclass[aspectratio=169,14pt]{beamer}
@@ -911,7 +921,7 @@ def cross_summary_slide(rows):
     nodes.append(
         "  \\node[anchor=north, text width=3.7cm, align=center,\n"
         "        font=\\fontsize{4.5}{5.5}\\selectfont\\bfseries, text=coverprimary]\n"
-        "    at (0.00,%.2f) {\awardyearcount 届\\;\\; \recordcount 条记录 / \personcount 位独立得主};\n"
+        "    at (0.00,%.2f) {\\awardyearcount 届\\;\\; \\recordcount 条记录 / \\personcount 位独立得主};\n"
         "  \\node[anchor=north, text width=3.7cm, align=center,\n"
         "        font=\\fontsize{4.5}{5.5}\\selectfont\\bfseries, text=coverprimary]\n"
         "    at (3.60,%.2f) {跨科双诺奖\\;\\; Marie Curie};\n"
@@ -957,14 +967,14 @@ def make_cover(people):
     grid_tikz = "\n".join(grid)
     return r'''\newcommand{\coverslide}{%%
 \begin{frame}[plain]
-\pdfbookmark[1]{封面 · 诺贝尔物理学奖 1901–2025}{cover}
+\pdfbookmark[1]{封面 · 诺贝尔物理学奖 1901–2026}{cover}
 \begin{tikzpicture}[remember picture, overlay]
   \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
   \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
   \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
   \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
   \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
-    at ([yshift=3.35cm]current page.center) {诺贝尔物理学奖：群星闪耀的世纪（1901–2025）};
+    at ([yshift=3.35cm]current page.center) {诺贝尔物理学奖：群星闪耀的世纪（1901–2026）};
   \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
     at ([yshift=2.50cm]current page.center) {Nobel Prize in Physics · \recordcount 条记录 / \personcount 位得主};
   \draw[coverprimary, line width=1.4pt] ([yshift=1.90cm, xshift=-5.2cm]current page.center)
@@ -973,7 +983,7 @@ def make_cover(people):
     at ([yshift=1.58cm]current page.center) {从 Röntgen 到人工神经网络 · 兼具沃尔夫物理学奖与图灵奖交叉得主一览};
 ''' + grid_tikz + r'''
   \node[anchor=center, font=\fontsize{10}{12}\selectfont\bfseries, text=DeepPurpleAccent]
-    at ([yshift=1.12cm]current page.center) {\faIcon{medal}\enspace Nobel Prize in Physics\enspace|\enspace 1901–2025 · 全 230 位得主};
+    at ([yshift=1.12cm]current page.center) {\faIcon{medal}\enspace Nobel Prize in Physics\enspace|\enspace 1901–2026 · 全 231 位得主};
 \end{tikzpicture}
 \end{frame}
 }
@@ -986,13 +996,13 @@ def intro_slide(legend_lines):
 \begin{frame}
 \pdfbookmark[1]{认识诺贝尔物理学奖}{intro}
 \plainbar
-\sectiontitle{认识诺贝尔物理学奖}{Nobel Prize in Physics · 1901–2025}
+\sectiontitle{认识诺贝尔物理学奖}{Nobel Prize in Physics · 1901–2026}
 \vspace{0.05cm}
 \begin{center}
 \begin{tikzpicture}
   \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,3.05) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coverprimary!82!black} 规模}\\[2pt]
-    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1901 年首颁（Röntgen）；至 2025 年共评奖 \awardyearcount 个年份、\recordcount 条记录，涉及 \personcount 位独立得主。}};
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1901 年首颁（Röntgen）；至 2026 年共评奖 \awardyearcount 个年份、\recordcount 条记录，涉及 \personcount 位独立得主。}};
   \node[draw=coveraccent!40, fill=redpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,1.10) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coveraccent!82!black} 两度获奖}\\[2pt]
     {\fontsize{7}{8.5}\selectfont\color{coverdark!84} John Bardeen 唯一两度物理学奖（1956 · 1972）；\\Marie Curie 更跨物理（1903）与化学（1911）双科。}};
@@ -1010,7 +1020,7 @@ def intro_slide(legend_lines):
 def section_slide(name, sub, note):
     return ('\\newcommand{\\%s}{\\sectionpageslide\n'
             '  {%s}\n  {%s}\n  {%s}\n'
-            '  {Nobel Prize in Physics · 1901–2025}\n}\n' % (name, sub, note, ""))
+            '  {Nobel Prize in Physics · 1901–2026}\n}\n' % (name, sub, note, ""))
 
 
 def ending_slide():
@@ -1026,11 +1036,11 @@ def ending_slide():
   \draw[coveramber, line width=1.4pt] ([yshift=0.15cm, xshift=-4.6cm]current page.center)
     -- ([yshift=0.15cm, xshift=4.6cm]current page.center);
   \node[anchor=center, font=\fontsize{10.5}{14}\selectfont, text=coverprimary!85!black]
-    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1901–2025 全部 \personcount 位独立诺贝尔物理学奖得主};
+    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1901–2026 全部 \personcount 位独立诺贝尔物理学奖得主};
   \node[anchor=center, font=\fontsize{8.5}{11.5}\selectfont\itshape, text=covermuted]
     at ([yshift=-1.70cm]current page.center) {他们的每一次追问，都在扩展人类认知的边界。};
   \node[anchor=south, font=\scriptsize, text=coverdark!40]
-    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace Nobel Prize in Physics · 1901–2025};
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace Nobel Prize in Physics · 1901–2026};
 \end{tikzpicture}
 \end{frame}
 }
@@ -1057,7 +1067,7 @@ def write_missing_md(people):
               "2. 保存为 `.jpg`（首选）/`.jpeg`/`.png`/`.webp`，命名与下表占位文件同名（扩展名可不同），放入 `physicist/video/episode-allinone/images/`。",
               "3. 重新运行 `python3 gen_physicist.py`（自动检测非空文件并使用），再 `make pdf && make video`。", "",
               "## 当前状态", "",
-              "- 总得主：**%d 位**（1901–2025）" % len(people),
+              "- 总得主：**%d 位**（1901–2026）" % len(people),
               "- 真人肖像在位：**%d 位**" % (len(people) - len(missing)),
               "- 缺肖像（占位）：**%d 位**" % len(missing)]
     with open(os.path.join(VID, "missing_photos.md"), "w", encoding="utf-8") as f:
@@ -1154,7 +1164,7 @@ def main():
     write_missing_md(people)
 
     os.makedirs(EP, exist_ok=True)
-    out = [HEADER.replace("{EP}", "allinone").replace("{TITLE}", "合集").replace("{RANGE}", "1901–2025")]
+    out = [HEADER.replace("{EP}", "allinone").replace("{TITLE}", "合集").replace("{RANGE}", "1901–2026")]
     out.append(make_cover(people))
     # 徽标图例：按 TOP_AWARDS 顺序收集本片涉及的 (badge,label) 及人次
     legend_lines = []

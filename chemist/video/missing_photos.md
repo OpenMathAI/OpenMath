@@ -1,7 +1,7 @@
 # Nobel Chemistry Video Series — Missing Portrait Checklist
 
 > Source: `chemist/presentations/{20th,21th}_century/pages/<Dir>/images.txt`（自动下载 2026-09-30）
-> 共 200 位得主中 **0 位** 缺真人肖像，待人工补图。
+> 共 202 位得主中 **0 位** 缺真人肖像，待人工补图。
 
 ## 缺照片得主
 
@@ -16,6 +16,6 @@
 
 ## 当前状态
 
-- 总得主：**200 位**（1901–2025）
-- 真人肖像在位：**200 位**
+- 总得主：**202 位**（1901–2026）
+- 真人肖像在位：**202 位**
 - 缺肖像（占位）：**0 位**

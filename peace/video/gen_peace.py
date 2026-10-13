@@ -578,7 +578,7 @@ def age_str(p):
 
 # ---------------- tex 生成 ----------------
 HEADER = r"""% Nobel Peace Video — Allinone
-% 诺贝尔和平奖全得主合集（1901–2025）
+% 诺贝尔和平奖全得主合集（1901–2026）
 % Beamer layout mirrors physicist/video/episode-allinone（源自 turing allinone）
 % Source: peace/presentations 名录 + 离线页面 metadata.json + Wikipedia images
 \documentclass[aspectratio=169,14pt]{beamer}
@@ -686,7 +686,8 @@ HEADER = r"""% Nobel Peace Video — Allinone
 \newcommand{\honorbar}[1]{%
   \begin{tikzpicture}[remember picture, overlay]
     \node[anchor=south, draw=coverprimary!55, fill=coverlight, rounded corners=6pt,
-          inner xsep=8pt, inner ysep=5pt, yshift=0.65cm, text=coverdark!85] at (current page.south) {%
+          inner xsep=8pt, inner ysep=5pt, yshift=0.65cm, text=coverdark!85,
+          text width=12.2cm, align=center] at (current page.south) {%
       \fontsize{7.5}{9.5}\selectfont\bfseries{\color{coverprimary} 其他殊荣}\enspace #1};
   \end{tikzpicture}%
 }
@@ -955,14 +956,14 @@ def make_cover(people, n_records, n_people, n_years):
     grid_tikz = "\n".join(grid)
     return (r'''\newcommand{\coverslide}{%%
 \begin{frame}[plain]
-\pdfbookmark[1]{封面 · 诺贝尔和平奖 1901–2025}{cover}
+\pdfbookmark[1]{封面 · 诺贝尔和平奖 1901–2026}{cover}
 \begin{tikzpicture}[remember picture, overlay]
   \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
   \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
   \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
   \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
   \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
-    at ([yshift=3.35cm]current page.center) {诺贝尔和平奖：橄榄枝的世纪（1901–2025）};
+    at ([yshift=3.35cm]current page.center) {诺贝尔和平奖：橄榄枝的世纪（1901–2026）};
   \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
     at ([yshift=2.50cm]current page.center) {Nobel Peace Prize · %d 条记录 / %d 位获奖者（含机构）};
   \draw[coverprimary, line width=1.4pt] ([yshift=1.90cm, xshift=-5.2cm]current page.center)
@@ -971,7 +972,7 @@ def make_cover(people, n_records, n_people, n_years):
     at ([yshift=1.58cm]current page.center) {从 Henry Dunant 到 Nihon Hidankyo · 人道主义者与机构一个多世纪的和平接力};
 ''' + grid_tikz + r'''
   \node[anchor=center, font=\fontsize{10}{12}\selectfont\bfseries, text=DeepPurpleAccent]
-    at ([yshift=1.12cm]current page.center) {\faIcon{medal}\enspace Nobel Peace Prize\enspace|\enspace 1901–2025 · 全 %d 个颁奖年份};
+    at ([yshift=1.12cm]current page.center) {\faIcon{medal}\enspace Nobel Peace Prize\enspace|\enspace 1901–2026 · 全 %d 个颁奖年份};
   \node[anchor=center, font=\fontsize{6.8}{8.5}\selectfont\itshape, text=covermuted]
     at ([yshift=0.62cm]current page.center) {和平与文学奖项的评价素来多元而有争议；};
   \node[anchor=center, font=\fontsize{6.8}{8.5}\selectfont\itshape, text=covermuted]
@@ -1000,13 +1001,13 @@ def intro_slide(legend_lines, n_records, n_people, n_years):
 \begin{frame}
 \pdfbookmark[1]{认识诺贝尔和平奖}{intro}
 \plainbar
-\sectiontitle{认识诺贝尔和平奖}{Nobel Peace Prize · 1901–2025}
+\sectiontitle{认识诺贝尔和平奖}{Nobel Peace Prize · 1901–2026}
 \vspace{0.05cm}
 \begin{center}
 \begin{tikzpicture}
   \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,3.05) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coverprimary!82!black} 规模}\\[2pt]
-    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1901 年首颁（Henry Dunant 与 Frédéric Passy 共获）；至 2025 年共评奖 ''' + str(n_years) + r''' 个年份、''' + str(n_records) + r''' 条记录，涉及 ''' + str(n_people) + r''' 位获奖者（含机构），本片全收录。}};
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1901 年首颁（Henry Dunant 与 Frédéric Passy 共获）；至 2026 年共评奖 ''' + str(n_years) + r''' 个年份、''' + str(n_records) + r''' 条记录，涉及 ''' + str(n_people) + r''' 位获奖者（含机构），本片全收录。}};
   \node[draw=coveraccent!40, fill=redpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,0.55) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coveraccent!82!black} 多次获奖与特殊记录}\\[2pt]
     {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 红十字国际委员会三度获奖（1917 · 1944 · 1963）；\\联合国难民署两度获奖（1954 · 1981）。\\黎德寿 1973 年拒绝领奖，迄今唯一。}};
@@ -1026,7 +1027,7 @@ def intro_slide(legend_lines, n_records, n_people, n_years):
 def section_slide(name, sub, note):
     return ('\\newcommand{\\%s}{\\sectionpageslide\n'
             '  {%s}\n  {%s}\n  {%s}\n'
-            '  {Nobel Peace Prize · 1901–2025}\n}\n' % (name, sub, note, ""))
+            '  {Nobel Peace Prize · 1901–2026}\n}\n' % (name, sub, note, ""))
 
 
 def ending_slide(n_people):
@@ -1042,11 +1043,11 @@ def ending_slide(n_people):
   \draw[coveramber, line width=1.4pt] ([yshift=0.15cm, xshift=-4.6cm]current page.center)
     -- ([yshift=0.15cm, xshift=4.6cm]current page.center);
   \node[anchor=center, font=\fontsize{10.5}{14}\selectfont, text=coverprimary!85!black]
-    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1901–2025 全部 """ + str(n_people) + r""" 位诺贝尔和平奖获奖者与机构};
+    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1901–2026 全部 """ + str(n_people) + r""" 位诺贝尔和平奖获奖者与机构};
   \node[anchor=center, font=\fontsize{8.5}{11.5}\selectfont\itshape, text=covermuted]
     at ([yshift=-1.70cm]current page.center) {每一次对暴力的拒绝，都是对人类尊严的重申。};
   \node[anchor=south, font=\scriptsize, text=coverdark!40]
-    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace Nobel Peace Prize · 1901–2025};
+    at ([yshift=0.38cm]current page.south) {\faIcon{medal}\enspace Nobel Peace Prize · 1901–2026};
 \end{tikzpicture}
 \end{frame}
 }
@@ -1073,7 +1074,7 @@ def write_missing_md(people):
               "2. 保存为 `.jpg`（首选）/`.jpeg`/`.png`/`.webp`，命名与下表占位文件同名（扩展名可不同），放入 `peace/video/episode-allinone/images/`。",
               "3. 重新运行 `python3 gen_peace.py`（自动检测非空文件并使用），再 `make pdf && make video`。", "",
               "## 当前状态", "",
-              "- 总获奖者：**%d 位**（含机构，1901–2025）" % len({norm(p['name']) for p in people}),
+              "- 总获奖者：**%d 位**（含机构，1901–2026）" % len({norm(p['name']) for p in people}),
               "- 真人肖像在位：**%d 条记录**" % (len(people) - len(missing)),
               "- 缺肖像（占位）：**%d 条记录**" % len(missing)]
     with open(os.path.join(VID, "missing_photos.md"), "w", encoding="utf-8") as f:

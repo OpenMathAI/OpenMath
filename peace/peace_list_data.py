@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""OpenPeace 名录数据：诺贝尔和平奖 1901–2025。
+"""OpenPeace 名录数据：诺贝尔和平奖 1901–2026。
 
 DATA = {年份: (获奖理由英文, 获奖理由中文, [(获奖者en, 获奖者zh, 国家/机构), ...])}
 获奖理由为英文维基百科「List of Nobel Peace Prize laureates」所载 citation（去掉脚注）；
@@ -93,7 +93,7 @@ DATA = {
            "表彰他在促成《凯洛格—白里安公约》（《非战公约》）中的关键作用",
            [("Frank Billings Kellogg", "弗兰克·比林斯·凯洛格", US)]),
     1930: ("for promoting Christian unity and helping create 'that new attitude of mind which is necessary if peace between nations is to become reality'.",
-           "表彰他推动基督教会的合一，并帮助培育“若要国家间和平成为现实所必需的那种新心态”",
+           "表彰他推动基督教会的合一，并帮助培育「若要国家间和平成为现实所必需的那种新心态」",
            [("Nathan Söderblom", "纳坦·瑟德布卢姆", "Sweden")]),
     1931: ("for their assiduous effort to revive the ideal of peace and to rekindle the spirit of peace in their own nation and in the whole of mankind.",
            "表彰他们不懈努力重振和平理想，在本国乃至全人类心中重新点燃和平精神",
@@ -371,4 +371,7 @@ DATA = {
     2025: ("for her tireless work promoting democratic rights for the people of Venezuela and for her struggle to achieve a just and peaceful transition from dictatorship to democracy.",
            "表彰她不知疲倦地促进委内瑞拉人民的民主权利，并为实现从专制到民主的公正和平过渡而斗争",
            [("María Corina Machado", "玛丽亚·科里娜·马查多", "Venezuela")]),
+    2026: ("for her efforts to promote peace and international law",
+           "表彰她为促进和平与国际法所做的努力",
+           [("Navanethem Pillay", "纳维·皮莱", "South Africa")]),
 }

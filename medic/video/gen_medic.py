@@ -594,7 +594,7 @@ def age_str(p):
 
 # ---------------- tex 生成 ----------------
 HEADER = r"""% Nobel Physiology or Medicine Video — Allinone
-% 诺贝尔生理学或医学奖全得主合集（1901–2025）
+% 诺贝尔生理学或医学奖全得主合集（1901–2026）
 % Beamer layout mirrors physicist/video/episode-allinone
 % Source: medic/presentations 名录 + 离线页面 metadata.json + Wikipedia images
 \documentclass[aspectratio=169,14pt]{beamer}
@@ -951,14 +951,14 @@ def make_cover(people):
     grid_tikz = "\n".join(grid)
     return r'''\newcommand{\coverslide}{%%
 \begin{frame}[plain]
-\pdfbookmark[1]{封面 · 诺贝尔生理学或医学奖 1901–2025}{cover}
+\pdfbookmark[1]{封面 · 诺贝尔生理学或医学奖 1901–2026}{cover}
 \begin{tikzpicture}[remember picture, overlay]
   \fill[coverprimary!6] (current page.north west) rectangle (current page.south east);
   \fill[coveraccent!10] (current page.south east) ++(-2.3,-1.7) circle (2.0cm);
   \fill[coveramber!14] (current page.north east) ++(-2.4,1.4) circle (1.2cm);
   \fill[coverpurple!10] (current page.north west) ++(3.0,-1.0) circle (0.9cm);
   \node[anchor=center, font=\fontsize{17}{22}\selectfont\bfseries, text=coverdark]
-    at ([yshift=3.35cm]current page.center) {诺贝尔生理学或医学奖：生命科学的世纪（1901–2025）};
+    at ([yshift=3.35cm]current page.center) {诺贝尔生理学或医学奖：生命科学的世纪（1901–2026）};
   \node[anchor=center, font=\fontsize{12}{15}\selectfont, text=coverprimary!85!black]
     at ([yshift=2.50cm]current page.center) {Nobel Prize in Physiology or Medicine · \recordcount 条记录 / \personcount 位得主};
   \draw[coverprimary, line width=1.4pt] ([yshift=1.90cm, xshift=-5.2cm]current page.center)
@@ -967,7 +967,7 @@ def make_cover(people):
     at ([yshift=1.58cm]current page.center) {从血清疗法到 mRNA 疫苗 · 一部人类战胜疾病的世纪史诗};
 ''' + grid_tikz + r'''
   \node[anchor=center, font=\fontsize{10}{12}\selectfont\bfseries, text=DeepPurpleAccent]
-    at ([yshift=1.12cm]current page.center) {\faIcon{heartbeat}\enspace Nobel Prize in Physiology or Medicine\enspace|\enspace 1901–2025 · 全 232 位得主};
+    at ([yshift=1.12cm]current page.center) {\faIcon{heartbeat}\enspace Nobel Prize in Physiology or Medicine\enspace|\enspace 1901–2026 · 全 235 位得主};
 \end{tikzpicture}
 \end{frame}
 }
@@ -980,13 +980,13 @@ def intro_slide(legend_lines):
 \begin{frame}
 \pdfbookmark[1]{认识诺贝尔生理学或医学奖}{intro}
 \plainbar
-\sectiontitle{认识诺贝尔生理学或医学奖}{Nobel Prize in Physiology or Medicine · 1901–2025}
+\sectiontitle{认识诺贝尔生理学或医学奖}{Nobel Prize in Physiology or Medicine · 1901–2026}
 \vspace{0.05cm}
 \begin{center}
 \begin{tikzpicture}
   \node[draw=coverprimary!40, fill=bluepanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,3.05) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coverprimary!82!black} 规模}\\[2pt]
-    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1901 年首颁（von Behring）；至 2025 年共评奖 \awardyearcount 个年份、\recordcount 条记录，涉及 \personcount 位独立得主。}};
+    {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 1901 年首颁（von Behring）；至 2026 年共评奖 \awardyearcount 个年份、\recordcount 条记录，涉及 \personcount 位独立得主。}};
   \node[draw=coveraccent!40, fill=redpanel, rounded corners=5pt, inner sep=7pt, text width=6.4cm, align=left, anchor=north west] at (-7.05,1.10) {%%
     {\fontsize{8}{9.5}\selectfont\bfseries\color{coveraccent!82!black} 两度获奖}\\[2pt]
     {\fontsize{7}{8.5}\selectfont\color{coverdark!84} 生理学或医学奖至今无人两度获奖，\\也无人跨物理/化学双诺奖。}};
@@ -1004,7 +1004,7 @@ def intro_slide(legend_lines):
 def section_slide(name, sub, note):
     return ('\\newcommand{\\%s}{\\sectionpageslide\n'
             '  {%s}\n  {%s}\n  {%s}\n'
-            '  {Nobel Prize in Physiology or Medicine · 1901–2025}\n}\n' % (name, sub, note, ""))
+            '  {Nobel Prize in Physiology or Medicine · 1901–2026}\n}\n' % (name, sub, note, ""))
 
 
 def ending_slide():
@@ -1020,11 +1020,11 @@ def ending_slide():
   \draw[coveramber, line width=1.4pt] ([yshift=0.15cm, xshift=-4.6cm]current page.center)
     -- ([yshift=0.15cm, xshift=4.6cm]current page.center);
   \node[anchor=center, font=\fontsize{10.5}{14}\selectfont, text=coverprimary!85!black]
-    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1901–2025 全部 \personcount 位独立诺贝尔生理学或医学奖得主};
+    at ([yshift=-0.75cm]current page.center) {谨以此片致敬 1901–2026 全部 \personcount 位独立诺贝尔生理学或医学奖得主};
   \node[anchor=center, font=\fontsize{8.5}{11.5}\selectfont\itshape, text=covermuted]
     at ([yshift=-1.70cm]current page.center) {他们以仁心与智识，一次次改写人类与疾病的对抗史。};
   \node[anchor=south, font=\scriptsize, text=coverdark!40]
-    at ([yshift=0.38cm]current page.south) {\faIcon{heartbeat}\enspace Nobel Prize in Physiology or Medicine · 1901–2025};
+    at ([yshift=0.38cm]current page.south) {\faIcon{heartbeat}\enspace Nobel Prize in Physiology or Medicine · 1901–2026};
 \end{tikzpicture}
 \end{frame}
 }
@@ -1051,7 +1051,7 @@ def write_missing_md(people):
               "2. 保存为 `.jpg`（首选）/`.jpeg`/`.png`/`.webp`，命名与下表占位文件同名（扩展名可不同），放入 `medic/video/episode-allinone/images/`。",
               "3. 重新运行 `python3 gen_medic.py`（自动检测非空文件并使用），再 `make pdf && make video`。", "",
               "## 当前状态", "",
-              "- 总得主：**%d 位**（1901–2025）" % len(people),
+              "- 总得主：**%d 位**（1901–2026）" % len(people),
               "- 真人肖像在位：**%d 位**" % (len(people) - len(missing)),
               "- 缺肖像（占位）：**%d 位**" % len(missing)]
     with open(os.path.join(VID, "missing_photos.md"), "w", encoding="utf-8") as f:
@@ -1156,7 +1156,7 @@ def main():
         "PERSONCOUNT": str(stats["unique_people"]),
         "RECORDCOUNT": str(stats["records"]),
     }
-    hdr = HEADER.replace("{EP}", "allinone").replace("{TITLE}", "合集").replace("{RANGE}", "1901–2025")
+    hdr = HEADER.replace("{EP}", "allinone").replace("{TITLE}", "合集").replace("{RANGE}", "1901–2026")
     for k, v in repl.items():
         hdr = hdr.replace(k, v)
     out = [hdr]

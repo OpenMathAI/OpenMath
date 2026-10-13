@@ -1,7 +1,7 @@
 # Nobel Physiology or Medicine Video Series — Missing Portrait Checklist
 
 > Source: `medic/presentations/pages/{20th,21th}_century/<Dir>/images.txt`（自动下载 2026-09-30）
-> 共 232 位得主中 **0 位** 缺真人肖像，待人工补图。
+> 共 235 位得主中 **0 位** 缺真人肖像，待人工补图。
 
 ## 缺照片得主
 
@@ -16,6 +16,6 @@
 
 ## 当前状态
 
-- 总得主：**232 位**（1901–2025）
-- 真人肖像在位：**232 位**
+- 总得主：**235 位**（1901–2026）
+- 真人肖像在位：**235 位**
 - 缺肖像（占位）：**0 位**

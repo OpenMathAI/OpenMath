@@ -50,6 +50,26 @@ for m in (m20, m21):
                 inserted += 1
             else:
                 skipped += 1
+# 兜底：直接遍历 DATA 名单（覆盖尚未进 manifest 的新年度得主，如 2026；
+# 幂等，与 manifest 循环产生的行自然去重）
+for y, (cite_en, cite_zh, laureates) in DATA.items():
+    share = "独享" if YEAR_N[y] == 1 else "共享"
+    note = f"Nobel Peace Prize {y}" + ("" if YEAR_N[y] == 1 else f"（{YEAR_N[y]} 名得主共享）")
+    for en_raw, zh, country in laureates:
+        en = ALIAS.get(en_raw, en_raw)
+        cur.execute("SELECT id FROM people WHERE name_en=%s", (en,))
+        row = cur.fetchone()
+        if row is None:
+            print(f"!! 未匹配到 people: {en} ({y})")
+            continue
+        cur.execute(
+            "INSERT IGNORE INTO award_laureate(person_id, award_id, year, share_type, source, note) "
+            "VALUES (%s,%s,%s,%s,'yaml',%s)",
+            (row[0], award_id, y, share, note))
+        if cur.rowcount:
+            inserted += 1
+        else:
+            skipped += 1
 conn.commit()
 print(f"inserted={inserted} skipped(existing)={skipped}")
 

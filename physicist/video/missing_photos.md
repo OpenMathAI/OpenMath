@@ -1,7 +1,7 @@
 # Nobel Physics Video Series — Missing Portrait Checklist
 
 > Source: `physicist/presentations/{20th,21th}_century/{20th,21st}_century/<Dir>/images.txt`（自动下载 2026-09-29）
-> 共 230 位得主中 **0 位** 缺真人肖像，待人工补图。
+> 共 231 位得主中 **0 位** 缺真人肖像，待人工补图。
 
 ## 缺照片得主
 
@@ -16,6 +16,6 @@
 
 ## 当前状态
 
-- 总得主：**230 位**（1901–2025）
-- 真人肖像在位：**230 位**
+- 总得主：**231 位**（1901–2026）
+- 真人肖像在位：**231 位**
 - 缺肖像（占位）：**0 位**

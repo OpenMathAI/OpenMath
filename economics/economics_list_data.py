@@ -225,6 +225,10 @@ DATA = {
            [("Joel Mokyr", "乔尔·莫基尔", "United States / Israel"),
             ("Philippe Aghion", "菲利普·阿吉翁", "France"),
             ("Peter Howitt", "彼得·豪伊特", "Canada")]),
+    2026: ("for microeconomic foundations of macroeconomic stabilisation",
+           "表彰其为宏观经济稳定奠定微观经济学基础",
+           [("Robert E. Hall", "罗伯特·霍尔", US),
+            ("Michael Woodford", "迈克尔·伍德福特", US)]),
 }
 
 # 女性得主（截至 2025）

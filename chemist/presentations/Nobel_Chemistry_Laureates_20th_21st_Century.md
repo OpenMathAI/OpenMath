@@ -219,3 +219,5 @@
 | 2025 | [Richard Robson](https://en.wikipedia.org/wiki/Richard_Robson_(chemist)) | British |
 | 2025 | [Omar M. Yaghi](https://en.wikipedia.org/wiki/Omar_M._Yaghi) | Jordanian American Saudi |
 
+| 2026 | [Henri B. Kagan](https://en.wikipedia.org/wiki/Henri_B._Kagan) | French |
+| 2026 | [Kenso Soai](https://en.wikipedia.org/wiki/Kens%C5%8D_Soai) | Japanese |
